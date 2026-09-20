@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView chromeDump;
     private TextView clickFbResult;
     private TextView clickFbExcerpt;
+    private TextView searchResult;
+    private TextView searchExcerpt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         chromeDump = findViewById(R.id.chromeDump);
         clickFbResult = findViewById(R.id.clickFbResult);
         clickFbExcerpt = findViewById(R.id.clickFbExcerpt);
+        searchResult = findViewById(R.id.searchResult);
+        searchExcerpt = findViewById(R.id.searchExcerpt);
 
         findViewById(R.id.btnOpenSettings).setOnClickListener(v -> {
             Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
@@ -84,6 +88,30 @@ public class MainActivity extends AppCompatActivity {
 
             main.postDelayed(Bet365AccessibilityService::notifyPendingFootballClickArmed, 400);
         });
+
+        findViewById(R.id.btnTestSearch).setOnClickListener(v -> {
+            if (!isServiceEnabled()) {
+                Toast.makeText(this, "Enable Accessibility first", Toast.LENGTH_LONG).show();
+                return;
+            }
+            // Milestone A+B: open Search and enter a known fixture query.
+            ScanStore.setPendingSearchFlow(this, "Fulham");
+            refreshUi();
+            Toast.makeText(this, "Queued SEARCH_FLOW — opening Bet365 HO/ in Chrome", Toast.LENGTH_SHORT).show();
+
+            Intent chrome = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.bet365.com/#/HO/"));
+            chrome.setPackage("com.android.chrome");
+            chrome.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            try {
+                startActivity(chrome);
+            } catch (Exception e) {
+                Intent any = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.bet365.com/#/HO/"));
+                any.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(any);
+            }
+
+            main.postDelayed(Bet365AccessibilityService::notifyPendingSearchFlowArmed, 400);
+        });
     }
 
     @Override
@@ -93,10 +121,15 @@ public class MainActivity extends AppCompatActivity {
         if (ScanStore.hasPendingClickFootball(this)
                 || (ScanStore.getFootballStatus(this) != null
                 && (ScanStore.getFootballStatus(this).startsWith("PENDING")
-                || ScanStore.getFootballStatus(this).startsWith("RUNNING")))) {
+                || ScanStore.getFootballStatus(this).startsWith("RUNNING")))
+                || ScanStore.hasPendingSearchFlow(this)
+                || (ScanStore.getSearchStatus(this) != null
+                && (ScanStore.getSearchStatus(this).startsWith("PENDING")
+                || ScanStore.getSearchStatus(this).startsWith("RUNNING")))) {
             main.postDelayed(this::refreshUi, 1500);
             main.postDelayed(this::refreshUi, 4000);
             main.postDelayed(this::refreshUi, 8000);
+            main.postDelayed(this::refreshUi, 12000);
         }
     }
 
@@ -154,6 +187,22 @@ public class MainActivity extends AppCompatActivity {
                             + "\n" + ScanStore.getFootballClickDetail(this)
             );
             clickFbExcerpt.setText("POST_CLICK_CHROME_TEXT:\n" + ScanStore.getFootballClickExcerpt(this));
+        }
+
+        String searchStatus = ScanStore.getSearchStatus(this);
+        if (!ScanStore.hasSearchResult(this) && (searchStatus == null || searchStatus.isEmpty())) {
+            searchResult.setText("SEARCH_FLOW: (not run)\nSTAGE: —");
+            searchExcerpt.setText("SEARCH_CHROME_TEXT: (none)");
+        } else if (ScanStore.hasPendingSearchFlow(this) || (searchStatus != null && searchStatus.startsWith("PENDING"))
+                || (searchStatus != null && searchStatus.startsWith("RUNNING"))) {
+            searchResult.setText("SEARCH_FLOW: " + searchStatus + "\nSTAGE: " + ScanStore.getSearchStage(this));
+            searchExcerpt.setText("SEARCH_CHROME_TEXT: (waiting — return here after Chrome test)");
+        } else {
+            boolean pass = ScanStore.getSearchPass(this);
+            searchResult.setText("SEARCH_FLOW: " + (pass ? "PASS" : "FAIL")
+                    + "\nSTAGE: " + ScanStore.getSearchStage(this)
+                    + "\n" + ScanStore.getSearchDetail(this));
+            searchExcerpt.setText("SEARCH_CHROME_TEXT:\n" + ScanStore.getSearchExcerpt(this));
         }
     }
 

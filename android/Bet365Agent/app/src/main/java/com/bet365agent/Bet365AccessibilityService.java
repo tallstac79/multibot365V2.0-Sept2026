@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityWindowInfo;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +22,27 @@ public class Bet365AccessibilityService extends AccessibilityService {
     private static final int MAX_NODES = 500;
     private static final int MAX_DUMP_CHARS = 16000;
     private static final long PENDING_RETRY_WINDOW_MS = 10000;
+    // Hard failsafe: always fires regardless of event traffic, guarantees no infinite PENDING.
+    private static final long HARD_DEADLINE_MS = 11000;
+    private static final long WATCHDOG_INTERVAL_MS = 800;
     private static final long TREE_SETTLE_MS = 350;
     private static final long POST_CLICK_WAIT_MS = 2500;
     private static final String TARGET_LABEL = "Football";
+    private static final String EXCLUDE_CONTEXT_LABEL = "virtual";
 
     private static volatile Bet365AccessibilityService instance;
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private volatile boolean footballClickInFlight = false;
     private volatile long pendingArmedAt = 0L;
     private volatile boolean settlePosted = false;
+    private volatile boolean hardDeadlinePosted = false;
+    private volatile int watchdogGeneration = 0;
+
+    // Debug/diagnostic fields persisted on every failure per BUILD_STATUS requirements.
+    private volatile long lastEventTs = 0L;
+    private volatile String lastEventPkg = "";
+    private volatile int lastWindowsInspected = 0;
+    private volatile int lastCandidatesFound = 0;
 
     public static boolean isRunning() {
         return instance != null;
@@ -54,7 +67,6 @@ public class Bet365AccessibilityService extends AccessibilityService {
             return;
         }
         scanAndStore("event:" + type);
-        if (!ScanStore.hasPendingClickFootball(this)) return;
 
         CharSequence pkgCs = event.getPackageName();
         String eventPkg = pkgCs == null ? "" : pkgCs.toString();
@@ -63,8 +75,12 @@ public class Bet365AccessibilityService extends AccessibilityService {
                 || type == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
                 || type == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
 
-        if (chromeEvent) {
-            tryPendingFootballOnEvent("a11y:" + type + " pkg=" + eventPkg);
+        if (ScanStore.hasPendingClickFootball(this)) {
+            if (chromeEvent) tryPendingFootballOnEvent("a11y:" + type + " pkg=" + eventPkg);
+            return;
+        }
+        if (ScanStore.hasPendingSearchFlow(this)) {
+            if (chromeEvent) tryPendingSearchOnEvent("a11y:" + type + " pkg=" + eventPkg);
         }
     }
 
@@ -90,6 +106,12 @@ public class Bet365AccessibilityService extends AccessibilityService {
         svc.pendingArmedAt = System.currentTimeMillis();
         svc.settlePosted = false;
         svc.footballClickInFlight = false;
+        svc.hardDeadlinePosted = false;
+        svc.lastEventTs = svc.pendingArmedAt;
+        svc.lastEventPkg = "";
+        svc.lastWindowsInspected = 0;
+        svc.lastCandidatesFound = 0;
+        final int generation = ++svc.watchdogGeneration;
         ScanStore.setFootballStatus(svc, "PENDING — waiting for Chrome + Bet365 tree (up to 10s)…");
         svc.tryPendingFootballOnEvent("armed");
         // Also schedule periodic retries in case events are sparse
@@ -98,11 +120,43 @@ public class Bet365AccessibilityService extends AccessibilityService {
         svc.mainHandler.postDelayed(() -> svc.tryPendingFootballOnEvent("timer:4s"), 4000);
         svc.mainHandler.postDelayed(() -> svc.tryPendingFootballOnEvent("timer:7s"), 7000);
         svc.mainHandler.postDelayed(() -> svc.tryPendingFootballOnEvent("timer:10s"), 10000);
+        // Absolute failsafe watchdog: fires on a fixed schedule independent of any
+        // Accessibility event traffic, so a queued action can NEVER remain PENDING
+        // indefinitely (this was the "stuck >2 minutes" bug). It repeatedly checks
+        // elapsed time itself, not relying on being invoked by an event/timer chain.
+        svc.scheduleHardWatchdog(generation);
+    }
+
+    private void scheduleHardWatchdog(int generation) {
+        mainHandler.postDelayed(() -> {
+            if (generation != watchdogGeneration) return; // superseded by a newer run
+            if (!ScanStore.hasPendingClickFootball(this) || hardDeadlinePosted) return;
+            long armed = pendingArmedAt <= 0 ? System.currentTimeMillis() : pendingArmedAt;
+            long elapsed = System.currentTimeMillis() - armed;
+            if (elapsed >= HARD_DEADLINE_MS) {
+                hardDeadlinePosted = true;
+                footballClickInFlight = false;
+                ChromeSnapshot snap = captureAllChrome();
+                failWithChromeDump(false, false, false,
+                        "FAIL: TIMEOUT (hard watchdog) after " + elapsed
+                                + "ms | lastEventTs=" + lastEventTs
+                                + " lastEventPkg=" + lastEventPkg
+                                + " windowsInspected=" + lastWindowsInspected
+                                + " candidatesFound=" + lastCandidatesFound
+                                + " reason=no valid non-virtual clickable Football target reached in time",
+                        snap);
+                recycleRoots(snap.roots);
+                ScanStore.clearPendingAction(this);
+                return;
+            }
+            scheduleHardWatchdog(generation);
+        }, WATCHDOG_INTERVAL_MS);
     }
 
     private void tryPendingFootballOnEvent(String reason) {
         if (!ScanStore.hasPendingClickFootball(this)) return;
         if (footballClickInFlight) return;
+        if (hardDeadlinePosted) return;
 
         long armed = pendingArmedAt;
         if (armed <= 0) {
@@ -111,15 +165,21 @@ public class Bet365AccessibilityService extends AccessibilityService {
         }
         long elapsed = System.currentTimeMillis() - armed;
         if (elapsed > PENDING_RETRY_WINDOW_MS) {
+            hardDeadlinePosted = true;
             ChromeSnapshot snap = captureAllChrome();
             failWithChromeDump(false, false, false,
-                    "FAIL: timed out after " + elapsed + "ms waiting for Chrome/Bet365 tree (" + reason + ")",
+                    "FAIL: TIMEOUT after " + elapsed + "ms waiting for Chrome/Bet365 tree (" + reason + ")"
+                            + " | lastEventTs=" + lastEventTs + " lastEventPkg=" + lastEventPkg
+                            + " windowsInspected=" + lastWindowsInspected + " candidatesFound=" + lastCandidatesFound,
                     snap);
             recycleRoots(snap.roots);
+            ScanStore.clearPendingAction(this);
             return;
         }
 
         String activePkg = currentActivePackage();
+        lastEventTs = System.currentTimeMillis();
+        lastEventPkg = activePkg;
         if ("com.bet365agent".equals(activePkg)) {
             ScanStore.setFootballStatus(this,
                     "PENDING — Bet365Agent still foreground (" + elapsed + "ms)");
@@ -154,6 +214,306 @@ public class Bet365AccessibilityService extends AccessibilityService {
         mainHandler.postDelayed(this::executeFootballClick, TREE_SETTLE_MS);
     }
 
+    // ============================================================================
+    // Milestone A/B: Bet365 Search interaction + text entry
+    // Per authoritative build direction, generic Football/Basketball top-nav
+    // clicking is abandoned. Search is more deterministic: locate the Search
+    // control by class+description, click it, wait for an editable field to
+    // appear, type the target query, and verify the text landed. No coordinate
+    // fallback; same hard-watchdog pattern as CLICK_FOOTBALL guards against
+    // infinite PENDING.
+    // ============================================================================
+    private volatile boolean searchFlowInFlight = false;
+    private volatile long searchArmedAt = 0L;
+    private volatile boolean searchHardDeadlinePosted = false;
+    private volatile int searchWatchdogGeneration = 0;
+    private static final long SEARCH_HARD_DEADLINE_MS = 11000;
+    private static final String SEARCH_LABEL = "Search";
+
+    /** Called from UI after queuing SEARCH_FLOW and launching Chrome HO/. */
+    public static void notifyPendingSearchFlowArmed() {
+        Bet365AccessibilityService svc = instance;
+        if (svc == null) return;
+        svc.searchArmedAt = System.currentTimeMillis();
+        svc.searchFlowInFlight = false;
+        svc.searchHardDeadlinePosted = false;
+        final int generation = ++svc.searchWatchdogGeneration;
+        ScanStore.setSearchStatus(svc, "opening_chrome", "PENDING — waiting for Chrome + Bet365 tree (up to 10s)…");
+        svc.tryPendingSearchOnEvent("armed");
+        svc.mainHandler.postDelayed(() -> svc.tryPendingSearchOnEvent("timer:1s"), 1000);
+        svc.mainHandler.postDelayed(() -> svc.tryPendingSearchOnEvent("timer:2s"), 2000);
+        svc.mainHandler.postDelayed(() -> svc.tryPendingSearchOnEvent("timer:4s"), 4000);
+        svc.mainHandler.postDelayed(() -> svc.tryPendingSearchOnEvent("timer:7s"), 7000);
+        svc.mainHandler.postDelayed(() -> svc.tryPendingSearchOnEvent("timer:10s"), 10000);
+        svc.scheduleSearchHardWatchdog(generation);
+    }
+
+    private void scheduleSearchHardWatchdog(int generation) {
+        mainHandler.postDelayed(() -> {
+            if (generation != searchWatchdogGeneration) return;
+            if (!ScanStore.hasPendingSearchFlow(this) || searchHardDeadlinePosted) return;
+            long armed = searchArmedAt <= 0 ? System.currentTimeMillis() : searchArmedAt;
+            long elapsed = System.currentTimeMillis() - armed;
+            if (elapsed >= SEARCH_HARD_DEADLINE_MS) {
+                searchHardDeadlinePosted = true;
+                searchFlowInFlight = false;
+                ChromeSnapshot snap = captureAllChrome();
+                failSearch("open_search", "FAIL: TIMEOUT (hard watchdog) after " + elapsed
+                        + "ms | lastEventTs=" + lastEventTs + " lastEventPkg=" + lastEventPkg
+                        + " windowsInspected=" + lastWindowsInspected, snap);
+                recycleRoots(snap.roots);
+                ScanStore.clearPendingAction(this);
+                return;
+            }
+            scheduleSearchHardWatchdog(generation);
+        }, WATCHDOG_INTERVAL_MS);
+    }
+
+    private void tryPendingSearchOnEvent(String reason) {
+        if (!ScanStore.hasPendingSearchFlow(this)) return;
+        if (searchFlowInFlight) return;
+        if (searchHardDeadlinePosted) return;
+
+        long armed = searchArmedAt;
+        if (armed <= 0) {
+            searchArmedAt = System.currentTimeMillis();
+            armed = searchArmedAt;
+        }
+        long elapsed = System.currentTimeMillis() - armed;
+        if (elapsed > PENDING_RETRY_WINDOW_MS) {
+            searchHardDeadlinePosted = true;
+            ChromeSnapshot snap = captureAllChrome();
+            failSearch("open_search", "FAIL: TIMEOUT after " + elapsed
+                    + "ms waiting for Chrome/Bet365 tree (" + reason + ")", snap);
+            recycleRoots(snap.roots);
+            ScanStore.clearPendingAction(this);
+            return;
+        }
+
+        String activePkg = currentActivePackage();
+        lastEventTs = System.currentTimeMillis();
+        lastEventPkg = activePkg;
+        if ("com.bet365agent".equals(activePkg)) {
+            ScanStore.setSearchStatus(this, "opening_chrome",
+                    "PENDING — Bet365Agent still foreground (" + elapsed + "ms)");
+            return;
+        }
+        if (!ScanStore.isChromePackage(activePkg) && !anyChromeWindowPresent()) {
+            ScanStore.setSearchStatus(this, "opening_chrome",
+                    "PENDING — waiting for Chrome foreground (" + elapsed + "ms)");
+            return;
+        }
+
+        ChromeSnapshot snap = captureAllChrome();
+        if (!snap.hasTree || !snap.looksLikeBet365) {
+            ScanStore.setSearchStatus(this, "opening_chrome",
+                    "PENDING — Chrome tree loading, waiting for Bet365 content (" + elapsed + "ms)");
+            return;
+        }
+
+        if (searchFlowInFlight) return;
+        searchFlowInFlight = true;
+        ScanStore.setSearchStatus(this, "locate_search",
+                "RUNNING — Chrome+Bet365 ready, locating Search control… (" + elapsed + "ms)");
+        mainHandler.postDelayed(this::executeOpenSearch, TREE_SETTLE_MS);
+    }
+
+    /** Step A: locate the Search control (Button/desc="Search") and click it. */
+    private void executeOpenSearch() {
+        try {
+            String activePkg = currentActivePackage();
+            if ("com.bet365agent".equals(activePkg)) {
+                searchFlowInFlight = false;
+                ScanStore.setSearchStatus(this, "opening_chrome", "PENDING — lost Chrome foreground, retrying…");
+                return;
+            }
+            ChromeSnapshot snap = captureAllChrome();
+            if (!snap.hasTree || !snap.looksLikeBet365) {
+                searchFlowInFlight = false;
+                ScanStore.setSearchStatus(this, "opening_chrome", "PENDING — Bet365 tree not ready, retrying…");
+                return;
+            }
+            ScanStore.saveChromeSnapshot(this, snap.packageName, snap.title, snap.dump,
+                    snap.visibleText, snap.clickableSummary, System.currentTimeMillis());
+
+            AccessibilityNodeInfo searchNode = findSearchControl(snap.roots);
+            if (searchNode == null) {
+                failSearch("locate_search", "FAIL: TARGET_NOT_FOUND — no clickable node with"
+                        + " text/desc=\"Search\" found in Chrome tree", snap);
+                recycleRoots(snap.roots);
+                searchFlowInFlight = false;
+                return;
+            }
+
+            boolean clicked = searchNode.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+            String detail = "searchNode=" + describeNode(searchNode) + " ACTION_CLICK=" + clicked;
+            searchNode.recycle();
+            recycleRoots(snap.roots);
+
+            if (!clicked) {
+                ChromeSnapshot fresh = captureAllChrome();
+                failSearch("locate_search", "FAIL: " + detail, fresh);
+                recycleRoots(fresh.roots);
+                searchFlowInFlight = false;
+                return;
+            }
+
+            ScanStore.setSearchStatus(this, "verify_search_open",
+                    "RUNNING — clicked Search, waiting for search UI to open…");
+            mainHandler.postDelayed(this::verifySearchOpened, POST_CLICK_WAIT_MS);
+        } catch (Exception e) {
+            ChromeSnapshot snap = captureAllChrome();
+            failSearch("locate_search", "FAIL: exception " + e, snap);
+            recycleRoots(snap.roots);
+            searchFlowInFlight = false;
+        }
+    }
+
+    /** Step: verify search UI opened (an editable field is now present and visible). */
+    private void verifySearchOpened() {
+        ChromeSnapshot snap = captureAllChrome();
+        ScanStore.saveChromeSnapshot(this, snap.packageName, snap.title, snap.dump,
+                snap.visibleText, snap.clickableSummary, System.currentTimeMillis());
+
+        AccessibilityNodeInfo editable = findEditableSearchField(snap.roots);
+        if (editable == null) {
+            failSearch("verify_search_open",
+                    "FAIL: search UI did not open — no visible editable field found after click", snap);
+            recycleRoots(snap.roots);
+            searchFlowInFlight = false;
+            return;
+        }
+
+        String query = ScanStore.getSearchQuery(this);
+        if (query == null || query.trim().isEmpty()) {
+            // Milestone A only: prove Search opens. Stop here successfully.
+            ScanStore.saveSearchResult(this, true, "verify_search_open",
+                    "PASS: search UI opened, editable field=" + describeNode(editable),
+                    snap.visibleText, System.currentTimeMillis());
+            editable.recycle();
+            recycleRoots(snap.roots);
+            searchFlowInFlight = false;
+            return;
+        }
+
+        // Milestone B: enter the query text into the field.
+        android.os.Bundle args = new android.os.Bundle();
+        args.putCharSequence(
+                AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, query);
+        boolean focusOk = editable.performAction(AccessibilityNodeInfo.ACTION_FOCUS);
+        boolean setOk = editable.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, args);
+        String detail = "editable=" + describeNode(editable)
+                + " focusOk=" + focusOk + " setTextOk=" + setOk + " query=" + query;
+        editable.recycle();
+        recycleRoots(snap.roots);
+
+        if (!setOk) {
+            ChromeSnapshot fresh = captureAllChrome();
+            failSearch("enter_text", "FAIL: " + detail, fresh);
+            recycleRoots(fresh.roots);
+            searchFlowInFlight = false;
+            return;
+        }
+
+        ScanStore.setSearchStatus(this, "verify_text", "RUNNING — text entered, verifying…");
+        final String detailOk = detail;
+        mainHandler.postDelayed(() -> verifyTextEntered(detailOk, query), POST_CLICK_WAIT_MS);
+    }
+
+    /** Step B verification: confirm the typed query is now visible in the field / results. */
+    private void verifyTextEntered(String detail, String query) {
+        ChromeSnapshot snap = captureAllChrome();
+        ScanStore.saveChromeSnapshot(this, snap.packageName, snap.title, snap.dump,
+                snap.visibleText, snap.clickableSummary, System.currentTimeMillis());
+
+        String blob = snap.visibleText == null ? "" : snap.visibleText;
+        boolean found = query != null && !query.trim().isEmpty()
+                && blob.toLowerCase(Locale.US).contains(query.trim().toLowerCase(Locale.US));
+
+        if (!found) {
+            failSearch("enter_text", "FAIL: entered query \"" + query
+                    + "\" not found in visible text after entry | " + detail, snap);
+        } else {
+            ScanStore.saveSearchResult(this, true, "verify_text",
+                    "PASS: query \"" + query + "\" confirmed visible | " + detail,
+                    snap.visibleText, System.currentTimeMillis());
+        }
+        recycleRoots(snap.roots);
+        searchFlowInFlight = false;
+    }
+
+    private void failSearch(String stage, String detail, ChromeSnapshot snap) {
+        if (snap != null && snap.hasTree) {
+            ScanStore.saveChromeSnapshot(this, snap.packageName, snap.title, snap.dump,
+                    snap.visibleText, snap.clickableSummary, System.currentTimeMillis());
+        }
+        String excerpt = "";
+        if (snap != null) {
+            excerpt = snap.visibleText;
+            if (excerpt == null || excerpt.trim().isEmpty()) excerpt = snap.dump;
+            if (excerpt != null && excerpt.length() > 6000) excerpt = excerpt.substring(0, 6000) + "…";
+            if (excerpt == null) excerpt = "(no chrome dump)";
+        } else {
+            excerpt = "(no chrome snapshot)";
+        }
+        ScanStore.saveSearchResult(this, false, stage, detail, excerpt, System.currentTimeMillis());
+    }
+
+    /** Find the clickable Search control: Button/View with text or desc == "Search". */
+    private AccessibilityNodeInfo findSearchControl(List<AccessibilityNodeInfo> roots) {
+        for (AccessibilityNodeInfo root : roots) {
+            AccessibilityNodeInfo found = findSearchControlNode(root);
+            if (found != null) return found;
+        }
+        return null;
+    }
+
+    private AccessibilityNodeInfo findSearchControlNode(AccessibilityNodeInfo node) {
+        if (node == null) return null;
+        CharSequence t = node.getText();
+        CharSequence d = node.getContentDescription();
+        String ts = t == null ? "" : t.toString().trim();
+        String ds = d == null ? "" : d.toString().trim();
+        if (node.isVisibleToUser() && node.isClickable()
+                && (SEARCH_LABEL.equalsIgnoreCase(ts) || SEARCH_LABEL.equalsIgnoreCase(ds))) {
+            return AccessibilityNodeInfo.obtain(node);
+        }
+        for (int i = 0; i < node.getChildCount(); i++) {
+            AccessibilityNodeInfo c = node.getChild(i);
+            if (c != null) {
+                AccessibilityNodeInfo found = findSearchControlNode(c);
+                c.recycle();
+                if (found != null) return found;
+            }
+        }
+        return null;
+    }
+
+    /** Find the first visible editable node (the search input box once opened). */
+    private AccessibilityNodeInfo findEditableSearchField(List<AccessibilityNodeInfo> roots) {
+        for (AccessibilityNodeInfo root : roots) {
+            AccessibilityNodeInfo found = findEditableNode(root);
+            if (found != null) return found;
+        }
+        return null;
+    }
+
+    private AccessibilityNodeInfo findEditableNode(AccessibilityNodeInfo node) {
+        if (node == null) return null;
+        if (node.isVisibleToUser() && node.isEditable()) {
+            return AccessibilityNodeInfo.obtain(node);
+        }
+        for (int i = 0; i < node.getChildCount(); i++) {
+            AccessibilityNodeInfo c = node.getChild(i);
+            if (c != null) {
+                AccessibilityNodeInfo found = findEditableNode(c);
+                c.recycle();
+                if (found != null) return found;
+            }
+        }
+        return null;
+    }
+
     private void executeFootballClick() {
         long ts = System.currentTimeMillis();
         try {
@@ -178,20 +538,45 @@ public class Bet365AccessibilityService extends AccessibilityService {
             ScanStore.saveChromeSnapshot(this, snap.packageName, snap.title, snap.dump,
                     snap.visibleText, snap.clickableSummary, ts);
 
-            FootballHit hit = findFootballAcrossChrome(snap.roots);
-            if (hit == null || hit.target == null) {
+            List<FootballHit> candidates = new ArrayList<>();
+            findFootballCandidatesAcrossChrome(snap.roots, candidates);
+            lastCandidatesFound = candidates.size();
+
+            if (candidates.isEmpty()) {
                 failWithChromeDump(false, false, false,
-                        "FAIL: no visible case-insensitive \"Football\" node in any Chrome root",
+                        "FAIL: TARGET_NOT_FOUND — no visible case-insensitive \"Football\" node"
+                                + " in the real sports navigation area of any Chrome root"
+                                + " (any Virtual Sports matches were explicitly excluded)",
                         snap);
                 recycleRoots(snap.roots);
+                for (FootballHit h : candidates) h.target.recycle();
                 footballClickInFlight = false;
                 return;
             }
 
+            if (candidates.size() > 1) {
+                StringBuilder paths = new StringBuilder();
+                for (FootballHit h : candidates) {
+                    paths.append("[").append(describeNode(h.target))
+                            .append(" ancestry=").append(h.ancestryContext).append("] ");
+                }
+                failWithChromeDump(true, false, false,
+                        "FAIL: AMBIGUOUS_TARGET — " + candidates.size()
+                                + " non-virtual Football candidates found, refusing to click. Candidates: "
+                                + paths,
+                        snap);
+                recycleRoots(snap.roots);
+                for (FootballHit h : candidates) h.target.recycle();
+                footballClickInFlight = false;
+                return;
+            }
+
+            FootballHit hit = candidates.get(0);
+
             AccessibilityNodeInfo clickable = findClickableAncestor(hit.target);
             if (clickable == null) {
                 String detail = "FAIL: Football found but no clickable ancestor; "
-                        + describeNode(hit.target);
+                        + describeNode(hit.target) + " ancestry=" + hit.ancestryContext;
                 hit.target.recycle();
                 failWithChromeDump(true, false, false, detail, snap);
                 recycleRoots(snap.roots);
@@ -202,6 +587,7 @@ public class Bet365AccessibilityService extends AccessibilityService {
             Rect bounds = new Rect();
             clickable.getBoundsInScreen(bounds);
             final String detail = "target=" + describeNode(hit.target)
+                    + " ancestry=" + hit.ancestryContext
                     + " clickable=" + describeNode(clickable)
                     + " bounds=" + bounds.toShortString()
                     + " rootPkg=" + hit.rootPackage;
@@ -332,6 +718,7 @@ public class Bet365AccessibilityService extends AccessibilityService {
     private static final class FootballHit {
         AccessibilityNodeInfo target;
         String rootPackage = "";
+        String ancestryContext = "";
     }
 
     /** Collect all Chrome roots (active + every application window). Caller recycles roots. */
@@ -340,12 +727,14 @@ public class Bet365AccessibilityService extends AccessibilityService {
         List<String> allDump = new ArrayList<>();
         List<String> allVisible = new ArrayList<>();
         List<String> allClickable = new ArrayList<>();
+        int windowsInspected = 0;
 
         // Prefer getWindows() so we do not rely only on rootInActiveWindow
         List<AccessibilityWindowInfo> windows = getWindows();
         if (windows != null) {
             for (AccessibilityWindowInfo w : windows) {
                 if (w == null) continue;
+                windowsInspected++;
                 if (w.getType() != AccessibilityWindowInfo.TYPE_APPLICATION
                         && w.getType() != AccessibilityWindowInfo.TYPE_SYSTEM) {
                     // still allow application primarily
@@ -437,23 +826,80 @@ public class Bet365AccessibilityService extends AccessibilityService {
                 || blob.contains("login")
                 || (snap.visibleText.length() > 80 && blob.contains("odds"));
 
+        lastWindowsInspected = windowsInspected;
         return snap;
     }
 
-    private FootballHit findFootballAcrossChrome(List<AccessibilityNodeInfo> roots) {
-        if (roots == null) return null;
+    /**
+     * Find all visible, case-insensitive "Football" candidates across the given
+     * Chrome roots, EXCLUDING any node whose ancestor chain mentions "virtual"
+     * (e.g. "Virtual Sports"). This fixes the misrouting bug where a global
+     * text search matched the Virtual Sports entry instead of the real Football
+     * sports-navigation entry. For each candidate we record a short ancestry
+     * context string for disambiguation logging.
+     */
+    private void findFootballCandidatesAcrossChrome(List<AccessibilityNodeInfo> roots, List<FootballHit> out) {
+        if (roots == null) return;
         for (AccessibilityNodeInfo root : roots) {
             if (root == null) continue;
-            AccessibilityNodeInfo found = findFootballNode(root);
-            if (found != null) {
+            CharSequence p = root.getPackageName();
+            String rootPkg = p == null ? "" : p.toString();
+            collectFootballCandidates(root, rootPkg, out);
+        }
+    }
+
+    private void collectFootballCandidates(AccessibilityNodeInfo node, String rootPkg, List<FootballHit> out) {
+        if (node == null) return;
+        CharSequence t = node.getText();
+        CharSequence d = node.getContentDescription();
+        String ts = t == null ? "" : t.toString().trim();
+        String ds = d == null ? "" : d.toString().trim();
+        if (TARGET_LABEL.equalsIgnoreCase(ts) || TARGET_LABEL.equalsIgnoreCase(ds)) {
+            boolean visible = node.isVisibleToUser();
+            String ancestry = buildAncestryContext(node);
+            boolean excluded = ancestry.toLowerCase(Locale.US).contains(EXCLUDE_CONTEXT_LABEL);
+            Log.d("Bet365Agent", "footballCandidate ts=" + ts + " visible=" + visible
+                    + " excluded=" + excluded + " ancestry=" + ancestry);
+            if (visible && !excluded) {
                 FootballHit hit = new FootballHit();
-                hit.target = found;
-                CharSequence p = root.getPackageName();
-                hit.rootPackage = p == null ? "" : p.toString();
-                return hit;
+                hit.target = AccessibilityNodeInfo.obtain(node);
+                hit.rootPackage = rootPkg;
+                hit.ancestryContext = ancestry;
+                out.add(hit);
             }
         }
-        return null;
+        for (int i = 0; i < node.getChildCount(); i++) {
+            AccessibilityNodeInfo c = node.getChild(i);
+            if (c != null) {
+                collectFootballCandidates(c, rootPkg, out);
+                c.recycle();
+            }
+        }
+    }
+
+    /** Walk up to 6 ancestors collecting text/desc/id/class for context-based disambiguation. */
+    private String buildAncestryContext(AccessibilityNodeInfo node) {
+        StringBuilder sb = new StringBuilder();
+        AccessibilityNodeInfo cur = node.getParent();
+        int hops = 0;
+        while (cur != null && hops < 6) {
+            CharSequence t = cur.getText();
+            CharSequence d = cur.getContentDescription();
+            CharSequence id = cur.getViewIdResourceName();
+            String piece = (t != null && t.length() > 0 ? t.toString() : "")
+                    + (d != null && d.length() > 0 ? "/" + d : "")
+                    + (id != null && id.length() > 0 ? "#" + id : "");
+            if (piece.length() > 0) {
+                if (sb.length() > 0) sb.append(" < ");
+                sb.append(piece);
+            }
+            AccessibilityNodeInfo parent = cur.getParent();
+            cur.recycle();
+            cur = parent;
+            hops++;
+        }
+        if (cur != null) cur.recycle();
+        return sb.length() == 0 ? "(no ancestry text)" : sb.toString();
     }
 
     private static void recycleRoots(List<AccessibilityNodeInfo> roots) {
@@ -521,44 +967,13 @@ public class Bet365AccessibilityService extends AccessibilityService {
         return "";
     }
 
-    private AccessibilityNodeInfo findFootballNode(AccessibilityNodeInfo root) {
-        List<AccessibilityNodeInfo> matches = new ArrayList<>();
-        collectFootball(root, matches);
-        AccessibilityNodeInfo best = null;
-        for (AccessibilityNodeInfo n : matches) {
-            if (!n.isVisibleToUser()) continue;
-            CharSequence t = n.getText();
-            String ts = t == null ? "" : t.toString().trim();
-            if (TARGET_LABEL.equalsIgnoreCase(ts)) {
-                best = n;
-                break;
-            }
-            if (best == null) best = n;
-        }
-        for (AccessibilityNodeInfo n : matches) {
-            if (n != best) n.recycle();
-        }
-        return best;
-    }
-
-    private void collectFootball(AccessibilityNodeInfo node, List<AccessibilityNodeInfo> out) {
-        if (node == null) return;
-        CharSequence t = node.getText();
-        CharSequence d = node.getContentDescription();
-        String ts = t == null ? "" : t.toString().trim();
-        String ds = d == null ? "" : d.toString().trim();
-        // case-insensitive exact match on text or contentDescription
-        if (TARGET_LABEL.equalsIgnoreCase(ts) || TARGET_LABEL.equalsIgnoreCase(ds)) {
-            out.add(AccessibilityNodeInfo.obtain(node));
-        }
-        for (int i = 0; i < node.getChildCount(); i++) {
-            AccessibilityNodeInfo c = node.getChild(i);
-            if (c != null) {
-                collectFootball(c, out);
-                c.recycle();
-            }
-        }
-    }
+    // NOTE: the legacy findFootballNode/collectFootball global-search helpers were
+    // removed. They caused the Virtual Sports misrouting bug (matched any visible
+    // "Football" text anywhere in the tree, including inside the Virtual Sports
+    // module). Target discovery now goes exclusively through
+    // findFootballCandidatesAcrossChrome() / collectFootballCandidates(), which
+    // scope-excludes any node whose ancestry mentions "virtual" and require exactly
+    // one disambiguated candidate before any click occurs.
 
     private AccessibilityNodeInfo findClickableAncestor(AccessibilityNodeInfo target) {
         AccessibilityNodeInfo cur = AccessibilityNodeInfo.obtain(target);

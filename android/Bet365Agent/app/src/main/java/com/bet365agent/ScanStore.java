@@ -31,6 +31,14 @@ public final class ScanStore {
     private static final String KEY_CLICK_FB_TS = "click_fb_ts";
     private static final String KEY_CLICK_FB_STATUS = "click_fb_status";
 
+    private static final String PENDING_SEARCH_FLOW = "SEARCH_FLOW";
+    private static final String KEY_SEARCH_PASS = "search_pass";
+    private static final String KEY_SEARCH_STAGE = "search_stage";
+    private static final String KEY_SEARCH_DETAIL = "search_detail";
+    private static final String KEY_SEARCH_EXCERPT = "search_excerpt";
+    private static final String KEY_SEARCH_TS = "search_ts";
+    private static final String KEY_SEARCH_STATUS = "search_status";
+
     private ScanStore() {}
 
     private static SharedPreferences prefs(Context ctx) {
@@ -145,4 +153,55 @@ public final class ScanStore {
     public static String getFootballClickDetail(Context ctx) { return prefs(ctx).getString(KEY_CLICK_FB_DETAIL, ""); }
     public static String getFootballStatus(Context ctx) { return prefs(ctx).getString(KEY_CLICK_FB_STATUS, ""); }
     public static long getFootballClickTs(Context ctx) { return prefs(ctx).getLong(KEY_CLICK_FB_TS, 0L); }
+
+    // --- Milestone A/B: Search interaction + text entry proof ---
+
+    public static void setPendingSearchFlow(Context ctx, String query) {
+        prefs(ctx).edit()
+                .putString(KEY_PENDING, PENDING_SEARCH_FLOW)
+                .putString(KEY_SEARCH_STATUS, "PENDING — switching to Chrome…")
+                .putString(KEY_SEARCH_STAGE, "queued")
+                .putBoolean(KEY_SEARCH_PASS, false)
+                .putString(KEY_SEARCH_DETAIL, "queued query=" + query)
+                .putString(KEY_SEARCH_EXCERPT, "")
+                .putLong(KEY_SEARCH_TS, System.currentTimeMillis())
+                .putString("search_query", query == null ? "" : query)
+                .apply();
+    }
+
+    public static String getSearchQuery(Context ctx) { return prefs(ctx).getString("search_query", ""); }
+
+    public static boolean hasPendingSearchFlow(Context ctx) {
+        return PENDING_SEARCH_FLOW.equals(getPendingAction(ctx));
+    }
+
+    public static void setSearchStatus(Context ctx, String stage, String status) {
+        prefs(ctx).edit()
+                .putString(KEY_SEARCH_STAGE, stage == null ? "" : stage)
+                .putString(KEY_SEARCH_STATUS, status == null ? "" : status)
+                .apply();
+    }
+
+    public static void saveSearchResult(
+            Context ctx, boolean pass, String stage, String detail, String excerpt, long ts) {
+        prefs(ctx).edit()
+                .putBoolean(KEY_SEARCH_PASS, pass)
+                .putString(KEY_SEARCH_STAGE, stage == null ? "" : stage)
+                .putString(KEY_SEARCH_DETAIL, detail == null ? "" : detail)
+                .putString(KEY_SEARCH_EXCERPT, excerpt == null ? "" : excerpt)
+                .putString(KEY_SEARCH_STATUS, "DONE")
+                .putLong(KEY_SEARCH_TS, ts)
+                .putString(KEY_PENDING, "")
+                .apply();
+    }
+
+    public static boolean hasSearchResult(Context ctx) {
+        return prefs(ctx).getLong(KEY_SEARCH_TS, 0L) > 0 && !PENDING_SEARCH_FLOW.equals(getPendingAction(ctx));
+    }
+    public static boolean getSearchPass(Context ctx) { return prefs(ctx).getBoolean(KEY_SEARCH_PASS, false); }
+    public static String getSearchStage(Context ctx) { return prefs(ctx).getString(KEY_SEARCH_STAGE, ""); }
+    public static String getSearchDetail(Context ctx) { return prefs(ctx).getString(KEY_SEARCH_DETAIL, ""); }
+    public static String getSearchExcerpt(Context ctx) { return prefs(ctx).getString(KEY_SEARCH_EXCERPT, ""); }
+    public static String getSearchStatus(Context ctx) { return prefs(ctx).getString(KEY_SEARCH_STATUS, ""); }
+    public static long getSearchTs(Context ctx) { return prefs(ctx).getLong(KEY_SEARCH_TS, 0L); }
 }
