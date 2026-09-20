@@ -320,7 +320,7 @@ public class Bet365AccessibilityService extends AccessibilityService {
         mainHandler.postDelayed(this::executeOpenSearch, TREE_SETTLE_MS);
     }
 
-    /** Step A: locate the Search control (Button/desc="Search") and click it. */
+    /** Step A: locate the Search control (SearchView or EditText) and click it. */
     private void executeOpenSearch() {
         try {
             String activePkg = currentActivePackage();
@@ -338,10 +338,11 @@ public class Bet365AccessibilityService extends AccessibilityService {
             ScanStore.saveChromeSnapshot(this, snap.packageName, snap.title, snap.dump,
                     snap.visibleText, snap.clickableSummary, System.currentTimeMillis());
 
-            AccessibilityNodeInfo searchNode = findSearchControl(snap.roots);
+            // Try to find SearchView or EditText in toolbar area
+            AccessibilityNodeInfo searchNode = findSearchViewOrEditText(snap.roots);
             if (searchNode == null) {
-                failSearch("locate_search", "FAIL: TARGET_NOT_FOUND — no clickable node with"
-                        + " text/desc=\"Search\" found in Chrome tree", snap);
+                failSearch("locate_search", "FAIL: SEARCHVIEW_NOT_FOUND — no SearchView or toolbar EditText"
+                        + " found in Chrome accessibility tree", snap);
                 recycleRoots(snap.roots);
                 searchFlowInFlight = false;
                 return;
@@ -354,7 +355,8 @@ public class Bet365AccessibilityService extends AccessibilityService {
 
             if (!clicked) {
                 ChromeSnapshot fresh = captureAllChrome();
-                failSearch("locate_search", "FAIL: " + detail, fresh);
+                failSearch("locate_search", "FAIL: EDITTEXT_NOT_ACTIVATED — "
+                        + "SearchView found but ACTION_CLICK failed: " + detail, fresh);
                 recycleRoots(fresh.roots);
                 searchFlowInFlight = false;
                 return;
@@ -461,7 +463,55 @@ public class Bet365AccessibilityService extends AccessibilityService {
         ScanStore.saveSearchResult(this, false, stage, detail, excerpt, System.currentTimeMillis());
     }
 
-    /** Find the clickable Search control: Button/View with text or desc == "Search". */
+    /** Find SearchView or EditText in toolbar area (class-based search, not text-based). */
+    private AccessibilityNodeInfo findSearchViewOrEditText(List<AccessibilityNodeInfo> roots) {
+        for (AccessibilityNodeInfo root : roots) {
+            AccessibilityNodeInfo found = findSearchViewOrEditTextNode(root);
+            if (found != null) return found;
+        }
+        return null;
+    }
+
+    private AccessibilityNodeInfo findSearchViewOrEditTextNode(AccessibilityNodeInfo node) {
+        if (node == null) return null;
+        
+        // Get the class name of this node
+        CharSequence classSeq = node.getClassName();
+        String className = classSeq == null ? "" : classSeq.toString();
+        
+        // Check if this is a SearchView (the container) or EditText in toolbar area
+        boolean isSearchView = "android.widget.SearchView".equals(className);
+        boolean isEditText = "android.widget.EditText".equals(className);
+        
+        // If it's a SearchView that's visible, try to use it directly
+        if (isSearchView && node.isVisibleToUser()) {
+            // Found the SearchView - return a copy so caller can click it
+            return AccessibilityNodeInfo.obtain(node);
+        }
+        
+        // If it's an EditText that's visible, focused, and in toolbar area (y < 300), use it
+        if (isEditText && node.isVisibleToUser()) {
+            Rect bounds = new Rect();
+            node.getBoundsInScreen(bounds);
+            // Toolbar is typically in top 200-250 pixels; check if this EditText is there
+            if (bounds.top < 300) {
+                return AccessibilityNodeInfo.obtain(node);
+            }
+        }
+        
+        // Recursively search children
+        for (int i = 0; i < node.getChildCount(); i++) {
+            AccessibilityNodeInfo c = node.getChild(i);
+            if (c != null) {
+                AccessibilityNodeInfo found = findSearchViewOrEditTextNode(c);
+                c.recycle();
+                if (found != null) return found;
+            }
+        }
+        return null;
+    }
+
+    /** Find the clickable Search control: Button/View with text or desc == "Search" (legacy fallback). */
     private AccessibilityNodeInfo findSearchControl(List<AccessibilityNodeInfo> roots) {
         for (AccessibilityNodeInfo root : roots) {
             AccessibilityNodeInfo found = findSearchControlNode(root);

@@ -63,8 +63,15 @@
             android:id="@+id/btnTestSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Test: Search + enter Fulham" />
+            android:layout_marginTop="8dp"
+            android:text="Test: Search Football &amp; Enter Query" />
+
+        <Button
+            android:id="@+id/btnTestFixture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Test: Tap Fixture from Search" />
 
         <TextView
             android:layout_width="match_parent"
@@ -92,6 +99,35 @@
             android:fontFamily="monospace"
             android:padding="8dp"
             android:text="SEARCH_CHROME_TEXT: (none)"
+            android:textIsSelectable="true"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Fixture tap test"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/fixtureResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="FIXTURE_TAP: (not run)"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fixtureExcerpt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="#11000000"
+            android:fontFamily="monospace"
+            android:padding="8dp"
+            android:text="FIXTURE_CHROME_TEXT: (none)"
             android:textIsSelectable="true"
             android:textSize="12sp" />
 
