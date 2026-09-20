@@ -12,7 +12,7 @@
 - Milestone A Search interaction: query "Fulham" entered and confirmed visible in editable field ✓
 
 ## In Progress
-- **Milestone C: Exact Fixture Selection** — tap fixture result from search. Search UI confirmed working, Fulham entered in editable field. Now requires fixture result tap via accessibility tree traversal + click. Code drafted but compile errors on Queue/handler references need resolution via direct ADB accessibility event injection (next iteration).
+- **Milestone C: Exact Fixture Selection** — Codex delegated; fixture tap handler written locally (clean compile). APK built but UI changes not persisted to device (fixture button/result TextViews not appearing in layout). Needs: git commit of Codex changes, rebuild, reinstall, then device verification.
 
 ## Next Milestone
 **B: Text Entry Verification** → **C: Exact Fixture Selection** → **D: Market/Line Selection** → **E: Betslip Validation**
