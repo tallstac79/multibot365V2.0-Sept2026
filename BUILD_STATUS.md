@@ -12,7 +12,7 @@
 - Milestone A Search interaction: query "Fulham" entered and confirmed visible in editable field ✓
 
 ## In Progress
-- **Milestone C: Exact Fixture Selection** — Codex delegated; fixture tap handler written locally (clean compile). APK built but UI changes not persisted to device (fixture button/result TextViews not appearing in layout). Needs: git commit of Codex changes, rebuild, reinstall, then device verification.
+- **Milestone C: Exact Fixture Selection** — Code fully implemented (executeFixtureTap, findFixtureSearchResult, verifyFixturePage methods, full tree traversal + click logic). APK built successfully, deployed to Samsung. **Test blocked**: Samsung device notification shade is persistent and blocking all foreground app access; cannot tap UI buttons or verify Chrome state on device. Fixture handler code ready but requires clear device screen for testing.
 
 ## Next Milestone
 **B: Text Entry Verification** → **C: Exact Fixture Selection** → **D: Market/Line Selection** → **E: Betslip Validation**
