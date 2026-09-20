@@ -16,12 +16,13 @@
 - Milestone A Search interaction: query "Fulham" entered and confirmed visible in editable field ✓
 
 ## In Progress
-- **Milestone C: Exact Fixture Selection** — DIAGNOSING & FIXING
-  - Issue identified: `tryPendingFixtureTap()` checks `currentActivePackage()` which only sees foreground window
-  - Root cause: On Samsung device, system UI is foreground overlay, Chrome is hidden but PRESENT in window list
-  - Solution: Replace foreground check with `anyChromeWindowPresent()` which enumerates ALL windows
-  - Status: Codex implementing fix now (replace line 1170 check, verify captureAllChrome searches all windows)
-  - Next: Deploy fixed APK and test with bypass marker
+- **Milestone C: Exact Fixture Selection** — ACTIVELY DEBUGGING
+  - Fix deployed: Changed from `currentActivePackage()` to `anyChromeWindowPresent()` check
+  - Bypass mode working: Marker file triggers, fixture_status updated to prefs
+  - Current issue: `anyChromeWindowPresent()` returns false even though Chrome exists in window list (confirmed via dumpsys)
+  - Root cause TBD: Possible race condition (getWindows() null during event), or window type mismatch
+  - Status: Codex adding debug logging + fallback logic to identify why getWindows() not finding Chrome
+  - Next: Deploy debug APK, test bypass marker, read debug_windows.txt output
 
 ## Next Milestone
 **B: Text Entry Verification** → **C: Exact Fixture Selection** → **D: Market/Line Selection** → **E: Betslip Validation**
