@@ -1316,107 +1316,233 @@ public class Bet365AccessibilityService extends AccessibilityService {
     }
 
     // Milestone C: Fixture selection via search result tap
-    private volatile boolean fixtureFlowInFlight = false;
+    // Active polling fields (replaces event-dependent trigger)
+    private volatile boolean fixturePollingActive = false;
     private volatile long fixtureArmedAt = 0L;
+    private volatile long fixturePollingStartedAt = 0L;
+    private Thread fixturePollingThread = null;
+    private static final long FIXTURE_POLLING_TIMEOUT_MS = 30000;  // Hard timeout after 30 seconds
+    private static final long FIXTURE_POLLING_INTERVAL_MS = 350;   // Poll every 350ms
 
     public static void notifyPendingFixtureTapArmed() {
         Bet365AccessibilityService svc = instance;
         if (svc == null) return;
         svc.fixtureArmedAt = System.currentTimeMillis();
-        svc.fixtureFlowInFlight = false;
-        ScanStore.setFixtureStatus(svc, "PENDING");
-        svc.tryPendingFixtureTap("armed");
-        svc.mainHandler.postDelayed(() -> svc.tryPendingFixtureTap("timer:2s"), 2000);
-        svc.mainHandler.postDelayed(() -> svc.tryPendingFixtureTap("timer:6s"), 6000);
+        svc.fixturePollingActive = false;
+        svc.fixturePollingStartedAt = 0L;
+        ScanStore.setFixtureStatus(svc, "PENDING — Starting active polling for Chrome fixture discovery…");
+        // Immediately start the polling thread (no dependency on accessibility events)
+        svc.startFixturePollingThread();
     }
 
-    private void tryPendingFixtureTap(String reason) {
-        if (fixtureFlowInFlight || !ScanStore.getPendingAction(this).equals("FIXTURE_TAP")) return;
-        long elapsed = System.currentTimeMillis() - fixtureArmedAt;
+    /**
+     * Spawn a background polling thread to actively search for Chrome content
+     * and execute fixture discovery independent of accessibility events.
+     * This replaces reliance on onAccessibilityEvent callbacks which may be
+     * unreliable on some Samsung devices.
+     */
+    private void startFixturePollingThread() {
+        if (fixturePollingThread != null) {
+            Log.w("Bet365A11y", "Fixture polling thread already running, skipping start");
+            return;
+        }
+        
+        fixturePollingThread = new Thread(() -> {
+            try {
+                fixturePollingStartedAt = System.currentTimeMillis();
+                long pollingStart = fixturePollingStartedAt;
+                
+                Log.d("Bet365A11y", "Fixture polling thread started");
+                ScanStore.setFixtureStatus(Bet365AccessibilityService.this, 
+                    "POLLING — Active discovery thread started");
+                
+                while (ScanStore.getPendingAction(Bet365AccessibilityService.this).equals("FIXTURE_TAP")) {
+                    long elapsed = System.currentTimeMillis() - pollingStart;
+                    
+                    // Hard timeout after 30 seconds
+                    if (elapsed > FIXTURE_POLLING_TIMEOUT_MS) {
+                        Log.d("Bet365A11y", "Fixture polling timeout after " + elapsed + "ms");
+                        ScanStore.setFixtureStatus(Bet365AccessibilityService.this, 
+                            "TIMEOUT — No Chrome fixture found after 30 seconds of polling");
+                        ScanStore.saveFixtureResult(Bet365AccessibilityService.this, false, 
+                            "polling_timeout", 
+                            "FAIL: Active polling timeout after 30s — no Chrome tree with fixtures found",
+                            "", System.currentTimeMillis());
+                        break;
+                    }
+                    
+                    // Update status every second
+                    if (elapsed % 1000 < FIXTURE_POLLING_INTERVAL_MS) {
+                        ScanStore.setFixtureStatus(Bet365AccessibilityService.this,
+                            "POLLING — Scanning for Chrome content (" + elapsed / 1000 + "s)…");
+                    }
+                    
+                    // Poll for Chrome windows and attempt fixture discovery
+                    try {
+                        if (pollAndDiscoverFixture()) {
+                            // Success! Fixture discovered and saved to prefs
+                            Log.d("Bet365A11y", "Fixture discovery succeeded via polling");
+                            break;
+                        }
+                    } catch (Exception e) {
+                        Log.w("Bet365A11y", "Error during fixture polling: " + e);
+                    }
+                    
+                    // Poll interval
+                    Thread.sleep(FIXTURE_POLLING_INTERVAL_MS);
+                }
+            } catch (InterruptedException e) {
+                Log.d("Bet365A11y", "Fixture polling thread interrupted");
+            } catch (Exception e) {
+                Log.e("Bet365A11y", "Unexpected error in fixture polling thread: " + e);
+                ScanStore.setFixtureStatus(Bet365AccessibilityService.this,
+                    "ERROR — Polling thread exception: " + e.getMessage());
+            } finally {
+                Log.d("Bet365A11y", "Fixture polling thread finished");
+                fixturePollingThread = null;
+            }
+        }, "FixturePollingThread");
+        
+        fixturePollingThread.start();
+    }
+    
+    /**
+     * Single poll cycle: Check for Chrome window + accessibility tree,
+     * attempt fixture discovery if tree is present.
+     * 
+     * Returns true if fixture was successfully discovered and saved, false otherwise.
+     */
+    private boolean pollAndDiscoverFixture() {
         String activePkg = currentActivePackage();
+        
+        // Check if Bet365Agent is still foreground (should not proceed)
         if ("com.bet365agent".equals(activePkg)) {
-            ScanStore.setFixtureStatus(this, "PENDING — Bet365Agent still foreground");
-            return;
+            return false;
         }
-        if (!anyChromeWindowPresent()) {
-            ScanStore.setFixtureStatus(this, "PENDING — Chrome not found in any window");
-            return;
+        
+        // Try to capture Chrome content
+        ChromeSnapshot snap = captureAllChrome();
+        
+        // If no Chrome tree, return false and continue polling
+        if (!snap.hasTree || snap.roots.isEmpty()) {
+            return false;
         }
-        fixtureFlowInFlight = true;
-        executeFixtureTap();
-    }
-
-    private void executeFixtureTap() {
-        long startTime = System.currentTimeMillis();
+        
         try {
-            ChromeSnapshot snap = captureAllChrome();
-            ScanStore.saveChromeSnapshot(this, snap.packageName, snap.title, snap.dump,
-                    snap.visibleText, snap.clickableSummary, System.currentTimeMillis());
-            
+            // Check if content looks like Bet365
             if (!snap.looksLikeBet365) {
-                failFixture("NOT_BET365", "FAIL: Chrome content not recognized as Bet365 page", snap);
-                recycleRoots(snap.roots);
-                fixtureFlowInFlight = false;
-                return;
+                return false;
             }
             
-            // PHASE 1: Dynamic fixture discovery
-            ScanStore.setFixtureStatus(this, "DISCOVERING - scanning for current football fixture...");
+            // ATTEMPT FIXTURE DISCOVERY
+            ScanStore.setFixtureStatus(Bet365AccessibilityService.this,
+                "DISCOVERING — Found Chrome tree, scanning for fixtures…");
+            
             FixtureCandidate discovered = discoverCurrentFootballFixture(snap.roots);
             
             if (discovered == null) {
-                failFixture("NO_TEST_FIXTURE", "FAIL: No current football fixture found in accessibility tree", snap);
-                recycleRoots(snap.roots);
-                fixtureFlowInFlight = false;
-                return;
+                return false;  // No fixture found yet, continue polling
             }
+            
+            // ✓ FIXTURE DISCOVERED!
+            Log.d("Bet365A11y", "Fixture discovered via polling: " + discovered.fixtureName);
             
             // Save discovered fixture info to prefs
-            ScanStore.saveDiscoveredFixture(this, discovered.fixtureName, discovered.homeTeam, discovered.awayTeam);
-            ScanStore.setFixtureStatus(this, "DISCOVERED - fixture: " + discovered.fixtureName);
+            ScanStore.saveDiscoveredFixture(Bet365AccessibilityService.this,
+                discovered.fixtureName, discovered.homeTeam, discovered.awayTeam);
             
-            // PHASE 2: Click the discovered fixture
-            AccessibilityNodeInfo clickable = findClickableAncestor(discovered.targetNode);
-            if (clickable == null) {
-                String detail = "FAIL: Fixture '" + discovered.fixtureName + "' found ("
-                        + describeNode(discovered.targetNode)
-                        + ") but no clickable ancestor found";
-                discovered.targetNode.recycle();
-                failFixture("NO_CLICKABLE_ANCESTOR", detail, snap);
-                recycleRoots(snap.roots);
-                fixtureFlowInFlight = false;
-                return;
-            }
+            // Update status
+            ScanStore.setFixtureStatus(Bet365AccessibilityService.this,
+                "DISCOVERED — " + discovered.fixtureName + " (via polling)");
             
-            String detail = "fixture=" + discovered.fixtureName
-                    + " target=" + describeNode(discovered.targetNode)
-                    + " clickable=" + describeNode(clickable);
-            boolean clicked = clickable.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-            if (clickable != discovered.targetNode) clickable.recycle();
-            discovered.targetNode.recycle();
+            // Now execute the click on discovered fixture via main handler
+            executeFixtureClickFromPolling(discovered, snap);
+            
+            return true;  // Stop polling
+            
+        } finally {
             recycleRoots(snap.roots);
-            
-            if (!clicked) {
-                failFixture("CLICK_FAILED", detail + "; ACTION_CLICK returned false", snap);
-                fixtureFlowInFlight = false;
-                return;
-            }
-            
-            ScanStore.setFixtureStatus(this, "RUNNING - clicked " + discovered.fixtureName 
-                    + ", waiting for fixture page...");
-            mainHandler.postDelayed(() -> {
-                try {
-                    verifyFixturePage(detail + "; ACTION_CLICK=true", discovered.homeTeam, discovered.awayTeam);
-                } finally {
-                    fixtureFlowInFlight = false;
-                }
-            }, POST_CLICK_WAIT_MS);
-        } catch (Exception e) {
-            ChromeSnapshot snap = captureAllChrome();
-            failFixture("EXCEPTION", "FAIL: exception in executeFixtureTap: " + e, snap);
-            recycleRoots(snap.roots);
-            fixtureFlowInFlight = false;
         }
+    }
+    
+    /**
+     * Execute fixture click after polling has found and discovered a fixture.
+     * Posts the click operation to the main handler thread.
+     */
+    private void executeFixtureClickFromPolling(FixtureCandidate discovered, ChromeSnapshot snap) {
+        mainHandler.post(() -> {
+            try {
+                Log.d("Bet365A11y", "Executing fixture click from polling discovery");
+                
+                // Find clickable ancestor
+                AccessibilityNodeInfo clickable = findClickableAncestor(discovered.targetNode);
+                if (clickable == null) {
+                    String detail = "FAIL: Fixture '" + discovered.fixtureName + "' found but no clickable ancestor";
+                    discovered.targetNode.recycle();
+                    failFixture("NO_CLICKABLE_ANCESTOR", detail, snap);
+                    ScanStore.clearPendingAction(Bet365AccessibilityService.this);
+                    return;
+                }
+                
+                String detail = "fixture=" + discovered.fixtureName
+                        + " target=" + describeNode(discovered.targetNode)
+                        + " clickable=" + describeNode(clickable);
+                boolean clicked = clickable.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                
+                if (clickable != discovered.targetNode) clickable.recycle();
+                discovered.targetNode.recycle();
+                
+                if (!clicked) {
+                    failFixture("CLICK_FAILED", detail + "; ACTION_CLICK returned false", snap);
+                    ScanStore.clearPendingAction(Bet365AccessibilityService.this);
+                    return;
+                }
+                
+                ScanStore.setFixtureStatus(Bet365AccessibilityService.this,
+                    "RUNNING — clicked " + discovered.fixtureName + ", waiting for fixture page…");
+                
+                // Schedule verification after click settles
+                mainHandler.postDelayed(() -> {
+                    try {
+                        verifyFixturePage(detail + "; ACTION_CLICK=true",
+                            discovered.homeTeam, discovered.awayTeam);
+                    } finally {
+                        ScanStore.clearPendingAction(Bet365AccessibilityService.this);
+                    }
+                }, POST_CLICK_WAIT_MS);
+                
+            } catch (Exception e) {
+                Log.e("Bet365A11y", "Error executing fixture click from polling: " + e);
+                discovered.targetNode.recycle();
+                failFixture("CLICK_EXCEPTION", "FAIL: Exception during click: " + e, snap);
+                ScanStore.clearPendingAction(Bet365AccessibilityService.this);
+            }
+        });
+    }
+    
+    /**
+     * Deprecated: tryPendingFixtureTap() - kept for compatibility but now replaced
+     * by active polling mechanism. This method is only called from event handler.
+     */
+    private void tryPendingFixtureTap(String reason) {
+        // Event-based method now mostly disabled; active polling takes over
+        // Keep minimal event handling in case polling thread hasn't started
+        if (!ScanStore.getPendingAction(this).equals("FIXTURE_TAP")) return;
+        if (fixturePollingThread == null || !fixturePollingThread.isAlive()) {
+            Log.d("Bet365A11y", "Polling thread not active, starting now");
+            startFixturePollingThread();
+        }
+    }
+
+    /**
+     * DEPRECATED: This method has been replaced by active polling mechanism.
+     * Kept as a stub for backward compatibility.
+     * All fixture discovery now happens in the polling thread via pollAndDiscoverFixture().
+     */
+    @Deprecated
+    private void executeFixtureTap() {
+        Log.d("Bet365A11y", "executeFixtureTap() called but deprecated; polling should handle this");
+        // Do nothing - active polling thread has taken over
     }
     
     /**
