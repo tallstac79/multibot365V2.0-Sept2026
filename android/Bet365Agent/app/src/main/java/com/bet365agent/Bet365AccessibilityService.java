@@ -1,6 +1,7 @@
 package com.bet365agent;
 
 import android.accessibilityservice.AccessibilityService;
+import android.app.ActivityManager;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
@@ -61,6 +62,9 @@ public class Bet365AccessibilityService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         if (event == null) return;
+        
+        // DEBUG: Log every event to confirm service is receiving them
+        Log.d("Bet365A11y", ">>> onAccessibilityEvent fired: type=" + event.getEventType() + " pkg=" + event.getPackageName());
         
         // DEBUG/BYPASS: Force fixture discovery if marker file exists
         if (checkForceFixtureDiscoveryMode() && !ScanStore.getPendingAction(this).equals("FIXTURE_TAP")) {
@@ -823,6 +827,33 @@ public class Bet365AccessibilityService extends AccessibilityService {
         }
         
         boolean foundChrome = chromeCount > 0;
+        
+        // FALLBACK: If no Chrome found in window list, check getRootInActiveWindow()
+        if (chromeCount == 0) {
+            debugLog.append("\n--- NO CHROME IN WINDOW LIST, ATTEMPTING FALLBACK ---\n");
+            AccessibilityNodeInfo fallbackRoot = getRootInActiveWindow();
+            if (fallbackRoot != null) {
+                CharSequence pkg = fallbackRoot.getPackageName();
+                String pkgStr = pkg == null ? "" : pkg.toString();
+                debugLog.append("Fallback root package: ").append(pkgStr).append("\n");
+                if (ScanStore.isChromePackage(pkgStr)) {
+                    foundChrome = true;
+                    debugLog.append("CHROME FOUND VIA FALLBACK ROOT\n");
+                } else {
+                    debugLog.append("Fallback root is NOT Chrome\n");
+                }
+                fallbackRoot.recycle();
+            } else {
+                debugLog.append("Fallback root is NULL\n");
+            }
+        }
+        
+        // SECONDARY FALLBACK: If still no Chrome, check if Chrome process is running
+        if (!foundChrome && isChromeRunning()) {
+            foundChrome = true;
+            debugLog.append("CHROME FOUND VIA PROCESS CHECK\n");
+        }
+        
         debugLog.append("\n--- SUMMARY ---\n");
         debugLog.append("Total windows: ").append(totalWindows).append("\n");
         debugLog.append("Chrome windows: ").append(chromeCount).append("\n");
@@ -841,6 +872,45 @@ public class Bet365AccessibilityService extends AccessibilityService {
             case AccessibilityWindowInfo.TYPE_SYSTEM: return "SYSTEM";
             case AccessibilityWindowInfo.TYPE_ACCESSIBILITY_OVERLAY: return "ACCESSIBILITY_OVERLAY";
             default: return "UNKNOWN(" + type + ")";
+        }
+    }
+    
+    /**
+     * Check if Chrome process is running via ActivityManager.
+     * This is a fallback method to detect Chrome even when getWindows() doesn't return it.
+     */
+    private boolean isChromeRunning() {
+        try {
+            ActivityManager am = (ActivityManager) getSystemService(android.content.Context.ACTIVITY_SERVICE);
+            if (am == null) {
+                Log.w("Bet365A11y", "ActivityManager is null");
+                return false;
+            }
+            
+            List<ActivityManager.RunningAppProcessInfo> processes = am.getRunningAppProcesses();
+            if (processes == null) {
+                Log.w("Bet365A11y", "No running app processes available");
+                return false;
+            }
+            
+            for (ActivityManager.RunningAppProcessInfo process : processes) {
+                if (process != null && process.processName != null) {
+                    if (ScanStore.isChromePackage(process.processName)) {
+                        Log.d("Bet365A11y", "Chrome process found: " + process.processName);
+                        return true;
+                    }
+                }
+            }
+            
+            Log.d("Bet365A11y", "Chrome process not found in running processes");
+            return false;
+        } catch (SecurityException e) {
+            // getRunningAppProcesses() requires GET_TASKS permission
+            Log.w("Bet365A11y", "SecurityException in isChromeRunning(): " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            Log.e("Bet365A11y", "Error checking Chrome process: " + e);
+            return false;
         }
     }
     
