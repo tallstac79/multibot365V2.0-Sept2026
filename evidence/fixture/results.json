@@ -1,0 +1,598 @@
+{
+  "status": "PASS",
+  "tests": [
+    {
+      "case": "moneyline",
+      "expected": "PASS",
+      "result": {
+        "instruction_id": "adapter-1789943620-moneyline",
+        "status": "PASS",
+        "stage": "PASS",
+        "detail": "Adapter workflow verified",
+        "duration_ms": 32605,
+        "execution_count": 1,
+        "run_id": "c_LL5QBZumwTdeyo7JAvKzde8N4no7N421oSqZts3ZaeU",
+        "fixture_name": "Elm Town v Willow City",
+        "home": "Elm Town",
+        "away": "Willow City",
+        "competition": "Academy",
+        "selection": {
+          "market": "MONEYLINE",
+          "side": "HOME",
+          "line": "NONE",
+          "price": "1.92",
+          "availability": "OPEN",
+          "bounds": [
+            40,
+            348,
+            516,
+            379
+          ]
+        },
+        "final_state": {
+          "home": "Elm Town",
+          "away": "Willow City",
+          "market": "MONEYLINE",
+          "side": "HOME",
+          "line": "NONE",
+          "price": "1.92",
+          "state": "REVIEWONLY"
+        },
+        "verification_detail": "Exact fixture, market, side, line and price visually verified in final dry-run state"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "spread",
+      "expected": "PASS",
+      "result": {
+        "instruction_id": "adapter-1789943620-spread",
+        "status": "PASS",
+        "stage": "PASS",
+        "detail": "Adapter workflow verified",
+        "duration_ms": 32238,
+        "execution_count": 1,
+        "run_id": "c_uGax8PHtCmXAvBS7cF2NmNgayCu_rCys2g-6kKWOBFs",
+        "fixture_name": "River Town v Maple City",
+        "home": "River Town",
+        "away": "Maple City",
+        "competition": "Academy",
+        "selection": {
+          "market": "SPREAD",
+          "side": "AWAY",
+          "line": "+1.5",
+          "price": "1.88",
+          "availability": "OPEN",
+          "bounds": [
+            38,
+            677,
+            516,
+            708
+          ]
+        },
+        "final_state": {
+          "home": "River Town",
+          "away": "Maple City",
+          "market": "SPREAD",
+          "side": "AWAY",
+          "line": "+1.5",
+          "price": "1.88",
+          "state": "REVIEWONLY"
+        },
+        "verification_detail": "Exact fixture, market, side, line and price visually verified in final dry-run state"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "spread_home",
+      "expected": "PASS",
+      "result": {
+        "instruction_id": "adapter-1789943620-spread_home",
+        "status": "PASS",
+        "stage": "PASS",
+        "detail": "Adapter workflow verified",
+        "duration_ms": 32068,
+        "execution_count": 1,
+        "run_id": "c_JJMQ9uYccqlnwqmKkQJUdlNuP10ccQxF0y8jNvsGAf8",
+        "fixture_name": "River Town v Maple City",
+        "home": "River Town",
+        "away": "Maple City",
+        "competition": "Academy",
+        "selection": {
+          "market": "SPREAD",
+          "side": "HOME",
+          "line": "-1.5",
+          "price": "1.96",
+          "availability": "OPEN",
+          "bounds": [
+            40,
+            595,
+            516,
+            626
+          ]
+        },
+        "final_state": {
+          "home": "River Town",
+          "away": "Maple City",
+          "market": "SPREAD",
+          "side": "HOME",
+          "line": "-1.5",
+          "price": "1.96",
+          "state": "REVIEWONLY"
+        },
+        "verification_detail": "Exact fixture, market, side, line and price visually verified in final dry-run state"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "total",
+      "expected": "PASS",
+      "result": {
+        "instruction_id": "adapter-1789943620-total",
+        "status": "PASS",
+        "stage": "PASS",
+        "detail": "Adapter workflow verified",
+        "duration_ms": 31929,
+        "execution_count": 1,
+        "run_id": "c_-e5HNQbgW5l934k_3b3-ImrR0XL_Rwwzvon9cYdKqgk",
+        "fixture_name": "River Town v Maple City",
+        "home": "River Town",
+        "away": "Maple City",
+        "competition": "Academy",
+        "selection": {
+          "market": "TOTAL",
+          "side": "OVER",
+          "line": "2.5",
+          "price": "1.82",
+          "availability": "OPEN",
+          "bounds": [
+            40,
+            842,
+            516,
+            873
+          ]
+        },
+        "final_state": {
+          "home": "River Town",
+          "away": "Maple City",
+          "market": "TOTAL",
+          "side": "OVER",
+          "line": "2.5",
+          "price": "1.82",
+          "state": "REVIEWONLY"
+        },
+        "verification_detail": "Exact fixture, market, side, line and price visually verified in final dry-run state"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "empty",
+      "expected": "NO_FIXTURE_FOUND",
+      "result": {
+        "instruction_id": "adapter-1789943620-empty",
+        "status": "FAIL",
+        "stage": "NO_FIXTURE_FOUND",
+        "detail": "No complete visible fixture",
+        "duration_ms": 13086,
+        "execution_count": 1,
+        "run_id": "c_LSSk-H7pIApBU3AUSqbrHDo5oFKmsY3OnFiilznavwc",
+        "fixture_name": null,
+        "home": null,
+        "away": null,
+        "competition": null,
+        "verification_detail": "No complete visible fixture"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "query_empty",
+      "expected": "NO_FIXTURE_FOUND",
+      "result": {
+        "instruction_id": "adapter-1789943620-query_empty",
+        "status": "FAIL",
+        "stage": "NO_FIXTURE_FOUND",
+        "detail": "No complete visible fixture",
+        "duration_ms": 12947,
+        "execution_count": 1,
+        "run_id": "c_xYIoylYF9UdZ85kl6UtGQwEL0AjGzaogctkuvFhoeQI",
+        "fixture_name": null,
+        "home": null,
+        "away": null,
+        "competition": null,
+        "verification_detail": "No complete visible fixture"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "query_unverified",
+      "expected": "TEXT_NOT_VERIFIED",
+      "result": {
+        "instruction_id": "adapter-1789943620-query_unverified",
+        "status": "FAIL",
+        "stage": "TEXT_NOT_VERIFIED",
+        "detail": "Editor value or screenshot field text differs from requested text",
+        "duration_ms": 12017,
+        "execution_count": 1,
+        "run_id": "c_OVIZqYW6Pl9hInPwfb4FfVKZnb-DKNgwCXlefksiAXQ",
+        "fixture_name": null,
+        "home": null,
+        "away": null,
+        "competition": null,
+        "verification_detail": "Editor value or screenshot field text differs from requested text"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "ambiguous",
+      "expected": "AMBIGUOUS_FIXTURE",
+      "result": {
+        "instruction_id": "adapter-1789943620-ambiguous",
+        "status": "FAIL",
+        "stage": "AMBIGUOUS_FIXTURE",
+        "detail": "Duplicate exact fixture identity in visible results",
+        "duration_ms": 13512,
+        "execution_count": 1,
+        "run_id": "c_-d4-kZ5XUNF6QLFsGAkYF5Fo23PF5qnZlVmYERbqS34",
+        "fixture_name": null,
+        "home": null,
+        "away": null,
+        "competition": null,
+        "verification_detail": "Duplicate exact fixture identity in visible results"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "wrong_event",
+      "expected": "WRONG_EVENT",
+      "result": {
+        "instruction_id": "adapter-1789943620-wrong_event",
+        "status": "FAIL",
+        "stage": "WRONG_EVENT",
+        "detail": "Event identity differs from discovered fixture",
+        "duration_ms": 16715,
+        "execution_count": 1,
+        "run_id": "c_sCn6JfkLlfh9JpKlr6-_ChSknXZOat2P3HicGdn4C90",
+        "fixture_name": "River Town v Maple City",
+        "home": "River Town",
+        "away": "Maple City",
+        "competition": "Academy",
+        "verification_detail": "Event identity differs from discovered fixture"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "click_ignored",
+      "expected": "CLICK_FAILED",
+      "result": {
+        "instruction_id": "adapter-1789943620-click_ignored",
+        "status": "FAIL",
+        "stage": "CLICK_FAILED",
+        "detail": "Fixture tap did not open an event",
+        "duration_ms": 16847,
+        "execution_count": 1,
+        "run_id": "c_iQQdpkV1FM9_x9QTWvQUBc-AFd_0DgBsk9ZSw6TUGAk",
+        "fixture_name": "Birch Town v Cedar City",
+        "home": "Birch Town",
+        "away": "Cedar City",
+        "competition": "Academy",
+        "verification_detail": "Fixture tap did not open an event"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "suspended",
+      "expected": "SUSPENDED",
+      "result": {
+        "instruction_id": "adapter-1789943620-suspended",
+        "status": "FAIL",
+        "stage": "SUSPENDED",
+        "detail": "Selection is SUSPENDED",
+        "duration_ms": 20928,
+        "execution_count": 1,
+        "run_id": "c_i2xzdsPAUEDj124NlVEHC9X1Wp7gz7lWsIrBM6gvJyM",
+        "fixture_name": "Birch Town v Cedar City",
+        "home": "Birch Town",
+        "away": "Cedar City",
+        "competition": "Academy",
+        "verification_detail": "Selection is SUSPENDED"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "unavailable",
+      "expected": "UNAVAILABLE",
+      "result": {
+        "instruction_id": "adapter-1789943620-unavailable",
+        "status": "FAIL",
+        "stage": "UNAVAILABLE",
+        "detail": "Selection is UNAVAILABLE",
+        "duration_ms": 20500,
+        "execution_count": 1,
+        "run_id": "c_C6f1CU8nSOMjDzQvRYJfmy9Iv6t2i9nOQwIjg05HvHM",
+        "fixture_name": "Cedar Town v Harbor City",
+        "home": "Cedar Town",
+        "away": "Harbor City",
+        "competition": "Academy",
+        "verification_detail": "Selection is UNAVAILABLE"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "changing",
+      "expected": "PRICE_CHANGED",
+      "result": {
+        "instruction_id": "adapter-1789943620-changing",
+        "status": "FAIL",
+        "stage": "PRICE_CHANGED",
+        "detail": "Price changed on opening review: 2.13",
+        "duration_ms": 31180,
+        "execution_count": 1,
+        "run_id": "c_QjZbE2Es0EqLKVJAbzQ39XJVZwnSftpibGYDGy7o1rc",
+        "fixture_name": "Harbor Town v River City",
+        "home": "Harbor Town",
+        "away": "River City",
+        "competition": "Academy",
+        "selection": {
+          "market": "SPREAD",
+          "side": "HOME",
+          "line": "-1.5",
+          "price": "1.96",
+          "availability": "OPEN",
+          "bounds": [
+            40,
+            595,
+            516,
+            626
+          ]
+        },
+        "verification_detail": "Price changed on opening review: 2.13"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "wrong_line",
+      "expected": "LINE_CHANGED",
+      "result": {
+        "instruction_id": "adapter-1789943620-wrong_line",
+        "status": "FAIL",
+        "stage": "LINE_CHANGED",
+        "detail": "Wrong line in review: 9.5",
+        "duration_ms": 30967,
+        "execution_count": 1,
+        "run_id": "c_1Qz_97XNTQGsiyEiJ9s8vJdUS6WcNChLZVN2Ql7M5ew",
+        "fixture_name": "Birch Town v Cedar City",
+        "home": "Birch Town",
+        "away": "Cedar City",
+        "competition": "Academy",
+        "selection": {
+          "market": "SPREAD",
+          "side": "HOME",
+          "line": "-1.5",
+          "price": "1.98",
+          "availability": "OPEN",
+          "bounds": [
+            40,
+            595,
+            516,
+            626
+          ]
+        },
+        "verification_detail": "Wrong line in review: 9.5"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "wrong_side",
+      "expected": "SELECTION_CHANGED",
+      "result": {
+        "instruction_id": "adapter-1789943620-wrong_side",
+        "status": "FAIL",
+        "stage": "SELECTION_CHANGED",
+        "detail": "Wrong side in review",
+        "duration_ms": 30478,
+        "execution_count": 1,
+        "run_id": "c_NLLHCNPDjPwfRfPZf51p7c2g7bRFCj9U7qtUIRMAG6g",
+        "fixture_name": "Birch Town v Cedar City",
+        "home": "Birch Town",
+        "away": "Cedar City",
+        "competition": "Academy",
+        "selection": {
+          "market": "SPREAD",
+          "side": "HOME",
+          "line": "-1.5",
+          "price": "1.98",
+          "availability": "OPEN",
+          "bounds": [
+            40,
+            595,
+            516,
+            626
+          ]
+        },
+        "verification_detail": "Wrong side in review"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "timeout",
+      "expected": "TIMEOUT",
+      "result": {
+        "instruction_id": "adapter-1789943620-timeout",
+        "status": "FAIL",
+        "stage": "TIMEOUT",
+        "detail": "Coordinator hard deadline expired",
+        "duration_ms": 229,
+        "execution_count": 1,
+        "run_id": "c_xL92pX25jsivNgt2ET_JrnEJcUja50ocWc9Vn23iL1U",
+        "fixture_name": null,
+        "home": null,
+        "away": null,
+        "competition": null,
+        "verification_detail": "Coordinator hard deadline expired"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "restart",
+      "expected": "INTERNAL_ERROR",
+      "result": {
+        "instruction_id": "adapter-1789943620-restart",
+        "status": "FAIL",
+        "stage": "INTERNAL_ERROR",
+        "detail": "Process restarted; uncertain instruction was not replayed",
+        "duration_ms": 29849,
+        "execution_count": 1,
+        "run_id": "c_LXkqv2fMflRfHoOUcGMq78vX5v1QnboXKb88m6kAJQk",
+        "fixture_name": "Meadow Town v Elm City",
+        "home": "Meadow Town",
+        "away": "Elm City",
+        "competition": "Academy",
+        "selection": {
+          "market": "SPREAD",
+          "side": "HOME",
+          "line": "-1.5",
+          "price": "1.97",
+          "availability": "OPEN",
+          "bounds": [
+            40,
+            595,
+            516,
+            626
+          ]
+        },
+        "verification_detail": "Process restarted; uncertain instruction was not replayed"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "after_restart",
+      "expected": "PASS",
+      "result": {
+        "instruction_id": "adapter-1789943620-after_restart",
+        "status": "PASS",
+        "stage": "PASS",
+        "detail": "Adapter workflow verified",
+        "duration_ms": 32070,
+        "execution_count": 1,
+        "run_id": "c_7NxNUOHLZ8UfcBB1-0i0M6YWTL5n7CKp199ASLM9eRs",
+        "fixture_name": "Meadow Town v Elm City",
+        "home": "Meadow Town",
+        "away": "Elm City",
+        "competition": "Academy",
+        "selection": {
+          "market": "TOTAL",
+          "side": "UNDER",
+          "line": "2.5",
+          "price": "2.02",
+          "availability": "OPEN",
+          "bounds": [
+            40,
+            924,
+            516,
+            955
+          ]
+        },
+        "final_state": {
+          "home": "Meadow Town",
+          "away": "Elm City",
+          "market": "TOTAL",
+          "side": "UNDER",
+          "line": "2.5",
+          "price": "2.02",
+          "state": "REVIEWONLY"
+        },
+        "verification_detail": "Exact fixture, market, side, line and price visually verified in final dry-run state"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "lost_response",
+      "expected": "PASS",
+      "result": {
+        "instruction_id": "adapter-1789943620-lost_response",
+        "status": "PASS",
+        "stage": "PASS",
+        "detail": "Adapter workflow verified",
+        "duration_ms": 31816,
+        "execution_count": 1,
+        "run_id": "c_grudsT8ufj2_SWyYssl0goHI8y_ipeWLJ3y6xfnwQNo",
+        "fixture_name": "Harbor Town v River City",
+        "home": "Harbor Town",
+        "away": "River City",
+        "competition": "Academy",
+        "selection": {
+          "market": "MONEYLINE",
+          "side": "HOME",
+          "line": "NONE",
+          "price": "1.92",
+          "availability": "OPEN",
+          "bounds": [
+            40,
+            348,
+            516,
+            379
+          ]
+        },
+        "final_state": {
+          "home": "Harbor Town",
+          "away": "River City",
+          "market": "MONEYLINE",
+          "side": "HOME",
+          "line": "NONE",
+          "price": "1.92",
+          "state": "REVIEWONLY"
+        },
+        "verification_detail": "Exact fixture, market, side, line and price visually verified in final dry-run state"
+      },
+      "assertions_passed": true
+    }
+  ],
+  "adb_server_absent_at_end": true,
+  "final_health": {
+    "healthy": true,
+    "heartbeat_ms": 1789944094803,
+    "uptime_ms": 70890,
+    "state": "IDLE",
+    "current_instruction": null,
+    "last_result": {
+      "instruction_id": "adapter-1789943620-lost_response",
+      "status": "PASS",
+      "stage": "PASS",
+      "detail": "Adapter workflow verified",
+      "duration_ms": 31816,
+      "execution_count": 1,
+      "run_id": "c_grudsT8ufj2_SWyYssl0goHI8y_ipeWLJ3y6xfnwQNo",
+      "fixture_name": "Harbor Town v River City",
+      "home": "Harbor Town",
+      "away": "River City",
+      "competition": "Academy",
+      "selection": {
+        "market": "MONEYLINE",
+        "side": "HOME",
+        "line": "NONE",
+        "price": "1.92",
+        "availability": "OPEN",
+        "bounds": [
+          40,
+          348,
+          516,
+          379
+        ]
+      },
+      "final_state": {
+        "home": "Harbor Town",
+        "away": "River City",
+        "market": "MONEYLINE",
+        "side": "HOME",
+        "line": "NONE",
+        "price": "1.92",
+        "state": "REVIEWONLY"
+      },
+      "verification_detail": "Exact fixture, market, side, line and price visually verified in final dry-run state"
+    },
+    "app_version": "0.4.0-adapter",
+    "version_code": 4,
+    "endpoint": "http://192.168.4.108:8767",
+    "pid": 9097
+  }
+}

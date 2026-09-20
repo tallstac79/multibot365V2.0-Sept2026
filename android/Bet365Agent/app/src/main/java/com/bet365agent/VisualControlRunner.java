@@ -44,6 +44,15 @@ final class VisualControlRunner {
     }
     synchronized void releaseReservation(String id) { if (id.equals(reservation)) reservation = null; }
     private TextEntryFlow textFlow;
+    private ResultListener textStepListener, terminalObserver;
+    void setTerminalObserver(ResultListener listener) { terminalObserver = listener; }
+    boolean startExternal(String id, long timeout) { return begin(id, Display.DEFAULT_DISPLAY, timeout); }
+    void textStep(TextInstruction instruction, ResultListener callback) throws Exception {
+        if (!withinDeadline(instruction.id) || textFlow != null) throw new IllegalStateException("Text step unavailable");
+        textStepListener = callback;
+        textFlow = new TextEntryFlow(this, service, instruction);
+        textFlow.start();
+    }
     private long deadline;
     private boolean closed;
     private int captureDisplay = Display.DEFAULT_DISPLAY;
@@ -103,7 +112,7 @@ final class VisualControlRunner {
         deadline = SystemClock.elapsedRealtime() + timeoutMs;
         ScanStore.setVisualControlTestResult(service, "RUNNING", id);
         log("START id=" + id);
-        main.postDelayed(() -> { if (live(id)) finish(id, textFlow == null ? "FAIL" : "TIMEOUT", "Hard deadline expired"); }, timeoutMs);
+        main.postDelayed(() -> { if (live(id)) finish(id, textFlow == null && terminalObserver == null ? "FAIL" : "TIMEOUT", "Hard deadline expired"); }, timeoutMs);
         return true;
     }
 
@@ -133,7 +142,7 @@ final class VisualControlRunner {
     boolean withinDeadline(String id) {
         if (!live(id)) return false;
         if (SystemClock.elapsedRealtime() >= deadline) {
-            finish(id, textFlow == null ? "FAIL" : "TIMEOUT", "Hard deadline expired"); return false;
+            finish(id, textFlow == null && terminalObserver == null ? "FAIL" : "TIMEOUT", "Hard deadline expired"); return false;
         }
         return true;
     }
@@ -195,7 +204,23 @@ final class VisualControlRunner {
         capture(id, phase, 0, bitmap -> process(id, bitmap, phase, next));
     }
 
+    void tableFrame(String id, String phase, Consumer<Ocr> next) {
+        capture(id, phase, 0, bitmap -> process(id, bitmap, phase, -1, next));
+    }
+    void regionFrame(String id, String phase, Rect bounds, boolean numeric, Consumer<Ocr> next) {
+        capture(id, phase, 0, bitmap -> {
+            Rect crop = new Rect(bounds); crop.inset(-8, -8);
+            if (!crop.intersect(0, 0, bitmap.getWidth(), bitmap.getHeight())) { bitmap.recycle(); finish(id,"INTERNAL_ERROR","Invalid OCR region"); return; }
+            Bitmap region = Bitmap.createBitmap(bitmap, crop.left, crop.top, crop.width(), crop.height());
+            if (region != bitmap) bitmap.recycle();
+            process(id, region, phase, numeric ? -2 : TessBaseAPI.PageSegMode.PSM_SINGLE_LINE, next);
+        });
+    }
+
     private void process(String id, Bitmap bitmap, String phase, Consumer<Ocr> next) {
+        process(id, bitmap, phase, TessBaseAPI.PageSegMode.PSM_AUTO, next);
+    }
+    private void process(String id, Bitmap bitmap, String phase, int segmentation, Consumer<Ocr> next) {
         TextEntryFlow flow = textFlow;
         worker.execute(() -> {
             try {
@@ -204,7 +229,7 @@ final class VisualControlRunner {
                 try (FileOutputStream out = new FileOutputStream(new File(dir, phase + ".png"))) {
                     if (!bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)) throw new IllegalStateException("PNG encode failed");
                 }
-                Ocr result = recognize(bitmap);
+                Ocr result = segmentation == -1 ? recognizeLines(bitmap) : segmentation == -2 ? recognize(bitmap, TessBaseAPI.PageSegMode.PSM_SINGLE_LINE, "0123456789.+-") : recognize(bitmap, segmentation);
                 if (flow != null) flow.analyze(bitmap, result, phase);
                 try (FileOutputStream out = new FileOutputStream(new File(dir, phase + ".txt"))) {
                     out.write(result.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
@@ -220,11 +245,34 @@ final class VisualControlRunner {
         });
     }
 
+    /** Refine separately detected table tokens; numeric crops use a numeric alphabet, never expected values. */
+    private Ocr recognizeLines(Bitmap bitmap) throws Exception {
+        Ocr coarse = recognize(bitmap);
+        Ocr result = new Ocr(bitmap.getWidth(), bitmap.getHeight());
+        TessBaseAPI tess = new TessBaseAPI();
+        try {
+            if (!tess.init(new File(service.getFilesDir(), "ocr").getAbsolutePath(), "eng")) throw new IllegalStateException("Tesseract cell init failed");
+            tess.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
+            for (int index=0;index<coarse.words.size();index++) {
+                String rough=coarse.words.get(index); if(rough.isEmpty())continue;
+                Rect box = new Rect(coarse.rects.get(index)); box.inset(-8, -8); box.intersect(0,0,bitmap.getWidth(),bitmap.getHeight());
+                Bitmap crop = Bitmap.createBitmap(bitmap, box.left, box.top, box.width(), box.height());
+                try {
+                    tess.setVariable("tessedit_char_whitelist",rough.matches(".*[0-9].*") && rough.replaceAll("[^A-Za-z]", "").length() <= 1 ? "0123456789.+-" : "");
+                    tess.setImage(crop); String text = tess.getUTF8Text();
+                    if (text != null && !text.trim().isEmpty()) { result.words.add(text.trim().replaceAll("\\s+", " ")); result.rects.add(new Rect(coarse.rects.get(index))); }
+                } finally { if(crop!=bitmap)crop.recycle(); }
+            }
+            return result;
+        } finally { tess.end(); }
+    }
+
     private Ocr recognize(Bitmap bitmap) throws Exception {
         return recognize(bitmap, TessBaseAPI.PageSegMode.PSM_AUTO);
     }
 
-    Ocr recognize(Bitmap bitmap, int segmentation) throws Exception {
+    Ocr recognize(Bitmap bitmap, int segmentation) throws Exception { return recognize(bitmap,segmentation,null); }
+    private Ocr recognize(Bitmap bitmap, int segmentation, String alphabet) throws Exception {
         File base = new File(service.getFilesDir(), "ocr");
         File data = new File(base, "tessdata/eng.traineddata");
         if (!data.exists()) {
@@ -241,6 +289,7 @@ final class VisualControlRunner {
         try {
             if (!tess.init(base.getAbsolutePath(), "eng")) throw new IllegalStateException("Tesseract init failed");
             tess.setPageSegMode(segmentation);
+            if(alphabet!=null)tess.setVariable("tessedit_char_whitelist",alphabet);
             tess.setImage(bitmap);
             tess.getUTF8Text();
             Ocr result = new Ocr(bitmap.getWidth(), bitmap.getHeight());
@@ -302,7 +351,13 @@ final class VisualControlRunner {
             textFlow.finished(status, detail);
             textFlow = null;
         }
+        if (textStepListener != null) {
+            ResultListener callback = textStepListener; textStepListener = null;
+            callback.onFinished(id, status, detail); return;
+        }
         active = null;
+        ResultListener observer = terminalObserver; terminalObserver = null;
+        if (observer != null) observer.onFinished(id, status, detail);
         prefs.edit().putString("status", status).putString("detail", detail).commit();
         ScanStore.setVisualControlTestResult(service, status, detail);
         log("RESULT id=" + id + " status=" + status + " detail=" + detail);

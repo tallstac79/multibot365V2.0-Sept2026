@@ -91,7 +91,7 @@ final class CoordinatorHttp implements AutoCloseable {
                 if (!rawLength.matches("[0-9]{1,5}")) throw new IOException("Invalid Content-Length");
                 int length = Integer.parseInt(rawLength);
                 if (length > 4096 || (!start[0].equals("POST") && length != 0)) throw new IOException("Invalid body size");
-                boolean fixture = start[0].equals("GET") && start[1].split("\\?", 2)[0].equals("/neutral/text.html");
+                boolean fixture = start[0].equals("GET") && Set.of("/neutral/text.html", "/neutral/simulator.html").contains(start[1].split("\\?", 2)[0]);
                 String provided = headers.getOrDefault("authorization", "");
                 boolean authorized = MessageDigest.isEqual(("Bearer " + agent.token()).getBytes(StandardCharsets.UTF_8), provided.getBytes(StandardCharsets.UTF_8));
                 if (!fixture && !authorized) reply = agent.error(401, "", "INVALID_INSTRUCTION", "Authentication required");

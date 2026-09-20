@@ -1,0 +1,128 @@
+ACCESSIBILITY MANAGER (dumpsys accessibility)
+
+currentUserId=0
+hasWindowMagnificationConnection=false
+Magnifier on display#0
+    MagnificationConfig[mode: 1, activated: false, scale: 1.0, centerX: 360.0, centerY: 756.5]
+    Magnification region=SkRegion((3,3,717,1510))
+    IdOfLastServiceToMagnify=-1
+    SupportWindowMagnification=true
+    WindowMagnificationConnectionState=DISCONNECTED
+User state[
+     attributes:{id=0, mIsTapDurationEnabled=false, mIsTouchBlockingEnabled=false, mIsStickyKeysEnabled=false, mIsBounceKeysEnabled=false, mIsSlowKeysEnabled=false, mIsAutoActionEnabled=false, mIsCornerActionEnabled=false, mIsAMEnabled=false, autoActionEnabled=false, cornerActionEnabled=false, AmEnabled=false, touchExplorationEnabled=false, serviceHandlesDoubleTap=false, requestMultiFingerGestures=false, requestTwoFingerPassthrough=false, sendMotionEventsEnabledfalse, displayMagnificationEnabled=false, autoclickEnabled=false, nonInteractiveUiTimeout=0, interactiveUiTimeout=0, installedServiceCount=4, magnificationModes={0=2}, magnificationCapabilities=3, audioDescriptionByDefaultEnabled=false, magnificationFollowTypingEnabled=true, alwaysOnMagnificationEnabled=true}
+     shortcut key:{[]}
+     button:{[]}
+     direct access:{[]}
+     button target:{null}
+
+     installed services: {
+      0 : com.samsung.accessibility/.universalswitch.UniversalSwitchService  (A11yTool)
+      1 : com.samsung.accessibility/.assistantmenu.serviceframework.AssistantMenuService  (A11yTool)
+      2 : com.samsung.android.accessibility.talkback/com.samsung.android.marvin.talkback.TalkBackService  (A11yTool)
+      3 : com.bet365agent/.Bet365AccessibilityService
+     }
+     Bound services:{Service[label=Bet365Agent Inspector, id=com.bet365agent/.Bet365AccessibilityService, isDefault=false, requestTouchExplorationMode=false, requestFilterKeyEvents=false, retrieveInteractiveWindows=true, captureFingerprintGestures=false, requestAccessibilityButton=false, receivedAccessibilityButtonCallbackSinceBind=false, lastAccessibilityButtonCallbackState=false, fetchFlags=384, nonInteractiveUiTimeout=0, interactiveUiTimeout=0, feedbackType[FEEDBACK_GENERIC], capabilities=161, eventTypes=[TYPE_WINDOW_STATE_CHANGED, TYPE_WINDOW_CONTENT_CHANGED, TYPE_VIEW_SCROLLED, TYPE_WINDOWS_CHANGED], notificationTimeout=200, requestA11yBtn=false]}
+     Enabled services:{{com.bet365agent/com.bet365agent.Bet365AccessibilityService}}
+     Binding services:{}
+     Crashed services:{}
+     Client list info:{
+          Client list callbacks: 10
+          Client list killed: false
+          Client list broadcasts count: -1
+          Registered clients:{
+[com.google.android.googlequicksearchbox][com.samsung.android.app.clockpack, com.android.systemui, com.samsung.android.app.routines][com.samsung.android.providers.trash, com.samsung.android.mtp, com.samsung.android.secsoundpicker, com.samsung.android.providers.media, com.android.providers.downloads.ui, com.android.providers.downloads, com.android.mtp, com.android.providers.media][de.axelspringer.yana.zeropage][com.samsung.android.providers.trash, com.samsung.android.mtp, com.samsung.android.secsoundpicker, com.samsung.android.providers.media, com.android.providers.downloads.ui, com.android.providers.downloads, com.android.mtp, com.android.providers.media][com.samsung.android.app.routines, com.samsung.android.app.clockpack, com.android.systemui][com.bet365agent][com.samsung.android.providers.trash, com.samsung.android.mtp, com.samsung.android.providers.media, com.android.providers.downloads.ui, com.android.providers.downloads, com.samsung.android.secsoundpicker, com.android.mtp, com.android.providers.media][com.samsung.android.app.clockpack, com.android.systemui, com.samsung.android.app.routines][com.android.chrome]}]
+  AccessibilityInputFilter:{A11yInputFilter Info :
+Enabled features of Display [0] = [MotionEventInjector]
+mEnabledFeatures : 0x00000010
+  }]
+
+**** CallStack History ****
+history [0] :
+09-20 19:34:44
+value :
+package : android
+user id : 0
+java.lang.Exception: a11y service changed
+	at android.provider.Settings$NameValueCache.semDumpCallStackIfNeeded(Settings.java:3423)
+	at android.provider.Settings$NameValueCache.putStringForUser(Settings.java:3399)
+	at android.provider.Settings$Secure.putStringForUser(Settings.java:9622)
+	at android.provider.Settings$Secure.putStringForUser(Settings.java:9603)
+	at com.android.server.accessibility.AccessibilityManagerService.persistColonDelimitedSetToSettingLocked(AccessibilityManagerService.java:2864)
+	at com.android.server.accessibility.AccessibilityManagerService.persistComponentNamesToSettingLocked(AccessibilityManagerService.java:2811)
+	at com.android.server.accessibility.AccessibilityManagerService$2.onPackageRemoved(AccessibilityManagerService.java:1197)
+	at com.android.internal.content.PackageMonitor.onReceive(PackageMonitor.java:401)
+	at android.app.LoadedApk$ReceiverDispatcher$Args.lambda$getRunnable$0(LoadedApk.java:1911)
+	at android.app.LoadedApk$ReceiverDispatcher$Args.$r8$lambda$gDuJqgxY6Zb-ifyeubKeivTLAwk(Unknown Source:0)
+	at android.app.LoadedApk$ReceiverDispatcher$Args$$ExternalSyntheticLambda0.run(Unknown Source:2)
+	at android.os.Handler.handleCallback(Handler.java:958)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:230)
+	at android.os.Looper.loop(Looper.java:319)
+	at android.os.HandlerThread.run(HandlerThread.java:67)
+history [1] :
+09-20 19:34:49
+value :
+package : android
+user id : 0
+java.lang.Exception: a11y service changed
+	at android.provider.Settings$NameValueCache.semDumpCallStackIfNeeded(Settings.java:3423)
+	at android.provider.Settings$NameValueCache.putStringForUser(Settings.java:3399)
+	at android.provider.Settings$Secure.putStringForUser(Settings.java:9622)
+	at android.provider.Settings$Secure.putStringForUser(Settings.java:9603)
+	at com.android.server.accessibility.AccessibilityManagerService.persistColonDelimitedSetToSettingLocked(AccessibilityManagerService.java:2864)
+	at com.android.server.accessibility.AccessibilityManagerService.persistComponentNamesToSettingLocked(AccessibilityManagerService.java:2811)
+	at com.android.server.accessibility.AccessibilityManagerService.updateServicesLocked(AccessibilityManagerService.java:2953)
+	at com.android.server.accessibility.AccessibilityManagerService.onUserStateChangedLocked(AccessibilityManagerService.java:3266)
+	at com.android.server.accessibility.AccessibilityManagerService.onUserStateChangedLocked(AccessibilityManagerService.java:3249)
+	at com.android.server.accessibility.AccessibilityManagerService.-$$Nest$monUserStateChangedLocked(AccessibilityManagerService.java:0)
+	at com.android.server.accessibility.AccessibilityManagerService$AccessibilityContentObserver.onChange(AccessibilityManagerService.java:5816)
+	at android.database.ContentObserver.onChange(ContentObserver.java:170)
+	at android.database.ContentObserver.onChange(ContentObserver.java:188)
+	at android.database.ContentObserver.onChange(ContentObserver.java:210)
+	at android.database.ContentObserver.onChange(ContentObserver.java:222)
+	at android.database.ContentObserver.lambda$dispatchChange$0(ContentObserver.java:304)
+	at android.database.ContentObserver.$r8$lambda$ZTAX5Dz0QB2gJk_nBFGhENlKHoI(Unknown Source:0)
+	at android.database.ContentObserver$$ExternalSyntheticLambda0.run(Unknown Source:10)
+	at android.os.Handler.handleCallback(Handler.java:958)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:230)
+	at android.os.Looper.loop(Looper.java:319)
+	at com.android.server.SystemServer.run(SystemServer.java:1356)
+	at com.android.server.SystemServer.main(SystemServer.java:1007)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:578)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1081)
+**** End of CallStack History ****
+
+Global Info [ Top focused display Id = 0
+     Active Window Id = 465
+     Top Focused Window Id = 465
+     Accessibility Focused Window Id = -1 ]
+
+Display[0] :
+A11yWindow[AccessibilityWindowInfo[title=Navigation bar, displayId=0, id=471, taskId=-1, type=TYPE_SYSTEM, layer=2, region=SkRegion((0,1510,720,1600)), bounds=Rect(0, 1510 - 720, 1600), focused=false, active=false, pictureInPicture=false, transitionTime=15034688, hasParent=false, isAnchored=false, hasChildren=false]]
+WindowInfo[WindowInfo[title=Navigation bar, displayId=0, taskId=-1, type=2019, layer=0, token=android.os.BinderProxy@9c2cf9d, region=SkRegion((0,1510,720,1600)), bounds=Rect(0, 1510 - 720, 1600), parent=null, focused=false, children=null, accessibility anchor=9223372034707292159, pictureInPicture=false, watchOutsideTouch=true, mTransformMatrix=Matrix{[1.0, 0.0, 0.0][0.0, 1.0, 1510.0][0.0, 0.0, 1.0]}, mMagnificationSpec=<scale:1.0,offsetX:0.0,offsetY:0.0>, locales=[en_GB]]]
+,
+A11yWindow[AccessibilityWindowInfo[title=null, displayId=0, id=470, taskId=-1, type=TYPE_SYSTEM, layer=1, region=SkRegion((0,0,720,45)), bounds=Rect(0, 0 - 720, 45), focused=false, active=false, pictureInPicture=false, transitionTime=15034686, hasParent=false, isAnchored=false, hasChildren=false]]
+WindowInfo[WindowInfo[title=null, displayId=0, taskId=-1, type=2000, layer=1, token=android.os.BinderProxy@d0d7dd6, region=SkRegion((0,0,720,45)), bounds=Rect(0, 0 - 720, 45), parent=null, focused=false, children=null, accessibility anchor=9223372034707292159, pictureInPicture=false, watchOutsideTouch=false, mTransformMatrix=Matrix{[1.0, 0.0, 0.0][0.0, 1.0, 0.0][0.0, 0.0, 1.0]}, mMagnificationSpec=<scale:1.0,offsetX:0.0,offsetY:0.0>, locales=[en_GB]]]
+,
+A11yWindow[AccessibilityWindowInfo[title=Chrome: ORBIT neutral visual test, displayId=0, id=465, taskId=108, type=TYPE_APPLICATION, layer=0, region=SkRegion((0,0,720,1600)), bounds=Rect(0, 0 - 720, 1600), focused=true, active=true, pictureInPicture=false, transitionTime=15034677, hasParent=false, isAnchored=false, hasChildren=false]]
+WindowInfo[WindowInfo[title=Chrome: ORBIT neutral visual test, displayId=0, taskId=108, type=1, layer=2, token=android.os.BinderProxy@8a5eea8, region=SkRegion((0,0,720,1600)), bounds=Rect(0, 0 - 720, 1600), parent=null, focused=true, children=null, accessibility anchor=9223372034707292159, pictureInPicture=false, watchOutsideTouch=false, mTransformMatrix=Matrix{[1.0, 0.0, 0.0][0.0, 1.0, 0.0][0.0, 0.0, 1.0]}, mMagnificationSpec=<scale:1.0,offsetX:0.0,offsetY:0.0>, locales=[en_GB]]]
+
+
+Window attributes:[{462=AccessibilityWindowAttributes{mAccessibilityWindowTitle=One UI HomemLocales=[en_GB]}, 463=AccessibilityWindowAttributes{mAccessibilityWindowTitle=nullmLocales=[en_GB]}, 464=AccessibilityWindowAttributes{mAccessibilityWindowTitle=Samsung KeyboardmLocales=[en_GB]}, 465=AccessibilityWindowAttributes{mAccessibilityWindowTitle=Chrome: ORBIT neutral visual testmLocales=[en_GB]}, 466=AccessibilityWindowAttributes{mAccessibilityWindowTitle=nullmLocales=[en_GB]}, 467=AccessibilityWindowAttributes{mAccessibilityWindowTitle=One UI HomemLocales=[en_GB]}, 468=AccessibilityWindowAttributes{mAccessibilityWindowTitle=nullmLocales=[en_GB]}, 469=AccessibilityWindowAttributes{mAccessibilityWindowTitle=nullmLocales=[en_GB]}, 470=AccessibilityWindowAttributes{mAccessibilityWindowTitle=nullmLocales=[en_GB]}, 471=AccessibilityWindowAttributes{mAccessibilityWindowTitle=Navigation barmLocales=[en_GB]}}]
+A11yInputFilter Info :
+Enabled features of Display [0] = [MotionEventInjector]
+mEnabledFeatures : 0x00000010Global client list info:{
+    Client list callbacks: 6
+    Client list killed: false
+    Client list broadcasts count: -1
+    Registered clients:{
+[com.sec.android.app.launcher][com.samsung.android.honeyboard][com.samsung.android.app.routines, com.samsung.android.app.clockpack, com.android.systemui][com.samsung.android.da.daagent, com.sec.imslogger, com.skms.android.agent, com.android.settings, com.sec.bcservice, com.android.keychain, com.samsung.sait.sohservice, com.samsung.android.aircommandmanager, com.sec.sve, com.samsung.sec.android.teegris.tui_service, com.sec.mhs.smarttethering, com.wssyncmldm, com.sec.enterprise.mdm.services.simpin, com.samsung.android.emergency, com.sec.android.app.servicemodeapp, com.sec.android.app.wlantest, com.android.localtransport, com.sec.android.app.SecSetupWizard, com.sec.android.smartfpsadjuster, com.sec.android.app.parser, com.mediatek, com.samsung.android.hdmapp, com.samsung.android.knox.zt.framework, com.samsung.SMT, com.samsung.android.app.settings.bixby, com.sec.usbsettings, com.android.dynsystem, com.android.wallpaperbackup, com.samsung.aasaservice, com.sec.automation, com.samsung.android.wifi.ai, com.samsung.android.app.dressroom, com.samsung.android.forest, com.sec.epdg, com.sec.imsservice, com.sec.android.sdhms, com.sec.android.emergencylauncher, com.samsung.android.peripheral.framework, com.samsung.android.provider.filterprovider, com.sec.android.app.factorykeystring, com.samsung.android.mdecservice, com.android.server.telecom, com.android.location.fused, com.samsung.android.themecenter, com.samsung.android.lool, com.sec.factory.camera, com.sec.android.app.hwmoduletest, com.android.inputdevices, com.samsung.android.knox.attestation, com.samsung.android.svcagent, com.sec.android.app.quicktool, com.sec.android.CcInfo, com.android.providers.settings, com.samsung.accessibility, com.samsung.android.knox.pushmanager, com.sec.app.RilErrorNotifier, com.samsung.android.providers.factory, com.samsung.android.smartface, com.sec.facatfunction, com.samsung.android.stickercenter, com.sec.android.iaft, com.sec.android.soagent, com.samsung.oda.service, com.samsung.android.smartswitchassistant, com.samsung.android.app.omcagent, com.sec.android.app.personalization, com.sec.android.diagmonagent, com.samsung.android.biometrics.app.setting, com.samsung.android.bbc.bbcagent, com.samsung.android.dqagent, android, com.samsung.android.fmm, com.samsung.android.keycustomizationinfobackupservice][com.google.android.permissioncontroller][com.samsung.android.bbc.bbcagent, com.sec.epdg, com.samsung.android.smartface, com.sec.android.app.wlantest, com.android.providers.settings, com.sec.bcservice, com.sec.android.diagmonagent, com.android.server.telecom, com.samsung.android.mdecservice, com.samsung.android.smartswitchassistant, com.samsung.android.aircommandmanager, com.samsung.android.providers.factory, com.samsung.android.emergency, com.sec.usbsettings, com.samsung.android.knox.pushmanager, com.sec.android.iaft, com.samsung.SMT, com.samsung.android.forest, com.samsung.android.stickercenter, com.samsung.android.lool, com.samsung.android.keycustomizationinfobackupservice, com.sec.android.soagent, com.samsung.android.knox.zt.framework, com.samsung.sait.sohservice, com.android.dynsystem, com.sec.android.app.hwmoduletest, com.samsung.android.wifi.ai, com.sec.automation, com.sec.factory.camera, com.sec.imsservice, com.skms.android.agent, com.samsung.android.svcagent, com.android.localtransport, com.sec.app.RilErrorNotifier, android, com.sec.enterprise.mdm.services.simpin, com.mediatek, com.samsung.android.peripheral.framework, com.android.inputdevices, com.sec.android.app.factorykeystring, com.samsung.accessibility, com.samsung.android.hdmapp, com.sec.android.app.quicktool, com.sec.android.smartfpsadjuster, com.android.settings, com.sec.android.app.parser, com.samsung.android.app.omcagent, com.samsung.android.provider.filterprovider, com.samsung.aasaservice, com.sec.sve, com.wssyncmldm, com.android.keychain, com.android.wallpaperbackup, com.samsung.sec.android.teegris.tui_service, com.samsung.oda.service, com.samsung.android.da.daagent, com.samsung.android.app.dressroom, com.samsung.android.biometrics.app.setting, com.samsung.android.dqagent, com.sec.android.app.SecSetupWizard, com.samsung.android.fmm, com.sec.facatfunction, com.sec.android.app.personalization, com.sec.imslogger, com.sec.android.sdhms, com.sec.android.app.servicemodeapp, com.sec.mhs.smarttethering, com.sec.android.emergencylauncher, com.samsung.android.knox.attestation, com.sec.android.CcInfo, com.android.location.fused, com.samsung.android.app.settings.bixby, com.samsung.android.themecenter]
+
+Proxy manager state:
+    Number of proxy connections: 0
+    Registered proxy connections:
+Accessibility Display Listener:
+    SystemUI uid: 10062
+    1 valid display: 0

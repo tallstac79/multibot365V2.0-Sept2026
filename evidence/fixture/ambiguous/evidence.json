@@ -1,0 +1,250 @@
+{
+  "run_id": "c_-d4-kZ5XUNF6QLFsGAkYF5Fo23PF5qnZlVmYERbqS34",
+  "adapter": "local_simulator",
+  "status": "AMBIGUOUS_FIXTURE",
+  "phase": "FINISHED",
+  "started_at_ms": 1789943800872,
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 20
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 26
+    },
+    {
+      "phase": "CAPTURE_home",
+      "elapsed_ms": 1265
+    },
+    {
+      "phase": "CAPTURED_home",
+      "elapsed_ms": 2263
+    },
+    {
+      "phase": "OPEN_SEARCH",
+      "elapsed_ms": 2283
+    },
+    {
+      "phase": "CAPTURE_search_button",
+      "elapsed_ms": 2301
+    },
+    {
+      "phase": "CAPTURED_search_button",
+      "elapsed_ms": 3246
+    },
+    {
+      "effect": "gesture",
+      "target": "SEARCH",
+      "bounds": [
+        65,
+        369,
+        209,
+        397
+      ],
+      "elapsed_ms": 3270
+    },
+    {
+      "phase": "GESTURE_DISPATCHING",
+      "elapsed_ms": 3271
+    },
+    {
+      "phase": "CAPTURE_search",
+      "elapsed_ms": 3851
+    },
+    {
+      "phase": "CAPTURED_search",
+      "elapsed_ms": 4911
+    },
+    {
+      "phase": "ENTER_QUERY",
+      "elapsed_ms": 4939
+    },
+    {
+      "phase": "ENTER_QUERY",
+      "elapsed_ms": 4961
+    },
+    {
+      "phase": "QUERY_VERIFIED",
+      "elapsed_ms": 9772
+    },
+    {
+      "phase": "DISMISS_KEYBOARD",
+      "elapsed_ms": 9792
+    },
+    {
+      "phase": "CAPTURE_find_button",
+      "elapsed_ms": 10217
+    },
+    {
+      "phase": "CAPTURED_find_button",
+      "elapsed_ms": 11364
+    },
+    {
+      "effect": "gesture",
+      "target": "FIND",
+      "bounds": [
+        66,
+        494,
+        147,
+        522
+      ],
+      "elapsed_ms": 11418
+    },
+    {
+      "phase": "GESTURE_DISPATCHING",
+      "elapsed_ms": 11418
+    },
+    {
+      "phase": "DISCOVER_FIXTURE",
+      "elapsed_ms": 12014
+    },
+    {
+      "phase": "CAPTURE_fixtures",
+      "elapsed_ms": 12067
+    },
+    {
+      "phase": "CAPTURED_fixtures",
+      "elapsed_ms": 13394
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 13434
+    }
+  ],
+  "screenshots": [
+    "s001_home.png",
+    "s002_search_button.png",
+    "s003_search.png",
+    "s004_find_button.png",
+    "s005_fixtures.png"
+  ],
+  "gesture_attempts": 2,
+  "query_evidence": {
+    "run_id": "c_-d4-kZ5XUNF6QLFsGAkYF5Fo23PF5qnZlVmYERbqS34",
+    "requested_text": "football",
+    "field_hint": "QUERY",
+    "package": "com.android.chrome",
+    "mechanism": "AccessibilityInputConnection.commitText",
+    "started_at_ms": 1789943805850,
+    "started_elapsed_ms": 14575360,
+    "timeout_ms": 60000,
+    "status": "PASS",
+    "field_bounds": [
+      42,
+      319,
+      679,
+      445
+    ],
+    "pre_screenshot": "files/visual/c_-d4-kZ5XUNF6QLFsGAkYF5Fo23PF5qnZlVmYERbqS34/before.png",
+    "post_screenshot": "files/visual/c_-d4-kZ5XUNF6QLFsGAkYF5Fo23PF5qnZlVmYERbqS34/after.png",
+    "verification_result": "EXACT_INPUT_AND_SCREENSHOT_OCR",
+    "input_attempts": 1,
+    "events": [
+      {
+        "phase": "STARTED",
+        "elapsed_ms": 1
+      },
+      {
+        "phase": "LOCATING",
+        "elapsed_ms": 27
+      },
+      {
+        "phase": "FOCUS_DISPATCHING",
+        "elapsed_ms": 1050
+      },
+      {
+        "phase": "FOCUS_GESTURE_COMPLETED",
+        "elapsed_ms": 1163
+      },
+      {
+        "phase": "FOCUS_CONFIRMED",
+        "elapsed_ms": 1379
+      },
+      {
+        "phase": "INPUT_COMMITTING",
+        "elapsed_ms": 2456
+      },
+      {
+        "phase": "INPUT_SENT",
+        "elapsed_ms": 2464
+      },
+      {
+        "phase": "VERIFYING",
+        "elapsed_ms": 3073
+      },
+      {
+        "phase": "FINISHED",
+        "elapsed_ms": 4718
+      }
+    ],
+    "phase": "FINISHED",
+    "editor_package": "com.android.chrome",
+    "editor_generation": 31,
+    "focused_screenshot": "files/visual/c_-d4-kZ5XUNF6QLFsGAkYF5Fo23PF5qnZlVmYERbqS34/focused.png",
+    "focused_field_bounds": [
+      42,
+      319,
+      679,
+      445
+    ],
+    "prior_text_length": 0,
+    "visible_field_text": "football",
+    "observed_text": "football",
+    "exact_input_match": true,
+    "visual_text_match": true,
+    "detail": "Exact editor value and visible field OCR verified",
+    "ended_at_ms": 1789943810566,
+    "duration_ms": 4717
+  },
+  "discovered_fixtures": [
+    {
+      "code": "5866",
+      "home": "Elm Town",
+      "away": "Willow City",
+      "fixture_name": "Elm Town v Willow City",
+      "exact_fixture_text": "Home Elm Town\nAway Willow City",
+      "competition": "Academy",
+      "bounds": [
+        62,
+        292,
+        334,
+        479
+      ]
+    },
+    {
+      "code": "5867",
+      "home": "Elm Town",
+      "away": "Willow City",
+      "fixture_name": "Elm Town v Willow City",
+      "exact_fixture_text": "Home Elm Town\nAway Willow City",
+      "competition": "Academy",
+      "bounds": [
+        62,
+        552,
+        334,
+        739
+      ]
+    },
+    {
+      "code": "5868",
+      "home": "Meadow Town",
+      "away": "Birch City",
+      "fixture_name": "Meadow Town v Birch City",
+      "exact_fixture_text": "Home Meadow Town\nAway Birch City",
+      "competition": "Academy",
+      "bounds": [
+        62,
+        811,
+        394,
+        999
+      ]
+    }
+  ],
+  "detail": "Duplicate exact fixture identity in visible results",
+  "duration_ms": 13434
+}

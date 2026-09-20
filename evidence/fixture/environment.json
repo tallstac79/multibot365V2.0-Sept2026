@@ -1,0 +1,42 @@
+{
+  "health": {
+    "healthy": true,
+    "heartbeat_ms": 1789943621400,
+    "uptime_ms": 607,
+    "state": "IDLE",
+    "current_instruction": null,
+    "last_result": {
+      "instruction_id": "adapter-1789943364-total",
+      "status": "FAIL",
+      "stage": "EVENT_NOT_VERIFIED",
+      "detail": "Expected unique visible field Home",
+      "duration_ms": 29805,
+      "execution_count": 1,
+      "run_id": "c_k23FU6gaBuUnXX3fZnmo62z_bpfRtFQrntrINnzrDJ4",
+      "fixture_name": "Elm Town v Willow City",
+      "home": "Elm Town",
+      "away": "Willow City",
+      "competition": "Academy",
+      "selection": {
+        "market": "TOTAL",
+        "side": "OVER",
+        "line": "2.5",
+        "price": "1.81",
+        "availability": "OPEN",
+        "bounds": [
+          40,
+          842,
+          516,
+          873
+        ]
+      },
+      "verification_detail": "Expected unique visible field Home"
+    },
+    "app_version": "0.4.0-adapter",
+    "version_code": 4,
+    "endpoint": "http://192.168.4.108:8767",
+    "pid": 7928
+  },
+  "adb_server_absent": true,
+  "transport": "private LAN HTTP; no ADB calls or forwarding"
+}

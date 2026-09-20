@@ -1,0 +1,51 @@
+{
+  "adb_server_absent": true,
+  "health": {
+    "healthy": true,
+    "heartbeat_ms": 1789944115094,
+    "uptime_ms": 91181,
+    "state": "IDLE",
+    "current_instruction": null,
+    "last_result": {
+      "instruction_id": "adapter-1789943620-lost_response",
+      "status": "PASS",
+      "stage": "PASS",
+      "detail": "Adapter workflow verified",
+      "duration_ms": 31816,
+      "execution_count": 1,
+      "run_id": "c_grudsT8ufj2_SWyYssl0goHI8y_ipeWLJ3y6xfnwQNo",
+      "fixture_name": "Harbor Town v River City",
+      "home": "Harbor Town",
+      "away": "River City",
+      "competition": "Academy",
+      "selection": {
+        "market": "MONEYLINE",
+        "side": "HOME",
+        "line": "NONE",
+        "price": "1.92",
+        "availability": "OPEN",
+        "bounds": [
+          40,
+          348,
+          516,
+          379
+        ]
+      },
+      "final_state": {
+        "home": "Harbor Town",
+        "away": "River City",
+        "market": "MONEYLINE",
+        "side": "HOME",
+        "line": "NONE",
+        "price": "1.92",
+        "state": "REVIEWONLY"
+      },
+      "verification_detail": "Exact fixture, market, side, line and price visually verified in final dry-run state"
+    },
+    "app_version": "0.4.0-adapter",
+    "version_code": 4,
+    "endpoint": "http://192.168.4.108:8767",
+    "pid": 9097
+  },
+  "transport": "private LAN HTTP; no forwarding; suite contains no ADB calls"
+}

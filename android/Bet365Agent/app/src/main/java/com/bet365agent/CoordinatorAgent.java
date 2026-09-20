@@ -34,7 +34,13 @@ final class CoordinatorAgent implements AutoCloseable {
         for (JSONObject row : store.unfinished()) {
             JSONObject evidence = evidence(row);
             String status = evidence == null ? "INTERRUPTED" : evidence.optString("status", "INTERRUPTED");
-            if (status.equals("RUNNING")) status = "INTERRUPTED";
+            if (status.equals("RUNNING")) {
+                status = "INTERRUPTED";
+                if(row.optJSONObject("payload").optString("action").equals("ADAPTER_WORKFLOW")) {
+                    put(evidence,"status","INTERNAL_ERROR");put(evidence,"detail","Process restarted; workflow not replayed");
+                    VisualSession.persist(VisualSession.file(service,row.optString("run_id")),evidence);
+                }
+            }
             complete(row, stage(status), status.equals("INTERRUPTED") ? "Process restarted; uncertain instruction was not replayed" : evidence.optString("detail"));
         }
         runner.setResultListener(this::runnerFinished);
@@ -44,8 +50,8 @@ final class CoordinatorAgent implements AutoCloseable {
     String endpoint() { return http.endpoint(); }
 
     CoordinatorHttp.Reply route(String method, String path, String body) throws Exception {
-        if (method.equals("GET") && path.split("\\?", 2)[0].equals("/neutral/text.html")) {
-            try (java.io.InputStream in = service.getAssets().open("neutral/text.html")) {
+        if (method.equals("GET") && Set.of("/neutral/text.html", "/neutral/simulator.html").contains(path.split("\\?", 2)[0])) {
+            try (java.io.InputStream in = service.getAssets().open(path.split("\\?", 2)[0].substring(1))) {
                 java.io.ByteArrayOutputStream bytes = new java.io.ByteArrayOutputStream(); byte[] buffer = new byte[4096]; int n;
                 while ((n = in.read(buffer)) != -1) bytes.write(buffer, 0, n);
                 return new CoordinatorHttp.Reply(200, "text/html; charset=utf-8", bytes.toByteArray());
@@ -67,7 +73,7 @@ final class CoordinatorAgent implements AutoCloseable {
                 JSONObject evidence = evidence(row);
                 return evidence == null ? error(404, parts[2], "INTERNAL_ERROR", "No text evidence yet") : json(200, evidence);
             }
-            if (parts.length == 5 && parts[3].equals("artifacts") && Set.of("before.png", "after.png", "focused.png", "field_after.png", "before.txt", "after.txt", "focused.txt").contains(parts[4])) {
+            if (parts.length == 5 && parts[3].equals("artifacts") && (Set.of("before.png", "after.png", "focused.png", "field_after.png", "before.txt", "after.txt", "focused.txt").contains(parts[4]) || parts[4].matches("s[0-9]{3}_[a-z_]+\\.(png|txt)"))) {
                 File file = new File(service.getFilesDir(), "visual/" + row.getString("run_id") + "/" + parts[4]);
                 if (file.isFile()) return new CoordinatorHttp.Reply(200, parts[4].endsWith("png") ? "image/png" : "text/plain; charset=utf-8", Files.readAllBytes(file.toPath()));
                 return error(404, parts[2], "INTERNAL_ERROR", "Artifact not captured");
@@ -114,6 +120,13 @@ final class CoordinatorAgent implements AutoCloseable {
             KeyguardManager keyguard = (KeyguardManager) service.getSystemService(android.content.Context.KEYGUARD_SERVICE);
             if (!power.isInteractive() || keyguard.isKeyguardLocked()) { complete(row, "FOCUS_FAILED", "Phone must be awake and unlocked"); return; }
             store.executing(instruction.id);
+            if(instruction.action.equals("ADAPTER_WORKFLOW")) {
+                if(!runner.startExternal(instruction.runId,remaining(row,instruction.timeout))) {complete(row,"INTERNAL_ERROR","Runner rejected workflow");return;}
+                VisualSession session=new VisualSession(service,runner,instruction.runId,instruction.adapter);
+                SiteAdapter adapter=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id);
+                new AdapterWorkflow(session,adapter).start(instruction.text,instruction.market,instruction.side);
+                return;
+            }
             String url = CoordinatorConfig.prefs(service).getString("start_url", "").trim();
             if (url.isEmpty()) url = endpoint() + "/neutral/text.html";
             Uri target = Uri.parse(url).buildUpon().appendQueryParameter("coordinator_request", instruction.id).build();
@@ -129,7 +142,7 @@ final class CoordinatorAgent implements AutoCloseable {
                     if (!runner.tryStartText(instruction.asText(budget))) complete(current, "INTERNAL_ERROR", "Runner rejected dispatch; no retry");
                 } catch (Exception e) { complete(current, "INTERNAL_ERROR", "Dispatch failed: " + e.getClass().getSimpleName()); }
             }, Math.min(1200, remaining));
-        } catch (Exception e) { complete(row, "INTERNAL_ERROR", "Cannot open configured Chrome page: " + e.getClass().getSimpleName()); }
+        } catch (Exception e) { runner.finish(instruction.runId,"INTERNAL_ERROR","Dispatch failed: "+e.getClass().getSimpleName()); complete(row, "INTERNAL_ERROR", "Cannot open configured Chrome page: " + e.getClass().getSimpleName()); }
     }
     private long remaining(JSONObject row, int timeout) { return timeout - (SystemClock.elapsedRealtime() - row.optLong("received_elapsed")); }
     private void runnerFinished(String runId, String status, String detail) {
@@ -142,13 +155,20 @@ final class CoordinatorAgent implements AutoCloseable {
         JSONObject result = result(id, stage, detail, Math.max(0, System.currentTimeMillis() - current.optLong("received_ms")));
         put(result, "execution_count", current.optInt("execution_count"));
         put(result, "run_id", current.optString("run_id"));
+        JSONObject proof=evidence(current);
+        if(proof!=null && current.optJSONObject("payload").optString("action").equals("ADAPTER_WORKFLOW")) {
+            JSONObject fixture=proof.optJSONObject("fixture");
+            for(String key:new String[]{"fixture_name","home","away","competition"})put(result,key,fixture==null?JSONObject.NULL:fixture.opt(key));
+            put(result,"selection",proof.opt("selection"));put(result,"final_state",proof.opt("final_state"));
+            put(result,"verification_detail",proof.optString("verification_detail",detail));
+        }
         store.complete(id, result);
         runner.releaseReservation(current.optString("run_id"));
         Log.i("AgentCoordinator", "RESULT " + result);
     }
     private static String stage(String textStatus) {
         if (textStatus.equals("FIELD_NOT_FOUND")) return "TARGET_NOT_FOUND";
-        return Set.of("PASS", "FOCUS_FAILED", "INPUT_FAILED", "TEXT_NOT_VERIFIED", "TIMEOUT").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
+        return Set.of("PASS", "FOCUS_FAILED", "INPUT_FAILED", "TEXT_NOT_VERIFIED", "TIMEOUT", "NO_FIXTURE_FOUND", "AMBIGUOUS_FIXTURE", "TARGET_NOT_FOUND", "CLICK_FAILED", "WRONG_EVENT", "EVENT_NOT_VERIFIED", "PRICE_CHANGED", "LINE_CHANGED", "SELECTION_CHANGED", "SUSPENDED", "UNAVAILABLE").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
     }
     private JSONObject health() throws Exception {
         JSONObject active = store.active(), last = store.last();
@@ -167,7 +187,8 @@ final class CoordinatorAgent implements AutoCloseable {
     }
     private JSONObject evidence(JSONObject row) {
         try {
-            File file = new File(service.getFilesDir(), "text/" + row.getString("run_id") + "/result.json");
+            boolean workflow=row.getJSONObject("payload").optString("action").equals("ADAPTER_WORKFLOW");
+            File file = new File(service.getFilesDir(), (workflow?"workflow/":"text/") + row.getString("run_id") + "/result.json");
             return file.isFile() ? new JSONObject(new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8)) : null;
         } catch (Exception e) { return null; }
     }

@@ -1,6 +1,58 @@
 # MultiBot365 build status
 
-## Current milestone: 3 — PASS on the physical Samsung
+## Current milestone: 4 — PASS on the physical Samsung (local simulator adapter)
+
+Built from e88b9b8 and verified on the physical Samsung SM-A136B, R5CT61TE14Z, Android 14/API 34. App **0.4.0-adapter (4)**. APK identity is recorded in evidence/fixture/build.json.
+
+### Implemented and proven
+
+- SiteAdapter defines all twelve requested operations. AdapterWorkflow sequences them without site labels, selectors or layout rules. VisualSession provides reusable capture, OCR geometry, gestures, query entry, deadlines and durable evidence. SiteAdapters is the composition/validation registry; LocalSimulatorAdapter contains the site-specific rules.
+- ADAPTER_WORKFLOW uses the existing authenticated private-LAN coordinator, strict schema, SQLite instruction ledger and single-active-run reservation. Existing OPEN_AND_TYPE remains supported. No permanent ADB connection is required.
+- Chrome opens the phone-hosted fictional simulator, visually opens search, enters the supplied query with exact editor and screenshot readback, discovers runtime-generated fixtures, selects the exact code/teams/competition, verifies the event, discovers all six quotes, reads the requested market/side/line/price, opens a dry-run review and independently verifies its exact final values.
+- Every UI observation comes from screenshots/OCR; interactions use dispatchGesture and the existing Android text-input mechanism. The new adapter path uses no AccessibilityNodeInfo tree, DOM, JavaScript evaluation or simulator data API.
+- Generic per-token OCR refinement and bounded numeric-region OCR preserve signs/decimals. Simulator typography/column spacing and field focus outlines were adjusted after physical OCR evidence exposed merged tokens and obscured borders. Expected numeric values are never supplied to OCR or used to repair its output.
+- Every phase, detected bounds, gesture intent, query input evidence, screenshot/OCR reference, discovered fixture/quote and result timing is persisted. Each successful workflow has five outer gestures plus the separately recorded query-focus gesture and one input attempt.
+- The simulator generates fictional teams, event codes and varying prices per load. Multiple Town/Youth fixtures, exact duplicates, all three market types, both spread signs, suspended/unavailable rows and deliberate event/side/line/price faults are exercised. There is no account, stake, transaction or wager action.
+
+### Physical acceptance
+
+**evidence/fixture/results.json: 19/19 cases passed their assertions.** The suite communicated Windows -> Samsung -> Windows solely over LAN HTTP with the PC ADB server stopped at both ends. Successful commands took 31.8–32.6 seconds. The 200ms timeout returned TIMEOUT in 229ms; no instruction remained pending.
+
+| Case | Observed stage | Duration ms |
+| --- | --- | --- |
+| moneyline | PASS | 32605 |
+| spread | PASS | 32238 |
+| spread_home | PASS | 32068 |
+| total | PASS | 31929 |
+| empty | NO_FIXTURE_FOUND | 13086 |
+| query_empty | NO_FIXTURE_FOUND | 12947 |
+| query_unverified | TEXT_NOT_VERIFIED | 12017 |
+| ambiguous | AMBIGUOUS_FIXTURE | 13512 |
+| wrong_event | WRONG_EVENT | 16715 |
+| click_ignored | CLICK_FAILED | 16847 |
+| suspended | SUSPENDED | 20928 |
+| unavailable | UNAVAILABLE | 20500 |
+| changing | PRICE_CHANGED | 31180 |
+| wrong_line | LINE_CHANGED | 30967 |
+| wrong_side | SELECTION_CHANGED | 30478 |
+| timeout | TIMEOUT | 229 |
+| restart | INTERNAL_ERROR | 29849 |
+| after_restart | PASS | 32070 |
+| lost_response | PASS | 31816 |
+
+Six successful runs include Elm Town v Willow City (moneyline HOME, NONE, 1.92), River Town v Maple City (spread AWAY +1.5/1.88, HOME -1.5/1.96; total OVER 2.5/1.82), Meadow Town v Elm City (total UNDER 2.5/2.02 after restart), and Harbor Town v River City (moneyline HOME/NONE/1.92 after a lost response). These were discovered from screenshots, not configured fixture names. All six final screenshots were independently visually reviewed against their structured results (evidence/fixture/visual_review.json).
+
+Each successful instruction was resubmitted with the same ID: DUPLICATE, execution_count=1, unchanged result and gesture count. Killing the process after durable final-tap intent produced INTERNAL_ERROR after rebind, retained five gesture attempts and rejected replay. A fresh instruction then passed. Dropping the HTTP response and retrying the same ID likewise executed once. Unknown adapters were rejected before admission.
+
+Existing coordinator regression: **11 recorded cases PASS**, plus unauthorized-access and busy-admission assertions (evidence/fixture/coordinator-regression/). Existing screenshot/OCR/gesture regression: **8/8 cases PASS their expected outcomes**, including exact screenshot failure code, successful action verification, ambiguous/missing targets, unchanged-page rejection and process recovery (evidence/fixture/visual-regression/). ADB forwarding was removed and its server stopped afterward; final-health.json records a healthy idle agent over LAN. No remaining blocker for this local simulator milestone.
+
+Reproduction and protocol: tools/SITE_ADAPTER.md; tools/test_site_adapter.py. Evidence includes original PNGs, OCR, submitted instructions, acknowledgements, results, duplicates and restart records under evidence/fixture/.
+
+Scope: fictional local simulator, currently visible English layouts and the proven Samsung/API33+ text-entry mechanism. Arbitrary sites, scrolling coverage and unseen layouts are not claimed. Future site implementations belong behind SiteAdapter. No live sportsbook adapter was added. Trusted-LAN pairing/security limitations from milestone 3 still apply.
+
+---
+
+## Milestone 3 — PASS on the physical Samsung
 
 Verified 2026-09-20 on the physical Samsung SM-A136B, R5CT61TE14Z, Android 14 / API 34, starting from commit 1a20c51. App version **0.3.0-coordinator (3)**.
 

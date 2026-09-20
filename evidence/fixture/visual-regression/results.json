@@ -1,0 +1,79 @@
+[
+  {
+    "phase": "CAPTURE_before",
+    "run_id": "invalid-display-d5d44c748779",
+    "capture_error_code": "4",
+    "capture_result": "TAKE_SCREENSHOT onFailure code=4 name=ERROR_TAKE_SCREENSHOT_INVALID_DISPLAY",
+    "detail": "TAKE_SCREENSHOT onFailure code=4 name=ERROR_TAKE_SCREENSHOT_INVALID_DISPLAY",
+    "status": "FAIL",
+    "test": "invalid-display",
+    "expected": "FAIL"
+  },
+  {
+    "phase": "CAPTURE_after",
+    "run_id": "normal-b7ab62f12ccf",
+    "capture_result": "onSuccess",
+    "detail": "OCR NEPTUNE bounds -> dispatchGesture completed -> OCR COMPLETE; READY absent",
+    "target_bounds": "[246,701][476,738]",
+    "status": "PASS",
+    "test": "normal",
+    "expected": "PASS"
+  },
+  {
+    "phase": "CAPTURE_after",
+    "run_id": "normal-e6df4c122e3b",
+    "capture_result": "onSuccess",
+    "detail": "OCR NEPTUNE bounds -> dispatchGesture completed -> OCR COMPLETE; READY absent",
+    "target_bounds": "[246,701][476,738]",
+    "status": "PASS",
+    "test": "normal",
+    "expected": "PASS"
+  },
+  {
+    "phase": "CAPTURE_before",
+    "run_id": "duplicate-a5882f8d68c3",
+    "detail": "Expected exactly one NEPTUNE; found 2",
+    "capture_result": "onSuccess",
+    "status": "FAIL",
+    "test": "duplicate",
+    "expected": "FAIL"
+  },
+  {
+    "phase": "CAPTURE_before",
+    "run_id": "missing-001c45147fe4",
+    "detail": "Expected exactly one NEPTUNE; found 0",
+    "capture_result": "onSuccess",
+    "status": "FAIL",
+    "test": "missing",
+    "expected": "FAIL"
+  },
+  {
+    "phase": "CAPTURE_after",
+    "run_id": "unchanged-fc38a8e2b8db",
+    "capture_result": "onSuccess",
+    "detail": "Expected COMPLETE and absence of READY not verified",
+    "target_bounds": "[246,701][476,738]",
+    "status": "FAIL",
+    "test": "unchanged",
+    "expected": "FAIL"
+  },
+  {
+    "phase": "CAPTURE_before",
+    "run_id": "restart-8a4c4a5a8ddb",
+    "capture_result": "onSuccess",
+    "detail": "Service restarted; previous action is not replayed",
+    "status": "INTERRUPTED",
+    "test": "process-restart",
+    "expected": "INTERRUPTED"
+  },
+  {
+    "phase": "CAPTURE_after",
+    "run_id": "after-restart-ad5500d11d0e",
+    "capture_result": "onSuccess",
+    "detail": "OCR NEPTUNE bounds -> dispatchGesture completed -> OCR COMPLETE; READY absent",
+    "target_bounds": "[246,701][476,738]",
+    "status": "PASS",
+    "test": "after-restart",
+    "expected": "PASS"
+  }
+]

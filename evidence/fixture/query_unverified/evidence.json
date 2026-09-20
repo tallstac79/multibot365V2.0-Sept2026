@@ -1,0 +1,165 @@
+{
+  "run_id": "c_OVIZqYW6Pl9hInPwfb4FfVKZnb-DKNgwCXlefksiAXQ",
+  "adapter": "local_simulator",
+  "status": "TEXT_NOT_VERIFIED",
+  "phase": "FINISHED",
+  "started_at_ms": 1789943787866,
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 22
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 27
+    },
+    {
+      "phase": "CAPTURE_home",
+      "elapsed_ms": 1270
+    },
+    {
+      "phase": "CAPTURED_home",
+      "elapsed_ms": 2286
+    },
+    {
+      "phase": "OPEN_SEARCH",
+      "elapsed_ms": 2310
+    },
+    {
+      "phase": "CAPTURE_search_button",
+      "elapsed_ms": 2329
+    },
+    {
+      "phase": "CAPTURED_search_button",
+      "elapsed_ms": 3270
+    },
+    {
+      "effect": "gesture",
+      "target": "SEARCH",
+      "bounds": [
+        65,
+        369,
+        209,
+        397
+      ],
+      "elapsed_ms": 3292
+    },
+    {
+      "phase": "GESTURE_DISPATCHING",
+      "elapsed_ms": 3293
+    },
+    {
+      "phase": "CAPTURE_search",
+      "elapsed_ms": 3876
+    },
+    {
+      "phase": "CAPTURED_search",
+      "elapsed_ms": 4895
+    },
+    {
+      "phase": "ENTER_QUERY",
+      "elapsed_ms": 4924
+    },
+    {
+      "phase": "ENTER_QUERY",
+      "elapsed_ms": 4945
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 11931
+    }
+  ],
+  "screenshots": [
+    "s001_home.png",
+    "s002_search_button.png",
+    "s003_search.png"
+  ],
+  "gesture_attempts": 1,
+  "query_evidence": {
+    "run_id": "c_OVIZqYW6Pl9hInPwfb4FfVKZnb-DKNgwCXlefksiAXQ",
+    "requested_text": "unreadable screen text unreadable screen text unreadable screen text unreadable screen text ",
+    "field_hint": "QUERY",
+    "package": "com.android.chrome",
+    "mechanism": "AccessibilityInputConnection.commitText",
+    "started_at_ms": 1789943792830,
+    "started_elapsed_ms": 14562340,
+    "timeout_ms": 60000,
+    "status": "TEXT_NOT_VERIFIED",
+    "field_bounds": [
+      42,
+      319,
+      679,
+      445
+    ],
+    "pre_screenshot": "files/visual/c_OVIZqYW6Pl9hInPwfb4FfVKZnb-DKNgwCXlefksiAXQ/before.png",
+    "post_screenshot": "files/visual/c_OVIZqYW6Pl9hInPwfb4FfVKZnb-DKNgwCXlefksiAXQ/after.png",
+    "verification_result": "NOT_VERIFIED",
+    "input_attempts": 1,
+    "events": [
+      {
+        "phase": "STARTED",
+        "elapsed_ms": 1
+      },
+      {
+        "phase": "LOCATING",
+        "elapsed_ms": 26
+      },
+      {
+        "phase": "FOCUS_DISPATCHING",
+        "elapsed_ms": 1025
+      },
+      {
+        "phase": "FOCUS_GESTURE_COMPLETED",
+        "elapsed_ms": 1135
+      },
+      {
+        "phase": "FOCUS_CONFIRMED",
+        "elapsed_ms": 1353
+      },
+      {
+        "phase": "INPUT_COMMITTING",
+        "elapsed_ms": 2457
+      },
+      {
+        "phase": "INPUT_SENT",
+        "elapsed_ms": 2469
+      },
+      {
+        "phase": "VERIFYING",
+        "elapsed_ms": 3092
+      },
+      {
+        "phase": "VERIFYING",
+        "elapsed_ms": 5283
+      },
+      {
+        "phase": "FINISHED",
+        "elapsed_ms": 6901
+      }
+    ],
+    "phase": "FINISHED",
+    "editor_package": "com.android.chrome",
+    "editor_generation": 28,
+    "focused_screenshot": "files/visual/c_OVIZqYW6Pl9hInPwfb4FfVKZnb-DKNgwCXlefksiAXQ/focused.png",
+    "focused_field_bounds": [
+      42,
+      319,
+      679,
+      445
+    ],
+    "prior_text_length": 0,
+    "visible_field_text": "'een text unreadable screen text",
+    "observed_text": "unreadable screen text unreadable screen text unreadable screen text unreadable screen text ",
+    "exact_input_match": true,
+    "visual_text_match": false,
+    "detail": "Editor value or screenshot field text differs from requested text",
+    "ended_at_ms": 1789943799729,
+    "duration_ms": 6900
+  },
+  "detail": "Editor value or screenshot field text differs from requested text",
+  "duration_ms": 11931
+}

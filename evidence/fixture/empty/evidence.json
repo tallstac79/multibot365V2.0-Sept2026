@@ -1,0 +1,207 @@
+{
+  "run_id": "c_LSSk-H7pIApBU3AUSqbrHDo5oFKmsY3OnFiilznavwc",
+  "adapter": "local_simulator",
+  "status": "NO_FIXTURE_FOUND",
+  "phase": "FINISHED",
+  "started_at_ms": 1789943759742,
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 20
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 25
+    },
+    {
+      "phase": "CAPTURE_home",
+      "elapsed_ms": 1269
+    },
+    {
+      "phase": "CAPTURED_home",
+      "elapsed_ms": 2239
+    },
+    {
+      "phase": "OPEN_SEARCH",
+      "elapsed_ms": 2258
+    },
+    {
+      "phase": "CAPTURE_search_button",
+      "elapsed_ms": 2274
+    },
+    {
+      "phase": "CAPTURED_search_button",
+      "elapsed_ms": 3206
+    },
+    {
+      "effect": "gesture",
+      "target": "SEARCH",
+      "bounds": [
+        65,
+        369,
+        209,
+        397
+      ],
+      "elapsed_ms": 3231
+    },
+    {
+      "phase": "GESTURE_DISPATCHING",
+      "elapsed_ms": 3231
+    },
+    {
+      "phase": "CAPTURE_search",
+      "elapsed_ms": 3814
+    },
+    {
+      "phase": "CAPTURED_search",
+      "elapsed_ms": 4824
+    },
+    {
+      "phase": "ENTER_QUERY",
+      "elapsed_ms": 4864
+    },
+    {
+      "phase": "ENTER_QUERY",
+      "elapsed_ms": 4885
+    },
+    {
+      "phase": "QUERY_VERIFIED",
+      "elapsed_ms": 9734
+    },
+    {
+      "phase": "DISMISS_KEYBOARD",
+      "elapsed_ms": 9756
+    },
+    {
+      "phase": "CAPTURE_find_button",
+      "elapsed_ms": 10180
+    },
+    {
+      "phase": "CAPTURED_find_button",
+      "elapsed_ms": 11303
+    },
+    {
+      "effect": "gesture",
+      "target": "FIND",
+      "bounds": [
+        66,
+        494,
+        147,
+        522
+      ],
+      "elapsed_ms": 11359
+    },
+    {
+      "phase": "GESTURE_DISPATCHING",
+      "elapsed_ms": 11360
+    },
+    {
+      "phase": "DISCOVER_FIXTURE",
+      "elapsed_ms": 11954
+    },
+    {
+      "phase": "CAPTURE_fixtures",
+      "elapsed_ms": 12012
+    },
+    {
+      "phase": "CAPTURED_fixtures",
+      "elapsed_ms": 12951
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 12991
+    }
+  ],
+  "screenshots": [
+    "s001_home.png",
+    "s002_search_button.png",
+    "s003_search.png",
+    "s004_find_button.png",
+    "s005_fixtures.png"
+  ],
+  "gesture_attempts": 2,
+  "query_evidence": {
+    "run_id": "c_LSSk-H7pIApBU3AUSqbrHDo5oFKmsY3OnFiilznavwc",
+    "requested_text": "football",
+    "field_hint": "QUERY",
+    "package": "com.android.chrome",
+    "mechanism": "AccessibilityInputConnection.commitText",
+    "started_at_ms": 1789943764645,
+    "started_elapsed_ms": 14534155,
+    "timeout_ms": 60000,
+    "status": "PASS",
+    "field_bounds": [
+      42,
+      319,
+      679,
+      445
+    ],
+    "pre_screenshot": "files/visual/c_LSSk-H7pIApBU3AUSqbrHDo5oFKmsY3OnFiilznavwc/before.png",
+    "post_screenshot": "files/visual/c_LSSk-H7pIApBU3AUSqbrHDo5oFKmsY3OnFiilznavwc/after.png",
+    "verification_result": "EXACT_INPUT_AND_SCREENSHOT_OCR",
+    "input_attempts": 1,
+    "events": [
+      {
+        "phase": "STARTED",
+        "elapsed_ms": 1
+      },
+      {
+        "phase": "LOCATING",
+        "elapsed_ms": 19
+      },
+      {
+        "phase": "FOCUS_DISPATCHING",
+        "elapsed_ms": 1038
+      },
+      {
+        "phase": "FOCUS_GESTURE_COMPLETED",
+        "elapsed_ms": 1153
+      },
+      {
+        "phase": "FOCUS_CONFIRMED",
+        "elapsed_ms": 1370
+      },
+      {
+        "phase": "INPUT_COMMITTING",
+        "elapsed_ms": 2462
+      },
+      {
+        "phase": "INPUT_SENT",
+        "elapsed_ms": 2481
+      },
+      {
+        "phase": "VERIFYING",
+        "elapsed_ms": 3108
+      },
+      {
+        "phase": "FINISHED",
+        "elapsed_ms": 4750
+      }
+    ],
+    "phase": "FINISHED",
+    "editor_package": "com.android.chrome",
+    "editor_generation": 20,
+    "focused_screenshot": "files/visual/c_LSSk-H7pIApBU3AUSqbrHDo5oFKmsY3OnFiilznavwc/focused.png",
+    "focused_field_bounds": [
+      42,
+      319,
+      679,
+      445
+    ],
+    "prior_text_length": 0,
+    "visible_field_text": "football",
+    "observed_text": "football",
+    "exact_input_match": true,
+    "visual_text_match": true,
+    "detail": "Exact editor value and visible field OCR verified",
+    "ended_at_ms": 1789943769394,
+    "duration_ms": 4750
+  },
+  "discovered_fixtures": [],
+  "detail": "No complete visible fixture",
+  "duration_ms": 12991
+}

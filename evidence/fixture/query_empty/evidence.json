@@ -1,0 +1,207 @@
+{
+  "run_id": "c_xYIoylYF9UdZ85kl6UtGQwEL0AjGzaogctkuvFhoeQI",
+  "adapter": "local_simulator",
+  "status": "NO_FIXTURE_FOUND",
+  "phase": "FINISHED",
+  "started_at_ms": 1789943773784,
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 18
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 25
+    },
+    {
+      "phase": "CAPTURE_home",
+      "elapsed_ms": 1268
+    },
+    {
+      "phase": "CAPTURED_home",
+      "elapsed_ms": 2262
+    },
+    {
+      "phase": "OPEN_SEARCH",
+      "elapsed_ms": 2270
+    },
+    {
+      "phase": "CAPTURE_search_button",
+      "elapsed_ms": 2277
+    },
+    {
+      "phase": "CAPTURED_search_button",
+      "elapsed_ms": 3221
+    },
+    {
+      "effect": "gesture",
+      "target": "SEARCH",
+      "bounds": [
+        65,
+        369,
+        209,
+        397
+      ],
+      "elapsed_ms": 3238
+    },
+    {
+      "phase": "GESTURE_DISPATCHING",
+      "elapsed_ms": 3238
+    },
+    {
+      "phase": "CAPTURE_search",
+      "elapsed_ms": 3825
+    },
+    {
+      "phase": "CAPTURED_search",
+      "elapsed_ms": 4836
+    },
+    {
+      "phase": "ENTER_QUERY",
+      "elapsed_ms": 4864
+    },
+    {
+      "phase": "ENTER_QUERY",
+      "elapsed_ms": 4888
+    },
+    {
+      "phase": "QUERY_VERIFIED",
+      "elapsed_ms": 9557
+    },
+    {
+      "phase": "DISMISS_KEYBOARD",
+      "elapsed_ms": 9578
+    },
+    {
+      "phase": "CAPTURE_find_button",
+      "elapsed_ms": 10003
+    },
+    {
+      "phase": "CAPTURED_find_button",
+      "elapsed_ms": 11118
+    },
+    {
+      "effect": "gesture",
+      "target": "FIND",
+      "bounds": [
+        66,
+        494,
+        147,
+        522
+      ],
+      "elapsed_ms": 11174
+    },
+    {
+      "phase": "GESTURE_DISPATCHING",
+      "elapsed_ms": 11174
+    },
+    {
+      "phase": "DISCOVER_FIXTURE",
+      "elapsed_ms": 11772
+    },
+    {
+      "phase": "CAPTURE_fixtures",
+      "elapsed_ms": 11830
+    },
+    {
+      "phase": "CAPTURED_fixtures",
+      "elapsed_ms": 12785
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 12838
+    }
+  ],
+  "screenshots": [
+    "s001_home.png",
+    "s002_search_button.png",
+    "s003_search.png",
+    "s004_find_button.png",
+    "s005_fixtures.png"
+  ],
+  "gesture_attempts": 2,
+  "query_evidence": {
+    "run_id": "c_xYIoylYF9UdZ85kl6UtGQwEL0AjGzaogctkuvFhoeQI",
+    "requested_text": "zebra",
+    "field_hint": "QUERY",
+    "package": "com.android.chrome",
+    "mechanism": "AccessibilityInputConnection.commitText",
+    "started_at_ms": 1789943778690,
+    "started_elapsed_ms": 14548201,
+    "timeout_ms": 60000,
+    "status": "PASS",
+    "field_bounds": [
+      42,
+      319,
+      679,
+      445
+    ],
+    "pre_screenshot": "files/visual/c_xYIoylYF9UdZ85kl6UtGQwEL0AjGzaogctkuvFhoeQI/before.png",
+    "post_screenshot": "files/visual/c_xYIoylYF9UdZ85kl6UtGQwEL0AjGzaogctkuvFhoeQI/after.png",
+    "verification_result": "EXACT_INPUT_AND_SCREENSHOT_OCR",
+    "input_attempts": 1,
+    "events": [
+      {
+        "phase": "STARTED",
+        "elapsed_ms": 0
+      },
+      {
+        "phase": "LOCATING",
+        "elapsed_ms": 23
+      },
+      {
+        "phase": "FOCUS_DISPATCHING",
+        "elapsed_ms": 1019
+      },
+      {
+        "phase": "FOCUS_GESTURE_COMPLETED",
+        "elapsed_ms": 1132
+      },
+      {
+        "phase": "FOCUS_CONFIRMED",
+        "elapsed_ms": 1349
+      },
+      {
+        "phase": "INPUT_COMMITTING",
+        "elapsed_ms": 2359
+      },
+      {
+        "phase": "INPUT_SENT",
+        "elapsed_ms": 2369
+      },
+      {
+        "phase": "VERIFYING",
+        "elapsed_ms": 2987
+      },
+      {
+        "phase": "FINISHED",
+        "elapsed_ms": 4591
+      }
+    ],
+    "phase": "FINISHED",
+    "editor_package": "com.android.chrome",
+    "editor_generation": 24,
+    "focused_screenshot": "files/visual/c_xYIoylYF9UdZ85kl6UtGQwEL0AjGzaogctkuvFhoeQI/focused.png",
+    "focused_field_bounds": [
+      42,
+      319,
+      679,
+      445
+    ],
+    "prior_text_length": 0,
+    "visible_field_text": "zebra",
+    "observed_text": "zebra",
+    "exact_input_match": true,
+    "visual_text_match": true,
+    "detail": "Exact editor value and visible field OCR verified",
+    "ended_at_ms": 1789943783280,
+    "duration_ms": 4590
+  },
+  "discovered_fixtures": [],
+  "detail": "No complete visible fixture",
+  "duration_ms": 12837
+}

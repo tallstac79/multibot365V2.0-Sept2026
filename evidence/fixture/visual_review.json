@@ -1,0 +1,96 @@
+{
+  "method": "Assistant visual inspection of original Samsung screenshots, independently compared with saved result JSON",
+  "reviews": [
+    {
+      "case": "moneyline",
+      "screenshot": "moneyline/s013_final.png",
+      "observed": {
+        "home": "Elm Town",
+        "away": "Willow City",
+        "market": "MONEYLINE",
+        "side": "HOME",
+        "line": "NONE",
+        "price": "1.92",
+        "state": "REVIEWONLY"
+      },
+      "matches_structured_result": true
+    },
+    {
+      "case": "spread",
+      "screenshot": "spread/s013_final.png",
+      "observed": {
+        "home": "River Town",
+        "away": "Maple City",
+        "market": "SPREAD",
+        "side": "AWAY",
+        "line": "+1.5",
+        "price": "1.88",
+        "state": "REVIEWONLY"
+      },
+      "matches_structured_result": true
+    },
+    {
+      "case": "spread_home",
+      "screenshot": "spread_home/s013_final.png",
+      "observed": {
+        "home": "River Town",
+        "away": "Maple City",
+        "market": "SPREAD",
+        "side": "HOME",
+        "line": "-1.5",
+        "price": "1.96",
+        "state": "REVIEWONLY"
+      },
+      "matches_structured_result": true
+    },
+    {
+      "case": "total",
+      "screenshot": "total/s013_final.png",
+      "observed": {
+        "home": "River Town",
+        "away": "Maple City",
+        "market": "TOTAL",
+        "side": "OVER",
+        "line": "2.5",
+        "price": "1.82",
+        "state": "REVIEWONLY"
+      },
+      "matches_structured_result": true
+    },
+    {
+      "case": "after_restart",
+      "screenshot": "after_restart/s013_final.png",
+      "observed": {
+        "home": "Meadow Town",
+        "away": "Elm City",
+        "market": "TOTAL",
+        "side": "UNDER",
+        "line": "2.5",
+        "price": "2.02",
+        "state": "REVIEWONLY"
+      },
+      "matches_structured_result": true
+    },
+    {
+      "case": "lost_response",
+      "screenshot": "lost_response/s013_final.png",
+      "observed": {
+        "home": "Harbor Town",
+        "away": "River City",
+        "market": "MONEYLINE",
+        "side": "HOME",
+        "line": "NONE",
+        "price": "1.92",
+        "state": "REVIEWONLY"
+      },
+      "matches_structured_result": true
+    },
+    {
+      "case": "changing",
+      "screenshot": "changing/s013_final.png",
+      "observed_price": "2.13",
+      "original_price": "1.96",
+      "expected_stage": "PRICE_CHANGED"
+    }
+  ]
+}
