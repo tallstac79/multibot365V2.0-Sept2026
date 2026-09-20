@@ -15,29 +15,19 @@
 ## Completed (cont'd)
 - Milestone A Search interaction: query "Fulham" entered and confirmed visible in editable field ✓
 
-## BLOCKED — REAL RUNTIME ISSUE DIAGNOSED
-- **Milestone C: Exact Fixture Selection** — ACCESSIBILITY SERVICE NOT RECEIVING EVENTS
-  - **Root cause identified (not code bug):** Samsung device not delivering accessibility events to third-party services
-  - Service IS installed, enabled in settings, and properly configured
-  - Service is NOT receiving ANY accessibility events despite taps/swipes/interactions
-  - Chrome IS running and loading Bet365 (confirmed via dumpsys), but accessibility tree is empty
-  - **Diagnosis:** Accessibility framework on this device is blocking event delivery to custom services (firmware limitation or missing developer setting)
-  - **Evidence:**
-    - `onAccessibilityEvent()` not called despite 100+ tap/swipe interactions
-    - No accessibility events in system logcat
-    - `enabled_accessibility_services` shows service is enabled
-    - Chrome window exists in window list but has 0 roots/accessibility nodes
-    - `touch_exploration_enabled=0` cannot be set to 1 (reverts to 0)
-  - **Code status:** ✅ 100% correct (3-level fallback detection, fixture discovery logic, all methods working)
-  - **Device status:** ❌ System-level accessibility event delivery broken on this Samsung device
-
-## Recommendation
-1. **This device may not be suitable for accessibility-based automation.** Accessibility frameworks are intentionally restricted on consumer devices for security/privacy.
-2. **Alternative approaches:**
-   - Use UIAutomator framework instead (requires different architecture but doesn't rely on AccessibilityService events)
-   - Test on a different device with open developer/accessibility modes
-   - Use device-level accessibility event simulation tools (adb shell uiautomator)
-3. **Code is ready.** All code changes are correct and verified. If this automation runs on a device with proper accessibility event delivery, it will work.
+## In Progress
+- **Milestone C: Exact Fixture Selection** — SWITCHING FROM EVENT-DRIVEN TO ACTIVE POLLING
+  - **Previous approach:** Event-driven (onAccessibilityEvent callbacks) — unreliable on this Samsung
+  - **New approach:** Active polling loop (getWindows() every 250-500ms) while pending_action="FIXTURE_TAP"
+  - **Rationale:** Earlier tests confirmed `captureAllChrome()` CAN access Chrome content when called directly
+  - **Implementation:** Background polling thread that:
+    1. Continuously checks getWindows() for Chrome tree
+    2. On Chrome found, calls `discoverCurrentFootballFixture()` directly
+    3. Writes results to prefs (fixture_name, fixture_home, fixture_away)
+    4. Hard timeout after 30 seconds
+  - **Status:** Codex implementing polling loop architecture
+  - **Next:** Deploy polling APK, test on Samsung R5CT61TE14Z, verify fixture discovery
+  - **Device compatibility:** Will be confirmed only after polling test passes or fails with real Chrome tree inspection
 
 ## Next Milestone
 **B: Text Entry Verification** → **C: Exact Fixture Selection** → **D: Market/Line Selection** → **E: Betslip Validation**
