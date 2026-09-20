@@ -1,18 +1,22 @@
 # MultiBot365 V2 Build Status
 
 ## Current Milestone
-**A: Reliable Search Interaction** (in progress)
+**C: Exact Fixture Selection** (next to test)
 
 ## Completed
-- Android phone accessibility service: enabled and reading Bet365 Chrome content ✓
-- Football-nav generic clicking test: abandoned per handoff direction ✓
+ - Android phone accessibility service: enabled and reading Bet365 Chrome content ✓
+ - **Milestone A: Search query entry + verification** ✓ PASS (2026-09-20 ~18:45)
+   - Root cause identified: Text-based search targeting vs. native SearchView control
+   - Codex fixed: `findSearchViewOrEditTextNode()` now targets `android.widget.SearchView` class
+   - Test: Entered "Fulham", confirmed visible in EditText
+   - Status: PASS (search_pass=true; search_detail="PASS: query 'Fulham' confirmed visible")
 - Hard watchdog timeout for pending actions: implemented ✓
 
 ## Completed (cont'd)
 - Milestone A Search interaction: query "Fulham" entered and confirmed visible in editable field ✓
 
 ## In Progress
-- **Milestone C: Exact Fixture Selection** — Fixture code complete and deployed. Search prerequisite now being fixed: root cause identified as incorrect targeting. Current code searches for text "Search", but actual Bet365 search control is an android.widget.SearchView (not text-based). Updated control now exposed in live tree at bounds [35,150][684,236]. Delegated to Codex to update executeSearchFlow() to target SearchView/EditText by class type instead of text label. APK rebuild in progress.
+- **Milestone C: Exact Fixture Selection** — Codex fixture tap handler implemented. Fulham vs Man Utd match visible on-device. Ready for tap + page verify test.
 
 ## Next Milestone
 **B: Text Entry Verification** → **C: Exact Fixture Selection** → **D: Market/Line Selection** → **E: Betslip Validation**
