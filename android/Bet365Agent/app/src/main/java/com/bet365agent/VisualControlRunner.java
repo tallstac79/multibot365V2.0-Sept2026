@@ -33,7 +33,16 @@ final class VisualControlRunner {
     private final Handler main = new Handler(Looper.getMainLooper());
     private final ExecutorService worker = Executors.newSingleThreadExecutor();
     private final SharedPreferences prefs;
-    private String active;
+    private volatile String active;
+    private volatile String reservation;
+    interface ResultListener { void onFinished(String id, String status, String detail); }
+    private ResultListener listener;
+    void setResultListener(ResultListener listener) { this.listener = listener; }
+    synchronized boolean reserve(String id) {
+        if (closed || active != null || reservation != null) return false;
+        reservation = id; return true;
+    }
+    synchronized void releaseReservation(String id) { if (id.equals(reservation)) reservation = null; }
     private TextEntryFlow textFlow;
     private long deadline;
     private boolean closed;
@@ -62,18 +71,21 @@ final class VisualControlRunner {
         prepare(id, captureOnly, 0);
     }
 
-    boolean isTextActive() { return textFlow != null; }
+    boolean isTextActive() { return textFlow != null || reservation != null; }
 
-    void startText(TextInstruction instruction) {
-        if (!begin(instruction.id, Display.DEFAULT_DISPLAY, instruction.timeoutMs)) return;
+    void startText(TextInstruction instruction) { tryStartText(instruction); }
+
+    boolean tryStartText(TextInstruction instruction) {
+        if (!begin(instruction.id, Display.DEFAULT_DISPLAY, instruction.timeoutMs)) return false;
         try {
             textFlow = new TextEntryFlow(this, service, instruction);
             textFlow.start();
         } catch (Exception e) { finish(instruction.id, "INPUT_FAILED", "Cannot start text flow: " + e); }
+        return true;
     }
 
-    private boolean begin(String id, int displayId, long timeoutMs) {
-        if (closed) return false;
+    private synchronized boolean begin(String id, int displayId, long timeoutMs) {
+        if (closed || (reservation != null && !reservation.equals(id))) return false;
         if (active != null || prefs.getStringSet("consumed_ids", new HashSet<>()).contains(id)) {
             log("DUPLICATE_OR_BUSY rejected id=" + id);
             return false;
@@ -294,6 +306,7 @@ final class VisualControlRunner {
         prefs.edit().putString("status", status).putString("detail", detail).commit();
         ScanStore.setVisualControlTestResult(service, status, detail);
         log("RESULT id=" + id + " status=" + status + " detail=" + detail);
+        if (listener != null) listener.onFinished(id, status, detail);
     }
 
     void close() {

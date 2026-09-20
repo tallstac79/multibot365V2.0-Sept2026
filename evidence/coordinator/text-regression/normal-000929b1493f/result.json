@@ -1,0 +1,77 @@
+{
+  "run_id": "normal-000929b1493f",
+  "requested_text": "orchard",
+  "field_hint": "SEARCH",
+  "package": "com.android.chrome",
+  "mechanism": "AccessibilityInputConnection.commitText",
+  "started_at_ms": 1789940335883,
+  "started_elapsed_ms": 11105393,
+  "timeout_ms": 30000,
+  "status": "PASS",
+  "field_bounds": [
+    57,
+    395,
+    664,
+    521
+  ],
+  "pre_screenshot": "files/visual/normal-000929b1493f/before.png",
+  "post_screenshot": "files/visual/normal-000929b1493f/after.png",
+  "verification_result": "EXACT_INPUT_AND_SCREENSHOT_OCR",
+  "input_attempts": 1,
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 1
+    },
+    {
+      "phase": "LOCATING",
+      "elapsed_ms": 47
+    },
+    {
+      "phase": "FOCUS_DISPATCHING",
+      "elapsed_ms": 966
+    },
+    {
+      "phase": "FOCUS_GESTURE_COMPLETED",
+      "elapsed_ms": 1086
+    },
+    {
+      "phase": "FOCUS_CONFIRMED",
+      "elapsed_ms": 1312
+    },
+    {
+      "phase": "INPUT_COMMITTING",
+      "elapsed_ms": 2477
+    },
+    {
+      "phase": "INPUT_SENT",
+      "elapsed_ms": 2527
+    },
+    {
+      "phase": "VERIFYING",
+      "elapsed_ms": 3143
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 4684
+    }
+  ],
+  "phase": "FINISHED",
+  "editor_package": "com.android.chrome",
+  "editor_generation": 8,
+  "focused_screenshot": "files/visual/normal-000929b1493f/focused.png",
+  "focused_field_bounds": [
+    57,
+    395,
+    664,
+    521
+  ],
+  "prior_text_length": 0,
+  "visible_field_text": "orchard",
+  "observed_text": "orchard",
+  "exact_input_match": true,
+  "visual_text_match": true,
+  "detail": "Exact editor value and visible field OCR verified",
+  "ended_at_ms": 1789940340566,
+  "duration_ms": 4684
+}

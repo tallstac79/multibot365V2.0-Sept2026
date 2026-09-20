@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        findViewById(R.id.btnCoordinator).setOnClickListener(v -> startActivity(new Intent(this, CoordinatorSettingsActivity.class)));
 
         statusAccessibility = findViewById(R.id.statusAccessibility);
         statusPackage = findViewById(R.id.statusPackage);

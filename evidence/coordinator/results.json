@@ -1,0 +1,161 @@
+{
+  "status": "PASS",
+  "tests": [
+    {
+      "case": "normal",
+      "expected": "PASS",
+      "result": {
+        "instruction_id": "lan-1789940231-normal",
+        "status": "PASS",
+        "stage": "PASS",
+        "detail": "Exact editor value and visible field OCR verified",
+        "duration_ms": 8284,
+        "execution_count": 1,
+        "run_id": "c_EQU5cTFJ_oOXoTLUMbiUYvdmM_lReinWM4SBmOFwpxI"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "duplicate",
+      "assertions_passed": true
+    },
+    {
+      "case": "spaces",
+      "expected": "PASS",
+      "result": {
+        "instruction_id": "lan-1789940231-spaces",
+        "status": "PASS",
+        "stage": "PASS",
+        "detail": "Exact editor value and visible field OCR verified",
+        "duration_ms": 7710,
+        "execution_count": 1,
+        "run_id": "c_U1Wo_sRnxnvOqECd0OoDhR0MsdAgG4dC7ejckPxuolM"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "mixed",
+      "expected": "PASS",
+      "result": {
+        "instruction_id": "lan-1789940231-mixed",
+        "status": "PASS",
+        "stage": "PASS",
+        "detail": "Exact editor value and visible field OCR verified",
+        "duration_ms": 7603,
+        "execution_count": 1,
+        "run_id": "c_IXIwkjhi6Wd8-MsqnZSLtIijgU6TSRzB949UOn1GWBE"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "numbers",
+      "expected": "PASS",
+      "result": {
+        "instruction_id": "lan-1789940231-numbers",
+        "status": "PASS",
+        "stage": "PASS",
+        "detail": "Exact editor value and visible field OCR verified",
+        "duration_ms": 7701,
+        "execution_count": 1,
+        "run_id": "c_Q7T2OPqHeCfAN5L0uEUACa04uglt41zT0I_n5cVY-Qc"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "malformed",
+      "count": 5,
+      "assertions_passed": true
+    },
+    {
+      "case": "missing",
+      "expected": "TARGET_NOT_FOUND",
+      "result": {
+        "instruction_id": "lan-1789940231-missing",
+        "status": "FAIL",
+        "stage": "TARGET_NOT_FOUND",
+        "detail": "No unique outlined field containing OCR hint Nonexistent",
+        "duration_ms": 7957,
+        "execution_count": 1,
+        "run_id": "c_qRaYRas44Nj07omaRATStzTe0eggGXRljorKqPoF7WY"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "timeout",
+      "expected": "TIMEOUT",
+      "result": {
+        "instruction_id": "lan-1789940231-timeout",
+        "status": "FAIL",
+        "stage": "TIMEOUT",
+        "detail": "Coordinator hard deadline expired",
+        "duration_ms": 207,
+        "execution_count": 1,
+        "run_id": "c_A7IX98RBP6YHiie99F3g--m4ZcY3CYM3sOfMCag8fw8"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "lost-response",
+      "result": {
+        "instruction_id": "lan-1789940231-lost-response",
+        "status": "PASS",
+        "stage": "PASS",
+        "detail": "Exact editor value and visible field OCR verified",
+        "duration_ms": 7651,
+        "execution_count": 1,
+        "run_id": "c_eOXgcuhvzVGH6vQKIixQlHBNNxpKYn0s0Jl11CP0h2s"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "restart-no-replay",
+      "old_pid": 30660,
+      "new_pid": 31049,
+      "result": {
+        "instruction_id": "lan-1789940231-restart",
+        "status": "FAIL",
+        "stage": "INTERNAL_ERROR",
+        "detail": "Process restarted; uncertain instruction was not replayed",
+        "duration_ms": 8070,
+        "execution_count": 1,
+        "run_id": "c_0uODxH_CFjKG2dlGTet_ymgpIW1Z5O6fAJhX6pNP6wk"
+      },
+      "assertions_passed": true
+    },
+    {
+      "case": "after-restart",
+      "expected": "PASS",
+      "result": {
+        "instruction_id": "lan-1789940231-after-restart",
+        "status": "PASS",
+        "stage": "PASS",
+        "detail": "Exact editor value and visible field OCR verified",
+        "duration_ms": 7855,
+        "execution_count": 1,
+        "run_id": "c_rjubybyemMHEApFBy7RBrPVIx_Tr7Ad5vL4Q3YoiB-A"
+      },
+      "assertions_passed": true
+    }
+  ],
+  "adb_server_absent_at_end": true,
+  "final_health": {
+    "healthy": true,
+    "heartbeat_ms": 1789940301548,
+    "uptime_ms": 9456,
+    "state": "IDLE",
+    "current_instruction": null,
+    "last_result": {
+      "instruction_id": "lan-1789940231-after-restart",
+      "status": "PASS",
+      "stage": "PASS",
+      "detail": "Exact editor value and visible field OCR verified",
+      "duration_ms": 7855,
+      "execution_count": 1,
+      "run_id": "c_rjubybyemMHEApFBy7RBrPVIx_Tr7Ad5vL4Q3YoiB-A"
+    },
+    "app_version": "0.3.0-coordinator",
+    "version_code": 3,
+    "endpoint": "http://192.168.4.108:8767",
+    "pid": 31049
+  }
+}

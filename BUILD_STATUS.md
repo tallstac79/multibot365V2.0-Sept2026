@@ -1,6 +1,56 @@
 # MultiBot365 build status
 
-## Current milestone: 2 — PASS on the physical Samsung
+## Current milestone: 3 — PASS on the physical Samsung
+
+Verified 2026-09-20 on the physical Samsung SM-A136B, R5CT61TE14Z, Android 14 / API 34, starting from commit 1a20c51. App version **0.3.0-coordinator (3)**.
+
+### Coordinator transport and execution
+
+- Windows talks directly to the phone at its private Wi-Fi address using authenticated HTTP on port 8767. No ADB, port forwarding, desktop server or keyboard injection is required in the execution path.
+- The phone exposes health/heartbeat, current state/instruction, last result, version, durable receipt acknowledgements, result polling and protected acceptance artifacts.
+- OPEN_AND_TYPE validates the strict five-field schema, durably admits the ID, opens the configured Chrome page, visually finds the supplied target, taps pixel-derived bounds, enters supplied text once, and requires exact editor readback plus screenshot OCR.
+- SQLite persists admission and results before effects/acknowledgement. Unique IDs remain permanent no-replay tombstones. One reserved runner accepts work at a time; duplicates return DUPLICATE and reference the original result.
+- Lost communication retries use the same ID. Restart reconciles terminal text evidence or marks uncertain work INTERNAL_ERROR without replay. A new instruction can then run normally.
+- The server binds only an RFC1918 IPv4 address on Wi-Fi/Ethernet, accepts private peers, requires a per-install shared token, rejects browser-origin API requests, and bounds framing, bodies, concurrency and socket lifetimes. HTTP is for a trusted LAN, not an encrypted/public deployment.
+- The app's Coordinator connection screen displays its address/token and permits local start-page/token configuration. Private Windows credentials live under ignored .local/; no token is committed.
+- Result status is PASS or FAIL; stage distinguishes PASS, INVALID_INSTRUCTION, DUPLICATE, TARGET_NOT_FOUND, FOCUS_FAILED, INPUT_FAILED, TEXT_NOT_VERIFIED, TIMEOUT and INTERNAL_ERROR. Busy is a rejected INTERNAL_ERROR/BUSY detail with the new ID unconsumed.
+
+### Physical acceptance evidence
+
+**evidence/coordinator/results.json**: all 11 recorded cases passed their assertions, plus unauthorized access and concurrent busy-admission checks. Evidence includes submitted instructions, acknowledgements, result JSON, original phone PNGs/OCR, exact text readback, detected bounds, timings, duplicate responses, and before/after restart state.
+
+| Case | Observed |
+| --- | --- |
+| Search / Fulham | PASS: Windows -> Samsung visual focus/input/verification -> Windows |
+| Spaces, mixed case, numbers | PASS with exact readback and screenshot OCR |
+| Same instruction ID | DUPLICATE, execution_count=1, input_attempts=1, original result unchanged |
+| Malformed JSON/schema | Five variants rejected INVALID_INSTRUCTION; unauthorized token rejected HTTP 401 |
+| Unreachable target | TARGET_NOT_FOUND, no input attempt |
+| 200ms instruction deadline | TIMEOUT (207ms observed), no input attempt |
+| Discard response then retry same ID | DUPLICATE, original command PASS, one input attempt |
+| Concurrent distinct instruction | Rejected BUSY, new ID not consumed |
+| Kill phone process after INPUT_SENT | New PID/service rebind; INTERNAL_ERROR/no replay; same ID DUPLICATE |
+| Fresh command after restart | PASS / Recovered 42 |
+
+The suite uses only HTTP and asserts the PC ADB server port is closed at both ends. All forwarding was removed before testing. ADB was used only for build/deployment, setup and later regression/audit work. The process-kill endpoint is authenticated and available only in debuggable builds.
+
+### Regressions diagnosed during this milestone
+
+Mixed-case Search exposed full-page OCR merging the placeholder with its enclosing rule. Only when the normal OCR pass has no matching hint, a bounded fallback removes long rules from an OCR copy and uses sparse-text segmentation. Target bounds still come from the original screenshot; the existing focus, input and exact verification architecture remains intact. Pixel preprocessing uses bulk arrays for Samsung performance.
+
+Chrome creates idle speculative HTTP connections. Responding to an idle read timeout with HTTP 400 left a stale response for its next navigation. The listener now silently closes idle/incomplete connections and applies a separate absolute five-second socket deadline. Repeat navigations passed afterward. Legacy accessibility tree event processing is suppressed throughout coordinator reservation and execution.
+
+All **13 text regression cases** and **8 visual regression cases** passed on the same final APK. Evidence: **evidence/coordinator/text-regression/results.json** and **evidence/coordinator/visual-regression/results.json**. Final LAN health remained healthy/IDLE after regression process restarts and after ADB was stopped again. No blocker remains for Milestone 3.
+
+Final APK SHA256: **7dfb8590adcb823331ded1142467c8059598396b6ea8f07b6839c87bd84e4fd7** (also evidence/coordinator/build.json).
+
+Reproduction, pairing, schema limits and endpoint contract: **tools/COORDINATOR.md**. Windows CLI: **tools/coordinator_client.py**. LAN-only acceptance: **tools/test_coordinator.py**.
+
+The current supported field/text contract remains the bounded Milestone 2 contract below. Recovery is at-most-once execution, not guaranteed completion after interruption. Clearing application data removes the ledger. The enabled accessibility service must be running and the phone awake/unlocked. Broader layouts, sessions and future action types remain subsequent milestones.
+
+---
+
+## Milestone 2 — PASS on the physical Samsung
 
 Verified 2026-09-20 on Samsung SM-A136B, R5CT61TE14Z, Android 14 / API 34. Built and deployed from milestone 1 commit 7611e27.
 

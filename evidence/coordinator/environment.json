@@ -1,0 +1,24 @@
+{
+  "adb_server_absent": true,
+  "health": {
+    "healthy": true,
+    "heartbeat_ms": 1789940232325,
+    "uptime_ms": 367,
+    "state": "IDLE",
+    "current_instruction": null,
+    "last_result": {
+      "instruction_id": "lan-1789940143-spaces",
+      "status": "FAIL",
+      "stage": "TARGET_NOT_FOUND",
+      "detail": "No unique outlined field containing OCR hint Search",
+      "duration_ms": 11181,
+      "execution_count": 1,
+      "run_id": "c_0ckuMsbLd4cBcZJ3rVQtG1K3lTRBJnp68CJDjdAJXls"
+    },
+    "app_version": "0.3.0-coordinator",
+    "version_code": 3,
+    "endpoint": "http://192.168.4.108:8767",
+    "pid": 30660
+  },
+  "transport": "private LAN HTTP; no forwarding; suite contains no ADB calls"
+}

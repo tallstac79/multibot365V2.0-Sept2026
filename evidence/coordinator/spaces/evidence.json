@@ -1,0 +1,77 @@
+{
+  "run_id": "c_U1Wo_sRnxnvOqECd0OoDhR0MsdAgG4dC7ejckPxuolM",
+  "requested_text": "clear blue sky",
+  "field_hint": "Search",
+  "package": "com.android.chrome",
+  "mechanism": "AccessibilityInputConnection.commitText",
+  "started_at_ms": 1789940242728,
+  "started_elapsed_ms": 11012239,
+  "timeout_ms": 13734,
+  "status": "PASS",
+  "field_bounds": [
+    57,
+    395,
+    664,
+    521
+  ],
+  "pre_screenshot": "files/visual/c_U1Wo_sRnxnvOqECd0OoDhR0MsdAgG4dC7ejckPxuolM/before.png",
+  "post_screenshot": "files/visual/c_U1Wo_sRnxnvOqECd0OoDhR0MsdAgG4dC7ejckPxuolM/after.png",
+  "verification_result": "EXACT_INPUT_AND_SCREENSHOT_OCR",
+  "input_attempts": 1,
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 1
+    },
+    {
+      "phase": "LOCATING",
+      "elapsed_ms": 54
+    },
+    {
+      "phase": "FOCUS_DISPATCHING",
+      "elapsed_ms": 2426
+    },
+    {
+      "phase": "FOCUS_GESTURE_COMPLETED",
+      "elapsed_ms": 2551
+    },
+    {
+      "phase": "FOCUS_CONFIRMED",
+      "elapsed_ms": 2775
+    },
+    {
+      "phase": "INPUT_COMMITTING",
+      "elapsed_ms": 3992
+    },
+    {
+      "phase": "INPUT_SENT",
+      "elapsed_ms": 4006
+    },
+    {
+      "phase": "VERIFYING",
+      "elapsed_ms": 4622
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 6267
+    }
+  ],
+  "phase": "FINISHED",
+  "editor_package": "com.android.chrome",
+  "editor_generation": 7,
+  "focused_screenshot": "files/visual/c_U1Wo_sRnxnvOqECd0OoDhR0MsdAgG4dC7ejckPxuolM/focused.png",
+  "focused_field_bounds": [
+    57,
+    395,
+    664,
+    521
+  ],
+  "prior_text_length": 0,
+  "visible_field_text": "clear blue sky",
+  "observed_text": "clear blue sky",
+  "exact_input_match": true,
+  "visual_text_match": true,
+  "detail": "Exact editor value and visible field OCR verified",
+  "ended_at_ms": 1789940248995,
+  "duration_ms": 6267
+}

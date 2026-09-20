@@ -1,0 +1,57 @@
+[
+  {
+    "body": "{",
+    "http": 400,
+    "result": {
+      "instruction_id": "",
+      "status": "FAIL",
+      "stage": "INVALID_INSTRUCTION",
+      "detail": "Schema validation failed: End of input",
+      "duration_ms": 0
+    }
+  },
+  {
+    "body": "{}",
+    "http": 400,
+    "result": {
+      "instruction_id": "",
+      "status": "FAIL",
+      "stage": "INVALID_INSTRUCTION",
+      "detail": "Schema validation failed: Exactly five fields required",
+      "duration_ms": 0
+    }
+  },
+  {
+    "body": "{\"instruction_id\": \"lan-1789940231-normal\", \"action\": \"OPEN_AND_TYPE\", \"target_text\": \"Search\", \"input_text\": \"Fulham\", \"timeout_ms\": \"15000\"}",
+    "http": 400,
+    "result": {
+      "instruction_id": "",
+      "status": "FAIL",
+      "stage": "INVALID_INSTRUCTION",
+      "detail": "Schema validation failed: Wrong field type: timeout_ms",
+      "duration_ms": 0
+    }
+  },
+  {
+    "body": "{\"instruction_id\": \"lan-1789940231-normal\", \"action\": \"OPEN_AND_TYPE\", \"target_text\": \"Search\", \"input_text\": \"Fulham\", \"timeout_ms\": 15000, \"unknown\": true}",
+    "http": 400,
+    "result": {
+      "instruction_id": "",
+      "status": "FAIL",
+      "stage": "INVALID_INSTRUCTION",
+      "detail": "Schema validation failed: Unknown field: unknown",
+      "duration_ms": 0
+    }
+  },
+  {
+    "body": "{\"instruction_id\": \"lan-1789940231-normal\", \"action\": \"OPEN_AND_TYPE\", \"target_text\": \"Search\", \"input_text\": \"Fulham\", \"timeout_ms\": 15000,\"action\":\"OPEN_AND_TYPE\"}",
+    "http": 400,
+    "result": {
+      "instruction_id": "",
+      "status": "FAIL",
+      "stage": "INVALID_INSTRUCTION",
+      "detail": "Schema validation failed: Duplicate field: action",
+      "duration_ms": 0
+    }
+  }
+]

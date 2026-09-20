@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="false"
@@ -10,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bet365Agent">
 
+        <activity android:name=".CoordinatorSettingsActivity" android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -58,8 +58,10 @@ public class Bet365AccessibilityService extends AccessibilityService {
     public void onServiceConnected() {
         super.onServiceConnected();
         instance = this;
+        if (coordinator != null) { coordinator.close(); coordinator = null; }
         if (visualRunner != null) visualRunner.close();
         visualRunner = new VisualControlRunner(this);
+        coordinator = new CoordinatorAgent(this, visualRunner);
         scanAndStore("onServiceConnected");
         tryPendingFootballOnEvent("onServiceConnected");
     }
@@ -117,6 +119,7 @@ public class Bet365AccessibilityService extends AccessibilityService {
     @Override
     public boolean onUnbind(android.content.Intent intent) {
         instance = null;
+        if (coordinator != null) { coordinator.close(); coordinator = null; }
         if (visualRunner != null) visualRunner.close();
         visualRunner = null;
         return super.onUnbind(intent);
@@ -125,6 +128,7 @@ public class Bet365AccessibilityService extends AccessibilityService {
     @Override
     public void onDestroy() {
         instance = null;
+        if (coordinator != null) { coordinator.close(); coordinator = null; }
         if (visualRunner != null) visualRunner.close();
         super.onDestroy();
     }
@@ -1823,6 +1827,8 @@ public class Bet365AccessibilityService extends AccessibilityService {
 
     // Neutral visual proof uses the same AccessibilityService and dispatchGesture transport.
     private VisualControlRunner visualRunner;
+    private CoordinatorAgent coordinator;
+    static String coordinatorEndpoint() { return instance == null || instance.coordinator == null ? "Waiting for service / Wi-Fi" : instance.coordinator.endpoint(); }
 
     @Override
     public android.accessibilityservice.InputMethod onCreateInputMethod() {

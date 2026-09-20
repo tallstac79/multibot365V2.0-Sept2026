@@ -191,6 +191,14 @@ final class TextEntryFlow {
     /** Called only on the existing OCR worker; no UI interaction occurs here. */
     void analyze(Bitmap bitmap, VisualControlRunner.Ocr ocr, String phase) throws Exception {
         List<Rect> hints = ocr.bounds(instruction.fieldHint);
+        if (hints.isEmpty() && "before".equals(phase)) {
+            Bitmap clean = withoutLongRules(bitmap);
+            VisualControlRunner.Ocr sparse;
+            try { sparse = runner.recognize(clean, TessBaseAPI.PageSegMode.PSM_SPARSE_TEXT); }
+            finally { clean.recycle(); }
+            hints = sparse.bounds(instruction.fieldHint);
+            if (!hints.isEmpty()) { ocr.words.clear(); ocr.rects.clear(); ocr.words.addAll(sparse.words); ocr.rects.addAll(sparse.rects); }
+        }
         if (hints.size() == 1) ocr.fieldBounds = findOutline(bitmap, hints.get(0));
         Rect current = field;
         // A blinking caret can merge with placeholder text in full-screen OCR.
@@ -209,6 +217,31 @@ final class TextEntryFlow {
                 }
             } finally { crop.recycle(); }
         }
+    }
+
+    /** Remove long straight rules only in the OCR copy; bounds still come from original pixels. */
+    private static Bitmap withoutLongRules(Bitmap source) {
+        int width = source.getWidth(), height = source.getHeight();
+        int[] pixels = new int[width * height]; source.getPixels(pixels, 0, width, 0, 0, width, height);
+        int[] clean = pixels.clone();
+        for (int y = 0; y < height; y++) {
+            int start = -1;
+            for (int x = 0; x <= width; x++) {
+                if (x < width && darkPixel(pixels[y * width + x])) { if (start < 0) start = x; }
+                else { if (start >= 0 && x - start > width / 3) for (int k = start; k < x; k++) clean[y * width + k] = Color.WHITE; start = -1; }
+            }
+        }
+        for (int x = 0; x < width; x++) {
+            int start = -1;
+            for (int y = 0; y <= height; y++) {
+                if (y < height && darkPixel(pixels[y * width + x])) { if (start < 0) start = y; }
+                else { if (start >= 0 && y - start > 80) for (int k = start; k < y; k++) clean[k * width + x] = Color.WHITE; start = -1; }
+            }
+        }
+        return Bitmap.createBitmap(clean, width, height, Bitmap.Config.ARGB_8888);
+    }
+    private static boolean darkPixel(int pixel) {
+        return Color.red(pixel) * 299 + Color.green(pixel) * 587 + Color.blue(pixel) * 114 < 128000;
     }
 
     private static boolean dark(Bitmap bitmap, int x, int y) {
