@@ -204,4 +204,36 @@ public final class ScanStore {
     public static String getSearchExcerpt(Context ctx) { return prefs(ctx).getString(KEY_SEARCH_EXCERPT, ""); }
     public static String getSearchStatus(Context ctx) { return prefs(ctx).getString(KEY_SEARCH_STATUS, ""); }
     public static long getSearchTs(Context ctx) { return prefs(ctx).getLong(KEY_SEARCH_TS, 0L); }
+
+    // Milestone C: Fixture selection
+    public static void setFixtureStatus(Context ctx, String status) { prefs(ctx).edit().putString("fixture_status", status).apply(); }
+    
+    public static void setFixtureResult(Context ctx, boolean pass, String detail) { 
+        prefs(ctx).edit().putBoolean("fixture_pass", pass).putString("fixture_detail", detail).putString("fixture_status", "DONE").apply(); 
+    }
+    
+    public static void saveFixtureResult(Context ctx, boolean pass, String stage, String detail, String excerpt, long ts) {
+        prefs(ctx).edit()
+                .putBoolean("fixture_pass", pass)
+                .putString("fixture_stage", stage == null ? "" : stage)
+                .putString("fixture_detail", detail == null ? "" : detail)
+                .putString("fixture_excerpt", excerpt == null ? "" : excerpt)
+                .putString("fixture_status", "DONE")
+                .putLong("fixture_ts", ts)
+                .putString(KEY_PENDING, "")
+                .apply();
+    }
+    
+    public static boolean hasFixtureResult(Context ctx) {
+        return prefs(ctx).getLong("fixture_ts", 0L) > 0;
+    }
+    
+    public static boolean getFixturePass(Context ctx) { return prefs(ctx).getBoolean("fixture_pass", false); }
+    public static String getFixtureStage(Context ctx) { return prefs(ctx).getString("fixture_stage", ""); }
+    public static String getFixtureDetail(Context ctx) { return prefs(ctx).getString("fixture_detail", ""); }
+    public static String getFixtureExcerpt(Context ctx) { return prefs(ctx).getString("fixture_excerpt", ""); }
+    public static String getFixtureStatus(Context ctx) { return prefs(ctx).getString("fixture_status", ""); }
+    public static long getFixtureTs(Context ctx) { return prefs(ctx).getLong("fixture_ts", 0L); }
+    
+    public static void setPendingAction(Context ctx, String action) { prefs(ctx).edit().putString("pending_action", action).apply(); }
 }

@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView clickFbExcerpt;
     private TextView searchResult;
     private TextView searchExcerpt;
+    private TextView fixtureResult;
+    private TextView fixtureExcerpt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         clickFbExcerpt = findViewById(R.id.clickFbExcerpt);
         searchResult = findViewById(R.id.searchResult);
         searchExcerpt = findViewById(R.id.searchExcerpt);
+        fixtureResult = findViewById(R.id.fixtureResult);
+        fixtureExcerpt = findViewById(R.id.fixtureExcerpt);
 
         findViewById(R.id.btnOpenSettings).setOnClickListener(v -> {
             Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
@@ -111,6 +115,18 @@ public class MainActivity extends AppCompatActivity {
             }
 
             main.postDelayed(Bet365AccessibilityService::notifyPendingSearchFlowArmed, 400);
+        });
+
+        findViewById(R.id.btnTestFixture).setOnClickListener(v -> {
+            if (!isServiceEnabled()) {
+                Toast.makeText(this, "Enable Accessibility first", Toast.LENGTH_LONG).show();
+                return;
+            }
+            // Milestone C: tap fixture result from search
+            ScanStore.setPendingAction(this, "FIXTURE_TAP");
+            refreshUi();
+            Toast.makeText(this, "Queued FIXTURE_TAP — tap result in search dropdown", Toast.LENGTH_SHORT).show();
+            main.postDelayed(Bet365AccessibilityService::notifyPendingFixtureTapArmed, 100);
         });
     }
 
@@ -203,6 +219,21 @@ public class MainActivity extends AppCompatActivity {
                     + "\nSTAGE: " + ScanStore.getSearchStage(this)
                     + "\n" + ScanStore.getSearchDetail(this));
             searchExcerpt.setText("SEARCH_CHROME_TEXT:\n" + ScanStore.getSearchExcerpt(this));
+        }
+
+        String fixtureStatus = ScanStore.getFixtureStatus(this);
+        if (!ScanStore.hasFixtureResult(this) && (fixtureStatus == null || fixtureStatus.isEmpty())) {
+            fixtureResult.setText("FIXTURE_TAP: (not run)\nSTAGE: —");
+            fixtureExcerpt.setText("FIXTURE_CHROME_TEXT: (none)");
+        } else if (fixtureStatus != null && (fixtureStatus.startsWith("PENDING") || fixtureStatus.startsWith("RUNNING"))) {
+            fixtureResult.setText("FIXTURE_TAP: " + fixtureStatus + "\nSTAGE: " + ScanStore.getFixtureStage(this));
+            fixtureExcerpt.setText("FIXTURE_CHROME_TEXT: (waiting — return here after Chrome test)");
+        } else {
+            boolean pass = ScanStore.getFixturePass(this);
+            fixtureResult.setText("FIXTURE_TAP: " + (pass ? "PASS" : "FAIL")
+                    + "\nSTAGE: " + ScanStore.getFixtureStage(this)
+                    + "\n" + ScanStore.getFixtureDetail(this));
+            fixtureExcerpt.setText("FIXTURE_CHROME_TEXT:\n" + ScanStore.getFixtureExcerpt(this));
         }
     }
 

@@ -9,6 +9,8 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityWindowInfo;
 import android.util.Log;
 
+import java.util.Queue;
+import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -1077,5 +1079,193 @@ public class Bet365AccessibilityService extends AccessibilityService {
         if (s == null) return "";
         if (s.length() <= max) return s;
         return s.substring(0, max) + "…";
+    }
+
+    // Milestone C: Fixture selection via search result tap
+    private volatile boolean fixtureFlowInFlight = false;
+    private volatile long fixtureArmedAt = 0L;
+
+    public static void notifyPendingFixtureTapArmed() {
+        Bet365AccessibilityService svc = instance;
+        if (svc == null) return;
+        svc.fixtureArmedAt = System.currentTimeMillis();
+        svc.fixtureFlowInFlight = false;
+        ScanStore.setFixtureStatus(svc, "PENDING");
+        svc.tryPendingFixtureTap("armed");
+        svc.mainHandler.postDelayed(() -> svc.tryPendingFixtureTap("timer:2s"), 2000);
+        svc.mainHandler.postDelayed(() -> svc.tryPendingFixtureTap("timer:6s"), 6000);
+    }
+
+    private void tryPendingFixtureTap(String reason) {
+        if (fixtureFlowInFlight || !ScanStore.getPendingAction(this).equals("FIXTURE_TAP")) return;
+        long elapsed = System.currentTimeMillis() - fixtureArmedAt;
+        String activePkg = currentActivePackage();
+        if ("com.bet365agent".equals(activePkg)) {
+            ScanStore.setFixtureStatus(this, "PENDING — Bet365Agent still foreground");
+            return;
+        }
+        if (!"com.android.chrome".equals(activePkg)) {
+            ScanStore.setFixtureStatus(this, "PENDING — Chrome not foreground");
+            return;
+        }
+        fixtureFlowInFlight = true;
+        executeFixtureTap();
+    }
+
+    private void executeFixtureTap() {
+        try {
+            ChromeSnapshot snap = captureAllChrome();
+            ScanStore.saveChromeSnapshot(this, snap.packageName, snap.title, snap.dump,
+                    snap.visibleText, snap.clickableSummary, System.currentTimeMillis());
+            
+            if (!snap.looksLikeBet365) {
+                failFixture("NOT_BET365", "FAIL: Chrome content not recognized as Bet365 page", snap);
+                recycleRoots(snap.roots);
+                fixtureFlowInFlight = false;
+                return;
+            }
+            
+            // Search for first Fulham text node (case-insensitive) in the accessibility tree
+            AccessibilityNodeInfo fulhamNode = findFixtureSearchResult(snap.roots, "Fulham");
+            if (fulhamNode == null) {
+                failFixture("SEARCH_RESULT_NOT_FOUND", "FAIL: first Fulham text node not found", snap);
+                recycleRoots(snap.roots);
+                fixtureFlowInFlight = false;
+                return;
+            }
+            
+            // Walk up to nearest clickable ancestor
+            AccessibilityNodeInfo clickable = findClickableAncestor(fulhamNode);
+            if (clickable == null) {
+                String detail = "FAIL: Fulham text found (" + describeNode(fulhamNode)
+                        + ") but no clickable ancestor found";
+                fulhamNode.recycle();
+                failFixture("NO_CLICKABLE_ANCESTOR", detail, snap);
+                recycleRoots(snap.roots);
+                fixtureFlowInFlight = false;
+                return;
+            }
+            
+            String detail = "target=" + describeNode(fulhamNode)
+                    + " clickable=" + describeNode(clickable);
+            boolean clicked = clickable.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+            if (clickable != fulhamNode) clickable.recycle();
+            fulhamNode.recycle();
+            recycleRoots(snap.roots);
+            
+            if (!clicked) {
+                failFixture("CLICK_FAILED", detail + "; ACTION_CLICK returned false", snap);
+                fixtureFlowInFlight = false;
+                return;
+            }
+            
+            ScanStore.setFixtureStatus(this, "RUNNING - clicked Fulham result, waiting for fixture page...");
+            mainHandler.postDelayed(() -> {
+                try {
+                    verifyFixturePage(detail + "; ACTION_CLICK=true");
+                } finally {
+                    fixtureFlowInFlight = false;
+                }
+            }, POST_CLICK_WAIT_MS);
+        } catch (Exception e) {
+            ChromeSnapshot snap = captureAllChrome();
+            failFixture("EXCEPTION", "FAIL: exception in executeFixtureTap: " + e, snap);
+            recycleRoots(snap.roots);
+            fixtureFlowInFlight = false;
+        }
+    }
+
+    /**
+     * Search Chrome accessibility tree for first visible text node containing the target
+     * (case-insensitive). Returns a copy of the node or null if not found.
+     */
+    private AccessibilityNodeInfo findFixtureSearchResult(List<AccessibilityNodeInfo> roots, String target) {
+        if (roots == null || target == null) return null;
+        String lcTarget = target.toLowerCase(Locale.US);
+        for (AccessibilityNodeInfo root : roots) {
+            AccessibilityNodeInfo found = findSearchResultNode(root, lcTarget);
+            if (found != null) return found;
+        }
+        return null;
+    }
+    
+    private AccessibilityNodeInfo findSearchResultNode(AccessibilityNodeInfo node, String lcTarget) {
+        if (node == null) return null;
+        // Check this node's text and description
+        CharSequence t = node.getText();
+        CharSequence d = node.getContentDescription();
+        String ts = t == null ? "" : t.toString().toLowerCase(Locale.US);
+        String ds = d == null ? "" : d.toString().toLowerCase(Locale.US);
+        
+        if (node.isVisibleToUser() && (ts.contains(lcTarget) || ds.contains(lcTarget))) {
+            // Found a match
+            return AccessibilityNodeInfo.obtain(node);
+        }
+        
+        // Recursively search children
+        for (int i = 0; i < node.getChildCount(); i++) {
+            AccessibilityNodeInfo c = node.getChild(i);
+            if (c != null) {
+                AccessibilityNodeInfo found = findSearchResultNode(c, lcTarget);
+                c.recycle();
+                if (found != null) return found;
+            }
+        }
+        return null;
+    }
+
+    private void verifyFixturePage(String detail) {
+        try {
+            ChromeSnapshot snap = captureAllChrome();
+            ScanStore.saveChromeSnapshot(this, snap.packageName, snap.title, snap.dump,
+                    snap.visibleText, snap.clickableSummary, System.currentTimeMillis());
+            
+            String blob = (snap.visibleText + "\n" + snap.dump).toLowerCase(Locale.US);
+            // Fixture page should have team names and odds (1, x, 2 are standard Bet365 odds markers)
+            boolean hasFixture = blob.contains("fulham")
+                    && (blob.contains("vs") || blob.contains("v ") || blob.contains("-")
+                    || (blob.contains("1") && blob.contains("x") && blob.contains("2"))
+                    || blob.contains("odds") || blob.contains("match"));
+            
+            String excerpt = snap.visibleText;
+            if (excerpt == null || excerpt.trim().isEmpty()) excerpt = snap.dump;
+            if (excerpt.length() > 4000) excerpt = excerpt.substring(0, 4000) + "…";
+            
+            if (!hasFixture) {
+                // failure
+                ScanStore.saveFixtureResult(this, false, "verify_page",
+                        detail + " | POST_CLICK_VALIDATION FAIL - fixture page did not load with expected content",
+                        excerpt, System.currentTimeMillis());
+            } else {
+                // success
+                ScanStore.saveFixtureResult(this, true, "verify_page",
+                        detail + " | POST_CLICK_VALIDATION PASS - fixture page loaded with Fulham and odds",
+                        excerpt, System.currentTimeMillis());
+            }
+            recycleRoots(snap.roots);
+        } catch (Exception e) {
+            ChromeSnapshot snap = captureAllChrome();
+            failFixture("VERIFY_EXCEPTION", "FAIL verify: " + e, snap);
+            recycleRoots(snap.roots);
+        }
+    }
+    
+    private void failFixture(String stage, String detail, ChromeSnapshot snap) {
+        if (snap != null && snap.hasTree) {
+            ScanStore.saveChromeSnapshot(this, snap.packageName, snap.title, snap.dump,
+                    snap.visibleText, snap.clickableSummary, System.currentTimeMillis());
+        }
+        String excerpt = "";
+        if (snap != null) {
+            excerpt = snap.visibleText;
+            if (excerpt == null || excerpt.trim().isEmpty()) excerpt = snap.dump;
+            if (excerpt != null && excerpt.length() > 4000) {
+                excerpt = excerpt.substring(0, 4000) + "…";
+            }
+            if (excerpt == null) excerpt = "(no chrome dump)";
+        } else {
+            excerpt = "(no chrome snapshot)";
+        }
+        ScanStore.saveFixtureResult(this, false, stage, detail, excerpt, System.currentTimeMillis());
     }
 }
