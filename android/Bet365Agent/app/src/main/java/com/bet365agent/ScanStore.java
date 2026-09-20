@@ -206,12 +206,33 @@ public final class ScanStore {
     public static long getSearchTs(Context ctx) { return prefs(ctx).getLong(KEY_SEARCH_TS, 0L); }
 
     // Milestone C: Fixture selection
-    public static void setFixtureStatus(Context ctx, String status) { prefs(ctx).edit().putString("fixture_status", status).apply(); }
-    
-    public static void setFixtureResult(Context ctx, boolean pass, String detail) { 
-        prefs(ctx).edit().putBoolean("fixture_pass", pass).putString("fixture_detail", detail).putString("fixture_status", "DONE").apply(); 
+    public static void setFixtureStatus(Context ctx, String status) { 
+        prefs(ctx).edit().putString("fixture_status", status).apply(); 
     }
     
+    public static void setFixtureResult(Context ctx, boolean pass, String detail) { 
+        prefs(ctx).edit()
+                .putBoolean("fixture_pass", pass)
+                .putString("fixture_detail", detail)
+                .putString("fixture_status", "DONE")
+                .apply(); 
+    }
+    
+    /**
+     * Save discovered fixture details (home team, away team, fixture name).
+     * Called during dynamic discovery phase.
+     */
+    public static void saveDiscoveredFixture(Context ctx, String fixtureName, String homeTeam, String awayTeam) {
+        prefs(ctx).edit()
+                .putString("fixture_name", fixtureName == null ? "" : fixtureName)
+                .putString("fixture_home", homeTeam == null ? "" : homeTeam)
+                .putString("fixture_away", awayTeam == null ? "" : awayTeam)
+                .apply();
+    }
+    
+    /**
+     * Save complete fixture result with all details including discovered fixture info.
+     */
     public static void saveFixtureResult(Context ctx, boolean pass, String stage, String detail, String excerpt, long ts) {
         prefs(ctx).edit()
                 .putBoolean("fixture_pass", pass)
@@ -234,6 +255,10 @@ public final class ScanStore {
     public static String getFixtureExcerpt(Context ctx) { return prefs(ctx).getString("fixture_excerpt", ""); }
     public static String getFixtureStatus(Context ctx) { return prefs(ctx).getString("fixture_status", ""); }
     public static long getFixtureTs(Context ctx) { return prefs(ctx).getLong("fixture_ts", 0L); }
+    
+    public static String getFixtureName(Context ctx) { return prefs(ctx).getString("fixture_name", ""); }
+    public static String getFixtureHome(Context ctx) { return prefs(ctx).getString("fixture_home", ""); }
+    public static String getFixtureAway(Context ctx) { return prefs(ctx).getString("fixture_away", ""); }
     
     public static void setPendingAction(Context ctx, String action) { prefs(ctx).edit().putString("pending_action", action).apply(); }
 }

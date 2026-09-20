@@ -61,6 +61,15 @@ public class Bet365AccessibilityService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         if (event == null) return;
+        
+        // DEBUG/BYPASS: Force fixture discovery if marker file exists
+        if (checkForceFixtureDiscoveryMode() && !ScanStore.getPendingAction(this).equals("FIXTURE_TAP")) {
+            clearForceFixtureDiscoveryMode();
+            ScanStore.setPendingAction(this, "FIXTURE_TAP");
+            ScanStore.setFixtureStatus(this, "BYPASS_MODE_ARMED - forcing fixture discovery");
+            notifyPendingFixtureTapArmed();
+        }
+        
         int type = event.getEventType();
         if (type != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
                 && type != AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED
@@ -83,6 +92,10 @@ public class Bet365AccessibilityService extends AccessibilityService {
         }
         if (ScanStore.hasPendingSearchFlow(this)) {
             if (chromeEvent) tryPendingSearchOnEvent("a11y:" + type + " pkg=" + eventPkg);
+            return;
+        }
+        if (ScanStore.getPendingAction(this).equals("FIXTURE_TAP")) {
+            if (chromeEvent) tryPendingFixtureTap("a11y:" + type + " pkg=" + eventPkg);
         }
     }
 
@@ -742,18 +755,105 @@ public class Bet365AccessibilityService extends AccessibilityService {
     }
 
     private boolean anyChromeWindowPresent() {
+        StringBuilder debugLog = new StringBuilder();
+        debugLog.append("=== anyChromeWindowPresent() DEBUG ===\n");
+        debugLog.append("Timestamp: ").append(System.currentTimeMillis()).append("\n");
+        
+        // STEP 1: Try getWindows()
         List<AccessibilityWindowInfo> windows = getWindows();
-        if (windows == null) return false;
-        for (AccessibilityWindowInfo w : windows) {
-            if (w == null) continue;
+        debugLog.append("getWindows() returned: ").append(windows == null ? "NULL" : "List(" + windows.size() + ")\n");
+        
+        if (windows == null || windows.isEmpty()) {
+            // FALLBACK: Try getRootInActiveWindow()
+            debugLog.append("\n--- ATTEMPTING FALLBACK: getRootInActiveWindow() ---\n");
+            AccessibilityNodeInfo fallbackRoot = getRootInActiveWindow();
+            if (fallbackRoot != null) {
+                CharSequence pkg = fallbackRoot.getPackageName();
+                String pkgStr = pkg == null ? "" : pkg.toString();
+                debugLog.append("Fallback root package: ").append(pkgStr).append("\n");
+                boolean isChrome = ScanStore.isChromePackage(pkgStr);
+                debugLog.append("Is Chrome (fallback): ").append(isChrome).append("\n");
+                fallbackRoot.recycle();
+                
+                // Write debug log
+                writeDebugLog(debugLog.toString());
+                return isChrome;
+            } else {
+                debugLog.append("Fallback root is NULL\n");
+                writeDebugLog(debugLog.toString());
+                return false;
+            }
+        }
+        
+        // STEP 2: Inspect each window
+        int totalWindows = windows.size();
+        int chromeCount = 0;
+        debugLog.append("\nInspecting ").append(totalWindows).append(" window(s):\n");
+        
+        for (int i = 0; i < windows.size(); i++) {
+            AccessibilityWindowInfo w = windows.get(i);
+            if (w == null) {
+                debugLog.append("  [").append(i).append("] NULL window\n");
+                continue;
+            }
+            
+            int windowType = w.getType();
+            String typeStr = getWindowTypeString(windowType);
+            debugLog.append("  [").append(i).append("] Type: ").append(typeStr).append(" (").append(windowType).append(")");
+            
             AccessibilityNodeInfo root = w.getRoot();
-            if (root == null) continue;
+            if (root == null) {
+                debugLog.append(" | Root: NULL\n");
+                continue;
+            }
+            
             CharSequence p = root.getPackageName();
             String ps = p == null ? "" : p.toString();
+            CharSequence t = w.getTitle();
+            String ts = t == null ? "" : t.toString();
+            
+            debugLog.append(" | Package: ").append(ps).append(" | Title: ").append(ts).append("\n");
+            
             root.recycle();
-            if (ScanStore.isChromePackage(ps)) return true;
+            
+            if (ScanStore.isChromePackage(ps)) {
+                chromeCount++;
+                debugLog.append("     ^^^ CHROME FOUND ^^^\n");
+            }
         }
-        return false;
+        
+        boolean foundChrome = chromeCount > 0;
+        debugLog.append("\n--- SUMMARY ---\n");
+        debugLog.append("Total windows: ").append(totalWindows).append("\n");
+        debugLog.append("Chrome windows: ").append(chromeCount).append("\n");
+        debugLog.append("Result: ").append(foundChrome ? "CHROME FOUND" : "NO CHROME").append("\n");
+        
+        // Write debug log
+        writeDebugLog(debugLog.toString());
+        
+        return foundChrome;
+    }
+    
+    private String getWindowTypeString(int type) {
+        switch (type) {
+            case AccessibilityWindowInfo.TYPE_APPLICATION: return "APPLICATION";
+            case AccessibilityWindowInfo.TYPE_INPUT_METHOD: return "INPUT_METHOD";
+            case AccessibilityWindowInfo.TYPE_SYSTEM: return "SYSTEM";
+            case AccessibilityWindowInfo.TYPE_ACCESSIBILITY_OVERLAY: return "ACCESSIBILITY_OVERLAY";
+            default: return "UNKNOWN(" + type + ")";
+        }
+    }
+    
+    private void writeDebugLog(String content) {
+        try {
+            java.io.File debugFile = new java.io.File(getFilesDir(), "debug_windows.txt");
+            java.io.FileWriter fw = new java.io.FileWriter(debugFile, false); // overwrite each time
+            fw.write(content);
+            fw.close();
+            Log.d("Bet365A11y", "Debug log written to: " + debugFile.getAbsolutePath());
+        } catch (Exception e) {
+            Log.e("Bet365A11y", "Error writing debug log: " + e);
+        }
     }
 
     private static final class ChromeSnapshot {
@@ -879,6 +979,20 @@ public class Bet365AccessibilityService extends AccessibilityService {
                 || (snap.visibleText.length() > 80 && blob.contains("odds"));
 
         lastWindowsInspected = windowsInspected;
+        
+        // DEBUG: Log captureAllChrome results
+        StringBuilder captureDebug = new StringBuilder();
+        captureDebug.append("=== captureAllChrome() SUMMARY ===\n");
+        captureDebug.append("hasTree: ").append(snap.hasTree).append("\n");
+        captureDebug.append("looksLikeBet365: ").append(snap.looksLikeBet365).append("\n");
+        captureDebug.append("packageName: ").append(snap.packageName).append("\n");
+        captureDebug.append("roots count: ").append(snap.roots.size()).append("\n");
+        captureDebug.append("dump length: ").append(snap.dump.length()).append(" chars\n");
+        captureDebug.append("visibleText length: ").append(snap.visibleText.length()).append(" chars\n");
+        captureDebug.append("clickableSummary length: ").append(snap.clickableSummary.length()).append(" chars\n");
+        captureDebug.append("title: ").append(snap.title).append("\n");
+        Log.d("Bet365A11y", captureDebug.toString());
+        
         return snap;
     }
 
@@ -1154,8 +1268,8 @@ public class Bet365AccessibilityService extends AccessibilityService {
             ScanStore.setFixtureStatus(this, "PENDING — Bet365Agent still foreground");
             return;
         }
-        if (!"com.android.chrome".equals(activePkg)) {
-            ScanStore.setFixtureStatus(this, "PENDING — Chrome not foreground");
+        if (!anyChromeWindowPresent()) {
+            ScanStore.setFixtureStatus(this, "PENDING — Chrome not found in any window");
             return;
         }
         fixtureFlowInFlight = true;
@@ -1163,6 +1277,7 @@ public class Bet365AccessibilityService extends AccessibilityService {
     }
 
     private void executeFixtureTap() {
+        long startTime = System.currentTimeMillis();
         try {
             ChromeSnapshot snap = captureAllChrome();
             ScanStore.saveChromeSnapshot(this, snap.packageName, snap.title, snap.dump,
@@ -1175,32 +1290,40 @@ public class Bet365AccessibilityService extends AccessibilityService {
                 return;
             }
             
-            // Search for first Fulham text node (case-insensitive) in the accessibility tree
-            AccessibilityNodeInfo fulhamNode = findFixtureSearchResult(snap.roots, "Fulham");
-            if (fulhamNode == null) {
-                failFixture("SEARCH_RESULT_NOT_FOUND", "FAIL: first Fulham text node not found", snap);
+            // PHASE 1: Dynamic fixture discovery
+            ScanStore.setFixtureStatus(this, "DISCOVERING - scanning for current football fixture...");
+            FixtureCandidate discovered = discoverCurrentFootballFixture(snap.roots);
+            
+            if (discovered == null) {
+                failFixture("NO_TEST_FIXTURE", "FAIL: No current football fixture found in accessibility tree", snap);
                 recycleRoots(snap.roots);
                 fixtureFlowInFlight = false;
                 return;
             }
             
-            // Walk up to nearest clickable ancestor
-            AccessibilityNodeInfo clickable = findClickableAncestor(fulhamNode);
+            // Save discovered fixture info to prefs
+            ScanStore.saveDiscoveredFixture(this, discovered.fixtureName, discovered.homeTeam, discovered.awayTeam);
+            ScanStore.setFixtureStatus(this, "DISCOVERED - fixture: " + discovered.fixtureName);
+            
+            // PHASE 2: Click the discovered fixture
+            AccessibilityNodeInfo clickable = findClickableAncestor(discovered.targetNode);
             if (clickable == null) {
-                String detail = "FAIL: Fulham text found (" + describeNode(fulhamNode)
+                String detail = "FAIL: Fixture '" + discovered.fixtureName + "' found ("
+                        + describeNode(discovered.targetNode)
                         + ") but no clickable ancestor found";
-                fulhamNode.recycle();
+                discovered.targetNode.recycle();
                 failFixture("NO_CLICKABLE_ANCESTOR", detail, snap);
                 recycleRoots(snap.roots);
                 fixtureFlowInFlight = false;
                 return;
             }
             
-            String detail = "target=" + describeNode(fulhamNode)
+            String detail = "fixture=" + discovered.fixtureName
+                    + " target=" + describeNode(discovered.targetNode)
                     + " clickable=" + describeNode(clickable);
             boolean clicked = clickable.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-            if (clickable != fulhamNode) clickable.recycle();
-            fulhamNode.recycle();
+            if (clickable != discovered.targetNode) clickable.recycle();
+            discovered.targetNode.recycle();
             recycleRoots(snap.roots);
             
             if (!clicked) {
@@ -1209,10 +1332,11 @@ public class Bet365AccessibilityService extends AccessibilityService {
                 return;
             }
             
-            ScanStore.setFixtureStatus(this, "RUNNING - clicked Fulham result, waiting for fixture page...");
+            ScanStore.setFixtureStatus(this, "RUNNING - clicked " + discovered.fixtureName 
+                    + ", waiting for fixture page...");
             mainHandler.postDelayed(() -> {
                 try {
-                    verifyFixturePage(detail + "; ACTION_CLICK=true");
+                    verifyFixturePage(detail + "; ACTION_CLICK=true", discovered.homeTeam, discovered.awayTeam);
                 } finally {
                     fixtureFlowInFlight = false;
                 }
@@ -1224,73 +1348,210 @@ public class Bet365AccessibilityService extends AccessibilityService {
             fixtureFlowInFlight = false;
         }
     }
-
+    
     /**
-     * Search Chrome accessibility tree for first visible text node containing the target
-     * (case-insensitive). Returns a copy of the node or null if not found.
+     * Data class representing a discovered football fixture candidate.
      */
-    private AccessibilityNodeInfo findFixtureSearchResult(List<AccessibilityNodeInfo> roots, String target) {
-        if (roots == null || target == null) return null;
-        String lcTarget = target.toLowerCase(Locale.US);
+    private static final class FixtureCandidate {
+        String fixtureName;      // e.g., "Arsenal v Liverpool"
+        String homeTeam;         // e.g., "Arsenal"
+        String awayTeam;         // e.g., "Liverpool"
+        AccessibilityNodeInfo targetNode;  // The node containing the fixture text
+    }
+    
+    /**
+     * Dynamically discover a current football fixture by scanning the accessibility tree.
+     * Looks for patterns like "Team A v Team B" or "Team A vs Team B" in the sports navigation area.
+     * Prefers fixtures that are not in Virtual Sports and have visible market data.
+     * 
+     * Returns null if no suitable fixture found.
+     */
+    private FixtureCandidate discoverCurrentFootballFixture(List<AccessibilityNodeInfo> roots) {
+        if (roots == null || roots.isEmpty()) return null;
+        
+        // Pattern recognition: look for "Team v Team" or "Team vs Team" format
+        // Common team name patterns: (usually 3-15 chars, starts with capital letter)
+        String[] commonPatterns = {
+            "v ", "vs ", " v ", " vs ", "-"  // separators between teams
+        };
+        
+        // First, collect all potential fixture candidates from the tree
+        List<FixtureCandidate> candidates = new ArrayList<>();
         for (AccessibilityNodeInfo root : roots) {
-            AccessibilityNodeInfo found = findSearchResultNode(root, lcTarget);
-            if (found != null) return found;
+            collectFixtureCandidates(root, candidates);
         }
+        
+        // If we found candidates, return the most likely one
+        // (typically the first visible fixture that's not in Virtual Sports)
+        if (!candidates.isEmpty()) {
+            return candidates.get(0);
+        }
+        
         return null;
     }
     
-    private AccessibilityNodeInfo findSearchResultNode(AccessibilityNodeInfo node, String lcTarget) {
-        if (node == null) return null;
-        // Check this node's text and description
-        CharSequence t = node.getText();
-        CharSequence d = node.getContentDescription();
-        String ts = t == null ? "" : t.toString().toLowerCase(Locale.US);
-        String ds = d == null ? "" : d.toString().toLowerCase(Locale.US);
+    /**
+     * Recursively collect fixture candidates from the accessibility tree.
+     * Looks for text nodes matching football fixture patterns.
+     */
+    private void collectFixtureCandidates(AccessibilityNodeInfo node, List<FixtureCandidate> candidates) {
+        if (node == null || candidates.size() > 20) return;  // Limit to avoid expensive scanning
         
-        if (node.isVisibleToUser() && (ts.contains(lcTarget) || ds.contains(lcTarget))) {
-            // Found a match
-            return AccessibilityNodeInfo.obtain(node);
+        if (node.isVisibleToUser()) {
+            CharSequence text = node.getText();
+            CharSequence desc = node.getContentDescription();
+            String textStr = (text == null ? "" : text.toString()).toLowerCase(Locale.US);
+            String descStr = (desc == null ? "" : desc.toString()).toLowerCase(Locale.US);
+            String content = textStr + " " + descStr;
+            
+            // Exclude Virtual Sports and other non-live content
+            if (!content.contains("virtual") && !content.contains("esports")) {
+                // Look for fixture patterns: "Team v Team", "Team vs Team"
+                FixtureCandidate candidate = tryParseFixture(textStr, node);
+                if (candidate == null) {
+                    candidate = tryParseFixture(descStr, node);
+                }
+                
+                if (candidate != null) {
+                    // Additional validation: verify we have reasonable team names
+                    if (isValidTeamName(candidate.homeTeam) && isValidTeamName(candidate.awayTeam)) {
+                        candidates.add(candidate);
+                    }
+                }
+            }
         }
         
-        // Recursively search children
+        // Recurse to children
         for (int i = 0; i < node.getChildCount(); i++) {
-            AccessibilityNodeInfo c = node.getChild(i);
-            if (c != null) {
-                AccessibilityNodeInfo found = findSearchResultNode(c, lcTarget);
-                c.recycle();
-                if (found != null) return found;
+            AccessibilityNodeInfo child = node.getChild(i);
+            if (child != null) {
+                collectFixtureCandidates(child, candidates);
+                child.recycle();
+            }
+        }
+    }
+    
+    /**
+     * Attempt to parse a fixture name from text in "Team A v Team B" format.
+     * Returns a FixtureCandidate if matched, null otherwise.
+     */
+    private FixtureCandidate tryParseFixture(String text, AccessibilityNodeInfo sourceNode) {
+        if (text == null || text.length() < 5) return null;
+        
+        // Try various separators
+        String[] separators = {"v ", "vs ", " v ", " vs ", "-"};
+        for (String sep : separators) {
+            int sepIdx = text.indexOf(sep);
+            if (sepIdx > 0) {
+                String home = text.substring(0, sepIdx).trim();
+                String away = text.substring(sepIdx + sep.length()).trim();
+                
+                // Check if we got reasonable team names
+                if (home.length() >= 3 && away.length() >= 3 && away.length() <= 50) {
+                    // Extract just the team names (remove time/date if present)
+                    home = extractTeamName(home);
+                    away = extractTeamName(away);
+                    
+                    if (!home.isEmpty() && !away.isEmpty()) {
+                        FixtureCandidate candidate = new FixtureCandidate();
+                        candidate.homeTeam = home;
+                        candidate.awayTeam = away;
+                        candidate.fixtureName = home + " v " + away;
+                        candidate.targetNode = AccessibilityNodeInfo.obtain(sourceNode);
+                        return candidate;
+                    }
+                }
             }
         }
         return null;
     }
+    
+    /**
+     * Extract team name from a string, removing time/score info.
+     * E.g., "Arsenal 14:00" -> "Arsenal"
+     */
+    private String extractTeamName(String str) {
+        if (str == null) return "";
+        str = str.trim();
+        
+        // Remove common suffixes like time, scores, odds indicators
+        String[] tokens = str.split("\\s+");
+        if (tokens.length == 0) return "";
+        
+        // Take the first significant token(s) that form a team name
+        StringBuilder name = new StringBuilder();
+        for (String token : tokens) {
+            // Stop if we hit a time pattern (HH:MM or numbers with colons)
+            if (token.matches("\\d{1,2}:\\d{2}.*")) break;
+            // Stop if we hit pure numbers (scores, odds)
+            if (token.matches("\\d+") && token.length() < 4) break;
+            
+            if (name.length() > 0) name.append(" ");
+            name.append(token);
+            
+            // Team names are typically 1-3 words
+            if (name.toString().split("\\s+").length >= 3) break;
+        }
+        
+        return name.toString();
+    }
+    
+    /**
+     * Validate that a string is a reasonable team name.
+     */
+    private boolean isValidTeamName(String name) {
+        if (name == null || name.isEmpty()) return false;
+        if (name.length() < 3 || name.length() > 40) return false;
+        
+        // Team names should start with a letter
+        if (!Character.isLetter(name.charAt(0))) return false;
+        
+        // Should not be all numbers or special chars
+        if (name.matches(".*\\d+.*") && name.matches("\\d+")) return false;
+        
+        return true;
+    }
 
-    private void verifyFixturePage(String detail) {
+    private void verifyFixturePage(String detail, String expectedHomeTeam, String expectedAwayTeam) {
         try {
             ChromeSnapshot snap = captureAllChrome();
             ScanStore.saveChromeSnapshot(this, snap.packageName, snap.title, snap.dump,
                     snap.visibleText, snap.clickableSummary, System.currentTimeMillis());
             
             String blob = (snap.visibleText + "\n" + snap.dump).toLowerCase(Locale.US);
-            // Fixture page should have team names and odds (1, x, 2 are standard Bet365 odds markers)
-            boolean hasFixture = blob.contains("fulham")
-                    && (blob.contains("vs") || blob.contains("v ") || blob.contains("-")
+            String homeTeamLc = (expectedHomeTeam == null ? "" : expectedHomeTeam).toLowerCase(Locale.US);
+            String awayTeamLc = (expectedAwayTeam == null ? "" : expectedAwayTeam).toLowerCase(Locale.US);
+            
+            // Fixture page should have:
+            // 1. Both team names visible
+            // 2. Market data visible (odds, lines, market names)
+            boolean hasHomeTeam = !homeTeamLc.isEmpty() && blob.contains(homeTeamLc);
+            boolean hasAwayTeam = !awayTeamLc.isEmpty() && blob.contains(awayTeamLc);
+            
+            // Look for market indicators: odds, separators between teams, standard Bet365 markers
+            boolean hasMarketData = blob.contains("vs") || blob.contains("v ")
                     || (blob.contains("1") && blob.contains("x") && blob.contains("2"))
-                    || blob.contains("odds") || blob.contains("match"));
+                    || blob.contains("odds") || blob.contains("match") || blob.contains("market");
             
             String excerpt = snap.visibleText;
             if (excerpt == null || excerpt.trim().isEmpty()) excerpt = snap.dump;
             if (excerpt.length() > 4000) excerpt = excerpt.substring(0, 4000) + "…";
             
-            if (!hasFixture) {
+            boolean fixtureValid = hasHomeTeam && hasAwayTeam && hasMarketData;
+            
+            if (!fixtureValid) {
                 // failure
-                ScanStore.saveFixtureResult(this, false, "verify_page",
-                        detail + " | POST_CLICK_VALIDATION FAIL - fixture page did not load with expected content",
-                        excerpt, System.currentTimeMillis());
+                String failDetail = detail + " | POST_CLICK_VALIDATION FAIL - ";
+                if (!hasHomeTeam) failDetail += "home team '" + expectedHomeTeam + "' not found; ";
+                if (!hasAwayTeam) failDetail += "away team '" + expectedAwayTeam + "' not found; ";
+                if (!hasMarketData) failDetail += "no market data found";
+                
+                ScanStore.saveFixtureResult(this, false, "verify_page", failDetail, excerpt, System.currentTimeMillis());
             } else {
                 // success
-                ScanStore.saveFixtureResult(this, true, "verify_page",
-                        detail + " | POST_CLICK_VALIDATION PASS - fixture page loaded with Fulham and odds",
-                        excerpt, System.currentTimeMillis());
+                String passDetail = detail + " | POST_CLICK_VALIDATION PASS - fixture page loaded with "
+                        + expectedHomeTeam + " v " + expectedAwayTeam + " and market data visible";
+                ScanStore.saveFixtureResult(this, true, "verify_page", passDetail, excerpt, System.currentTimeMillis());
             }
             recycleRoots(snap.roots);
         } catch (Exception e) {
@@ -1300,6 +1561,35 @@ public class Bet365AccessibilityService extends AccessibilityService {
         }
     }
     
+    /**
+     * DEBUG/BYPASS mode: Check if a marker file exists that forces fixture discovery.
+     * If /data/data/com.bet365agent/.fixture_test_now exists, immediately force fixture discovery
+     * on the next accessibility event, bypassing normal button-press mechanism.
+     */
+    private boolean checkForceFixtureDiscoveryMode() {
+        try {
+            java.io.File markerFile = new java.io.File(getFilesDir(), ".fixture_test_now");
+            return markerFile.exists();
+        } catch (Exception e) {
+            Log.d("Bet365A11y", "Error checking bypass marker: " + e);
+            return false;
+        }
+    }
+    
+    /**
+     * Remove the bypass marker file after processing.
+     */
+    private void clearForceFixtureDiscoveryMode() {
+        try {
+            java.io.File markerFile = new java.io.File(getFilesDir(), ".fixture_test_now");
+            if (markerFile.exists()) {
+                markerFile.delete();
+            }
+        } catch (Exception e) {
+            Log.d("Bet365A11y", "Error clearing bypass marker: " + e);
+        }
+    }
+
     private void failFixture(String stage, String detail, ChromeSnapshot snap) {
         if (snap != null && snap.hasTree) {
             ScanStore.saveChromeSnapshot(this, snap.packageName, snap.title, snap.dump,
