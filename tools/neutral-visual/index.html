@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ORBIT neutral visual test</title>
+<style>
+body { margin: 28px; background: white; color: #111; font: 24px Arial, sans-serif; }
+h1 { font-size: 32px; } button { display: block; margin: 28px 0; padding: 24px;
+width: 100%; border: 3px solid #111; background: #eee; color: #111; font: bold 28px Arial, sans-serif; }
+#state { margin-top: 30px; font-weight: bold; font-size: 30px; }
+</style>
+<h1>ORBIT</h1><p>Neutral visual test</p>
+<button onclick="selectTarget(false)">SATURN</button>
+<button onclick="selectTarget(true)">NEPTUNE</button>
+<div id="state">READY</div>
+<script>
+let taps = 0;
+function selectTarget(correct) {
+  taps++;
+  document.getElementById('state').textContent = correct && taps === 1 ? 'COMPLETE' : 'FAILED';
+}
+const mode = new URLSearchParams(location.search).get('mode');
+if (mode === 'duplicate') {
+  const duplicate = document.createElement('button');
+  duplicate.textContent = 'NEPTUNE';
+  duplicate.onclick = () => selectTarget(false);
+  document.getElementById('state').before(duplicate);
+}
+if (mode === 'unchanged') window.selectTarget = () => {};
+if (mode === 'missing') document.querySelectorAll('button')[1].textContent = 'VENUS';
+</script></html>

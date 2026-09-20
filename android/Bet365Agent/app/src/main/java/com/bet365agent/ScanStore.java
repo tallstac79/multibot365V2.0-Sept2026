@@ -261,4 +261,29 @@ public final class ScanStore {
     public static String getFixtureAway(Context ctx) { return prefs(ctx).getString("fixture_away", ""); }
     
     public static void setPendingAction(Context ctx, String action) { prefs(ctx).edit().putString("pending_action", action).apply(); }
+
+    // ========== VISUAL CONTROL TEST (Milestone C) ==========
+
+    /**
+     * Set result of visual control test (screenshot + OCR + gesture)
+     */
+    public static void setVisualControlTestResult(Context ctx, String status, String detail) {
+        prefs(ctx).edit()
+                .putString("visual_control_status", status)
+                .putString("visual_control_detail", detail)
+                .putLong("visual_control_ts", System.currentTimeMillis())
+                .apply();
+    }
+
+    public static String getVisualControlStatus(Context ctx) {
+        return prefs(ctx).getString("visual_control_status", "NOT_RUN");
+    }
+
+    public static String getVisualControlDetail(Context ctx) {
+        return prefs(ctx).getString("visual_control_detail", "");
+    }
+
+    public static long getVisualControlTs(Context ctx) {
+        return prefs(ctx).getLong("visual_control_ts", 0L);
+    }
 }

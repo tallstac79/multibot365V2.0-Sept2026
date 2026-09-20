@@ -1,7 +1,9 @@
 package com.bet365agent;
 
 import android.accessibilityservice.AccessibilityService;
+import android.accessibilityservice.GestureDescription;
 import android.app.ActivityManager;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
@@ -9,6 +11,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityWindowInfo;
 import android.util.Log;
+
 
 import java.util.Queue;
 import java.util.LinkedList;
@@ -55,6 +58,8 @@ public class Bet365AccessibilityService extends AccessibilityService {
     public void onServiceConnected() {
         super.onServiceConnected();
         instance = this;
+        if (visualRunner != null) visualRunner.close();
+        visualRunner = new VisualControlRunner(this);
         scanAndStore("onServiceConnected");
         tryPendingFootballOnEvent("onServiceConnected");
     }
@@ -108,8 +113,17 @@ public class Bet365AccessibilityService extends AccessibilityService {
     }
 
     @Override
+    public boolean onUnbind(android.content.Intent intent) {
+        instance = null;
+        if (visualRunner != null) visualRunner.close();
+        visualRunner = null;
+        return super.onUnbind(intent);
+    }
+
+    @Override
     public void onDestroy() {
         instance = null;
+        if (visualRunner != null) visualRunner.close();
         super.onDestroy();
     }
 
@@ -1803,5 +1817,23 @@ public class Bet365AccessibilityService extends AccessibilityService {
             excerpt = "(no chrome snapshot)";
         }
         ScanStore.saveFixtureResult(this, false, stage, detail, excerpt, System.currentTimeMillis());
+    }
+
+    // Neutral visual proof uses the same AccessibilityService and dispatchGesture transport.
+    private VisualControlRunner visualRunner;
+
+    public static void triggerVisualControlTest() {
+        triggerVisualControlTest("manual-" + System.currentTimeMillis(), false);
+    }
+
+    public static void triggerVisualControlTest(String id, boolean captureOnly) {
+        triggerVisualControlTest(id, captureOnly, android.view.Display.DEFAULT_DISPLAY);
+    }
+
+    static void triggerVisualControlTest(String id, boolean captureOnly, int displayId) {
+        Bet365AccessibilityService svc = instance;
+        if (svc != null) svc.mainHandler.post(() -> {
+            if (svc.visualRunner != null) svc.visualRunner.start(id, captureOnly, displayId);
+        });
     }
 }

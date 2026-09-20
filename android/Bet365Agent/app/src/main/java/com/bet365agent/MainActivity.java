@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView searchExcerpt;
     private TextView fixtureResult;
     private TextView fixtureExcerpt;
+    private TextView visualControlResult;
+    private TextView visualControlExcerpt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         searchExcerpt = findViewById(R.id.searchExcerpt);
         fixtureResult = findViewById(R.id.fixtureResult);
         fixtureExcerpt = findViewById(R.id.fixtureExcerpt);
+        visualControlResult = findViewById(R.id.visualControlResult);
+        visualControlExcerpt = findViewById(R.id.visualControlExcerpt);
 
         findViewById(R.id.btnOpenSettings).setOnClickListener(v -> {
             Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
@@ -127,6 +131,25 @@ public class MainActivity extends AppCompatActivity {
             refreshUi();
             Toast.makeText(this, "Queued FIXTURE_TAP — tap result in search dropdown", Toast.LENGTH_SHORT).show();
             main.postDelayed(Bet365AccessibilityService::notifyPendingFixtureTapArmed, 100);
+        });
+
+        findViewById(R.id.btnTestVisualControl).setOnClickListener(v -> {
+            if (!isServiceEnabled()) {
+                Toast.makeText(this, "Enable Accessibility first", Toast.LENGTH_LONG).show();
+                return;
+            }
+            // tools/neutral-visual is served on the host and forwarded with adb reverse tcp:8765 tcp:8765.
+            refreshUi();
+            Intent neutral = new Intent(Intent.ACTION_VIEW, Uri.parse("http://127.0.0.1:8765/?run=" + System.currentTimeMillis()));
+            neutral.setPackage("com.android.chrome");
+            try {
+                startActivity(neutral);
+                main.postDelayed(Bet365AccessibilityService::triggerVisualControlTest, 1500);
+            } catch (Exception e) {
+                ScanStore.setVisualControlTestResult(this, "FAIL", "Cannot open Chrome: " + e.getMessage());
+            }
+            main.postDelayed(this::refreshUi, 2000);
+            main.postDelayed(this::refreshUi, 5000);
         });
     }
 
@@ -234,6 +257,16 @@ public class MainActivity extends AppCompatActivity {
                     + "\nSTAGE: " + ScanStore.getFixtureStage(this)
                     + "\n" + ScanStore.getFixtureDetail(this));
             fixtureExcerpt.setText("FIXTURE_CHROME_TEXT:\n" + ScanStore.getFixtureExcerpt(this));
+        }
+
+        // Visual Control Test Results
+        String visualControlStatus = ScanStore.getVisualControlStatus(this);
+        if ("NOT_RUN".equals(visualControlStatus) || visualControlStatus.isEmpty()) {
+            visualControlResult.setText("VISUAL_CONTROL_TEST: (not run)");
+            visualControlExcerpt.setText("Details: (none)");
+        } else {
+            visualControlResult.setText("VISUAL_CONTROL_TEST: " + visualControlStatus);
+            visualControlExcerpt.setText("Details: " + ScanStore.getVisualControlDetail(this));
         }
     }
 

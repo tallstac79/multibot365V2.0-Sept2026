@@ -73,6 +73,13 @@
             android:layout_marginTop="8dp"
             android:text="Test: Tap Fixture from Search" />
 
+        <Button
+            android:id="@+id/btnTestVisualControl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Test: Visual Control (Screenshot + OCR + Gesture)" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -128,6 +135,35 @@
             android:fontFamily="monospace"
             android:padding="8dp"
             android:text="FIXTURE_CHROME_TEXT: (none)"
+            android:textIsSelectable="true"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Visual control test (Screenshot + OCR + Gesture)"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/visualControlResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="VISUAL_CONTROL_TEST: (not run)"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/visualControlExcerpt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="#11000000"
+            android:fontFamily="monospace"
+            android:padding="8dp"
+            android:text="Details: (none)"
             android:textIsSelectable="true"
             android:textSize="12sp" />
 
