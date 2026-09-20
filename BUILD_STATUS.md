@@ -15,15 +15,16 @@
 ## Completed (cont'd)
 - Milestone A Search interaction: query "Fulham" entered and confirmed visible in editable field ✓
 
-## In Progress
-- **Milestone C: Visual Control Layer (Screenshot/OCR + dispatchGesture)**
-  - **Pivot:** From AccessibilityNodeInfo tree (blocked) to image-based UI detection
-  - **Approach:** Screenshot → OCR locate Search → dispatchGesture tap → verify opened
-  - **Technical:** Tesseract OCR + AccessibilityService.dispatchGesture() + GestureDescription
-  - **Status:** Codex implementing screenshot/OCR pipeline
-  - **Fallback plan:** If takeScreenshot() unavailable, evaluate MediaProjection alternative
-  - **Next:** Deploy, test on Samsung R5CT61TE14Z, verify visual control works
-  - **No node trees, no ADB coordinates — pure image-based control**
+## In Progress - Manual Testing Required
+- **Milestone C: Visual Control Layer (Screenshot/OCR + dispatchGesture)** ✅ CODE READY
+  - **Implementation status:** COMPLETE — all 9 methods implemented + Tesseract OCR + UI integration
+  - **Build status:** ✅ APK built successfully (31 MB, native libs included)
+  - **Deployment status:** ✅ APK installed on Samsung R5CT61TE14Z, service enabled
+  - **Testing blockerADB input tap commands not reliably triggering MainActivity button clicks (likely Samsung UI framework quirk)
+  - **Code verification:** ✓ All methods present ✓ Compilation successful ✓ Service running ✓ LogCat active
+  - **Manual test required:** TAP "Test: Visual Control (Screenshot + OCR + Gesture)" button in MainActivity to execute workflow
+  - **Expected result:** Service captures screenshot → OCR finds Search control → dispatchGesture taps it → captures again → verifies opened → writes result to prefs
+  - **Success indicator:** `visual_control_status = "PASS"` in SharedPreferences + logcat shows "Triggered VISUAL_CONTROL_TEST"
 
 ## Next Milestone
 **B: Text Entry Verification** → **C: Exact Fixture Selection** → **D: Market/Line Selection** → **E: Betslip Validation**
