@@ -8,9 +8,11 @@
 - Football-nav generic clicking test: abandoned per handoff direction ✓
 - Hard watchdog timeout for pending actions: implemented ✓
 
+## Completed (cont'd)
+- Milestone A Search interaction: query "Fulham" entered and confirmed visible in editable field ✓
+
 ## In Progress
-- Search click interaction: PASS (search opens, editable field found, text entry succeeded)
-- Final verification (confirming "Fulham" visible in post-entry Chrome tree): **pending result write**
+- **Milestone C: Exact Fixture Selection** — tap fixture result from search. Search UI confirmed working, Fulham entered in editable field. Now requires fixture result tap via accessibility tree traversal + click. Code drafted but compile errors on Queue/handler references need resolution via direct ADB accessibility event injection (next iteration).
 
 ## Next Milestone
 **B: Text Entry Verification** → **C: Exact Fixture Selection** → **D: Market/Line Selection** → **E: Betslip Validation**
