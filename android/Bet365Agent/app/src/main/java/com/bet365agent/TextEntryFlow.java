@@ -1,0 +1,314 @@
+package com.bet365agent;
+
+import android.accessibilityservice.AccessibilityService;
+import android.accessibilityservice.GestureDescription;
+import android.accessibilityservice.InputMethod.AccessibilityInputConnection;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Path;
+import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.SystemClock;
+import android.util.AtomicFile;
+import android.util.Log;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.SurroundingText;
+import com.googlecode.tesseract.android.TessBaseAPI;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
+
+/** Visual field targeting + API 33 accessibility input connection. No node-tree or clipboard use. */
+final class TextEntryFlow {
+    private final VisualControlRunner runner;
+    private final AccessibilityService service;
+    private final TextInstruction instruction;
+    private final Handler main = new Handler(Looper.getMainLooper());
+    private final ExecutorService inputWorker = Executors.newSingleThreadExecutor();
+    private final JSONObject record = new JSONObject();
+    private final JSONArray events = new JSONArray();
+    private final long started = SystemClock.elapsedRealtime();
+    private volatile Rect field;
+    private long initialGeneration, focusedGeneration;
+    private AgentInputMethod method;
+    private boolean ending;
+
+    TextEntryFlow(VisualControlRunner runner, AccessibilityService service, TextInstruction instruction) throws Exception {
+        this.runner = runner; this.service = service; this.instruction = instruction;
+        record.put("run_id", instruction.id).put("requested_text", instruction.text)
+            .put("field_hint", instruction.fieldHint).put("package", instruction.targetPackage)
+            .put("mechanism", "AccessibilityInputConnection.commitText")
+            .put("started_at_ms", System.currentTimeMillis()).put("started_elapsed_ms", started)
+            .put("timeout_ms", instruction.timeoutMs).put("status", "RUNNING")
+            .put("field_bounds", JSONObject.NULL).put("pre_screenshot", JSONObject.NULL)
+            .put("post_screenshot", JSONObject.NULL).put("verification_result", "NOT_VERIFIED")
+            .put("input_attempts", 0).put("events", events);
+        checkpoint("STARTED");
+    }
+
+    void start() {
+        if (android.os.Build.VERSION.SDK_INT < 33 || !(service.getInputMethod() instanceof AgentInputMethod)) {
+            end("INPUT_FAILED", "Accessibility input method unavailable (requires API 33 and IME flag)"); return;
+        }
+        method = (AgentInputMethod) service.getInputMethod();
+        locate(0);
+    }
+
+    private boolean live() { return !ending && runner.withinDeadline(instruction.id); }
+    private void end(String status, String detail) {
+        if (!live()) return;
+        ending = true;
+        if (!"PASS".equals(status) && record.isNull("post_screenshot")) {
+            // Capture the actual failed state, too. The same hard deadline still applies.
+            runner.frame(instruction.id, "after", ignored -> {
+                put("post_screenshot", imagePath("after"));
+                runner.finish(instruction.id, status, detail);
+            });
+        } else runner.finish(instruction.id, status, detail);
+    }
+    private String imagePath(String phase) { return "files/visual/" + instruction.id + "/" + phase + ".png"; }
+
+    private void locate(int attempt) {
+        if (!live()) return;
+        checkpoint("LOCATING");
+        runner.frame(instruction.id, "before", ocr -> {
+            put("pre_screenshot", imagePath("before"));
+            if (ocr.fieldBounds == null) {
+                if (attempt < 1) { main.postDelayed(() -> locate(attempt + 1), 700); return; }
+                end("FIELD_NOT_FOUND", "No unique outlined field containing OCR hint " + instruction.fieldHint); return;
+            }
+            field = new Rect(ocr.fieldBounds);
+            put("field_bounds", coordinates(field));
+            initialGeneration = method.generation();
+            Path path = new Path(); path.moveTo(field.exactCenterX(), field.exactCenterY());
+            GestureDescription tap = new GestureDescription.Builder()
+                .addStroke(new GestureDescription.StrokeDescription(path, 0, 100)).build();
+            checkpoint("FOCUS_DISPATCHING");
+            boolean accepted = service.dispatchGesture(tap, new AccessibilityService.GestureResultCallback() {
+                @Override public void onCompleted(GestureDescription gesture) {
+                    if (live()) { checkpoint("FOCUS_GESTURE_COMPLETED"); waitForFocus(0); }
+                }
+                @Override public void onCancelled(GestureDescription gesture) { end("FOCUS_FAILED", "Focus gesture cancelled"); }
+            }, main);
+            if (!accepted) end("FOCUS_FAILED", "Focus gesture rejected");
+        });
+    }
+
+    private boolean editorMatches() {
+        EditorInfo info = method.getCurrentInputEditorInfo();
+        if (!method.getCurrentInputStarted() || info == null || !instruction.targetPackage.equals(info.packageName)
+                || method.getCurrentInputConnection() == null) return false;
+        int variation = info.inputType & 0xfff;
+        // Never use this plaintext evidence flow for password editors.
+        return variation != 0x81 && variation != 0x91 && variation != 0xe1 && variation != 0x12;
+    }
+
+    private void waitForFocus(int attempt) {
+        if (!live()) return;
+        if (editorMatches() && method.generation() != initialGeneration) {
+            focusedGeneration = method.generation();
+            put("editor_package", method.getCurrentInputEditorInfo().packageName);
+            put("editor_generation", focusedGeneration);
+            checkpoint("FOCUS_CONFIRMED");
+            runner.frame(instruction.id, "focused", ocr -> {
+                put("focused_screenshot", imagePath("focused"));
+                if (ocr.fieldBounds == null) { end("FOCUS_FAILED", "Field no longer visually identifiable after focus"); return; }
+                field = new Rect(ocr.fieldBounds);
+                put("focused_field_bounds", coordinates(field));
+                readEditor(value -> replace(value));
+            });
+        } else if (attempt < 12) main.postDelayed(() -> waitForFocus(attempt + 1), 200);
+        else end("FOCUS_FAILED", "No fresh input session for the visually tapped field");
+    }
+
+    private boolean sameEditor() { return editorMatches() && method.generation() == focusedGeneration; }
+
+    private void readEditor(Consumer<String> next) {
+        if (!live()) return;
+        if (!sameEditor()) { end("INPUT_FAILED", "Editor focus changed or input connection disappeared"); return; }
+        AccessibilityInputConnection connection = method.getCurrentInputConnection();
+        inputWorker.execute(() -> {
+            try {
+                SurroundingText surrounding = connection.getSurroundingText(2048, 2048, 0);
+                String value = surrounding == null ? null : surrounding.getText().toString();
+                boolean complete = surrounding != null && surrounding.getOffset() == 0 && value.length() < 2048;
+                main.post(() -> {
+                    if (!live()) return;
+                    if (!sameEditor() || !complete) {
+                        end("INPUT_FAILED", "Cannot read the complete current editor value"); return;
+                    }
+                    try { next.accept(value); }
+                    catch (Exception e) { end("INPUT_FAILED", "Input operation failed: " + e); }
+                });
+            } catch (Exception e) { main.post(() -> { if (live()) end("INPUT_FAILED", "Input read failed: " + e); }); }
+        });
+    }
+
+    private void replace(String before) {
+        if (!live() || !sameEditor()) { if (live()) end("INPUT_FAILED", "Focus lost before commit"); return; }
+        put("prior_text_length", before.length());
+        put("input_attempts", 1);
+        // Persist before the effect. A restart never replays uncertain text insertion.
+        checkpoint("INPUT_COMMITTING");
+        AccessibilityInputConnection connection = method.getCurrentInputConnection();
+        connection.setSelection(0, before.length());
+        connection.commitText(instruction.text, 1, null);
+        checkpoint("INPUT_SENT");
+        main.postDelayed(() -> verify(0), 600);
+    }
+
+    private void verify(int attempt) {
+        if (!live()) return;
+        checkpoint("VERIFYING");
+        runner.frame(instruction.id, "after", ocr -> {
+            put("post_screenshot", imagePath("after"));
+            put("visible_field_text", ocr.fieldText);
+            readEditor(value -> {
+                boolean exact = instruction.text.equals(value);
+                boolean visible = normalizeWords(instruction.text).equals(ocr.fieldText);
+                put("observed_text", value);
+                put("exact_input_match", exact);
+                put("visual_text_match", visible);
+                if (exact && visible) {
+                    put("verification_result", "EXACT_INPUT_AND_SCREENSHOT_OCR");
+                    end("PASS", "Exact editor value and visible field OCR verified");
+                } else if (attempt < 1) main.postDelayed(() -> verify(attempt + 1), 500);
+                else end("TEXT_NOT_VERIFIED", "Editor value or screenshot field text differs from requested text");
+            });
+        });
+    }
+
+    private static String normalizeWords(String value) { return value.trim().replaceAll("\\s+", " "); }
+
+    /** Called only on the existing OCR worker; no UI interaction occurs here. */
+    void analyze(Bitmap bitmap, VisualControlRunner.Ocr ocr, String phase) throws Exception {
+        List<Rect> hints = ocr.bounds(instruction.fieldHint);
+        if (hints.size() == 1) ocr.fieldBounds = findOutline(bitmap, hints.get(0));
+        Rect current = field;
+        // A blinking caret can merge with placeholder text in full-screen OCR.
+        // Reuse the previously measured rectangle only when its actual border is still present.
+        if ("focused".equals(phase) && ocr.fieldBounds == null && current != null && validOutline(bitmap, current)) {
+            ocr.fieldBounds = new Rect(current);
+        }
+        if ("after".equals(phase) && current != null && validOutline(bitmap, current)) {
+            Rect inside = new Rect(current); inside.inset(9, 9);
+            Bitmap crop = Bitmap.createBitmap(bitmap, inside.left, inside.top, inside.width(), inside.height());
+            try {
+                VisualControlRunner.Ocr text = runner.recognize(crop, TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
+                ocr.fieldText = normalizeWords(String.join(" ", text.words));
+                try (FileOutputStream out = new FileOutputStream(new File(service.getFilesDir(), "visual/" + instruction.id + "/field_after.png"))) {
+                    crop.compress(Bitmap.CompressFormat.PNG, 100, out);
+                }
+            } finally { crop.recycle(); }
+        }
+    }
+
+    private static boolean dark(Bitmap bitmap, int x, int y) {
+        int pixel = bitmap.getPixel(x, y);
+        return Color.red(pixel) * 299 + Color.green(pixel) * 587 + Color.blue(pixel) * 114 < 128000;
+    }
+
+    /** Locate enclosing rectangular borders around an OCR placeholder, entirely from pixels. */
+    static Rect findOutline(Bitmap bitmap, Rect hint) {
+        int cy = hint.centerY(), left = -1, right = -1;
+        int span = hint.height() / 2 + 8;
+        if (cy - span < 0 || cy + span >= bitmap.getHeight()) return null;
+        for (int x = hint.left - 1; x >= 0; x--) {
+            if (vertical(bitmap, x, cy - span, cy + span)) { left = x; break; }
+        }
+        for (int x = hint.right + 1; x < bitmap.getWidth(); x++) {
+            if (vertical(bitmap, x, cy - span, cy + span)) { right = x; break; }
+        }
+        if (left < 0 || right < 0 || right - left <= hint.width()) return null;
+        int top = cy, bottom = cy;
+        while (top > 0 && dark(bitmap, left, top - 1)) top--;
+        while (bottom + 1 < bitmap.getHeight() && dark(bitmap, left, bottom + 1)) bottom++;
+        Rect result = new Rect(left, top, right + 1, bottom + 1);
+        return result.height() > hint.height() + 16 && validOutline(bitmap, result) ? result : null;
+    }
+
+    private static boolean vertical(Bitmap bitmap, int x, int top, int bottom) {
+        for (int y = top; y <= bottom; y++) if (!dark(bitmap, x, y)) return false;
+        return true;
+    }
+
+    private static boolean validOutline(Bitmap bitmap, Rect rect) {
+        if (rect.left < 0 || rect.top < 0 || rect.right > bitmap.getWidth() || rect.bottom > bitmap.getHeight()
+                || rect.width() <= 20 || rect.height() <= 20) return false;
+        int hits = 0, total = 0;
+        for (int x = rect.left; x < rect.right; x += 3) {
+            total += 2;
+            if (dark(bitmap, x, rect.top + 1)) hits++;
+            if (dark(bitmap, x, rect.bottom - 2)) hits++;
+        }
+        return hits >= total * .9;
+    }
+
+    private static JSONArray coordinates(Rect rect) {
+        return new JSONArray().put(rect.left).put(rect.top).put(rect.right).put(rect.bottom);
+    }
+    private void put(String key, Object value) {
+        try { record.put(key, value); } catch (Exception e) { throw new IllegalStateException(e); }
+    }
+    private void checkpoint(String phase) {
+        put("phase", phase);
+        try { events.put(new JSONObject().put("phase", phase).put("elapsed_ms", SystemClock.elapsedRealtime() - started)); }
+        catch (Exception e) { throw new IllegalStateException(e); }
+        persist(service, record);
+        Log.i("AgentText", "id=" + instruction.id + " phase=" + phase);
+    }
+
+    void finished(String status, String detail) {
+        ending = true;
+        main.removeCallbacksAndMessages(null);
+        inputWorker.shutdownNow();
+        put("status", status); put("detail", detail);
+        put("ended_at_ms", System.currentTimeMillis());
+        put("duration_ms", SystemClock.elapsedRealtime() - started);
+        if (record.isNull("pre_screenshot") && new File(service.getFilesDir(), "visual/" + instruction.id + "/before.png").isFile()) {
+            put("pre_screenshot", imagePath("before"));
+        }
+        if (record.isNull("post_screenshot")) put("post_screenshot_unavailable_reason", "Terminated before an after-frame completed");
+        if (!"PASS".equals(status)) put("verification_result", "NOT_VERIFIED");
+        checkpoint("FINISHED");
+        Log.i("AgentText", "RESULT " + record);
+    }
+
+    static void recover(AccessibilityService service) {
+        String saved = service.getSharedPreferences("text_agent", 0).getString("record", "");
+        if (saved.isEmpty()) return;
+        try {
+            JSONObject value = new JSONObject(saved);
+            if (!"RUNNING".equals(value.optString("status"))) return;
+            value.put("status", "INTERRUPTED").put("phase", "FINISHED")
+                .put("detail", "Service restarted; uncertain input is not replayed")
+                .put("verification_result", "NOT_VERIFIED").put("ended_at_ms", System.currentTimeMillis())
+                .put("duration_ms", SystemClock.elapsedRealtime() - value.getLong("started_elapsed_ms"));
+            if (value.isNull("post_screenshot")) value.put("post_screenshot_unavailable_reason", "Process stopped before after-frame verification");
+            persist(service, value);
+            Log.i("AgentText", "RECOVERED " + value);
+        } catch (Exception e) { Log.e("AgentText", "Recovery record failure", e); }
+    }
+
+    private static void persist(AccessibilityService service, JSONObject value) {
+        try {
+            String json = value.toString(2);
+            File dir = new File(service.getFilesDir(), "text/" + value.getString("run_id"));
+            if (!dir.isDirectory() && !dir.mkdirs()) throw new IllegalStateException("Cannot create evidence directory");
+            AtomicFile file = new AtomicFile(new File(dir, "result.json"));
+            FileOutputStream out = file.startWrite();
+            try { out.write(json.getBytes(StandardCharsets.UTF_8)); file.finishWrite(out); }
+            catch (Exception e) { file.failWrite(out); throw e; }
+            SharedPreferences prefs = service.getSharedPreferences("text_agent", 0);
+            if (!prefs.edit().putString("record", json).commit()) throw new IllegalStateException("Cannot persist text state");
+        } catch (Exception e) { throw new IllegalStateException("Evidence persistence failed", e); }
+    }
+}

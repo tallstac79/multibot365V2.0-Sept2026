@@ -1,0 +1,35 @@
+{
+  "run_id": "timeout-9cc90ff12d0e",
+  "requested_text": "not inserted",
+  "field_hint": "SEARCH",
+  "package": "com.android.chrome",
+  "mechanism": "AccessibilityInputConnection.commitText",
+  "started_at_ms": 1789938504178,
+  "started_elapsed_ms": 9273689,
+  "timeout_ms": 200,
+  "status": "TIMEOUT",
+  "field_bounds": null,
+  "pre_screenshot": "files/visual/timeout-9cc90ff12d0e/before.png",
+  "post_screenshot": null,
+  "verification_result": "NOT_VERIFIED",
+  "input_attempts": 0,
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0
+    },
+    {
+      "phase": "LOCATING",
+      "elapsed_ms": 27
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 200
+    }
+  ],
+  "phase": "FINISHED",
+  "detail": "Hard deadline expired",
+  "ended_at_ms": 1789938504377,
+  "duration_ms": 199,
+  "post_screenshot_unavailable_reason": "Terminated before an after-frame completed"
+}

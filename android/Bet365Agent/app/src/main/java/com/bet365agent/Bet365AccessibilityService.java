@@ -67,6 +67,8 @@ public class Bet365AccessibilityService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         if (event == null) return;
+        // The text pipeline deliberately operates without node-tree inspection.
+        if (visualRunner != null && visualRunner.isTextActive()) return;
         
         // DEBUG: Log every event to confirm service is receiving them
         Log.d("Bet365A11y", ">>> onAccessibilityEvent fired: type=" + event.getEventType() + " pkg=" + event.getPackageName());
@@ -1821,6 +1823,18 @@ public class Bet365AccessibilityService extends AccessibilityService {
 
     // Neutral visual proof uses the same AccessibilityService and dispatchGesture transport.
     private VisualControlRunner visualRunner;
+
+    @Override
+    public android.accessibilityservice.InputMethod onCreateInputMethod() {
+        return new AgentInputMethod(this);
+    }
+
+    static void triggerTextEntry(TextInstruction instruction) {
+        Bet365AccessibilityService svc = instance;
+        if (svc != null) svc.mainHandler.post(() -> {
+            if (svc.visualRunner != null) svc.visualRunner.startText(instruction);
+        });
+    }
 
     public static void triggerVisualControlTest() {
         triggerVisualControlTest("manual-" + System.currentTimeMillis(), false);

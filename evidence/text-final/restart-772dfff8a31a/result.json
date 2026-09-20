@@ -1,0 +1,66 @@
+{
+  "run_id": "restart-772dfff8a31a",
+  "requested_text": "restart value",
+  "field_hint": "SEARCH",
+  "package": "com.android.chrome",
+  "mechanism": "AccessibilityInputConnection.commitText",
+  "started_at_ms": 1789938518276,
+  "started_elapsed_ms": 9287787,
+  "timeout_ms": 30000,
+  "status": "INTERRUPTED",
+  "field_bounds": [
+    57,
+    395,
+    664,
+    521
+  ],
+  "pre_screenshot": "files/visual/restart-772dfff8a31a/before.png",
+  "post_screenshot": null,
+  "verification_result": "NOT_VERIFIED",
+  "input_attempts": 1,
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 1
+    },
+    {
+      "phase": "LOCATING",
+      "elapsed_ms": 24
+    },
+    {
+      "phase": "FOCUS_DISPATCHING",
+      "elapsed_ms": 1016
+    },
+    {
+      "phase": "FOCUS_GESTURE_COMPLETED",
+      "elapsed_ms": 1133
+    },
+    {
+      "phase": "FOCUS_CONFIRMED",
+      "elapsed_ms": 1354
+    },
+    {
+      "phase": "INPUT_COMMITTING",
+      "elapsed_ms": 2594
+    },
+    {
+      "phase": "INPUT_SENT",
+      "elapsed_ms": 2612
+    }
+  ],
+  "phase": "FINISHED",
+  "editor_package": "com.android.chrome",
+  "editor_generation": 33,
+  "focused_screenshot": "files/visual/restart-772dfff8a31a/focused.png",
+  "focused_field_bounds": [
+    57,
+    395,
+    664,
+    521
+  ],
+  "prior_text_length": 0,
+  "detail": "Service restarted; uncertain input is not replayed",
+  "ended_at_ms": 1789938522840,
+  "duration_ms": 4564,
+  "post_screenshot_unavailable_reason": "Process stopped before after-frame verification"
+}

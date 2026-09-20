@@ -34,6 +34,7 @@ final class VisualControlRunner {
     private final ExecutorService worker = Executors.newSingleThreadExecutor();
     private final SharedPreferences prefs;
     private String active;
+    private TextEntryFlow textFlow;
     private long deadline;
     private boolean closed;
     private int captureDisplay = Display.DEFAULT_DISPLAY;
@@ -46,6 +47,7 @@ final class VisualControlRunner {
                 .putString("detail", "Service restarted; previous action is not replayed").commit();
             ScanStore.setVisualControlTestResult(service, "INTERRUPTED", "Service restarted; previous action is not replayed");
         }
+        TextEntryFlow.recover(service);
         log("SERVICE_CONNECTED sdk=" + android.os.Build.VERSION.SDK_INT
             + " capabilities=" + service.getServiceInfo().getCapabilities()
             + " pid=" + android.os.Process.myPid());
@@ -56,26 +58,41 @@ final class VisualControlRunner {
     }
 
     void start(String id, boolean captureOnly, int displayId) {
-        if (closed) return;
+        if (!begin(id, captureOnly ? displayId : Display.DEFAULT_DISPLAY, 30000)) return;
+        prepare(id, captureOnly, 0);
+    }
+
+    boolean isTextActive() { return textFlow != null; }
+
+    void startText(TextInstruction instruction) {
+        if (!begin(instruction.id, Display.DEFAULT_DISPLAY, instruction.timeoutMs)) return;
+        try {
+            textFlow = new TextEntryFlow(this, service, instruction);
+            textFlow.start();
+        } catch (Exception e) { finish(instruction.id, "INPUT_FAILED", "Cannot start text flow: " + e); }
+    }
+
+    private boolean begin(String id, int displayId, long timeoutMs) {
+        if (closed) return false;
         if (active != null || prefs.getStringSet("consumed_ids", new HashSet<>()).contains(id)) {
             log("DUPLICATE_OR_BUSY rejected id=" + id);
-            return;
+            return false;
         }
-        if (!id.matches("[A-Za-z0-9_-]{1,64}")) return;
+        if (!id.matches("[A-Za-z0-9_-]{1,64}")) return false;
         Set<String> consumed = new HashSet<>(prefs.getStringSet("consumed_ids", new HashSet<>()));
         consumed.add(id);
         // Persist before any effect: restart never blindly repeats a gesture.
         if (!prefs.edit().putStringSet("consumed_ids", consumed).putString("run_id", id)
                 .putString("status", "RUNNING").putString("detail", "")
                 .remove("target_bounds").remove("capture_result").remove("capture_error_code")
-                .putString("phase", "CAPTURE_BEFORE").commit()) return;
+                .putString("phase", "CAPTURE_BEFORE").commit()) return false;
         active = id;
-        captureDisplay = captureOnly ? displayId : Display.DEFAULT_DISPLAY;
-        deadline = SystemClock.elapsedRealtime() + 30000;
+        captureDisplay = displayId;
+        deadline = SystemClock.elapsedRealtime() + timeoutMs;
         ScanStore.setVisualControlTestResult(service, "RUNNING", id);
-        log("START id=" + id + " captureOnly=" + captureOnly);
-        main.postDelayed(() -> { if (live(id)) finish(id, "FAIL", "Hard timeout after 30 seconds"); }, 30000);
-        prepare(id, captureOnly, 0);
+        log("START id=" + id);
+        main.postDelayed(() -> { if (live(id)) finish(id, textFlow == null ? "FAIL" : "TIMEOUT", "Hard deadline expired"); }, timeoutMs);
+        return true;
     }
 
     private void prepare(String id, boolean captureOnly, int attempt) {
@@ -101,10 +118,10 @@ final class VisualControlRunner {
     }
 
     private boolean live(String id) { return !closed && id.equals(active); }
-    private boolean withinDeadline(String id) {
+    boolean withinDeadline(String id) {
         if (!live(id)) return false;
         if (SystemClock.elapsedRealtime() >= deadline) {
-            finish(id, "FAIL", "Hard timeout after 30 seconds"); return false;
+            finish(id, textFlow == null ? "FAIL" : "TIMEOUT", "Hard deadline expired"); return false;
         }
         return true;
     }
@@ -162,7 +179,12 @@ final class VisualControlRunner {
         }
     }
 
+    void frame(String id, String phase, Consumer<Ocr> next) {
+        capture(id, phase, 0, bitmap -> process(id, bitmap, phase, next));
+    }
+
     private void process(String id, Bitmap bitmap, String phase, Consumer<Ocr> next) {
+        TextEntryFlow flow = textFlow;
         worker.execute(() -> {
             try {
                 File dir = new File(service.getFilesDir(), "visual/" + id);
@@ -171,6 +193,7 @@ final class VisualControlRunner {
                     if (!bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)) throw new IllegalStateException("PNG encode failed");
                 }
                 Ocr result = recognize(bitmap);
+                if (flow != null) flow.analyze(bitmap, result, phase);
                 try (FileOutputStream out = new FileOutputStream(new File(dir, phase + ".txt"))) {
                     out.write(result.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
                 }
@@ -186,6 +209,10 @@ final class VisualControlRunner {
     }
 
     private Ocr recognize(Bitmap bitmap) throws Exception {
+        return recognize(bitmap, TessBaseAPI.PageSegMode.PSM_AUTO);
+    }
+
+    Ocr recognize(Bitmap bitmap, int segmentation) throws Exception {
         File base = new File(service.getFilesDir(), "ocr");
         File data = new File(base, "tessdata/eng.traineddata");
         if (!data.exists()) {
@@ -201,7 +228,7 @@ final class VisualControlRunner {
         TessBaseAPI tess = new TessBaseAPI();
         try {
             if (!tess.init(base.getAbsolutePath(), "eng")) throw new IllegalStateException("Tesseract init failed");
-            tess.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
+            tess.setPageSegMode(segmentation);
             tess.setImage(bitmap);
             tess.getUTF8Text();
             Ocr result = new Ocr(bitmap.getWidth(), bitmap.getHeight());
@@ -256,8 +283,13 @@ final class VisualControlRunner {
         }));
     }
 
-    private void finish(String id, String status, String detail) {
+    void finish(String id, String status, String detail) {
         if (!live(id)) return;
+        if (textFlow != null) {
+            if ("FAIL".equals(status)) status = "INPUT_FAILED";
+            textFlow.finished(status, detail);
+            textFlow = null;
+        }
         active = null;
         prefs.edit().putString("status", status).putString("detail", detail).commit();
         ScanStore.setVisualControlTestResult(service, status, detail);
@@ -274,7 +306,9 @@ final class VisualControlRunner {
 
     private void log(String text) { Log.i(TAG, text); }
 
-    private static class Ocr {
+    static class Ocr {
+        Rect fieldBounds;
+        String fieldText = "";
         final int width, height;
         final List<String> words = new ArrayList<>();
         final List<Rect> rects = new ArrayList<>();

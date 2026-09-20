@@ -1,0 +1,60 @@
+{
+  "run_id": "input-failed-76a852f3556a",
+  "requested_text": "not inserted",
+  "field_hint": "SEARCH",
+  "package": "com.android.chrome",
+  "mechanism": "AccessibilityInputConnection.commitText",
+  "started_at_ms": 1789938482090,
+  "started_elapsed_ms": 9251601,
+  "timeout_ms": 30000,
+  "status": "INPUT_FAILED",
+  "field_bounds": [
+    57,
+    395,
+    664,
+    521
+  ],
+  "pre_screenshot": "files/visual/input-failed-76a852f3556a/before.png",
+  "post_screenshot": "files/visual/input-failed-76a852f3556a/after.png",
+  "verification_result": "NOT_VERIFIED",
+  "input_attempts": 0,
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0
+    },
+    {
+      "phase": "LOCATING",
+      "elapsed_ms": 30
+    },
+    {
+      "phase": "FOCUS_DISPATCHING",
+      "elapsed_ms": 1033
+    },
+    {
+      "phase": "FOCUS_GESTURE_COMPLETED",
+      "elapsed_ms": 1150
+    },
+    {
+      "phase": "FOCUS_CONFIRMED",
+      "elapsed_ms": 1375
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 3922
+    }
+  ],
+  "phase": "FINISHED",
+  "editor_package": "com.android.chrome",
+  "editor_generation": 22,
+  "focused_screenshot": "files/visual/input-failed-76a852f3556a/focused.png",
+  "focused_field_bounds": [
+    57,
+    395,
+    664,
+    521
+  ],
+  "detail": "Editor focus changed or input connection disappeared",
+  "ended_at_ms": 1789938486012,
+  "duration_ms": 3922
+}

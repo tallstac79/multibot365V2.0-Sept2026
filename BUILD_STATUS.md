@@ -1,8 +1,61 @@
 # MultiBot365 build status
 
+## Current milestone: 2 — PASS on the physical Samsung
+
+Verified 2026-09-20 on Samsung SM-A136B, R5CT61TE14Z, Android 14 / API 34. Built and deployed from milestone 1 commit 7611e27.
+
+**Generic configurable text entry + exact state verification passed.** All 13 text acceptance cases met their expected outcomes. The existing 8-case visual-control suite also passed on the same final APK.
+
+### Mechanism and behavior
+
+- The requested text, field hint, expected editor package and deadline come from a JSON instruction; no payload string is hardcoded in Android.
+- Screenshot OCR locates the hint; pixel analysis derives the enclosing field border. dispatchGesture focuses that rectangle.
+- Android's API 33+ accessibility InputMethod / AccessibilityInputConnection is enabled with flagInputMethodEditor. It commits the supplied string directly without clipboard use, ADB typing, a custom keyboard, or changing Samsung HoneyBoard.
+- A fresh editor session and matching package are required before input. Existing text is selected using the input connection; a commit is attempted at most once.
+- No AccessibilityNodeInfo trees are used by the text path. Legacy tree scanning is bypassed while it runs. The proven capture/OCR/gesture components are reused through small extension hooks.
+- Verification requires both exact input-connection readback (including case and every space) and case-sensitive screenshot OCR from inside the detected field. OCR collapses word spacing only for the visual comparison; the independent exact readback verifies whitespace.
+- Deadline, duplicate/busy admission and no-replay recovery extend the existing runner. Failures release the run for a fresh request. Pending text work becomes INTERRUPTED after service/process restart.
+- Evidence is persisted atomically in files/text/<run_id>/result.json and mirrored in text_agent preferences. It includes requested/observed text, actual field bounds, screenshot references, verification flags, attempt count and phase/total timings. Before/focused/after screenshots and field crops are stored under files/visual/<run_id>/.
+
+### Final physical acceptance
+
+Evidence: **evidence/text-final/results.json**, per-run instructions/results/screenshots and logcat. Reproduction and API references: **tools/neutral-visual/TEXT_ENTRY.md**.
+
+| Test | Expected and observed |
+| --- | --- |
+| normal: orchard | PASS |
+| spaces: clear blue sky | PASS |
+| mixed case: MiXeD Case | PASS |
+| numbers: 907314 | PASS |
+| repeated spaces: Alpha  beta 42 | PASS; both spaces preserved in exact readback |
+| absent field | FIELD_NOT_FOUND; zero input attempts |
+| disabled field | FOCUS_FAILED; zero input attempts |
+| input connection disappears after focus | INPUT_FAILED; zero input attempts |
+| page rejects the inserted value | TEXT_NOT_VERIFIED; no second commit |
+| configured 200ms deadline | TIMEOUT; zero input attempts; late OCR cannot act |
+| fresh instruction after failures | PASS |
+| kill app after INPUT_SENT / before verification | INTERRUPTED; persisted input_attempts=1; same ID rejected |
+| new instruction after process restart: Recovered 42 | PASS |
+
+Successful final cases completed in 4.773–5.071 seconds. Example pixel-derived field bounds: [57,395,664,521]. Each completed ID was re-submitted and its result remained unchanged. The selected keyboard stayed com.samsung.android.honeyboard/.service.HoneyBoardService.
+
+Failure states include an after screenshot when the deadline permits. Timeout and process interruption may prevent an after-frame; those references are explicitly null with a persisted reason. They never imply successful observation.
+
+Milestone 1 regression evidence: **evidence/text-visual-regression/results.json** — all eight cases passed their assertions, including capture error code 4, visual tap/state verification, ambiguity rejection, duplicate protection and process recovery.
+
+Final tested APK SHA256: **5C08D1AC852A2A8C49EF32F390C80334B4CA57E809972D961A79C61E453E2EA4**.
+
+### Scope and next work
+
+No blocker remains for Milestone 2. The current bounded contract supports visible outlined fields with a unique single-word hint and 1–128 UTF-16 units of supplied text on API 33+. Borderless/ambiguous/unidentifiable or unprovably focused fields fail explicitly. Password fields are excluded. Multiline, clipped text and non-English visual recognition are not claimed by this acceptance proof.
+
+Next: session handling, production coordinator intake, broader visual selectors and a neutral end-to-end instruction workflow. No production coordinator endpoint or keyboard replacement was introduced.
+
+---
+
 Updated: 2026-09-20 21:40 Europe/London.
 
-## Current milestone — PASS on the physical Samsung
+## Milestone 1 — PASS on the physical Samsung
 
 Accessibility screenshot -> OCR target bounds -> dispatchGesture tap -> second screenshot -> verified neutral page state change.
 
@@ -64,10 +117,10 @@ The script serves local HTML, forwards an ephemeral port, launches Chrome, trigg
 
 The app button expects the page served on host port 8765 and adb reverse tcp:8765 tcp:8765. The suite closes its own server/forwarding when finished.
 
-## Next milestones — not complete
+## Remaining milestones
 
-1. Generic structured instruction schema and dispatch pipeline; current runner is a bounded acceptance fixture.
-2. Neutral text entry and exact target selection beyond this two-button fixture.
+1. Production coordinator intake and dispatch protocol; text instructions currently enter through the protected debug receiver.
+2. Broader visual selectors and layouts beyond the now-verified outlined text field and two-button fixtures.
 3. General state verification, session handling, coordinator intake and neutral end-to-end workflow.
 4. Extend persistence/idempotency/recovery to all generic coordinator actions.
 

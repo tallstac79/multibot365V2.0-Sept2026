@@ -1,0 +1,13 @@
+[
+  {"name":"normal", "text":"orchard", "mode":"normal", "expected":"PASS"},
+  {"name":"spaces", "text":"clear blue sky", "mode":"normal", "expected":"PASS"},
+  {"name":"mixed-case", "text":"MiXeD Case", "mode":"normal", "expected":"PASS"},
+  {"name":"numbers", "text":"907314", "mode":"normal", "expected":"PASS"},
+  {"name":"repeated-spaces", "text":"Alpha  beta 42", "mode":"normal", "expected":"PASS"},
+  {"name":"missing", "text":"not inserted", "mode":"missing", "expected":"FIELD_NOT_FOUND"},
+  {"name":"focus-failed", "text":"not inserted", "mode":"disabled", "expected":"FOCUS_FAILED"},
+  {"name":"input-failed", "text":"not inserted", "mode":"disconnect", "expected":"INPUT_FAILED"},
+  {"name":"rejected-text", "text":"orchard", "mode":"reject", "expected":"TEXT_NOT_VERIFIED"},
+  {"name":"timeout", "text":"not inserted", "mode":"normal", "timeout_ms":200, "expected":"TIMEOUT"},
+  {"name":"recovery", "text":"fresh start", "mode":"normal", "expected":"PASS"}
+]

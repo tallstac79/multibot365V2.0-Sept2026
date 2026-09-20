@@ -1,0 +1,47 @@
+{
+  "run_id": "focus-failed-210554c8b106",
+  "requested_text": "not inserted",
+  "field_hint": "SEARCH",
+  "package": "com.android.chrome",
+  "mechanism": "AccessibilityInputConnection.commitText",
+  "started_at_ms": 1789938471781,
+  "started_elapsed_ms": 9241292,
+  "timeout_ms": 30000,
+  "status": "FOCUS_FAILED",
+  "field_bounds": [
+    57,
+    395,
+    664,
+    521
+  ],
+  "pre_screenshot": "files/visual/focus-failed-210554c8b106/before.png",
+  "post_screenshot": "files/visual/focus-failed-210554c8b106/after.png",
+  "verification_result": "NOT_VERIFIED",
+  "input_attempts": 0,
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0
+    },
+    {
+      "phase": "LOCATING",
+      "elapsed_ms": 21
+    },
+    {
+      "phase": "FOCUS_DISPATCHING",
+      "elapsed_ms": 1027
+    },
+    {
+      "phase": "FOCUS_GESTURE_COMPLETED",
+      "elapsed_ms": 1145
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 4943
+    }
+  ],
+  "phase": "FINISHED",
+  "detail": "No fresh input session for the visually tapped field",
+  "ended_at_ms": 1789938476724,
+  "duration_ms": 4943
+}

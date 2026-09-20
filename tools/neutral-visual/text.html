@@ -1,0 +1,25 @@
+<!doctype html><html lang="en"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neutral text entry</title>
+<style>
+body { font: 22px Arial,sans-serif; margin:28px; background:#fff; color:#111; }
+h1 { font-size:28px; font-weight:normal; }
+input { box-sizing:border-box; width:100%; border:3px solid #111; border-radius:0;
+background:#fff; color:#111; font:22px Arial,sans-serif; padding:18px 12px; }
+input::placeholder { color:#333; opacity:1; }
+input:focus { outline:2px solid #357; outline-offset:3px; }
+#state { margin-top:20px; }
+</style>
+<h1>Neutral text entry</h1><p>Enter a value</p>
+<input id="entry" type="text" placeholder="SEARCH" autocomplete="off" autocapitalize="off" spellcheck="false">
+<p id="state">READY</p>
+<script>
+const mode = new URLSearchParams(location.search).get('mode');
+const field = document.getElementById('entry');
+field.addEventListener('focus', () => document.getElementById('state').textContent = 'FOCUSED');
+field.addEventListener('input', () => document.getElementById('state').textContent = 'EDITED');
+if (mode === 'missing') field.remove();
+if (mode === 'disabled') field.disabled = true;
+if (mode === 'reject') field.addEventListener('input', () => { field.value = ''; });
+if (mode === 'disconnect') field.addEventListener('focus', () => setTimeout(() => field.readOnly = true, 250));
+</script></html>

@@ -1,0 +1,38 @@
+{
+  "run_id": "missing-0cb29a771353",
+  "requested_text": "not inserted",
+  "field_hint": "SEARCH",
+  "package": "com.android.chrome",
+  "mechanism": "AccessibilityInputConnection.commitText",
+  "started_at_ms": 1789938463216,
+  "started_elapsed_ms": 9232727,
+  "timeout_ms": 30000,
+  "status": "FIELD_NOT_FOUND",
+  "field_bounds": null,
+  "pre_screenshot": "files/visual/missing-0cb29a771353/before.png",
+  "post_screenshot": "files/visual/missing-0cb29a771353/after.png",
+  "verification_result": "NOT_VERIFIED",
+  "input_attempts": 0,
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 1
+    },
+    {
+      "phase": "LOCATING",
+      "elapsed_ms": 26
+    },
+    {
+      "phase": "LOCATING",
+      "elapsed_ms": 1679
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 3681
+    }
+  ],
+  "phase": "FINISHED",
+  "detail": "No unique outlined field containing OCR hint SEARCH",
+  "ended_at_ms": 1789938466897,
+  "duration_ms": 3681
+}
