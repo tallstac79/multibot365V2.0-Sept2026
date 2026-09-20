@@ -15,26 +15,15 @@
 ## Completed (cont'd)
 - Milestone A Search interaction: query "Fulham" entered and confirmed visible in editable field ✓
 
-## BLOCKED — DEVICE ARCHITECTURAL INCOMPATIBILITY CONFIRMED
-- **Milestone C: Exact Fixture Selection** — SAMSUNG DEVICE UNSUITABLE FOR ACCESSIBILITY AUTOMATION
-  - **Final diagnosis:** Samsung accessibility API firmware block is universal, not Chrome-specific
-  - **Evidence:** Accessibility service cannot access ANY app windows' UI trees (tested):
-    - System UI only visible
-    - MainActivity (app running the service) has empty tree — cannot even interact with own UI
-    - Chrome tree also empty and unreachable
-    - Cannot click buttons in own app; cannot inject pending_action through UI
-  - **Root cause:** Firmware-level accessibility API restriction on this Samsung device
-  - **Code status:** ✅ 100% functionally correct (polling logic, fixture discovery, all methods verified)
-  - **Device status:** ❌ Unsuitable for this automation model — accessibility framework not available
-  - **Confirmation:** Attempted 5+ approaches; all blocked by same firmware limitation
-
-## Recommendation
-**This specific Samsung device cannot run accessibility-based automation.** Test on:
-1. **Different Android device** (e.g., emulator, different OEM, or properly developer-configured device)
-2. **UIAutomator alternative** (requires architectural redesign; uses different API path)
-3. **Verify code on compatible device** before declaring production-ready
-
-**Code is production-grade and ready to deploy on devices with open accessibility API.**
+## In Progress
+- **Milestone C: Visual Control Layer (Screenshot/OCR + dispatchGesture)**
+  - **Pivot:** From AccessibilityNodeInfo tree (blocked) to image-based UI detection
+  - **Approach:** Screenshot → OCR locate Search → dispatchGesture tap → verify opened
+  - **Technical:** Tesseract OCR + AccessibilityService.dispatchGesture() + GestureDescription
+  - **Status:** Codex implementing screenshot/OCR pipeline
+  - **Fallback plan:** If takeScreenshot() unavailable, evaluate MediaProjection alternative
+  - **Next:** Deploy, test on Samsung R5CT61TE14Z, verify visual control works
+  - **No node trees, no ADB coordinates — pure image-based control**
 
 ## Next Milestone
 **B: Text Entry Verification** → **C: Exact Fixture Selection** → **D: Market/Line Selection** → **E: Betslip Validation**
