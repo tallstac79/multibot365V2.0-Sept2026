@@ -1,0 +1,2547 @@
+{
+  "ts": "2026-09-20T12:18:46.390089+00:00",
+  "version": {
+    "Android-Package": "com.android.chrome",
+    "Browser": "Chrome/126.0.6478.110",
+    "Protocol-Version": "1.3",
+    "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+    "V8-Version": "12.6.228.19",
+    "WebKit-Version": "537.36 (@bddce39c9e5a7ad32e6312dcdefeddb61be25ccb)",
+    "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/browser"
+  },
+  "tabs": [
+    {
+      "description": "",
+      "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_internal_file/@bddce39c9e5a7ad32e6312dcdefeddb61be25ccb/inspector.html?ws=127.0.0.1:9222/devtools/page/0",
+      "id": "0",
+      "title": "Bet with bet365 \u2013 Live Online Betting Sportsbook \u2013 Latest Bets and Odds",
+      "type": "page",
+      "url": "https://www.bet365.com/#/HO/",
+      "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/0"
+    }
+  ],
+  "logged_in": true,
+  "challenge": false,
+  "results": [
+    {
+      "element": "SESSION balance",
+      "old_selector": "//div[@class=\"hm-MainHeaderMembersWide_Balance hm-Balance \"]",
+      "old_test": {
+        "selector": "//div[@class=\"hm-MainHeaderMembersWide_Balance hm-Balance \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=\u00a30.00",
+      "confidence": "low",
+      "discover": [
+        {
+          "text": "\u00a30.00",
+          "tag": "div",
+          "id": null,
+          "className": "sln-d0",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "\u00a30.00",
+          "tag": "div",
+          "id": null,
+          "className": "hrm-b",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "\u00a30.00",
+          "tag": "div",
+          "id": null,
+          "className": "hrm-3",
+          "role": null,
+          "aria": null,
+          "data": {}
+        }
+      ],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "SESSION members/account menu",
+      "old_selector": "//div[@class=\"hm-MainHeaderMembersWide_MembersMenuIcon \"]",
+      "old_test": {
+        "selector": "//div[@class=\"hm-MainHeaderMembersWide_MembersMenuIcon \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Members",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "SESSION logout",
+      "old_selector": "//div[@class=\"ul-MembersLinkButton_Text \" and text()=\"Log Out\"]",
+      "old_test": {
+        "selector": "//div[@class=\"ul-MembersLinkButton_Text \" and text()=\"Log Out\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Log Out",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "SESSION logged-out indicator",
+      "old_selector": "//div[contains(@class, \"hm-MainHeaderRHSLoggedOutWide_Login \")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"hm-MainHeaderRHSLoggedOutWide_Login \")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "N/A (logged in)",
+      "proposed": "text=Log In",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "expected_fail_logged_in",
+      "status": "FAIL"
+    },
+    {
+      "element": "PUBLIC login button",
+      "old_selector": "//div[contains(@class, \"hm-MainHeaderRHSLoggedOutWide_Login \")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"hm-MainHeaderRHSLoggedOutWide_Login \")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "N/A (logged in)",
+      "proposed": "text=Log In",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "expected_fail_logged_in",
+      "status": "FAIL"
+    },
+    {
+      "element": "PUBLIC login container",
+      "old_selector": "//div[@class=\"hm-MainHeaderRHSLoggedOutWide_LoginContainer \"]",
+      "old_test": {
+        "selector": "//div[@class=\"hm-MainHeaderRHSLoggedOutWide_LoginContainer \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "N/A (logged in)",
+      "proposed": "text=Login",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "expected_fail_logged_in",
+      "status": "FAIL"
+    },
+    {
+      "element": "PUBLIC username",
+      "old_selector": "//input[@class=\"lms-StandardLogin_Username \"]",
+      "old_test": {
+        "selector": "//input[@class=\"lms-StandardLogin_Username \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "N/A (logged in)",
+      "proposed": "text=Username",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "expected_fail_logged_in",
+      "status": "FAIL"
+    },
+    {
+      "element": "PUBLIC password",
+      "old_selector": "//input[@class=\"lms-StandardLogin_Password \"]",
+      "old_test": {
+        "selector": "//input[@class=\"lms-StandardLogin_Password \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "N/A (logged in)",
+      "proposed": "text=Password",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "expected_fail_logged_in",
+      "status": "FAIL"
+    },
+    {
+      "element": "PUBLIC login submit",
+      "old_selector": ".lms-LoginButton_Text",
+      "old_test": {
+        "selector": ".lms-LoginButton_Text",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "N/A (logged in)",
+      "proposed": "text=Log In",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "expected_fail_logged_in",
+      "status": "FAIL"
+    },
+    {
+      "element": "SEARCH control/bar",
+      "old_selector": "//div[contains(@class, \"c-SearchBar_Inner\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"c-SearchBar_Inner\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "[aria-label=\"Search\"]",
+      "confidence": "med",
+      "discover": [
+        {
+          "text": "Search Search",
+          "tag": "button",
+          "id": null,
+          "className": "sln-a1",
+          "role": null,
+          "aria": "Search",
+          "data": {}
+        },
+        {
+          "text": "Search",
+          "tag": "div",
+          "id": null,
+          "className": "sln-db",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "Search",
+          "tag": "span",
+          "id": null,
+          "className": "sln-77",
+          "role": null,
+          "aria": null,
+          "data": {}
+        }
+      ],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "SEARCH input",
+      "old_selector": "//input[@class=\"sml-SearchTextInput \"]",
+      "old_test": {
+        "selector": "//input[@class=\"sml-SearchTextInput \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "[aria-label=\"Search\"]",
+      "confidence": "med",
+      "discover": [
+        {
+          "text": "Search Search",
+          "tag": "button",
+          "id": null,
+          "className": "sln-a1",
+          "role": null,
+          "aria": "Search",
+          "data": {}
+        },
+        {
+          "text": "Search",
+          "tag": "div",
+          "id": null,
+          "className": "sln-db",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "Search",
+          "tag": "span",
+          "id": null,
+          "className": "sln-77",
+          "role": null,
+          "aria": null,
+          "data": {}
+        }
+      ],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "SEARCH view event text",
+      "old_selector": "//div[@class=\"ssm-SiteSearchTextHeaderTextLabel \" and contains(text(), \"View Event\")]",
+      "old_test": {
+        "selector": "//div[@class=\"ssm-SiteSearchTextHeaderTextLabel \" and contains(text(), \"View Event\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=View Event",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "SEARCH view event bets",
+      "old_selector": "//div[@class=\"ssm-SiteSearchBetsHeaderTextLabel \" and contains(text(), \"View Event\")]",
+      "old_test": {
+        "selector": "//div[@class=\"ssm-SiteSearchBetsHeaderTextLabel \" and contains(text(), \"View Event\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=View Event",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "NAV all sports",
+      "old_selector": "//div[contains(@class, \"hm-HeaderMenuItem \")]/div[text()=\"All Sports\" or text()=\"\u038c\u03bb\u03b1 \u03c4\u03b1 \u03a3\u03c0\u03bf\u03c1\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"hm-HeaderMenuItem \")]/div[text()=\"All Sports\" or text()=\"\u038c\u03bb\u03b1 \u03c4\u03b1 \u03a3\u03c0\u03bf\u03c1\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Home All Sports In-Play My Bets Casino",
+      "confidence": "low",
+      "discover": [
+        {
+          "text": "Home All Sports In-Play My Bets Casino",
+          "tag": "div",
+          "id": null,
+          "className": "tbm-9d",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "All Sports",
+          "tag": "a",
+          "id": null,
+          "className": "tbm-9e tbm-86",
+          "role": null,
+          "aria": null,
+          "data": {}
+        }
+      ],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "NAV in-play",
+      "old_selector": "//div[contains(@class, \"hm-HeaderMenuItem \")]/div[text()=\"In-Play\" or text()=\"\u03a3\u03b5-\u0395\u03be\u03ad\u03bb\u03b9\u03be\u03b7\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"hm-HeaderMenuItem \")]/div[text()=\"In-Play\" or text()=\"\u03a3\u03b5-\u0395\u03be\u03ad\u03bb\u03b9\u03be\u03b7\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=In-Play",
+      "confidence": "low",
+      "discover": [
+        {
+          "text": "In-Play",
+          "tag": "div",
+          "id": null,
+          "className": "hsn-NavTab ",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "In-Play",
+          "tag": "div",
+          "id": null,
+          "className": "hsn-NavTab_Label ",
+          "role": null,
+          "aria": null,
+          "data": {
+            "data-content": "In-Play"
+          }
+        },
+        {
+          "text": "IN-PLAY",
+          "tag": "div",
+          "id": null,
+          "className": "cpr-9e cpr-f65",
+          "role": null,
+          "aria": null,
+          "data": {}
+        }
+      ],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "BETSLIP stake input",
+      "old_selector": "//div[contains(@class, \"bsf-StakeBox_StakeValue-input \")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"bsf-StakeBox_StakeValue-input \")]",
+        "count": 1,
+        "visible": 0,
+        "ok": true,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "YES",
+      "proposed": "[class*=\"bsf-StakeBox\"]",
+      "confidence": "med",
+      "discover": [
+        {
+          "text": "Set Stake",
+          "tag": "div",
+          "id": null,
+          "className": "bsf-StakeBox bsf-StakeBox_Empty bsf-StakeBox_Standard bsf-StakeBox_Width375 ",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "Set Stake",
+          "tag": "div",
+          "id": null,
+          "className": "bsf-StakeBox_Wrapper ",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "Set Stake",
+          "tag": "div",
+          "id": null,
+          "className": "bsf-StakeBox_StakeInput ",
+          "role": null,
+          "aria": null,
+          "data": {}
+        }
+      ],
+      "bucket": "unchanged",
+      "status": "PASS"
+    },
+    {
+      "element": "BETSLIP place bet",
+      "old_selector": "//div[contains(@class, \"AcceptButton \") and not(contains(@class, \"Hidden\")) and not(contains(@class, \"Disabled\"))]/div[contains(@class, \"AcceptButton_Text\") and contains(text(), \"Place Bet\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"AcceptButton \") and not(contains(@class, \"Hidden\")) and not(contains(@class, \"Disabled\"))]/div[contains(@class, \"AcceptButton_Text\") and contains(text(), \"Place Bet\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "[class*=\"bsf-BetButtonsWrapper\"]",
+      "confidence": "med",
+      "discover": [
+        {
+          "text": "Total Stake\u00a30.00\u00a30.00Total StakePlace Bet\u00a30.00Total To ReturnFee\u00a30.00Place Bet",
+          "tag": "div",
+          "id": null,
+          "className": "bsf-BetButtonsWrapper ",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "Total Stake\u00a30.00\u00a30.00Total StakePlace Bet\u00a30.00Total To ReturnFee\u00a30.00",
+          "tag": "div",
+          "id": null,
+          "className": "bsf-PlaceBetButton bsf-PlaceBetButton_Disabled bsf-PlaceBetButton-ccyprefixsymbol ",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "Total Stake\u00a30.00\u00a30.00Total StakePlace Bet\u00a30.00Total To ReturnFee\u00a30.00",
+          "tag": "div",
+          "id": null,
+          "className": "bsf-PlaceBetButton_Wrapper",
+          "role": null,
+          "aria": null,
+          "data": {}
+        }
+      ],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "BETSLIP accept changes text",
+      "old_selector": "//div[contains(@class, \"AcceptButton_Text\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"AcceptButton_Text\")]",
+        "count": 1,
+        "visible": 0,
+        "ok": true,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "YES",
+      "proposed": "text=Accept",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "unchanged",
+      "status": "PASS"
+    },
+    {
+      "element": "BETSLIP done",
+      "old_selector": "//div[contains(@class, \"ReceiptContent_Done\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"ReceiptContent_Done\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Done",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "BETSLIP remove",
+      "old_selector": "//div[contains(@class, \"-RemoveButton\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"-RemoveButton\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Remove",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "BETSLIP remove all",
+      "old_selector": "//div[contains(@class, \"edit\")]/div/div[contains(@class, \"ControlBar\") and contains(text(), \"Remove all\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"edit\")]/div/div[contains(@class, \"ControlBar\") and contains(text(), \"Remove all\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Remove all",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "MARKET nav buttons",
+      "old_selector": "//div[contains(@class, \"sph-MarketGroupNavBarButton \")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"sph-MarketGroupNavBarButton \")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Popular",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "MARKET asian lines tab",
+      "old_selector": "//div[contains(@class, \"sph-MarketGroupNavBarButton \")]/div[@data-content=\"Asian Lines\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"sph-MarketGroupNavBarButton \")]/div[@data-content=\"Asian Lines\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Asian Lines",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "MARKET popular tab",
+      "old_selector": "//div[contains(@class, \"sph-MarketGroupNavBarButton \")]/div[@data-content=\"Popular\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"sph-MarketGroupNavBarButton \")]/div[@data-content=\"Popular\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Popular",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "EVENT header label",
+      "old_selector": "//div[contains(@class, \"sph-EventHeader_Label \")]/span",
+      "old_test": {
+        "selector": "//div[contains(@class, \"sph-EventHeader_Label \")]/span",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "AH team1",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Handicap\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div[2]/div/div[1]/div/span[2]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Handicap\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div[2]/div/div[1]/div/span[2]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Asian Handicap",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "GOAL LINE over",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Goal Line\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div[2]/div/span",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Goal Line\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div[2]/div/span",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Goal Line",
+      "confidence": "low",
+      "discover": [],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "MY BETS tab",
+      "old_selector": "//div[contains(@class, \"hm-MainHeaderTabRow_MyBetsLabel \")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"hm-MainHeaderTabRow_MyBetsLabel \")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Home All Sports In-Play My Bets Casino",
+      "confidence": "low",
+      "discover": [
+        {
+          "text": "Home All Sports In-Play My Bets Casino",
+          "tag": "div",
+          "id": null,
+          "className": "tbm-9d",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "My Bets",
+          "tag": "a",
+          "id": null,
+          "className": "tbm-d tbm-9e",
+          "role": null,
+          "aria": null,
+          "data": {}
+        }
+      ],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "MY BETS button",
+      "old_selector": "//div[contains(@class, \"hm-HeaderMenuItemMyBets \")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"hm-HeaderMenuItemMyBets \")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Home All Sports In-Play My Bets Casino",
+      "confidence": "low",
+      "discover": [
+        {
+          "text": "Home All Sports In-Play My Bets Casino",
+          "tag": "div",
+          "id": null,
+          "className": "tbm-9d",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "My Bets",
+          "tag": "a",
+          "id": null,
+          "className": "tbm-d tbm-9e",
+          "role": null,
+          "aria": null,
+          "data": {}
+        }
+      ],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "FOOTBALL nav",
+      "old_selector": null,
+      "old_test": {
+        "ok": false,
+        "count": 0,
+        "visible": 0,
+        "selector": null,
+        "sample": null,
+        "error": "no old selector"
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Football",
+      "confidence": "low",
+      "discover": [
+        {
+          "text": "Football",
+          "tag": "div",
+          "id": null,
+          "className": "crr-6",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "Football",
+          "tag": "div",
+          "id": null,
+          "className": "crr-2",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "Football",
+          "tag": "div",
+          "id": null,
+          "className": "crr-3d",
+          "role": null,
+          "aria": null,
+          "data": {}
+        }
+      ],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "BASKETBALL nav",
+      "old_selector": null,
+      "old_test": {
+        "ok": false,
+        "count": 0,
+        "visible": 0,
+        "selector": null,
+        "sample": null,
+        "error": "no old selector"
+      },
+      "mobile_works": "NO (needs new)",
+      "proposed": "text=Basketball",
+      "confidence": "low",
+      "discover": [
+        {
+          "text": "Basketball",
+          "tag": "div",
+          "id": null,
+          "className": "crr-6",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "Basketball",
+          "tag": "div",
+          "id": null,
+          "className": "crr-2",
+          "role": null,
+          "aria": null,
+          "data": {}
+        },
+        {
+          "text": "Basketball",
+          "tag": "div",
+          "id": null,
+          "className": "crr-3d",
+          "role": null,
+          "aria": null,
+          "data": {}
+        }
+      ],
+      "bucket": "modify",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST ACCEPT_BUTTON_DISABLED",
+      "old_selector": "//div[contains(@class, \"AcceptButton \") and contains(@class, \"Disabled\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"AcceptButton \") and contains(@class, \"Disabled\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST ACCEPT_BUTTON_MESSAGE",
+      "old_selector": "//div[contains(@class, \"AcceptButton_Message\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"AcceptButton_Message\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST ACCEPT_BUTTON_VISIBLE",
+      "old_selector": "//div[contains(@class, \"AcceptButton \") and not(contains(@class, \"Hidden\"))]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"AcceptButton \") and not(contains(@class, \"Hidden\"))]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST ACCEPT_CHANGES_AND_PLACE",
+      "old_selector": "//div[contains(@class, \"AcceptButton_Text\") and contains(text(), \"Place Bet\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"AcceptButton_Text\") and contains(text(), \"Place Bet\")]",
+        "count": 1,
+        "visible": 0,
+        "ok": true,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "YES",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unchanged",
+      "status": "PASS"
+    },
+    {
+      "element": "CONST ACCEPT_CHANGES_NO_PLACE",
+      "old_selector": "//div[contains(@class, \"AcceptButton_Text\") and not(contains(text(), \"Place Bet\"))]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"AcceptButton_Text\") and not(contains(text(), \"Place Bet\"))]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST AH_CORNERS_TEAM1",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Handicap Corners\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div[2]/div/div[1]/div/span[2]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Handicap Corners\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div[2]/div/div[1]/div/span[2]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST AH_CORNERS_TEAM2",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Handicap Corners\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div[2]/div/div[2]/div/span[2]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Handicap Corners\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div[2]/div/div[2]/div/span[2]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST AH_TEAM1_ACTIVE",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Handicap\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div[2]/div/div[1]/div[not(contains(@class,\"Suspended\"))]/span[2]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Handicap\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div[2]/div/div[1]/div[not(contains(@class,\"Suspended\"))]/span[2]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST AH_TEAM2_ACTIVE",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Handicap\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div[2]/div/div[2]/div[not(contains(@class,\"Suspended\"))]/span[2]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Handicap\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div[2]/div/div[2]/div[not(contains(@class,\"Suspended\"))]/span[2]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST AH_TEAM2_VALUE",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Handicap\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div[2]/div/div[2]/div/span[2]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Handicap\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div[2]/div/div[2]/div/span[2]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST ALL_BETS_TAB",
+      "old_selector": "//div[contains(@class, \"HeaderButton \") and text()=\"All\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"HeaderButton \") and text()=\"All\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST ALT_AH_BUTTON",
+      "old_selector": "//div[contains(@class, \"MarketGroup\") and contains(@class, \"Button_Text \") and text()=\"Alternative Asian Handicap\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup\") and contains(@class, \"Button_Text \") and text()=\"Alternative Asian Handicap\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST ALT_AH_OPEN",
+      "old_selector": "//div[contains(@class, \"MarketGroupButton\") and contains(@class, \"MarketGroup_Open \")]/div[contains(@class, \"MarketGroup\") and contains(@class, \"Button_Text \") and text()=\"Alternative Asian Handicap\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroupButton\") and contains(@class, \"MarketGroup_Open \")]/div[contains(@class, \"MarketGroup\") and contains(@class, \"Button_Text \") and text()=\"Alternative Asian Handicap\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST ALT_GOAL_LINE_BUTTON",
+      "old_selector": "//div[contains(@class, \"MarketGroup\") and contains(@class, \"Button_Text \") and text()=\"Alternative Goal Line\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup\") and contains(@class, \"Button_Text \") and text()=\"Alternative Goal Line\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST ALT_GOAL_LINE_OPEN",
+      "old_selector": "//div[contains(@class, \"MarketGroupButton\") and contains(@class, \"MarketGroup_Open \")]/div[contains(@class, \"MarketGroup\") and contains(@class, \"Button_Text \") and text()=\"Alternative Goal Line\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroupButton\") and contains(@class, \"MarketGroup_Open \")]/div[contains(@class, \"MarketGroup\") and contains(@class, \"Button_Text \") and text()=\"Alternative Goal Line\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST ASIAN_TOTAL_CORNERS_OVER",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Total Corners\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div[2]/div/span",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Total Corners\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div[2]/div/span",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST ASIAN_TOTAL_CORNERS_UNDER",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Total Corners\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div[3]/div/span",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Asian Total Corners\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div[3]/div/span",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST BET_BUILDER_TAB",
+      "old_selector": "//div[contains(@class, \"sph-MarketGroupNavBarButton \")]/div[@data-content=\"Bet Builder\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"sph-MarketGroupNavBarButton \")]/div[@data-content=\"Bet Builder\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST CASH_OUT_TAB",
+      "old_selector": "//div[contains(@class, \"HeaderButton \") and text()=\"Cash Out\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"HeaderButton \") and text()=\"Cash Out\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST CLOSE_BUTTON",
+      "old_selector": "//div[@class=\"sml-CloseButton \"]",
+      "old_test": {
+        "selector": "//div[@class=\"sml-CloseButton \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST CLOSE_BUTTON2",
+      "old_selector": "//div[@class=\"pm-MessageOverlayCloseButton \"]",
+      "old_test": {
+        "selector": "//div[@class=\"pm-MessageOverlayCloseButton \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST COOKIES_ACCEPT",
+      "old_selector": "//div[@class=\"ccm-CookieConsentPopup_Accept \"]",
+      "old_test": {
+        "selector": "//div[@class=\"ccm-CookieConsentPopup_Accept \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST COOKIES_ACCEPT2",
+      "old_selector": "//button[text()=\"Accept All\"]",
+      "old_test": {
+        "selector": "//button[text()=\"Accept All\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST CORNERS_RACE_VALUES",
+      "old_selector": "//div[contains(@class, \"MarketGroupWithIconsButton_Text \") and text()=\"Corners Race\"]/parent::*/parent::*/parent::*/parent::*/div[2]/div/div[1]/div[contains(@class, \"Participant\")]/div",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroupWithIconsButton_Text \") and text()=\"Corners Race\"]/parent::*/parent::*/parent::*/parent::*/div[2]/div/div[1]/div[contains(@class, \"Participant\")]/div",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST CORNERS_TAB",
+      "old_selector": "//div[contains(@class, \"sph-MarketGroupNavBarButton \")]/div[@data-content=\"Corners\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"sph-MarketGroupNavBarButton \")]/div[@data-content=\"Corners\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST CORNER_MATCH_BET_TEAM1",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Corner Match Bet\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div/div[1]/span[2]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Corner Match Bet\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div/div[1]/span[2]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST CORNER_MATCH_BET_TEAM2",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Corner Match Bet\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div/div[3]/span[2]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Corner Match Bet\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div/div[3]/span[2]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST DNB_TEAM1",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Draw No Bet\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div/div[1]/span[2]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Draw No Bet\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div/div[1]/span[2]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST DNB_TEAM1_ACTIVE",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Draw No Bet\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div/div[1][not(contains(@class,\"Suspended\"))]/span[2]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Draw No Bet\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div/div[1][not(contains(@class,\"Suspended\"))]/span[2]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST DNB_TEAM2",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Draw No Bet\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div/div[2]/span[2]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Draw No Bet\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div/div[2]/span[2]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST DNB_TEAM2_ACTIVE",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Draw No Bet\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div/div[2][not(contains(@class,\"Suspended\"))]/span[2]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Draw No Bet\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div/div[2][not(contains(@class,\"Suspended\"))]/span[2]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST EVENT_TIMESTAMP",
+      "old_selector": "//div[contains(@class, \"sph-ExtraData_TimeStamp \")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"sph-ExtraData_TimeStamp \")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST EVENT_WRAPPER_LABEL",
+      "old_selector": "//div[contains(@class, \"sph-EventWrapper_Label \")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"sph-EventWrapper_Label \")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST FIXTURE_TEAM1",
+      "old_selector": "//div[contains(@class, \"sph-FixturePodHeader_BottomInfoWrapper \")]/div[1]/div",
+      "old_test": {
+        "selector": "//div[contains(@class, \"sph-FixturePodHeader_BottomInfoWrapper \")]/div[1]/div",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST FIXTURE_TEAM2",
+      "old_selector": "//div[contains(@class, \"sph-FixturePodHeader_BottomInfoWrapper \")]/div[3]/div",
+      "old_test": {
+        "selector": "//div[contains(@class, \"sph-FixturePodHeader_BottomInfoWrapper \")]/div[3]/div",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST GOAL_LINE_OVER_ACTIVE",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Goal Line\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div[2]/div[not(contains(@class,\"Suspended\"))]/span",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Goal Line\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div[2]/div[not(contains(@class,\"Suspended\"))]/span",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST GOAL_LINE_UNDER",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Goal Line\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div[3]/div/span",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Goal Line\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div[3]/div/span",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST GOAL_LINE_UNDER_ACTIVE",
+      "old_selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Goal Line\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div[3]/div[not(contains(@class,\"Suspended\"))]/span",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MarketGroup \")]//div[text()=\"Goal Line\"]//ancestor::div[contains(@class, \"MarketGroup \")]/div/div/div[3]/div[not(contains(@class,\"Suspended\"))]/span",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST INACTIVITY_LOGGED_OUT",
+      "old_selector": "//div[@class=\"wlm-InactivityLoggedOutPopup_Close \"]",
+      "old_test": {
+        "selector": "//div[@class=\"wlm-InactivityLoggedOutPopup_Close \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST INSUFFICIENT_FUNDS_CLOSE",
+      "old_selector": "//div[contains(@class, \"qd-CrossButton \")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"qd-CrossButton \")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST INTRO_POPUP_CLOSE",
+      "old_selector": "//div[@class=\"iip-IntroductoryPopup_Cross\"]",
+      "old_test": {
+        "selector": "//div[@class=\"iip-IntroductoryPopup_Cross\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST IP_ASIAN_LINES",
+      "old_selector": "//div[contains(@class, \"ipe-GridHeaderTabLink \")]/div[contains(text(), \"Asian Lines\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"ipe-GridHeaderTabLink \")]/div[contains(text(), \"Asian Lines\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST IP_BET_BUILDER",
+      "old_selector": "//div[contains(@class, \"ipe-GridHeaderTabLink \")]/div[contains(text(), \"Bet Builder\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"ipe-GridHeaderTabLink \")]/div[contains(text(), \"Bet Builder\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST IP_CORNERS",
+      "old_selector": "//div[contains(@class, \"ipe-GridHeaderTabLink \")]/div[contains(text(), \"Corners\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"ipe-GridHeaderTabLink \")]/div[contains(text(), \"Corners\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST IP_EVENT_HEADER",
+      "old_selector": "//div[contains(@class, \"ipe-EventHeader_Fixture \")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"ipe-EventHeader_Fixture \")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST IP_PLAYER",
+      "old_selector": "//div[contains(@class, \"ipe-GridHeaderTabLink \")]/div[contains(text(), \"Player\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"ipe-GridHeaderTabLink \")]/div[contains(text(), \"Player\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST IP_POPULAR",
+      "old_selector": "//div[contains(@class, \"ipe-GridHeaderTabLink \")]/div[contains(text(), \"Popular\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"ipe-GridHeaderTabLink \")]/div[contains(text(), \"Popular\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST LAST_LOGIN_BUTTON",
+      "old_selector": "//div[@class=\"llm-LastLoginModule_Button \"]",
+      "old_test": {
+        "selector": "//div[@class=\"llm-LastLoginModule_Button \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST LIVE_NOW_TAB",
+      "old_selector": "//div[contains(@class, \"HeaderButton \") and text()=\"Live Now\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"HeaderButton \") and text()=\"Live Now\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST MULTIPLE_REMOVE",
+      "old_selector": "//div[contains(@class, \"-MultipleHeaderRemoveButton\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"-MultipleHeaderRemoveButton\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST MY_BETS_COUNT",
+      "old_selector": "//span[@class=\"hm-HeaderMenuItemMyBets_MyBetsCount \"]",
+      "old_test": {
+        "selector": "//span[@class=\"hm-HeaderMenuItemMyBets_MyBetsCount \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST NOT_INTERESTED",
+      "old_selector": "//div[contains(@class, \"pm-FreeBetsPushGraphicCloseButton\") and (contains(text(), \"Not Interested\"))]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"pm-FreeBetsPushGraphicCloseButton\") and (contains(text(), \"Not Interested\"))]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST NO_SEARCH_RESULTS",
+      "old_selector": "//div[@class=\"ssm-DynamicSearchPane_NoResults \"]",
+      "old_test": {
+        "selector": "//div[@class=\"ssm-DynamicSearchPane_NoResults \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST NO_THANKS",
+      "old_selector": "//button[@class=\"default_Button text-button\" and text()=\"No thanks\"]",
+      "old_test": {
+        "selector": "//button[@class=\"default_Button text-button\" and text()=\"No thanks\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST PLAYER_TAB",
+      "old_selector": "//div[contains(@class, \"sph-MarketGroupNavBarButton \")]/div[@data-content=\"Player\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"sph-MarketGroupNavBarButton \")]/div[@data-content=\"Player\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST REALITY_CHECK_REMAIN",
+      "old_selector": "//div[@class=\"alm-ActivityLimitStayButton \" and text()=\"Remain Logged In\"]",
+      "old_test": {
+        "selector": "//div[@class=\"alm-ActivityLimitStayButton \" and text()=\"Remain Logged In\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST REMAIN_LOGGED_IN",
+      "old_selector": "//div[@class=\"alm-InactivityAlertRemainButton \"]",
+      "old_test": {
+        "selector": "//div[@class=\"alm-InactivityAlertRemainButton \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST RESTRICTIONS_CONTINUE",
+      "old_selector": "//button[@class=\"accept-button\" and text()=\"Continue\"]",
+      "old_test": {
+        "selector": "//button[@class=\"accept-button\" and text()=\"Continue\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST RESTRICTIONS_MODAL",
+      "old_selector": "//div[@class=\"modal partialAuthentication general-account-restrictions\"]",
+      "old_test": {
+        "selector": "//div[@class=\"modal partialAuthentication general-account-restrictions\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST SETTLED_TAB",
+      "old_selector": "//div[contains(@class, \"HeaderButton \") and text()=\"Settled\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"HeaderButton \") and text()=\"Settled\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST SHOW_OPTIONS",
+      "old_selector": "//div[contains(@class, \"-EditButton\") and contains(@class, \"-DefaultContent_TitleEdit\") and contains(text(), \"Show Options\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"-EditButton\") and contains(@class, \"-DefaultContent_TitleEdit\") and contains(text(), \"Show Options\")]",
+        "count": 1,
+        "visible": 0,
+        "ok": true,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "YES",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unchanged",
+      "status": "PASS"
+    },
+    {
+      "element": "CONST UNSETTLED_TAB",
+      "old_selector": "//div[contains(@class, \"HeaderButton \") and text()=\"Unsettled\"]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"HeaderButton \") and text()=\"Unsettled\"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST UPDATE_STAKE_BUTTON",
+      "old_selector": "//div[contains(@class, \"AcceptButton \") and not(contains(@class, \"Hidden\"))]/div[contains(@class, \"AcceptButton_Text\") and contains(text(), \"Update Stake\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"AcceptButton \") and not(contains(@class, \"Hidden\"))]/div[contains(@class, \"AcceptButton_Text\") and contains(text(), \"Update Stake\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST UP_ARROW",
+      "old_selector": "//div[contains(@class, \"-DefaultContent_Close\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"-DefaultContent_Close\")]",
+        "count": 1,
+        "visible": 0,
+        "ok": true,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "YES",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unchanged",
+      "status": "PASS"
+    },
+    {
+      "element": "CONST VIDEO_MATCH_PITCH",
+      "old_selector": "//div[@class=\"lv-ButtonBar_MatchLive \"]/div",
+      "old_test": {
+        "selector": "//div[@class=\"lv-ButtonBar_MatchLive \"]/div",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST VIDEO_PITCH_BUTTON",
+      "old_selector": "//div[contains(@class, \"MediaButtonLoader_ML1 \")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"MediaButtonLoader_ML1 \")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST VIDEO_PLAYING",
+      "old_selector": "//div[contains(@class, \"fpm-FloatableMediaPlayerControls-playing\")]",
+      "old_test": {
+        "selector": "//div[contains(@class, \"fpm-FloatableMediaPlayerControls-playing\")]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    },
+    {
+      "element": "CONST VIDEO_STOP_BUTTON",
+      "old_selector": "//div[@class=\"fpm-PlayButton \"]",
+      "old_test": {
+        "selector": "//div[@class=\"fpm-PlayButton \"]",
+        "count": 0,
+        "visible": 0,
+        "ok": false,
+        "error": null,
+        "sample": null
+      },
+      "mobile_works": "NO",
+      "proposed": "",
+      "confidence": "none",
+      "discover": [],
+      "bucket": "unusable",
+      "status": "FAIL"
+    }
+  ],
+  "markets": {
+    "football": {
+      "ok": true,
+      "notes": [
+        "Locator.click: Timeout 3000ms exceeded.\nCall log:\n  - waiting for locator(\"text=Football\").first\n    - locator resolved to <div class=\"crr-3d\">Football</div>\n  - attempting click action\n    - waiting for element to be visible, enabled and stable\n",
+        "Locator.click: Timeout 3000ms exceeded.\nCall log:\n  - waiting for locator(\"//div[normalize-space()=\\\"Football\\\"]\").first\n    - locator resolved to <div class=\"crr-6\">\u2026</div>\n  - attempting click action\n    - waiting for element to be visible, enabled and stable\n",
+        "opened=Bournemouth",
+        "selection_odds=None"
+      ],
+      "markets": {
+        "1X2/moneyline": {
+          "discover": [
+            {
+              "text": "Scores & Results Live Scores Results",
+              "tag": "div",
+              "id": null,
+              "className": "frm-d1 frm-f5",
+              "role": null,
+              "aria": null,
+              "data": {}
+            },
+            {
+              "text": "Scores & Results",
+              "tag": "div",
+              "id": null,
+              "className": "frm-98",
+              "role": null,
+              "aria": null,
+              "data": {}
+            },
+            {
+              "text": "Results",
+              "tag": "div",
+              "id": null,
+              "className": "frm-a9",
+              "role": null,
+              "aria": null,
+              "data": {}
+            },
+            {
+              "text": "Results",
+              "tag": "div",
+              "id": null,
+              "className": "frm-b7",
+              "role": null,
+              "aria": null,
+              "data": {}
+            }
+          ],
+          "old": {
+            "selector": "//div[contains(@class, \"MarketGroup\") and contains(@class, \"Button_Text \") and text()=\"Match Result\"]",
+            "count": 0,
+            "visible": 0,
+            "ok": false,
+            "error": null,
+            "sample": null
+          },
+          "proposed": "text=Scores & Results Live Scores Results"
+        },
+        "asian_handicap": {
+          "discover": [],
+          "old": {
+            "selector": "//div[contains(@class, \"MarketGroup\") and contains(@class, \"Button_Text \") and text()=\"Asian Handicap\"]",
+            "count": 0,
+            "visible": 0,
+            "ok": false,
+            "error": null,
+            "sample": null
+          },
+          "proposed": ""
+        },
+        "totals": {
+          "discover": [
+            {
+              "text": "Total Stake\u00a30.00\u00a30.00Total StakePlace Bet\u00a30.00Total To ReturnFee\u00a30.00Place Bet",
+              "tag": "div",
+              "id": null,
+              "className": "bsf-BetButtonsWrapper ",
+              "role": null,
+              "aria": null,
+              "data": {}
+            },
+            {
+              "text": "Total Stake\u00a30.00\u00a30.00Total StakePlace Bet\u00a30.00Total To ReturnFee\u00a30.00",
+              "tag": "div",
+              "id": null,
+              "className": "bsf-PlaceBetButton bsf-PlaceBetButton_Disabled bsf-PlaceBetButton-ccyprefixsymbol ",
+              "role": null,
+              "aria": null,
+              "data": {}
+            },
+            {
+              "text": "Total Stake\u00a30.00\u00a30.00Total StakePlace Bet\u00a30.00Total To ReturnFee\u00a30.00",
+              "tag": "div",
+              "id": null,
+              "className": "bsf-PlaceBetButton_Wrapper",
+              "role": null,
+              "aria": null,
+              "data": {}
+            }
+          ],
+          "old": {
+            "selector": "//div[contains(@class, \"MarketGroup\") and contains(@class, \"Button_Text \") and text()=\"Goal Line\"]",
+            "count": 0,
+            "visible": 0,
+            "ok": false,
+            "error": null,
+            "sample": null
+          },
+          "proposed": "[class*=\"bsf-BetButtonsWrapper\"]"
+        }
+      },
+      "betslip": {
+        "stake": {
+          "selector": "//div[contains(@class, \"bsf-StakeBox_StakeValue-input \")]",
+          "count": 1,
+          "visible": 0,
+          "ok": true,
+          "error": null,
+          "sample": null
+        },
+        "place_bet": {
+          "selector": "//div[contains(@class, \"AcceptButton \") and not(contains(@class, \"Hidden\")) and not(contains(@class, \"Disabled\"))]/div[contains(@class, \"AcceptButton_Text\") and contains(text(), \"Place Bet\")]",
+          "count": 0,
+          "visible": 0,
+          "ok": false,
+          "error": null,
+          "sample": null
+        },
+        "accept": {
+          "selector": "//div[contains(@class, \"AcceptButton_Text\")]",
+          "count": 1,
+          "visible": 0,
+          "ok": true,
+          "error": null,
+          "sample": null
+        },
+        "remove": {
+          "selector": "//div[contains(@class, \"-RemoveButton\")]",
+          "count": 0,
+          "visible": 0,
+          "ok": false,
+          "error": null,
+          "sample": null
+        },
+        "remove_all": {
+          "selector": "//div[contains(@class, \"edit\")]/div/div[contains(@class, \"ControlBar\") and contains(text(), \"Remove all\")]",
+          "count": 0,
+          "visible": 0,
+          "ok": false,
+          "error": null,
+          "sample": null
+        },
+        "done": {
+          "selector": "//div[contains(@class, \"ReceiptContent_Done\")]",
+          "count": 0,
+          "visible": 0,
+          "ok": false,
+          "error": null,
+          "sample": null
+        },
+        "discover": [
+          {
+            "text": "Set Stake",
+            "tag": "div",
+            "id": null,
+            "className": "bsf-StakeBox bsf-StakeBox_Empty bsf-StakeBox_Standard bsf-StakeBox_Width375 ",
+            "role": null,
+            "aria": null,
+            "data": {}
+          },
+          {
+            "text": "Set Stake",
+            "tag": "div",
+            "id": null,
+            "className": "bsf-StakeBox_Wrapper ",
+            "role": null,
+            "aria": null,
+            "data": {}
+          },
+          {
+            "text": "Set Stake",
+            "tag": "div",
+            "id": null,
+            "className": "bsf-StakeBox_StakeInput ",
+            "role": null,
+            "aria": null,
+            "data": {}
+          },
+          {
+            "text": "Set Stake",
+            "tag": "div",
+            "id": null,
+            "className": "bsf-StakeBox_StakeAmount ",
+            "role": null,
+            "aria": null,
+            "data": {}
+          },
+          {
+            "text": "Set Stake",
+            "tag": "div",
+            "id": null,
+            "className": "bsf-StakeBox_StakeValue-wrapper ",
+            "role": null,
+            "aria": null,
+            "data": {}
+          },
+          {
+            "text": "Set Stake",
+            "tag": "div",
+            "id": null,
+            "className": "bsf-StakeBox_StakeValue bsf-StakeBox_StakeValue-empty ",
+            "role": null,
+            "aria": null,
+            "data": {}
+          },
+          {
+            "text": "Total Stake\u00a30.00\u00a30.00Total StakePlace Bet\u00a30.00Total To ReturnFee\u00a30.00Place Bet",
+            "tag": "div",
+            "id": null,
+            "className": "bsf-BetButtonsWrapper ",
+            "role": null,
+            "aria": null,
+            "data": {}
+          },
+          {
+            "text": "Total Stake\u00a30.00\u00a30.00Total StakePlace Bet\u00a30.00Total To ReturnFee\u00a30.00",
+            "tag": "div",
+            "id": null,
+            "className": "bsf-PlaceBetButton bsf-PlaceBetButton_Disabled bsf-PlaceBetButton-ccyprefixsymbol ",
+            "role": null,
+            "aria": null,
+            "data": {}
+          },
+          {
+            "text": "Total Stake\u00a30.00\u00a30.00Total StakePlace Bet\u00a30.00Total To ReturnFee\u00a30.00",
+            "tag": "div",
+            "id": null,
+            "className": "bsf-PlaceBetButton_Wrapper",
+            "role": null,
+            "aria": null,
+            "data": {}
+          },
+          {
+            "text": "Place Bet\u00a30.00",
+            "tag": "div",
+            "id": null,
+            "className": "bsf-PlaceBetButton_TopRow ",
+            "role": null,
+            "aria": null,
+            "data": {}
+          },
+          {
+            "text": "Place Bet",
+            "tag": "div",
+            "id": null,
+            "className": "bsf-PlaceBetButton_Text ",
+            "role": null,
+            "aria": null,
+            "data": {}
+          }
+        ],
+        "clear": "no clear controls found"
+      }
+    },
+    "basketball": {
+      "ok": true,
+      "notes": [
+        "Locator.click: Timeout 3000ms exceeded.\nCall log:\n  - waiting for locator(\"text=Basketball\").first\n    - locator resolved to <div class=\"crr-3d\">Basketball</div>\n  - attempting click action\n    - waiting for element to be visible, enabled and stable\n",
+        "Locator.click: Timeout 3000ms exceeded.\nCall log:\n  - waiting for locator(\"//div[normalize-space()=\\\"Basketball\\\"]\").first\n    - locator resolved to <div class=\"crr-6\">\u2026</div>\n  - attempting click action\n    - waiting for element to be visible, enabled and stable\n",
+        "opened=Sun 20 Sep\nBournemouth\nLiverpool\n14:00\n1\n3.10\nX\n3.70\n2\n2.20",
+        "selection_odds=3.10"
+      ],
+      "markets": {
+        "moneyline": {
+          "discover": [
+            {
+              "text": "Money Line 2.80 1.45",
+              "tag": "div",
+              "id": null,
+              "className": "cpr-35",
+              "role": null,
+              "aria": null,
+              "data": {}
+            },
+            {
+              "text": "Money Line 3.00 1.40",
+              "tag": "div",
+              "id": null,
+              "className": "cpr-35",
+              "role": null,
+              "aria": null,
+              "data": {}
+            },
+            {
+              "text": "Money Line 2.25 1.66",
+              "tag": "div",
+              "id": null,
+              "className": "cpr-35",
+              "role": null,
+              "aria": null,
+              "data": {}
+            },
+            {
+              "text": "Money Line 4.25 1.23",
+              "tag": "div",
+              "id": null,
+              "className": "cpr-35",
+              "role": null,
+              "aria": null,
+              "data": {}
+            }
+          ],
+          "proposed": "text=Money Line 2.80 1.45"
+        },
+        "spread": {
+          "discover": [
+            {
+              "text": "Spread +4.5 1.90 -4.5 1.90",
+              "tag": "div",
+              "id": null,
+              "className": "cpr-35",
+              "role": null,
+              "aria": null,
+              "data": {}
+            },
+            {
+              "text": "Money Line 2.80 1.45",
+              "tag": "div",
+              "id": null,
+              "className": "cpr-35",
+              "role": null,
+              "aria": null,
+              "data": {}
+            },
+            {
+              "text": "Spread +5.5 1.90 -5.5 1.90",
+              "tag": "div",
+              "id": null,
+              "className": "cpr-35",
+              "role": null,
+              "aria": null,
+              "data": {}
+            },
+            {
+              "text": "Money Line 3.00 1.40",
+              "tag": "div",
+              "id": null,
+              "className": "cpr-35",
+              "role": null,
+              "aria": null,
+              "data": {}
+            }
+          ],
+          "proposed": "text=Spread +4.5 1.90 -4.5 1.90"
+        },
+        "totals": {
+          "discover": [
+            {
+              "text": "Total O 47.5 1.90 U 47.5 1.90",
+              "tag": "div",
+              "id": null,
+              "className": "cpr-35",
+              "role": null,
+              "aria": null,
+              "data": {}
+            },
+            {
+              "text": "Total O 41.5 1.90 U 41.5 1.90",
+              "tag": "div",
+              "id": null,
+              "className": "cpr-35",
+              "role": null,
+              "aria": null,
+              "data": {}
+            },
+            {
+              "text": "Total O 45.5 1.90 U 45.5 1.90",
+              "tag": "div",
+              "id": null,
+              "className": "cpr-35",
+              "role": null,
+              "aria": null,
+              "data": {}
+            },
+            {
+              "text": "Total O 45.5 1.90 U 45.5 1.90",
+              "tag": "div",
+              "id": null,
+              "className": "cpr-35",
+              "role": null,
+              "aria": null,
+              "data": {}
+            }
+          ],
+          "proposed": "text=Total O 47.5 1.90 U 47.5 1.90"
+        }
+      },
+      "betslip": {
+        "stake": {
+          "selector": "//div[contains(@class, \"bsf-StakeBox_StakeValue-input \")]",
+          "count": 0,
+          "visible": 0,
+          "ok": false,
+          "error": null,
+          "sample": null
+        },
+        "place_bet": {
+          "selector": "//div[contains(@class, \"AcceptButton \") and not(contains(@class, \"Hidden\")) and not(contains(@class, \"Disabled\"))]/div[contains(@class, \"AcceptButton_Text\") and contains(text(), \"Place Bet\")]",
+          "count": 0,
+          "visible": 0,
+          "ok": false,
+          "error": null,
+          "sample": null
+        },
+        "remove": {
+          "selector": "//div[contains(@class, \"-RemoveButton\")]",
+          "count": 0,
+          "visible": 0,
+          "ok": false,
+          "error": null,
+          "sample": null
+        },
+        "discover": [],
+        "clear": "no clear controls found"
+      }
+    }
+  },
+  "summary": {
+    "unchanged": 5,
+    "modify": 22,
+    "unusable": 66,
+    "expected_fail_logged_in": 6,
+    "football_addressable": {
+      "1x2": true,
+      "spread": false,
+      "totals": true
+    },
+    "basketball_addressable": {
+      "ml": true,
+      "spread": true,
+      "totals": true
+    },
+    "betslip_readable": true,
+    "logged_in": true
+  },
+  "session": {
+    "hasLogIn": false,
+    "hasJoin": false,
+    "hasLogOut": false,
+    "hasMyBets": true,
+    "balanceText": "\u00a30.00",
+    "membersClass": true,
+    "loggedOutClass": false
+  }
+}
