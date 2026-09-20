@@ -12,7 +12,7 @@
 - Milestone A Search interaction: query "Fulham" entered and confirmed visible in editable field ✓
 
 ## In Progress
-- **Milestone C: Exact Fixture Selection** — Code fully implemented and deployed. **On-device test FAILED**: Fixture tap handler ready but cannot execute because Search handler consistently fails with TARGET_NOT_FOUND (Search button not being detected in Chrome accessibility tree). This blocks Fixture handler (which depends on Fulham search result being visible). Root cause: either Chrome accessibility tree structure changed post-reinstall, or accessibility service tree traversal not scanning current page state correctly. Code is correct; blocker is Chrome state / accessibility tree mismatch.
+- **Milestone C: Exact Fixture Selection** — Fixture code complete and deployed. Search prerequisite now being fixed: root cause identified as incorrect targeting. Current code searches for text "Search", but actual Bet365 search control is an android.widget.SearchView (not text-based). Updated control now exposed in live tree at bounds [35,150][684,236]. Delegated to Codex to update executeSearchFlow() to target SearchView/EditText by class type instead of text label. APK rebuild in progress.
 
 ## Next Milestone
 **B: Text Entry Verification** → **C: Exact Fixture Selection** → **D: Market/Line Selection** → **E: Betslip Validation**
