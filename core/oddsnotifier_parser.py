@@ -9,6 +9,7 @@ from decimal import Decimal
 import hashlib
 import json
 import re
+from urllib.parse import parse_qs, urlsplit
 
 
 class AlertFormatError(ValueError):
@@ -49,17 +50,61 @@ def _quotes(text, count, allow_parenthetical=False, sides=None):
         raise AlertFormatError(f"Expected exactly {count} prices")
     quotes = []
     for index, cell in enumerate(cells):
-        pattern = rf"({NUMBER})(?:\s*\(({NUMBER})\))?" if allow_parenthetical else rf"({NUMBER})"
+        pattern = (rf"({NUMBER})([⬇⬆]\ufe0f?)?(?:\s*\(({NUMBER})\))?"
+                   if allow_parenthetical else rf"({NUMBER})")
         m = _match(pattern, cell, "price cell")
         quote = dict(position=index + 1, price=_price(m[1]))
-        if allow_parenthetical and m[2] is not None:
-            quote['parenthetical_price'] = _price(m[2])
+        if allow_parenthetical:
+            if m[2] is not None:
+                quote['movement'] = 'DOWN' if m[2].startswith('⬇') else 'UP'
+                quote['movement_marker'] = m[2]
+            if m[3] is not None:
+                quote['parenthetical_price'] = _price(m[3])
         if sides is not None:
             quote['side'] = sides[index]
         quotes.append(quote)
     if 0 < sum('parenthetical_price' in q for q in quotes) < count:
         raise AlertFormatError("Mixed parenthetical and plain price cells")
     return quotes
+
+
+def _linked_label(row):
+    """Read a parenthesized bare/Markdown URL as data, never fetch it."""
+    m = _match(r'(.+?) \((https://[^\s()]+|\[https://[^\s\[\]]+\]\(https://[^\s()]+\))\)',
+               row, 'linked label')
+    label, link = m[1], m[2]
+    if link.startswith('['):
+        markdown = _match(r'\[(https://[^\s\[\]]+)\]\((https://[^\s()]+)\)', link, 'Markdown link')
+        if markdown[1] != markdown[2]:
+            raise AlertFormatError('Conflicting displayed and destination URLs')
+        link = markdown[2]
+    try:
+        parsed = urlsplit(link)
+        if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password or parsed.port:
+            raise ValueError('Unexpected URL authority')
+    except ValueError as error:
+        raise AlertFormatError('Invalid source URL') from error
+    return label, link, parsed
+
+
+def _linked_ml_rows(rows):
+    """Normalize only the observed linked football-ML layout; no broad fallback."""
+    fixture, fixture_url, parsed = _linked_label(rows[2])
+    if parsed.hostname != 'oddshub.io' or not parsed.path.startswith('/football/'):
+        raise AlertFormatError('Unsupported fixture URL')
+    if parse_qs(parsed.query, keep_blank_values=True).get('market') != ['ML']:
+        raise AlertFormatError('Fixture URL must identify exactly one ML market')
+    if not rows[1].startswith('Football - '):
+        raise AlertFormatError('Linked football URL conflicts with sport')
+    site, comparison_url, comparison = _linked_label(rows[7])
+    if site != 'Bet365' or comparison.hostname not in ('bet365.com', 'www.bet365.com'):
+        raise AlertFormatError('Unsupported comparison link')
+    _match(r'(?:🟢\s+)?Opening', rows[5], 'linked opening header')
+    _match(rf'(?:🎯\s+)?EV: {NUMBER}%', rows[9], 'linked EV')
+    normalized = [rows[0], rows[1], fixture, rows[3], 'ML', rows[4],
+                  'Opening', rows[6], 'Bet365 (ML)', rows[8],
+                  re.sub(r'^🎯\s+', '', rows[9])]
+    return normalized, fixture_url, comparison_url
 
 
 def _source(channel_id, message_id, source_timestamp):
@@ -99,8 +144,12 @@ def parse_oddsnotifier(text, *, channel_id=None, message_id=None, source_timesta
     rows = [row.strip() for row in text.splitlines() if row.strip()]
     if not rows or rows[0] != HEADER:
         return None
-    if len(rows) != 11:
-        raise AlertFormatError("Expected one complete alert with 11 nonempty lines")
+    linked = len(rows) == 10
+    fixture_url = comparison_url = None
+    if linked:
+        rows, fixture_url, comparison_url = _linked_ml_rows(rows)
+    elif len(rows) != 11:
+        raise AlertFormatError("Expected one complete supported alert")
     event = _match(r"(Football|Basketball) - ([^\r\n]+?) - ([^\r\n]+)", rows[1], "sport/country/competition")
     teams = re.split(r"\s+vs\s+", rows[2])
     if len(teams) != 2 or not all(teams) or teams[0].casefold() == teams[1].casefold():
@@ -128,19 +177,33 @@ def parse_oddsnotifier(text, *, channel_id=None, message_id=None, source_timesta
             raise AlertFormatError('Total lines cannot be negative')
     sides = _ORDERS[(sport, market)] if ordering_profile else None
     pinnacle_quotes = _quotes(rows[5], count, True, sides)
-    opening_quotes = _quotes(rows[7], count, sides=sides)
+    opening_count = len(re.split(r'\s+-\s+', rows[7]))
+    incomplete_opening = linked and market == '1X2' and opening_count == 2
+    # The real linked sample omits an unidentified opening outcome. Never map its
+    # two values onto any subset of the three current outcomes or invent a value.
+    opening_sides = None if incomplete_opening else sides
+    opening_quotes = _quotes(rows[7], 2 if incomplete_opening else count, sides=opening_sides)
     comparison_quotes = _quotes(rows[9], count, sides=sides)
     unresolved = ['target_selection_not_explicit', 'event_timezone_unspecified']
     unresolved.append('quote_mapping_is_unverified_assumption' if sides else 'quote_sides_not_labeled')
     if any('parenthetical_price' in q for q in pinnacle_quotes):
         unresolved.append('parenthetical_price_meaning_unspecified')
+    if incomplete_opening:
+        unresolved.append('opening_outcome_count_mismatch_unmapped')
     ev = _match(rf"EV: ({NUMBER})%", rows[10], "displayed EV")
     observation_id, source_time = _source(channel_id, message_id, source_timestamp)
     return {
-        "schema_version": 2, "source": "OddsNotifier", "observation_id": observation_id,
+        "schema_version": 3, "source": "OddsNotifier", "observation_id": observation_id,
+        "format_variant": 'linked_football_ml' if linked else 'labeled_market',
+        "fixture_url": fixture_url, "comparison_url": comparison_url,
+        "market_label_source": 'fixture_url_query' if linked else 'standalone_label',
         "sample_provenance": sample_provenance,
         "quote_mapping": {"profile": ordering_profile, "production_verified": False,
-                          "sides_by_position": list(sides) if sides else None},
+                          "sides_by_position": list(sides) if sides else None,
+                          "group_sides_by_position": {
+                              'pinnacle': list(sides) if sides else None,
+                              'opening': list(opening_sides) if opening_sides else None,
+                              'comparison': list(sides) if sides else None}},
         "telegram_channel_id": channel_id, "telegram_message_id": message_id,
         "source_timestamp": source_time, "raw_text": text,
         "sport": sport, "country": event[2], "competition": event[3],
@@ -149,7 +212,8 @@ def parse_oddsnotifier(text, *, channel_id=None, message_id=None, source_timesta
         "scheduled_timezone": None, "market": market, "market_label": label,
         "displayed_line": current_line,
         "pinnacle": {"line": current_line, "quotes": pinnacle_quotes},
-        "opening": {"line": opening_line, "quotes": opening_quotes},
+        "opening": {"line": opening_line, "quotes": opening_quotes,
+                    "outcome_count_matches_market": not incomplete_opening},
         "comparison": {"site": comparison[1].strip(), "line": comparison_line,
                        "quotes": comparison_quotes},
         "displayed_ev_percent": ev[1],

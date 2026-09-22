@@ -1,0 +1,105 @@
+{
+  "status": "PARSED",
+  "observation": {
+    "schema_version": 3,
+    "source": "OddsNotifier",
+    "observation_id": null,
+    "format_variant": "linked_football_ml",
+    "fixture_url": "https://oddshub.io/football/scotland-challenge-cup/72965130?market=ML",
+    "comparison_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201525428/F3/I1/",
+    "market_label_source": "fixture_url_query",
+    "sample_provenance": "user_reported_real",
+    "quote_mapping": {
+      "profile": null,
+      "production_verified": false,
+      "sides_by_position": null,
+      "group_sides_by_position": {
+        "pinnacle": null,
+        "opening": null,
+        "comparison": null
+      }
+    },
+    "telegram_channel_id": null,
+    "telegram_message_id": null,
+    "source_timestamp": null,
+    "raw_text": "New odds update on Pinnacle\nFootball - Scotland - Challenge Cup\nBanks O\u00b4Dee vs Aberdeen B ([https://oddshub.io/football/scotland-challenge-cup/72965130?market=ML](https://oddshub.io/football/scotland-challenge-cup/72965130?market=ML))\n22.09.2026 18:45\n3.900\u2b07\ufe0f (4.050) - 4.970 (5.040) - 1.574\u2b06\ufe0f (1.546)\n\ud83d\udfe2 Opening\n4.020 - 1.598\nBet365 ([https://www.bet365.com/#/AC/B1/C1/D8/E201525428/F3/I1/](https://www.bet365.com/#/AC/B1/C1/D8/E201525428/F3/I1/))\n5.00 - 4.20 - 1.48\n\ud83c\udfaf EV: 111.48%\n",
+    "sport": "football",
+    "country": "Scotland",
+    "competition": "Challenge Cup",
+    "fixture": "Banks O\u00b4Dee vs Aberdeen B",
+    "home": "Banks O\u00b4Dee",
+    "away": "Aberdeen B",
+    "scheduled_at_local": "2026-09-22T18:45",
+    "scheduled_timezone": null,
+    "market": "1X2",
+    "market_label": "ML",
+    "displayed_line": null,
+    "pinnacle": {
+      "line": null,
+      "quotes": [
+        {
+          "position": 1,
+          "price": "3.900",
+          "movement": "DOWN",
+          "movement_marker": "\u2b07\ufe0f",
+          "parenthetical_price": "4.050"
+        },
+        {
+          "position": 2,
+          "price": "4.970",
+          "parenthetical_price": "5.040"
+        },
+        {
+          "position": 3,
+          "price": "1.574",
+          "movement": "UP",
+          "movement_marker": "\u2b06\ufe0f",
+          "parenthetical_price": "1.546"
+        }
+      ]
+    },
+    "opening": {
+      "line": null,
+      "quotes": [
+        {
+          "position": 1,
+          "price": "4.020"
+        },
+        {
+          "position": 2,
+          "price": "1.598"
+        }
+      ],
+      "outcome_count_matches_market": false
+    },
+    "comparison": {
+      "site": "Bet365",
+      "line": null,
+      "quotes": [
+        {
+          "position": 1,
+          "price": "5.00"
+        },
+        {
+          "position": 2,
+          "price": "4.20"
+        },
+        {
+          "position": 3,
+          "price": "1.48"
+        }
+      ]
+    },
+    "displayed_ev_percent": "111.48",
+    "target_side": null,
+    "target_line": null,
+    "alert_price": null,
+    "unresolved": [
+      "target_selection_not_explicit",
+      "event_timezone_unspecified",
+      "quote_sides_not_labeled",
+      "parenthetical_price_meaning_unspecified",
+      "opening_outcome_count_mismatch_unmapped"
+    ]
+  }
+}

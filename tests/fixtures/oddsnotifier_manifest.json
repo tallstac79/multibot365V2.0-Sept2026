@@ -1,5 +1,5 @@
 {
-  "note": "User states only the first Spread alert was copied from a real message. All other examples are synthetic and do not validate production format or ordering.",
+  "note": "User reports original Spread and linked football ML samples are real alerts. Other five examples are synthetic. Quote side ordering remains unverified.",
   "samples": [
     {
       "file": "oddsnotifier_spread.txt",
@@ -36,6 +36,12 @@
       "provenance": "synthetic",
       "sport": "basketball",
       "market": "TOTALS"
+    },
+    {
+      "file": "oddsnotifier_football_ml_linked.txt",
+      "provenance": "user_reported_real",
+      "sport": "football",
+      "market": "1X2"
     }
   ]
 }

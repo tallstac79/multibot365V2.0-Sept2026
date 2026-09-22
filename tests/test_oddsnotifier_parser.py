@@ -101,7 +101,7 @@ class ParserTests(unittest.TestCase):
         self.assertEqual(sum(s['provenance'] == 'synthetic' for s in manifest['samples']), 5)
         for entry in manifest['samples']:
             with self.subTest(file=entry['file']):
-                text = (FIXTURES / entry['file']).read_text()
+                text = (FIXTURES / entry['file']).read_text(encoding='utf-8')
                 r = parse_oddsnotifier(text, sample_provenance=entry['provenance'])
                 self.assertEqual((r['sport'], r['market']), (entry['sport'], entry['market']))
                 self.assertEqual(r['sample_provenance'], entry['provenance'])
@@ -193,6 +193,78 @@ class ParserTests(unittest.TestCase):
             r = parse_oddsnotifier(SAMPLE.replace('111.47', ev), ordering_profile='synthetic_order_v1')
             self.assertIsNone(r['target_side'])
             self.assertIsNone(r['alert_price'])
+
+    def test_real_linked_ml_sample(self):
+        r = parse_oddsnotifier(sample('football_ml_linked'), sample_provenance='user_reported_real')
+        self.assertEqual((r['home'], r['away']), ('Banks O´Dee', 'Aberdeen B'))
+        self.assertEqual(r['fixture'], 'Banks O´Dee vs Aberdeen B')
+        self.assertEqual(r['competition'], 'Challenge Cup')
+        self.assertEqual(r['market'], '1X2')
+        self.assertEqual(r['market_label_source'], 'fixture_url_query')
+        self.assertEqual(r['fixture_url'], 'https://oddshub.io/football/scotland-challenge-cup/72965130?market=ML')
+        self.assertEqual(r['comparison_url'], 'https://www.bet365.com/#/AC/B1/C1/D8/E201525428/F3/I1/')
+        self.assertEqual(r['displayed_ev_percent'], '111.48')
+        self.assertEqual([q['price'] for q in r['pinnacle']['quotes']], ['3.900', '4.970', '1.574'])
+        self.assertEqual([q['parenthetical_price'] for q in r['pinnacle']['quotes']], ['4.050', '5.040', '1.546'])
+        self.assertEqual([q.get('movement') for q in r['pinnacle']['quotes']], ['DOWN', None, 'UP'])
+        self.assertEqual([q['price'] for q in r['comparison']['quotes']], ['5.00', '4.20', '1.48'])
+        self.assertEqual(r['raw_text'], sample('football_ml_linked'))
+
+    def test_short_opening_never_assigned_sides(self):
+        for profile in [None, 'synthetic_order_v1']:
+            r = parse_oddsnotifier(sample('football_ml_linked'), ordering_profile=profile)
+            self.assertEqual(r['opening']['quotes'], [dict(position=1, price='4.020'), dict(position=2, price='1.598')])
+            self.assertFalse(r['opening']['outcome_count_matches_market'])
+            self.assertIsNone(r['quote_mapping']['group_sides_by_position']['opening'])
+            self.assertIn('opening_outcome_count_mismatch_unmapped', r['unresolved'])
+            self.assertIsNone(r['target_side'])
+        self.assertEqual([q['side'] for q in r['pinnacle']['quotes']], ['HOME', 'DRAW', 'AWAY'])
+
+    def test_linked_complete_opening_can_use_test_profile(self):
+        text = sample('football_ml_linked').replace('4.020 - 1.598', '4.020 - 5.000 - 1.598')
+        r = parse_oddsnotifier(text, ordering_profile='synthetic_order_v1')
+        self.assertTrue(r['opening']['outcome_count_matches_market'])
+        self.assertEqual([q['side'] for q in r['opening']['quotes']], ['HOME', 'DRAW', 'AWAY'])
+
+    def test_plain_links_and_text_presentation_arrows(self):
+        import re
+        text = re.sub(r'\[(https://[^\]]+)\]\(\1\)', r'\1', sample('football_ml_linked'))
+        text = text.replace('\ufe0f', '').replace('🟢 ', '').replace('🎯 ', '')
+        r = parse_oddsnotifier(text)
+        self.assertEqual(r['pinnacle']['quotes'][0]['movement_marker'], '⬇')
+        self.assertEqual(r['pinnacle']['quotes'][2]['movement'], 'UP')
+        self.assertEqual(r['home'], 'Banks O´Dee')
+
+    def test_linked_unsupported_or_conflicting_market(self):
+        original = sample('football_ml_linked')
+        for before, after in [('?market=ML', '?market=Total'),
+                              ('?market=ML', '?market=ML&market=ML'),
+                              ('?market=ML', '?market='),
+                              ('Football -', 'Basketball -'),
+                              ('oddshub.io/', 'oddshub.io.example/'),
+                              ('www.bet365.com/', 'other.example/')]:
+            with self.subTest(after=after), self.assertRaises(AlertFormatError):
+                parse_oddsnotifier(original.replace(before, after))
+
+    def test_link_display_destination_conflict(self):
+        with self.assertRaises(AlertFormatError):
+            parse_oddsnotifier(sample('football_ml_linked').replace('?market=ML]', '?market=Total]'))
+
+    def test_linked_invalid_quote_counts(self):
+        for before, after in [('4.020 - 1.598', '4.020'),
+                              ('4.020 - 1.598', '4.020 - 4.000 - 3.000 - 1.598'),
+                              ('5.00 - 4.20 - 1.48', '5.00 - 1.48'),
+                              ('3.900⬇️ (4.050) - ', '')]:
+            with self.subTest(after=after), self.assertRaises(AlertFormatError):
+                parse_oddsnotifier(sample('football_ml_linked').replace(before, after))
+
+    def test_movement_not_recomputed(self):
+        # Preserve the printed arrow even when it contradicts a guessed meaning
+        # for the parenthesized number. The producer's semantics are unknown.
+        text = sample('football_ml_linked').replace('3.900⬇️', '4.900⬇️')
+        self.assertEqual(parse_oddsnotifier(text)['pinnacle']['quotes'][0]['movement'], 'DOWN')
+        with self.assertRaises(AlertFormatError):
+            parse_oddsnotifier(text.replace('4.900⬇️', '4.900⬇️⬆️'))
 
 
 if __name__ == '__main__':

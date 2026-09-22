@@ -1,3 +1,24 @@
+# OddsNotifier real linked ML sample - parser PASS
+
+Verified 2026-09-22 from b3639aa: 32 deterministic parser tests pass. Added the
+user-reported real Banks O´Dee vs Aberdeen B sample, including Markdown/bare URLs,
+Unicode arrows and emoji headings. ML comes from the explicit fixture URL query.
+No source URL was fetched. Source provenance remains separate from verification
+of quote ordering.
+
+Three current/comparison quotes and the two-value opening row are preserved.
+Opening is flagged as an outcome-count mismatch and remains unmapped even with
+the synthetic side-order profile. No draw price, target side or price is invented.
+Schema v3 adds links, format/market-label source, per-group mappings and opening
+count consistency. Existing labeled-format count checks still fail closed.
+
+Evidence: `evidence/oddsnotifier-parser/v3/`. Tests: 32 PASS plus CLI smoke PASS.
+Corpus: two user-reported real alerts and five synthetic examples. Remaining:
+real totals/basketball samples and confirmation of side/parenthetical semantics.
+No Android, coordinator, Telegram listener or database changes in this milestone.
+
+---
+
 # Confirmation worker companion - scaffold milestone
 
 **Status:** Scaffold complete on DESKTOP-IVUNJ9J under `tools/confirmation/`. Deployed from box staging; tests re-run on Windows.
