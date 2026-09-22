@@ -74,6 +74,12 @@ def main():
         if isinstance(fs, dict) and fs.get("state") not in (None, "NOSUBMIT"):
             # still allow PASS if stage PASS and NOSUBMIT missing but explicitly no submit path
             pass
+    ml = []
+    if code == 200:
+        ml = evidence.get("moneyline_map") or []
+    summary["moneyline_map"] = ml
+    summary["fixture_home"] = result.get("home")
+    summary["fixture_away"] = result.get("away")
     (out / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     def _ascii(x):
         if x is None: return None
@@ -81,6 +87,36 @@ def main():
     print(summary["status"], _ascii(result.get("stage")), _ascii(result.get("fixture_name")), _ascii(result.get("detail")), flush=True)
     if summary["status"] != "PASS":
         raise SystemExit(1)
+    # 1X2 identity invariants ? do not accept PASS without a verified map
+    fh, fa = result.get("home"), result.get("away")
+    if not ml:
+        print("FAIL missing moneyline_map in evidence", flush=True)
+        raise SystemExit(2)
+    by = {row.get("selection_role"): row for row in ml}
+    for role in ("HOME", "DRAW", "AWAY"):
+        if role not in by:
+            print("FAIL moneyline_map missing", role, flush=True)
+            raise SystemExit(2)
+    if by["HOME"].get("selection_name", "").lower() != (fh or "").lower():
+        print("FAIL HOME name", by["HOME"].get("selection_name"), "!=", fh, flush=True)
+        raise SystemExit(2)
+    if by["AWAY"].get("selection_name", "").lower() != (fa or "").lower():
+        print("FAIL AWAY name", by["AWAY"].get("selection_name"), "!=", fa, flush=True)
+        raise SystemExit(2)
+    dn = (by["DRAW"].get("selection_name") or "").lower()
+    if dn in ((fh or "").lower(), (fa or "").lower()) or (dn and dn not in ("draw", "x", "tie", "")):
+        if dn not in ("draw", "x", "tie"):
+            print("FAIL DRAW name looks like team", by["DRAW"].get("selection_name"), flush=True)
+            raise SystemExit(2)
+    prices = {r: by[r].get("price") for r in ("HOME", "DRAW", "AWAY")}
+    if len(set(prices.values())) < 3:
+        print("FAIL 1X2 prices not distinct", prices, flush=True)
+        raise SystemExit(2)
+    sel = result.get("selection") or {}
+    if sel.get("side") == "HOME" and sel.get("price") != by["HOME"].get("price"):
+        print("FAIL selected HOME price mismatch", sel.get("price"), by["HOME"].get("price"), flush=True)
+        raise SystemExit(2)
+    print("1X2 MAP OK", prices, flush=True)
     print("LIVE BET365 ACCEPTANCE PASS", flush=True)
 
 if __name__ == "__main__":

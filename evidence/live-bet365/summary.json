@@ -1,10 +1,10 @@
 {
   "status": "PASS",
-  "app_version": "0.6.14-live",
-  "version_code": 26,
-  "timestamp": "2026-09-22T20:42:56+0100",
+  "app_version": "0.6.15-live",
+  "version_code": 27,
+  "timestamp": "2026-09-22T20:52:59+0100",
   "instruction": {
-    "instruction_id": "live-bet365-1790106122",
+    "instruction_id": "live-bet365-1790106723",
     "action": "ADAPTER_WORKFLOW",
     "adapter": "live_bet365",
     "scenario": "live",
@@ -17,13 +17,13 @@
     "timeout_ms": 60000
   },
   "result": {
-    "instruction_id": "live-bet365-1790106122",
+    "instruction_id": "live-bet365-1790106723",
     "status": "PASS",
     "stage": "PASS",
     "detail": "Adapter workflow verified",
-    "duration_ms": 52964,
+    "duration_ms": 54130,
     "execution_count": 1,
-    "run_id": "c_YJQ4uIpIqocYVtGUXIZsNnUcTMcySMT2KW1ZJHR1gdw",
+    "run_id": "c_HR0aMaZ9-F_QR9Yhx0Haz3EG6cb8a5TdbgYKWOhoQzw",
     "fixture_name": "Arsenal v Leeds",
     "home": "Arsenal",
     "away": "Leeds",
@@ -32,12 +32,14 @@
       "market": "MONEYLINE",
       "side": "HOME",
       "line": "NONE",
-      "price": "8.00",
+      "price": "1.33",
       "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Arsenal",
       "bounds": [
         111,
         776,
-        610,
+        277,
         793
       ]
     },
@@ -47,7 +49,7 @@
       "market": "MONEYLINE",
       "side": "HOME",
       "line": "NONE",
-      "price": "8.00",
+      "price": "1.33",
       "stake": "0.00",
       "state": "NOSUBMIT",
       "place_bet_visible": true,
@@ -62,12 +64,14 @@
     "market": "MONEYLINE",
     "side": "HOME",
     "line": "NONE",
-    "price": "8.00",
+    "price": "1.33",
     "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Arsenal",
     "bounds": [
       111,
       776,
-      610,
+      277,
       793
     ]
   },
@@ -77,7 +81,7 @@
     "market": "MONEYLINE",
     "side": "HOME",
     "line": "NONE",
-    "price": "8.00",
+    "price": "1.33",
     "stake": "0.00",
     "state": "NOSUBMIT",
     "place_bet_visible": true,
@@ -85,5 +89,51 @@
   },
   "detail": "Adapter workflow verified",
   "wager_submitted": false,
-  "stop_before_wager": true
+  "stop_before_wager": true,
+  "moneyline_map": [
+    {
+      "fixture_home": "Arsenal",
+      "fixture_away": "Leeds",
+      "selection_role": "HOME",
+      "selection_name": "Arsenal",
+      "price": "1.33",
+      "line": "NONE",
+      "bounds": [
+        111,
+        776,
+        277,
+        793
+      ]
+    },
+    {
+      "fixture_home": "Arsenal",
+      "fixture_away": "Leeds",
+      "selection_role": "DRAW",
+      "selection_name": "Draw",
+      "price": "5.00",
+      "line": "NONE",
+      "bounds": [
+        277,
+        776,
+        443,
+        793
+      ]
+    },
+    {
+      "fixture_home": "Arsenal",
+      "fixture_away": "Leeds",
+      "selection_role": "AWAY",
+      "selection_name": "Leeds",
+      "price": "8.00",
+      "line": "NONE",
+      "bounds": [
+        443,
+        776,
+        610,
+        793
+      ]
+    }
+  ],
+  "fixture_home": "Arsenal",
+  "fixture_away": "Leeds"
 }

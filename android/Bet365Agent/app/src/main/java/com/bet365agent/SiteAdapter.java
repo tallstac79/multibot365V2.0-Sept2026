@@ -31,13 +31,17 @@ interface SiteAdapter {
         JSONObject json() { return CoordinatorAgent.object("code",code,"home",home,"away",away,"fixture_name",name(),"exact_fixture_text","Home "+home+"\nAway "+away,"competition",competition,"bounds",VisualSession.bounds(bounds)); }
     }
     final class Selection {
-        final String market, side, line, price, availability;
+        final String market, side, line, price, availability, name;
         final Rect bounds;
         Selection(String market, String side, String line, String price, String availability, Rect bounds) {
+            this(market, side, line, price, availability, bounds, "");
+        }
+        Selection(String market, String side, String line, String price, String availability, Rect bounds, String name) {
             this.market=market; this.side=side; this.line=line; this.price=price; this.availability=availability; this.bounds=new Rect(bounds);
+            this.name = name == null ? "" : name;
         }
         boolean identity(Selection other) { return market.equals(other.market) && side.equals(other.side) && line.equals(other.line); }
-        JSONObject json() { return CoordinatorAgent.object("market",market,"side",side,"line",line,"price",price,"availability",availability,"bounds",VisualSession.bounds(bounds)); }
+        JSONObject json() { return CoordinatorAgent.object("market",market,"side",side,"line",line,"price",price,"availability",availability,"selection_role",side,"selection_name",name,"bounds",VisualSession.bounds(bounds)); }
     }
     final class Failure extends RuntimeException {
         final String stage;

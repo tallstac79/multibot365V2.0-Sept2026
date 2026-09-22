@@ -128,9 +128,25 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     public CompletableFuture<List<Selection>> discover_markets() {
         return ui.captureTable("markets").thenApply(s -> {
-            List<Selection> found = parseMarkets(s);
-            if (found.isEmpty()) found = parseFullTimeResult(s);
+            List<Selection> found = parseFullTimeResult(s);
+            if (found.isEmpty()) found = parseMarkets(s);
             require(!found.isEmpty(), "EVENT_NOT_VERIFIED", "No live market quotes parsed from Bet365 event OCR");
+            validateMoneylineIdentities(found);
+            JSONArray map = new JSONArray();
+            for (Selection q : found) {
+                if (!"MONEYLINE".equals(q.market)) continue;
+                map.put(CoordinatorAgent.object(
+                        "fixture_home", liveFixture != null ? liveFixture.home : "",
+                        "fixture_away", liveFixture != null ? liveFixture.away : "",
+                        "selection_role", q.side,
+                        "selection_name", q.name,
+                        "price", q.price,
+                        "line", q.line,
+                        "bounds", VisualSession.bounds(q.bounds)));
+            }
+            ui.put("moneyline_map", map);
+            ui.put("fixture_home", liveFixture != null ? liveFixture.home : "");
+            ui.put("fixture_away", liveFixture != null ? liveFixture.away : "");
             return found;
         });
     }
@@ -138,7 +154,6 @@ final class Bet365LiveAdapter implements SiteAdapter {
     public CompletableFuture<Selection> read_selection(List<Selection> all, String market, String side) {
         List<Selection> matches = new ArrayList<>();
         for (Selection s : all) if (s.market.equals(market) && s.side.equals(side)) matches.add(s);
-        // Prefer OPEN if multiple lines for same side.
         List<Selection> open = new ArrayList<>();
         for (Selection s : matches) if ("OPEN".equals(s.availability)) open.add(s);
         List<Selection> pool = open.isEmpty() ? matches : open;
@@ -146,6 +161,9 @@ final class Bet365LiveAdapter implements SiteAdapter {
         Selection pick = pool.get(0);
         require(!"SUSPENDED".equals(pick.availability), "SUSPENDED", "Selection suspended");
         require(!"UNAVAILABLE".equals(pick.availability), "UNAVAILABLE", "Selection unavailable");
+        validateOneIdentity(pick);
+        ui.put("selection_role", pick.side);
+        ui.put("selection_name", pick.name);
         return CompletableFuture.completedFuture(pick);
     }
 
@@ -375,93 +393,175 @@ final class Bet365LiveAdapter implements SiteAdapter {
         return out;
     }
 
+
     private List<Selection> parseFtrColumns(VisualScreen screen, String home, String away) {
         if (home == null || away == null) return List.of();
-        // Merged label row: "Arsenal Draw Leeds" + odds row "13 4 1 7 1"
-        for (VisualScreen.Line labels : screen.lines) {
-            if (labels.bounds.top < 500 || labels.bounds.top > 880) continue;
-            String t = labels.text.trim();
-            String lower = t.toLowerCase(Locale.US);
-            if (!t.contains(home) || !t.contains(away)) continue;
-            if (!lower.contains("draw") && !lower.matches(".*" + "\\" + "bx" + "\\" + "b.*")) continue;
-            for (VisualScreen.Line odds : screen.lines) {
-                if (odds.bounds.top <= labels.bounds.bottom) continue;
-                if (odds.bounds.top > labels.bounds.bottom + 90) continue;
-                List<String> prices = extractAllFractionals(odds.text);
-                if (prices.size() < 3) continue;
-                return threeMoneyline(odds.bounds, prices);
-            }
-        }
-        // Separate label lines + separate/partial odds under each column
+        if (!hasFullTimeResult(screen)) return List.of();
         VisualScreen.Line homeL = null, drawL = null, awayL = null;
         for (VisualScreen.Line line : screen.lines) {
-            if (line.bounds.top < 500 || line.bounds.top > 880) continue;
+            if (line.bounds.top < 500 || line.bounds.top > 900) continue;
             String t = line.text.trim();
-            if (t.equalsIgnoreCase(home) || t.equals(home)) homeL = line;
-            else if (t.equalsIgnoreCase("Draw") || t.equalsIgnoreCase("X") || t.equalsIgnoreCase("D RAW")) drawL = line;
-            else if (t.equalsIgnoreCase(away) || t.equals(away)) awayL = line;
+            if (t.equalsIgnoreCase(home) || teamTokenMatch(home, t)) homeL = line;
+            else if (isDrawLabel(t)) drawL = line;
+            else if (t.equalsIgnoreCase(away) || teamTokenMatch(away, t)) awayL = line;
         }
-        if (homeL != null && drawL != null && awayL != null) {
-            String hp = nearestOddsBelow(screen, homeL);
-            String dp = nearestOddsBelow(screen, drawL);
-            String ap = nearestOddsBelow(screen, awayL);
-            if (hp != null && dp != null && ap != null) {
-                List<Selection> out = new ArrayList<>();
-                out.add(new Selection("MONEYLINE", "HOME", "NONE", toDecimal(hp), "OPEN", homeL.bounds));
-                out.add(new Selection("MONEYLINE", "DRAW", "NONE", toDecimal(dp), "OPEN", drawL.bounds));
-                out.add(new Selection("MONEYLINE", "AWAY", "NONE", toDecimal(ap), "OPEN", awayL.bounds));
-                // Prefer odds bounds if we can find them
-                VisualScreen.Line ho = nearestOddsLineBelow(screen, homeL);
-                VisualScreen.Line ddo = nearestOddsLineBelow(screen, drawL);
-                VisualScreen.Line ao = nearestOddsLineBelow(screen, awayL);
-                if (ho != null) out.set(0, new Selection("MONEYLINE", "HOME", "NONE", toDecimal(hp), "OPEN", ho.bounds));
-                if (ddo != null) out.set(1, new Selection("MONEYLINE", "DRAW", "NONE", toDecimal(dp), "OPEN", ddo.bounds));
-                if (ao != null) out.set(2, new Selection("MONEYLINE", "AWAY", "NONE", toDecimal(ap), "OPEN", ao.bounds));
-                return out;
+        // Merged label row fallback: "Arsenal Draw Leeds"
+        if (homeL == null || drawL == null || awayL == null) {
+            for (VisualScreen.Line line : screen.lines) {
+                if (line.bounds.top < 500 || line.bounds.top > 900) continue;
+                String t = line.text.trim();
+                String lower = t.toLowerCase(Locale.US);
+                if (!t.contains(home) || !t.contains(away)) continue;
+                if (!lower.contains("draw") && !isDrawLabel(t)) continue;
+                // Approximate thirds of the label row as column anchors
+                int w = Math.max(3, line.bounds.width());
+                homeL = synthLabel(home, line.bounds.left, line.bounds.top, line.bounds.left + w / 3, line.bounds.bottom);
+                drawL = synthLabel("Draw", line.bounds.left + w / 3, line.bounds.top, line.bounds.left + 2 * w / 3, line.bounds.bottom);
+                awayL = synthLabel(away, line.bounds.left + 2 * w / 3, line.bounds.top, line.bounds.right, line.bounds.bottom);
+                break;
             }
         }
-        return List.of();
-    }
+        if (homeL == null || drawL == null || awayL == null) return List.of();
 
-    private static List<Selection> threeMoneyline(Rect box, List<String> prices) {
-        int w = Math.max(1, box.width());
-        Rect homeBox = new Rect(box.left, box.top, box.left + w / 3, box.bottom);
-        Rect drawBox = new Rect(box.left + w / 3, box.top, box.left + 2 * w / 3, box.bottom);
-        Rect awayBox = new Rect(box.left + 2 * w / 3, box.top, box.right, box.bottom);
+        List<PriceHit> prices = priceHitsBelow(screen, Math.min(homeL.bounds.top, Math.min(drawL.bounds.top, awayL.bounds.top)));
+        if (prices.size() < 3) return List.of();
+
+        PriceHit homeP = nearestUniquePrice(prices, homeL.bounds.centerX());
+        PriceHit drawP = nearestUniquePrice(prices, drawL.bounds.centerX(), homeP);
+        PriceHit awayP = nearestUniquePrice(prices, awayL.bounds.centerX(), homeP, drawP);
+        if (homeP == null || drawP == null || awayP == null) {
+            throw new Failure("AMBIGUOUS_FIXTURE", "1X2 column/price association ambiguous on live Bet365 OCR");
+        }
+        // Require distinct price boxes
+        if (homeP.bounds.equals(drawP.bounds) || homeP.bounds.equals(awayP.bounds) || drawP.bounds.equals(awayP.bounds)) {
+            throw new Failure("AMBIGUOUS_FIXTURE", "1X2 prices collapsed to same OCR box");
+        }
         List<Selection> out = new ArrayList<>();
-        out.add(new Selection("MONEYLINE", "HOME", "NONE", toDecimal(prices.get(0)), "OPEN", homeBox));
-        out.add(new Selection("MONEYLINE", "DRAW", "NONE", toDecimal(prices.get(1)), "OPEN", drawBox));
-        out.add(new Selection("MONEYLINE", "AWAY", "NONE", toDecimal(prices.get(2)), "OPEN", awayBox));
+        out.add(new Selection("MONEYLINE", "HOME", "NONE", homeP.price, "OPEN", homeP.bounds, home));
+        out.add(new Selection("MONEYLINE", "DRAW", "NONE", drawP.price, "OPEN", drawP.bounds, "Draw"));
+        out.add(new Selection("MONEYLINE", "AWAY", "NONE", awayP.price, "OPEN", awayP.bounds, away));
         return out;
     }
 
-    private static String nearestOddsBelow(VisualScreen screen, VisualScreen.Line label) {
-        VisualScreen.Line line = nearestOddsLineBelow(screen, label);
-        if (line == null) return null;
-        // If the odds line holds multiple prices, pick the token nearest this label's X
-        List<String> all = extractAllFractionals(line.text);
-        if (all.isEmpty()) return extractFractionalOdds(line.text.trim());
-        if (all.size() == 1) return all.get(0);
-        int lx = label.bounds.centerX();
-        int third = Math.max(1, line.bounds.width() / all.size());
-        int idx = Math.min(all.size() - 1, Math.max(0, (lx - line.bounds.left) / third));
-        return all.get(idx);
+    private static VisualScreen.Line synthLabel(String text, int l, int t, int r, int b) {
+        VisualScreen.Line line = new VisualScreen.Line();
+        line.text = text;
+        line.bounds.set(l, t, r, b);
+        return line;
     }
 
-    private static VisualScreen.Line nearestOddsLineBelow(VisualScreen screen, VisualScreen.Line label) {
-        VisualScreen.Line best = null;
-        int bestDy = Integer.MAX_VALUE;
+    private static boolean isDrawLabel(String t) {
+        String u = t.trim().toLowerCase(Locale.US);
+        return u.equals("draw") || u.equals("x") || u.equals("d raw") || u.equals("d  raw") || u.equals("tie");
+    }
+
+    private static boolean teamTokenMatch(String team, String token) {
+        if (team == null || token == null) return false;
+        String a = team.trim().toLowerCase(Locale.US);
+        String b = token.trim().toLowerCase(Locale.US);
+        if (a.equals(b)) return true;
+        String[] ap = a.split("\s+");
+        return ap.length > 0 && (b.equals(ap[0]) || a.startsWith(b) || b.startsWith(ap[0]));
+    }
+
+    private static final class PriceHit {
+        final String price;
+        final Rect bounds;
+        PriceHit(String price, Rect bounds) { this.price = price; this.bounds = new Rect(bounds); }
+    }
+
+    private List<PriceHit> priceHitsBelow(VisualScreen screen, int labelTop) {
+        List<PriceHit> out = new ArrayList<>();
         for (VisualScreen.Line line : screen.lines) {
-            if (line.bounds.top <= label.bounds.bottom) continue;
-            int dy = line.bounds.top - label.bounds.bottom;
-            if (dy < 0 || dy > 90) continue;
-            if (extractAllFractionals(line.text).isEmpty() && extractFractionalOdds(line.text.trim()) == null) continue;
-            int dx = Math.abs(line.bounds.centerX() - label.bounds.centerX());
-            // Allow wide merged odds rows
-            if (dx > 280 && line.bounds.width() < 300) continue;
-            if (dy < bestDy) { bestDy = dy; best = line; }
+            if (line.bounds.top < labelTop) continue;
+            if (line.bounds.top > labelTop + 120) continue;
+            // Prefer atomic tokens: split merged "133 5.00 8.00" via word geometry when available
+            if (line.words != null && line.words.size() > 1 && screenHasOriginal(screen)) {
+                // Fall through to whole-line token split below using text; word rects not exposed ? split text.
+            }
+            List<String> toks = extractAllFractionals(line.text);
+            if (toks.size() >= 3 && line.bounds.width() > 200) {
+                // Split the wide odds row into equal columns as a last resort only when tokens==3
+                int w = line.bounds.width();
+                for (int i = 0; i < 3; i++) {
+                    Rect box = new Rect(line.bounds.left + i * w / 3, line.bounds.top,
+                            line.bounds.left + (i + 1) * w / 3, line.bounds.bottom);
+                    out.add(new PriceHit(toDecimal(toks.get(i)), box));
+                }
+                continue;
+            }
+            String one = extractFractionalOdds(line.text.trim());
+            if (one != null && line.bounds.width() < 220) {
+                out.add(new PriceHit(toDecimal(one), line.bounds));
+            } else if (toks.size() == 1 && line.bounds.width() < 220) {
+                out.add(new PriceHit(toDecimal(toks.get(0)), line.bounds));
+            }
         }
+        // Dedup by similar centerX
+        List<PriceHit> uniq = new ArrayList<>();
+        for (PriceHit p : out) {
+            boolean seen = false;
+            for (PriceHit u : uniq) {
+                if (Math.abs(u.bounds.centerX() - p.bounds.centerX()) < 40) { seen = true; break; }
+            }
+            if (!seen) uniq.add(p);
+        }
+        return uniq;
+    }
+
+    private static boolean screenHasOriginal(VisualScreen screen) { return true; }
+
+    private static PriceHit nearestUniquePrice(List<PriceHit> prices, int labelCx, PriceHit... taken) {
+        PriceHit best = null;
+        int bestDx = Integer.MAX_VALUE;
+        for (PriceHit p : prices) {
+            boolean used = false;
+            if (taken != null) for (PriceHit t : taken) if (t != null && t.bounds.equals(p.bounds)) { used = true; break; }
+            if (used) continue;
+            int dx = Math.abs(p.bounds.centerX() - labelCx);
+            if (dx < bestDx) { bestDx = dx; best = p; }
+        }
+        if (best == null || bestDx > 160) return null;
         return best;
+    }
+
+    private void validateMoneylineIdentities(List<Selection> all) {
+        if (liveFixture == null) return;
+        String home = liveFixture.home;
+        String away = liveFixture.away;
+        boolean sawHome = false, sawDraw = false, sawAway = false;
+        for (Selection s : all) {
+            if (!"MONEYLINE".equals(s.market)) continue;
+            validateOneIdentity(s);
+            if ("HOME".equals(s.side)) sawHome = true;
+            if ("DRAW".equals(s.side)) sawDraw = true;
+            if ("AWAY".equals(s.side)) sawAway = true;
+        }
+        if ("football".equals(sport)) {
+            require(sawHome && sawDraw && sawAway, "EVENT_NOT_VERIFIED",
+                    "Football 1X2 map incomplete home=" + sawHome + " draw=" + sawDraw + " away=" + sawAway);
+        } else {
+            require(sawHome && sawAway, "EVENT_NOT_VERIFIED", "Basketball moneyline map incomplete");
+        }
+    }
+
+    private void validateOneIdentity(Selection s) {
+        if (!"MONEYLINE".equals(s.market) || liveFixture == null) return;
+        String home = liveFixture.home;
+        String away = liveFixture.away;
+        String n = s.name == null ? "" : s.name.trim();
+        if ("HOME".equals(s.side)) {
+            require(!n.isEmpty() && (n.equalsIgnoreCase(home) || teamTokenMatch(home, n)),
+                    "EVENT_NOT_VERIFIED", "selection_role=HOME but selection_name='" + n + "' != fixture_home='" + home + "'");
+        } else if ("AWAY".equals(s.side)) {
+            require(!n.isEmpty() && (n.equalsIgnoreCase(away) || teamTokenMatch(away, n)),
+                    "EVENT_NOT_VERIFIED", "selection_role=AWAY but selection_name='" + n + "' != fixture_away='" + away + "'");
+        } else if ("DRAW".equals(s.side)) {
+            require(isDrawLabel(n) || n.isEmpty() || n.equalsIgnoreCase("Draw"),
+                    "EVENT_NOT_VERIFIED", "DRAW selection_name must not be a team name: '" + n + "'");
+            require(!n.equalsIgnoreCase(home) && !n.equalsIgnoreCase(away),
+                    "EVENT_NOT_VERIFIED", "DRAW has team name '" + n + "'");
+        }
     }
 
     private static List<String> extractAllFractionals(String text) {
@@ -482,22 +582,31 @@ final class Bet365LiveAdapter implements SiteAdapter {
         return out;
     }
 
-    /** Bet365 UK fractionals; OCR often drops slash (13?1/3), reads slash as 1 (411?4/1), or spaces (4 1?4/1). */
+    /** Bet365 UK fractionals; OCR drops slash/dot (133?1.33, 5100?5.00, 411?4/1). */
     private static String extractFractionalOdds(String t) {
         if (t == null) return null;
         String s = t.trim();
-        Matcher m = PRICE.matcher(s.replace(" ", ""));
-        if (m.find() && s.replace(" ", "").equals(m.group(1).replace("/", ""))) {
-            /* fall through ? prefer structured repairs below for ambiguous digit blobs */
-        }
-        m = PRICE.matcher(s);
+        Matcher m = PRICE.matcher(s);
         if (m.find()) return m.group(1);
         if (s.matches("\\d+/\\d+")) return s;
         if (s.matches("\\d+\\s+\\d+")) {
             String[] p = s.trim().split("\\s+");
             return p[0] + "/" + p[1];
         }
-        String compact = s.replace(" ", "");
+        String compact = s.replace(" ", "").replace(",", ".");
+        if (compact.matches("\\d+\\.\\d{2}")) return compact;
+        // 133 ? 1.33 ; 125 ? 1.25 (leading 1 + two decimal digits, no dot)
+        if (compact.matches("1\\d\\d")) {
+            return "1." + compact.substring(1);
+        }
+        // 500 ? 5.00 ; 200 ? 2.00
+        if (compact.matches("\\d\\d\\d") && compact.endsWith("00")) {
+            return compact.charAt(0) + ".00";
+        }
+        // 5100 ? 5.00 (OCR inserted noise before 00)
+        if (compact.matches("\\d1\\d\\d") && compact.endsWith("00")) {
+            return compact.charAt(0) + ".00";
+        }
         if (compact.matches("\\d\\d") && !compact.equals("10") && !compact.equals("11") && !compact.equals("12")) {
             return compact.charAt(0) + "/" + compact.charAt(1);
         }

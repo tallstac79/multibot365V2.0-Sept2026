@@ -1,5 +1,16 @@
 # MultiBot365 build status
 
+## Current milestone: LIVE BET365 1X2 IDENTITY FIX ? PASS on the physical Samsung
+
+Verified 2026-09-22 ~20:52 Europe/London. App **0.6.15-live (27)**. Evidence: `evidence/live-bet365/` with verified `moneyline_map`:
+
+- HOME ? Arsenal @ **1.33**
+- DRAW ? Draw @ **5.00**
+- AWAY ? Leeds @ **8.00**
+
+Prior `565b132` PASS (HOME @ 8.00) **rejected** as side-association bug; fixed and re-proven. STOP before Place Bet held. See `BUILD_STATUS_LIVE.md`.
+
+---
 ## Current milestone: LIVE BET365 ADAPTER VALIDATION ? PASS on the physical Samsung
 
 Verified 2026-09-22 ~20:42 Europe/London on Samsung SM-A136B `R5CT61TE14Z`. App **0.6.14-live (26)**. Evidence: `evidence/live-bet365/` (**PASS**). See `BUILD_STATUS_LIVE.md`.

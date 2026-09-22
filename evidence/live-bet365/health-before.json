@@ -1,17 +1,17 @@
 {
   "healthy": true,
-  "heartbeat_ms": 1790106122411,
-  "uptime_ms": 259723,
+  "heartbeat_ms": 1790106723901,
+  "uptime_ms": 5870,
   "state": "IDLE",
   "current_instruction": null,
   "last_result": {
-    "instruction_id": "live-bet365-1790105690",
-    "status": "FAIL",
-    "stage": "EVENT_NOT_VERIFIED",
-    "detail": "Live selection / bet-slip state not visible after quote tap",
-    "duration_ms": 59253,
+    "instruction_id": "live-bet365-1790106122",
+    "status": "PASS",
+    "stage": "PASS",
+    "detail": "Adapter workflow verified",
+    "duration_ms": 52964,
     "execution_count": 1,
-    "run_id": "c_Ix2IRwvrwgw16SJfUj6iaKVsbKLG07cihU22CvSYlRM",
+    "run_id": "c_YJQ4uIpIqocYVtGUXIZsNnUcTMcySMT2KW1ZJHR1gdw",
     "fixture_name": "Arsenal v Leeds",
     "home": "Arsenal",
     "away": "Leeds",
@@ -20,19 +20,31 @@
       "market": "MONEYLINE",
       "side": "HOME",
       "line": "NONE",
-      "price": "1.33",
+      "price": "8.00",
       "availability": "OPEN",
       "bounds": [
-        116,
-        791,
-        278,
-        810
+        111,
+        776,
+        610,
+        793
       ]
     },
-    "verification_detail": "Live selection / bet-slip state not visible after quote tap"
+    "final_state": {
+      "home": "Arsenal",
+      "away": "Leeds",
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "8.00",
+      "stake": "0.00",
+      "state": "NOSUBMIT",
+      "place_bet_visible": true,
+      "wager_submitted": false
+    },
+    "verification_detail": "Exact fixture, market, side, line and price visually verified in final dry-run state"
   },
-  "app_version": "0.6.14-live",
-  "version_code": 26,
+  "app_version": "0.6.15-live",
+  "version_code": 27,
   "endpoint": "http://192.168.4.108:8767",
-  "pid": 11508
+  "pid": 15694
 }
