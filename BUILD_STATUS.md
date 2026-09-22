@@ -1,3 +1,18 @@
+# MultiBot365 build status
+
+## Current milestone: LIVE BET365 ADAPTER VALIDATION ? PASS on the physical Samsung
+
+Verified 2026-09-22 ~20:42 Europe/London on Samsung SM-A136B `R5CT61TE14Z`. App **0.6.14-live (26)**. Evidence: `evidence/live-bet365/` (**PASS**). See `BUILD_STATUS_LIVE.md`.
+
+- Fixture: Arsenal v Leeds
+- Market / side / line: MONEYLINE / HOME / NONE
+- Live price (structured): 8.00
+- Final: NOSUBMIT, wager_submitted false (stopped before Place Bet)
+- Parent commit: `68dea3e` (M5 simulator). Live work committed on top.
+
+No LocalSimulator substitute. Login wall cleared after David logged in on phone Chrome.
+
+---
 ﻿# MultiBot365 build status
 
 ## Current milestone: 5 — PASS on the physical Samsung (multi-sport local simulator)

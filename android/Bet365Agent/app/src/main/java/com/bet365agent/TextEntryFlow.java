@@ -174,6 +174,11 @@ final class TextEntryFlow {
             readEditor(value -> {
                 boolean exact = instruction.text.equals(value);
                 boolean visible = normalizeWords(instruction.text).equals(ocr.fieldText);
+                if (!visible && exact) {
+                    for (String word : ocr.words) {
+                        if (instruction.text.equalsIgnoreCase(word)) { visible = true; break; }
+                    }
+                }
                 put("observed_text", value);
                 put("exact_input_match", exact);
                 put("visual_text_match", visible);
@@ -199,7 +204,15 @@ final class TextEntryFlow {
             hints = sparse.bounds(instruction.fieldHint);
             if (!hints.isEmpty()) { ocr.words.clear(); ocr.rects.clear(); ocr.words.addAll(sparse.words); ocr.rects.addAll(sparse.rects); }
         }
-        if (hints.size() == 1) ocr.fieldBounds = findOutline(bitmap, hints.get(0));
+        if (hints.size() == 1) {
+            ocr.fieldBounds = findOutline(bitmap, hints.get(0));
+            if (ocr.fieldBounds == null) {
+                // Generic fallback for outlined-less search fields (e.g. live Bet365): expand the unique OCR hint.
+                Rect h = hints.get(0);
+                ocr.fieldBounds = new Rect(Math.max(0, h.left - 48), Math.max(0, h.top - 24),
+                        Math.min(bitmap.getWidth() - 1, h.right + 220), Math.min(bitmap.getHeight() - 1, h.bottom + 24));
+            }
+        }
         Rect current = field;
         // A blinking caret can merge with placeholder text in full-screen OCR.
         // Reuse the previously measured rectangle only when its actual border is still present.

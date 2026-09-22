@@ -13,7 +13,7 @@ final class TextInstruction {
         targetPackage = value.getString("package");
         timeoutMs = value.optLong("timeout_ms", 30000);
         if (!id.matches("[A-Za-z0-9_-]{1,64}") || text.isEmpty() || text.length() > 128
-                || !fieldHint.matches("[A-Za-z0-9]{1,40}") || targetPackage.isEmpty()
+                || !fieldHint.matches("[A-Za-z0-9.]{1,40}") || targetPackage.isEmpty()
                 || timeoutMs < 100 || timeoutMs > 60000) {
             throw new IllegalArgumentException("Invalid id, text (1..128 UTF-16 units), single-word field hint, package or deadline");
         }
