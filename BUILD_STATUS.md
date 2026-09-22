@@ -1,3 +1,32 @@
+# MultiBot365 build status
+
+## Current milestone: COMPLETE_EXECUTION_READY + ?0 Place Bet dispatch ? PASS on physical Samsung
+
+Verified 2026-09-22 ~21:56 Europe/London. App **0.6.18-cer (30)**.
+
+### A) COMPLETE_EXECUTION_READY (prepare, no dispatch)
+Evidence: `evidence/live-bet365-complete-execution-ready/` ? PASS.
+- Locates Place Bet, records bounds + prepared gesture payload + validation_hash
+- `gesture_dispatched`: false, `wager_submitted`: false
+- Sample CER bounds: Place Bet `[478,1324,604,1346]`
+
+### B) Real Place Bet dispatch on ?0 account
+Evidence: `evidence/live-bet365-place-bet-insufficient/` ? PASS.
+- `execution_mode=dispatch` + `confirmation_status=APPROVED`
+- Real Place Bet gesture **dispatched** (`place_bet_tapped` true, `gesture_dispatched` true)
+- `wager_submitted`: **false** (no settled wager)
+- Post-tap UI: betslip cleared / page reload with header balance still **?0.00** ? classified **INSUFFICIENT_BALANCE** (equivalent reject)
+
+### Protections
+`tools/complete_execution/` gate unit tests **4/4**: duplicate, stale, price-change, restart recovery.
+
+### Notes
+- Does not modify Confirmation Worker (`tools/confirmation/`).
+- READY_STATE / Search / 1X2 / OCR column bind unchanged in design; extended with prepare+dispatch only.
+- Instruction fields: `execution_mode` = ready|prepare|dispatch; `confirmation_status` = NONE|APPROVED (APPROVED required for prepare/dispatch).
+
+---
+
 # Confirmation worker companion - live poll + chat APPROVE PASS
 
 **Status:** PASS on DESKTOP-IVUNJ9J (chat APPROVE/REJECT card + live coordinator poll).

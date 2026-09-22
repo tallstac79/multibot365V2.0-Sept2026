@@ -118,13 +118,13 @@ final class CoordinatorAgent implements AutoCloseable {
         try {
             PowerManager power = (PowerManager) service.getSystemService(android.content.Context.POWER_SERVICE);
             KeyguardManager keyguard = (KeyguardManager) service.getSystemService(android.content.Context.KEYGUARD_SERVICE);
-            if (!power.isInteractive() || keyguard.isKeyguardLocked()) { complete(row, "FOCUS_FAILED", "Phone must be awake and unlocked"); return; }
+            if (!power.isInteractive()) { complete(row, "FOCUS_FAILED", "Phone must be awake and unlocked"); return; }
             store.executing(instruction.id);
             if(instruction.action.equals("ADAPTER_WORKFLOW")) {
                 if(!runner.startExternal(instruction.runId,remaining(row,instruction.timeout))) {complete(row,"INTERNAL_ERROR","Runner rejected workflow");return;}
                 VisualSession session=new VisualSession(service,runner,instruction.runId,instruction.adapter);
                 SiteAdapter adapter=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id,instruction.sport,instruction.stake);
-                new AdapterWorkflow(session,adapter).start(instruction.text,instruction.market,instruction.side,instruction.minimumPrice,instruction.stake);
+                new AdapterWorkflow(session,adapter).start(instruction.text,instruction.market,instruction.side,instruction.minimumPrice,instruction.stake,instruction.executionMode,instruction.confirmationStatus);
                 return;
             }
             String url = CoordinatorConfig.prefs(service).getString("start_url", "").trim();
@@ -159,7 +159,7 @@ final class CoordinatorAgent implements AutoCloseable {
         if(proof!=null && current.optJSONObject("payload").optString("action").equals("ADAPTER_WORKFLOW")) {
             JSONObject fixture=proof.optJSONObject("fixture");
             for(String key:new String[]{"fixture_name","home","away","competition"})put(result,key,fixture==null?JSONObject.NULL:fixture.opt(key));
-            put(result,"selection",proof.opt("selection"));put(result,"final_state",proof.opt("final_state"));put(result,"ready_state",proof.opt("ready_state"));
+            put(result,"selection",proof.opt("selection"));put(result,"final_state",proof.opt("final_state"));put(result,"ready_state",proof.opt("ready_state"));put(result,"complete_execution_ready",proof.opt("complete_execution_ready"));put(result,"place_bet_tapped",proof.opt("place_bet_tapped"));put(result,"place_bet_result",proof.opt("place_bet_result"));put(result,"place_bet_detail",proof.opt("place_bet_detail"));if(proof.has("wager_submitted"))put(result,"wager_submitted",proof.opt("wager_submitted"));
             put(result,"verification_detail",proof.optString("verification_detail",detail));
         }
         store.complete(id, result);

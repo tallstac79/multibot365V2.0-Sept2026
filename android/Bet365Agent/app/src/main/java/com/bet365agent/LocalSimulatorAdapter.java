@@ -116,4 +116,32 @@ final class LocalSimulatorAdapter implements SiteAdapter {
     private static String normalizeSide(String raw){return raw.replace("D RAW","DRAW").replace("D  RAW","DRAW");}
     private static String normId(String raw){return raw.replace("Unned","United").replace("Umted","United").replace("Umited","United");}
     private static void require(boolean condition,String stage,String message){if(!condition)throw new Failure(stage,message);}
+
+
+    public CompletableFuture<Void> prepare_complete_execution(Fixture fixture, Selection selection, String stake, String minimumPrice) {
+        return ui.capture("complete_execution_pre").thenAccept(s -> {
+            org.json.JSONObject gesture = CoordinatorAgent.object("type","tap","target","Place Bet","bounds",new org.json.JSONArray(java.util.Arrays.asList(100,100,200,150)),"dispatched",false);
+            org.json.JSONObject cer = CoordinatorAgent.object(
+                "state","COMPLETE_EXECUTION_READY","fixture",fixture.name(),"market",selection.market,
+                "selection_role",selection.side,"selection_name",selection.name,"line",selection.line,
+                "price",selection.price,"stake",stake,"minimum_price",minimumPrice,
+                "final_control","Place Bet","final_control_bounds",new org.json.JSONArray(java.util.Arrays.asList(100,100,200,150)),
+                "final_control_enabled",true,"final_control_actionable",true,
+                "prepared_gesture",gesture,"gesture_dispatched",false,"wager_submitted",false,
+                "timestamp_ms",System.currentTimeMillis(),"validation_hash","sim-hash");
+            ui.put("complete_execution_ready", cer);
+            ui.put("prepared_gesture", gesture);
+            ui.put("gesture_dispatched", false);
+            ui.put("wager_submitted", false);
+        });
+    }
+    public CompletableFuture<Void> place_bet(Fixture fixture, Selection selection, String stake) {
+        return ui.capture("place_bet").thenAccept(s -> {
+            // Simulator dry-run: prove control path without a real bookmaker submit.
+            ui.put("place_bet_tapped", true);
+            ui.put("wager_submitted", false);
+            ui.put("place_bet_result", "PLACE_BET_CONTROL_PROVEN");
+            ui.put("place_bet_detail", "LocalSimulator: Place Bet path exercised; no real wager");
+        });
+    }
 }

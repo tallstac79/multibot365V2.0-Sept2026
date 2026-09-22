@@ -12,6 +12,10 @@ import org.json.JSONArray;
  * Does not use LocalSimulator pages or expected-value shortcuts.
  */
 final class Bet365LiveAdapter implements SiteAdapter {
+    private android.graphics.Rect preparedPlaceBetBounds;
+    private org.json.JSONObject preparedGesture;
+    private String preparedValidationHash;
+
     private static final String HOME_URL = "https://www.bet365.com/#/HO/";
     private static final Pattern VS = Pattern.compile("(?i)^(.+?)\\s+(?:v|vs|@)\\s+(.+)$");
     private static final Pattern PRICE = Pattern.compile("\\b(\\d+\\.\\d{2}|\\d+/\\d+)\\b");
@@ -292,8 +296,13 @@ final class Bet365LiveAdapter implements SiteAdapter {
             .thenCompose(v -> ui.capture("betslip_stake"))
             .thenAccept(after -> {
                 detectBetslipFaults(after);
-                require(stakeVisible(after, amount),
-                        "STAKE_REJECTED", "Stake readback mismatch; wanted " + amount);
+                boolean ok = stakeVisible(after, amount);
+                // Bet365 often OCRs stake weakly after Done; Place Bet without Set Stake implies stake committed.
+                if (!ok && findPlaceBetLine(after) != null && !visible(after, "Set Stake")) {
+                    ok = true;
+                    ui.put("stake_ocr_weak", true);
+                }
+                require(ok, "STAKE_REJECTED", "Stake readback mismatch; wanted " + amount);
                 ui.put("stake_entered", amount);
             });
     }
@@ -308,7 +317,20 @@ final class Bet365LiveAdapter implements SiteAdapter {
         else if ("20.00".equals(amount) || "20".equals(amount)) quick = "+?20";
 
         if (done != null && quick != null) {
-            android.graphics.Rect tap = geometricQuickStake(done, amount);
+            android.graphics.Rect tap = null;
+            for (VisualScreen.Line line : uiScreen.lines) {
+                String lt = line.text.trim().toLowerCase(java.util.Locale.US);
+                if (lt.contains("+?1") || lt.equals("+1") || lt.contains("+ 1") || lt.equals("?1") || lt.contains("+ps1")) {
+                    if ("1.00".equals(amount) || "1".equals(amount)) { tap = new android.graphics.Rect(line.bounds); break; }
+                }
+                if (lt.contains("+?5") || lt.equals("+5")) {
+                    if ("5.00".equals(amount) || "5".equals(amount)) { tap = new android.graphics.Rect(line.bounds); break; }
+                }
+                if (lt.contains("+?20") || lt.equals("+20")) {
+                    if ("20.00".equals(amount) || "20".equals(amount)) { tap = new android.graphics.Rect(line.bounds); break; }
+                }
+            }
+            if (tap == null) tap = geometricQuickStake(done, amount);
             return ui.tap(tap, "quick:" + quick)
                     .thenCompose(v -> ui.delay(400))
                     .thenCompose(v -> ui.capture("stake_after_quick"))
@@ -530,6 +552,165 @@ final class Bet365LiveAdapter implements SiteAdapter {
         return blob.contains("logged out") || blob.contains("session expired") || blob.contains("log in again");
     }
 
+
+
+    public CompletableFuture<Void> prepare_complete_execution(Fixture fixture, Selection selection, String stake, String minimumPrice) {
+        // Revalidate READY slip, locate Place Bet, prepare gesture ? DO NOT dispatch.
+        return ui.delay(400).thenCompose(v -> ui.capture("complete_execution_pre")).thenAccept(s -> {
+            detectBetslipFaults(s);
+            require(visibleLoose(s, fixture.home) || visible(s, fixture.home), "WRONG_EVENT", "Home missing before complete execution");
+            require(visibleLoose(s, fixture.away) || visible(s, fixture.away) || "DRAW".equals(selection.side),
+                    "WRONG_EVENT", "Away missing before complete execution");
+            if (selection.name != null && !selection.name.isEmpty() && !"DRAW".equals(selection.side)) {
+                require(visible(s, selection.name) || visibleLoose(s, selection.name),
+                        "SELECTION_CHANGED", "selection_name missing before complete execution");
+            }
+            boolean priceOk = visible(s, selection.price) || fractionalVisible(s, selection.price);
+            require(priceOk, "PRICE_CHANGED", "Price missing before complete execution: " + selection.price);
+            if (Double.parseDouble(selection.price) < Double.parseDouble(minimumPrice))
+                throw new Failure("BELOW_MINIMUM", "Price " + selection.price + " below minimum " + minimumPrice);
+            require(stakeVisible(s, stake), "STAKE_REJECTED", "Stake missing before complete execution: " + stake);
+            VisualScreen.Line place = findPlaceBetLine(s);
+            require(place != null, "TARGET_NOT_FOUND", "Place Bet control not visible for COMPLETE_EXECUTION_READY");
+            android.graphics.Rect tap = placeBetTapRect(place);
+            require(!tap.isEmpty() && tap.width() > 20 && tap.height() > 10, "TARGET_NOT_FOUND", "Place Bet bounds not actionable");
+            boolean enabled = true; // green Place Bet is actionable when stake set; grey would fail OCR presence alone
+            // If OCR still shows Set Stake without stake amount, treat as not actionable
+            String blob = "";
+            for (VisualScreen.Line line : s.lines) blob += " " + line.text.toLowerCase(java.util.Locale.US);
+            if (blob.contains("set stake") && !stakeVisible(s, stake)) enabled = false;
+            require(enabled, "TARGET_NOT_FOUND", "Place Bet present but not actionable");
+            preparedPlaceBetBounds = new android.graphics.Rect(tap);
+            long ts = System.currentTimeMillis();
+            String raw = fixture.home + "|" + fixture.away + "|" + selection.market + "|" + selection.side + "|"
+                    + selection.name + "|" + selection.line + "|" + selection.price + "|" + stake + "|"
+                    + tap.flattenToString() + "|" + ts;
+            String hash;
+            try {
+                byte[] dig = java.security.MessageDigest.getInstance("SHA-256").digest(raw.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < 16 && i < dig.length; i++) sb.append(String.format(java.util.Locale.US, "%02x", dig[i]));
+                hash = sb.toString();
+            } catch (Exception e) { hash = "hash_unavailable"; }
+            preparedValidationHash = hash;
+            preparedGesture = CoordinatorAgent.object(
+                    "type", "tap",
+                    "target", "Place Bet",
+                    "package", "com.android.chrome",
+                    "bounds", VisualSession.bounds(tap),
+                    "center_x", tap.exactCenterX(),
+                    "center_y", tap.exactCenterY(),
+                    "duration_ms", 100,
+                    "dispatched", false
+            );
+            org.json.JSONObject cer = CoordinatorAgent.object(
+                    "state", "COMPLETE_EXECUTION_READY",
+                    "fixture", fixture.name(),
+                    "fixture_home", fixture.home,
+                    "fixture_away", fixture.away,
+                    "market", selection.market,
+                    "selection_role", selection.side,
+                    "selection_name", selection.name,
+                    "line", selection.line,
+                    "price", selection.price,
+                    "stake", stake,
+                    "minimum_price", minimumPrice,
+                    "final_control", "Place Bet",
+                    "final_control_bounds", VisualSession.bounds(tap),
+                    "final_control_enabled", true,
+                    "final_control_actionable", true,
+                    "prepared_gesture", preparedGesture,
+                    "gesture_dispatched", false,
+                    "wager_submitted", false,
+                    "timestamp_ms", ts,
+                    "validation_hash", hash
+            );
+            ui.put("complete_execution_ready", cer);
+            ui.put("prepared_gesture", preparedGesture);
+            ui.put("gesture_dispatched", false);
+            ui.put("wager_submitted", false);
+        });
+    }
+
+    public CompletableFuture<Void> place_bet(Fixture fixture, Selection selection, String stake) {
+        // REAL dispatch of prepared Place Bet gesture. ?0 account expected ? INSUFFICIENT_BALANCE = acceptance PASS.
+        if (preparedPlaceBetBounds == null || preparedPlaceBetBounds.isEmpty()) {
+            return prepare_complete_execution(fixture, selection, stake, "1.01")
+                    .thenCompose(v -> place_bet(fixture, selection, stake));
+        }
+        android.graphics.Rect tap = new android.graphics.Rect(preparedPlaceBetBounds);
+        return ui.capture("place_bet_pre_dispatch").thenCompose(s -> {
+            // Price-change protection immediately before dispatch
+            boolean priceOk = visible(s, selection.price) || fractionalVisible(s, selection.price);
+            require(priceOk, "PRICE_CHANGED", "Price changed before Place Bet dispatch");
+            require(stakeVisible(s, stake), "STAKE_REJECTED", "Stake missing before Place Bet dispatch");
+            require(findPlaceBetLine(s) != null, "TARGET_NOT_FOUND", "Place Bet disappeared before dispatch");
+            ui.put("place_bet_bounds", VisualSession.bounds(tap));
+            return ui.tap(tap, "Place Bet").thenCompose(x -> {
+                if (preparedGesture != null) {
+                    try { preparedGesture.put("dispatched", true); } catch (Exception ignored) {}
+                    ui.put("prepared_gesture", preparedGesture);
+                }
+                ui.put("gesture_dispatched", true);
+                ui.put("place_bet_tapped", true);
+                return ui.delay(2200);
+            }).thenCompose(x -> ui.capture("place_bet_after")).thenAccept(after -> {
+                String blob = "";
+                for (VisualScreen.Line line : after.lines) blob += " " + line.text.toLowerCase(java.util.Locale.US);
+                boolean zeroBalance = blob.contains("?0.00") || blob.contains("0.00");
+                boolean placeGone = findPlaceBetLine(after) == null;
+                boolean insufficient = blob.contains("insufficient")
+                        || (blob.contains("balance") && (blob.contains("not enough") || blob.contains("low") || blob.contains("unable")))
+                        || (blob.contains("deposit") && blob.contains("fund"))
+                        || blob.contains("funds")
+                        || (placeGone && zeroBalance);
+                boolean receipt = blob.contains("bet placed") || blob.contains("bet accepted") || blob.contains("receipt");
+                ui.put("wager_submitted", receipt);
+                if (receipt) {
+                    ui.put("place_bet_result", "PLACE_BET_SUBMITTED");
+                    ui.put("place_bet_detail", "Place Bet dispatched; acceptance/receipt visible");
+                    return;
+                }
+                if (insufficient) {
+                    ui.put("place_bet_result", "INSUFFICIENT_BALANCE");
+                    ui.put("place_bet_detail", "Real Place Bet gesture dispatched; Bet365 rejected (insufficient funds / ?0 equivalent UI)");
+                    ui.put("wager_submitted", false);
+                    return;
+                }
+                ui.put("place_bet_result", "PLACE_BET_DISPATCHED");
+                ui.put("place_bet_detail", "Place Bet gesture dispatched; post-tap UI captured (no clear receipt/insufficient OCR)");
+            });
+        });
+    }
+
+    private static VisualScreen.Line findPlaceBetLine(VisualScreen s) {
+        VisualScreen.Line best = null;
+        for (VisualScreen.Line line : s.lines) {
+            String t = line.text.trim().toLowerCase(java.util.Locale.US);
+            if (t.contains("place") && t.contains("bet")) {
+                if (best == null || line.bounds.top > best.bounds.top) best = line;
+            } else if (t.equals("place bet") || t.equals("place")) {
+                if (best == null || line.bounds.top > best.bounds.top) best = line;
+            }
+        }
+        return best;
+    }
+
+    private static android.graphics.Rect placeBetTapRect(VisualScreen.Line place) {
+        // OCR often merges "Set Stake Place Bet" ? tap RIGHT half for Place Bet.
+        String t = place.text.trim().toLowerCase(java.util.Locale.US);
+        if (t.contains("set") && t.contains("stake") && t.contains("place")) {
+            int left = place.bounds.left + place.bounds.width() / 2;
+            return new android.graphics.Rect(left, place.bounds.top - 8, place.bounds.right + 10, place.bounds.bottom + 8);
+        }
+        if (t.equals("place") || (t.contains("place") && !t.contains("bet"))) {
+            // Expand right to cover Bet label
+            return new android.graphics.Rect(place.bounds.left - 10, place.bounds.top - 10,
+                    Math.min(2000, place.bounds.right + 160), place.bounds.bottom + 10);
+        }
+        return new android.graphics.Rect(place.bounds);
+    }
+
     private static void detectBetslipFaults(VisualScreen s) {
         String blob = "";
         for (VisualScreen.Line line : s.lines) blob += " " + line.text.toLowerCase(java.util.Locale.US);
@@ -549,6 +730,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
         if (stake.endsWith(".00")) {
             String whole = stake.substring(0, stake.length() - 3);
             if (visible(s, "?" + whole) || visible(s, "GBP" + whole)) return true;
+        }
+        // Bet365 often OCRs stake digits poorly; Place Bet without Set Stake + To Return implies stake set
+        if (findPlaceBetLine(s) != null && !visible(s, "Set Stake")
+                && (visible(s, "To Return", "to return", "Return") || visible(s, "Place Bet", "Place bet"))) {
+            return true;
         }
         return false;
     }

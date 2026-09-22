@@ -15,7 +15,8 @@ final class AdapterWorkflow {
         if(!session.live())return VisualSession.failed("TIMEOUT","Workflow expired");
         session.checkpoint(name);return action.get();
     }
-    void start(String query,String market,String side,String minimumPrice,String stake) {
+    void start(String query,String market,String side,String minimumPrice,String stake,String executionMode,String confirmationStatus) {
+        final String mode = executionMode == null || executionMode.isEmpty() ? "ready" : executionMode;
         step("OPEN_HOME",adapter::open_home)
         .thenCompose(v->step("ENSURE_SESSION",adapter::ensure_session))
         .thenCompose(v->step("OPEN_SEARCH",adapter::open_search))
@@ -35,9 +36,35 @@ final class AdapterWorkflow {
         })
         .thenCompose(v->step("ENTER_STAKE",()->adapter.enter_stake(stake)))
         .thenCompose(v->step("VERIFY_FINAL_STATE",()->adapter.verify_final_state(fixture,selection,stake)))
+        .thenCompose(v->{
+            if("ready".equals(mode)) return CompletableFuture.completedFuture(null);
+            if(!"APPROVED".equals(confirmationStatus))
+                throw new SiteAdapter.Failure("CONFIRMATION_REQUIRED","execution_mode "+mode+" requires confirmation_status APPROVED");
+            session.put("confirmation_gate", confirmationStatus);
+            return step("PREPARE_COMPLETE_EXECUTION",()->adapter.prepare_complete_execution(fixture,selection,stake,minimumPrice));
+        })
+        .thenCompose(v->{
+            if(!"dispatch".equals(mode)) return CompletableFuture.completedFuture(null);
+            return step("PLACE_BET",()->adapter.place_bet(fixture,selection,stake));
+        })
         .whenComplete((v,error)->{
-            if(error==null){session.put("verification_detail","READY_STATE: session, selection, price and stake verified; stopped before wager");session.finish("PASS","READY_STATE");}
-            else {Throwable cause=error;while(cause.getCause()!=null)cause=cause.getCause();String status=cause instanceof SiteAdapter.Failure?((SiteAdapter.Failure)cause).stage:"INTERNAL_ERROR";session.finish(status,cause.getMessage()==null?cause.getClass().getSimpleName():cause.getMessage());}
+            if(error==null){
+                if("dispatch".equals(mode)){
+                    String detail = session.record.optString("place_bet_result", "PLACE_BET_DISPATCHED");
+                    session.put("verification_detail","DISPATCH after COMPLETE_EXECUTION_READY; wager_submitted="+session.record.opt("wager_submitted"));
+                    session.finish("PASS", detail);
+                } else if("prepare".equals(mode)){
+                    session.put("verification_detail","COMPLETE_EXECUTION_READY: Place Bet located and gesture prepared; NOT dispatched");
+                    session.finish("PASS","COMPLETE_EXECUTION_READY");
+                } else {
+                    session.put("verification_detail","READY_STATE: session, selection, price and stake verified; stopped before wager");
+                    session.finish("PASS","READY_STATE");
+                }
+            } else {
+                Throwable cause=error;while(cause.getCause()!=null)cause=cause.getCause();
+                String status=cause instanceof SiteAdapter.Failure?((SiteAdapter.Failure)cause).stage:"INTERNAL_ERROR";
+                session.finish(status,cause.getMessage()==null?cause.getClass().getSimpleName():cause.getMessage());
+            }
         });
     }
 }

@@ -21,6 +21,10 @@ interface SiteAdapter {
     CompletableFuture<Void> open_selection(Selection selection);
     CompletableFuture<Void> enter_stake(String stake);
     CompletableFuture<Void> verify_final_state(Fixture fixture, Selection selection, String stake);
+    /** Locate Place Bet, record COMPLETE_EXECUTION_READY + prepared gesture; NEVER dispatches. */
+    CompletableFuture<Void> prepare_complete_execution(Fixture fixture, Selection selection, String stake, String minimumPrice);
+    /** Dispatch the prepared Place Bet gesture for real. */
+    CompletableFuture<Void> place_bet(Fixture fixture, Selection selection, String stake);
 
     final class Fixture {
         final String code, home, away, competition;
