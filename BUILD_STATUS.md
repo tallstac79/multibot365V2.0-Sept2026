@@ -1,3 +1,26 @@
+# Confirmation worker companion - live poll + chat APPROVE PASS
+
+**Status:** PASS on DESKTOP-IVUNJ9J (chat APPROVE/REJECT card + live coordinator poll).
+**Date:** 2026-09-22 ~21:37 Europe/London
+**Commits:** scaffold 6a3a7f9, derive fields 82c55b7, plus this milestone commit.
+
+## Proven
+
+- Live poll: coordinator GET /instructions/live-ready-1790108608 (+ evidence) → 
+eady_state.state=READY (app **0.6.16-ready**).
+- Normalize/derive: device_id=samsung-R5CT61TE14Z, ISO alidated_at, SHA-256 alidation_hash (main bot omits these).
+- Chat card shown: READY / Fixture / Market / Selection / Line / Price / Minimum / Stake / APPROVE|REJECT.
+- Human **APPROVE** → outbox status **APPROVED**; second approve → **DUPLICATE**.
+- Evidence: evidence/confirmation-live-poll/ (poll.json, card.json, decision.json).
+- Unit tests: 9/9 still pass. No Place Bet. No main-bot / Android source edits.
+
+## Not claimed
+
+- Continuous always-on poller daemon (manual/CLI + this chat card path proven).
+- Main-bot automatic read of confirmation outbox (INTERFACE documents the file contract).
+
+---
+
 # OddsNotifier real linked ML sample - parser PASS
 
 Verified 2026-09-22 from b3639aa: 32 deterministic parser tests pass. Added the

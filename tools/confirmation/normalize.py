@@ -7,6 +7,7 @@ Requires instruction_id (top-level or nested).
 from __future__ import annotations
 
 import hashlib
+import re
 from datetime import datetime, timezone
 from typing import Any, Mapping, MutableMapping, Optional
 
@@ -57,6 +58,20 @@ def _fixture_from(parts: Mapping[str, Any], nested: Mapping[str, Any]) -> Option
         return f"{home} v {away}"
     return None
 
+
+
+def _as_validated_at(*vals: Any) -> str:
+    """Return first ISO-like timestamp; else UTC now. Rejects stage/detail strings."""
+    iso_re = re.compile(r"^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}")
+    for v in vals:
+        if v is None:
+            continue
+        s = str(v).strip()
+        if not s or s.lower() in ("none", "null"):
+            continue
+        if iso_re.match(s):
+            return s
+    return _now_iso()
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
@@ -157,12 +172,12 @@ def normalize_payload(raw: Mapping[str, Any]) -> dict:
         )
     )
 
-    validated_at = _first(
+    validated_at = _as_validated_at(
         bag.get("validated_at"),
         raw.get("validated_at"),
         raw.get("timestamp"),
         result.get("validated_at") if isinstance(result, Mapping) else None,
-        _now_iso(),
+        evidence.get("validated_at") if isinstance(evidence, Mapping) else None,
     )
 
     # Main bot does not yet emit validation_hash / device_id — derive on our side.
