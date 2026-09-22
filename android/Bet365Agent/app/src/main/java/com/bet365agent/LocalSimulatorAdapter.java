@@ -28,6 +28,8 @@ final class LocalSimulatorAdapter implements SiteAdapter {
             .appendQueryParameter("stake",stake)
             .build().toString();
     }
+    public CompletableFuture<Void> ensure_session(){return CompletableFuture.completedFuture(null);}
+    public CompletableFuture<Void> enter_stake(String stake){return CompletableFuture.completedFuture(null);}
     public CompletableFuture<Void> open_home(){return ui.open(url).thenCompose(v->ui.capture("home")).thenAccept(s->require(s.has("SIMULATOR"),"TARGET_NOT_FOUND","Simulator home not visible"));}
     public CompletableFuture<Void> open_search(){return click("SEARCH","search_button").thenCompose(v->ui.capture("search")).thenAccept(s->require(s.has("SEARCHPAGE"),"TARGET_NOT_FOUND","Search page not visible"));}
     public CompletableFuture<Void> enter_query(String query){return ui.type("QUERY",query).thenCompose(v->ui.dismissKeyboard()).thenCompose(v->click("FIND","find_button"));}

@@ -18,4 +18,14 @@ final class CoordinatorConfig {
         }
         return token;
     }
+    /** Bet365 username for visual login; app-private prefs only ? never written to evidence. */
+    static String bet365Username(Context context) { return prefs(context).getString("bet365_username", ""); }
+    static String bet365Password(Context context) { return prefs(context).getString("bet365_password", ""); }
+    static boolean hasBet365Credentials(Context context) {
+        return !bet365Username(context).isEmpty() && !bet365Password(context).isEmpty();
+    }
+    static boolean saveBet365Credentials(Context context, String username, String password) {
+        return prefs(context).edit().putString("bet365_username", username == null ? "" : username.trim())
+                .putString("bet365_password", password == null ? "" : password).commit();
+    }
 }

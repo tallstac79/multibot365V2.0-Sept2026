@@ -17,6 +17,7 @@ final class AdapterWorkflow {
     }
     void start(String query,String market,String side,String minimumPrice,String stake) {
         step("OPEN_HOME",adapter::open_home)
+        .thenCompose(v->step("ENSURE_SESSION",adapter::ensure_session))
         .thenCompose(v->step("OPEN_SEARCH",adapter::open_search))
         .thenCompose(v->step("ENTER_QUERY",()->adapter.enter_query(query)))
         .thenCompose(v->step("DISCOVER_FIXTURE",adapter::discover_fixture))
@@ -32,9 +33,10 @@ final class AdapterWorkflow {
                 throw new SiteAdapter.Failure("BELOW_MINIMUM","Visible price "+price+" is below minimum "+minimumPrice);
             return step("OPEN_SELECTION",()->adapter.open_selection(selection));
         })
+        .thenCompose(v->step("ENTER_STAKE",()->adapter.enter_stake(stake)))
         .thenCompose(v->step("VERIFY_FINAL_STATE",()->adapter.verify_final_state(fixture,selection,stake)))
         .whenComplete((v,error)->{
-            if(error==null){session.put("verification_detail","Exact fixture, market, side, line and price visually verified in final dry-run state");session.finish("PASS","Adapter workflow verified");}
+            if(error==null){session.put("verification_detail","READY_STATE: session, selection, price and stake verified; stopped before wager");session.finish("PASS","READY_STATE");}
             else {Throwable cause=error;while(cause.getCause()!=null)cause=cause.getCause();String status=cause instanceof SiteAdapter.Failure?((SiteAdapter.Failure)cause).stage:"INTERNAL_ERROR";session.finish(status,cause.getMessage()==null?cause.getClass().getSimpleName():cause.getMessage());}
         });
     }

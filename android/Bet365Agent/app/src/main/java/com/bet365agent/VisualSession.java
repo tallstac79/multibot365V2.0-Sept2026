@@ -105,6 +105,113 @@ final class VisualSession {
         }catch(Exception e){f.completeExceptionally(e);}
         return f;
     }
+    /** Tap a visual hint and commit text via Accessibility IME without TextEntryFlow focus/OCR gating. */
+    CompletableFuture<Void> typeDirect(String hint, String value) {
+        if(!live())return failed("TIMEOUT","Session expired");
+        checkpoint("ENTER_DIRECT");
+        CompletableFuture<Void> f=future();
+        capture("direct_field").thenCompose(screen -> {
+            Rect box = null;
+            String want = hint.toLowerCase(java.util.Locale.US);
+            for (VisualScreen.Line line : screen.lines) {
+                String t = line.text.trim().toLowerCase(java.util.Locale.US);
+                if (t.equals(want) || t.contains(want)) {
+                    // Prefer tapping below label for "Stake"; for "0.00" tap the value itself
+                    if (want.equals("stake") || want.equals("amount")) {
+                        box = new Rect(Math.max(0, line.bounds.left - 20), line.bounds.top,
+                                Math.min(2000, line.bounds.right + 400), Math.min(3000, line.bounds.bottom + 160));
+                    } else {
+                        box = new Rect(line.bounds);
+                    }
+                    break;
+                }
+            }
+            if (box == null) {
+                f.completeExceptionally(new SiteAdapter.Failure("TARGET_NOT_FOUND","Field not visible for direct type: " + hint));
+                return CompletableFuture.<Void>completedFuture(null);
+            }
+            return tap(box, "direct-field:" + hint);
+        }).thenCompose(v -> pollCommit(value, 0, f));
+        return f;
+    }
+
+    private CompletableFuture<Void> pollCommit(String value, int attempt, CompletableFuture<Void> f) {
+        return delay(450).thenCompose(v -> {
+            try {
+                if (android.os.Build.VERSION.SDK_INT < 33 || !(service.getInputMethod() instanceof AgentInputMethod)) {
+                    f.completeExceptionally(new SiteAdapter.Failure("INPUT_FAILED","Accessibility IME unavailable"));
+                    return CompletableFuture.<Void>completedFuture(null);
+                }
+                AgentInputMethod method = (AgentInputMethod) service.getInputMethod();
+                android.accessibilityservice.InputMethod.AccessibilityInputConnection ac = method.getCurrentInputConnection();
+                if (ac == null) {
+                    if (attempt < 10) return pollCommit(value, attempt + 1, f);
+                    f.completeExceptionally(new SiteAdapter.Failure("FOCUS_FAILED","No input connection after tapping stake/field"));
+                    return CompletableFuture.<Void>completedFuture(null);
+                }
+                try {
+                    // Clear existing then commit
+                    android.view.inputmethod.SurroundingText surrounding = ac.getSurroundingText(64, 64, 0);
+                    if (surrounding != null) {
+                        CharSequence cur = surrounding.getText();
+                        if (cur != null && cur.length() > 0) ac.setSelection(0, cur.length());
+                    }
+                } catch (Exception ignored) {}
+                ac.commitText(value, 1, null);
+                put("direct_entered", true);
+                put("direct_value", value);
+                checkpoint("DIRECT_SENT");
+                f.complete(null);
+            } catch (Exception e) {
+                f.completeExceptionally(new SiteAdapter.Failure("INPUT_FAILED","Direct type failed: " + e.getClass().getSimpleName()));
+            }
+            return CompletableFuture.<Void>completedFuture(null);
+        });
+    }
+
+    /** Commit into a password/secret field. Never OCR-verifies or stores the secret value. */
+    CompletableFuture<Void> typeSecret(String hint, String secret) {
+        if(!live())return failed("TIMEOUT","Session expired");
+        checkpoint("ENTER_SECRET");
+        CompletableFuture<Void> f=future();
+        capture("secret_field").thenCompose(screen -> {
+            Rect box = null;
+            for (VisualScreen.Line line : screen.lines) {
+                String t = line.text.trim().toLowerCase(java.util.Locale.US);
+                if (t.contains(hint.toLowerCase(java.util.Locale.US)) || t.contains("password")) {
+                    box = new Rect(line.bounds.left, line.bounds.top, line.bounds.right, Math.min(line.bounds.bottom + 140, line.bounds.top + 200));
+                    break;
+                }
+            }
+            if (box == null) {
+                f.completeExceptionally(new SiteAdapter.Failure("LOGIN_FAILED","Password field not visible"));
+                return CompletableFuture.<Void>completedFuture(null);
+            }
+            return tap(box, "secret-field");
+        }).thenCompose(v -> delay(700)).thenAccept(v -> {
+            try {
+                if (android.os.Build.VERSION.SDK_INT < 33 || !(service.getInputMethod() instanceof AgentInputMethod)) {
+                    f.completeExceptionally(new SiteAdapter.Failure("LOGIN_FAILED","Accessibility IME unavailable for secret entry"));
+                    return;
+                }
+                AgentInputMethod method = (AgentInputMethod) service.getInputMethod();
+                android.accessibilityservice.InputMethod.AccessibilityInputConnection ac = method.getCurrentInputConnection();
+                if (ac == null) {
+                    f.completeExceptionally(new SiteAdapter.Failure("LOGIN_FAILED","No input connection for secret field"));
+                    return;
+                }
+                ac.commitText(secret, 1, null);
+                put("secret_field_hint", hint);
+                put("secret_entered", true);
+                checkpoint("SECRET_SENT");
+                f.complete(null);
+            } catch (Exception e) {
+                f.completeExceptionally(new SiteAdapter.Failure("LOGIN_FAILED","Secret entry failed: " + e.getClass().getSimpleName()));
+            }
+        });
+        return f;
+    }
+
     CompletableFuture<Void> dismissKeyboard() {
         if(!live())return failed("TIMEOUT","Session expired");
         checkpoint("DISMISS_KEYBOARD");service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);return delay(900);

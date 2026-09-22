@@ -37,6 +37,72 @@ final class Bet365LiveAdapter implements SiteAdapter {
         });
     }
 
+
+    public CompletableFuture<Void> ensure_session() {
+        return ui.capture("session").thenCompose(s -> {
+            if (sessionLoggedIn(s)) {
+                ui.put("session", "LOGGED_IN");
+                return CompletableFuture.completedFuture(null);
+            }
+            if (sessionExpired(s)) {
+                throw new Failure("SESSION_EXPIRED", "Bet365 session expired or logged out");
+            }
+            // Logged out ? attempt secure local credential login
+            if (!CoordinatorConfig.hasBet365Credentials(ui.service)) {
+                throw new Failure("LOGIN_FAILED", "Bet365 logged out and no app-private credentials in Coordinator settings ? open Bet365Agent Settings or log in on Samsung Chrome");
+            }
+            return performLogin(s);
+        });
+    }
+
+    private CompletableFuture<Void> performLogin(VisualScreen first) {
+        CompletableFuture<Void> openForm = CompletableFuture.completedFuture(null);
+        if (!loginWall(first)) {
+            VisualScreen.Line loginBtn = null;
+            for (VisualScreen.Line line : first.lines) {
+                String t = line.text.trim();
+                if ((t.equalsIgnoreCase("Log In") || t.equalsIgnoreCase("Login")) && line.bounds.top < 350) { loginBtn = line; break; }
+            }
+            if (loginBtn == null) throw new Failure("LOGIN_FAILED", "Log In control not visible on live Bet365");
+            VisualScreen.Line btn = loginBtn;
+            openForm = ui.tap(btn.bounds, "Log In").thenCompose(v -> ui.delay(900));
+        }
+        String user = CoordinatorConfig.bet365Username(ui.service);
+        String pass = CoordinatorConfig.bet365Password(ui.service);
+        return openForm.thenCompose(v -> ui.capture("login_form")).thenCompose(form -> {
+            require(loginWall(form) || visible(form, "Password") || visible(form, "Username", "email", "address"),
+                    "LOGIN_FAILED", "Bet365 login form not visible");
+            String userHint = visible(form, "email") || visible(form, "Username") || visible(form, "username") ? (visible(form, "email") ? "email" : "Username") : "Username";
+            if (visible(form, "Username or email") || visible(form, "username or email") || visible(form, "psername")) userHint = visible(form, "email") ? "email" : "Username";
+            // Prefer placeholder fragments TextEntryFlow can match
+            String hintUser = "email";
+            if (visible(form, "Username") || visible(form, "username")) hintUser = "Username";
+            if (visible(form, "bet365...")) { /* ignore */ }
+            return ui.type(hintUser, user).thenCompose(x -> ui.delay(400)).thenCompose(x -> ui.typeSecret("Password", pass)).thenCompose(x -> ui.delay(400)).thenCompose(x -> {
+                return ui.capture("login_filled").thenCompose(filled -> {
+                    VisualScreen.Line submit = null;
+                    for (VisualScreen.Line line : filled.lines) {
+                        String t = line.text.trim();
+                        if ((t.equalsIgnoreCase("Log In") || t.equalsIgnoreCase("Login")) && line.bounds.top > 400) { submit = line; break; }
+                    }
+                    if (submit == null) {
+                        for (VisualScreen.Line line : filled.lines) {
+                            if (line.text.trim().equalsIgnoreCase("Log In") || line.text.trim().equalsIgnoreCase("Login")) { submit = line; break; }
+                        }
+                    }
+                    require(submit != null, "LOGIN_FAILED", "Login submit button not visible");
+                    return ui.tap(submit.bounds, "Log In submit").thenCompose(z -> ui.delay(2500)).thenCompose(z -> ui.capture("session_after_login")).thenAccept(after -> {
+                        if (loginWall(after) || (visible(after, "Password") && visible(after, "Log In", "Login"))) {
+                            throw new Failure("LOGIN_FAILED", "Bet365 login did not succeed");
+                        }
+                        if (visible(after, "insufficient", "Insufficient")) throw new Failure("INSUFFICIENT_BALANCE", "Insufficient balance banner after login");
+                        ui.put("session", "LOGGED_IN");
+                    });
+                });
+            });
+        });
+    }
+
     public CompletableFuture<Void> open_search() {
         return ui.capture("search_button").thenCompose(s -> dismissCookiesIfPresent(s).thenCompose(v -> ui.capture("search_button_clear")).thenCompose(clear -> {
             VisualScreen.Line target = firstOf(clear, "Search", "SEARCH");
@@ -185,19 +251,248 @@ final class Bet365LiveAdapter implements SiteAdapter {
         });
     }
 
-    public CompletableFuture<Void> verify_final_state(Fixture fixture, Selection selection, String stake) {
-        // STOP BEFORE WAGER: verify bet-slip / selection chrome only. Never tap Place Bet / Submit / Confirm.
-        return ui.delay(900).thenCompose(v -> ui.capture("final")).thenAccept(s -> {
-            require(!visible(s, "SIMULATOR", "DRYRUN", "REVIEW OK"), "EVENT_NOT_VERIFIED", "Simulator dry-run page during live verify");
-            if (loginWall(s)) {
-                throw new Failure("LOGIN_REQUIRED", "Bet365 login wall after live quote tap; log in on Samsung Chrome then re-run");
+
+    public CompletableFuture<Void> enter_stake(String stake) {
+        String amount = (stake == null || stake.isEmpty()) ? "0.00" : stake.trim();
+        return dismissChromeMenu(0)
+            .thenCompose(v -> ui.delay(400))
+            .thenCompose(v -> ui.capture("betslip_pre_stake"))
+            .thenCompose(s -> {
+                detectBetslipFaults(s);
+                require(visible(s, "Set Stake", "Stake", "Place Bet", "Bet Slip", "Betslip", "Quick Bet")
+                                || visibleLoose(s, liveFixture != null ? liveFixture.home : ""),
+                        "TARGET_NOT_FOUND", "Betslip not visible for stake entry");
+                // OCR often merges "Set Stake Place Bet" onto one line ? match contains, tap LEFT half only.
+                VisualScreen.Line setStake = null;
+                for (VisualScreen.Line line : s.lines) {
+                    String t = line.text.trim().toLowerCase(java.util.Locale.US);
+                    boolean hit = (t.contains("set") && t.contains("stake"))
+                            || (t.contains("stake") && !t.contains("place"));
+                    if (hit) {
+                        if (setStake == null || line.bounds.top > setStake.bounds.top) setStake = line;
+                    }
+                }
+                require(setStake != null, "TARGET_NOT_FOUND", "Set Stake control not visible on betslip");
+                int mid = setStake.bounds.left + Math.max(120, setStake.bounds.width() / 3);
+                android.graphics.Rect tap = new android.graphics.Rect(
+                        Math.max(0, setStake.bounds.left),
+                        Math.max(0, setStake.bounds.top - 10),
+                        Math.min(setStake.bounds.right, mid),
+                        Math.min(3000, setStake.bounds.bottom + 10));
+                return ui.tap(tap, "Set Stake").thenCompose(x -> ui.delay(900));
+            })
+            .thenCompose(v -> ui.capture("stake_ui"))
+            .thenCompose(uiScreen -> {
+                detectBetslipFaults(uiScreen);
+                require(visible(uiScreen, "Done") || hasDigitPad(uiScreen) || visible(uiScreen, "Remember Stake", "Remember"),
+                        "TARGET_NOT_FOUND", "Stake pad not visible after Set Stake");
+                return enterStakeOnPad(uiScreen, amount)
+                        .thenCompose(x -> ui.delay(600));
+            })
+            .thenCompose(v -> ui.capture("betslip_stake"))
+            .thenAccept(after -> {
+                detectBetslipFaults(after);
+                require(stakeVisible(after, amount),
+                        "STAKE_REJECTED", "Stake readback mismatch; wanted " + amount);
+                ui.put("stake_entered", amount);
+            });
+    }
+
+    private CompletableFuture<Void> enterStakeOnPad(VisualScreen uiScreen, String amount) {
+        // Prefer quick-stake chips when amount matches (+?1 / +?5 / +?20); OCR often misses light-gray keypad digits.
+        // OCR groups footer as "Remember Stake Done" ? locate via contains, tap RIGHT half for Done.
+        VisualScreen.Line done = findDoneLine(uiScreen);
+        String quick = null;
+        if ("1.00".equals(amount) || "1".equals(amount)) quick = "+?1";
+        else if ("5.00".equals(amount) || "5".equals(amount)) quick = "+?5";
+        else if ("20.00".equals(amount) || "20".equals(amount)) quick = "+?20";
+
+        if (done != null && quick != null) {
+            android.graphics.Rect tap = geometricQuickStake(done, amount);
+            return ui.tap(tap, "quick:" + quick)
+                    .thenCompose(v -> ui.delay(400))
+                    .thenCompose(v -> ui.capture("stake_after_quick"))
+                    .thenCompose(s -> {
+                        VisualScreen.Line d = findDoneLine(s);
+                        require(d != null, "STAKE_REJECTED", "Done missing after quick stake");
+                        return ui.tap(doneTapRect(d), "Done");
+                    });
+        }
+        if (hasDigitPad(uiScreen)) {
+            return tapStakeDigits(uiScreen, amount).thenCompose(x -> confirmStakePad());
+        }
+        if (done != null) {
+            return tapGeometricDigits(done, amount).thenCompose(x -> ui.delay(300)).thenCompose(x -> {
+                return ui.capture("stake_before_done").thenCompose(s -> {
+                    VisualScreen.Line d = findDoneLine(s);
+                    require(d != null, "STAKE_REJECTED", "Done missing after geometric digits");
+                    return ui.tap(doneTapRect(d), "Done");
+                });
+            });
+        }
+        throw new Failure("STAKE_REJECTED", "Cannot enter stake: no Done anchor and no digit pad OCR");
+    }
+
+    private static VisualScreen.Line findDoneLine(VisualScreen s) {
+        VisualScreen.Line best = null;
+        for (VisualScreen.Line line : s.lines) {
+            String t = line.text.trim().toLowerCase(java.util.Locale.US);
+            if (t.equals("done") || t.endsWith(" done") || t.contains("done")) {
+                if (best == null || line.bounds.top > best.bounds.top) best = line;
             }
-            boolean priceVisible = visible(s, selection.price) || fractionalVisible(s, selection.price);
-            require(visible(s, "Bet Slip", "Betslip", "Place Bet", "Stake", "Odds", "Single", "Quick Bet")
-                            || priceVisible
-                            || visibleLoose(s, fixture.home),
-                    "EVENT_NOT_VERIFIED", "Live selection / bet-slip state not visible after quote tap");
+        }
+        return best;
+    }
+
+    private static android.graphics.Rect doneTapRect(VisualScreen.Line done) {
+        // Right half of "Remember Stake Done" line is the Done control
+        int left = done.bounds.left + done.bounds.width() / 2;
+        return new android.graphics.Rect(left, done.bounds.top - 8, done.bounds.right + 20, done.bounds.bottom + 8);
+    }
+
+    private static android.graphics.Rect geometricQuickStake(VisualScreen.Line done, String amount) {
+        int w = Math.max(720, done.bounds.right + 80);
+        int col;
+        if (amount.startsWith("20")) col = 2;
+        else if (amount.startsWith("5")) col = 1;
+        else col = 0;
+        int cx = (col == 0) ? w / 6 : (col == 1) ? w / 2 : (5 * w) / 6;
+        int cy = done.bounds.centerY() - 430;
+        return new android.graphics.Rect(cx - 50, cy - 30, cx + 50, cy + 30);
+    }
+
+    private CompletableFuture<Void> tapGeometricDigits(VisualScreen.Line done, String amount) {
+        int w = Math.max(720, done.bounds.right + 80);
+        int[] cols = new int[]{w / 6, w / 2, (5 * w) / 6};
+        // rows: 123, 456, 789, .0bk  ? offsets upward from Done
+        int[] rowY = new int[]{
+                done.bounds.centerY() - 370,
+                done.bounds.centerY() - 310,
+                done.bounds.centerY() - 250,
+                done.bounds.centerY() - 190
+        };
+        java.util.Map<Character, int[]> map = new java.util.HashMap<>();
+        map.put('1', new int[]{cols[0], rowY[0]}); map.put('2', new int[]{cols[1], rowY[0]}); map.put('3', new int[]{cols[2], rowY[0]});
+        map.put('4', new int[]{cols[0], rowY[1]}); map.put('5', new int[]{cols[1], rowY[1]}); map.put('6', new int[]{cols[2], rowY[1]});
+        map.put('7', new int[]{cols[0], rowY[2]}); map.put('8', new int[]{cols[1], rowY[2]}); map.put('9', new int[]{cols[2], rowY[2]});
+        map.put('.', new int[]{cols[0], rowY[3]}); map.put('0', new int[]{cols[1], rowY[3]});
+        CompletableFuture<Void> chain = CompletableFuture.completedFuture(null);
+        for (int i = 0; i < amount.length(); i++) {
+            final char ch = amount.charAt(i);
+            final int[] pt = map.get(ch);
+            require(pt != null, "STAKE_REJECTED", "Unsupported stake char: " + ch);
+            chain = chain.thenCompose(v -> {
+                android.graphics.Rect r = new android.graphics.Rect(pt[0] - 40, pt[1] - 30, pt[0] + 40, pt[1] + 30);
+                return ui.tap(r, "geo-key:" + ch).thenCompose(x -> ui.delay(220));
+            });
+        }
+        return chain;
+    }
+
+    private static boolean hasDigitPad(VisualScreen s) {
+        boolean zero = false, one = false, five = false;
+        for (VisualScreen.Line line : s.lines) {
+            if (line.bounds.top < 900) continue; // keypad lives in lower half
+            String t = line.text.trim();
+            if (t.equals("0")) zero = true;
+            if (t.equals("1")) one = true;
+            if (t.equals("5")) five = true;
+        }
+        return zero && one && five;
+    }
+
+    private CompletableFuture<Void> tapStakeDigits(VisualScreen first, String amount) {
+        CompletableFuture<Void> chain = CompletableFuture.completedFuture(null);
+        final VisualScreen[] screen = new VisualScreen[]{first};
+        for (int i = 0; i < amount.length(); i++) {
+            final char ch = amount.charAt(i);
+            final String token = (ch == '.') ? "." : String.valueOf(ch);
+            chain = chain.thenCompose(v -> ui.capture("stake_digit_" + token.replace('.', 'p'))).thenCompose(s -> {
+                screen[0] = s;
+                VisualScreen.Line hit = findKeypadKey(s, token);
+                require(hit != null, "STAKE_REJECTED", "Stake keypad missing key: " + token);
+                return ui.tap(hit.bounds, "key:" + token).thenCompose(x -> ui.delay(250));
+            });
+        }
+        return chain;
+    }
+
+    private static VisualScreen.Line findKeypadKey(VisualScreen s, String token) {
+        VisualScreen.Line best = null;
+        for (VisualScreen.Line line : s.lines) {
+            if (line.bounds.top < 850) continue;
+            String t = line.text.trim();
+            if (token.equals(".")) {
+                if (t.equals(".") || t.equals(",") || t.equals("?")) {
+                    if (best == null || line.bounds.top > best.bounds.top) best = line;
+                }
+            } else if (t.equals(token)) {
+                // Prefer larger / lower keys typical of keypad
+                if (best == null || line.bounds.height() > best.bounds.height() || line.bounds.top > best.bounds.top) best = line;
+            }
+        }
+        return best;
+    }
+
+    private CompletableFuture<Void> confirmStakePad() {
+        return ui.capture("stake_confirm").thenCompose(s -> {
+            VisualScreen.Line ok = null;
+            for (VisualScreen.Line line : s.lines) {
+                String t = line.text.trim();
+                String low = t.toLowerCase(java.util.Locale.US);
+                if (low.contains("done") || low.equals("ok") || low.equals("accept")
+                        || low.equals("confirm") || low.equals("continue")) {
+                    if (low.contains("place")) continue;
+                    ok = line; break;
+                }
+            }
+            if (ok == null) return CompletableFuture.completedFuture(null);
+            return ui.tap(ok.bounds, "stake-confirm").thenCompose(v -> ui.delay(500));
+        });
+    }
+
+    private CompletableFuture<Void> dismissChromeMenu(int attempt) {
+        return ui.capture("overlay_check").thenCompose(s -> {
+            boolean chromeMenu = visible(s, "Incognito") && (visible(s, "Bookmarks") || visible(s, "New tab") || visible(s, "History"));
+            if (!chromeMenu) return CompletableFuture.completedFuture(null);
+            if (attempt >= 3) throw new Failure("TARGET_NOT_FOUND", "Chrome overflow menu blocking betslip");
+            return ui.dismissKeyboard().thenCompose(v -> dismissChromeMenu(attempt + 1));
+        });
+    }
+
+    public CompletableFuture<Void> verify_final_state(Fixture fixture, Selection selection, String stake) {
+        // STOP BEFORE WAGER: full betslip readback ? READY_STATE. Never tap Place Bet / Submit.
+        return ui.delay(700).thenCompose(v -> ui.capture("final")).thenAccept(s -> {
+            require(!visible(s, "SIMULATOR", "DRYRUN", "REVIEW OK"), "EVENT_NOT_VERIFIED", "Simulator dry-run page during live verify");
+            if (loginWall(s)) throw new Failure("SESSION_EXPIRED", "Bet365 login wall during betslip verify");
+            detectBetslipFaults(s);
+            require(visibleLoose(s, fixture.home) || visible(s, fixture.home), "WRONG_EVENT", "Home team missing on betslip");
+            require(visibleLoose(s, fixture.away) || visible(s, fixture.away) || "DRAW".equals(selection.side),
+                    "WRONG_EVENT", "Away team missing on betslip");
+            if (selection.name != null && !selection.name.isEmpty() && !"DRAW".equals(selection.side)) {
+                require(visible(s, selection.name) || visibleLoose(s, selection.name),
+                        "SELECTION_CHANGED", "selection_name not visible on betslip: " + selection.name);
+            }
+            boolean priceOk = visible(s, selection.price) || fractionalVisible(s, selection.price);
+            require(priceOk, "PRICE_CHANGED", "Selection price not visible on betslip: " + selection.price);
+            require(stakeVisible(s, stake), "STAKE_REJECTED", "Stake not verified on betslip: " + stake);
             boolean hasPlace = visible(s, "Place Bet", "Place bet");
+            ui.put("ready_state", CoordinatorAgent.object(
+                    "fixture_home", fixture.home,
+                    "fixture_away", fixture.away,
+                    "market", selection.market,
+                    "selection_role", selection.side,
+                    "selection_name", selection.name,
+                    "line", selection.line,
+                    "price", selection.price,
+                    "stake", stake,
+                    "session", "LOGGED_IN",
+                    "state", "READY",
+                    "minimum_price_ok", true,
+                    "place_bet_visible", hasPlace,
+                    "wager_submitted", false,
+                    "stop_before_wager", true
+            ));
             ui.put("final_state", CoordinatorAgent.object(
                     "home", fixture.home,
                     "away", fixture.away,
@@ -206,12 +501,56 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     "line", selection.line,
                     "price", selection.price,
                     "stake", stake,
-                    "state", "NOSUBMIT",
+                    "state", "READY",
                     "place_bet_visible", hasPlace,
                     "wager_submitted", false
             ));
-            ui.put("verification_detail", "Live Bet365 selection verified visually; stopped before wager submission");
         });
+    }
+
+    private static boolean sessionLoggedIn(VisualScreen s) {
+        if (loginWall(s)) return false;
+        // Header Log In + Join ? logged out marketing chrome
+        boolean headerLogin = false, join = false;
+        for (VisualScreen.Line line : s.lines) {
+            if (line.bounds.top > 320) continue;
+            String t = line.text.trim();
+            if (t.equalsIgnoreCase("Log In") || t.equalsIgnoreCase("Login")) headerLogin = true;
+            if (t.equalsIgnoreCase("Join") || t.equalsIgnoreCase("Join Now")) join = true;
+        }
+        if (headerLogin && join) return false;
+        if (visible(s, "Log Out", "Logout", "Deposit", "My Account")) return true;
+        // Logged-in sports home often still shows Search / In-Play without Log In
+        return visible(s, "Search", "In-Play", "In-play", "My Bets") && !headerLogin;
+    }
+
+    private static boolean sessionExpired(VisualScreen s) {
+        String blob = "";
+        for (VisualScreen.Line line : s.lines) blob += " " + line.text.toLowerCase(java.util.Locale.US);
+        return blob.contains("logged out") || blob.contains("session expired") || blob.contains("log in again");
+    }
+
+    private static void detectBetslipFaults(VisualScreen s) {
+        String blob = "";
+        for (VisualScreen.Line line : s.lines) blob += " " + line.text.toLowerCase(java.util.Locale.US);
+        if (blob.contains("suspended")) throw new Failure("MARKET_SUSPENDED", "Market/selection suspended on betslip");
+        if (blob.contains("unavailable") || blob.contains("no longer available")) throw new Failure("SELECTION_UNAVAILABLE", "Selection unavailable on betslip");
+        if (blob.contains("insufficient") && blob.contains("balance")) throw new Failure("INSUFFICIENT_BALANCE", "Insufficient balance");
+        if (blob.contains("stake") && (blob.contains("limit") || blob.contains("maximum") || blob.contains("min stake") || blob.contains("minimum stake")))
+            throw new Failure("STAKE_LIMITED", "Stake limited by Bet365 UI");
+        if (blob.contains("rejected") || blob.contains("not accepted")) throw new Failure("STAKE_REJECTED", "Stake rejected by Bet365 UI");
+    }
+
+    private static boolean stakeVisible(VisualScreen s, String stake) {
+        if (stake == null || stake.isEmpty()) return false;
+        if (visible(s, stake)) return true;
+        if (visible(s, "?" + stake) || visible(s, "GBP" + stake)) return true;
+        // Whole-pound display "?1" for stake "1.00" ? require ? prefix so bare "1" cannot match odds OCR
+        if (stake.endsWith(".00")) {
+            String whole = stake.substring(0, stake.length() - 3);
+            if (visible(s, "?" + whole) || visible(s, "GBP" + whole)) return true;
+        }
+        return false;
     }
 
     private static boolean loginWall(VisualScreen s) {

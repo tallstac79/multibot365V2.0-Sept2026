@@ -8,6 +8,7 @@ import org.json.JSONObject;
 /** Interface semantics only. Implementations own navigation, labels, parsing and layout rules. */
 interface SiteAdapter {
     CompletableFuture<Void> open_home();
+    CompletableFuture<Void> ensure_session();
     CompletableFuture<Void> open_search();
     CompletableFuture<Void> enter_query(String query);
     CompletableFuture<Fixture> discover_fixture();
@@ -18,6 +19,7 @@ interface SiteAdapter {
     CompletableFuture<String> read_line(Selection selection);
     CompletableFuture<String> read_price(Selection selection);
     CompletableFuture<Void> open_selection(Selection selection);
+    CompletableFuture<Void> enter_stake(String stake);
     CompletableFuture<Void> verify_final_state(Fixture fixture, Selection selection, String stake);
 
     final class Fixture {

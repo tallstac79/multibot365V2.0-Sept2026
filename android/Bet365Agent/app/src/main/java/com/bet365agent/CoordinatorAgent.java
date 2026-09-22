@@ -159,7 +159,7 @@ final class CoordinatorAgent implements AutoCloseable {
         if(proof!=null && current.optJSONObject("payload").optString("action").equals("ADAPTER_WORKFLOW")) {
             JSONObject fixture=proof.optJSONObject("fixture");
             for(String key:new String[]{"fixture_name","home","away","competition"})put(result,key,fixture==null?JSONObject.NULL:fixture.opt(key));
-            put(result,"selection",proof.opt("selection"));put(result,"final_state",proof.opt("final_state"));
+            put(result,"selection",proof.opt("selection"));put(result,"final_state",proof.opt("final_state"));put(result,"ready_state",proof.opt("ready_state"));
             put(result,"verification_detail",proof.optString("verification_detail",detail));
         }
         store.complete(id, result);

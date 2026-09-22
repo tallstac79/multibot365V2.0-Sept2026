@@ -42,7 +42,7 @@ final class CoordinatorInstruction {
         Set<String> expected=action.equals("OPEN_AND_TYPE")?Set.of("instruction_id","action","target_text","input_text","timeout_ms"):
             Set.of("instruction_id","action","adapter","scenario","query","market","side","sport","minimum_price","stake","timeout_ms");
         if(!fields.keySet().equals(expected) || !Set.of("OPEN_AND_TYPE","ADAPTER_WORKFLOW").contains(action)
-            || !id.matches("[A-Za-z0-9_-]{1,64}") || text.isEmpty() || text.length()>128 || !fields.getOrDefault("timeout_ms", "").matches("[0-9]{1,5}")) throw new IllegalArgumentException("Invalid schema, action, ID, text or timeout");
+            || !id.matches("[A-Za-z0-9_-]{1,64}") || text.isEmpty() || text.length()>128 || !fields.getOrDefault("timeout_ms", "").matches("[0-9]{1,6}")) throw new IllegalArgumentException("Invalid schema, action, ID, text or timeout");
         if(action.equals("OPEN_AND_TYPE") && !target.matches("[A-Za-z0-9]{1,40}")) throw new IllegalArgumentException("Invalid target");
         if(action.equals("ADAPTER_WORKFLOW")) {
             SiteAdapters.validate(adapter,scenario);
@@ -55,7 +55,7 @@ final class CoordinatorInstruction {
             if(!sides.contains(side)) throw new IllegalArgumentException("Invalid market/side");
         }
         timeout = Integer.parseInt(fields.get("timeout_ms"));
-        if (timeout < 100 || timeout > 60000) throw new IllegalArgumentException("timeout_ms must be 100..60000");
+        if (timeout < 100 || timeout > 120000) throw new IllegalArgumentException("timeout_ms must be 100..120000");
         runId = "c_" + Base64.encodeToString(MessageDigest.getInstance("SHA-256").digest(id.getBytes(StandardCharsets.UTF_8)), Base64.NO_WRAP | Base64.URL_SAFE | Base64.NO_PADDING);
         payload = new JSONObject();for(Map.Entry<String,String> entry:fields.entrySet())payload.put(entry.getKey(),entry.getKey().equals("timeout_ms")?timeout:entry.getValue());
     }
