@@ -113,6 +113,16 @@ python -m tools.confirmation status
 
 SQLite under `tools/confirmation/data/confirmation.sqlite3` (gitignored). Separate from the phone coordinator DB. Survives worker restart; no duplicate approvals after reload.
 
+
+## Derived fields (confirmation-side)
+
+Main bot READY_STATE today may omit device_id, alidated_at, and alidation_hash.
+The normalizer fills them without main-bot changes:
+
+- device_id defaults to samsung-R5CT61TE14Z when absent
+- alidated_at uses payload 	imestamp when present, else ingest UTC now
+- alidation_hash is a SHA-256 prefix of canonical instruction/fixture/market/selection/line/price/stake when absent
+
 ## Hard rules
 
 1. Confirmation worker does **not** invoke Place Bet, Confirm, Submit, or any wager action.

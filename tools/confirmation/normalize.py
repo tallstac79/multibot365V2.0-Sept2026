@@ -6,6 +6,7 @@ Requires instruction_id (top-level or nested).
 
 from __future__ import annotations
 
+import hashlib
 from datetime import datetime, timezone
 from typing import Any, Mapping, MutableMapping, Optional
 
@@ -159,14 +160,16 @@ def normalize_payload(raw: Mapping[str, Any]) -> dict:
     validated_at = _first(
         bag.get("validated_at"),
         raw.get("validated_at"),
+        raw.get("timestamp"),
         result.get("validated_at") if isinstance(result, Mapping) else None,
         _now_iso(),
     )
+
+    # Main bot does not yet emit validation_hash / device_id — derive on our side.
     validation_hash = _first(
         bag.get("validation_hash"),
         raw.get("validation_hash"),
         result.get("validation_hash") if isinstance(result, Mapping) else None,
-        "",
     )
 
     expected_line = _first(
@@ -186,8 +189,36 @@ def normalize_payload(raw: Mapping[str, Any]) -> dict:
         "minimum_price": minimum_price if minimum_price is not None else "",
         "stake": stake if stake is not None else "",
         "validated_at": str(validated_at).strip(),
-        "validation_hash": str(validation_hash).strip(),
+        "validation_hash": "",
     }
     if expected_line is not None:
         out["expected_line"] = expected_line
+
+    hash_in = validation_hash
+    if hash_in is not None and str(hash_in).strip() and str(hash_in).strip().lower() != "none":
+        out["validation_hash"] = str(hash_in).strip()
+    else:
+        line_part = out.get("line")
+        if line_part is None or str(line_part).strip().upper() in ("", "NONE", "NULL", "N/A"):
+            line_canon = ""
+        else:
+            line_canon = str(line_part).strip()
+        material = "|".join(
+            [
+                out["instruction_id"],
+                out["fixture"],
+                out["market"],
+                out["selection_role"],
+                out["selection_name"],
+                line_canon,
+                str(out["current_price"]),
+                str(out["minimum_price"]),
+                str(out["stake"]),
+            ]
+        )
+        out["validation_hash"] = hashlib.sha256(material.encode("utf-8")).hexdigest()[:32]
+
+    if out["device_id"] in ("", "unknown-device"):
+        out["device_id"] = "samsung-R5CT61TE14Z"
+
     return out
