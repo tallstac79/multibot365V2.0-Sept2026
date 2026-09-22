@@ -1,2 +1,9 @@
 .local/
 __pycache__/
+
+# Confirmation worker runtime (companion)
+tools/confirmation/data/
+tools/confirmation/outbox/*.json
+!tools/confirmation/outbox/.gitkeep
+tools/confirmation/inbox/*.json
+!tools/confirmation/inbox/.gitkeep
