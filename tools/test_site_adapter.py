@@ -3,10 +3,34 @@ import argparse,json,socket,time,hashlib
 from pathlib import Path
 from coordinator_client import Client
 
-CASES=[('moneyline','normal','MONEYLINE','HOME','PASS'),('spread','normal','SPREAD','AWAY','PASS'),('spread_home','normal','SPREAD','HOME','PASS'),('total','normal','TOTAL','OVER','PASS'),('empty','empty','SPREAD','HOME','NO_FIXTURE_FOUND'),('query_empty','normal','SPREAD','HOME','NO_FIXTURE_FOUND'),('query_unverified','normal','SPREAD','HOME','TEXT_NOT_VERIFIED'),('ambiguous','ambiguous','SPREAD','HOME','AMBIGUOUS_FIXTURE'),('wrong_event','wrong_event','SPREAD','HOME','WRONG_EVENT'),('click_ignored','click_ignored','SPREAD','HOME','CLICK_FAILED'),('suspended','suspended','SPREAD','HOME','SUSPENDED'),('unavailable','unavailable','SPREAD','HOME','UNAVAILABLE'),('changing','changing','SPREAD','HOME','PRICE_CHANGED'),('wrong_line','wrong_line','SPREAD','HOME','LINE_CHANGED'),('wrong_side','wrong_side','SPREAD','HOME','SELECTION_CHANGED'),('timeout','normal','SPREAD','HOME','TIMEOUT')]
+# name, scenario, market, side, sport, expected
+CASES=[
+    ('moneyline','normal','MONEYLINE','HOME','football','PASS'),
+    ('spread','normal','SPREAD','AWAY','football','PASS'),
+    ('spread_home','normal','SPREAD','HOME','football','PASS'),
+    ('total','normal','TOTAL','OVER','football','PASS'),
+    ('fb_1x2_draw','normal','MONEYLINE','DRAW','football','PASS'),
+    ('bb_ml','normal','MONEYLINE','HOME','basketball','PASS'),
+    ('bb_spread','normal','SPREAD','AWAY','basketball','PASS'),
+    ('bb_total','normal','TOTAL','OVER','basketball','PASS'),
+    ('empty','empty','SPREAD','HOME','football','NO_FIXTURE_FOUND'),
+    ('query_empty','normal','SPREAD','HOME','football','NO_FIXTURE_FOUND'),
+    ('query_unverified','normal','SPREAD','HOME','football','TEXT_NOT_VERIFIED'),
+    ('ambiguous','ambiguous','SPREAD','HOME','football','AMBIGUOUS_FIXTURE'),
+    ('wrong_event','wrong_event','SPREAD','HOME','football','WRONG_EVENT'),
+    ('click_ignored','click_ignored','SPREAD','HOME','football','CLICK_FAILED'),
+    ('suspended','suspended','SPREAD','HOME','football','SUSPENDED'),
+    ('unavailable','unavailable','SPREAD','HOME','football','UNAVAILABLE'),
+    ('changing','changing','SPREAD','HOME','football','PRICE_CHANGED'),
+    ('wrong_line','wrong_line','SPREAD','HOME','football','LINE_CHANGED'),
+    ('wrong_side','wrong_side','SPREAD','HOME','football','SELECTION_CHANGED'),
+    ('below_min','normal','SPREAD','HOME','football','BELOW_MINIMUM'),
+    ('stale','stale','SPREAD','HOME','football','NO_FIXTURE_FOUND'),
+    ('timeout','normal','SPREAD','HOME','football','TIMEOUT'),
+]
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--config',default='.local/coordinator.json');parser.add_argument('--output',default='evidence/fixture');parser.add_argument('--case');parser.add_argument('--resume',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--config',default='.local/coordinator.json');parser.add_argument('--output',default='evidence/fixture-m5');parser.add_argument('--case');parser.add_argument('--resume',action='store_true');args=parser.parse_args()
     c=Client(json.loads(Path(args.config).read_text()));out=Path(args.output);out.mkdir(parents=True,exist_ok=True);prefix='adapter-'+str(int(time.time()));summary={'status':'RUNNING','tests':[]}
     if args.resume:
         build=json.loads((out/'build.json').read_text());assert build['apk_sha256']==hashlib.sha256(Path('android/Bet365Agent/app/build/outputs/apk/debug/app-debug.apk').read_bytes()).hexdigest(),'Resume requires the same APK'
@@ -17,8 +41,26 @@ def main():
     def no_adb():
         with socket.socket() as s:s.settimeout(.5);assert s.connect_ex(('127.0.0.1',5037))!=0,'Stop the ADB server first'
         return True
-    def instruction(name,scenario='normal',market='SPREAD',side='HOME'):
-        return dict(instruction_id=prefix+'-'+name,action='ADAPTER_WORKFLOW',adapter='local_simulator',scenario=scenario,query=('unreadable screen text '*4) if name=='query_unverified' else 'zebra' if name=='query_empty' else 'football',market=market,side=side,timeout_ms=200 if name=='timeout' else 60000)
+    def instruction(name,scenario='normal',market='SPREAD',side='HOME',sport='football'):
+        if name=='query_unverified':
+            query=('unreadable screen text '*4)
+        elif name=='query_empty':
+            query='zebra'
+        else:
+            query=sport
+        return dict(
+            instruction_id=prefix+'-'+name,
+            action='ADAPTER_WORKFLOW',
+            adapter='local_simulator',
+            scenario=scenario,
+            query=query,
+            market=market,
+            side=side,
+            sport=sport,
+            minimum_price='9.99' if name=='below_min' else '1.01',
+            stake='10.00',
+            timeout_ms=200 if name=='timeout' else 60000,
+        )
     def collect(name,i):
         r=c.result(i['instruction_id']);save(name+'/instruction.json',i);save(name+'/result.json',r)
         code,e=c.request('GET','/instructions/'+i['instruction_id']+'/evidence');save(name+'/evidence.json',e)
@@ -36,12 +78,14 @@ def main():
         if expected=='PASS':
             assert r['status']=='PASS' and r['execution_count']==1
             assert e['query_evidence']['exact_input_match'] and e['query_evidence']['visual_text_match'] and e['query_evidence']['input_attempts']==1
-            assert len(e['discovered_fixtures'])==3 and len(e['markets'])==6
+            expected_quotes=7 if i['sport']=='football' else 6
+            assert len(e['discovered_fixtures'])==3 and len(e['markets'])==expected_quotes
             assert e['fixture']==e['discovered_fixtures'][0]
             assert e['discovered_fixtures'][0]['home'].split()[0]==e['discovered_fixtures'][1]['home'].split()[0]
             assert r['home']==e['final_state']['home'] and r['away']==e['final_state']['away']
             for key in ['market','side','line','price']:assert e['selection'][key]==e['final_state'][key]
-            assert e['final_state']['state']=='REVIEWONLY' and e['gesture_attempts']==5
+            assert e['final_state']['stake']==i['stake']
+            assert e['final_state']['state']=='REVIEW OK' and e['gesture_attempts']==5
             phases={v['phase'] for v in e['events'] if 'phase' in v}
             assert {'OPEN_HOME','OPEN_SEARCH','ENTER_QUERY','DISCOVER_FIXTURE','SELECT_FIXTURE','VERIFY_EVENT','DISCOVER_MARKETS','READ_SELECTION','READ_LINE','READ_PRICE','OPEN_SELECTION','VERIFY_FINAL_STATE'}<=phases
             code,d=c.request('POST','/instructions',i);assert code==409 and d['stage']=='DUPLICATE' and d['execution_count']==1;save(name+'/duplicate.json',d)
@@ -55,9 +99,9 @@ def main():
     try:
         save('resumed-environment.json' if args.resume else 'environment.json',dict(health=c.health(),adb_server_absent=no_adb(),transport='private LAN HTTP; no ADB calls or forwarding'))
         bad=instruction('unknown');bad['adapter']='missing_adapter';code,r=c.request('POST','/instructions',bad);assert code==400 and r['stage']=='INVALID_INSTRUCTION';save('invalid-adapter.json',r)
-        for name,scenario,market,side,expected in CASES:
+        for name,scenario,market,side,sport,expected in CASES:
             if (args.case and args.case!=name) or (args.resume and name in completed):continue
-            i=instruction(name,scenario,market,side);save(name+'/ack.json',c.submit(i));check(name,i,expected)
+            i=instruction(name,scenario,market,side,sport);save(name+'/ack.json',c.submit(i));check(name,i,expected)
         if not args.case:
             i=instruction('restart');old=c.health()['pid'];save('restart/ack.json',c.submit(i));end=time.monotonic()+60
             while time.monotonic()<end:

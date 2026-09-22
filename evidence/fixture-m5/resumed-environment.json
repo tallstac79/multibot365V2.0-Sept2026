@@ -1,0 +1,42 @@
+{
+  "health": {
+    "healthy": true,
+    "heartbeat_ms": 1790102565393,
+    "uptime_ms": 16425,
+    "state": "IDLE",
+    "current_instruction": null,
+    "last_result": {
+      "instruction_id": "adapter-1790102402-bb_spread",
+      "status": "FAIL",
+      "stage": "WRONG_EVENT",
+      "detail": "Event identity differs from discovered fixture",
+      "duration_ms": 33735,
+      "execution_count": 1,
+      "run_id": "c_qrH7-0fbD5hwjtwSB7R4JiREpsCOPQ2_u8rt0e3Yh2M",
+      "fixture_name": "East United v Lynx",
+      "home": "East United",
+      "away": "Lynx",
+      "competition": "Pro",
+      "selection": {
+        "market": "SPREAD",
+        "side": "AWAY",
+        "line": "+5.5",
+        "price": "1.88",
+        "availability": "OPEN",
+        "bounds": [
+          38,
+          677,
+          554,
+          708
+        ]
+      },
+      "verification_detail": "Event identity differs from discovered fixture"
+    },
+    "app_version": "0.5.6-sim",
+    "version_code": 11,
+    "endpoint": "http://192.168.4.108:8767",
+    "pid": 5012
+  },
+  "adb_server_absent": true,
+  "transport": "private LAN HTTP; no ADB calls or forwarding"
+}

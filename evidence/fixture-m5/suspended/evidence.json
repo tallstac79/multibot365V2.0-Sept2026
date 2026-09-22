@@ -1,0 +1,440 @@
+{
+  "run_id": "c_wRAm9oHTIwZKfYNlNZ4CCfxPefbgUnit1O8aVSdSDE8",
+  "adapter": "local_simulator",
+  "status": "SUSPENDED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790102742386,
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 12
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 17
+    },
+    {
+      "phase": "CAPTURE_home",
+      "elapsed_ms": 1254
+    },
+    {
+      "phase": "CAPTURED_home",
+      "elapsed_ms": 2418
+    },
+    {
+      "phase": "OPEN_SEARCH",
+      "elapsed_ms": 2438
+    },
+    {
+      "phase": "CAPTURE_search_button",
+      "elapsed_ms": 2457
+    },
+    {
+      "phase": "CAPTURED_search_button",
+      "elapsed_ms": 3597
+    },
+    {
+      "effect": "gesture",
+      "target": "SEARCH",
+      "bounds": [
+        65,
+        369,
+        209,
+        397
+      ],
+      "elapsed_ms": 3621
+    },
+    {
+      "phase": "GESTURE_DISPATCHING",
+      "elapsed_ms": 3621
+    },
+    {
+      "phase": "CAPTURE_search",
+      "elapsed_ms": 4202
+    },
+    {
+      "phase": "CAPTURED_search",
+      "elapsed_ms": 5397
+    },
+    {
+      "phase": "ENTER_QUERY",
+      "elapsed_ms": 5426
+    },
+    {
+      "phase": "ENTER_QUERY",
+      "elapsed_ms": 5446
+    },
+    {
+      "phase": "QUERY_VERIFIED",
+      "elapsed_ms": 10766
+    },
+    {
+      "phase": "DISMISS_KEYBOARD",
+      "elapsed_ms": 10788
+    },
+    {
+      "phase": "CAPTURE_find_button",
+      "elapsed_ms": 11713
+    },
+    {
+      "phase": "CAPTURED_find_button",
+      "elapsed_ms": 13073
+    },
+    {
+      "effect": "gesture",
+      "target": "FIND",
+      "bounds": [
+        66,
+        369,
+        147,
+        397
+      ],
+      "elapsed_ms": 13117
+    },
+    {
+      "phase": "GESTURE_DISPATCHING",
+      "elapsed_ms": 13117
+    },
+    {
+      "phase": "DISCOVER_FIXTURE",
+      "elapsed_ms": 13704
+    },
+    {
+      "phase": "CAPTURE_fixtures",
+      "elapsed_ms": 13745
+    },
+    {
+      "phase": "CAPTURED_fixtures",
+      "elapsed_ms": 15312
+    },
+    {
+      "phase": "SELECT_FIXTURE",
+      "elapsed_ms": 15332
+    },
+    {
+      "phase": "CAPTURE_fixture_preflight",
+      "elapsed_ms": 15348
+    },
+    {
+      "phase": "CAPTURED_fixture_preflight",
+      "elapsed_ms": 16879
+    },
+    {
+      "effect": "gesture",
+      "target": "Elm Town v Willow City",
+      "bounds": [
+        62,
+        292,
+        334,
+        530
+      ],
+      "elapsed_ms": 16900
+    },
+    {
+      "phase": "GESTURE_DISPATCHING",
+      "elapsed_ms": 16900
+    },
+    {
+      "phase": "VERIFY_EVENT",
+      "elapsed_ms": 17474
+    },
+    {
+      "phase": "CAPTURE_event",
+      "elapsed_ms": 17502
+    },
+    {
+      "phase": "CAPTURED_event",
+      "elapsed_ms": 18791
+    },
+    {
+      "phase": "DISCOVER_MARKETS",
+      "elapsed_ms": 18850
+    },
+    {
+      "phase": "CAPTURE_markets_button",
+      "elapsed_ms": 18879
+    },
+    {
+      "phase": "CAPTURED_markets_button",
+      "elapsed_ms": 20135
+    },
+    {
+      "effect": "gesture",
+      "target": "MARKETS",
+      "bounds": [
+        66,
+        604,
+        240,
+        632
+      ],
+      "elapsed_ms": 20152
+    },
+    {
+      "phase": "GESTURE_DISPATCHING",
+      "elapsed_ms": 20152
+    },
+    {
+      "phase": "CAPTURE_markets",
+      "elapsed_ms": 20730
+    },
+    {
+      "phase": "CAPTURED_markets",
+      "elapsed_ms": 23478
+    },
+    {
+      "phase": "READ_SELECTION",
+      "elapsed_ms": 23509
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 23530
+    }
+  ],
+  "screenshots": [
+    "s001_home.png",
+    "s002_search_button.png",
+    "s003_search.png",
+    "s004_find_button.png",
+    "s005_fixtures.png",
+    "s006_fixture_preflight.png",
+    "s007_event.png",
+    "s008_markets_button.png",
+    "s009_markets.png"
+  ],
+  "gesture_attempts": 4,
+  "query_evidence": {
+    "run_id": "c_wRAm9oHTIwZKfYNlNZ4CCfxPefbgUnit1O8aVSdSDE8",
+    "requested_text": "football",
+    "field_hint": "QUERY",
+    "package": "com.android.chrome",
+    "mechanism": "AccessibilityInputConnection.commitText",
+    "started_at_ms": 1790102747849,
+    "started_elapsed_ms": 173517359,
+    "timeout_ms": 60000,
+    "status": "PASS",
+    "field_bounds": [
+      42,
+      447,
+      679,
+      573
+    ],
+    "pre_screenshot": "files/visual/c_wRAm9oHTIwZKfYNlNZ4CCfxPefbgUnit1O8aVSdSDE8/before.png",
+    "post_screenshot": "files/visual/c_wRAm9oHTIwZKfYNlNZ4CCfxPefbgUnit1O8aVSdSDE8/after.png",
+    "verification_result": "EXACT_INPUT_AND_SCREENSHOT_OCR",
+    "input_attempts": 1,
+    "events": [
+      {
+        "phase": "STARTED",
+        "elapsed_ms": 1
+      },
+      {
+        "phase": "LOCATING",
+        "elapsed_ms": 22
+      },
+      {
+        "phase": "FOCUS_DISPATCHING",
+        "elapsed_ms": 1223
+      },
+      {
+        "phase": "FOCUS_GESTURE_COMPLETED",
+        "elapsed_ms": 1334
+      },
+      {
+        "phase": "FOCUS_CONFIRMED",
+        "elapsed_ms": 1551
+      },
+      {
+        "phase": "INPUT_COMMITTING",
+        "elapsed_ms": 2867
+      },
+      {
+        "phase": "INPUT_SENT",
+        "elapsed_ms": 2876
+      },
+      {
+        "phase": "VERIFYING",
+        "elapsed_ms": 3486
+      },
+      {
+        "phase": "FINISHED",
+        "elapsed_ms": 5218
+      }
+    ],
+    "phase": "FINISHED",
+    "editor_package": "com.android.chrome",
+    "editor_generation": 28,
+    "focused_screenshot": "files/visual/c_wRAm9oHTIwZKfYNlNZ4CCfxPefbgUnit1O8aVSdSDE8/focused.png",
+    "focused_field_bounds": [
+      42,
+      447,
+      679,
+      573
+    ],
+    "prior_text_length": 0,
+    "visible_field_text": "football",
+    "observed_text": "football",
+    "exact_input_match": true,
+    "visual_text_match": true,
+    "detail": "Exact editor value and visible field OCR verified",
+    "ended_at_ms": 1790102753065,
+    "duration_ms": 5217
+  },
+  "discovered_fixtures": [
+    {
+      "code": "7589",
+      "home": "Elm Town",
+      "away": "Willow City",
+      "fixture_name": "Elm Town v Willow City",
+      "exact_fixture_text": "Home Elm Town\nAway Willow City",
+      "competition": "Academy",
+      "bounds": [
+        62,
+        292,
+        334,
+        530
+      ]
+    },
+    {
+      "code": "7590",
+      "home": "Elm Youth",
+      "away": "Willow City",
+      "fixture_name": "Elm Youth v Willow City",
+      "exact_fixture_text": "Home Elm Youth\nAway Willow City",
+      "competition": "Junior",
+      "bounds": [
+        62,
+        603,
+        329,
+        841
+      ]
+    },
+    {
+      "code": "7591",
+      "home": "Meadow Town",
+      "away": "Birch City",
+      "fixture_name": "Meadow Town v Birch City",
+      "exact_fixture_text": "Home Meadow Town\nAway Birch City",
+      "competition": "Academy",
+      "bounds": [
+        62,
+        914,
+        394,
+        1153
+      ]
+    }
+  ],
+  "fixture": {
+    "code": "7589",
+    "home": "Elm Town",
+    "away": "Willow City",
+    "fixture_name": "Elm Town v Willow City",
+    "exact_fixture_text": "Home Elm Town\nAway Willow City",
+    "competition": "Academy",
+    "bounds": [
+      62,
+      292,
+      334,
+      530
+    ]
+  },
+  "event_verified": true,
+  "markets": [
+    {
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "1.91",
+      "availability": "SUSPENDED",
+      "bounds": [
+        40,
+        348,
+        657,
+        379
+      ]
+    },
+    {
+      "market": "MONEYLINE",
+      "side": "DRAW",
+      "line": "NONE",
+      "price": "3.41",
+      "availability": "SUSPENDED",
+      "bounds": [
+        40,
+        430,
+        657,
+        461
+      ]
+    },
+    {
+      "market": "MONEYLINE",
+      "side": "AWAY",
+      "line": "NONE",
+      "price": "2.11",
+      "availability": "SUSPENDED",
+      "bounds": [
+        38,
+        512,
+        657,
+        543
+      ]
+    },
+    {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "-1.5",
+      "price": "1.96",
+      "availability": "SUSPENDED",
+      "bounds": [
+        40,
+        677,
+        657,
+        708
+      ]
+    },
+    {
+      "market": "SPREAD",
+      "side": "AWAY",
+      "line": "+1.5",
+      "price": "1.86",
+      "availability": "SUSPENDED",
+      "bounds": [
+        38,
+        759,
+        657,
+        790
+      ]
+    },
+    {
+      "market": "TOTAL",
+      "side": "OVER",
+      "line": "2.5",
+      "price": "1.81",
+      "availability": "SUSPENDED",
+      "bounds": [
+        40,
+        924,
+        657,
+        955
+      ]
+    },
+    {
+      "market": "TOTAL",
+      "side": "UNDER",
+      "line": "2.5",
+      "price": "2.01",
+      "availability": "SUSPENDED",
+      "bounds": [
+        40,
+        1006,
+        657,
+        1037
+      ]
+    }
+  ],
+  "detail": "Selection is SUSPENDED",
+  "duration_ms": 23530
+}

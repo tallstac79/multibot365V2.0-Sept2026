@@ -10,8 +10,8 @@ android {
         applicationId = "com.bet365agent"
         minSdk = 26
         targetSdk = 34
-        versionCode = 4
-        versionName = "0.4.0-adapter"
+        versionCode = 11
+        versionName = "0.5.6-sim"
     }
 
     buildTypes {
@@ -37,3 +37,4 @@ dependencies {
     // Tesseract OCR for visual control
     implementation("com.rmtheis:tess-two:9.1.0")
 }
+

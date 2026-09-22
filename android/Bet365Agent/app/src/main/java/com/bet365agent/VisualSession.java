@@ -107,7 +107,7 @@ final class VisualSession {
     }
     CompletableFuture<Void> dismissKeyboard() {
         if(!live())return failed("TIMEOUT","Session expired");
-        checkpoint("DISMISS_KEYBOARD");service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);return delay(400);
+        checkpoint("DISMISS_KEYBOARD");service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);return delay(900);
     }
     void finish(String status,String detail) { if(done)return;terminated(status,detail);runner.finish(id,status,detail); }
     private void terminated(String status,String detail) {

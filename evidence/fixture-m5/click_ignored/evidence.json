@@ -1,0 +1,305 @@
+{
+  "run_id": "c_M29b-P74tNwvIslKoUZdDhIdZhYfvBmjPZScuVnW-1k",
+  "adapter": "local_simulator",
+  "status": "CLICK_FAILED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790102722078,
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 20
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 26
+    },
+    {
+      "phase": "CAPTURE_home",
+      "elapsed_ms": 1268
+    },
+    {
+      "phase": "CAPTURED_home",
+      "elapsed_ms": 2430
+    },
+    {
+      "phase": "OPEN_SEARCH",
+      "elapsed_ms": 2449
+    },
+    {
+      "phase": "CAPTURE_search_button",
+      "elapsed_ms": 2467
+    },
+    {
+      "phase": "CAPTURED_search_button",
+      "elapsed_ms": 3600
+    },
+    {
+      "effect": "gesture",
+      "target": "SEARCH",
+      "bounds": [
+        65,
+        369,
+        209,
+        397
+      ],
+      "elapsed_ms": 3628
+    },
+    {
+      "phase": "GESTURE_DISPATCHING",
+      "elapsed_ms": 3628
+    },
+    {
+      "phase": "CAPTURE_search",
+      "elapsed_ms": 4211
+    },
+    {
+      "phase": "CAPTURED_search",
+      "elapsed_ms": 5406
+    },
+    {
+      "phase": "ENTER_QUERY",
+      "elapsed_ms": 5435
+    },
+    {
+      "phase": "ENTER_QUERY",
+      "elapsed_ms": 5456
+    },
+    {
+      "phase": "QUERY_VERIFIED",
+      "elapsed_ms": 10816
+    },
+    {
+      "phase": "DISMISS_KEYBOARD",
+      "elapsed_ms": 10836
+    },
+    {
+      "phase": "CAPTURE_find_button",
+      "elapsed_ms": 11760
+    },
+    {
+      "phase": "CAPTURED_find_button",
+      "elapsed_ms": 13112
+    },
+    {
+      "effect": "gesture",
+      "target": "FIND",
+      "bounds": [
+        66,
+        369,
+        147,
+        397
+      ],
+      "elapsed_ms": 13161
+    },
+    {
+      "phase": "GESTURE_DISPATCHING",
+      "elapsed_ms": 13161
+    },
+    {
+      "phase": "DISCOVER_FIXTURE",
+      "elapsed_ms": 13759
+    },
+    {
+      "phase": "CAPTURE_fixtures",
+      "elapsed_ms": 13815
+    },
+    {
+      "phase": "CAPTURED_fixtures",
+      "elapsed_ms": 15310
+    },
+    {
+      "phase": "SELECT_FIXTURE",
+      "elapsed_ms": 15331
+    },
+    {
+      "phase": "CAPTURE_fixture_preflight",
+      "elapsed_ms": 15345
+    },
+    {
+      "phase": "CAPTURED_fixture_preflight",
+      "elapsed_ms": 16789
+    },
+    {
+      "effect": "gesture",
+      "target": "Maple Town v Meadow City",
+      "bounds": [
+        62,
+        292,
+        360,
+        530
+      ],
+      "elapsed_ms": 16813
+    },
+    {
+      "phase": "GESTURE_DISPATCHING",
+      "elapsed_ms": 16813
+    },
+    {
+      "phase": "VERIFY_EVENT",
+      "elapsed_ms": 17386
+    },
+    {
+      "phase": "CAPTURE_event",
+      "elapsed_ms": 17414
+    },
+    {
+      "phase": "CAPTURED_event",
+      "elapsed_ms": 18916
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 18941
+    }
+  ],
+  "screenshots": [
+    "s001_home.png",
+    "s002_search_button.png",
+    "s003_search.png",
+    "s004_find_button.png",
+    "s005_fixtures.png",
+    "s006_fixture_preflight.png",
+    "s007_event.png"
+  ],
+  "gesture_attempts": 3,
+  "query_evidence": {
+    "run_id": "c_M29b-P74tNwvIslKoUZdDhIdZhYfvBmjPZScuVnW-1k",
+    "requested_text": "football",
+    "field_hint": "QUERY",
+    "package": "com.android.chrome",
+    "mechanism": "AccessibilityInputConnection.commitText",
+    "started_at_ms": 1790102727549,
+    "started_elapsed_ms": 173497059,
+    "timeout_ms": 60000,
+    "status": "PASS",
+    "field_bounds": [
+      42,
+      447,
+      679,
+      573
+    ],
+    "pre_screenshot": "files/visual/c_M29b-P74tNwvIslKoUZdDhIdZhYfvBmjPZScuVnW-1k/before.png",
+    "post_screenshot": "files/visual/c_M29b-P74tNwvIslKoUZdDhIdZhYfvBmjPZScuVnW-1k/after.png",
+    "verification_result": "EXACT_INPUT_AND_SCREENSHOT_OCR",
+    "input_attempts": 1,
+    "events": [
+      {
+        "phase": "STARTED",
+        "elapsed_ms": 1
+      },
+      {
+        "phase": "LOCATING",
+        "elapsed_ms": 28
+      },
+      {
+        "phase": "FOCUS_DISPATCHING",
+        "elapsed_ms": 1293
+      },
+      {
+        "phase": "FOCUS_GESTURE_COMPLETED",
+        "elapsed_ms": 1408
+      },
+      {
+        "phase": "FOCUS_CONFIRMED",
+        "elapsed_ms": 1626
+      },
+      {
+        "phase": "INPUT_COMMITTING",
+        "elapsed_ms": 2923
+      },
+      {
+        "phase": "INPUT_SENT",
+        "elapsed_ms": 2934
+      },
+      {
+        "phase": "VERIFYING",
+        "elapsed_ms": 3544
+      },
+      {
+        "phase": "FINISHED",
+        "elapsed_ms": 5270
+      }
+    ],
+    "phase": "FINISHED",
+    "editor_package": "com.android.chrome",
+    "editor_generation": 25,
+    "focused_screenshot": "files/visual/c_M29b-P74tNwvIslKoUZdDhIdZhYfvBmjPZScuVnW-1k/focused.png",
+    "focused_field_bounds": [
+      42,
+      447,
+      679,
+      573
+    ],
+    "prior_text_length": 0,
+    "visible_field_text": "football",
+    "observed_text": "football",
+    "exact_input_match": true,
+    "visual_text_match": true,
+    "detail": "Exact editor value and visible field OCR verified",
+    "ended_at_ms": 1790102732817,
+    "duration_ms": 5269
+  },
+  "discovered_fixtures": [
+    {
+      "code": "8004",
+      "home": "Maple Town",
+      "away": "Meadow City",
+      "fixture_name": "Maple Town v Meadow City",
+      "exact_fixture_text": "Home Maple Town\nAway Meadow City",
+      "competition": "Academy",
+      "bounds": [
+        62,
+        292,
+        360,
+        530
+      ]
+    },
+    {
+      "code": "8005",
+      "home": "Maple Youth",
+      "away": "Meadow City",
+      "fixture_name": "Maple Youth v Meadow City",
+      "exact_fixture_text": "Home Maple Youth\nAway Meadow City",
+      "competition": "Junior",
+      "bounds": [
+        62,
+        603,
+        362,
+        841
+      ]
+    },
+    {
+      "code": "8006",
+      "home": "River Town",
+      "away": "Elm City",
+      "fixture_name": "River Town v Elm City",
+      "exact_fixture_text": "Home River Town\nAway Elm City",
+      "competition": "Academy",
+      "bounds": [
+        62,
+        914,
+        336,
+        1153
+      ]
+    }
+  ],
+  "fixture": {
+    "code": "8004",
+    "home": "Maple Town",
+    "away": "Meadow City",
+    "fixture_name": "Maple Town v Meadow City",
+    "exact_fixture_text": "Home Maple Town\nAway Meadow City",
+    "competition": "Academy",
+    "bounds": [
+      62,
+      292,
+      360,
+      530
+    ]
+  },
+  "detail": "Fixture tap did not open an event",
+  "duration_ms": 18940
+}

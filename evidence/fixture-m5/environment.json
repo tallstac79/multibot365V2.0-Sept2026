@@ -1,0 +1,52 @@
+{
+  "health": {
+    "healthy": true,
+    "heartbeat_ms": 1790101803349,
+    "uptime_ms": 152509,
+    "state": "IDLE",
+    "current_instruction": null,
+    "last_result": {
+      "instruction_id": "adapter-1790101722-moneyline",
+      "status": "PASS",
+      "stage": "PASS",
+      "detail": "Adapter workflow verified",
+      "duration_ms": 35917,
+      "execution_count": 1,
+      "run_id": "c_xYJdVOt-ynoN06noyCoyRssovVj5q8ewS9YWg8Tf-V4",
+      "fixture_name": "Elm Town v Willow City",
+      "home": "Elm Town",
+      "away": "Willow City",
+      "competition": "Academy",
+      "selection": {
+        "market": "MONEYLINE",
+        "side": "HOME",
+        "line": "NONE",
+        "price": "1.93",
+        "availability": "OPEN",
+        "bounds": [
+          40,
+          348,
+          554,
+          379
+        ]
+      },
+      "final_state": {
+        "home": "Elm Town",
+        "away": "Willow City",
+        "market": "MONEYLINE",
+        "side": "HOME",
+        "line": "NONE",
+        "price": "1.93",
+        "stake": "10.00",
+        "state": "REVIEW OK"
+      },
+      "verification_detail": "Exact fixture, market, side, line and price visually verified in final dry-run state"
+    },
+    "app_version": "0.5.2-sim",
+    "version_code": 7,
+    "endpoint": "http://192.168.4.108:8767",
+    "pid": 2065
+  },
+  "adb_server_absent": true,
+  "transport": "private LAN HTTP; no ADB calls or forwarding"
+}

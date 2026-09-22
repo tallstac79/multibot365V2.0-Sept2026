@@ -1,28 +1,66 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Local interface laboratory</title>
-<style>body{font:19px Arial,sans-serif;margin:20px;background:white;color:#111}h1{font-size:25px;margin:10px 0}p{margin:9px 0}button{font:21px Arial;background:#eef;border:2px solid #335;padding:12px;margin:8px 0}input{box-sizing:border-box;width:100%;font:22px Arial;padding:18px 12px;border:3px solid #111;border-radius:0}input::placeholder{color:#333;opacity:1}input:focus{outline:2px solid #357;outline-offset:3px}article{padding:8px 10px;margin:8px 0;background:#eef;border-left:3px solid #335}article p{margin:5px 0}.quote{padding:9px 0;margin:0;font-size:18px;display:grid;grid-template-columns:75px 75px 60px auto}.quote span:nth-child(2),.quote span:nth-child(3){font:22px Arial}h2{font-size:22px;margin:15px 0 4px}.readout{display:grid;grid-template-columns:110px auto}.readout span:nth-child(2){font:22px Arial}small{font-size:14px}</style>
+<style>body{font:19px Arial,sans-serif;margin:20px;background:white;color:#111}h1{font-size:25px;margin:10px 0}p{margin:9px 0}button{font:21px Arial;background:#eef;border:2px solid #335;padding:12px;margin:8px 0}input{box-sizing:border-box;width:100%;font:22px Arial;padding:18px 12px;border:3px solid #111;border-radius:0}input::placeholder{color:#333;opacity:1}input:focus{outline:2px solid #357;outline-offset:3px}article{padding:8px 10px;margin:8px 0;background:#eef;border-left:3px solid #335}article p{margin:5px 0}.quote{padding:9px 0;margin:0;font-size:18px;display:grid;grid-template-columns:95px 75px 60px auto}.quote span:nth-child(2),.quote span:nth-child(3){font:22px Arial}h2{font-size:22px;margin:15px 0 4px}.readout{display:grid;grid-template-columns:110px auto}.readout span:nth-child(2){font:22px Arial}small{font-size:14px}</style>
 <main id="app"></main><script>
 'use strict';
-// All data is fictional and generated locally. There is no network, account, stake or transaction API.
-const app=document.getElementById('app');const mode=new URLSearchParams(location.search).get('scenario')||'normal';
+// All data is fictional and generated locally. There is no network, account, or transaction API.
+// Stake is a simulated dry-run readout only.
+const app=document.getElementById('app');
+const params=new URLSearchParams(location.search);
+const mode=params.get('scenario')||'normal';
+const sport=(params.get('sport')||'football').toLowerCase();
+const stakeParam=params.get('stake')||'10.00';
+const stake=/^[0-9]+\.[0-9]{2}$/.test(stakeParam)?stakeParam:'10.00';
 const random=new Uint32Array(2);crypto.getRandomValues(random);const n=random[0]%8;
-const names=['Cedar','Maple','Willow','Harbor','Meadow','Birch','River','Elm'];
-const home=names[n],away=names[(n+3)%8];const code=4100+random[1]%4000;
-const fixtures=[{code,home:home+' Town',away:away+' City',league:'Academy'},
-{code:code+1,home:home+' Youth',away:away+' City',league:'Junior'},
-{code:code+2,home:names[(n+5)%8]+' Town',away:names[(n+6)%8]+' City',league:'Academy'}];
-if(mode==='ambiguous')fixtures[1]={...fixtures[0],code:code+1};
-const marketLabel={MONEYLINE:'Match winner',SPREAD:'Handicap',TOTAL:'Total points'};
+const fbNames=['Cedar','Maple','Willow','Harbor','Meadow','Birch','River','Elm'];
+const bbNames=['North','South','East','West','Lake','Hill','Park','Bay'];
+const bbAway=['Ravens','Falcons','Wolves','Bears','Owls','Lynx','Foxes','Hawks'];
+const kickHours=[15,17,19,20];const tipHours=[18,19,20,21];
+function kickoff(){const h=kickHours[random[1]%4];const m=random[0]%2===0?'00':'45';return h+':'+m;}
+function tipoff(){const h=tipHours[random[0]%4];const m=random[1]%2===0?'00':'30';return h+':'+m;}
+let fixtures,marketLabel,buildQuotes;
+if(sport==='basketball'){
+  const home=bbNames[n],away=bbAway[(n+3)%8];const code=5200+random[1]%4000;
+  fixtures=[{code,home:home+' Club',away:away,league:'Pro',time:tipoff()},
+  {code:code+1,home:home+' College',away:bbAway[(n+4)%8],league:'College',time:tipoff()},
+  {code:code+2,home:bbNames[(n+5)%8]+' Club',away:bbAway[(n+6)%8],league:'Summit',time:tipoff()}];
+  marketLabel={MONEYLINE:'Moneyline',SPREAD:'Spread',TOTAL:'Totals'};
+  buildQuotes=function(shift){const price=b=>(b+shift).toFixed(2);return[
+    {market:'MONEYLINE',side:'HOME',line:'NONE',price:price(1.90)},
+    {market:'MONEYLINE',side:'AWAY',line:'NONE',price:price(2.10)},
+    {market:'SPREAD',side:'HOME',line:'-5.5',price:price(1.95)},
+    {market:'SPREAD',side:'AWAY',line:'+5.5',price:price(1.85)},
+    {market:'TOTAL',side:'OVER',line:'220.5',price:price(1.80)},
+    {market:'TOTAL',side:'UNDER',line:'220.5',price:price(2.00)}];};
+}else{
+  const home=fbNames[n],away=fbNames[(n+3)%8];const code=4100+random[1]%4000;
+  fixtures=[{code,home:home+' Town',away:away+' City',league:'Academy',time:kickoff()},
+  {code:code+1,home:home+' Youth',away:away+' City',league:'Junior',time:kickoff()},
+  {code:code+2,home:fbNames[(n+5)%8]+' Town',away:fbNames[(n+6)%8]+' City',league:'Academy',time:kickoff()}];
+  marketLabel={MONEYLINE:'Match winner',SPREAD:'Handicap',TOTAL:'Total points'};
+  buildQuotes=function(shift){const price=b=>(b+shift).toFixed(2);return[
+    {market:'MONEYLINE',side:'HOME',line:'NONE',price:price(1.90)},
+    {market:'MONEYLINE',side:'DRAW',line:'NONE',price:price(3.40)},
+    {market:'MONEYLINE',side:'AWAY',line:'NONE',price:price(2.10)},
+    {market:'SPREAD',side:'HOME',line:'-1.5',price:price(1.95)},
+    {market:'SPREAD',side:'AWAY',line:'+1.5',price:price(1.85)},
+    {market:'TOTAL',side:'OVER',line:'2.5',price:price(1.80)},
+    {market:'TOTAL',side:'UNDER',line:'2.5',price:price(2.00)}];};
+}
+if(mode==='ambiguous')fixtures[1]={...fixtures[0],code:fixtures[0].code+1};
 let selected,quotes=[],chosen;
-const info=f=>`<p>Code ${f.code}</p><p>League ${f.league}</p><p>Home ${f.home}</p><p>Away ${f.away}</p>`;
+const info=f=>`<p>Code ${f.code}</p><p>League ${f.league}</p><p>Time ${f.time}</p><p>Home ${f.home}</p><p>Away ${f.away}</p>`;
 function homePage(){app.innerHTML='<h1>SIMULATOR</h1><p>Fictional interface laboratory</p><button id="search">SEARCH</button>';document.getElementById('search').onclick=searchPage;}
-function searchPage(){app.innerHTML='<h1>SEARCHPAGE</h1><p>Search the local catalog</p><input placeholder="QUERY" autocomplete="off" autocapitalize="off" spellcheck="false"><button id="find">FIND</button>';document.getElementById('find').onclick=()=>{const q=app.querySelector('input').value.toLowerCase();listPage(q);};}
-function listPage(q){const list=mode==='empty'?[]:fixtures.filter(f=>q==='football'||(f.home+' '+f.away+' '+f.league).toLowerCase().includes(q));app.innerHTML='<h1>FIXTURES</h1>'+(list.length?'':'<p>EMPTY</p>');list.forEach(f=>{let card=document.createElement('article');card.innerHTML=info(f);card.onclick=()=>{if(mode==='click_ignored')return;selected=mode==='wrong_event'?fixtures[2]:f;eventPage();};app.append(card);});}
+function searchPage(){app.innerHTML='<h1>SEARCHPAGE</h1><p>Search the local catalog</p><button id="find">FIND</button><input placeholder="QUERY" autocomplete="off" autocapitalize="off" spellcheck="false">';document.getElementById('find').onclick=()=>{const q=app.querySelector('input').value.toLowerCase();listPage(q);};}
+function listPage(q){
+  const showAll=q==='football'||q==='basketball';
+  let list=mode==='empty'?[]:fixtures.filter(f=>showAll?(q===sport):(f.home+' '+f.away+' '+f.league).toLowerCase().includes(q));
+  app.innerHTML='<h1>FIXTURES</h1>'+(list.length?'':'<p>EMPTY</p>');
+  list.forEach(f=>{let card=document.createElement('article');card.innerHTML=info(f);card.onclick=()=>{if(mode==='click_ignored')return;selected=mode==='wrong_event'?fixtures[2]:f;eventPage();};app.append(card);});
+  if(mode==='stale'&&list.length){setTimeout(()=>{app.innerHTML='<h1>FIXTURES</h1><p>EMPTY</p>';},500);}
+}
 function eventPage(){app.innerHTML='<h1>EVENT</h1>'+info(selected)+'<button id="markets">MARKETS</button>';document.getElementById('markets').onclick=marketPage;}
-function marketPage(){const shift=(random[1]%4)*.01;const price=b=>(b+shift).toFixed(2);quotes=[
-{market:'MONEYLINE',side:'HOME',line:'NONE',price:price(1.90)}, {market:'MONEYLINE',side:'AWAY',line:'NONE',price:price(2.10)},
-{market:'SPREAD',side:'HOME',line:'-1.5',price:price(1.95)}, {market:'SPREAD',side:'AWAY',line:'+1.5',price:price(1.85)},
-{market:'TOTAL',side:'OVER',line:'2.5',price:price(1.80)}, {market:'TOTAL',side:'UNDER',line:'2.5',price:price(2.00)}];
+function marketPage(){const shift=(random[1]%4)*.01;quotes=buildQuotes(shift);
 app.innerHTML='<h1>MARKETS</h1>';let last='';quotes.forEach(q=>{q.state=mode==='suspended'?'SUSPENDED':mode==='unavailable'?'UNAVAILABLE':'OPEN';if(last!==q.market){let title=document.createElement('h2');title.textContent=marketLabel[q.market];app.append(title);last=q.market;}let row=document.createElement('p');row.className='quote';[q.side,q.line,q.price,q.state].forEach(value=>{let cell=document.createElement('span');cell.textContent=value;row.append(cell);});row.onclick=()=>{if(q.state!=='OPEN')return;chosen={...q};if(mode==='changing')chosen.price=(+chosen.price+.17).toFixed(2);if(mode==='wrong_line')chosen.line='9.5';if(mode==='wrong_side')chosen.side='AWAY';reviewPage();};app.append(row);});}
-function reviewPage(){app.innerHTML='<h1>DRYRUN</h1>'+info(selected)+`<p class="readout"><span>Market</span><span>${marketLabel[chosen.market]}</span></p><p class="readout"><span>Side</span><span>${chosen.side}</span></p><p class="readout"><span>Line</span><span>${chosen.line}</span></p><p class="readout"><span>Price</span><span>${chosen.price}</span></p><p class="readout"><span>State</span><span>REVIEWONLY</span></p><small>Local simulation. No transaction.</small>`;}
+function reviewPage(){app.innerHTML='<h1>DRYRUN</h1>'+info(selected)+`<p class="readout"><span>Stake</span><span>${stake}</span></p><p class="readout"><span>Market</span><span>${marketLabel[chosen.market]}</span></p><p class="readout"><span>Side</span><span>${chosen.side}</span></p><p class="readout"><span>Line</span><span>${chosen.line}</span></p><p class="readout"><span>Price</span><span>${chosen.price}</span></p><p class="readout"><span>State</span><span>REVIEW OK</span></p><small>Local simulation. No transaction.</small>`;}
 homePage();
 </script></html>

@@ -123,8 +123,8 @@ final class CoordinatorAgent implements AutoCloseable {
             if(instruction.action.equals("ADAPTER_WORKFLOW")) {
                 if(!runner.startExternal(instruction.runId,remaining(row,instruction.timeout))) {complete(row,"INTERNAL_ERROR","Runner rejected workflow");return;}
                 VisualSession session=new VisualSession(service,runner,instruction.runId,instruction.adapter);
-                SiteAdapter adapter=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id);
-                new AdapterWorkflow(session,adapter).start(instruction.text,instruction.market,instruction.side);
+                SiteAdapter adapter=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id,instruction.sport,instruction.stake);
+                new AdapterWorkflow(session,adapter).start(instruction.text,instruction.market,instruction.side,instruction.minimumPrice,instruction.stake);
                 return;
             }
             String url = CoordinatorConfig.prefs(service).getString("start_url", "").trim();
@@ -168,7 +168,7 @@ final class CoordinatorAgent implements AutoCloseable {
     }
     private static String stage(String textStatus) {
         if (textStatus.equals("FIELD_NOT_FOUND")) return "TARGET_NOT_FOUND";
-        return Set.of("PASS", "FOCUS_FAILED", "INPUT_FAILED", "TEXT_NOT_VERIFIED", "TIMEOUT", "NO_FIXTURE_FOUND", "AMBIGUOUS_FIXTURE", "TARGET_NOT_FOUND", "CLICK_FAILED", "WRONG_EVENT", "EVENT_NOT_VERIFIED", "PRICE_CHANGED", "LINE_CHANGED", "SELECTION_CHANGED", "SUSPENDED", "UNAVAILABLE").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
+        return Set.of("PASS", "FOCUS_FAILED", "INPUT_FAILED", "TEXT_NOT_VERIFIED", "TIMEOUT", "NO_FIXTURE_FOUND", "AMBIGUOUS_FIXTURE", "TARGET_NOT_FOUND", "CLICK_FAILED", "WRONG_EVENT", "EVENT_NOT_VERIFIED", "PRICE_CHANGED", "LINE_CHANGED", "SELECTION_CHANGED", "SUSPENDED", "UNAVAILABLE", "BELOW_MINIMUM").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
     }
     private JSONObject health() throws Exception {
         JSONObject active = store.active(), last = store.last();

@@ -18,7 +18,7 @@ interface SiteAdapter {
     CompletableFuture<String> read_line(Selection selection);
     CompletableFuture<String> read_price(Selection selection);
     CompletableFuture<Void> open_selection(Selection selection);
-    CompletableFuture<Void> verify_final_state(Fixture fixture, Selection selection);
+    CompletableFuture<Void> verify_final_state(Fixture fixture, Selection selection, String stake);
 
     final class Fixture {
         final String code, home, away, competition;
