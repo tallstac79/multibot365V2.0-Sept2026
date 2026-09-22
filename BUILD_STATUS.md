@@ -1,3 +1,24 @@
+# OddsNotifier offline multi-market parser - sample tests PASS
+
+Verified 2026-09-22 from commit 443ac94: 24 deterministic tests pass for one
+user-reported real Spread alert and five explicitly synthetic ML/Spread/Total
+examples. This does not establish their exact production formatting.
+
+Football ML is three-outcome 1X2; basketball ML is two-outcome MONEYLINE.
+Spread and totals preserve independent displayed lines and decimal strings.
+Quote sides remain unmapped by default. The opt-in `synthetic_order_v1` profile
+explicitly tests HOME/DRAW/AWAY, HOME/AWAY and OVER/UNDER ordering; all mapped
+output is marked production_verified=false. No target is inferred from EV/prices.
+Invalid counts, headers, lines and mapping profiles fail closed.
+
+Evidence: `evidence/oddsnotifier-parser/v2/`; provenance manifest and supplied
+samples: `tests/fixtures/oddsnotifier_manifest.json`. Usage and assumptions:
+`tools/ODDSNOTIFIER_PARSER.md`. Android, Telegram listener, coordinator and database
+were not changed. Remaining limitation: production format/order confirmation
+requires additional real samples. Earlier milestone records follow unchanged.
+
+---
+
 # OddsNotifier standalone parser - supplied Spread sample PASS
 
 Verified with 12 deterministic unit tests on 2026-09-22, based on commit 81fcd4a.

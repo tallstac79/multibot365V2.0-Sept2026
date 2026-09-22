@@ -1,0 +1,41 @@
+{
+  "note": "User states only the first Spread alert was copied from a real message. All other examples are synthetic and do not validate production format or ordering.",
+  "samples": [
+    {
+      "file": "oddsnotifier_spread.txt",
+      "provenance": "user_reported_real",
+      "sport": "football",
+      "market": "SPREAD"
+    },
+    {
+      "file": "oddsnotifier_football_ml.txt",
+      "provenance": "synthetic",
+      "sport": "football",
+      "market": "1X2"
+    },
+    {
+      "file": "oddsnotifier_football_total.txt",
+      "provenance": "synthetic",
+      "sport": "football",
+      "market": "TOTALS"
+    },
+    {
+      "file": "oddsnotifier_basketball_ml.txt",
+      "provenance": "synthetic",
+      "sport": "basketball",
+      "market": "MONEYLINE"
+    },
+    {
+      "file": "oddsnotifier_basketball_spread.txt",
+      "provenance": "synthetic",
+      "sport": "basketball",
+      "market": "SPREAD"
+    },
+    {
+      "file": "oddsnotifier_basketball_total.txt",
+      "provenance": "synthetic",
+      "sport": "basketball",
+      "market": "TOTALS"
+    }
+  ]
+}

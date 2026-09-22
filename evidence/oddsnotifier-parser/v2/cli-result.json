@@ -1,0 +1,103 @@
+{
+  "status": "PARSED",
+  "observation": {
+    "schema_version": 2,
+    "source": "OddsNotifier",
+    "observation_id": null,
+    "sample_provenance": "synthetic",
+    "quote_mapping": {
+      "profile": "synthetic_order_v1",
+      "production_verified": false,
+      "sides_by_position": [
+        "HOME",
+        "DRAW",
+        "AWAY"
+      ]
+    },
+    "telegram_channel_id": null,
+    "telegram_message_id": null,
+    "source_timestamp": null,
+    "raw_text": "New odds update on Pinnacle\n\nFootball - England - Premier League\nArsenal vs Leeds United\n22.09.2026 20:00\n\nML\n1.420 - 5.200 - 8.100\n\nOpening\n1.500 - 4.800 - 7.500\n\nBet365 (ML)\n1.40 - 5.00 - 8.00\n\nEV: 106.84%\n",
+    "sport": "football",
+    "country": "England",
+    "competition": "Premier League",
+    "fixture": "Arsenal vs Leeds United",
+    "home": "Arsenal",
+    "away": "Leeds United",
+    "scheduled_at_local": "2026-09-22T20:00",
+    "scheduled_timezone": null,
+    "market": "1X2",
+    "market_label": "ML",
+    "displayed_line": null,
+    "pinnacle": {
+      "line": null,
+      "quotes": [
+        {
+          "position": 1,
+          "price": "1.420",
+          "side": "HOME"
+        },
+        {
+          "position": 2,
+          "price": "5.200",
+          "side": "DRAW"
+        },
+        {
+          "position": 3,
+          "price": "8.100",
+          "side": "AWAY"
+        }
+      ]
+    },
+    "opening": {
+      "line": null,
+      "quotes": [
+        {
+          "position": 1,
+          "price": "1.500",
+          "side": "HOME"
+        },
+        {
+          "position": 2,
+          "price": "4.800",
+          "side": "DRAW"
+        },
+        {
+          "position": 3,
+          "price": "7.500",
+          "side": "AWAY"
+        }
+      ]
+    },
+    "comparison": {
+      "site": "Bet365",
+      "line": null,
+      "quotes": [
+        {
+          "position": 1,
+          "price": "1.40",
+          "side": "HOME"
+        },
+        {
+          "position": 2,
+          "price": "5.00",
+          "side": "DRAW"
+        },
+        {
+          "position": 3,
+          "price": "8.00",
+          "side": "AWAY"
+        }
+      ]
+    },
+    "displayed_ev_percent": "106.84",
+    "target_side": null,
+    "target_line": null,
+    "alert_price": null,
+    "unresolved": [
+      "target_selection_not_explicit",
+      "event_timezone_unspecified",
+      "quote_mapping_is_unverified_assumption"
+    ]
+  }
+}

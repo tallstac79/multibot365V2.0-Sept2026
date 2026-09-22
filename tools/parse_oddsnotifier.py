@@ -14,11 +14,16 @@ def main():
     parser.add_argument("--channel-id")
     parser.add_argument("--message-id")
     parser.add_argument("--source-timestamp")
+    parser.add_argument("--ordering-profile", choices=['synthetic_order_v1'])
+    parser.add_argument("--sample-provenance", choices=['unspecified', 'user_reported_real', 'synthetic'],
+                        default='unspecified')
     args = parser.parse_args()
     try:
         result = parse_oddsnotifier(args.file.read_text(encoding="utf-8-sig"),
                                    channel_id=args.channel_id, message_id=args.message_id,
-                                   source_timestamp=args.source_timestamp)
+                                   source_timestamp=args.source_timestamp,
+                                   ordering_profile=args.ordering_profile,
+                                   sample_provenance=args.sample_provenance)
     except (OSError, UnicodeError, AlertFormatError) as error:
         print(json.dumps({"status": "INVALID_ALERT", "detail": str(error)}))
         return 2

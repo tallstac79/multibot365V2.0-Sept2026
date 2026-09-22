@@ -1,4 +1,4 @@
-"""Offline, lossless observation parser for the supplied OddsNotifier Spread format.
+"""Offline observation parser for supplied real/synthetic OddsNotifier formats.
 
 No selection recommendation, price rule, instruction or execution is produced.
 Price positions remain positions: the supplied message does not label their sides
@@ -18,6 +18,16 @@ class AlertFormatError(ValueError):
 HEADER = "New odds update on Pinnacle"
 NUMBER = r"[0-9]+(?:\.[0-9]+)?"
 LINE = r"[+-]?[0-9]+(?:\.[0-9]+)?"
+# An opt-in hypothesis for synthetic tests, NOT a verified production convention.
+SYNTHETIC_ORDER_PROFILE = "synthetic_order_v1"
+_ORDERS = {
+    ("football", "1X2"): ("HOME", "DRAW", "AWAY"),
+    ("basketball", "MONEYLINE"): ("HOME", "AWAY"),
+    ("football", "SPREAD"): ("HOME", "AWAY"),
+    ("basketball", "SPREAD"): ("HOME", "AWAY"),
+    ("football", "TOTALS"): ("OVER", "UNDER"),
+    ("basketball", "TOTALS"): ("OVER", "UNDER"),
+}
 
 
 def _match(pattern, value, field):
@@ -33,13 +43,23 @@ def _price(value):
     return value
 
 
-def _quotes(text, parenthetical=False):
-    token = rf"({NUMBER})\s*\(({NUMBER})\)" if parenthetical else rf"({NUMBER})"
-    m = _match(rf"{token}\s+-\s+{token}", text, "two-price row")
-    if parenthetical:
-        return [dict(position=1, price=_price(m[1]), parenthetical_price=_price(m[2])),
-                dict(position=2, price=_price(m[3]), parenthetical_price=_price(m[4]))]
-    return [dict(position=i + 1, price=_price(value)) for i, value in enumerate(m.groups())]
+def _quotes(text, count, allow_parenthetical=False, sides=None):
+    cells = re.split(r"\s+-\s+", text)
+    if len(cells) != count:
+        raise AlertFormatError(f"Expected exactly {count} prices")
+    quotes = []
+    for index, cell in enumerate(cells):
+        pattern = rf"({NUMBER})(?:\s*\(({NUMBER})\))?" if allow_parenthetical else rf"({NUMBER})"
+        m = _match(pattern, cell, "price cell")
+        quote = dict(position=index + 1, price=_price(m[1]))
+        if allow_parenthetical and m[2] is not None:
+            quote['parenthetical_price'] = _price(m[2])
+        if sides is not None:
+            quote['side'] = sides[index]
+        quotes.append(quote)
+    if 0 < sum('parenthetical_price' in q for q in quotes) < count:
+        raise AlertFormatError("Mixed parenthetical and plain price cells")
+    return quotes
 
 
 def _source(channel_id, message_id, source_timestamp):
@@ -62,13 +82,18 @@ def _source(channel_id, message_id, source_timestamp):
     return "oddsnotifier:" + hashlib.sha256(identity.encode()).hexdigest(), source_timestamp
 
 
-def parse_oddsnotifier(text, *, channel_id=None, message_id=None, source_timestamp=None):
+def parse_oddsnotifier(text, *, channel_id=None, message_id=None, source_timestamp=None,
+                      ordering_profile=None, sample_provenance="unspecified"):
     """Return an observation; None for unrelated text; raise on invalid alerts.
 
-    Supports only the concrete Spread grammar demonstrated by the supplied sample.
+    Supports Spread, ML and Total grammars demonstrated by supplied samples.
     Raw text, signed lines and all decimal precision are retained. Missing metadata
     stays null for pasted samples. No timestamp timezone or target side is guessed.
     """
+    if ordering_profile not in (None, SYNTHETIC_ORDER_PROFILE):
+        raise AlertFormatError("Unknown ordering profile")
+    if sample_provenance not in ("unspecified", "user_reported_real", "synthetic"):
+        raise AlertFormatError("Unknown sample provenance")
     if not isinstance(text, str) or len(text) > 32768:
         raise AlertFormatError("Text must be a string of at most 32768 characters")
     rows = [row.strip() for row in text.splitlines() if row.strip()]
@@ -85,25 +110,49 @@ def parse_oddsnotifier(text, *, channel_id=None, message_id=None, source_timesta
         scheduled = datetime.strptime(rows[3], "%d.%m.%Y %H:%M")
     except ValueError as error:
         raise AlertFormatError("Invalid event date") from error
-    current = _match(rf"Spread \(({LINE})\)", rows[4], "current market")
-    opening = _match(rf"Opening \(({LINE})\)", rows[6], "opening line")
-    comparison = _match(rf"([^()]+) \(Spread ({LINE})\)", rows[8], "comparison market")
+    sport = event[1].lower()
+    if rows[4] == 'ML':
+        label, market = 'ML', '1X2' if sport == 'football' else 'MONEYLINE'
+        count = 3 if sport == 'football' else 2
+        _match('Opening', rows[6], 'opening market')
+        comparison = _match(r'([^()]+) \(ML\)', rows[8], 'comparison market')
+        current_line = opening_line = comparison_line = None
+    else:
+        current = _match(rf'(Spread|Total) \(({LINE})\)', rows[4], 'current market')
+        label = current[1]
+        market, count = ('SPREAD' if label == 'Spread' else 'TOTALS'), 2
+        opening = _match(rf'Opening \(({LINE})\)', rows[6], 'opening line')
+        comparison = _match(rf'([^()]+) \({label} ({LINE})\)', rows[8], 'comparison market')
+        current_line, opening_line, comparison_line = current[2], opening[1], comparison[2]
+        if market == 'TOTALS' and any(Decimal(n) < 0 for n in (current_line, opening_line, comparison_line)):
+            raise AlertFormatError('Total lines cannot be negative')
+    sides = _ORDERS[(sport, market)] if ordering_profile else None
+    pinnacle_quotes = _quotes(rows[5], count, True, sides)
+    opening_quotes = _quotes(rows[7], count, sides=sides)
+    comparison_quotes = _quotes(rows[9], count, sides=sides)
+    unresolved = ['target_selection_not_explicit', 'event_timezone_unspecified']
+    unresolved.append('quote_mapping_is_unverified_assumption' if sides else 'quote_sides_not_labeled')
+    if any('parenthetical_price' in q for q in pinnacle_quotes):
+        unresolved.append('parenthetical_price_meaning_unspecified')
     ev = _match(rf"EV: ({NUMBER})%", rows[10], "displayed EV")
     observation_id, source_time = _source(channel_id, message_id, source_timestamp)
     return {
-        "schema_version": 1, "source": "OddsNotifier", "observation_id": observation_id,
+        "schema_version": 2, "source": "OddsNotifier", "observation_id": observation_id,
+        "sample_provenance": sample_provenance,
+        "quote_mapping": {"profile": ordering_profile, "production_verified": False,
+                          "sides_by_position": list(sides) if sides else None},
         "telegram_channel_id": channel_id, "telegram_message_id": message_id,
         "source_timestamp": source_time, "raw_text": text,
-        "sport": event[1].lower(), "country": event[2], "competition": event[3],
+        "sport": sport, "country": event[2], "competition": event[3],
         "fixture": rows[2], "home": teams[0], "away": teams[1],
         "scheduled_at_local": scheduled.isoformat(timespec="minutes"),
-        "scheduled_timezone": None, "market": "SPREAD", "displayed_line": current[1],
-        "pinnacle": {"line": current[1], "quotes": _quotes(rows[5], True)},
-        "opening": {"line": opening[1], "quotes": _quotes(rows[7])},
-        "comparison": {"site": comparison[1].strip(), "line": comparison[2],
-                       "quotes": _quotes(rows[9])},
+        "scheduled_timezone": None, "market": market, "market_label": label,
+        "displayed_line": current_line,
+        "pinnacle": {"line": current_line, "quotes": pinnacle_quotes},
+        "opening": {"line": opening_line, "quotes": opening_quotes},
+        "comparison": {"site": comparison[1].strip(), "line": comparison_line,
+                       "quotes": comparison_quotes},
         "displayed_ev_percent": ev[1],
         "target_side": None, "target_line": None, "alert_price": None,
-        "unresolved": ["target_selection_not_explicit", "quote_sides_not_labeled",
-                       "parenthetical_price_meaning_unspecified", "event_timezone_unspecified"],
+        "unresolved": unresolved,
     }

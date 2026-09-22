@@ -1,0 +1,1038 @@
+[
+  {
+    "sample": {
+      "file": "oddsnotifier_spread.txt",
+      "provenance": "user_reported_real",
+      "sport": "football",
+      "market": "SPREAD"
+    },
+    "unmapped": {
+      "schema_version": 2,
+      "source": "OddsNotifier",
+      "observation_id": null,
+      "sample_provenance": "user_reported_real",
+      "quote_mapping": {
+        "profile": null,
+        "production_verified": false,
+        "sides_by_position": null
+      },
+      "telegram_channel_id": null,
+      "telegram_message_id": null,
+      "source_timestamp": null,
+      "raw_text": "New odds update on Pinnacle\n\nFootball - England - Isthmian Premier League\nWelling United vs Cheshunt\n15.09.2026 18:45\n\nSpread (-0.75)\n2.160 (1.900) - 1.662 (1.884)\n\nOpening (-0.75)\n2.000 - 1.714\n\nBet365 (Spread -0.75)\n1.85 - 1.95\n\nEV: 111.47%\n",
+      "sport": "football",
+      "country": "England",
+      "competition": "Isthmian Premier League",
+      "fixture": "Welling United vs Cheshunt",
+      "home": "Welling United",
+      "away": "Cheshunt",
+      "scheduled_at_local": "2026-09-15T18:45",
+      "scheduled_timezone": null,
+      "market": "SPREAD",
+      "market_label": "Spread",
+      "displayed_line": "-0.75",
+      "pinnacle": {
+        "line": "-0.75",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "2.160",
+            "parenthetical_price": "1.900"
+          },
+          {
+            "position": 2,
+            "price": "1.662",
+            "parenthetical_price": "1.884"
+          }
+        ]
+      },
+      "opening": {
+        "line": "-0.75",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "2.000"
+          },
+          {
+            "position": 2,
+            "price": "1.714"
+          }
+        ]
+      },
+      "comparison": {
+        "site": "Bet365",
+        "line": "-0.75",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.85"
+          },
+          {
+            "position": 2,
+            "price": "1.95"
+          }
+        ]
+      },
+      "displayed_ev_percent": "111.47",
+      "target_side": null,
+      "target_line": null,
+      "alert_price": null,
+      "unresolved": [
+        "target_selection_not_explicit",
+        "event_timezone_unspecified",
+        "quote_sides_not_labeled",
+        "parenthetical_price_meaning_unspecified"
+      ]
+    },
+    "explicit_test_mapping": {
+      "schema_version": 2,
+      "source": "OddsNotifier",
+      "observation_id": null,
+      "sample_provenance": "user_reported_real",
+      "quote_mapping": {
+        "profile": "synthetic_order_v1",
+        "production_verified": false,
+        "sides_by_position": [
+          "HOME",
+          "AWAY"
+        ]
+      },
+      "telegram_channel_id": null,
+      "telegram_message_id": null,
+      "source_timestamp": null,
+      "raw_text": "New odds update on Pinnacle\n\nFootball - England - Isthmian Premier League\nWelling United vs Cheshunt\n15.09.2026 18:45\n\nSpread (-0.75)\n2.160 (1.900) - 1.662 (1.884)\n\nOpening (-0.75)\n2.000 - 1.714\n\nBet365 (Spread -0.75)\n1.85 - 1.95\n\nEV: 111.47%\n",
+      "sport": "football",
+      "country": "England",
+      "competition": "Isthmian Premier League",
+      "fixture": "Welling United vs Cheshunt",
+      "home": "Welling United",
+      "away": "Cheshunt",
+      "scheduled_at_local": "2026-09-15T18:45",
+      "scheduled_timezone": null,
+      "market": "SPREAD",
+      "market_label": "Spread",
+      "displayed_line": "-0.75",
+      "pinnacle": {
+        "line": "-0.75",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "2.160",
+            "parenthetical_price": "1.900",
+            "side": "HOME"
+          },
+          {
+            "position": 2,
+            "price": "1.662",
+            "parenthetical_price": "1.884",
+            "side": "AWAY"
+          }
+        ]
+      },
+      "opening": {
+        "line": "-0.75",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "2.000",
+            "side": "HOME"
+          },
+          {
+            "position": 2,
+            "price": "1.714",
+            "side": "AWAY"
+          }
+        ]
+      },
+      "comparison": {
+        "site": "Bet365",
+        "line": "-0.75",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.85",
+            "side": "HOME"
+          },
+          {
+            "position": 2,
+            "price": "1.95",
+            "side": "AWAY"
+          }
+        ]
+      },
+      "displayed_ev_percent": "111.47",
+      "target_side": null,
+      "target_line": null,
+      "alert_price": null,
+      "unresolved": [
+        "target_selection_not_explicit",
+        "event_timezone_unspecified",
+        "quote_mapping_is_unverified_assumption",
+        "parenthetical_price_meaning_unspecified"
+      ]
+    }
+  },
+  {
+    "sample": {
+      "file": "oddsnotifier_football_ml.txt",
+      "provenance": "synthetic",
+      "sport": "football",
+      "market": "1X2"
+    },
+    "unmapped": {
+      "schema_version": 2,
+      "source": "OddsNotifier",
+      "observation_id": null,
+      "sample_provenance": "synthetic",
+      "quote_mapping": {
+        "profile": null,
+        "production_verified": false,
+        "sides_by_position": null
+      },
+      "telegram_channel_id": null,
+      "telegram_message_id": null,
+      "source_timestamp": null,
+      "raw_text": "New odds update on Pinnacle\n\nFootball - England - Premier League\nArsenal vs Leeds United\n22.09.2026 20:00\n\nML\n1.420 - 5.200 - 8.100\n\nOpening\n1.500 - 4.800 - 7.500\n\nBet365 (ML)\n1.40 - 5.00 - 8.00\n\nEV: 106.84%\n",
+      "sport": "football",
+      "country": "England",
+      "competition": "Premier League",
+      "fixture": "Arsenal vs Leeds United",
+      "home": "Arsenal",
+      "away": "Leeds United",
+      "scheduled_at_local": "2026-09-22T20:00",
+      "scheduled_timezone": null,
+      "market": "1X2",
+      "market_label": "ML",
+      "displayed_line": null,
+      "pinnacle": {
+        "line": null,
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.420"
+          },
+          {
+            "position": 2,
+            "price": "5.200"
+          },
+          {
+            "position": 3,
+            "price": "8.100"
+          }
+        ]
+      },
+      "opening": {
+        "line": null,
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.500"
+          },
+          {
+            "position": 2,
+            "price": "4.800"
+          },
+          {
+            "position": 3,
+            "price": "7.500"
+          }
+        ]
+      },
+      "comparison": {
+        "site": "Bet365",
+        "line": null,
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.40"
+          },
+          {
+            "position": 2,
+            "price": "5.00"
+          },
+          {
+            "position": 3,
+            "price": "8.00"
+          }
+        ]
+      },
+      "displayed_ev_percent": "106.84",
+      "target_side": null,
+      "target_line": null,
+      "alert_price": null,
+      "unresolved": [
+        "target_selection_not_explicit",
+        "event_timezone_unspecified",
+        "quote_sides_not_labeled"
+      ]
+    },
+    "explicit_test_mapping": {
+      "schema_version": 2,
+      "source": "OddsNotifier",
+      "observation_id": null,
+      "sample_provenance": "synthetic",
+      "quote_mapping": {
+        "profile": "synthetic_order_v1",
+        "production_verified": false,
+        "sides_by_position": [
+          "HOME",
+          "DRAW",
+          "AWAY"
+        ]
+      },
+      "telegram_channel_id": null,
+      "telegram_message_id": null,
+      "source_timestamp": null,
+      "raw_text": "New odds update on Pinnacle\n\nFootball - England - Premier League\nArsenal vs Leeds United\n22.09.2026 20:00\n\nML\n1.420 - 5.200 - 8.100\n\nOpening\n1.500 - 4.800 - 7.500\n\nBet365 (ML)\n1.40 - 5.00 - 8.00\n\nEV: 106.84%\n",
+      "sport": "football",
+      "country": "England",
+      "competition": "Premier League",
+      "fixture": "Arsenal vs Leeds United",
+      "home": "Arsenal",
+      "away": "Leeds United",
+      "scheduled_at_local": "2026-09-22T20:00",
+      "scheduled_timezone": null,
+      "market": "1X2",
+      "market_label": "ML",
+      "displayed_line": null,
+      "pinnacle": {
+        "line": null,
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.420",
+            "side": "HOME"
+          },
+          {
+            "position": 2,
+            "price": "5.200",
+            "side": "DRAW"
+          },
+          {
+            "position": 3,
+            "price": "8.100",
+            "side": "AWAY"
+          }
+        ]
+      },
+      "opening": {
+        "line": null,
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.500",
+            "side": "HOME"
+          },
+          {
+            "position": 2,
+            "price": "4.800",
+            "side": "DRAW"
+          },
+          {
+            "position": 3,
+            "price": "7.500",
+            "side": "AWAY"
+          }
+        ]
+      },
+      "comparison": {
+        "site": "Bet365",
+        "line": null,
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.40",
+            "side": "HOME"
+          },
+          {
+            "position": 2,
+            "price": "5.00",
+            "side": "DRAW"
+          },
+          {
+            "position": 3,
+            "price": "8.00",
+            "side": "AWAY"
+          }
+        ]
+      },
+      "displayed_ev_percent": "106.84",
+      "target_side": null,
+      "target_line": null,
+      "alert_price": null,
+      "unresolved": [
+        "target_selection_not_explicit",
+        "event_timezone_unspecified",
+        "quote_mapping_is_unverified_assumption"
+      ]
+    }
+  },
+  {
+    "sample": {
+      "file": "oddsnotifier_football_total.txt",
+      "provenance": "synthetic",
+      "sport": "football",
+      "market": "TOTALS"
+    },
+    "unmapped": {
+      "schema_version": 2,
+      "source": "OddsNotifier",
+      "observation_id": null,
+      "sample_provenance": "synthetic",
+      "quote_mapping": {
+        "profile": null,
+        "production_verified": false,
+        "sides_by_position": null
+      },
+      "telegram_channel_id": null,
+      "telegram_message_id": null,
+      "source_timestamp": null,
+      "raw_text": "New odds update on Pinnacle\n\nFootball - England - Premier League\nArsenal vs Leeds United\n22.09.2026 20:00\n\nTotal (2.5)\n1.820 - 2.080\n\nOpening (2.5)\n1.900 - 2.000\n\nBet365 (Total 2.5)\n1.95 - 1.85\n\nEV: 108.42%\n",
+      "sport": "football",
+      "country": "England",
+      "competition": "Premier League",
+      "fixture": "Arsenal vs Leeds United",
+      "home": "Arsenal",
+      "away": "Leeds United",
+      "scheduled_at_local": "2026-09-22T20:00",
+      "scheduled_timezone": null,
+      "market": "TOTALS",
+      "market_label": "Total",
+      "displayed_line": "2.5",
+      "pinnacle": {
+        "line": "2.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.820"
+          },
+          {
+            "position": 2,
+            "price": "2.080"
+          }
+        ]
+      },
+      "opening": {
+        "line": "2.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.900"
+          },
+          {
+            "position": 2,
+            "price": "2.000"
+          }
+        ]
+      },
+      "comparison": {
+        "site": "Bet365",
+        "line": "2.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.95"
+          },
+          {
+            "position": 2,
+            "price": "1.85"
+          }
+        ]
+      },
+      "displayed_ev_percent": "108.42",
+      "target_side": null,
+      "target_line": null,
+      "alert_price": null,
+      "unresolved": [
+        "target_selection_not_explicit",
+        "event_timezone_unspecified",
+        "quote_sides_not_labeled"
+      ]
+    },
+    "explicit_test_mapping": {
+      "schema_version": 2,
+      "source": "OddsNotifier",
+      "observation_id": null,
+      "sample_provenance": "synthetic",
+      "quote_mapping": {
+        "profile": "synthetic_order_v1",
+        "production_verified": false,
+        "sides_by_position": [
+          "OVER",
+          "UNDER"
+        ]
+      },
+      "telegram_channel_id": null,
+      "telegram_message_id": null,
+      "source_timestamp": null,
+      "raw_text": "New odds update on Pinnacle\n\nFootball - England - Premier League\nArsenal vs Leeds United\n22.09.2026 20:00\n\nTotal (2.5)\n1.820 - 2.080\n\nOpening (2.5)\n1.900 - 2.000\n\nBet365 (Total 2.5)\n1.95 - 1.85\n\nEV: 108.42%\n",
+      "sport": "football",
+      "country": "England",
+      "competition": "Premier League",
+      "fixture": "Arsenal vs Leeds United",
+      "home": "Arsenal",
+      "away": "Leeds United",
+      "scheduled_at_local": "2026-09-22T20:00",
+      "scheduled_timezone": null,
+      "market": "TOTALS",
+      "market_label": "Total",
+      "displayed_line": "2.5",
+      "pinnacle": {
+        "line": "2.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.820",
+            "side": "OVER"
+          },
+          {
+            "position": 2,
+            "price": "2.080",
+            "side": "UNDER"
+          }
+        ]
+      },
+      "opening": {
+        "line": "2.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.900",
+            "side": "OVER"
+          },
+          {
+            "position": 2,
+            "price": "2.000",
+            "side": "UNDER"
+          }
+        ]
+      },
+      "comparison": {
+        "site": "Bet365",
+        "line": "2.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.95",
+            "side": "OVER"
+          },
+          {
+            "position": 2,
+            "price": "1.85",
+            "side": "UNDER"
+          }
+        ]
+      },
+      "displayed_ev_percent": "108.42",
+      "target_side": null,
+      "target_line": null,
+      "alert_price": null,
+      "unresolved": [
+        "target_selection_not_explicit",
+        "event_timezone_unspecified",
+        "quote_mapping_is_unverified_assumption"
+      ]
+    }
+  },
+  {
+    "sample": {
+      "file": "oddsnotifier_basketball_ml.txt",
+      "provenance": "synthetic",
+      "sport": "basketball",
+      "market": "MONEYLINE"
+    },
+    "unmapped": {
+      "schema_version": 2,
+      "source": "OddsNotifier",
+      "observation_id": null,
+      "sample_provenance": "synthetic",
+      "quote_mapping": {
+        "profile": null,
+        "production_verified": false,
+        "sides_by_position": null
+      },
+      "telegram_channel_id": null,
+      "telegram_message_id": null,
+      "source_timestamp": null,
+      "raw_text": "New odds update on Pinnacle\n\nBasketball - USA - NBA\nBoston Celtics vs New York Knicks\n22.09.2026 23:30\n\nML\n1.620 - 2.380\n\nOpening\n1.700 - 2.250\n\nBet365 (ML)\n1.72 - 2.20\n\nEV: 105.91%\n",
+      "sport": "basketball",
+      "country": "USA",
+      "competition": "NBA",
+      "fixture": "Boston Celtics vs New York Knicks",
+      "home": "Boston Celtics",
+      "away": "New York Knicks",
+      "scheduled_at_local": "2026-09-22T23:30",
+      "scheduled_timezone": null,
+      "market": "MONEYLINE",
+      "market_label": "ML",
+      "displayed_line": null,
+      "pinnacle": {
+        "line": null,
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.620"
+          },
+          {
+            "position": 2,
+            "price": "2.380"
+          }
+        ]
+      },
+      "opening": {
+        "line": null,
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.700"
+          },
+          {
+            "position": 2,
+            "price": "2.250"
+          }
+        ]
+      },
+      "comparison": {
+        "site": "Bet365",
+        "line": null,
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.72"
+          },
+          {
+            "position": 2,
+            "price": "2.20"
+          }
+        ]
+      },
+      "displayed_ev_percent": "105.91",
+      "target_side": null,
+      "target_line": null,
+      "alert_price": null,
+      "unresolved": [
+        "target_selection_not_explicit",
+        "event_timezone_unspecified",
+        "quote_sides_not_labeled"
+      ]
+    },
+    "explicit_test_mapping": {
+      "schema_version": 2,
+      "source": "OddsNotifier",
+      "observation_id": null,
+      "sample_provenance": "synthetic",
+      "quote_mapping": {
+        "profile": "synthetic_order_v1",
+        "production_verified": false,
+        "sides_by_position": [
+          "HOME",
+          "AWAY"
+        ]
+      },
+      "telegram_channel_id": null,
+      "telegram_message_id": null,
+      "source_timestamp": null,
+      "raw_text": "New odds update on Pinnacle\n\nBasketball - USA - NBA\nBoston Celtics vs New York Knicks\n22.09.2026 23:30\n\nML\n1.620 - 2.380\n\nOpening\n1.700 - 2.250\n\nBet365 (ML)\n1.72 - 2.20\n\nEV: 105.91%\n",
+      "sport": "basketball",
+      "country": "USA",
+      "competition": "NBA",
+      "fixture": "Boston Celtics vs New York Knicks",
+      "home": "Boston Celtics",
+      "away": "New York Knicks",
+      "scheduled_at_local": "2026-09-22T23:30",
+      "scheduled_timezone": null,
+      "market": "MONEYLINE",
+      "market_label": "ML",
+      "displayed_line": null,
+      "pinnacle": {
+        "line": null,
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.620",
+            "side": "HOME"
+          },
+          {
+            "position": 2,
+            "price": "2.380",
+            "side": "AWAY"
+          }
+        ]
+      },
+      "opening": {
+        "line": null,
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.700",
+            "side": "HOME"
+          },
+          {
+            "position": 2,
+            "price": "2.250",
+            "side": "AWAY"
+          }
+        ]
+      },
+      "comparison": {
+        "site": "Bet365",
+        "line": null,
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.72",
+            "side": "HOME"
+          },
+          {
+            "position": 2,
+            "price": "2.20",
+            "side": "AWAY"
+          }
+        ]
+      },
+      "displayed_ev_percent": "105.91",
+      "target_side": null,
+      "target_line": null,
+      "alert_price": null,
+      "unresolved": [
+        "target_selection_not_explicit",
+        "event_timezone_unspecified",
+        "quote_mapping_is_unverified_assumption"
+      ]
+    }
+  },
+  {
+    "sample": {
+      "file": "oddsnotifier_basketball_spread.txt",
+      "provenance": "synthetic",
+      "sport": "basketball",
+      "market": "SPREAD"
+    },
+    "unmapped": {
+      "schema_version": 2,
+      "source": "OddsNotifier",
+      "observation_id": null,
+      "sample_provenance": "synthetic",
+      "quote_mapping": {
+        "profile": null,
+        "production_verified": false,
+        "sides_by_position": null
+      },
+      "telegram_channel_id": null,
+      "telegram_message_id": null,
+      "source_timestamp": null,
+      "raw_text": "New odds update on Pinnacle\n\nBasketball - USA - NBA\nBoston Celtics vs New York Knicks\n22.09.2026 23:30\n\nSpread (-4.5)\n1.970 - 1.930\n\nOpening (-4.5)\n1.900 - 2.000\n\nBet365 (Spread -4.5)\n1.91 - 1.95\n\nEV: 104.76%\n",
+      "sport": "basketball",
+      "country": "USA",
+      "competition": "NBA",
+      "fixture": "Boston Celtics vs New York Knicks",
+      "home": "Boston Celtics",
+      "away": "New York Knicks",
+      "scheduled_at_local": "2026-09-22T23:30",
+      "scheduled_timezone": null,
+      "market": "SPREAD",
+      "market_label": "Spread",
+      "displayed_line": "-4.5",
+      "pinnacle": {
+        "line": "-4.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.970"
+          },
+          {
+            "position": 2,
+            "price": "1.930"
+          }
+        ]
+      },
+      "opening": {
+        "line": "-4.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.900"
+          },
+          {
+            "position": 2,
+            "price": "2.000"
+          }
+        ]
+      },
+      "comparison": {
+        "site": "Bet365",
+        "line": "-4.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.91"
+          },
+          {
+            "position": 2,
+            "price": "1.95"
+          }
+        ]
+      },
+      "displayed_ev_percent": "104.76",
+      "target_side": null,
+      "target_line": null,
+      "alert_price": null,
+      "unresolved": [
+        "target_selection_not_explicit",
+        "event_timezone_unspecified",
+        "quote_sides_not_labeled"
+      ]
+    },
+    "explicit_test_mapping": {
+      "schema_version": 2,
+      "source": "OddsNotifier",
+      "observation_id": null,
+      "sample_provenance": "synthetic",
+      "quote_mapping": {
+        "profile": "synthetic_order_v1",
+        "production_verified": false,
+        "sides_by_position": [
+          "HOME",
+          "AWAY"
+        ]
+      },
+      "telegram_channel_id": null,
+      "telegram_message_id": null,
+      "source_timestamp": null,
+      "raw_text": "New odds update on Pinnacle\n\nBasketball - USA - NBA\nBoston Celtics vs New York Knicks\n22.09.2026 23:30\n\nSpread (-4.5)\n1.970 - 1.930\n\nOpening (-4.5)\n1.900 - 2.000\n\nBet365 (Spread -4.5)\n1.91 - 1.95\n\nEV: 104.76%\n",
+      "sport": "basketball",
+      "country": "USA",
+      "competition": "NBA",
+      "fixture": "Boston Celtics vs New York Knicks",
+      "home": "Boston Celtics",
+      "away": "New York Knicks",
+      "scheduled_at_local": "2026-09-22T23:30",
+      "scheduled_timezone": null,
+      "market": "SPREAD",
+      "market_label": "Spread",
+      "displayed_line": "-4.5",
+      "pinnacle": {
+        "line": "-4.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.970",
+            "side": "HOME"
+          },
+          {
+            "position": 2,
+            "price": "1.930",
+            "side": "AWAY"
+          }
+        ]
+      },
+      "opening": {
+        "line": "-4.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.900",
+            "side": "HOME"
+          },
+          {
+            "position": 2,
+            "price": "2.000",
+            "side": "AWAY"
+          }
+        ]
+      },
+      "comparison": {
+        "site": "Bet365",
+        "line": "-4.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.91",
+            "side": "HOME"
+          },
+          {
+            "position": 2,
+            "price": "1.95",
+            "side": "AWAY"
+          }
+        ]
+      },
+      "displayed_ev_percent": "104.76",
+      "target_side": null,
+      "target_line": null,
+      "alert_price": null,
+      "unresolved": [
+        "target_selection_not_explicit",
+        "event_timezone_unspecified",
+        "quote_mapping_is_unverified_assumption"
+      ]
+    }
+  },
+  {
+    "sample": {
+      "file": "oddsnotifier_basketball_total.txt",
+      "provenance": "synthetic",
+      "sport": "basketball",
+      "market": "TOTALS"
+    },
+    "unmapped": {
+      "schema_version": 2,
+      "source": "OddsNotifier",
+      "observation_id": null,
+      "sample_provenance": "synthetic",
+      "quote_mapping": {
+        "profile": null,
+        "production_verified": false,
+        "sides_by_position": null
+      },
+      "telegram_channel_id": null,
+      "telegram_message_id": null,
+      "source_timestamp": null,
+      "raw_text": "New odds update on Pinnacle\n\nBasketball - USA - NBA\nBoston Celtics vs New York Knicks\n22.09.2026 23:30\n\nTotal (224.5)\n1.850 - 2.050\n\nOpening (224.5)\n1.930 - 1.930\n\nBet365 (Total 224.5)\n1.95 - 1.85\n\nEV: 107.31%\n",
+      "sport": "basketball",
+      "country": "USA",
+      "competition": "NBA",
+      "fixture": "Boston Celtics vs New York Knicks",
+      "home": "Boston Celtics",
+      "away": "New York Knicks",
+      "scheduled_at_local": "2026-09-22T23:30",
+      "scheduled_timezone": null,
+      "market": "TOTALS",
+      "market_label": "Total",
+      "displayed_line": "224.5",
+      "pinnacle": {
+        "line": "224.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.850"
+          },
+          {
+            "position": 2,
+            "price": "2.050"
+          }
+        ]
+      },
+      "opening": {
+        "line": "224.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.930"
+          },
+          {
+            "position": 2,
+            "price": "1.930"
+          }
+        ]
+      },
+      "comparison": {
+        "site": "Bet365",
+        "line": "224.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.95"
+          },
+          {
+            "position": 2,
+            "price": "1.85"
+          }
+        ]
+      },
+      "displayed_ev_percent": "107.31",
+      "target_side": null,
+      "target_line": null,
+      "alert_price": null,
+      "unresolved": [
+        "target_selection_not_explicit",
+        "event_timezone_unspecified",
+        "quote_sides_not_labeled"
+      ]
+    },
+    "explicit_test_mapping": {
+      "schema_version": 2,
+      "source": "OddsNotifier",
+      "observation_id": null,
+      "sample_provenance": "synthetic",
+      "quote_mapping": {
+        "profile": "synthetic_order_v1",
+        "production_verified": false,
+        "sides_by_position": [
+          "OVER",
+          "UNDER"
+        ]
+      },
+      "telegram_channel_id": null,
+      "telegram_message_id": null,
+      "source_timestamp": null,
+      "raw_text": "New odds update on Pinnacle\n\nBasketball - USA - NBA\nBoston Celtics vs New York Knicks\n22.09.2026 23:30\n\nTotal (224.5)\n1.850 - 2.050\n\nOpening (224.5)\n1.930 - 1.930\n\nBet365 (Total 224.5)\n1.95 - 1.85\n\nEV: 107.31%\n",
+      "sport": "basketball",
+      "country": "USA",
+      "competition": "NBA",
+      "fixture": "Boston Celtics vs New York Knicks",
+      "home": "Boston Celtics",
+      "away": "New York Knicks",
+      "scheduled_at_local": "2026-09-22T23:30",
+      "scheduled_timezone": null,
+      "market": "TOTALS",
+      "market_label": "Total",
+      "displayed_line": "224.5",
+      "pinnacle": {
+        "line": "224.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.850",
+            "side": "OVER"
+          },
+          {
+            "position": 2,
+            "price": "2.050",
+            "side": "UNDER"
+          }
+        ]
+      },
+      "opening": {
+        "line": "224.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.930",
+            "side": "OVER"
+          },
+          {
+            "position": 2,
+            "price": "1.930",
+            "side": "UNDER"
+          }
+        ]
+      },
+      "comparison": {
+        "site": "Bet365",
+        "line": "224.5",
+        "quotes": [
+          {
+            "position": 1,
+            "price": "1.95",
+            "side": "OVER"
+          },
+          {
+            "position": 2,
+            "price": "1.85",
+            "side": "UNDER"
+          }
+        ]
+      },
+      "displayed_ev_percent": "107.31",
+      "target_side": null,
+      "target_line": null,
+      "alert_price": null,
+      "unresolved": [
+        "target_selection_not_explicit",
+        "event_timezone_unspecified",
+        "quote_mapping_is_unverified_assumption"
+      ]
+    }
+  }
+]

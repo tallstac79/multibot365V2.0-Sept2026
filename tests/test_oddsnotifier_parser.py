@@ -1,10 +1,16 @@
 import unittest
+import json
 from pathlib import Path
 
 from core.oddsnotifier_parser import AlertFormatError, parse_oddsnotifier
 
 SAMPLE = (Path(__file__).parent / "fixtures/oddsnotifier_spread.txt").read_text(encoding="utf-8")
 META = dict(channel_id="-100123456", message_id="42", source_timestamp="2026-09-15T17:00:00Z")
+FIXTURES = Path(__file__).parent / 'fixtures'
+
+
+def sample(name):
+    return (FIXTURES / f'oddsnotifier_{name}.txt').read_text(encoding='utf-8')
 
 
 class ParserTests(unittest.TestCase):
@@ -89,6 +95,104 @@ class ParserTests(unittest.TestCase):
         for value in [None, b'hello', 'x' * 32769]:
             with self.assertRaises(AlertFormatError):
                 parse_oddsnotifier(value)
+
+    def test_all_sample_provenance_and_default_unmapped(self):
+        manifest = json.loads((FIXTURES / 'oddsnotifier_manifest.json').read_text())
+        self.assertEqual(sum(s['provenance'] == 'synthetic' for s in manifest['samples']), 5)
+        for entry in manifest['samples']:
+            with self.subTest(file=entry['file']):
+                text = (FIXTURES / entry['file']).read_text()
+                r = parse_oddsnotifier(text, sample_provenance=entry['provenance'])
+                self.assertEqual((r['sport'], r['market']), (entry['sport'], entry['market']))
+                self.assertEqual(r['sample_provenance'], entry['provenance'])
+                self.assertFalse(r['quote_mapping']['production_verified'])
+                self.assertIsNone(r['quote_mapping']['profile'])
+                for group in ['pinnacle', 'opening', 'comparison']:
+                    self.assertTrue(all('side' not in q for q in r[group]['quotes']))
+                self.assertIsNone(r['target_side'])
+
+    def test_explicit_football_three_way_mapping(self):
+        r = parse_oddsnotifier(sample('football_ml'), ordering_profile='synthetic_order_v1')
+        self.assertEqual(r['market'], '1X2')
+        expected = [('HOME', '1.420'), ('DRAW', '5.200'), ('AWAY', '8.100')]
+        self.assertEqual([(q['side'], q['price']) for q in r['pinnacle']['quotes']], expected)
+        self.assertEqual([(q['side'], q['price']) for q in r['comparison']['quotes']],
+                         [('HOME', '1.40'), ('DRAW', '5.00'), ('AWAY', '8.00')])
+        self.assertEqual([(q['side'], q['price']) for q in r['opening']['quotes']],
+                         [('HOME', '1.500'), ('DRAW', '4.800'), ('AWAY', '7.500')])
+        self.assertIsNone(r['displayed_line'])
+        self.assertIsNone(r['target_side'])
+
+    def test_explicit_basketball_two_way_mapping(self):
+        r = parse_oddsnotifier(sample('basketball_ml'), ordering_profile='synthetic_order_v1')
+        self.assertEqual(r['market'], 'MONEYLINE')
+        self.assertEqual([(q['side'], q['price']) for q in r['pinnacle']['quotes']],
+                         [('HOME', '1.620'), ('AWAY', '2.380')])
+        self.assertEqual(r['quote_mapping']['sides_by_position'], ['HOME', 'AWAY'])
+        self.assertFalse(r['quote_mapping']['production_verified'])
+
+    def test_explicit_total_order_for_both_sports(self):
+        for name, line, prices in [('football_total', '2.5', ['1.820', '2.080']),
+                                   ('basketball_total', '224.5', ['1.850', '2.050'])]:
+            with self.subTest(name=name):
+                r = parse_oddsnotifier(sample(name), ordering_profile='synthetic_order_v1')
+                self.assertEqual(r['displayed_line'], line)
+                self.assertEqual([(q['side'], q['price']) for q in r['pinnacle']['quotes']],
+                                 list(zip(['OVER', 'UNDER'], prices)))
+                for group in ['opening', 'comparison']:
+                    self.assertEqual([q['side'] for q in r[group]['quotes']], ['OVER', 'UNDER'])
+                self.assertIn('quote_mapping_is_unverified_assumption', r['unresolved'])
+
+    def test_explicit_spread_order_no_line_inversion(self):
+        for name, line in [('spread', '-0.75'), ('basketball_spread', '-4.5')]:
+            r = parse_oddsnotifier(sample(name), ordering_profile='synthetic_order_v1')
+            self.assertEqual([q['side'] for q in r['pinnacle']['quotes']], ['HOME', 'AWAY'])
+            self.assertEqual(r['displayed_line'], line)
+            self.assertIsNone(r['target_line'])
+            self.assertTrue(all('line' not in q for q in r['pinnacle']['quotes']))
+
+    def test_wrong_counts_for_every_quote_group(self):
+        for name in ['football_ml', 'basketball_ml', 'football_total', 'basketball_spread']:
+            for row_index in [5, 7, 9]:
+                rows = [r for r in sample(name).splitlines() if r]
+                cells = rows[row_index].split(' - ')
+                for changed in [cells[:-1], cells + ['3.000']]:
+                    with self.subTest(name=name, row=row_index, count=len(changed)):
+                        corrupt = rows.copy()
+                        corrupt[row_index] = ' - '.join(changed)
+                        with self.assertRaises(AlertFormatError):
+                            parse_oddsnotifier('\n'.join(corrupt))
+
+    def test_inconsistent_market_headers(self):
+        for before, after in [('Bet365 (Total 2.5)', 'Bet365 (Spread 2.5)'),
+                              ('Opening (2.5)', 'Opening'), ('Total (2.5)', 'Total')]:
+            with self.subTest(before=before), self.assertRaises(AlertFormatError):
+                parse_oddsnotifier(sample('football_total').replace(before, after))
+
+    def test_unknown_mapping_never_falls_back(self):
+        for profile in ['production', 'HOME/AWAY', '', True]:
+            with self.subTest(profile=profile), self.assertRaises(AlertFormatError):
+                parse_oddsnotifier(SAMPLE, ordering_profile=profile)
+
+    def test_invalid_provenance(self):
+        with self.assertRaises(AlertFormatError):
+            parse_oddsnotifier(SAMPLE, sample_provenance='verified_live')
+
+    def test_parenthetical_uniformity(self):
+        with self.assertRaises(AlertFormatError):
+            parse_oddsnotifier(SAMPLE.replace(' (1.884)', ''))
+        r = parse_oddsnotifier(sample('basketball_spread'))
+        self.assertNotIn('parenthetical_price_meaning_unspecified', r['unresolved'])
+
+    def test_negative_total_rejected(self):
+        with self.assertRaises(AlertFormatError):
+            parse_oddsnotifier(sample('football_total').replace('2.5', '-2.5'))
+
+    def test_pricing_does_not_choose_side(self):
+        for ev in ['0.00', '111.47', '999.99']:
+            r = parse_oddsnotifier(SAMPLE.replace('111.47', ev), ordering_profile='synthetic_order_v1')
+            self.assertIsNone(r['target_side'])
+            self.assertIsNone(r['alert_price'])
 
 
 if __name__ == '__main__':
