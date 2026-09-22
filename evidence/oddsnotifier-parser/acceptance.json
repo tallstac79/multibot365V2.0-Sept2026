@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "scope": "offline supplied Spread-format observation parser",
+  "base_commit": "81fcd4a",
+  "tests_passed": 12,
+  "command": "python -m unittest discover -s tests -p test_oddsnotifier_parser.py -v",
+  "coordinator_tests": "not applicable; no coordinator integration",
+  "live_telegram_tested": false,
+  "other_market_formats": "unsupported pending real samples",
+  "database_modified": false,
+  "android_modified_by_this_change": false
+}

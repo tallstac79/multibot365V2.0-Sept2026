@@ -1,3 +1,22 @@
+# OddsNotifier standalone parser - supplied Spread sample PASS
+
+Verified with 12 deterministic unit tests on 2026-09-22, based on commit 81fcd4a.
+`core/oddsnotifier_parser.py` and `tools/parse_oddsnotifier.py` extract observations
+from the user-supplied Spread alert. Exact decimal strings, signed lines, both
+Pinnacle quote positions and parenthesized values, opening/comparison prices,
+fixture date and displayed EV are preserved. Optional Telegram metadata creates
+a stable channel-scoped observation ID. Missing selection, timestamp timezone
+and quote-side semantics are not guessed. No instruction is emitted.
+
+Evidence: `evidence/oddsnotifier-parser/`. Format and usage:
+`tools/ODDSNOTIFIER_PARSER.md`. Tests: `tests/test_oddsnotifier_parser.py`.
+This is parser-only acceptance; no live Telegram, persistent deduplication,
+coordinator, database or Android changes were made by this milestone. Existing
+uncommitted Android changes were left untouched. Actual examples of 1X2,
+moneyline, totals and basketball are still needed for their format validation.
+
+---
+
 # MultiBot365 build status
 
 ## Current milestone: LIVE BET365 1X2 IDENTITY FIX ? PASS on the physical Samsung

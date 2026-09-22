@@ -1,0 +1,74 @@
+{
+  "status": "PARSED",
+  "observation": {
+    "schema_version": 1,
+    "source": "OddsNotifier",
+    "observation_id": null,
+    "telegram_channel_id": null,
+    "telegram_message_id": null,
+    "source_timestamp": null,
+    "raw_text": "New odds update on Pinnacle\n\nFootball - England - Isthmian Premier League\nWelling United vs Cheshunt\n15.09.2026 18:45\n\nSpread (-0.75)\n2.160 (1.900) - 1.662 (1.884)\n\nOpening (-0.75)\n2.000 - 1.714\n\nBet365 (Spread -0.75)\n1.85 - 1.95\n\nEV: 111.47%\n",
+    "sport": "football",
+    "country": "England",
+    "competition": "Isthmian Premier League",
+    "fixture": "Welling United vs Cheshunt",
+    "home": "Welling United",
+    "away": "Cheshunt",
+    "scheduled_at_local": "2026-09-15T18:45",
+    "scheduled_timezone": null,
+    "market": "SPREAD",
+    "displayed_line": "-0.75",
+    "pinnacle": {
+      "line": "-0.75",
+      "quotes": [
+        {
+          "position": 1,
+          "price": "2.160",
+          "parenthetical_price": "1.900"
+        },
+        {
+          "position": 2,
+          "price": "1.662",
+          "parenthetical_price": "1.884"
+        }
+      ]
+    },
+    "opening": {
+      "line": "-0.75",
+      "quotes": [
+        {
+          "position": 1,
+          "price": "2.000"
+        },
+        {
+          "position": 2,
+          "price": "1.714"
+        }
+      ]
+    },
+    "comparison": {
+      "site": "Bet365",
+      "line": "-0.75",
+      "quotes": [
+        {
+          "position": 1,
+          "price": "1.85"
+        },
+        {
+          "position": 2,
+          "price": "1.95"
+        }
+      ]
+    },
+    "displayed_ev_percent": "111.47",
+    "target_side": null,
+    "target_line": null,
+    "alert_price": null,
+    "unresolved": [
+      "target_selection_not_explicit",
+      "quote_sides_not_labeled",
+      "parenthetical_price_meaning_unspecified",
+      "event_timezone_unspecified"
+    ]
+  }
+}
