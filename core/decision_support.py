@@ -14,7 +14,7 @@ def now():
 
 def defaults():
     return {'global': {'enabled': True, 'default_stake': 1.0, 'allowed_slippage': 0.0, 'max_stake': 10.0,
-                       'stale_alert_seconds': 300, 'event_timezone': None, 'min_line_advantage': 0.5},
+                       'stale_alert_seconds': 300, 'event_timezone': None, 'min_line_advantage': 1.0},
             'sports': {sport: {'markets': {market: {'enabled': True, 'stake': None, 'minimum_ev': None,
                         'allowed_slippage': None, 'min_price': None, 'max_price': None}
                         for market in markets}} for sport, markets in MARKETS.items()}}

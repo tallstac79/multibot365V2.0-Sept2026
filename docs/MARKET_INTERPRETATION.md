@@ -118,8 +118,10 @@ unconfirmed: arrows and parentheses disagree in some live messages.
 The rules engine (`rules-3`) queues only `CLEAR_VALUE_SIGNAL` or `FAVOURABLE_LINE_SIGNAL`, and
 every configured rule still applies to both. For `FAVOURABLE_LINE_SIGNAL`:
 
-* The line advantage must reach **Min favourable line advantage** (global, default 0.5 points,
-  range 0.5 to 50). This is how "materially favourable" is defined.
+* The line advantage must reach **Min favourable line advantage** (global, default 1.0 point,
+  configurable 0.5 to 50). This is how "materially favourable" is defined. The default is 1.0
+  because compared lines in this feed differ in minimum 1-point steps, even when the lines
+  themselves are half-points.
 * The Bet365 price must pass the market's min/max alert-price rules. Slippage sets the
   minimum price as usual.
 * `minimum_ev` is recorded as *not applicable*, because OddsNotifier EV is unavailable for

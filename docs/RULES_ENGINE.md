@@ -35,7 +35,7 @@ GLOBAL
 | allowed_slippage | 0.0 | minimum_price = max(1.01, alert price − slippage), in decimal-price points |
 | stale_alert_seconds | 300 | Maximum age since the Telegram post (or receipt if earlier) |
 | event_timezone | null | IANA zone for OddsNotifier fixture times. Null fails closed (see below). |
-| min_line_advantage | 0.5 | Minimum Bet365 line advantage, in points, for a FAVOURABLE_LINE_SIGNAL (0.5 to 50) |
+| min_line_advantage | 1.0 | Minimum Bet365 line advantage, in points, for a FAVOURABLE_LINE_SIGNAL (configurable 0.5 to 50). The default is 1.0 because the compared Pinnacle and Bet365 lines in this feed differ in minimum 1-point steps, even when the lines themselves are half-points. |
 
 FOOTBALL (`1X2`, `SPREAD`, `TOTALS`) and BASKETBALL (`MONEYLINE`, `SPREAD`, `TOTALS`), per
 market:

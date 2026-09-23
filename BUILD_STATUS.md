@@ -8,7 +8,7 @@ Verified 2026-09-23. Based on 5c82664. Backend rules and interpretation only. **
   ordering, a quantified favourable Bet365 line for that exact side, and both prices present.
   No synthetic EV is calculated.
 - **Rules:** rules-3 accepts both signals. Line signals must also meet `min_line_advantage`
-  (default 0.5 points, configurable in Rules & configuration) and the market's min/max price
+  (default 1.0 point; the compared lines in this feed differ in minimum 1-point steps; configurable 0.5 to 50 in Rules & configuration) and the market's min/max price
   rules; `minimum_ev` is recorded as not applicable.
 - **Interpretation:** a highlighted target on unequal lines is now PARSED, so it reaches the
   rules. Without a highlight it stays PARSED_PARTIAL / POTENTIAL_VALUE, and Kipina never

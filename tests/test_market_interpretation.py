@@ -288,6 +288,22 @@ class FavourableLineSignalTests(unittest.TestCase):
         self.assertEqual(decision['instruction']['minimum_price'], '1.80')
         self.assertIn('not applicable', next(c['detail'] for c in decision['checks'] if c['name'] == 'minimum_ev'))
 
+    def test_default_minimum_line_advantage_is_one_point(self):
+        from core.decision_support import defaults, validate
+        self.assertEqual(defaults()['global']['min_line_advantage'], 1.0)
+        half = parse(unequal_totals('168.5', '169', 'UNDER'))['parsed']        # +0.5
+        self.assertEqual((half['bet_quality'], half['comparison']['line_advantage']), ('FAVOURABLE_LINE_SIGNAL', '0.5'))
+        self.assertTrue(self.evaluate(half, config())['reason'].startswith('line_advantage'))
+        one = parse(unequal_totals('168.5', '169.5', 'UNDER'))['parsed']       # +1.0
+        self.assertEqual(self.evaluate(one, config())['decision'], 'ACCEPT')
+        self.assertEqual(self.evaluate(half, config(min_line_advantage=0.5))['decision'], 'ACCEPT')  # still configurable
+        legacy = defaults()
+        del legacy['global']['min_line_advantage']
+        self.assertEqual(validate(legacy)['global']['min_line_advantage'], 1.0)
+        for bad in (0.4, 51):
+            with self.assertRaises(ValueError):
+                validate(config(min_line_advantage=bad))
+
     def test_equal_line_minimum_ev_still_enforced(self):
         cfg = config()
         cfg['sports']['basketball']['markets']['TOTALS']['minimum_ev'] = 120
