@@ -1,3 +1,18 @@
+---
+# MultiBot365 FOCUS_FAILED fix 0.6.25-focus vc37 - READY_FOR_LIVE_REPROOF YES
+
+Verified 2026-09-23 ~19:50 Europe/London. App **0.6.25-focus (37)** on Samsung R5CT61TE14Z / galaxy-a13-5g. Coordinator Tailscale `http://100.114.45.68:8767` / MagicDNS `galaxy-a13-5g.taila8257e.ts.net:8767`. Session **AUTHENTICATED**. `dispatch_enabled=false` throughout (never flipped true).
+
+- **Prior FAIL:** live ready-only on 0.6.24-search hit `FOCUS_FAILED: No fresh input session for the visually tapped field` (instruction `on-85a1398083a603180851685a`). Search UI opened and field was located/tapped, but TextEntryFlow required `generation != initialGeneration` after tap; Chrome often already had an auto-focused IME session so re-tap did not start a fresh input connection.
+- **Fix:** TextEntryFlow blur-then-focus + multi-signal fresh-session gate (generation advance after tap, optional IME window, bounds still match tapped field) with bounded relocate retry (3 cycles). AgentInputMethod records start/finish timestamps. Version bump `0.6.25-focus` / vc37.
+- **Proof (evidence/search-focus-proof/proof-summary.json):**
+  - **10/10 Fulham OPEN_SEARCH_QUERY PASS** (`focus-fulham-01-1790186166` ... `focus-fulham-10-1790187516`); each with `fresh_generation` and `editor_generation > focus_baseline_generation`; `wrong_field=false`.
+  - **Edges PASS:** chrome-recovery, reopen-after-search, keyboard-already-open, keyboard-initially-closed; failed-focus recovery via observed `FOCUS_BLUR_STALE`/`FOCUS_BLURRED` path (retry-relocate not needed this run).
+  - Flags: FOCUS_ACQUIRED/10X_REPEAT/STALE_SESSION_PROTECTION/WRONG_FIELD_PROTECTION/CHROME_RECOVERY/RESET_STATE = PASS; **READY_FOR_LIVE_REPROOF=YES**.
+- **APK match:** Desktop `Bet365Agent-0.6.25-focus.apk` == built debug APK == installed base.apk (sha256 match); `/health` `0.6.25-focus` vc37.
+- **Safety:** no wager; Place Bet not engaged; dispatch left **false**; no OddsNotifier / live READY dependency for this proof.
+
+
 # MultiBot365 rules: FAVOURABLE_LINE_SIGNAL for verified unequal-line targets: PASS
 
 Verified 2026-09-23. Based on 5c82664. Backend rules and interpretation only. **175 tests PASS**
