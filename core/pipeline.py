@@ -236,7 +236,7 @@ class Pipeline:
         proven adapter stops before its final action. Final action remains out of scope.
         """
         payload = dict(instruction_id=row['instruction_id'], action='ADAPTER_WORKFLOW', adapter=self.settings.adapter,
-                       scenario='live', query=(f"{row['home']}||{row['away']}" if row.get('away') else row['home']), sport=row['sport'], market=row['market'],
+                       scenario='live', query=(f"{row['home']}||{row['away']}" if row['away'] else row['home']), sport=row['sport'], market=row['market'],
                        side=row['selection'], line=row['line'], minimum_price=row['minimum_price'],
                        stake=row['stake'], timeout_ms=self.settings.device_timeout_ms, execution_mode='ready')
         assert payload['execution_mode'] == 'ready' and 'confirmation_status' not in payload
@@ -305,7 +305,7 @@ class Pipeline:
                 permitted, why = session_gate(session, now, self.settings.session_max_age_seconds)
                 if not permitted:
                     self.store.transition(db, row['instruction_id'], State.SESSION_REQUIRED, actor='dispatcher',
-                                          reason=why, session_state=(session or {}).get('state', 'UNKNOWN'))
+                                          reason=why, session_state=(session or {}).get('state', 'UNKNOWN') if isinstance(session, dict) or session is None else session['state'])
                     continue
                 if in_flight or health.get('current_instruction'):
                     continue  # One instruction at a time; wait (it may later go STALE).
