@@ -291,30 +291,83 @@ final class TextEntryFlow {
         main.postDelayed(() -> verify(0), 600);
     }
 
+    private static final int OCR_VERIFY_ATTEMPTS = 3;
+
     private void verify(int attempt) {
         if (!live()) return;
         checkpoint("VERIFYING");
         runner.frame(instruction.id, "after", ocr -> {
             put("post_screenshot", imagePath("after"));
             put("visible_field_text", ocr.fieldText);
+            put("ocr_verify_attempt", attempt);
+            // Recapture search-field bounds after typing; refuse if the tapped field drifted.
+            if (ocr.fieldBounds != null) {
+                put("post_field_bounds", coordinates(ocr.fieldBounds));
+                if (tappedField != null && !boundsStillMatch(tappedField, ocr.fieldBounds)) {
+                    put("wrong_field", true);
+                    end("TEXT_NOT_VERIFIED", "Search field bounds changed after typing");
+                    return;
+                }
+                field = new Rect(ocr.fieldBounds);
+            }
             readEditor(value -> {
                 boolean exact = instruction.text.equals(value);
-                boolean visible = normalizeWords(instruction.text).equals(ocr.fieldText);
-                if (!visible && exact) {
-                    for (String word : ocr.words) {
-                        if (instruction.text.equalsIgnoreCase(word)) { visible = true; break; }
-                    }
-                }
+                boolean visible = visualFieldMatches(instruction.text, ocr);
+                boolean boundsOk = tappedField != null && field != null && boundsStillMatch(tappedField, field);
+                boolean fresh = focusedGeneration > focusBaselineGeneration && sameEditor();
                 put("observed_text", value);
                 put("exact_input_match", exact);
                 put("visual_text_match", visible);
-                if (exact && visible) {
+                put("bounds_unchanged", boundsOk);
+                put("focus_session_fresh", fresh);
+                if (!exact) {
+                    if (attempt + 1 < OCR_VERIFY_ATTEMPTS) {
+                        main.postDelayed(() -> verify(attempt + 1), 450);
+                        return;
+                    }
+                    end("TEXT_NOT_VERIFIED", "Editor value differs from requested text");
+                    return;
+                }
+                // Hard path: exact injected editor text AND OCR agree.
+                if (visible) {
                     put("verification_result", "EXACT_INPUT_AND_SCREENSHOT_OCR");
+                    put("ocr_gate", "HARD_MATCH");
                     end("PASS", "Exact editor value and visible field OCR verified");
-                } else if (attempt < 1) main.postDelayed(() -> verify(attempt + 1), 500);
-                else end("TEXT_NOT_VERIFIED", "Editor value or screenshot field text differs from requested text");
+                    return;
+                }
+                // OCR is supporting evidence only when editor is exact, bounds unchanged, and focus is fresh.
+                // Retry OCR/recapture before soft-passing imperfect field OCR (B/S, I/l, 0/O, rn/m noise).
+                if (boundsOk && fresh) {
+                    if (attempt + 1 < OCR_VERIFY_ATTEMPTS) {
+                        main.postDelayed(() -> verify(attempt + 1), 450);
+                        return;
+                    }
+                    put("verification_result", "EXACT_INPUT_OCR_SOFT");
+                    put("ocr_gate", "SOFT_SUPPORTING");
+                    put("ocr_soft_pass", true);
+                    end("PASS", "Exact editor value verified; OCR supporting evidence imperfect but field/focus gates held");
+                    return;
+                }
+                if (attempt + 1 < OCR_VERIFY_ATTEMPTS) {
+                    main.postDelayed(() -> verify(attempt + 1), 450);
+                    return;
+                }
+                end("TEXT_NOT_VERIFIED", "Exact editor text present but field/focus gates failed with imperfect OCR");
             });
         });
+    }
+
+    /** Exact OCR agreement only — never a fixture-identity substitute. */
+    private static boolean visualFieldMatches(String requested, VisualControlRunner.Ocr ocr) {
+        if (requested == null || ocr == null) return false;
+        String want = normalizeWords(requested);
+        if (want.equals(ocr.fieldText)) return true;
+        if (ocr.words != null) {
+            for (String word : ocr.words) {
+                if (requested.equalsIgnoreCase(word) || want.equalsIgnoreCase(normalizeWords(word))) return true;
+            }
+        }
+        return false;
     }
 
     private static String normalizeWords(String value) { return value.trim().replaceAll("\\s+", " "); }
@@ -345,16 +398,26 @@ final class TextEntryFlow {
         if ("focused".equals(phase) && ocr.fieldBounds == null && current != null && validOutline(bitmap, current)) {
             ocr.fieldBounds = new Rect(current);
         }
-        if ("after".equals(phase) && current != null && validOutline(bitmap, current)) {
-            Rect inside = new Rect(current); inside.inset(9, 9);
-            Bitmap crop = Bitmap.createBitmap(bitmap, inside.left, inside.top, inside.width(), inside.height());
-            try {
-                VisualControlRunner.Ocr text = runner.recognize(crop, TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
-                ocr.fieldText = normalizeWords(String.join(" ", text.words));
-                try (FileOutputStream out = new FileOutputStream(new File(service.getFilesDir(), "visual/" + instruction.id + "/field_after.png"))) {
-                    crop.compress(Bitmap.CompressFormat.PNG, 100, out);
-                }
-            } finally { crop.recycle(); }
+        if ("after".equals(phase) && current != null) {
+            // Recapture outlined field after typing; fall back to prior bounds when outline still valid.
+            Rect recaptured = findOutline(bitmap, current);
+            if (recaptured != null && boundsStillMatch(current, recaptured)) {
+                ocr.fieldBounds = recaptured;
+            } else if (validOutline(bitmap, current)) {
+                ocr.fieldBounds = new Rect(current);
+            }
+            Rect cropBounds = ocr.fieldBounds != null ? ocr.fieldBounds : current;
+            Rect inside = new Rect(cropBounds); inside.inset(9, 9);
+            if (inside.width() > 8 && inside.height() > 8) {
+                Bitmap crop = Bitmap.createBitmap(bitmap, inside.left, inside.top, inside.width(), inside.height());
+                try {
+                    VisualControlRunner.Ocr text = runner.recognize(crop, TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
+                    ocr.fieldText = normalizeWords(String.join(" ", text.words));
+                    try (FileOutputStream out = new FileOutputStream(new File(service.getFilesDir(), "visual/" + instruction.id + "/field_after.png"))) {
+                        crop.compress(Bitmap.CompressFormat.PNG, 100, out);
+                    }
+                } finally { crop.recycle(); }
+            }
         }
     }
 

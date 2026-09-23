@@ -1,3 +1,18 @@
+﻿---
+# MultiBot365 TEXT_NOT_VERIFIED OCR soft-pass 0.6.26-ocr vc38 - READY_FOR_LIVE_REPROOF NO (Casino-only Beroe blocker)
+
+Verified 2026-09-23 ~21:05 Europe/London. App **0.6.26-ocr (38)** on Samsung R5CT61TE14Z / galaxy-a13-5g. Coordinator Tailscale `http://100.114.45.68:8767`. Session **AUTHENTICATED**. `dispatch_enabled=false` throughout.
+
+- **Prior FAIL:** live ready-only on 0.6.25-focus hit `TEXT_NOT_VERIFIED` for alert `on-fb29e8a770a96d2ead9d705f` (BC Beroe vs Ferrol) despite `exact_input_match=true` — field OCR saw `Seroe`/`Serod` vs requested `BC Beroe`, fail-closed before fixture verification.
+- **Fix:** TextEntryFlow splits gates — hard require exact injected editor text; OCR retries/recapture (3x); OCR soft-pass only when editor exact + field bounds unchanged + fresh focus. Fixture identity remains hard: both teams / unique pairing; ambiguous => `AMBIGUOUS_FIXTURE`. Sports-steer tries Sports/Football/TEAMS chips before fixture assert. `discover_fixture` uses last typed query (not defaultQuery).
+- **Proof (evidence/beroe-ocr-fixture-proof/):**
+  - **Beroe soft OCR PASS** (`EXACT_INPUT_OCR_SOFT`, ocr=`Serod`/`Seroe`, editor=`BC Beroe`).
+  - **Beroe fixture:** `NO_FIXTURE_FOUND` fail-closed — Bet365 returns **Casino-only** pane for `BC Beroe` (no sports fixture rows / no Sports chip). Sports-steer ran but could not retarget.
+  - **Fulham wrong-fixture protection PASS:** query `Fulham` => `AMBIGUOUS_FIXTURE` (Ipswich|Fulham, Fulham|Hull, Fulham|Crystal Palace).
+  - **Fulham||Crystal Palace PASS:** unique pairing verified (`Fulham v Crystal Palace`).
+- **READY_FOR_LIVE_REPROOF=NO** until Bet365 lists a sports fixture for BC Beroe (Casino-only blocker). OCR/TEXT_NOT_VERIFIED fix itself is proven.
+- **Safety:** no wager; Place Bet not engaged; dispatch left **false**.
+
 ---
 # MultiBot365 FOCUS_FAILED fix 0.6.25-focus vc37 - READY_FOR_LIVE_REPROOF YES
 
@@ -75,8 +90,8 @@ new). Output: `evidence/market-interpretation/tests.txt`.
 
 - **New layer** `core/market_interpretation.py`, used by `core/alert_classifier.py` (classifier-2):
   - Two-sided alerts, with optional `P -> L` line updates, alt lines, linked or unlinked
-    rows, and 🟢 or 🔵 Opening markers.
-  - Side-labelled alerts, with `Limit`, `Opening: Side`, `Spread (L): Side price ↓ [x%]`,
+    rows, and ðŸŸ¢ or ðŸ”µ Opening markers.
+  - Side-labelled alerts, with `Limit`, `Opening: Side`, `Spread (L): Side price â†“ [x%]`,
     `Fair Odds` and an empty `Bet365` section.
 - **Normalised schema 5:** `selection_*`, `reference`, `comparison` (equal_line, line
   difference/advantage, line/price quality, ev_status, supplied EV), `movement`,
@@ -90,7 +105,7 @@ new). Output: `evidence/market-interpretation/tests.txt`.
   (no longer INVALID). Kipina: OVER 2 points worse (UNFAVOURABLE), UNDER 2 points better
   (FAVOURABLE, POTENTIAL_VALUE).
 - **Football production format** (HJK Helsinki vs Brann): PARSED_PARTIAL. Brann AWAY -1.5,
-  2.030 → 1.724 SHORTENED, supplied -11.7 %, fair 1.850, limit €200 → €400, Bet365 absent.
+  2.030 â†’ 1.724 SHORTENED, supplied -11.7 %, fair 1.850, limit â‚¬200 â†’ â‚¬400, Bet365 absent.
 - **Bet quality** is separate from line/price quality. CLEAR_VALUE_SIGNAL only for a
   verified, highlighted, equal-line alert with a better Bet365 price and supplied EV above
   100 %. The rules engine (rules-2) now requires it.
@@ -122,12 +137,12 @@ Remaining ambiguities:
 Verified 2026-09-23 ~15:00 Europe/London. App **0.6.22-login (34)** on Samsung galaxy-a13-5g. Coordinator Tailscale `http://100.114.45.68:8767` / MagicDNS `galaxy-a13-5g.taila8257e.ts.net:8767`.
 
 - **Session before dispatch:** AUTHENTICATED (post `session-login-1790175250` PASS). Notifications disabled.
-- **Dispatch enable:** `.local/pipeline.json` `dispatch_enabled=true`; `pipeline_service` LISTENING; one live OddsNotifier alert PARSED→QUEUED→DISPATCHED.
+- **Dispatch enable:** `.local/pipeline.json` `dispatch_enabled=true`; `pipeline_service` LISTENING; one live OddsNotifier alert PARSEDâ†’QUEUEDâ†’DISPATCHED.
 - **Live alert:** `on-f24902a9a6dc166b07e79880` msg 68009 **Japan vs Thailand** basketball SPREAD HOME **-56.5** @1.80 stake 1.00 `execution_mode=ready`.
-- **Device result:** FAIL `TARGET_NOT_FOUND` — "Live Bet365 search UI not visible after Search tap" (33.8s). **READY not reached.** `wager_submitted` absent/false.
+- **Device result:** FAIL `TARGET_NOT_FOUND` â€” "Live Bet365 search UI not visible after Search tap" (33.8s). **READY not reached.** `wager_submitted` absent/false.
 - **Post-fail health:** session **AUTHENTICATED** (workflow); Place Bet never engaged.
 - **Dispatch disabled after:** `dispatch_enabled=false` + pipeline restart; status confirms false, intake LISTENING, notifications DISABLED.
-- **LTE / Tailscale recovery (no ADB):** Wi-Fi state **unknown without ADB**. OPEN_AND_TYPE over MagicDNS **PASS** (`ts-recovery-1790175562-open-type` Exact editor value verified). Network path: MagicDNS → endpoint `http://100.114.45.68:8767`.
+- **LTE / Tailscale recovery (no ADB):** Wi-Fi state **unknown without ADB**. OPEN_AND_TYPE over MagicDNS **PASS** (`ts-recovery-1790175562-open-type` Exact editor value verified). Network path: MagicDNS â†’ endpoint `http://100.114.45.68:8767`.
 - **App restart:** **NO_ADB_BLOCKER** (cannot force-stop). Strongest check: AUTHENTICATED after dispatch FAIL; final idle probe UNKNOWN after recovery typing.
 - **Phone reboot:** **NO_ADB_BLOCKER** (needs human). Prior dual-bind reboot evidence retained.
 - Evidence: `evidence/live-ready-dispatch/` (instruction/result/transitions/health + recovery OPEN_AND_TYPE + `session-summary.json`). No `.local` secrets committed.
@@ -140,14 +155,14 @@ Verified 2026-09-23 ~15:00 Europe/London. App **0.6.22-login (34)** on Samsung g
 Verified 2026-09-23 15:11 Europe/London. Backend on `444793f` + this commit. App **0.6.21-session (33)** on Samsung R5CT61TE14Z. Dashboard **2.0-dashboard.3**. **141 automated tests PASS** (128 under `tests/` + 13 under `tools/`).
 
 - **Telegram login:** Telethon user session for OddsNotifier Feed 2 (`oddsnotifierfeed2bot` / peer 1475314653). Channel-form `-1001475314653` is incorrect for this peer.
-- **Intake:** `tools.pipeline_service run` LISTENING; real `event` deliveries persist to `.local/pipeline.sqlite3` with entities + production Markdown via `render_oddsnotifier`. Live PARSED basketball Spread/Totals with bold Bet365 target proven (e.g. message 67960 → PARSED HOME 1.74); older alerts correctly STALE; EV:None / missing fixture URL / unsupported layouts fail closed (INVALID/AMBIGUOUS/IGNORED).
+- **Intake:** `tools.pipeline_service run` LISTENING; real `event` deliveries persist to `.local/pipeline.sqlite3` with entities + production Markdown via `render_oddsnotifier`. Live PARSED basketball Spread/Totals with bold Bet365 target proven (e.g. message 67960 â†’ PARSED HOME 1.74); older alerts correctly STALE; EV:None / missing fixture URL / unsupported layouts fail closed (INVALID/AMBIGUOUS/IGNORED).
 - **Config:** `.local/pipeline.json` (untracked) `dispatch_enabled=false`, notifications disabled. Rules `event_timezone=Europe/London`.
-- **Startup:** Task Scheduler `MultiBot365Pipeline` ONLOGON → `tools\run_pipeline_service.cmd` (Python 3.11, project cwd). Status Ready.
+- **Startup:** Task Scheduler `MultiBot365Pipeline` ONLOGON â†’ `tools\run_pipeline_service.cmd` (Python 3.11, project cwd). Status Ready.
 - **Dashboard:** REAL DATA mode shows live intake/lifecycle; coordinator ONLINE; Python 3.11 only (Hermes dashboard stopped).
-- **Android session contract:** `GET /health` includes stable `device_id=galaxy-a13-5g` and `session{state,observed_at_ms,detail}` refreshed ≥60s (idle OCR probe). Observed `AUTHENTICATED` via idle probe. Accepts wire `TOTALS`→`TOTAL` and required `line` for Spread/Totals; missing line → HTTP 400 INVALID_INSTRUCTION. Preserves `ready_state.session`, observed price, `wager_submitted`. Dual Tailscale/LAN bind from a292373 preserved (endpoint `http://100.114.45.68:8767`).
-- **Ready-only:** `dispatch_enabled` remains false — no coordinator dispatch of live alerts. Milestone stays `wager_submitted=false`.
+- **Android session contract:** `GET /health` includes stable `device_id=galaxy-a13-5g` and `session{state,observed_at_ms,detail}` refreshed â‰¥60s (idle OCR probe). Observed `AUTHENTICATED` via idle probe. Accepts wire `TOTALS`â†’`TOTAL` and required `line` for Spread/Totals; missing line â†’ HTTP 400 INVALID_INSTRUCTION. Preserves `ready_state.session`, observed price, `wager_submitted`. Dual Tailscale/LAN bind from a292373 preserved (endpoint `http://100.114.45.68:8767`).
+- **Ready-only:** `dispatch_enabled` remains false â€” no coordinator dispatch of live alerts. Milestone stays `wager_submitted=false`.
 
-**Remaining:** enable dispatch only after operator approval; prove a fresh in-window alert through READY on device; Wi‑Fi-off LTE / phone-reboot / app-restart re-verification not re-run this session (prior a292373 evidence stands).
+**Remaining:** enable dispatch only after operator approval; prove a fresh in-window alert through READY on device; Wiâ€‘Fi-off LTE / phone-reboot / app-restart re-verification not re-run this session (prior a292373 evidence stands).
 
 ---
 # MultiBot365 unattended backend pipeline: PASS (tests); live Telegram connection pending login
@@ -215,7 +230,7 @@ Verified 2026-09-23 13:28 Europe/London. App **0.6.20-ts** (32) on Samsung SM-A1
 - Evidence: `evidence/coordinator-tailscale-bind/` (incl. `phone-reboot-*.json`, updated `summary.json`). No `.local/coordinator.json` or gradle junk committed. Live-site adapter/parser/OCR untouched.
 
 ---
-# MultiBot365 V2 real operations console + production basketball parser â€” PASS
+# MultiBot365 V2 real operations console + production basketball parser Ã¢â‚¬â€ PASS
 
 Verified 2026-09-23. Dashboard **2.0-dashboard.2**, based on 2aac0c4.
 
@@ -250,7 +265,7 @@ messages are a genuine recorded snapshot, never synthetic production data.
 
 ---
 
-# MultiBot365 V2 local dashboard â€” PASS
+# MultiBot365 V2 local dashboard Ã¢â‚¬â€ PASS
 
 Verified 2026-09-23. Dashboard build **2.0-dashboard.1**, based on cfb267c.
 
@@ -372,11 +387,11 @@ Evidence: `evidence/live-bet365-place-bet-insufficient/` ? PASS.
 
 ## Proven
 
-- Live poll: coordinator GET /instructions/live-ready-1790108608 (+ evidence) â†’ 
+- Live poll: coordinator GET /instructions/live-ready-1790108608 (+ evidence) Ã¢â€ â€™ 
 eady_state.state=READY (app **0.6.16-ready**).
 - Normalize/derive: device_id=samsung-R5CT61TE14Z, ISO alidated_at, SHA-256 alidation_hash (main bot omits these).
 - Chat card shown: READY / Fixture / Market / Selection / Line / Price / Minimum / Stake / APPROVE|REJECT.
-- Human **APPROVE** â†’ outbox status **APPROVED**; second approve â†’ **DUPLICATE**.
+- Human **APPROVE** Ã¢â€ â€™ outbox status **APPROVED**; second approve Ã¢â€ â€™ **DUPLICATE**.
 - Evidence: evidence/confirmation-live-poll/ (poll.json, card.json, decision.json).
 - Unit tests: 9/9 still pass. No Place Bet. No main-bot / Android source edits.
 
@@ -390,7 +405,7 @@ eady_state.state=READY (app **0.6.16-ready**).
 # OddsNotifier real linked ML sample - parser PASS
 
 Verified 2026-09-22 from b3639aa: 32 deterministic parser tests pass. Added the
-user-reported real Banks OÂ´Dee vs Aberdeen B sample, including Markdown/bare URLs,
+user-reported real Banks OÃ‚Â´Dee vs Aberdeen B sample, including Markdown/bare URLs,
 Unicode arrows and emoji headings. ML comes from the explicit fixture URL query.
 No source URL was fetched. Source provenance remains separate from verification
 of quote ordering.
@@ -512,16 +527,16 @@ Verified 2026-09-22 ~20:42 Europe/London on Samsung SM-A136B `R5CT61TE14Z`. App 
 No LocalSimulator substitute. Login wall cleared after David logged in on phone Chrome.
 
 ---
-Ã¯Â»Â¿# MultiBot365 build status
+ÃƒÂ¯Ã‚Â»Ã‚Â¿# MultiBot365 build status
 
-## Current milestone: 5 Ã¢â‚¬â€ PASS on the physical Samsung (multi-sport local simulator)
+## Current milestone: 5 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â PASS on the physical Samsung (multi-sport local simulator)
 
 Verified 2026-09-22 on Samsung SM-A136B `R5CT61TE14Z`. App **0.5.6-sim (11)**. Evidence: `evidence/fixture-m5/` (**25/25**). See `BUILD_STATUS_M5.md` for the full case table and OCR notes. Baseline commit `9133319`.
 
 Hard stop unchanged: fictional LocalSimulator only; no live Bet365 wager path.
 
 ---
-## Current milestone: 4 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â PASS on the physical Samsung (local simulator adapter)
+## Current milestone: 4 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â PASS on the physical Samsung (local simulator adapter)
 
 Built from e88b9b8 and verified on the physical Samsung SM-A136B, R5CT61TE14Z, Android 14/API 34. App **0.4.0-adapter (4)**. APK identity is recorded in evidence/fixture/build.json.
 
@@ -537,7 +552,7 @@ Built from e88b9b8 and verified on the physical Samsung SM-A136B, R5CT61TE14Z, A
 
 ### Physical acceptance
 
-**evidence/fixture/results.json: 19/19 cases passed their assertions.** The suite communicated Windows -> Samsung -> Windows solely over LAN HTTP with the PC ADB server stopped at both ends. Successful commands took 31.8ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“32.6 seconds. The 200ms timeout returned TIMEOUT in 229ms; no instruction remained pending.
+**evidence/fixture/results.json: 19/19 cases passed their assertions.** The suite communicated Windows -> Samsung -> Windows solely over LAN HTTP with the PC ADB server stopped at both ends. Successful commands took 31.8ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ32.6 seconds. The 200ms timeout returned TIMEOUT in 229ms; no instruction remained pending.
 
 | Case | Observed stage | Duration ms |
 | --- | --- | --- |
@@ -573,7 +588,7 @@ Scope: fictional local simulator, currently visible English layouts and the prov
 
 ---
 
-## Milestone 3 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â PASS on the physical Samsung
+## Milestone 3 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â PASS on the physical Samsung
 
 Verified 2026-09-20 on the physical Samsung SM-A136B, R5CT61TE14Z, Android 14 / API 34, starting from commit 1a20c51. App version **0.3.0-coordinator (3)**.
 
@@ -623,7 +638,7 @@ The current supported field/text contract remains the bounded Milestone 2 contra
 
 ---
 
-## Milestone 2 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â PASS on the physical Samsung
+## Milestone 2 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â PASS on the physical Samsung
 
 Verified 2026-09-20 on Samsung SM-A136B, R5CT61TE14Z, Android 14 / API 34. Built and deployed from milestone 1 commit 7611e27.
 
@@ -660,17 +675,17 @@ Evidence: **evidence/text-final/results.json**, per-run instructions/results/scr
 | kill app after INPUT_SENT / before verification | INTERRUPTED; persisted input_attempts=1; same ID rejected |
 | new instruction after process restart: Recovered 42 | PASS |
 
-Successful final cases completed in 4.773ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“5.071 seconds. Example pixel-derived field bounds: [57,395,664,521]. Each completed ID was re-submitted and its result remained unchanged. The selected keyboard stayed com.samsung.android.honeyboard/.service.HoneyBoardService.
+Successful final cases completed in 4.773ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ5.071 seconds. Example pixel-derived field bounds: [57,395,664,521]. Each completed ID was re-submitted and its result remained unchanged. The selected keyboard stayed com.samsung.android.honeyboard/.service.HoneyBoardService.
 
 Failure states include an after screenshot when the deadline permits. Timeout and process interruption may prevent an after-frame; those references are explicitly null with a persisted reason. They never imply successful observation.
 
-Milestone 1 regression evidence: **evidence/text-visual-regression/results.json** ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â all eight cases passed their assertions, including capture error code 4, visual tap/state verification, ambiguity rejection, duplicate protection and process recovery.
+Milestone 1 regression evidence: **evidence/text-visual-regression/results.json** ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â all eight cases passed their assertions, including capture error code 4, visual tap/state verification, ambiguity rejection, duplicate protection and process recovery.
 
 Final tested APK SHA256: **5C08D1AC852A2A8C49EF32F390C80334B4CA57E809972D961A79C61E453E2EA4**.
 
 ### Scope and next work
 
-No blocker remains for Milestone 2. The current bounded contract supports visible outlined fields with a unique single-word hint and 1ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“128 UTF-16 units of supplied text on API 33+. Borderless/ambiguous/unidentifiable or unprovably focused fields fail explicitly. Password fields are excluded. Multiline, clipped text and non-English visual recognition are not claimed by this acceptance proof.
+No blocker remains for Milestone 2. The current bounded contract supports visible outlined fields with a unique single-word hint and 1ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ128 UTF-16 units of supplied text on API 33+. Borderless/ambiguous/unidentifiable or unprovably focused fields fail explicitly. Password fields are excluded. Multiline, clipped text and non-English visual recognition are not claimed by this acceptance proof.
 
 Next: session handling, production coordinator intake, broader visual selectors and a neutral end-to-end instruction workflow. No production coordinator endpoint or keyboard replacement was introduced.
 
@@ -678,7 +693,7 @@ Next: session handling, production coordinator intake, broader visual selectors 
 
 Updated: 2026-09-20 21:40 Europe/London.
 
-## Milestone 1 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â PASS on the physical Samsung
+## Milestone 1 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â PASS on the physical Samsung
 
 Accessibility screenshot -> OCR target bounds -> dispatchGesture tap -> second screenshot -> verified neutral page state change.
 
@@ -687,7 +702,7 @@ App: existing com.bet365agent / Bet365Agent. Chrome: com.android.chrome.
 
 ## Exact diagnosis
 
-The inherited captureScreenshotAsset() returned null on every Android version and never called takeScreenshot(). The historical ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œFailed to capture initial screenshotÃƒÂ¢Ã¢â€šÂ¬Ã‚Â therefore had **no Android result/error code**. It was not evidence of a Samsung restriction.
+The inherited captureScreenshotAsset() returned null on every Android version and never called takeScreenshot(). The historical ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“Failed to capture initial screenshotÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â therefore had **no Android result/error code**. It was not evidence of a Samsung restriction.
 
 Service XML also omitted android:canTakeScreenshot="true". Bound capabilities were 33 (content + gestures); after deployment Android rebound with capabilities=161 (33 + screenshot capability 128).
 
@@ -700,7 +715,7 @@ Other inherited gaps: missing bundled OCR model, estimated coordinates, main-thr
 - Errors 1 and 3 retry at most twice, 700ms apart. Other capture errors terminate the run.
 - Tesseract OCR and PNG writing on a worker. Existing tess-two and AccessibilityService/dispatchGesture architecture retained.
 - Official English legacy model bundled and atomically installed in private storage. Automatic page segmentation returns actual word bounds; sparse mode missed bordered labels.
-- One exact NEPTUNE match required. Precondition: exact words ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œNeutral visual testÃƒÂ¢Ã¢â€šÂ¬Ã‚Â and READY. Postcondition: COMPLETE and READY absent. No guessed bounds or success heuristic.
+- One exact NEPTUNE match required. Precondition: exact words ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“Neutral visual testÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â and READY. Postcondition: COMPLETE and READY absent. No guessed bounds or success heuristic.
 - Gesture completion/cancellation callbacks; bounded readiness and verification retries; 30-second overall deadline and late-callback guards.
 - Durable consumed IDs before effects, busy/duplicate rejection, persisted phase/result, restart interruption without replay. This is currently specific to the neutral runner, not a general coordinator/session protocol.
 - Service connect/unbind/destroy cleanup. A killed process recovers as INTERRUPTED on rebind.
@@ -747,9 +762,10 @@ The app button expects the page served on host port 8765 and adb reverse tcp:876
 3. General state verification, session handling, coordinator intake and neutral end-to-end workflow.
 4. Extend persistence/idempotency/recovery to all generic coordinator actions.
 
-Earlier BUILD_STATUS reported the legacy search query ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œFulhamÃƒÂ¢Ã¢â€šÂ¬Ã‚Â passed on 2026-09-20. This historical result is preserved as context, not revalidated here. Existing legacy search/fixture code remains.
+Earlier BUILD_STATUS reported the legacy search query ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“FulhamÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â passed on 2026-09-20. This historical result is preserved as context, not revalidated here. Existing legacy search/fixture code remains.
 
 No physical-action or credential blocker remains for this milestone. Tracked Gradle/build artifacts were already dirty at takeover and are excluded from the source milestone commit.
+
 
 
 

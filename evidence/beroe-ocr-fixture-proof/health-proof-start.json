@@ -1,0 +1,31 @@
+{
+  "healthy": true,
+  "heartbeat_ms": 1790193428116,
+  "uptime_ms": 280418,
+  "state": "IDLE",
+  "current_instruction": null,
+  "last_result": {
+    "instruction_id": "ocr-fulham-01-1790193326",
+    "status": "FAIL",
+    "stage": "AMBIGUOUS_FIXTURE",
+    "detail": "Multiple plausible fixtures for query 'Fulham': [ipswich|fulham, fulham|hull, fulham|crystal palace]",
+    "duration_ms": 48720,
+    "execution_count": 1,
+    "run_id": "c_WXOq3---V7e2c2unzXq-_93oEA9NQH7Un2gupQo8HkM",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "Multiple plausible fixtures for query 'Fulham': [ipswich|fulham, fulham|hull, fulham|crystal palace]"
+  },
+  "app_version": "0.6.26-ocr",
+  "version_code": 38,
+  "endpoint": "http://100.114.45.68:8767",
+  "pid": 19959,
+  "device_id": "galaxy-a13-5g",
+  "session": {
+    "state": "AUTHENTICATED",
+    "observed_at_ms": 1790193392113,
+    "detail": "idle probe"
+  }
+}

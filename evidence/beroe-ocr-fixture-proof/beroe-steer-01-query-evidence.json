@@ -1,0 +1,125 @@
+{
+  "run_id": "c_SjIg9mILpTpO7E6XPsJCN37RdmVKV4jj4T2qRANKIL4",
+  "requested_text": "BC Beroe",
+  "field_hint": "bet365...",
+  "package": "com.android.chrome",
+  "mechanism": "AccessibilityInputConnection.commitText",
+  "started_at_ms": 1790193821517,
+  "started_elapsed_ms": 27574041,
+  "timeout_ms": 60000,
+  "status": "PASS",
+  "field_bounds": [
+    124,
+    157,
+    487,
+    224
+  ],
+  "pre_screenshot": "files/visual/c_SjIg9mILpTpO7E6XPsJCN37RdmVKV4jj4T2qRANKIL4/before.png",
+  "post_screenshot": "files/visual/c_SjIg9mILpTpO7E6XPsJCN37RdmVKV4jj4T2qRANKIL4/after.png",
+  "verification_result": "EXACT_INPUT_OCR_SOFT",
+  "input_attempts": 1,
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0
+    },
+    {
+      "phase": "LOCATING",
+      "elapsed_ms": 20
+    },
+    {
+      "phase": "FOCUS_BLUR_STALE",
+      "elapsed_ms": 1779
+    },
+    {
+      "phase": "FOCUS_BLURRED",
+      "elapsed_ms": 2046
+    },
+    {
+      "phase": "FOCUS_DISPATCHING",
+      "elapsed_ms": 2253
+    },
+    {
+      "phase": "FOCUS_GESTURE_COMPLETED",
+      "elapsed_ms": 2414
+    },
+    {
+      "phase": "FOCUS_CONFIRMED",
+      "elapsed_ms": 2651
+    },
+    {
+      "phase": "INPUT_COMMITTING",
+      "elapsed_ms": 4172
+    },
+    {
+      "phase": "INPUT_SENT",
+      "elapsed_ms": 4191
+    },
+    {
+      "phase": "VERIFYING",
+      "elapsed_ms": 4811
+    },
+    {
+      "phase": "VERIFYING",
+      "elapsed_ms": 7089
+    },
+    {
+      "phase": "VERIFYING",
+      "elapsed_ms": 9559
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 11516
+    }
+  ],
+  "phase": "FINISHED",
+  "focus_cycle": 0,
+  "blur_tap_xy": [
+    305,
+    364
+  ],
+  "focus_baseline_generation": 9,
+  "focus_tap_elapsed_ms": 27576293,
+  "focus_tap_xy": [
+    305,
+    190
+  ],
+  "editor_package": "com.android.chrome",
+  "editor_generation": 10,
+  "editor_start_elapsed_ms": 27576562,
+  "ime_window_visible": false,
+  "focus_signals": {
+    "fresh_generation": true,
+    "generation": 10,
+    "baseline_generation": 9,
+    "ime_window_visible": false,
+    "focus_cycle": 0
+  },
+  "focused_screenshot": "files/visual/c_SjIg9mILpTpO7E6XPsJCN37RdmVKV4jj4T2qRANKIL4/focused.png",
+  "focused_field_bounds": [
+    124,
+    157,
+    487,
+    224
+  ],
+  "wrong_field": false,
+  "prior_text_length": 28,
+  "visible_field_text": "Serod",
+  "ocr_verify_attempt": 2,
+  "post_field_bounds": [
+    124,
+    157,
+    487,
+    224
+  ],
+  "observed_text": "BC Beroe",
+  "exact_input_match": true,
+  "visual_text_match": false,
+  "bounds_unchanged": true,
+  "focus_session_fresh": true,
+  "ocr_gate": "SOFT_SUPPORTING",
+  "ocr_soft_pass": true,
+  "detail": "Exact editor value verified; OCR supporting evidence imperfect but field/focus gates held",
+  "ended_at_ms": 1790193833033,
+  "duration_ms": 11516
+}

@@ -23,9 +23,17 @@ final class Bet365LiveAdapter implements SiteAdapter {
     private final VisualSession ui;
     private final String sport;
     private Fixture liveFixture;
+    /** Last typed search query (exact). Used for fixture identity, never fuzzy OCR. */
+    private String lastQuery = "";
+    /** Optional expected away team for hard fixture pairing (OPEN_SEARCH proofs / future schema). */
+    private String expectedAway = "";
     Bet365LiveAdapter(VisualSession ui, String sport) {
         this.ui = ui;
         this.sport = sport == null ? "football" : sport.toLowerCase(Locale.US);
+    }
+
+    void setExpectedAway(String away) {
+        this.expectedAway = away == null ? "" : away.trim();
     }
 
     public CompletableFuture<Void> open_home() {
@@ -314,20 +322,38 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     public CompletableFuture<Void> enter_query(String query) {
         String q = (query == null || query.trim().isEmpty()) ? defaultQuery() : query.trim();
+        // Support optional "Home||Away" proof encoding: type Home only; hard-verify Away in results.
+        String awayHint = "";
+        int sep = q.indexOf("||");
+        if (sep > 0) {
+            awayHint = q.substring(sep + 2).trim();
+            q = q.substring(0, sep).trim();
+        }
+        if (!awayHint.isEmpty()) expectedAway = awayHint;
+        lastQuery = q;
+        ui.put("search_query", q);
+        if (!expectedAway.isEmpty()) ui.put("expected_away", expectedAway);
+        final String queryText = q;
         return ui.capture("query_pre").thenCompose(s -> {
             require(!visible(s, "SIMULATOR", "SEARCHPAGE"), "TARGET_NOT_FOUND", "Simulator leaked into live search");
             // Only skip typing when real search results (not Recent Searches + Close) are already on screen.
-            if (hasLiveSearchResults(s, q)) {
-                return ui.dismissKeyboard().thenCompose(v -> ui.delay(400)).thenCompose(v -> ui.capture("query_results")).thenAccept(r -> {
-                    require(hasLiveSearchResults(r, q), "TEXT_NOT_VERIFIED", "Live query results not visible");
-                });
+            if (hasLiveSearchResults(s, queryText)) {
+                final String typed = queryText;
+                return ui.dismissKeyboard().thenCompose(v -> ui.delay(400)).thenCompose(v -> ui.capture("query_results"))
+                    .thenCompose(r -> steerSearchResultsToSports(r).thenCompose(v2 -> ui.capture("query_results_sports")).thenAccept(sports -> {
+                        assertUniqueFixtureForQuery(sports, typed);
+                    }));
             }
-            VisualScreen.Line recent = recentSearchChip(s, q);
+            VisualScreen.Line recent = recentSearchChip(s, queryText);
             if (recent != null) {
-                return ui.tap(recent.bounds, "Recent " + q).thenCompose(v -> ui.delay(1200)).thenCompose(v -> ui.capture("query_results")).thenAccept(r -> {
-                    require(!visible(r, "SIMULATOR", "SEARCHPAGE"), "TARGET_NOT_FOUND", "Simulator leaked into live search");
-                    require(hasLiveSearchResults(r, q), "TEXT_NOT_VERIFIED", "Recent search did not open live results");
-                });
+                final String typed = queryText;
+                return ui.tap(recent.bounds, "Recent " + typed).thenCompose(v -> ui.delay(1200)).thenCompose(v -> ui.capture("query_results"))
+                    .thenCompose(r -> {
+                        require(!visible(r, "SIMULATOR", "SEARCHPAGE"), "TARGET_NOT_FOUND", "Simulator leaked into live search");
+                        return steerSearchResultsToSports(r).thenCompose(v2 -> ui.capture("query_results_sports")).thenAccept(sports -> {
+                            assertUniqueFixtureForQuery(sports, typed);
+                        });
+                    });
             }
             CompletableFuture<Void> clear = CompletableFuture.completedFuture(null);
             VisualScreen.Line clearBtn = null;
@@ -339,10 +365,17 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 clear = ui.tap(btn.bounds, "Clear search").thenCompose(v -> ui.delay(400));
             }
             String hint = visible(s, "bet365...") ? "bet365..." : "Search";
-            return clear.thenCompose(v -> ui.type(hint, q)).thenCompose(v -> ui.dismissKeyboard()).thenCompose(v -> ui.delay(900)).thenCompose(v -> ui.capture("query_results")).thenAccept(r -> {
-                require(!visible(r, "SIMULATOR", "SEARCHPAGE"), "TARGET_NOT_FOUND", "Simulator leaked into live search");
-                require(hasLiveSearchResults(r, q) || visible(r, q), "TEXT_NOT_VERIFIED", "Live query results not visible after typing");
-            });
+            final String typed = queryText;
+            return clear.thenCompose(v -> ui.type(hint, typed)).thenCompose(v -> ui.dismissKeyboard()).thenCompose(v -> ui.delay(1200))
+                .thenCompose(v -> ui.capture("query_results"))
+                .thenCompose(r -> {
+                    require(!visible(r, "SIMULATOR", "SEARCHPAGE"), "TARGET_NOT_FOUND", "Simulator leaked into live search");
+                    return steerSearchResultsToSports(r).thenCompose(v2 -> ui.capture("query_results_sports")).thenAccept(sports -> {
+                        // Do not fail-closed on imperfect full-screen OCR of the typed query string.
+                        // Hard identity gate = unique search-result fixture (both teams when expectedAway set).
+                        assertUniqueFixtureForQuery(sports, typed);
+                    });
+                });
         });
     }
 
@@ -354,14 +387,12 @@ final class Bet365LiveAdapter implements SiteAdapter {
             for (Fixture f : all) observed.put(f.json());
             ui.put("discovered_fixtures", observed);
             require(!all.isEmpty(), "NO_FIXTURE_FOUND", "No live fixture row parsed from Bet365 search OCR");
-            String q = defaultQuery().toLowerCase(Locale.US);
-            Fixture first = all.get(0);
-            for (Fixture f : all) {
-                String blob = (f.home + " " + f.away).toLowerCase(Locale.US);
-                if (blob.contains(q)) { first = f; break; }
-            }
+            String q = (lastQuery == null || lastQuery.isEmpty()) ? defaultQuery() : lastQuery;
+            Fixture chosen = selectUniqueFixtureForQuery(all, q, expectedAway);
+            liveFixture = chosen;
             ui.put("sport_observed", sport);
-            return first;
+            ui.put("verified_fixture", chosen.json());
+            return chosen;
         });
     }
 
@@ -1460,6 +1491,116 @@ final class Bet365LiveAdapter implements SiteAdapter {
         if (u.equals("home") || u.equals("away") || u.equals("draw") || u.equals("live") || u.equals("close")) return false;
         if (u.contains("in-play") || u.contains("sports") || u.contains("casino")) return false;
         return true;
+    }
+
+    /**
+     * When Bet365 search surfaces Casino-first hits (common for "BC ?" queries),
+     * tap a Sports/Football/Basketball/Events/TEAMS chip before fixture identity.
+     * Does not weaken fixture matching ? only changes which results pane is OCR'd.
+     */
+    private CompletableFuture<Void> steerSearchResultsToSports(VisualScreen s) {
+        if (s == null) return CompletableFuture.completedFuture(null);
+        if (!fixturesFromSearch(s).isEmpty()) return CompletableFuture.completedFuture(null);
+        VisualScreen.Line chip = null;
+        String[] prefer = new String[] {"Sports", "Football", "Basketball", "Events", "TEAMS", "Teams"};
+        for (String label : prefer) {
+            for (VisualScreen.Line line : s.lines) {
+                String t = line.text.trim();
+                if (!t.equalsIgnoreCase(label) && !t.equalsIgnoreCase(label + " ")) continue;
+                if (line.bounds.top < 200 || line.bounds.top > 520) continue;
+                chip = line;
+                break;
+            }
+            if (chip != null) break;
+        }
+        // Casino-only pane: still try a broader Sports token anywhere in the filter strip.
+        if (chip == null && visible(s, "Casino")) {
+            for (VisualScreen.Line line : s.lines) {
+                String up = line.text.trim().toUpperCase(Locale.US);
+                if (line.bounds.top < 200 || line.bounds.top > 560) continue;
+                if (up.equals("SPORTS") || up.equals("FOOTBALL") || up.equals("BASKETBALL") || up.equals("EVENTS") || up.equals("TEAMS")) {
+                    chip = line;
+                    break;
+                }
+            }
+        }
+        if (chip == null) return CompletableFuture.completedFuture(null);
+        ui.put("search_results_steer", chip.text);
+        return ui.tap(chip.bounds, "Search filter " + chip.text).thenCompose(v -> ui.delay(1100));
+    }
+
+    /**
+     * Hard fixture identity gate (search results): positively identify the queried team,
+     * require a single home/away pairing, and when expectedAway is set require that away too.
+     * No fuzzy OCR confusion mapping — imperfect OCR must not select a market.
+     */
+    private void assertUniqueFixtureForQuery(VisualScreen s, String q) {
+        List<Fixture> all = fixturesFromSearch(s);
+        JSONArray observed = new JSONArray();
+        for (Fixture f : all) observed.put(f.json());
+        ui.put("search_result_fixtures", observed);
+        ui.put("search_ocr_readback", screenTextBlob(s));
+        if (all.isEmpty()) {
+            throw new Failure("NO_FIXTURE_FOUND",
+                    "No sports fixture rows parsed after query '" + q + "'; OCR=" + screenTextBlob(s));
+        }
+        Fixture chosen = selectUniqueFixtureForQuery(all, q, expectedAway);
+        liveFixture = chosen;
+        ui.put("verified_fixture", chosen.json());
+        ui.put("fixture_home", chosen.home);
+        ui.put("fixture_away", chosen.away);
+    }
+
+    private static Fixture selectUniqueFixtureForQuery(List<Fixture> all, String query, String expectedAway) {
+        String q = query == null ? "" : query.trim();
+        String away = expectedAway == null ? "" : expectedAway.trim();
+        require(!q.isEmpty(), "NO_FIXTURE_FOUND", "No search query available for fixture identity");
+        List<Fixture> matches = new ArrayList<>();
+        for (Fixture f : all) {
+            boolean qHit = teamPositivelyIdentified(f.home, q) || teamPositivelyIdentified(f.away, q);
+            if (!qHit) continue;
+            if (!away.isEmpty()) {
+                boolean awayHit = teamPositivelyIdentified(f.home, away) || teamPositivelyIdentified(f.away, away);
+                if (!awayHit) continue;
+                // Both teams must sit on opposite sides (correct pairing).
+                boolean queryHome = teamPositivelyIdentified(f.home, q);
+                boolean queryAway = teamPositivelyIdentified(f.away, q);
+                boolean awayHome = teamPositivelyIdentified(f.home, away);
+                boolean awayAwaySide = teamPositivelyIdentified(f.away, away);
+                if (!((queryHome && awayAwaySide) || (queryAway && awayHome))) continue;
+            }
+            matches.add(f);
+        }
+        if (matches.isEmpty()) {
+            throw new Failure(!away.isEmpty() ? "WRONG_EVENT" : "NO_FIXTURE_FOUND",
+                    !away.isEmpty()
+                            ? ("No fixture pairing for '" + q + "' vs '" + away + "'")
+                            : ("No search result fixture positively identifies query '" + q + "'"));
+        }
+        // Collapse to unique home|away pairings (ignore competition duplicates).
+        LinkedHashMap<String, Fixture> pairings = new LinkedHashMap<>();
+        for (Fixture f : matches) {
+            String key = f.home.toLowerCase(Locale.US) + "|" + f.away.toLowerCase(Locale.US);
+            pairings.putIfAbsent(key, f);
+        }
+        require(pairings.size() == 1, "AMBIGUOUS_FIXTURE",
+                "Multiple plausible fixtures for query '" + q + "'"
+                        + (away.isEmpty() ? "" : (" vs '" + away + "'"))
+                        + ": " + pairings.keySet());
+        return pairings.values().iterator().next();
+    }
+
+    /** Positive team identity: exact or contains full multi-word query; no OCR confusion aliases. */
+    private static boolean teamPositivelyIdentified(String teamName, String requested) {
+        if (teamName == null || requested == null) return false;
+        String t = teamName.trim().replaceAll("\\s+", " ").toLowerCase(Locale.US);
+        String r = requested.trim().replaceAll("\\s+", " ").toLowerCase(Locale.US);
+        if (t.isEmpty() || r.isEmpty()) return false;
+        if (t.equals(r)) return true;
+        if (t.contains(r)) return true;
+        // Allow requested "BC Beroe" to match team "Beroe" only when requested ends with that token.
+        if (r.endsWith(" " + t) && t.length() >= 4) return true;
+        return false;
     }
 
     private static boolean hasLiveSearchResults(VisualScreen s, String q) {

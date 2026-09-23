@@ -1,0 +1,23 @@
+{
+  "ROOT_CAUSE": "TEXT_NOT_VERIFIED when exact_input_match=true but field OCR misread BC Beroe as Seroe/Serod",
+  "QUERY_VERIFICATION_FIX": "PASS \u2014 editor exact required; OCR soft-pass when bounds unchanged + fresh focus",
+  "OCR_RETRY": "PASS \u2014 3 OCR/recapture attempts before soft-pass (Beroe saw VERIFYING x3, ocr=Serod/Seroe)",
+  "EDITOR_MATCH": "PASS \u2014 exact_input_match true on Beroe and Fulham cycles",
+  "FIXTURE_HARD_GATE": "PASS on Fulham||Crystal Palace (unique pairing); Beroe NO_FIXTURE_FOUND fail-closed (Casino-only pane, no sports rows)",
+  "WRONG_FIXTURE_PROTECTION": "PASS \u2014 Fulham alone -> AMBIGUOUS_FIXTURE [ipswich|fulham, fulham|hull, fulham|crystal palace]",
+  "SPORTS_STEER": "FAIL_CASINO_ONLY \u2014 steer ran (query_results_sports.png) but Bet365 search for BC Beroe exposed only Casino chip; no Sports/Football/TEAMS chip to tap",
+  "BEROE_SOFT_OCR": "PASS",
+  "BEROE_FIXTURE_HARD_GATE": "NO_FIXTURE_FOUND (fail-closed; Casino-only)",
+  "FULHAM_WRONG_FIXTURE_PROTECTION": "PASS",
+  "FULHAM_PAIR_UNIQUE": "PASS (Fulham v Crystal Palace)",
+  "REPEAT_TEST": "PASS for Fulham unique pairing; Beroe soft-OCR reproduced",
+  "READY_FOR_LIVE_REPROOF": "NO",
+  "DISPATCH_NOW": false,
+  "dispatch_enabled_end": false,
+  "APP_VERSION": "0.6.26-ocr",
+  "VERSION_CODE": 38,
+  "COMMIT_PENDING": true,
+  "evidence_dir": "evidence/beroe-ocr-fixture-proof/",
+  "CASINO_ONLY_BLOCKER": "Bet365 mobile search for exact query \"BC Beroe\" returns a Casino-only results pane (URL #/AX/K9; chip \"Casino\"; no Football/TEAMS/Sports filter chip and no home/away fixture rows). Sports-steer executed but could not tap a Sports category that is not present. OCR soft-pass correctly allowed exact editor text \"BC Beroe\" despite field OCR \"Serod\"/\"Seroe\"; fixture hard gate then fail-closed with NO_FIXTURE_FOUND (no market navigation). Fulham wrong-fixture protection and Fulham||Crystal Palace unique pairing both PASS. Live READY for BC Beroe vs Ferrol will remain blocked until Bet365 surfaces a sports fixture row for that query.",
+  "captured_at": "2026-09-23T21:07:08.893599+01:00"
+}
