@@ -126,13 +126,28 @@ final class CoordinatorAgent implements AutoCloseable {
         try {
             PowerManager power = (PowerManager) service.getSystemService(android.content.Context.POWER_SERVICE);
             KeyguardManager keyguard = (KeyguardManager) service.getSystemService(android.content.Context.KEYGUARD_SERVICE);
-            if (!power.isInteractive()) { complete(row, "FOCUS_FAILED", "Phone must be awake and unlocked"); return; }
+            // Best-effort screen wake (no ADB): ACQUIRE_CAUSES_WAKEUP. Unlock still required if keyguard is secure.
+            try {
+                if (power != null && !power.isInteractive()) {
+                    @SuppressWarnings("deprecation")
+                    PowerManager.WakeLock wake = power.newWakeLock(
+                        PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE,
+                        "bet365agent:instruction");
+                    wake.acquire(4000L);
+                    try { Thread.sleep(250); } catch (InterruptedException ignored) {}
+                    if (wake.isHeld()) wake.release();
+                }
+            } catch (Exception ignored) {}
+            if (power == null || !power.isInteractive()) { complete(row, "FOCUS_FAILED", "Phone must be awake and unlocked"); return; }
             store.executing(instruction.id);
-            if(instruction.action.equals("ADAPTER_WORKFLOW")) {
+            if(instruction.action.equals("ADAPTER_WORKFLOW") || instruction.action.equals("SESSION_CHECK") || instruction.action.equals("SESSION_PROBE") || instruction.action.equals("OPEN_SEARCH")) {
                 if(!runner.startExternal(instruction.runId,remaining(row,instruction.timeout))) {complete(row,"INTERNAL_ERROR","Runner rejected workflow");return;}
                 VisualSession session=new VisualSession(service,runner,instruction.runId,instruction.adapter);
+                if(instruction.action.equals("SESSION_PROBE")) { new SessionProbeWorkflow(session).start(); return; }
                 SiteAdapter adapter=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id,instruction.sport,instruction.stake);
-                new AdapterWorkflow(session,adapter).start(instruction.text,instruction.market,instruction.side,instruction.line,instruction.minimumPrice,instruction.stake,instruction.executionMode,instruction.confirmationStatus);
+                if(instruction.action.equals("SESSION_CHECK")) new SessionCheckWorkflow(session,adapter).start();
+                else if(instruction.action.equals("OPEN_SEARCH")) new SearchOpenWorkflow(session,adapter,instruction.text).start();
+                else new AdapterWorkflow(session,adapter).start(instruction.text,instruction.market,instruction.side,instruction.line,instruction.minimumPrice,instruction.stake,instruction.executionMode,instruction.confirmationStatus);
                 return;
             }
             String url = CoordinatorConfig.prefs(service).getString("start_url", "").trim();
@@ -164,7 +179,8 @@ final class CoordinatorAgent implements AutoCloseable {
         put(result, "execution_count", current.optInt("execution_count"));
         put(result, "run_id", current.optString("run_id"));
         JSONObject proof=evidence(current);
-        if(proof!=null && current.optJSONObject("payload").optString("action").equals("ADAPTER_WORKFLOW")) {
+        String completedAction=current.optJSONObject("payload").optString("action");
+        if(proof!=null && (completedAction.equals("ADAPTER_WORKFLOW") || completedAction.equals("SESSION_CHECK") || completedAction.equals("SESSION_PROBE") || completedAction.equals("OPEN_SEARCH"))) {
             JSONObject fixture=proof.optJSONObject("fixture");
             for(String key:new String[]{"fixture_name","home","away","competition"})put(result,key,fixture==null?JSONObject.NULL:fixture.opt(key));
             put(result,"selection",proof.opt("selection"));put(result,"final_state",proof.opt("final_state"));put(result,"ready_state",proof.opt("ready_state"));put(result,"complete_execution_ready",proof.opt("complete_execution_ready"));put(result,"place_bet_tapped",proof.opt("place_bet_tapped"));put(result,"place_bet_result",proof.opt("place_bet_result"));put(result,"place_bet_detail",proof.opt("place_bet_detail"));if(proof.has("wager_submitted"))put(result,"wager_submitted",proof.opt("wager_submitted"));
@@ -179,7 +195,7 @@ final class CoordinatorAgent implements AutoCloseable {
     }
     private static String stage(String textStatus) {
         if (textStatus.equals("FIELD_NOT_FOUND")) return "TARGET_NOT_FOUND";
-        return Set.of("PASS", "FOCUS_FAILED", "INPUT_FAILED", "TEXT_NOT_VERIFIED", "TIMEOUT", "NO_FIXTURE_FOUND", "AMBIGUOUS_FIXTURE", "TARGET_NOT_FOUND", "CLICK_FAILED", "WRONG_EVENT", "EVENT_NOT_VERIFIED", "PRICE_CHANGED", "LINE_CHANGED", "SELECTION_CHANGED", "SUSPENDED", "UNAVAILABLE", "BELOW_MINIMUM").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
+        return Set.of("PASS", "LOGIN_FAILED", "SESSION_EXPIRED", "FOCUS_FAILED", "INPUT_FAILED", "TEXT_NOT_VERIFIED", "TIMEOUT", "NO_FIXTURE_FOUND", "AMBIGUOUS_FIXTURE", "TARGET_NOT_FOUND", "CLICK_FAILED", "WRONG_EVENT", "EVENT_NOT_VERIFIED", "PRICE_CHANGED", "LINE_CHANGED", "SELECTION_CHANGED", "SUSPENDED", "UNAVAILABLE", "BELOW_MINIMUM").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
     }
     private JSONObject health() throws Exception {
         JSONObject active = store.active(), last = store.last();
@@ -263,7 +279,8 @@ final class CoordinatorAgent implements AutoCloseable {
     }
     private JSONObject evidence(JSONObject row) {
         try {
-            boolean workflow=row.getJSONObject("payload").optString("action").equals("ADAPTER_WORKFLOW");
+            String action=row.getJSONObject("payload").optString("action");
+            boolean workflow=action.equals("ADAPTER_WORKFLOW") || action.equals("SESSION_CHECK") || action.equals("SESSION_PROBE") || action.equals("OPEN_SEARCH");
             File file = new File(service.getFilesDir(), (workflow?"workflow/":"text/") + row.getString("run_id") + "/result.json");
             return file.isFile() ? new JSONObject(new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8)) : null;
         } catch (Exception e) { return null; }

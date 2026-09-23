@@ -1,0 +1,89 @@
+{
+  "open_search": [
+    {
+      "i": 1,
+      "id": "open-search-1790178324-1",
+      "ok": true,
+      "status": "PASS",
+      "stage": "PASS",
+      "detail": "OPEN_SEARCH"
+    },
+    {
+      "i": 2,
+      "id": "open-search-1790178596-2",
+      "ok": true,
+      "status": "PASS",
+      "stage": "PASS",
+      "detail": "OPEN_SEARCH"
+    },
+    {
+      "i": 3,
+      "id": "open-search-1790178878-3",
+      "ok": true,
+      "status": "PASS",
+      "stage": "PASS",
+      "detail": "OPEN_SEARCH"
+    },
+    {
+      "i": 4,
+      "id": "open-search-1790179107-4",
+      "ok": true,
+      "status": "PASS",
+      "stage": "PASS",
+      "detail": "OPEN_SEARCH"
+    },
+    {
+      "i": 5,
+      "id": "open-search-1790179344-5",
+      "ok": true,
+      "status": "PASS",
+      "stage": "PASS",
+      "detail": "OPEN_SEARCH"
+    }
+  ],
+  "text_entry": {
+    "id": "search-fulham-1790179552",
+    "ok": true,
+    "status": "PASS",
+    "stage": "PASS",
+    "detail": "OPEN_SEARCH_QUERY"
+  },
+  "app_version": "0.6.24-search",
+  "version_code": 36,
+  "health_end": {
+    "healthy": true,
+    "heartbeat_ms": 1790179837234,
+    "uptime_ms": 1680437,
+    "state": "IDLE",
+    "current_instruction": null,
+    "last_result": {
+      "instruction_id": "search-fulham-1790179552",
+      "status": "PASS",
+      "stage": "PASS",
+      "detail": "OPEN_SEARCH_QUERY",
+      "duration_ms": 81474,
+      "execution_count": 1,
+      "run_id": "c_uKDattnH-GbiXZIEctUYFrihA03hkdVp-USwd9sCbiU",
+      "fixture_name": null,
+      "home": null,
+      "away": null,
+      "competition": null,
+      "verification_detail": "OPEN_SEARCH: query 'Fulham' entered and results verified; reset afterward"
+    },
+    "app_version": "0.6.24-search",
+    "version_code": 36,
+    "endpoint": "http://100.114.45.68:8767",
+    "pid": 32755,
+    "device_id": "galaxy-a13-5g",
+    "session": {
+      "state": "AUTHENTICATED",
+      "observed_at_ms": 1790179707117,
+      "detail": "idle probe"
+    }
+  },
+  "SEARCH_OPEN": "PASS",
+  "5X_REPEAT": "PASS",
+  "SEARCH_TEXT_ENTRY": "PASS",
+  "RESET_STATE": "PASS",
+  "READY_FOR_LIVE_REPROOF": "YES"
+}

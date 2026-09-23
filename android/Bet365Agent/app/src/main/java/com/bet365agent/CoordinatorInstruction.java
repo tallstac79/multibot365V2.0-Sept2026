@@ -57,25 +57,46 @@ final class CoordinatorInstruction {
         placeBet = "dispatch".equals(executionMode);
         if(fields.containsKey("place_bet") && !Set.of("true","false").contains(fields.get("place_bet")))
             throw new IllegalArgumentException("Invalid place_bet");
-        target=fields.getOrDefault("target_text", ""); text=fields.getOrDefault(action.equals("ADAPTER_WORKFLOW")?"query":"input_text", "");
-        Set<String> expected=action.equals("OPEN_AND_TYPE")?Set.of("instruction_id","action","target_text","input_text","timeout_ms"):
-            Set.of("instruction_id","action","adapter","scenario","query","market","side","sport","minimum_price","stake","timeout_ms");
-        if(!action.equals("OPEN_AND_TYPE")) {
-            // Optional execution fields: any subset of place_bet / execution_mode / confirmation_status
+        target=fields.getOrDefault("target_text", ""); text=fields.getOrDefault(action.equals("ADAPTER_WORKFLOW")||action.equals("OPEN_SEARCH")?"query":"input_text", "");
+        Set<String> expected;
+        if(action.equals("OPEN_AND_TYPE")) {
+            expected=Set.of("instruction_id","action","target_text","input_text","timeout_ms");
+            if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid OPEN_AND_TYPE schema");
+        } else if(action.equals("OPEN_SEARCH")) {
+            // query optional: omit for open-only; include for Searchâ†’typeâ†’results harness
+            java.util.HashSet<String> openSearchBase = new java.util.HashSet<>(java.util.Arrays.asList(
+                "instruction_id","action","adapter","scenario","sport","timeout_ms"));
+            java.util.HashSet<String> keys = new java.util.HashSet<>(fields.keySet());
+            if(!keys.containsAll(openSearchBase)) throw new IllegalArgumentException("Invalid OPEN_SEARCH schema");
+            keys.removeAll(openSearchBase);
+            if(!keys.isEmpty() && !(keys.size()==1 && keys.contains("query")))
+                throw new IllegalArgumentException("Invalid OPEN_SEARCH extras");
+        } else if(action.equals("SESSION_CHECK")) {
+            expected=Set.of("instruction_id","action","adapter","scenario","sport","timeout_ms");
+            if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid SESSION_CHECK schema");
+        } else if(action.equals("SESSION_PROBE")) {
+            expected=Set.of("instruction_id","action","adapter","timeout_ms");
+            if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid SESSION_PROBE schema");
+        } else {
+            expected=Set.of("instruction_id","action","adapter","scenario","query","market","side","sport","minimum_price","stake","timeout_ms");
             java.util.HashSet<String> allowedExtra = new java.util.HashSet<>(java.util.Arrays.asList("place_bet","execution_mode","confirmation_status","line"));
             java.util.HashSet<String> keys = new java.util.HashSet<>(fields.keySet());
             keys.removeAll(expected);
             if(!allowedExtra.containsAll(keys)) throw new IllegalArgumentException("Invalid schema extras");
             java.util.HashSet<String> base = new java.util.HashSet<>(fields.keySet());
             base.removeAll(allowedExtra);
-            if(!base.equals(expected)) throw new IllegalArgumentException("Invalid schema, action, ID, text or timeout");
-        } else if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid schema, action, ID, text or timeout");
-        if(!Set.of("OPEN_AND_TYPE","ADAPTER_WORKFLOW").contains(action)
-            || !id.matches("[A-Za-z0-9_-]{1,64}") || text.isEmpty() || text.length()>128 || !fields.getOrDefault("timeout_ms", "").matches("[0-9]{1,6}")) throw new IllegalArgumentException("Invalid schema, action, ID, text or timeout");
+            if(!base.equals(expected)) throw new IllegalArgumentException("Invalid ADAPTER_WORKFLOW schema");
+        }
+        if(!Set.of("OPEN_AND_TYPE","ADAPTER_WORKFLOW","SESSION_CHECK","SESSION_PROBE","OPEN_SEARCH").contains(action)
+            || !id.matches("[A-Za-z0-9_-]{1,64}") || ((action.equals("SESSION_CHECK") || action.equals("SESSION_PROBE") || action.equals("OPEN_SEARCH")) ? (action.equals("OPEN_SEARCH") ? false : !text.isEmpty()) : text.isEmpty())
+            || text.length()>128 || !fields.getOrDefault("timeout_ms", "").matches("[0-9]{1,6}"))
+            throw new IllegalArgumentException("Invalid schema, action, ID, text or timeout");
         if(action.equals("OPEN_AND_TYPE") && !target.matches("[A-Za-z0-9]{1,40}")) throw new IllegalArgumentException("Invalid target");
-        if(action.equals("ADAPTER_WORKFLOW")) {
+        if(action.equals("ADAPTER_WORKFLOW") || action.equals("SESSION_CHECK") || action.equals("OPEN_SEARCH")) {
             SiteAdapters.validate(adapter,scenario);
             if(!Set.of("football","basketball").contains(sport)) throw new IllegalArgumentException("Invalid sport");
+        }
+        if(action.equals("ADAPTER_WORKFLOW")) {
             if(!minimumPrice.matches("[0-9]+\\.[0-9]{2}") || !stake.matches("[0-9]+\\.[0-9]{2}")) throw new IllegalArgumentException("Invalid minimum_price or stake");
             if(!Set.of("MONEYLINE","SPREAD","TOTAL").contains(market)) throw new IllegalArgumentException("Invalid market");
             Set<String> sides = market.equals("TOTAL") ? Set.of("OVER","UNDER")
@@ -90,8 +111,7 @@ final class CoordinatorInstruction {
             } else {
                 if(normalizedLine.isEmpty() || normalizedLine.equalsIgnoreCase("NONE") || normalizedLine.equalsIgnoreCase("null"))
                     throw new IllegalArgumentException("line required for SPREAD/TOTALS");
-                if(!normalizedLine.matches("[+-]?[0-9]+(\\.[0-9]+)?"))
-                    throw new IllegalArgumentException("Invalid line");
+                if(!normalizedLine.matches("[+-]?[0-9]+(\\.[0-9]+)?")) throw new IllegalArgumentException("Invalid line");
                 resolvedLine = normalizedLine;
             }
         }
@@ -107,3 +127,4 @@ final class CoordinatorInstruction {
             .put("text", text).put("package", "com.android.chrome").put("timeout_ms", remaining));
     }
 }
+
