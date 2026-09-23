@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-23",
+  "dashboard_url": "http://127.0.0.1:8780",
+  "browser_checks": {
+    "desktop_1440x1000": "PASS",
+    "narrow_600x900": "PASS",
+    "status_cards": "PASS: coordinator OFFLINE, mini PC Tailscale Running, phone peer ONLINE",
+    "fixtures_and_parse_filter": "PASS: 15 records including all requested markets and edge cases",
+    "normalized_instruction_and_copy": "PASS: copied indicator observed",
+    "configuration_validation": "PASS: negative stake rejected without saving",
+    "configuration_persistence": "PASS: default stake 1 saved and retained after server restart",
+    "history_filter": "PASS: TIMEOUT yields 4 recorded results, original FAIL/TIMEOUT values retained",
+    "result_audit_and_evidence": "PASS: raw payload and bounded local evidence links",
+    "logs_component_filter": "PASS: dashboard.config yields only configuration change",
+    "empty_live_feed": "PASS: no records and explicit disconnected label",
+    "backend_unavailable": "PASS: server stopped and explicit unavailable state observed",
+    "backend_recovery": "PASS: final server restarted, status cards restored"
+  },
+  "automated_tests": {"passed":59,"failed":0},
+  "limitations": ["Phone coordinator connection refused during acceptance; Tailscale peer is online", "Real Telegram feed and production selection semantics remain deferred"]
+}

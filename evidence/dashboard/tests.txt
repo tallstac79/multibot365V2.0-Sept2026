@@ -1,0 +1,65 @@
+test_backend_unavailable (tests.test_dashboard.DashboardTests.test_backend_unavailable) ... ok
+test_config_persistence_and_audit (tests.test_dashboard.DashboardTests.test_config_persistence_and_audit) ... ok
+test_config_validation (tests.test_dashboard.DashboardTests.test_config_validation) ... ok
+test_cross_origin_and_host_rejected (tests.test_dashboard.DashboardTests.test_cross_origin_and_host_rejected) ... ok
+test_dashboard_loads_and_assets (tests.test_dashboard.DashboardTests.test_dashboard_loads_and_assets) ... ok
+test_duplicate_and_malformed_fail_closed (tests.test_dashboard.DashboardTests.test_duplicate_and_malformed_fail_closed) ... ok
+test_empty_database_history_and_logs (tests.test_dashboard.DashboardTests.test_empty_database_history_and_logs) ... ok
+test_fixture_coverage (tests.test_dashboard.DashboardTests.test_fixture_coverage) ... ok
+test_health_online_degraded_and_reconnect (tests.test_dashboard.DashboardTests.test_health_online_degraded_and_reconnect) ... ok
+test_history_filter_and_evidence (tests.test_dashboard.DashboardTests.test_history_filter_and_evidence) ... ok
+test_malformed_record_ignored (tests.test_dashboard.DashboardTests.test_malformed_record_ignored) ... ok
+test_no_live_feed_fabrication (tests.test_dashboard.DashboardTests.test_no_live_feed_fabrication) ... ok
+test_real_observations_remain_unmapped (tests.test_dashboard.DashboardTests.test_real_observations_remain_unmapped) ... ok
+test_rules_price_stake_and_disabled (tests.test_dashboard.DashboardTests.test_rules_price_stake_and_disabled) ... ok
+test_all_sample_provenance_and_default_unmapped (tests.test_oddsnotifier_parser.ParserTests.test_all_sample_provenance_and_default_unmapped) ... ok
+test_channel_scoped_identity (tests.test_oddsnotifier_parser.ParserTests.test_channel_scoped_identity) ... ok
+test_explicit_basketball_two_way_mapping (tests.test_oddsnotifier_parser.ParserTests.test_explicit_basketball_two_way_mapping) ... ok
+test_explicit_football_three_way_mapping (tests.test_oddsnotifier_parser.ParserTests.test_explicit_football_three_way_mapping) ... ok
+test_explicit_spread_order_no_line_inversion (tests.test_oddsnotifier_parser.ParserTests.test_explicit_spread_order_no_line_inversion) ... ok
+test_explicit_total_order_for_both_sports (tests.test_oddsnotifier_parser.ParserTests.test_explicit_total_order_for_both_sports) ... ok
+test_extra_content_rejected (tests.test_oddsnotifier_parser.ParserTests.test_extra_content_rejected) ... ok
+test_inconsistent_market_headers (tests.test_oddsnotifier_parser.ParserTests.test_inconsistent_market_headers) ... ok
+test_input_bound (tests.test_oddsnotifier_parser.ParserTests.test_input_bound) ... ok
+test_invalid_provenance (tests.test_oddsnotifier_parser.ParserTests.test_invalid_provenance) ... ok
+test_layout_and_generated_names (tests.test_oddsnotifier_parser.ParserTests.test_layout_and_generated_names) ... ok
+test_link_display_destination_conflict (tests.test_oddsnotifier_parser.ParserTests.test_link_display_destination_conflict) ... ok
+test_linked_complete_opening_can_use_test_profile (tests.test_oddsnotifier_parser.ParserTests.test_linked_complete_opening_can_use_test_profile) ... ok
+test_linked_invalid_quote_counts (tests.test_oddsnotifier_parser.ParserTests.test_linked_invalid_quote_counts) ... ok
+test_linked_unsupported_or_conflicting_market (tests.test_oddsnotifier_parser.ParserTests.test_linked_unsupported_or_conflicting_market) ... ok
+test_malformed_or_ambiguous (tests.test_oddsnotifier_parser.ParserTests.test_malformed_or_ambiguous) ... ok
+test_message_identity_stable_across_edits (tests.test_oddsnotifier_parser.ParserTests.test_message_identity_stable_across_edits) ... ok
+test_metadata_validation (tests.test_oddsnotifier_parser.ParserTests.test_metadata_validation) ... ok
+test_movement_not_recomputed (tests.test_oddsnotifier_parser.ParserTests.test_movement_not_recomputed) ... ok
+test_negative_total_rejected (tests.test_oddsnotifier_parser.ParserTests.test_negative_total_rejected) ... ok
+test_no_invented_selection_or_metadata (tests.test_oddsnotifier_parser.ParserTests.test_no_invented_selection_or_metadata) ... ok
+test_no_neighbor_line_substitution (tests.test_oddsnotifier_parser.ParserTests.test_no_neighbor_line_substitution) ... ok
+test_parenthetical_uniformity (tests.test_oddsnotifier_parser.ParserTests.test_parenthetical_uniformity) ... ok
+test_plain_links_and_text_presentation_arrows (tests.test_oddsnotifier_parser.ParserTests.test_plain_links_and_text_presentation_arrows) ... ok
+test_pricing_does_not_choose_side (tests.test_oddsnotifier_parser.ParserTests.test_pricing_does_not_choose_side) ... ok
+test_real_linked_ml_sample (tests.test_oddsnotifier_parser.ParserTests.test_real_linked_ml_sample) ... ok
+test_short_opening_never_assigned_sides (tests.test_oddsnotifier_parser.ParserTests.test_short_opening_never_assigned_sides) ... ok
+test_supplied_sample (tests.test_oddsnotifier_parser.ParserTests.test_supplied_sample) ... ok
+test_unknown_mapping_never_falls_back (tests.test_oddsnotifier_parser.ParserTests.test_unknown_mapping_never_falls_back) ... ok
+test_unrelated (tests.test_oddsnotifier_parser.ParserTests.test_unrelated) ... ok
+test_unseen_market_rejected (tests.test_oddsnotifier_parser.ParserTests.test_unseen_market_rejected) ... ok
+test_wrong_counts_for_every_quote_group (tests.test_oddsnotifier_parser.ParserTests.test_wrong_counts_for_every_quote_group) ... ok
+test_approve_then_reapprove_duplicate (tools.confirmation.tests.test_confirmation.ConfirmationTests.test_approve_then_reapprove_duplicate) ... ok
+test_duplicate_instruction_id (tools.confirmation.tests.test_confirmation.ConfirmationTests.test_duplicate_instruction_id) ... ok
+test_expire_stale_pending (tools.confirmation.tests.test_confirmation.ConfirmationTests.test_expire_stale_pending) ... ok
+test_malformed_missing_fields_state_invalid (tools.confirmation.tests.test_confirmation.ConfirmationTests.test_malformed_missing_fields_state_invalid) ... ok
+test_normalizer_nested_adapter_shape (tools.confirmation.tests.test_confirmation.ConfirmationTests.test_normalizer_nested_adapter_shape) ... ok
+test_price_below_minimum (tools.confirmation.tests.test_confirmation.ConfirmationTests.test_price_below_minimum) ... ok
+test_restart_persist_pending_and_approve (tools.confirmation.tests.test_confirmation.ConfirmationTests.test_restart_persist_pending_and_approve) ... ok
+test_stale_validated_at_expired (tools.confirmation.tests.test_confirmation.ConfirmationTests.test_stale_validated_at_expired) ... ok
+test_store_close_reopen_no_replay (tools.confirmation.tests.test_confirmation.ConfirmationTests.test_store_close_reopen_no_replay)
+Closing and reopening SQLite preserves decisions (restart path). ... ok
+test_duplicate_protection (tools.complete_execution.tests.test_gate.GateTests.test_duplicate_protection) ... ok
+test_price_change_protection (tools.complete_execution.tests.test_gate.GateTests.test_price_change_protection) ... ok
+test_restart_recovery (tools.complete_execution.tests.test_gate.GateTests.test_restart_recovery) ... ok
+test_stale_protection (tools.complete_execution.tests.test_gate.GateTests.test_stale_protection) ... ok
+
+----------------------------------------------------------------------
+Ran 59 tests in 2.671s
+
+OK

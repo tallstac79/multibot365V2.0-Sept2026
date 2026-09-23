@@ -1,3 +1,34 @@
+# MultiBot365 V2 local dashboard — PASS
+
+Verified 2026-09-23. Dashboard build **2.0-dashboard.1**, based on cfb267c.
+
+- Local FastAPI + plain HTML/CSS/JavaScript operations dashboard at http://127.0.0.1:8780.
+- Overview with coordinator/phone/Tailscale health, current activity and latest live result.
+- Clearly labelled sample alerts: all requested football/basketball markets, 1X2 sides,
+  malformed, ambiguous, duplicate, stale and ignored cases; no synthetic production feed.
+- Configurable global/per-market stakes, slippage and displayed-EV thresholds; validated
+  transactional SQLite persistence and change timestamps. Rules affect previews only.
+- Normalized instruction, copy JSON, original parser output, raw text, warnings,
+  provenance, applied configuration and audit timeline.
+- Recorded backend execution history with original status/stage, filters, pagination,
+  result JSON, evidence links/previews; compact filterable technical logs.
+- **59 automated tests PASS**: 14 dashboard, 32 parser, 9 confirmation, 4 execution gates.
+  Browser checks cover rendering, filters, copy, validation/save, empty live source,
+  backend failure and recovery; screenshots: `evidence/dashboard/`.
+- Start/configuration/ports/architecture/limitations: `docs/DASHBOARD.md`.
+- No Android phone agent, live-site adapter, coordinator protocol, parser, confirmation
+  infrastructure or Tailscale transport modifications. Existing dirty Android build
+  artifacts remain excluded from this milestone.
+
+Live verification limitation: mini PC Tailscale Running and Samsung peer ONLINE,
+but phone coordinator HTTP connection refused. Dashboard correctly reports coordinator
+OFFLINE independently of peer connectivity. No USB/ADB connection was required. Real
+Telegram integration and verified production quote/selection semantics remain deferred.
+Device ID and historical pipeline timestamps missing from existing schemas are labelled
+unavailable rather than invented. Dashboard implementation has no remaining blocker.
+
+---
+
 # MultiBot365 networking milestone - LTE/Tailscale coordinator path
 
 **Status:** PASS (full post-reboot recovery verified)
