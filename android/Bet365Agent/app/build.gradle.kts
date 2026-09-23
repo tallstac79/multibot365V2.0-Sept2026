@@ -10,8 +10,8 @@ android {
         applicationId = "com.bet365agent"
         minSdk = 26
         targetSdk = 34
-        versionCode = 38
-        versionName = "0.6.26-ocr"
+        versionCode = 39
+        versionName = "0.6.27-sports"
     }
 
     buildTypes {

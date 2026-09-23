@@ -1,4 +1,22 @@
 ﻿---
+# MultiBot365 sports discovery 0.6.27-sports vc39 - READY_FOR_LIVE_REPROOF YES
+
+Verified 2026-09-23 ~22:05 Europe/London. App **0.6.27-sports (39)** on Samsung R5CT61TE14Z / galaxy-a13-5g. Coordinator Tailscale `http://100.114.45.68:8767`. Session **AUTHENTICATED**. `dispatch_enabled=false` throughout (never flipped true).
+
+- **ROOT_CAUSE:** Bet365 global Search for `BC Beroe` landed on Casino product `#/AX/K9` with Casino-only chip/results (`10000 BC 2 DOUBLEMAX`); no Sports chip to steer; single-query fail-closed before alias/ladder.
+- **Fix (0.6.27-sports):** ensure Sports context before Search; bounded query ladder A/B/C/D with club-prefix aliases for SEARCH ONLY; Casino-only never accepted (`SPORTS_RESULTS_NOT_FOUND`); hard fixture identity uses intended home+away (normalize `(W)` / Uni Ferrol); pipeline query `home||away`.
+- **Proof (`evidence/sports-discovery-proof/`):**
+  - **BC_BEROE PASS x2** — discovery query `Beroe Ferrol` (alias); verified `Beroe (W) v Uni Ferrol (W)`.
+  - **FULHAM PASS** — `Fulham v Crystal Palace`.
+  - **ALIAS_SEARCH / QUERY_LADDER / CASINO_REJECTION / FIXTURE_HARD_GATE PASS**.
+  - **AMBIGUITY PASS** (`Fulham` => AMBIGUOUS_FIXTURE).
+  - **WRONG_OPPONENT PASS** (fail-closed; never accepted).
+  - **RESET_STATE PASS**.
+  - **MULTI:** feed basketballs attempted; only Beroe live on board; others fail-closed (not accepted).
+- **READY_FOR_LIVE_REPROOF=YES**. **DISPATCH_NOW=false**.
+- **Safety:** no wager; Place Bet not engaged; dispatch left **false**.
+
+---
 # MultiBot365 TEXT_NOT_VERIFIED OCR soft-pass 0.6.26-ocr vc38 - READY_FOR_LIVE_REPROOF NO (Casino-only Beroe blocker)
 
 Verified 2026-09-23 ~21:05 Europe/London. App **0.6.26-ocr (38)** on Samsung R5CT61TE14Z / galaxy-a13-5g. Coordinator Tailscale `http://100.114.45.68:8767`. Session **AUTHENTICATED**. `dispatch_enabled=false` throughout.
@@ -765,6 +783,7 @@ The app button expects the page served on host port 8765 and adb reverse tcp:876
 Earlier BUILD_STATUS reported the legacy search query ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“FulhamÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â passed on 2026-09-20. This historical result is preserved as context, not revalidated here. Existing legacy search/fixture code remains.
 
 No physical-action or credential blocker remains for this milestone. Tracked Gradle/build artifacts were already dirty at takeover and are excluded from the source milestone commit.
+
 
 
 
