@@ -35,6 +35,7 @@ GLOBAL
 | allowed_slippage | 0.0 | minimum_price = max(1.01, alert price − slippage), in decimal-price points |
 | stale_alert_seconds | 300 | Maximum age since the Telegram post (or receipt if earlier) |
 | event_timezone | null | IANA zone for OddsNotifier fixture times. Null fails closed (see below). |
+| min_line_advantage | 0.5 | Minimum Bet365 line advantage, in points, for a FAVOURABLE_LINE_SIGNAL (0.5 to 50) |
 
 FOOTBALL (`1X2`, `SPREAD`, `TOTALS`) and BASKETBALL (`MONEYLINE`, `SPREAD`, `TOTALS`), per
 market:
@@ -54,11 +55,16 @@ Unknown keys are still rejected.
 
 1. `verified_mapping`: production-verified quote mapping (otherwise REJECT; nothing is guessed)
 2. `explicit_target`: explicit Bet365 target side and price
+   - `bet_quality`: must be `CLEAR_VALUE_SIGNAL` (equal-line price/EV edge) or `FAVOURABLE_LINE_SIGNAL`
+     (verified target with a favourable Bet365 line; see
+     [MARKET_INTERPRETATION.md](MARKET_INTERPRETATION.md))
+   - `line_advantage` (favourable-line signals only): at least `min_line_advantage` points
 3. `known_market`, `global_enabled`, `market_enabled`
 4. `alert_age`: older than `stale_alert_seconds` → **STALE**
 5. `event_not_started`: an event already started → **STALE**. An unconfigured timezone or
    unreadable time → **REJECT** ("cannot prove the event has not started").
-6. `valid_price`, `minimum_ev`, `min_price`, `max_price`
+6. `valid_price`, `minimum_ev` (not applicable to favourable-line signals, which have no EV),
+   `min_price`, `max_price`
 7. `stake`, then ACCEPT
 
 The engine runs at ingest and again immediately before dispatch, using the current

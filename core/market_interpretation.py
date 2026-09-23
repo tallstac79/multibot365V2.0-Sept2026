@@ -19,8 +19,8 @@ side explicitly. Anything else is kept, but no side is assigned.
 Separate dimensions are produced, per side:
   line_quality   FAVOURABLE | EQUAL | UNFAVOURABLE | UNKNOWN
   price_quality  FAVOURABLE | EQUAL | UNFAVOURABLE | NOT_COMPARABLE | UNKNOWN
-  bet_quality    CLEAR_VALUE_SIGNAL | POTENTIAL_VALUE | NO_ADVANTAGE | UNFAVOURABLE |
-                 INSUFFICIENT_INFORMATION
+  bet_quality    CLEAR_VALUE_SIGNAL | FAVOURABLE_LINE_SIGNAL | POTENTIAL_VALUE | NO_ADVANTAGE |
+                 UNFAVOURABLE | INSUFFICIENT_INFORMATION
 and for the alert: ev_status SUPPLIED_EQUAL_LINE | NOT_AVAILABLE_UNEQUAL_LINES | MISSING | INVALID.
 See docs/MARKET_INTERPRETATION.md.
 """
@@ -43,8 +43,10 @@ FAVOURABLE, EQUAL, UNFAVOURABLE, UNKNOWN, NOT_COMPARABLE = (
     'FAVOURABLE', 'EQUAL', 'UNFAVOURABLE', 'UNKNOWN', 'NOT_COMPARABLE')
 EV_SUPPLIED, EV_UNEQUAL, EV_MISSING, EV_INVALID = (
     'SUPPLIED_EQUAL_LINE', 'NOT_AVAILABLE_UNEQUAL_LINES', 'MISSING', 'INVALID')
-CLEAR_VALUE_SIGNAL, POTENTIAL_VALUE, NO_ADVANTAGE, INSUFFICIENT_INFORMATION = (
-    'CLEAR_VALUE_SIGNAL', 'POTENTIAL_VALUE', 'NO_ADVANTAGE', 'INSUFFICIENT_INFORMATION')
+CLEAR_VALUE_SIGNAL, FAVOURABLE_LINE_SIGNAL, POTENTIAL_VALUE, NO_ADVANTAGE, INSUFFICIENT_INFORMATION = (
+    'CLEAR_VALUE_SIGNAL', 'FAVOURABLE_LINE_SIGNAL', 'POTENTIAL_VALUE', 'NO_ADVANTAGE', 'INSUFFICIENT_INFORMATION')
+# Signals the rules engine may act on (each still subject to every configured rule).
+ACTIONABLE_SIGNALS = (CLEAR_VALUE_SIGNAL, FAVOURABLE_LINE_SIGNAL)
 SHORTENED, DRIFTED = 'SHORTENED', 'DRIFTED'
 
 TWO_SIDED_PROFILE = 'oddsnotifier_basketball_v1'
@@ -158,9 +160,13 @@ def compare_side(market, side, reference_line, reference_price, bet365_line, bet
 def bet_quality(comparison, *, verified, bet365_present, is_target, ev_status, supplied_ev):
     """Bet quality is deliberately NOT line quality.
 
-    CLEAR_VALUE_SIGNAL needs: verified ordering, the highlighted Bet365 target, equal lines,
-    Bet365 price above the reference price and an OddsNotifier-supplied equal-line EV above
-    100 %. A favourable line alone (price not comparable) is only POTENTIAL_VALUE.
+    CLEAR_VALUE_SIGNAL: verified ordering, the highlighted Bet365 target, equal lines, Bet365
+    price above the reference price and an OddsNotifier-supplied equal-line EV above 100 %.
+    FAVOURABLE_LINE_SIGNAL: verified ordering, the highlighted Bet365 target, a quantified
+    Bet365 line advantage for that exact side, and both prices present (not comparable across
+    lines, so no EV is implied). Price acceptability and materiality are rules-engine checks.
+    Otherwise a favourable line is only POTENTIAL_VALUE (non-actionable): no highlighted
+    target, missing price, or an advantage that cannot be quantified.
     """
     if not verified or not bet365_present:
         return INSUFFICIENT_INFORMATION
@@ -168,6 +174,9 @@ def bet_quality(comparison, *, verified, bet365_present, is_target, ev_status, s
     if line == UNFAVOURABLE:
         return UNFAVOURABLE
     if line == FAVOURABLE:
+        advantage = dec(comparison.get('line_advantage'))
+        if is_target and price == NOT_COMPARABLE and advantage is not None and advantage > 0:
+            return FAVOURABLE_LINE_SIGNAL
         return POTENTIAL_VALUE if price in (NOT_COMPARABLE, UNKNOWN, FAVOURABLE) else INSUFFICIENT_INFORMATION
     if line == EQUAL:
         if price == UNFAVOURABLE:
@@ -485,7 +494,7 @@ def _two_sided(rows, head, opening_marker):
         partial.append('Bet365 section absent; no comparable offer captured')
     if sides and target is None and len(highlighted) <= 1:
         partial.append('No highlighted Bet365 target; side-level comparisons only, no side chosen')
-    if bet365_present and ev_status == EV_UNEQUAL:
+    if bet365_present and ev_status == EV_UNEQUAL and target is None:
         partial.append('EV not available: unequal lines (evaluated directionally)')
     elif ev_status == EV_MISSING:
         partial.append('EV not supplied')
@@ -661,6 +670,9 @@ def interpret(text, *, channel_id=None, message_id=None, source_timestamp=None):
     elif partial:
         status, reason = PARSED_PARTIAL, '; '.join(partial)
     else:
-        status, reason = PARSED, 'Production-verified mapping, explicit Bet365 target, equal-line EV supplied'
+        status, reason = PARSED, ('Production-verified mapping, explicit Bet365 target, equal-line EV supplied'
+                                  if alert['comparison']['ev_status'] == EV_SUPPLIED else
+                                  'Production-verified mapping, explicit Bet365 target, unequal lines evaluated '
+                                  'directionally (no EV calculated)')
     alert['interpretation_status'] = status
     return dict(status=status, reason=reason, parsed=alert, profile=profile)

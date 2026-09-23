@@ -200,10 +200,18 @@ class BetQualityTests(unittest.TestCase):
     def quality(self, line, price, **kw):
         values = dict(verified=True, bet365_present=True, is_target=True, ev_status='SUPPLIED_EQUAL_LINE', supplied_ev='108')
         values.update(kw)
-        return bet_quality(dict(line_quality=line, price_quality=price), **values)
+        advantage = values.pop('advantage', None)
+        return bet_quality(dict(line_quality=line, price_quality=price, line_advantage=advantage), **values)
 
     def test_line_quality_is_not_bet_quality(self):
-        self.assertEqual(self.quality(FAVOURABLE, NOT_COMPARABLE, ev_status='NOT_AVAILABLE_UNEQUAL_LINES'), 'POTENTIAL_VALUE')
+        unequal = dict(ev_status='NOT_AVAILABLE_UNEQUAL_LINES', supplied_ev=None)
+        self.assertEqual(self.quality(FAVOURABLE, NOT_COMPARABLE, advantage='3.0', **unequal), 'FAVOURABLE_LINE_SIGNAL')
+        self.assertEqual(self.quality(FAVOURABLE, NOT_COMPARABLE, advantage='3.0', is_target=False, **unequal),
+                         'POTENTIAL_VALUE')                                   # no target side
+        self.assertEqual(self.quality(FAVOURABLE, UNKNOWN, advantage='3.0', **unequal), 'POTENTIAL_VALUE')  # price missing
+        self.assertEqual(self.quality(FAVOURABLE, NOT_COMPARABLE, advantage=None, **unequal), 'POTENTIAL_VALUE')
+        self.assertEqual(self.quality(FAVOURABLE, NOT_COMPARABLE, advantage='3.0', verified=False, **unequal),
+                         'INSUFFICIENT_INFORMATION')                          # ordering unverified
         self.assertEqual(self.quality(EQUAL, FAVOURABLE), 'CLEAR_VALUE_SIGNAL')
         self.assertEqual(self.quality(EQUAL, FAVOURABLE, is_target=False), 'POTENTIAL_VALUE')
         self.assertEqual(self.quality(EQUAL, FAVOURABLE, supplied_ev='99.5'), 'POTENTIAL_VALUE')
@@ -220,6 +228,85 @@ class BetQualityTests(unittest.TestCase):
             decision = evaluate(dict(p, bet_quality=quality), config(), instruction_id='x', received_at=T0.isoformat(), now=T0)
             self.assertEqual(decision['decision'], 'REJECT')
             self.assertTrue(decision['reason'].startswith('bet_quality'), decision['reason'])
+
+
+def unequal_totals(pinnacle, bet365, bold):
+    """Genuine Kipina layout with the lines and highlighted Bet365 position changed."""
+    prices = '**1.83** - 1.90' if bold == 'OVER' else '1.90 - **1.83**' if bold == 'UNDER' else '1.83 - 1.90'
+    return (KIPINA.replace('Totals (165.5 -> 166.5)', f'Totals ({pinnacle})')
+            .replace('Bet365 (Totals 168.5)', f'Bet365 (Totals {bet365})').replace('1.83 - 1.83', prices))
+
+
+class FavourableLineSignalTests(unittest.TestCase):
+    def evaluate(self, parsed, cfg=None):
+        return evaluate(parsed, cfg or config(), instruction_id='x', received_at=T0.isoformat(), now=T0)
+
+    def test_user_examples_over_and_under(self):
+        for pinnacle, bet365, target, advantage in (('168.5', '165.5', 'OVER', '3.0'), ('168.5', '171.5', 'UNDER', '3.0')):
+            with self.subTest(target=target):
+                r = parse(unequal_totals(pinnacle, bet365, target))
+                p = r['parsed']
+                self.assertEqual(r['status'], 'PARSED')
+                self.assertIn('unequal lines evaluated directionally', r['reason'])
+                self.assertEqual((p['selection_side'], p['selection_line'], p['line_quality'], p['price_quality']),
+                                 (target, bet365, FAVOURABLE, NOT_COMPARABLE))
+                self.assertEqual((p['bet_quality'], p['comparison']['line_advantage'], p['comparison']['ev_status'],
+                                  p['displayed_ev_percent']),
+                                 ('FAVOURABLE_LINE_SIGNAL', advantage, 'NOT_AVAILABLE_UNEQUAL_LINES', None))
+                decision = self.evaluate(p)
+                self.assertEqual(decision['decision'], 'ACCEPT', decision['reason'])
+                self.assertEqual((decision['instruction']['signal_reason'], decision['instruction']['line_advantage'],
+                                  decision['instruction']['side'], decision['instruction']['line']),
+                                 ('FAVOURABLE_LINE_SIGNAL', advantage, target, bet365))
+
+    def test_highlighted_side_with_worse_line_is_unfavourable(self):
+        p = parse(unequal_totals('168.5', '171.5', 'OVER'))['parsed']
+        self.assertEqual((p['bet_quality'], p['comparison']['line_advantage']), ('UNFAVOURABLE', '-3.0'))
+        self.assertTrue(self.evaluate(p)['reason'].startswith('bet_quality'))
+
+    def test_kipina_without_highlight_never_picks_under(self):
+        r = parse(KIPINA)
+        self.assertEqual(r['status'], 'PARSED_PARTIAL')
+        self.assertIsNone(r['parsed']['selection_side'])
+        self.assertEqual(side(r['parsed'], 'UNDER')['bet_quality'], 'POTENTIAL_VALUE')
+        self.assertTrue(self.evaluate(r['parsed'])['reason'].startswith('explicit_target'))
+        with tempfile.TemporaryDirectory() as tmp:
+            result = pipeline(Path(tmp) / 'p.sqlite3', Clock()).ingest(message(MELBOURNE, message_id='900002', text=KIPINA))
+            self.assertEqual((result['status'], result['instruction_id']), ('PARSED_PARTIAL', None))
+
+    def test_line_signal_still_subject_to_price_and_materiality_rules(self):
+        p = parse(unequal_totals('168.5', '171.5', 'UNDER'))['parsed']     # UNDER @ 1.83, +3.0
+        self.assertTrue(self.evaluate(p, config(min_line_advantage=3.5))['reason'].startswith('line_advantage'))
+        for bound, value in (('min_price', 1.9), ('max_price', 1.5)):
+            cfg = config()
+            cfg['sports']['basketball']['markets']['TOTALS'][bound] = value
+            self.assertTrue(self.evaluate(p, cfg)['reason'].startswith(bound), bound)
+        cfg = config(allowed_slippage=0.03)
+        cfg['sports']['basketball']['markets']['TOTALS']['minimum_ev'] = 105
+        decision = self.evaluate(p, cfg)
+        self.assertEqual(decision['decision'], 'ACCEPT')
+        self.assertEqual(decision['instruction']['minimum_price'], '1.80')
+        self.assertIn('not applicable', next(c['detail'] for c in decision['checks'] if c['name'] == 'minimum_ev'))
+
+    def test_equal_line_minimum_ev_still_enforced(self):
+        cfg = config()
+        cfg['sports']['basketball']['markets']['TOTALS']['minimum_ev'] = 120
+        self.assertTrue(self.evaluate(parse(MELBOURNE['raw_text'])['parsed'], cfg)['reason'].startswith('minimum_ev'))
+
+    def test_line_signal_reaches_queue_in_pipeline(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p = pipeline(Path(tmp) / 'p.sqlite3', Clock())
+            result = p.ingest(message(MELBOURNE, message_id='900003', text=unequal_totals('168.5', '171.5', 'UNDER')))
+            self.assertEqual((result['status'], result['state']), ('PARSED', 'QUEUED'))
+            with p.store.connection() as db:
+                row = db.execute('SELECT selection, line, alert_price FROM instructions').fetchone()
+            self.assertEqual(tuple(row), ('UNDER', '171.5', '1.83'))
+
+    def test_spread_line_signal_uses_selected_team_line(self):
+        text = CORPUS['68014'].replace('1.83 - 1.83', '1.83 - **1.83**')   # AWAY: -10 -> -4.5 (+5.5)
+        p = parse(text)['parsed']
+        self.assertEqual((p['selection_side'], p['selection_line'], p['bet_quality'], p['comparison']['line_advantage']),
+                         ('AWAY', '-4.5', 'FAVOURABLE_LINE_SIGNAL', '5.5'))
 
 
 class SafetyTests(unittest.TestCase):
@@ -297,9 +384,12 @@ class ProductionRegressionTests(unittest.TestCase):
             verdict = alert_classifier.classify(text)
             p = verdict['parsed']
             if verdict['status'] == 'PARSED':
-                self.assertEqual(p['comparison']['ev_status'], 'SUPPLIED_EQUAL_LINE', message_id)
-                self.assertTrue(p['comparison']['equal_line'])
-                self.assertIn(p['bet_quality'], ('CLEAR_VALUE_SIGNAL', 'NO_ADVANTAGE', 'UNFAVOURABLE', 'POTENTIAL_VALUE'))
+                self.assertIsNotNone(p['selection_side'], message_id)
+                if p['comparison']['equal_line']:
+                    self.assertEqual(p['comparison']['ev_status'], 'SUPPLIED_EQUAL_LINE', message_id)
+                    self.assertIn(p['bet_quality'], ('CLEAR_VALUE_SIGNAL', 'NO_ADVANTAGE', 'UNFAVOURABLE', 'POTENTIAL_VALUE'))
+                else:
+                    self.assertIn(p['bet_quality'], ('FAVOURABLE_LINE_SIGNAL', 'UNFAVOURABLE'), message_id)
             if verdict['status'] == 'PARSED_PARTIAL' and p['comparison']['ev_status'] == 'NOT_AVAILABLE_UNEQUAL_LINES':
                 qualities = {s['side']: s['line_quality'] for s in p['sides']}
                 self.assertEqual(sorted(qualities.values()), [FAVOURABLE, UNFAVOURABLE], message_id)

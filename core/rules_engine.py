@@ -13,8 +13,9 @@ import hashlib
 import json
 
 from core.decision_support import validate
+from core.market_interpretation import ACTIONABLE_SIGNALS
 
-ENGINE_VERSION = 'rules-2'
+ENGINE_VERSION = 'rules-3'
 ACCEPT, REJECT, STALE = 'ACCEPT', 'REJECT', 'STALE'
 
 
@@ -70,12 +71,23 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
     check('explicit_target', bool(alert.get('target_side') and alert.get('alert_price')),
           f"target {alert.get('target_side')} @ {alert.get('alert_price')}" if alert.get('target_side')
           else 'no explicit Bet365 target in source message')
-    # Market interpretation (core.market_interpretation): only a clear equal-line value signal on
-    # the highlighted target proceeds. A favourable line alone is not a bet.
+    # Market interpretation (core.market_interpretation): only an actionable signal on the
+    # highlighted, verified target proceeds. CLEAR_VALUE_SIGNAL = equal-line price/EV edge;
+    # FAVOURABLE_LINE_SIGNAL = materially favourable Bet365 line at an acceptable price (no EV).
     quality = alert.get('bet_quality')
-    check('bet_quality', quality == 'CLEAR_VALUE_SIGNAL',
+    comparison = alert.get('comparison') or {}
+    check('bet_quality', quality in ACTIONABLE_SIGNALS,
           f"{quality or 'no market interpretation'} (line {alert.get('line_quality')}, price "
-          f"{alert.get('price_quality')}, EV {(alert.get('comparison') or {}).get('ev_status')})")
+          f"{alert.get('price_quality')}, EV {comparison.get('ev_status')})")
+    line_signal = quality == 'FAVOURABLE_LINE_SIGNAL'
+    if line_signal:
+        advantage = comparison.get('line_advantage')
+        try:
+            advantage_value = Decimal(str(advantage))
+        except (InvalidOperation, TypeError, ValueError):
+            advantage_value = None
+        check('line_advantage', advantage_value is not None and advantage_value >= Decimal(str(g['min_line_advantage'])),
+              f"Bet365 line advantage {advantage} points vs minimum {g['min_line_advantage']}")
     sport, market = alert.get('sport'), alert.get('market')
     rule = config['sports'].get(sport, {}).get('markets', {}).get(market)
     check('known_market', rule is not None, f'{sport} {market}' if rule else f'unsupported sport/market {sport} {market}')
@@ -111,7 +123,10 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
         price, valid_price = None, False
     check('valid_price', valid_price, f'alert price {alert.get("alert_price")}')
     if rule is not None:
-        if rule['minimum_ev'] is not None:
+        if rule['minimum_ev'] is not None and line_signal:
+            check('minimum_ev', True, 'not applicable: OddsNotifier EV unavailable for unequal lines '
+                  '(favourable-line signal; no synthetic EV)')
+        elif rule['minimum_ev'] is not None:
             try:
                 ev = Decimal(str(alert.get('displayed_ev_percent')))
             except (InvalidOperation, TypeError, ValueError):
@@ -143,6 +158,8 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
         alternate_line={k: bool(alternate.get(k)) for k in ('current', 'opening', 'comparison')},
         alert_price=str(alert.get('alert_price')), minimum_price=str(minimum), stake=f'{stake:.2f}',
         displayed_ev_percent=alert.get('displayed_ev_percent'), bet_quality=quality,
+        signal_reason=quality, line_advantage=comparison.get('line_advantage'),
+        ev_status=comparison.get('ev_status'),
         line_quality=alert.get('line_quality'), price_quality=alert.get('price_quality'),
         reference_odds=(alert.get('reference') or {}).get('odds'))
     return result

@@ -14,14 +14,14 @@ def now():
 
 def defaults():
     return {'global': {'enabled': True, 'default_stake': 1.0, 'allowed_slippage': 0.0, 'max_stake': 10.0,
-                       'stale_alert_seconds': 300, 'event_timezone': None},
+                       'stale_alert_seconds': 300, 'event_timezone': None, 'min_line_advantage': 0.5},
             'sports': {sport: {'markets': {market: {'enabled': True, 'stake': None, 'minimum_ev': None,
                         'allowed_slippage': None, 'min_price': None, 'max_price': None}
                         for market in markets}} for sport, markets in MARKETS.items()}}
 
 # Keys added after configurations were first persisted; older stored configs are
 # upgraded with these defaults. Unknown keys are still rejected.
-GLOBAL_ADDED = ('stale_alert_seconds', 'event_timezone')
+GLOBAL_ADDED = ('stale_alert_seconds', 'event_timezone', 'min_line_advantage')
 MARKET_ADDED = ('min_price', 'max_price')
 
 def upgrade(config):
@@ -68,6 +68,7 @@ def validate(config):
     number(g['allowed_slippage'], 'Slippage (decimal price points)', 0, 1)
     number(g['stale_alert_seconds'], 'Stale alert limit (seconds)', 5, 86400)
     timezone_name(g['event_timezone'])
+    number(g['min_line_advantage'], 'Minimum favourable line advantage (points)', 0.5, 50)
     if not isinstance(config['sports'], dict) or set(config['sports']) != set(MARKETS):
         raise ValueError('Expected football and basketball')
     for sport, markets in MARKETS.items():

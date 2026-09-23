@@ -1,3 +1,27 @@
+# MultiBot365 rules: FAVOURABLE_LINE_SIGNAL for verified unequal-line targets: PASS
+
+Verified 2026-09-23. Based on 5c82664. Backend rules and interpretation only. **175 tests PASS**
+(`evidence/market-interpretation/tests-favourable-line.txt`).
+
+- **CLEAR_VALUE_SIGNAL** is unchanged: an equal-line, verified price/EV edge.
+- **FAVOURABLE_LINE_SIGNAL** (new) needs all of: a highlighted verified target side, verified
+  ordering, a quantified favourable Bet365 line for that exact side, and both prices present.
+  No synthetic EV is calculated.
+- **Rules:** rules-3 accepts both signals. Line signals must also meet `min_line_advantage`
+  (default 0.5 points, configurable in Rules & configuration) and the market's min/max price
+  rules; `minimum_ev` is recorded as not applicable.
+- **Interpretation:** a highlighted target on unequal lines is now PARSED, so it reaches the
+  rules. Without a highlight it stays PARSED_PARTIAL / POTENTIAL_VALUE, and Kipina never
+  picks UNDER.
+- **Dashboard:** the Signal explanation line and the min line advantage setting.
+- **Live corpus:** all 140 genuine Feed 2 alerts have no highlighted target on unequal lines,
+  so they are unchanged (33 CLEAR_VALUE_SIGNAL, 90 PARSED_PARTIAL, 17 AMBIGUOUS).
+- **Live service:** PID 6780 was started by the operator at 17:17:08, after cb3e703 (17:13:48)
+  and after these rule files were saved (17:16:01). It is therefore already running cb3e703
+  plus this change. It was **not** restarted again, because dispatch was armed for the
+  operator's single READY-only live cycle at that moment.
+
+---
 # MultiBot365 Search UI re-home 5/5 OPEN_SEARCH PASS (0.6.24-search vc36) - READY_FOR_LIVE_REPROOF YES
 
 Verified 2026-09-23 ~17:00 Europe/London. App **0.6.24-search (36)** on Samsung R5CT61TE14Z / galaxy-a13-5g. Coordinator Tailscale `http://100.114.45.68:8767` / MagicDNS `galaxy-a13-5g.taila8257e.ts.net:8767`. Session **AUTHENTICATED**.

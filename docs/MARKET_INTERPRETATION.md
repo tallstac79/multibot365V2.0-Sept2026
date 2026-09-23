@@ -82,8 +82,9 @@ Line quality is evaluated directionally per side, and `ev_status` =
 `NOT_AVAILABLE_UNEQUAL_LINES`. No synthetic EV is calculated.
 
 `EV: None (not equal lines)` therefore does **not** mean no value and is **not** INVALID.
-It means OddsNotifier's standard equal-line EV is unavailable. The alert becomes
-`PARSED_PARTIAL`, and each side still carries a directional result. In the live corpus,
+It means OddsNotifier's standard equal-line EV is unavailable, and each side still carries a
+directional result. With a highlighted verified target, the alert is `PARSED` and may be a
+`FAVOURABLE_LINE_SIGNAL` (see below). Without one it is `PARSED_PARTIAL`. In the live corpus,
 90 such alerts that were previously INVALID are now fully interpreted.
 
 ## Movement
@@ -107,21 +108,38 @@ unconfirmed: arrows and parentheses disagree in some live messages.
 
 | bet_quality | When |
 |---|---|
-| CLEAR_VALUE_SIGNAL | Verified ordering, the highlighted target, equal lines, Bet365 price above Pinnacle, and OddsNotifier-supplied equal-line EV above 100 % |
-| POTENTIAL_VALUE | A favourable line with prices not comparable, or an equal line with a better price but no supplied EV for this side |
+| CLEAR_VALUE_SIGNAL | Equal-line price/EV edge: verified ordering, the highlighted target, equal lines, Bet365 price above Pinnacle, and OddsNotifier-supplied equal-line EV above 100 % |
+| FAVOURABLE_LINE_SIGNAL | Verified ordering, the highlighted target, a quantified positive Bet365 line advantage for that exact side, and both prices present. The prices are not comparable across lines, so no EV is implied or calculated. |
+| POTENTIAL_VALUE | Non-actionable: a favourable line with no highlighted target, a missing price or an unquantifiable advantage, or an equal line with a better price but no supplied EV for this side |
 | NO_ADVANTAGE | Equal line and equal price |
 | UNFAVOURABLE | An unfavourable line, or an equal line with a worse price |
 | INSUFFICIENT_INFORMATION | Unverified ordering, no Bet365 offer, or unknown qualities |
 
-A favourable line at a poor price is at most POTENTIAL_VALUE. The rules engine (`rules-2`)
-now also requires `bet_quality == CLEAR_VALUE_SIGNAL` before anything is queued.
+The rules engine (`rules-3`) queues only `CLEAR_VALUE_SIGNAL` or `FAVOURABLE_LINE_SIGNAL`, and
+every configured rule still applies to both. For `FAVOURABLE_LINE_SIGNAL`:
+
+* The line advantage must reach **Min favourable line advantage** (global, default 0.5 points,
+  range 0.5 to 50). This is how "materially favourable" is defined.
+* The Bet365 price must pass the market's min/max alert-price rules. Slippage sets the
+  minimum price as usual.
+* `minimum_ev` is recorded as *not applicable*, because OddsNotifier EV is unavailable for
+  unequal lines and no synthetic EV is calculated.
+
+The instruction carries `signal_reason`, `line_advantage` and `ev_status`, so downstream
+components can tell the two signals apart.
+
+Examples: Pinnacle OVER 168.5 vs Bet365 OVER 165.5 with OVER highlighted gives +3.0,
+FAVOURABLE_LINE_SIGNAL. Pinnacle UNDER 168.5 vs Bet365 UNDER 171.5 with UNDER highlighted
+gives +3.0, FAVOURABLE_LINE_SIGNAL. A highlighted side whose line is *worse* is
+UNFAVOURABLE and is rejected. Kipina (166.5 vs 168.5, nothing highlighted) stays
+PARSED_PARTIAL: UNDER is POTENTIAL_VALUE and is never chosen automatically.
 
 ## Intake statuses and fail-closed cases
 
 | Status | Meaning |
 |---|---|
-| PARSED | Complete and comparable: highlighted target, Bet365 present, equal lines, EV supplied. Only these reach the rules engine. |
-| PARSED_PARTIAL | Valid and interpreted, but no highlighted target, no Bet365 offer, or no EV (unequal lines or not supplied). It is stored, and no instruction is created. |
+| PARSED | Highlighted verified target with Bet365 present, and either equal lines with supplied EV or unequal lines evaluated directionally. Only these reach the rules engine. |
+| PARSED_PARTIAL | Valid and interpreted, but no highlighted target, no Bet365 offer, or EV not supplied. It is stored, and no instruction is created. |
 | AMBIGUOUS | Over/Under or HOME/AWAY ordering is unverified; the selected side is not labelled; more than one price is highlighted; a price is highlighted outside the Bet365 row; the EV field is unrecognised; no market label or fixture link; a spread line equals Pinnacle as displayed while OddsNotifier reports "not equal lines" (sign reference unsafe) |
 | INVALID | Genuinely malformed or contradictory data only: wrong price count, price ≤ 1, a negative total, a Bet365 market that conflicts with the alert market, a fixture URL market that conflicts with the label, a numeric EV with unequal lines, "not equal lines" with equal totals, an opening side that conflicts with the market side, a side impossible for the market, an arrow that conflicts with the supplied percentage, identical teams, an invalid date, or unexpected rows |
 
