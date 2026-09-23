@@ -1,0 +1,13 @@
+﻿{
+    "tcp_before":  {
+                       "100.114.45.68:8767":  "FAIL No connection could be made because the target machine actively refused it 100.114.45.68:8767",
+                       "192.168.4.108:8767":  "OK remote=192.168.4.108:8767",
+                       "galaxy-a13-5g.taila8257e.ts.net:8767":  "FAIL No connection could be made because the target machine actively refused it 100.114.45.68:8767"
+                   },
+    "fix_code":  32,
+    "tailscale_peer":  "100.114.45.68  galaxy-a13-5g    davidstache@  android  active; direct 192.168.4.108:36421, tx 109984 rx 82480  ",
+    "adb_devices":  "List of devices attached\r\nR5CT61TE14Z\tdevice",
+    "version_name":  "0.6.20-ts",
+    "timestamp_europe_london":  "2026-09-23 13:12:36 +01:00",
+    "diagnosis":  "CoordinatorHttp.localAddress preferred wlan/eth RFC1918 over Tailscale tun; MagicDNS/100.x refused while LAN 192.168.4.108:8767 OK"
+}

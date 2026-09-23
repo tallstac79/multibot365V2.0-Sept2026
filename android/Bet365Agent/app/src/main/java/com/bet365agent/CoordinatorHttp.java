@@ -16,11 +16,40 @@ final class CoordinatorHttp implements AutoCloseable {
         final int code; final String type; final byte[] data; Runnable afterWrite;
         Reply(int code, String type, byte[] data) { this.code = code; this.type = type; this.data = data; }
     }
+    /** LAN (wlan/eth RFC1918) and/or Tailscale tun CGNAT bind targets. Never rmnet/public/wildcard. */
+    private static final class BindTargets {
+        final InetAddress lan;
+        final InetAddress tailscale;
+        BindTargets(InetAddress lan, InetAddress tailscale) { this.lan = lan; this.tailscale = tailscale; }
+        boolean empty() { return lan == null && tailscale == null; }
+        @Override public boolean equals(Object o) {
+            if (!(o instanceof BindTargets)) return false;
+            BindTargets other = (BindTargets) o;
+            return Objects.equals(lan, other.lan) && Objects.equals(tailscale, other.tailscale);
+        }
+        @Override public int hashCode() { return Objects.hash(lan, tailscale); }
+        List<InetAddress> addresses() {
+            List<InetAddress> list = new ArrayList<>(2);
+            if (lan != null) list.add(lan);
+            if (tailscale != null) list.add(tailscale);
+            return list;
+        }
+        /** Clean primary URL for clients/fixture open. Prefer Tailscale when dual-bound; never annotate here. */
+        String endpointLabel(int port) {
+            InetAddress primary = tailscale != null ? tailscale : lan;
+            return primary == null ? null : "http://" + primary.getHostAddress() + ":" + port;
+        }
+        String listenDetail(int port) {
+            if (tailscale != null && lan != null)
+                return endpointLabel(port) + " (+lan http://" + lan.getHostAddress() + ":" + port + ")";
+            return endpointLabel(port);
+        }
+    }
     private final CoordinatorAgent agent;
     private final ScheduledExecutorService deadlines = Executors.newSingleThreadScheduledExecutor();
     private final ThreadPoolExecutor clients = new ThreadPoolExecutor(4, 4, 0, TimeUnit.SECONDS, new ArrayBlockingQueue<>(12));
     private volatile boolean closed;
-    private volatile ServerSocket server;
+    private volatile List<ServerSocket> servers = Collections.emptyList();
     private volatile String endpoint;
     private final Thread listener;
 
@@ -41,8 +70,8 @@ final class CoordinatorHttp implements AutoCloseable {
         byte[] b = address.getAddress(); int a = b[0] & 255, second = b[1] & 255;
         return a == 100 && second >= 64 && second <= 127;
     }
-    private static InetAddress localAddress() throws Exception {
-        // Prefer physical Wi-Fi/Ethernet RFC1918. Fall back to Tailscale tun CGNAT when Wi-Fi is off.
+    private static BindTargets discoverAddresses() throws Exception {
+        // Dual-bind when both Wi-Fi/Ethernet RFC1918 and Tailscale tun CGNAT exist.
         // Never bind carrier/mobile (rmnet) or wildcard/public addresses.
         InetAddress lan = null, tailscale = null;
         for (NetworkInterface nic : Collections.list(NetworkInterface.getNetworkInterfaces())) {
@@ -56,19 +85,28 @@ final class CoordinatorHttp implements AutoCloseable {
                 if (tun && tailscaleAddress(address) && tailscale == null) tailscale = address;
             }
         }
-        return lan != null ? lan : tailscale;
+        return new BindTargets(lan, tailscale);
+    }
+    private static ServerSocket bindOne(InetAddress address) throws IOException {
+        ServerSocket socket = new ServerSocket();
+        socket.setReuseAddress(true);
+        socket.bind(new InetSocketAddress(address, CoordinatorConfig.PORT), 12);
+        socket.setSoTimeout(500);
+        return socket;
     }
     private void listen() {
         while (!closed) {
+            List<ServerSocket> open = new ArrayList<>(2);
             try {
-                InetAddress address = localAddress();
-                if (address == null) { Thread.sleep(1500); continue; }
-                try (ServerSocket socket = new ServerSocket()) {
-                    server = socket; socket.setReuseAddress(true);
-                    socket.bind(new InetSocketAddress(address, CoordinatorConfig.PORT), 12); socket.setSoTimeout(2000);
-                    endpoint = "http://" + address.getHostAddress() + ":" + CoordinatorConfig.PORT;
-                    Log.i("AgentCoordinator", "LISTEN " + endpoint);
-                    while (!closed && address.equals(localAddress())) {
+                BindTargets targets = discoverAddresses();
+                if (targets.empty()) { Thread.sleep(1500); continue; }
+                for (InetAddress address : targets.addresses()) open.add(bindOne(address));
+                servers = Collections.unmodifiableList(new ArrayList<>(open));
+                endpoint = targets.endpointLabel(CoordinatorConfig.PORT);
+                Log.i("AgentCoordinator", "LISTEN " + targets.listenDetail(CoordinatorConfig.PORT));
+                while (!closed && targets.equals(discoverAddresses())) {
+                    for (ServerSocket socket : open) {
+                        if (closed) break;
                         try {
                             Socket client = socket.accept();
                             if (!privateAddress(client.getInetAddress())) { client.close(); continue; }
@@ -80,7 +118,12 @@ final class CoordinatorHttp implements AutoCloseable {
             } catch (Exception e) {
                 if (!closed) Log.w("AgentCoordinator", "Listener retry: " + e.getClass().getSimpleName());
                 try { Thread.sleep(1000); } catch (InterruptedException ignored) { }
-            } finally { endpoint = null; server = null; }
+            } finally {
+                endpoint = null; servers = Collections.emptyList();
+                for (ServerSocket socket : open) {
+                    try { socket.close(); } catch (IOException ignored) { }
+                }
+            }
         }
     }
     private void handle(Socket socket) {
@@ -153,7 +196,9 @@ final class CoordinatorHttp implements AutoCloseable {
     }
     @Override public void close() {
         closed = true; endpoint = null;
-        try { if (server != null) server.close(); } catch (IOException ignored) { }
+        for (ServerSocket socket : servers) {
+            try { socket.close(); } catch (IOException ignored) { }
+        }
         listener.interrupt(); clients.shutdownNow(); deadlines.shutdownNow();
     }
 }
