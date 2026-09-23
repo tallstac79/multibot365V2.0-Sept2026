@@ -1,0 +1,29 @@
+{
+  "date": "2026-09-23",
+  "version": "2.0-dashboard.2",
+  "automated_tests": {"passed": 84, "failed": 0},
+  "browser_checks": {
+    "real_default_and_same_five_sections": "PASS",
+    "real_alerts": "PASS: 4 observed Telegram records, original message IDs, bold targets",
+    "requested_production_fixtures": "PASS: Melbourne OVER 190.5 @2.20 EV113.52; Rytas HOME -18.5 @1.83 EV108.47",
+    "real_recommendation_copy": "PASS",
+    "real_history": "PASS: 4 persisted production device results",
+    "sample_history_isolation": "PASS: 67 backend test captures, no real results mixed in",
+    "timeline": "PASS: only stored ack/state/device events; no invented parser/rule stages",
+    "evidence_and_notification_preview": "PASS",
+    "configuration": "PASS: existing values retained in generic decision-support layer",
+    "technical_logs": "PASS: existing log sources and config audit",
+    "backend_stop_refresh": "PASS: live status cleared, per-source errors displayed",
+    "backend_restart_refresh": "PASS: four real alerts restored and errors cleared",
+    "telegram_feed2": "PASS: numeric bold verified in rendered DOM; relevant messages only saved",
+    "telegram_feed1": "Setup notices visible; no new football mapping inferred"
+  },
+  "live_health": {
+    "coordinator": "OFFLINE: HTTP connection refused",
+    "samsung": "DEGRADED: Tailscale peer online, agent HTTP unavailable",
+    "mini_pc_tailscale": "Running",
+    "phone_tailscale": "ONLINE"
+  },
+  "scope": "Read-only operations and human recommendations; no device dispatch or notification sends",
+  "remaining": "Phone coordinator connection refusal; continuous Telegram ingestion remains deferred"
+}

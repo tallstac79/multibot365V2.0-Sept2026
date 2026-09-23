@@ -1,3 +1,38 @@
+# MultiBot365 V2 real operations console + production basketball parser — PASS
+
+Verified 2026-09-23. Dashboard **2.0-dashboard.2**, based on 2aac0c4.
+
+- Same five screens/layout; REAL DATA default, SAMPLE DATA retained and isolated.
+- Existing coordinator GET health and Tailscale read-only status supply actual state,
+  hostnames and explicitly labelled identity. No phone execution endpoints added.
+- Real alerts consume the generic parser observation store read-only; absent store is
+  empty, unreadable store reports an error. Mode changes do not mutate records.
+- Four genuine Feed 2 messages captured from the user's signed-in Telegram UI, numeric
+  bold verified, and imported as a local production snapshot (not a continuous feed).
+- Production basketball Totals/Spread profile, schema v4: OVER/UNDER and HOME/AWAY
+  inverse spread lines, retained alternate-line metadata, current Bet365 target line.
+  Required Melbourne OVER190.5 @2.20 EV113.52 and Rytas HOME-18.5 @1.83 EV108.47 pass.
+  Raw pasted originals retained; independent browser evidence confirms bold targets.
+  Basketball Moneyline and football mapping semantics remain unchanged.
+- REAL history: 4 persisted production results. SAMPLE history: 67 existing test
+  captures. Timelines contain only matching stored stages/timestamps/evidence.
+- Generic core decision-support config validates/persists rules; recommendations
+  are human-readable, separately labelled, and never dispatched. Plain-text Telegram
+  result formatter is preview-only and preserves existing backend enums.
+- Technical logs read bounded existing application logs plus configuration audit.
+- **84 automated tests PASS**, including 11 strict production basketball cases and
+  parser/config/health/source/history/log regressions. Browser checks and screenshots
+  in evidence/dashboard/real-*. Documentation: docs/DASHBOARD.md.
+
+Live limitation: mini PC Tailscale Running, Samsung peer ONLINE, coordinator HTTP
+connection refused. Correctly shown coordinator OFFLINE / Samsung DEGRADED. Health
+available/offline/reconnect cases pass deterministic tests. No Android engine,
+live-site adapter, coordinator execution protocol, Tailscale transport or proven
+phone workflow changes. Real Telegram continuous intake remains deferred; imported
+messages are a genuine recorded snapshot, never synthetic production data.
+
+---
+
 # MultiBot365 V2 local dashboard — PASS
 
 Verified 2026-09-23. Dashboard build **2.0-dashboard.1**, based on cfb267c.

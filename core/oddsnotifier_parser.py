@@ -1,8 +1,9 @@
 """Offline observation parser for supplied real/synthetic OddsNotifier formats.
 
-No selection recommendation, price rule, instruction or execution is produced.
-Price positions remain positions: the supplied message does not label their sides
-or explain the parenthesized values. Decimal strings preserve source precision.
+No price rule or execution is produced. Legacy observations keep quote positions
+unmapped; the opt-in, user-confirmed basketball profile can extract an explicit
+Bet365 target. Parenthetical semantics remain unresolved. Decimal strings retain
+source precision.
 """
 from datetime import datetime
 from decimal import Decimal
@@ -15,6 +16,8 @@ from urllib.parse import parse_qs, urlsplit
 class AlertFormatError(ValueError):
     """A recognized alert is malformed, ambiguous or unsupported."""
 
+
+from core.oddsnotifier_basketball import PROFILE as PRODUCTION_BASKETBALL_PROFILE, parse_basketball
 
 HEADER = "New odds update on Pinnacle"
 NUMBER = r"[0-9]+(?:\.[0-9]+)?"
@@ -128,19 +131,24 @@ def _source(channel_id, message_id, source_timestamp):
 
 
 def parse_oddsnotifier(text, *, channel_id=None, message_id=None, source_timestamp=None,
-                      ordering_profile=None, sample_provenance="unspecified"):
+                      ordering_profile=None, sample_provenance="unspecified", target_position=None):
     """Return an observation; None for unrelated text; raise on invalid alerts.
 
     Supports Spread, ML and Total grammars demonstrated by supplied samples.
     Raw text, signed lines and all decimal precision are retained. Missing metadata
     stays null for pasted samples. No timestamp timezone or target side is guessed.
     """
-    if ordering_profile not in (None, SYNTHETIC_ORDER_PROFILE):
+    if ordering_profile not in (None, SYNTHETIC_ORDER_PROFILE, PRODUCTION_BASKETBALL_PROFILE):
         raise AlertFormatError("Unknown ordering profile")
     if sample_provenance not in ("unspecified", "user_reported_real", "synthetic"):
         raise AlertFormatError("Unknown sample provenance")
     if not isinstance(text, str) or len(text) > 32768:
         raise AlertFormatError("Text must be a string of at most 32768 characters")
+    if ordering_profile == PRODUCTION_BASKETBALL_PROFILE:
+        return parse_basketball(text, channel_id=channel_id, message_id=message_id,
+                               source_timestamp=source_timestamp, sample_provenance=sample_provenance, target_position=target_position)
+    if target_position is not None:
+        raise AlertFormatError('Target confirmation requires the production basketball profile')
     rows = [row.strip() for row in text.splitlines() if row.strip()]
     if not rows or rows[0] != HEADER:
         return None

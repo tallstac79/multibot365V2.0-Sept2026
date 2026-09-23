@@ -1,11 +1,14 @@
 """Run with python -m dashboard (loopback port 8780)."""
 import os
+import sqlite3
+from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from dashboard.services import ROOT, Store, Health, sample_alerts, history, log_entries
+from dashboard.services import ROOT, Store, Health, sample_alerts
+from dashboard.adapters import real_alerts, result_history, application_logs
 
 
 def create_app(root=ROOT, db_path=None, health=None):
@@ -48,26 +51,45 @@ def create_app(root=ROOT, db_path=None, health=None):
         try: return store.save(value)
         except (ValueError, TypeError, KeyError) as error: raise HTTPException(422, str(error))
 
+    def selected_mode(mode):
+        if mode == 'live': mode = 'real'  # Compatibility with the first dashboard build.
+        if mode not in ('sample', 'real'): raise HTTPException(422, 'Invalid mode')
+        return mode
+
+    def stored_alerts():
+        try: return real_alerts(store.get(), root)
+        except (sqlite3.Error, ValueError, TypeError, KeyError):
+            raise HTTPException(503, 'Stored alert source is unreadable; no sample fallback')
+
     @app.get('/api/alerts')
-    def alerts(mode: str = 'sample'):
-        if mode not in ('sample', 'live'): raise HTTPException(422, 'Invalid mode')
-        return {'mode': mode, 'items': sample_alerts(store.get(), root) if mode == 'sample' else [],
-                'note': 'SAMPLE DATA — fixture replay; never submitted' if mode == 'sample' else 'Live feed is not connected'}
+    def alerts(mode: str = 'real'):
+        mode = selected_mode(mode)
+        rows = sample_alerts(store.get(), root) if mode == 'sample' else stored_alerts()
+        return {'mode': mode, 'items': rows,
+                'note': 'Parser fixtures and recorded tests; no dispatch' if mode == 'sample' else
+                        'Stored production records only' if rows else 'No stored production alerts; Telegram feed is not connected'}
 
     @app.get('/api/history')
-    def results(q: str = '', status: str = '', limit: int = 100, offset: int = 0):
-        rows = history(root)
+    def results(q: str = '', status: str = '', limit: int = 100, offset: int = 0, mode: str = 'real'):
+        mode = selected_mode(mode)
+        # An unavailable alert source must not hide independent recorded device results.
+        try: linked = real_alerts(store.get(), root) if mode == 'real' else []
+        except (sqlite3.Error, ValueError, TypeError, KeyError): linked = []
+        rows = result_history(root, mode, linked)
         rows = [r for r in rows if (not status or r['status'] == status or r['stage'] == status)
                 and q.lower() in ' '.join(str(r.get(k) or '') for k in ('instruction_id', 'fixture', 'market', 'side', 'device_id')).lower()]
-        return {'total': len(rows), 'items': rows[max(0, offset):max(0, offset) + max(1, min(limit, 200))]}
+        return {'mode': mode, 'total': len(rows), 'items': rows[max(0, offset):max(0, offset) + max(1, min(limit, 200))]}
 
     @app.get('/api/logs')
     def logs(component: str = '', severity: str = '', instruction_id: str = '', device_id: str = '', since: str = '', until: str = ''):
-        rows = log_entries(store, root)
+        rows = application_logs(store, root)
         for key, value in [('component', component), ('severity', severity), ('instruction_id', instruction_id), ('device_id', device_id)]:
             if value: rows = [r for r in rows if value.lower() in str(r.get(key) or '').lower()]
-        if since: rows = [r for r in rows if r['timestamp'] >= since]
-        if until: rows = [r for r in rows if r['timestamp'] <= until]
+        def moment(value):
+            try: return datetime.fromisoformat(value.replace('Z', '+00:00')).astimezone(timezone.utc)
+            except ValueError: raise HTTPException(422, 'Invalid log time filter')
+        if since: rows = [r for r in rows if moment(r['timestamp']) >= moment(since)]
+        if until: rows = [r for r in rows if moment(r['timestamp']) <= moment(until)]
         return {'total': len(rows), 'items': rows[:100]}
 
     @app.get('/api/evidence/{name:path}')

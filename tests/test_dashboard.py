@@ -40,20 +40,21 @@ class DashboardTests(unittest.TestCase):
         self.assertEqual(h.get()['phone']['status'], 'ONLINE')
         self.assertEqual(h.get()['network']['phone'], 'ONLINE')
         h.cached_at=0; Fake.response=OSError()
-        self.assertEqual(h.get()['phone']['status'], 'OFFLINE')
+        self.assertEqual(h.get()['phone']['status'], 'DEGRADED')
+        self.assertEqual(h.get()['coordinator']['status'], 'OFFLINE')
         self.assertIsNotNone(h.get()['phone']['last_success'])
         h.cached_at=0; Fake.response={'healthy':False}
         self.assertEqual(h.get()['phone']['status'], 'DEGRADED')
         self.assertIsNotNone(h.get()['network']['last_reconnect'])
     def test_fixture_coverage(self):
-        rows=self.client.get('/api/alerts').json()['items']
+        rows=self.client.get('/api/alerts?mode=sample').json()['items']
         self.assertEqual({r['status'] for r in rows}, {'PARSED','AMBIGUOUS','INVALID','DUPLICATE','IGNORED'})
         actual={(r['sport'],r['market'],r['side']) for r in rows if r['instruction']}
         for expected in [('football','1X2',s) for s in ('HOME','DRAW','AWAY')]+[('football','SPREAD','HOME'),('football','TOTALS','OVER'),('basketball','MONEYLINE','HOME'),('basketball','SPREAD','HOME'),('basketball','TOTALS','OVER')]:
             self.assertIn(expected,actual)
         self.assertTrue(all(r['provenance']['mode']=='SAMPLE DATA' for r in rows))
     def test_duplicate_and_malformed_fail_closed(self):
-        rows=self.client.get('/api/alerts').json()['items']
+        rows=self.client.get('/api/alerts?mode=sample').json()['items']
         duplicate=next(r for r in rows if r['status']=='DUPLICATE')
         original=next(r for r in rows if r['instruction_id']==duplicate['instruction_id'] and r['status']=='PARSED')
         self.assertEqual(duplicate['source_message_id'], original['source_message_id'])
@@ -61,7 +62,8 @@ class DashboardTests(unittest.TestCase):
         for r in rows:
             if r['status']!='PARSED': self.assertIsNone(r['instruction'])
     def test_no_live_feed_fabrication(self):
-        self.assertEqual(self.client.get('/api/alerts?mode=live').json()['items'],[])
+        empty_client=TestClient(create_app(self.root,self.db,Health(self.root,network=lambda:{})))
+        self.assertEqual(empty_client.get('/api/alerts?mode=real').json()['items'],[])
         self.assertEqual(self.client.get('/api/alerts?mode=bad').status_code,422)
     def test_config_validation(self):
         for field,value in [('default_stake',-1),('max_stake',0),('allowed_slippage',2),('enabled','true')]:
@@ -92,8 +94,8 @@ class DashboardTests(unittest.TestCase):
         config['global']['enabled']=False
         self.assertTrue(all(r['instruction'] is None for r in sample_alerts({'config':config})))
     def test_real_observations_remain_unmapped(self):
-        for r in self.client.get('/api/alerts').json()['items']:
-            if r['provenance']['original']=='user_reported_real':
+        for r in self.client.get('/api/alerts?mode=sample').json()['items']:
+            if r['provenance']['original']=='user_reported_real' and r['sport']=='football':
                 self.assertIsNone(r['instruction'])
                 self.assertIsNone(r['parsed']['quote_mapping']['profile'])
     def test_empty_database_history_and_logs(self):
@@ -103,7 +105,7 @@ class DashboardTests(unittest.TestCase):
     def test_history_filter_and_evidence(self):
         all_rows=self.client.get('/api/history').json()
         self.assertGreater(all_rows['total'],0)
-        rows=self.client.get('/api/history?status=TIMEOUT').json()['items']
+        rows=self.client.get('/api/history?mode=sample&status=TIMEOUT').json()['items']
         self.assertTrue(rows)
         self.assertTrue(all(r['stage']=='TIMEOUT' for r in rows))
         self.assertEqual(self.client.get('/api/history?q=not-present-123').json()['total'],0)

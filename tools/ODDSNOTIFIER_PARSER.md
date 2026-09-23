@@ -89,3 +89,20 @@ metadata records null for opening. No missing value or relationship to the
 current outcomes is invented. One or four opening quotes are rejected, and this
 exception does not relax count checks in the older labeled layouts. A PARSED
 observation can contain unresolved information; it is not an executable instruction.
+
+## Production basketball profile (2026-09-23)
+
+Use `--ordering-profile oddsnotifier_basketball_v1` for the genuine linked Totals/Spread
+layout. Four user-supplied raw fixtures and provenance live in the manifest. Verified
+Telegram rendering (including numeric bold) is captured in
+`evidence/dashboard/telegram-basketball-observed.json`. This profile returns schema v4;
+legacy profiles retain schema v3. Basketball Moneyline mappings remain unchanged.
+
+Totals quote order: OVER, UNDER. Spread: HOME at displayed line, AWAY at inverse,
+separately for Pinnacle/Opening/Bet365. Alternate-line metadata is retained. The sole
+bold Bet365 price identifies the target; its current Bet365 line is used. Missing bold
+means unresolved selection, never choose the larger price. For pasted text with lost
+formatting, `--target-position 1` records explicit user confirmation; it is not inferred.
+Conflicting/multiple target markers fail. The original user-pasted fixtures are not
+rewritten to manufacture bold formatting. Exact raw-fixture and browser-format tests:
+`tests/test_oddsnotifier_basketball_production.py`.

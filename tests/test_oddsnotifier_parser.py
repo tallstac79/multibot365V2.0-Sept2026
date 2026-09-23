@@ -100,6 +100,7 @@ class ParserTests(unittest.TestCase):
         manifest = json.loads((FIXTURES / 'oddsnotifier_manifest.json').read_text())
         self.assertEqual(sum(s['provenance'] == 'synthetic' for s in manifest['samples']), 5)
         for entry in manifest['samples']:
+            if entry.get('profile'): continue  # Production profiles have dedicated contract tests.
             with self.subTest(file=entry['file']):
                 text = (FIXTURES / entry['file']).read_text(encoding='utf-8')
                 r = parse_oddsnotifier(text, sample_provenance=entry['provenance'])

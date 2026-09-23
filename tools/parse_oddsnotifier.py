@@ -14,16 +14,17 @@ def main():
     parser.add_argument("--channel-id")
     parser.add_argument("--message-id")
     parser.add_argument("--source-timestamp")
-    parser.add_argument("--ordering-profile", choices=['synthetic_order_v1'])
+    parser.add_argument("--ordering-profile", choices=['synthetic_order_v1', 'oddsnotifier_basketball_v1'])
     parser.add_argument("--sample-provenance", choices=['unspecified', 'user_reported_real', 'synthetic'],
                         default='unspecified')
+    parser.add_argument('--target-position', type=int, choices=[1,2], help='Explicit user-confirmed Bet365 quote position; production basketball only')
     args = parser.parse_args()
     try:
         result = parse_oddsnotifier(args.file.read_text(encoding="utf-8-sig"),
                                    channel_id=args.channel_id, message_id=args.message_id,
                                    source_timestamp=args.source_timestamp,
                                    ordering_profile=args.ordering_profile,
-                                   sample_provenance=args.sample_provenance)
+                                   sample_provenance=args.sample_provenance, target_position=args.target_position)
     except (OSError, UnicodeError, AlertFormatError) as error:
         print(json.dumps({"status": "INVALID_ALERT", "detail": str(error)}))
         return 2

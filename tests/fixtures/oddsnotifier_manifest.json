@@ -1,5 +1,5 @@
 {
-  "note": "User reports original Spread and linked football ML samples are real alerts. Other five examples are synthetic. Quote side ordering remains unverified.",
+  "note": "Four genuine user-supplied basketball alerts added. Totals/Spread ordering confirmed by user; basketball Moneyline and previous football ordering remain unverified. Synthetic examples retain their original provenance.",
   "samples": [
     {
       "file": "oddsnotifier_spread.txt",
@@ -42,6 +42,66 @@
       "provenance": "user_reported_real",
       "sport": "football",
       "market": "1X2"
+    },
+    {
+      "file": "oddsnotifier_basketball_melbourne_real.txt",
+      "provenance": "user_reported_real",
+      "sport": "basketball",
+      "market": "TOTALS",
+      "profile": "oddsnotifier_basketball_v1",
+      "formatting_note": "Original chat-pasted text retained; formatting verified separately in evidence/dashboard/telegram-basketball-observed.json",
+      "target_position": 1,
+      "target_confirmation": "Observed numeric bold/underline on first Bet365 quote in signed-in Feed 2 on 2026-09-23",
+      "source_chat_id": "1475314653",
+      "source_message_id": "67898"
+    },
+    {
+      "file": "oddsnotifier_basketball_prague_real.txt",
+      "provenance": "user_reported_real",
+      "sport": "basketball",
+      "market": "TOTALS",
+      "profile": "oddsnotifier_basketball_v1",
+      "formatting_note": "Original chat-pasted text retained; formatting verified separately in evidence/dashboard/telegram-basketball-observed.json",
+      "target_position": 1,
+      "target_confirmation": "Observed numeric bold/underline on first Bet365 quote in signed-in Feed 2 on 2026-09-23",
+      "source_chat_id": "1475314653",
+      "source_message_id": "67897"
+    },
+    {
+      "file": "oddsnotifier_basketball_rytas_real.txt",
+      "provenance": "user_reported_real",
+      "sport": "basketball",
+      "market": "SPREAD",
+      "profile": "oddsnotifier_basketball_v1",
+      "target_position": 1,
+      "target_confirmation": "Observed numeric bold/underline on first Bet365 quote in signed-in Feed 2 on 2026-09-23",
+      "expected": {
+        "side": "HOME",
+        "line": "-18.5",
+        "price": "1.83",
+        "ev": "108.47"
+      },
+      "source_chat_id": "1475314653",
+      "source_message_id": "67895",
+      "formatting_note": "Original chat-pasted text retained; formatting verified separately in evidence/dashboard/telegram-basketball-observed.json"
+    },
+    {
+      "file": "oddsnotifier_basketball_melbourne_190_5_real.txt",
+      "provenance": "user_reported_real",
+      "sport": "basketball",
+      "market": "TOTALS",
+      "profile": "oddsnotifier_basketball_v1",
+      "target_position": 1,
+      "target_confirmation": "Observed numeric bold/underline on first Bet365 quote in signed-in Feed 2 on 2026-09-23",
+      "expected": {
+        "side": "OVER",
+        "line": "190.5",
+        "price": "2.20",
+        "ev": "113.52"
+      },
+      "source_chat_id": "1475314653",
+      "source_message_id": "67894",
+      "formatting_note": "Original chat-pasted text retained; formatting verified separately in evidence/dashboard/telegram-basketball-observed.json"
     }
   ]
 }
