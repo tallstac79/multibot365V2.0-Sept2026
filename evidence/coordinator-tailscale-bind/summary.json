@@ -23,25 +23,35 @@
     "app_restart_lte": true,
     "dashboard_online_wifi_on": true,
     "dashboard_online_lte": true,
-    "phone_reboot": false
+    "phone_reboot": true,
+    "tcp_magicdns_phone_reboot": true,
+    "tcp_tailscale_phone_reboot": true,
+    "health_phone_reboot": true,
+    "auth_open_and_type_phone_reboot": true,
+    "duplicate_phone_reboot": true,
+    "dashboard_online_phone_reboot": true
   },
   "instruction_ids": {
     "wifi_on_roundtrip": "ts-dualbind-1790169521-open-type",
     "wifi_on_after_restart": "ts-dualbind-restart-1790169557-after",
     "lte_roundtrip": "ts-lte-dualbind-1790169666-open-type",
-    "lte_after_restart": "ts-lte-restart-1790169702-after"
+    "lte_after_restart": "ts-lte-restart-1790169702-after",
+    "phone_reboot_roundtrip": "ts-phone-reboot-1790166469-open-type"
   },
   "pids": {
     "wifi_before_restart": 9312,
     "wifi_after_restart": 10851,
     "lte_before_restart": 10851,
-    "lte_after_restart": 11563
+    "lte_after_restart": 11563,
+    "phone_reboot": 4417
   },
-  "phone_reboot": "PENDING_DAVID",
+  "phone_reboot": "PASS",
   "notes": [
     "Pre-fix with Wi-Fi ON: MagicDNS/100.x ConnectionRefused; LAN 192.168.4.108 OK",
     "Post dual-bind Wi-Fi ON: MagicDNS+TS+LAN listen",
     "Post dual-bind LTE (Wi-Fi OFF via svc wifi disable / David): MagicDNS+TS listen; LAN down",
-    "Dashboard coordinator.status ONLINE in both modes via .local/coordinator.json MagicDNS URL"
-  ]
+    "Dashboard coordinator.status ONLINE in both modes via .local/coordinator.json MagicDNS URL",
+    "Phone reboot (David): wifi_on=0 mobile_data=1 Tailscale ON accessibility on; coordinator rebound pid 4417; instruction ts-phone-reboot-1790166469-open-type PASS"
+  ],
+  "transport_phone_reboot": "Wi-Fi OFF; MagicDNS+TS TCP OK; health PASS endpoint http://100.114.45.68:8767; OPEN_AND_TYPE PASS; DUPLICATE 409; dashboard ONLINE"
 }

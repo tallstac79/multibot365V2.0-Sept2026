@@ -1,13 +1,13 @@
 # MultiBot365 coordinator Tailscale dual-bind (Wi-Fi + LTE MagicDNS) - PASS
 
-Verified 2026-09-23 13:22 Europe/London. App **0.6.20-ts** (32) on Samsung SM-A136B R5CT61TE14Z.
+Verified 2026-09-23 13:28 Europe/London. App **0.6.20-ts** (32) on Samsung SM-A136B R5CT61TE14Z.
 
 - **Root cause:** `CoordinatorHttp.localAddress()` preferred wlan/eth RFC1918 over Tailscale tun; with Wi-Fi ON the listener bound only `192.168.4.x`. Dashboard/client MagicDNS -> `100.114.45.68:8767` -> ConnectionRefused.
 - **Fix:** Dual `ServerSocket` bind (LAN + Tailscale) when both interfaces exist; Tailscale-only when Wi-Fi is down. Never bind `0.0.0.0` / public / rmnet. Reported `endpoint` is a clean primary URL preferring Tailscale (safe for fixture open); dual detail only in LISTEN log.
 - **Wi-Fi ON:** TCP MagicDNS + `100.114.45.68` + `192.168.4.108` :8767 OK; health PASS; OPEN_AND_TYPE PASS; DUPLICATE execution_count unchanged; app force-stop/restart rebind + instruction PASS; dashboard coordinator ONLINE.
 - **LTE (Wi-Fi OFF, mobile data ON, Tailscale ON):** TCP MagicDNS + `100.114.45.68` OK; LAN refused as expected; health PASS endpoint `http://100.114.45.68:8767`; OPEN_AND_TYPE PASS (`ts-lte-dualbind-1790169666-open-type`); DUPLICATE 409; app restart pid 10851->11563 then instruction PASS (`ts-lte-restart-1790169702-after`); dashboard ONLINE.
-- **Phone reboot:** PENDING_DAVID (not performed this run).
-- Evidence: `evidence/coordinator-tailscale-bind/`. No `.local/coordinator.json` or gradle junk committed. Live-site adapter/parser/OCR untouched.
+- **Phone reboot:** PASS after David reboot (wifi_on=0, mobile data ON, Tailscale ON, accessibility on). Coordinator rebound pid 4417 endpoint `http://100.114.45.68:8767`; OPEN_AND_TYPE PASS (`ts-phone-reboot-1790166469-open-type`); DUPLICATE 409; dashboard coordinator ONLINE.
+- Evidence: `evidence/coordinator-tailscale-bind/` (incl. `phone-reboot-*.json`, updated `summary.json`). No `.local/coordinator.json` or gradle junk committed. Live-site adapter/parser/OCR untouched.
 
 ---
 # MultiBot365 V2 real operations console + production basketball parser â€” PASS

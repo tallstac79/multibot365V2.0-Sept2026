@@ -1,0 +1,51 @@
+{
+  "dashboard": {
+    "version": "2.0-dashboard.2",
+    "uptime_seconds": 1367,
+    "online": true
+  },
+  "coordinator": {
+    "status": "ONLINE",
+    "error": null,
+    "health": {
+      "healthy": true,
+      "heartbeat_ms": 1790166516939,
+      "uptime_ms": 238375,
+      "state": "IDLE",
+      "current_instruction": null,
+      "last_result": {
+        "instruction_id": "ts-phone-reboot-1790166469-open-type",
+        "status": "PASS",
+        "stage": "PASS",
+        "detail": "Exact editor value and visible field OCR verified",
+        "duration_ms": 8539,
+        "execution_count": 1,
+        "run_id": "c_HQxQ05SuwAdvenfSBZZcNo4PXUxkP7GtZuz-8jbi1HM"
+      },
+      "app_version": "0.6.20-ts",
+      "version_code": 32,
+      "endpoint": "http://100.114.45.68:8767",
+      "pid": 4417
+    }
+  },
+  "phone": {
+    "device_id": "nUGxX2Ky8v11CNTRL",
+    "device_id_source": "Tailscale node ID",
+    "status": "ONLINE",
+    "tailscale_hostname": "galaxy-a13-5g.taila8257e.ts.net.",
+    "heartbeat_ms": 1790166516939,
+    "latency_ms": 219,
+    "state": "IDLE",
+    "app_version": "0.6.20-ts",
+    "last_success": "2026-09-23T12:28:36+00:00"
+  },
+  "network": {
+    "mini_pc": "Running",
+    "mini_pc_hostname": "desktop-ivunj9j.taila8257e.ts.net.",
+    "phone_last_seen": "0001-01-01T00:00:00Z",
+    "phone": "ONLINE",
+    "transport": "HTTP over Tailscale",
+    "last_reconnect": "2026-09-23T12:25:07+00:00"
+  },
+  "checked_at": "2026-09-23T12:28:37+00:00"
+}
