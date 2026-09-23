@@ -13,7 +13,7 @@ public class CoordinatorSettingsActivity extends Activity {
         LinearLayout layout = new LinearLayout(this); layout.setOrientation(1); layout.setPadding(24,24,24,24);
         ScrollView scroll = new ScrollView(this); scroll.addView(layout); setContentView(scroll);
         TextView address = new TextView(this);
-        address.setText("Coordinator HTTP: " + Bet365AccessibilityService.coordinatorEndpoint() + "\nTrusted private Wi-Fi. Phone awake/unlocked. Pair token with Windows."); layout.addView(address);
+        address.setText("Coordinator HTTP: " + Bet365AccessibilityService.coordinatorEndpoint() + "\nTrusted private Wi-Fi or Tailscale. Phone awake/unlocked. Pair token with Windows."); layout.addView(address);
         EditText token = new EditText(this); token.setText(CoordinatorConfig.token(this)); token.setSingleLine(true); token.setTransformationMethod(PasswordTransformationMethod.getInstance()); layout.addView(token);
         Button show = new Button(this); show.setText("Show pairing token"); layout.addView(show); show.setOnClickListener(v -> token.setTransformationMethod(null));
         TextView label = new TextView(this); label.setText("Start page URL (blank = built-in neutral test page)"); layout.addView(label);

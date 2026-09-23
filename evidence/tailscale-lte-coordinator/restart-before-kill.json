@@ -1,0 +1,61 @@
+{
+  "http": 200,
+  "evidence": {
+    "run_id": "c_oRSZSCL9-75mPr-mV6NvH5QvWsuFW-5ZwD3blGboydU",
+    "requested_text": "RestartProofTS",
+    "field_hint": "Search",
+    "package": "com.android.chrome",
+    "mechanism": "AccessibilityInputConnection.commitText",
+    "started_at_ms": 1790150034043,
+    "started_elapsed_ms": 1750556,
+    "timeout_ms": 23757,
+    "status": "RUNNING",
+    "field_bounds": [
+      57,
+      395,
+      664,
+      521
+    ],
+    "pre_screenshot": "files/visual/c_oRSZSCL9-75mPr-mV6NvH5QvWsuFW-5ZwD3blGboydU/before.png",
+    "post_screenshot": null,
+    "verification_result": "NOT_VERIFIED",
+    "input_attempts": 1,
+    "events": [
+      {
+        "phase": "STARTED",
+        "elapsed_ms": 0
+      },
+      {
+        "phase": "LOCATING",
+        "elapsed_ms": 42
+      },
+      {
+        "phase": "FOCUS_DISPATCHING",
+        "elapsed_ms": 2594
+      },
+      {
+        "phase": "FOCUS_GESTURE_COMPLETED",
+        "elapsed_ms": 2720
+      },
+      {
+        "phase": "FOCUS_CONFIRMED",
+        "elapsed_ms": 2941
+      },
+      {
+        "phase": "INPUT_COMMITTING",
+        "elapsed_ms": 4232
+      }
+    ],
+    "phase": "INPUT_COMMITTING",
+    "editor_package": "com.android.chrome",
+    "editor_generation": 8,
+    "focused_screenshot": "files/visual/c_oRSZSCL9-75mPr-mV6NvH5QvWsuFW-5ZwD3blGboydU/focused.png",
+    "focused_field_bounds": [
+      57,
+      395,
+      664,
+      521
+    ],
+    "prior_text_length": 0
+  }
+}

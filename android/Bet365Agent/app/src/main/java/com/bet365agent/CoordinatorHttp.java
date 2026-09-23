@@ -29,18 +29,34 @@ final class CoordinatorHttp implements AutoCloseable {
         listener = new Thread(this::listen, "coordinator-http"); listener.start();
     }
     String endpoint() { return endpoint; }
+    /** RFC1918 LAN or Tailscale CGNAT (100.64.0.0/10). Used for trusted peer checks. */
     static boolean privateAddress(InetAddress address) {
         if (!(address instanceof Inet4Address)) return false;
         byte[] b = address.getAddress(); int a = b[0] & 255, second = b[1] & 255;
-        return a == 10 || (a == 172 && second >= 16 && second <= 31) || (a == 192 && second == 168);
+        return a == 10 || (a == 172 && second >= 16 && second <= 31) || (a == 192 && second == 168)
+            || (a == 100 && second >= 64 && second <= 127);
+    }
+    static boolean tailscaleAddress(InetAddress address) {
+        if (!(address instanceof Inet4Address)) return false;
+        byte[] b = address.getAddress(); int a = b[0] & 255, second = b[1] & 255;
+        return a == 100 && second >= 64 && second <= 127;
     }
     private static InetAddress localAddress() throws Exception {
-        // Only a physical Wi-Fi/Ethernet interface, never a public/mobile/VPN or wildcard address.
+        // Prefer physical Wi-Fi/Ethernet RFC1918. Fall back to Tailscale tun CGNAT when Wi-Fi is off.
+        // Never bind carrier/mobile (rmnet) or wildcard/public addresses.
+        InetAddress lan = null, tailscale = null;
         for (NetworkInterface nic : Collections.list(NetworkInterface.getNetworkInterfaces())) {
-            if (!nic.isUp() || !(nic.getName().startsWith("wlan") || nic.getName().startsWith("eth"))) continue;
-            for (InetAddress address : Collections.list(nic.getInetAddresses())) if (privateAddress(address)) return address;
+            if (!nic.isUp()) continue;
+            String name = nic.getName();
+            boolean wifiEth = name.startsWith("wlan") || name.startsWith("eth");
+            boolean tun = name.startsWith("tun");
+            if (!wifiEth && !tun) continue;
+            for (InetAddress address : Collections.list(nic.getInetAddresses())) {
+                if (wifiEth && privateAddress(address) && !tailscaleAddress(address) && lan == null) lan = address;
+                if (tun && tailscaleAddress(address) && tailscale == null) tailscale = address;
+            }
         }
-        return null;
+        return lan != null ? lan : tailscale;
     }
     private void listen() {
         while (!closed) {

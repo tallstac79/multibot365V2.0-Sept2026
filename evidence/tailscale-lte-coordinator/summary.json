@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "transport": "Tailscale MagicDNS galaxy-a13-5g.taila8257e.ts.net -> 100.114.45.68:8767",
+  "wifi_off_mobile_tailscale": true,
+  "wifi_confirmation": "adb settings get global wifi_on=0; active default network MOBILE[LTE] uk.lebara.mobi",
+  "checks": {
+    "health": true,
+    "instruction_roundtrip": true,
+    "duplicate_no_second_execution": true,
+    "app_restart_rebind_tailscale": true,
+    "app_restart_no_duplicate_replay": true,
+    "after_app_restart_new_instruction": true,
+    "phone_reboot": true,
+    "mini_pc_reboot": true
+  },
+  "instruction_ids": {
+    "roundtrip": "ts-lte-1790150005-open-type",
+    "restart_pending": "ts-lte-restart-1790150031-pending",
+    "after_restart": "ts-lte-restart-1790150031-after",
+    "post_reboot": "ts-lte-postreboot-1790151061-open-type"
+  },
+  "pids": {
+    "before_app_restart": 13574,
+    "after_app_restart": 14148,
+    "post_reboot": 4354
+  },
+  "app_version": "0.6.19-ts",
+  "post_reboot_verified_at": "2026-09-23T09:11:44.104439+01:00",
+  "notes": [
+    "David confirmed Samsung + mini PC restarted before this verification.",
+    "After phone reboot, screen was locked; unlocked via adb wake+dismiss-keyguard then OPEN_AND_TYPE PASSed.",
+    "nslookup via LAN DNS fails MagicDNS; Resolve-DnsName / Tailscale Magicsock resolves correctly."
+  ]
+}

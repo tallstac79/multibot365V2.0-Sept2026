@@ -1,12 +1,12 @@
 # Coordinator connection
 
-The app listens on port 8767 on a private IPv4 Wi-Fi/Ethernet address. There is no ADB forwarding or host process in the action path. Enable the accessibility service, keep the phone awake/unlocked, and open **Coordinator connection** in the app to read its address and pairing token. Put those values in an untracked `.local/coordinator.json`:
+The app listens on port 8767 on a private IPv4 Wi-Fi/Ethernet address, or on the Tailscale tun address (100.64.0.0/10) when Wi-Fi is off. There is no ADB forwarding or host process in the action path. Enable the accessibility service, keep the phone awake/unlocked, and open **Coordinator connection** in the app to read its address and pairing token. Put those values in an untracked `.local/coordinator.json`:
 
 ```json
 {"url":"http://PHONE_PRIVATE_IP:8767","token":"COPY_THE_PHONE_GENERATED_TOKEN"}
 ```
 
-Use a trusted private LAN: HTTP bearer authentication does not encrypt traffic. The listener refuses wildcard/public/mobile/VPN binding and non-private peers. Rotate the token in the app settings when needed. Tokens are generated per installation and never committed. An optional start-page URL is configured on the phone; blank selects its built-in neutral page. The instruction cannot change that URL.
+Use a trusted private LAN: HTTP bearer authentication does not encrypt traffic. The listener refuses wildcard/public/carrier-mobile binding and non-private peers; Tailscale CGNAT peers and tun bind are allowed. Rotate the token in the app settings when needed. Tokens are generated per installation and never committed. An optional start-page URL is configured on the phone; blank selects its built-in neutral page. The instruction cannot change that URL.
 
 ```powershell
 python tools/coordinator_client.py health

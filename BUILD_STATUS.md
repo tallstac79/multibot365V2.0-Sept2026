@@ -1,3 +1,57 @@
+# MultiBot365 networking milestone - LTE/Tailscale coordinator path
+
+**Status:** PASS (full post-reboot recovery verified)
+**Date:** 2026-09-23 ~09:11 Europe/London
+**App:** 0.6.19-ts (31) on Samsung SM-A136B R5CT61TE14Z
+**HEAD before this work:** a06f3b4 COMPLETE_EXECUTION_READY
+
+## Architecture correction (CoS hostname)
+
+- Intended data path remains **Windows client -> phone coordinator** (HTTP :8767).
+- CoS named `desktop-ivunj9j.taila8257e.ts.net` (mini PC). That is the **client**, not the coordinator host.
+- Correct MagicDNS used in `.local/coordinator.json`: **`galaxy-a13-5g.taila8257e.ts.net`** (Samsung, Tailscale IP 100.114.45.68).
+- Mini PC Tailscale IP 100.69.205.34 remains the Windows peer.
+
+## Code / config changes (networking only)
+
+- `android/Bet365Agent/app/src/main/java/com/bet365agent/CoordinatorHttp.java`
+  - Accept Tailscale CGNAT `100.64.0.0/10` as trusted private peers.
+  - Bind preference: Wi-Fi/Ethernet RFC1918 first; **fall back to Tailscale `tun*`** when Wi-Fi is off.
+  - Still never binds carrier `rmnet` / public / wildcard.
+- `CoordinatorSettingsActivity.java` - UI hint mentions Tailscale.
+- `app/build.gradle.kts` - versionCode 31 / versionName `0.6.19-ts`.
+- `.local/coordinator.json` url -> `http://galaxy-a13-5g.taila8257e.ts.net:8767` (token unchanged; **not committed**).
+- `tools/COORDINATOR.md` - documents Tailscale bind/peers and MagicDNS URL form.
+- No Bet365LiveAdapter / AdapterWorkflow / Place Bet logic changes.
+
+## Proven on physical devices (Wi-Fi OFF, mobile/LTE ON, Tailscale ON)
+
+Evidence: `evidence/tailscale-lte-coordinator/`
+
+| Check | Result |
+|---|---|
+| Agent health via MagicDNS | PASS - endpoint `http://100.114.45.68:8767`, app 0.6.19-ts |
+| Coordinator request reaches phone | PASS - `ts-lte-1790150005-open-type` ACCEPTED |
+| Phone returns result | PASS - stage PASS, execution_count 1 |
+| Duplicate after success | PASS - HTTP 409 DUPLICATE, execution_count stays 1 |
+| App restart recovers (Tailscale rebind) | PASS - pid 13574->14148, same TS endpoint |
+| No duplicate / no replay after app restart | PASS - pending -> INTERNAL_ERROR count 1; re-POST DUPLICATE; fresh after-restart PASS |
+| Phone reboot recovers | PASS - after David reboot; health + OPEN_AND_TYPE `ts-lte-postreboot-1790151061-open-type` PASS; duplicate 409; wifi_on=0 LTE; Tailscale + accessibility up |
+| Mini PC reboot recovers | PASS - after David reboot; `tailscale status` shows galaxy-a13-5g; MagicDNS Resolve-DnsName -> 100.114.45.68; client health/instruction over MagicDNS |
+
+## Post-reboot verification notes
+
+- David confirmed Samsung phone AND mini PC restarted before this pass.
+- After phone reboot the screen was locked once; unlocked via adb wake + dismiss-keyguard, then instruction PASS (not a networking failure).
+- `settings get global wifi_on` = 0; active default network MOBILE[LTE] (`uk.lebara.mobi`).
+- LAN `nslookup` does not resolve MagicDNS; Tailscale Resolve-DnsName / Magicsock does (expected).
+
+## Not claimed
+
+- Any change to live-site Place Bet / READY_STATE business logic.
+- Permanent unlocked-after-reboot guarantee (phone may need unlock after cold boot).
+
+---
 # MultiBot365 build status
 
 ## Current milestone: COMPLETE_EXECUTION_READY + ?0 Place Bet dispatch ? PASS on physical Samsung
