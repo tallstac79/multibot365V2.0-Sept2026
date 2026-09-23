@@ -1,0 +1,72 @@
+[
+  {
+    "id": 48,
+    "instruction_id": "on-f24902a9a6dc166b07e79880",
+    "from_state": null,
+    "to_state": "RECEIVED",
+    "at": "2026-09-23T14:55:08.649+00:00",
+    "actor": "intake",
+    "reason": "Source message received",
+    "detail": null
+  },
+  {
+    "id": 49,
+    "instruction_id": "on-f24902a9a6dc166b07e79880",
+    "from_state": "RECEIVED",
+    "to_state": "PARSED",
+    "at": "2026-09-23T14:55:08.649+00:00",
+    "actor": "parser",
+    "reason": "oddsnotifier_basketball_v1 / classifier-1",
+    "detail": null
+  },
+  {
+    "id": 50,
+    "instruction_id": "on-f24902a9a6dc166b07e79880",
+    "from_state": "PARSED",
+    "to_state": "RULES_APPLIED",
+    "at": "2026-09-23T14:55:08.649+00:00",
+    "actor": "rules",
+    "reason": "All rules passed",
+    "detail": null
+  },
+  {
+    "id": 51,
+    "instruction_id": "on-f24902a9a6dc166b07e79880",
+    "from_state": "RULES_APPLIED",
+    "to_state": "QUEUED",
+    "at": "2026-09-23T14:55:08.649+00:00",
+    "actor": "rules",
+    "reason": "Queued for device",
+    "detail": null
+  },
+  {
+    "id": 52,
+    "instruction_id": "on-f24902a9a6dc166b07e79880",
+    "from_state": "QUEUED",
+    "to_state": "DISPATCHED",
+    "at": "2026-09-23T14:55:35.427+00:00",
+    "actor": "dispatcher",
+    "reason": "Sent to coordinator",
+    "detail": null
+  },
+  {
+    "id": 53,
+    "instruction_id": "on-f24902a9a6dc166b07e79880",
+    "from_state": "DISPATCHED",
+    "to_state": "DEVICE_ACTIVE",
+    "at": "2026-09-23T14:55:35.610+00:00",
+    "actor": "coordinator",
+    "reason": "Coordinator durably accepted instruction",
+    "detail": null
+  },
+  {
+    "id": 54,
+    "instruction_id": "on-f24902a9a6dc166b07e79880",
+    "from_state": "DEVICE_ACTIVE",
+    "to_state": "TARGET_NOT_FOUND",
+    "at": "2026-09-23T14:56:09.805+00:00",
+    "actor": "coordinator",
+    "reason": "TARGET_NOT_FOUND: Live Bet365 search UI not visible after Search tap",
+    "detail": null
+  }
+]

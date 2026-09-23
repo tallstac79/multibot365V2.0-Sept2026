@@ -1,0 +1,12 @@
+{
+  "alert": "Kipina Basket vs Kauhajoki Karhu Basket Totals",
+  "message_id": "67989",
+  "intake_id": 37,
+  "received_at": "2026-09-23T14:21:43.228+00:00",
+  "status": "INVALID",
+  "reason": "basketball TOTALS production layout: Unsupported production basketball layout",
+  "delivery": "event",
+  "formatted_text": "New odds update on Pinnacle\n\nBasketball - Finland - Suomen Cup\n[Kipina Basket vs Kauhajoki Karhu Basket](https://oddshub.io/basketball/finland-suomen-cup-group-d/74525502?market=Totals)\n23.09.2026 15:30\n\nTotals (165.5 -> 166.5)\n1.751\u2b07\ufe0f (1.769) - 1.917\u2b06\ufe0f (1.900)\n\n\ud83d\udfe2 Opening (170.5)\n1.806 - 1.793\n\n[Bet365 (Totals 168.5)](https://www.bet365.com/#/AC/B18/C21171274/D19/E26792838/F19/I0/)\n1.83 - 1.83\n\n\ud83c\udfaf EV: None (not equal lines)",
+  "conclusion": "Correctly rejected fail-closed as INVALID before rules/dispatch. Unsupported production basketball layout: Pinnacle line transition 'Totals (165.5 -> 166.5)' and EV: None (not equal lines). No bold Bet365 target price usable for READY. Not blocked by dispatch_enabled timing \u2014 never reached QUEUED.",
+  "dispatch_enabled_at_receive": "was false until ~14:23:40; irrelevant because INVALID at ingest"
+}

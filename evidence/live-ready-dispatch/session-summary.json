@@ -1,0 +1,41 @@
+﻿{
+  "PASS_FAIL": "FAIL",
+  "reason": "Live PARSED alert dispatched ready-only but terminal TARGET_NOT_FOUND (search UI not visible); never reached READY",
+  "APP_VERSION": "0.6.22-login",
+  "version_code": 34,
+  "DISPATCH_PROOF": {
+    "id": "on-f24902a9a6dc166b07e79880",
+    "message_id": "68009",
+    "fixture": "Japan vs Thailand",
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-56.5",
+    "stake": "1.00",
+    "alert_price": "1.80",
+    "execution_mode": "ready",
+    "READY": false,
+    "terminal": "TARGET_NOT_FOUND",
+    "detail": "Live Bet365 search UI not visible after Search tap",
+    "wager_submitted": false
+  },
+  "DISPATCH_DISABLED_AFTER": true,
+  "pipeline_status_after": {"dispatch_enabled": false, "intake": "LISTENING", "notifications": "DISABLED"},
+  "LTE": {
+    "wifi_state": "UNKNOWN_WITHOUT_ADB",
+    "network_path": "MagicDNS galaxy-a13-5g.taila8257e.ts.net:8767 -> endpoint http://100.114.45.68:8767",
+    "open_and_type": "PASS",
+    "instruction_id": "ts-recovery-1790175562-open-type",
+    "note": "Cannot toggle Wi-Fi without ADB; proved coordinator instruction PASS over Tailscale"
+  },
+  "APP_RESTART": {
+    "status": "NO_ADB_BLOCKER",
+    "detail": "Cannot force-stop/restart app without ADB; no remote restart path. Strongest non-ADB check: after live dispatch FAIL, health session=AUTHENTICATED (workflow). After recovery OPEN_AND_TYPE, idle probe session=UNKNOWN."
+  },
+  "PHONE_REBOOT": {
+    "status": "NO_ADB_BLOCKER",
+    "detail": "Cannot reboot without ADB; needs human reboot. Prior a292373 phone-reboot evidence stands."
+  },
+  "session_after_dispatch_fail": "AUTHENTICATED",
+  "session_final_idle_probe": "UNKNOWN",
+  "evidence_dir": "evidence/live-ready-dispatch/"
+}

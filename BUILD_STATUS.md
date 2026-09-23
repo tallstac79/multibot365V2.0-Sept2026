@@ -1,4 +1,22 @@
-﻿# MultiBot365 live Telegram intake + session contract - PASS (ready-only; dispatch still off)
+﻿# MultiBot365 live ready-only dispatch E2E - FAIL (TARGET_NOT_FOUND); dispatch re-disabled
+
+Verified 2026-09-23 ~15:00 Europe/London. App **0.6.22-login (34)** on Samsung galaxy-a13-5g. Coordinator Tailscale `http://100.114.45.68:8767` / MagicDNS `galaxy-a13-5g.taila8257e.ts.net:8767`.
+
+- **Session before dispatch:** AUTHENTICATED (post `session-login-1790175250` PASS). Notifications disabled.
+- **Dispatch enable:** `.local/pipeline.json` `dispatch_enabled=true`; `pipeline_service` LISTENING; one live OddsNotifier alert PARSED→QUEUED→DISPATCHED.
+- **Live alert:** `on-f24902a9a6dc166b07e79880` msg 68009 **Japan vs Thailand** basketball SPREAD HOME **-56.5** @1.80 stake 1.00 `execution_mode=ready`.
+- **Device result:** FAIL `TARGET_NOT_FOUND` — "Live Bet365 search UI not visible after Search tap" (33.8s). **READY not reached.** `wager_submitted` absent/false.
+- **Post-fail health:** session **AUTHENTICATED** (workflow); Place Bet never engaged.
+- **Dispatch disabled after:** `dispatch_enabled=false` + pipeline restart; status confirms false, intake LISTENING, notifications DISABLED.
+- **LTE / Tailscale recovery (no ADB):** Wi-Fi state **unknown without ADB**. OPEN_AND_TYPE over MagicDNS **PASS** (`ts-recovery-1790175562-open-type` Exact editor value verified). Network path: MagicDNS → endpoint `http://100.114.45.68:8767`.
+- **App restart:** **NO_ADB_BLOCKER** (cannot force-stop). Strongest check: AUTHENTICATED after dispatch FAIL; final idle probe UNKNOWN after recovery typing.
+- **Phone reboot:** **NO_ADB_BLOCKER** (needs human). Prior dual-bind reboot evidence retained.
+- Evidence: `evidence/live-ready-dispatch/` (instruction/result/transitions/health + recovery OPEN_AND_TYPE + `session-summary.json`). No `.local` secrets committed.
+
+**Remaining:** fix Bet365 search UI visibility for ready-only path; re-enable dispatch only after operator approval; human phone reboot / optional ADB for Wi-Fi-off LTE and app-restart if required.
+
+---
+# MultiBot365 live Telegram intake + session contract - PASS (ready-only; dispatch still off)
 
 Verified 2026-09-23 15:11 Europe/London. Backend on `444793f` + this commit. App **0.6.21-session (33)** on Samsung R5CT61TE14Z. Dashboard **2.0-dashboard.3**. **141 automated tests PASS** (128 under `tests/` + 13 under `tools/`).
 
@@ -613,5 +631,6 @@ The app button expects the page served on host port 8765 and adb reverse tcp:876
 Earlier BUILD_STATUS reported the legacy search query ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œFulhamÃƒÂ¢Ã¢â€šÂ¬Ã‚Â passed on 2026-09-20. This historical result is preserved as context, not revalidated here. Existing legacy search/fixture code remains.
 
 No physical-action or credential blocker remains for this milestone. Tracked Gradle/build artifacts were already dirty at takeover and are excluded from the source milestone commit.
+
 
 
