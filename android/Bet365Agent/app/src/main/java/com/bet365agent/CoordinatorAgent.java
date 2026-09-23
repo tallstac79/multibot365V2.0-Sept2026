@@ -187,6 +187,11 @@ final class CoordinatorAgent implements AutoCloseable {
         JSONObject session;
         synchronized (sessionLock) {
             session = object("state", sessionState, "observed_at_ms", sessionObservedAtMs, "detail", sessionDetail == null ? "" : sessionDetail);
+            // Watchdog: ensure the 60s refresh keeps running even if a prior delayed post was dropped.
+            if (!closed && System.currentTimeMillis() - sessionObservedAtMs > SESSION_REFRESH_MS + 5_000L) {
+                main.removeCallbacks(sessionRefresh);
+                main.post(sessionRefresh);
+            }
         }
         return object("healthy", !closed).put("heartbeat_ms", System.currentTimeMillis()).put("uptime_ms", SystemClock.elapsedRealtime() - boot)
             .put("state", active == null ? "IDLE" : active.optString("state"))
@@ -220,11 +225,11 @@ final class CoordinatorAgent implements AutoCloseable {
             KeyguardManager keyguard = (KeyguardManager) service.getSystemService(android.content.Context.KEYGUARD_SERVICE);
             if (power == null || !power.isInteractive() || (keyguard != null && keyguard.isKeyguardLocked())) {
                 noteSession("UNKNOWN", "screen locked or off");
-            } else if (store.active() != null || runner.isTextActive()) {
-                // Do not steal the runner mid-instruction; age out as UNKNOWN rather than repeating a stale AUTHENTICATED claim.
-                noteSession("UNKNOWN", "busy; deferred on-screen session check");
+            } else if (store.active() != null) {
+                // Mid-instruction: do not steal screenshots; fail closed rather than reuse a stale AUTHENTICATED claim.
+                noteSession("UNKNOWN", "instruction active; deferred on-screen session check");
             } else {
-                // Lightweight on-screen classification using a capture-only probe when idle.
+                final long startedAt = System.currentTimeMillis();
                 boolean started = runner.probeSession(ocr -> {
                     try {
                         VisualScreen screen = new VisualScreen(ocr);
@@ -234,7 +239,16 @@ final class CoordinatorAgent implements AutoCloseable {
                         noteSession("ERROR", "session probe failed: " + e.getClass().getSimpleName());
                     }
                 });
-                if (!started) noteSession("UNKNOWN", "runner unavailable for session probe");
+                if (!started) {
+                    noteSession("UNKNOWN", "runner unavailable for session probe");
+                } else {
+                    // If OCR callback never arrives, age out instead of freezing observed_at.
+                    main.postDelayed(() -> {
+                        synchronized (sessionLock) {
+                            if (sessionObservedAtMs < startedAt) noteSession("UNKNOWN", "session probe timed out");
+                        }
+                    }, 15_000L);
+                }
             }
         } catch (Exception e) {
             noteSession("ERROR", "session refresh failed: " + e.getClass().getSimpleName());
