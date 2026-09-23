@@ -24,6 +24,46 @@ and same-origin browser writes remain enforced. LAN clients can read evidence an
 edit recommendations; there is no authentication. Do not expose/port-forward publicly.
 Startup does not alter firewall or Tailscale configuration.
 
+## Pipeline integration (2.0-dashboard.3)
+
+The same five screens and layout are kept. The dashboard now also reads the authoritative
+pipeline store `.local/pipeline.sqlite3` in SQLite `mode=ro`. It never creates, migrates
+or writes that store. A missing store is an empty source; a corrupt one returns HTTP 503 on
+alerts, never a sample fallback. Origins stay separate: `production` rows appear only in
+REAL DATA, and `sample` rows (replays) only in SAMPLE DATA.
+
+* **Overview:** the phone card shows *Session state* and *Session observed* from the stored
+  session contract ("No session report (fails closed)" when absent). Current activity shows
+  the pipeline service heartbeat, Telegram intake state, dispatch mode, lifecycle counts
+  and open instructions.
+* **Incoming alerts:** continuous intake rows come first, followed by the recorded snapshot.
+  When both stores hold the same Telegram chat/message (`-100` prefix normalised), the
+  pipeline record wins and the message is shown once. The new *Lifecycle* column and the
+  stored failure reason sit next to parse status. The detail view adds the lifecycle state,
+  failure reason, device and session at dispatch; the rules decision with every check; the
+  stored transition timeline; evidence references; and the Telegram notification text
+  built from the stored record.
+* **Execution history:** device-facing pipeline records (dispatched or with a device
+  result) appear with canonical state as *Status* and the original device stage as
+  *Stage*, plus the dispatched request, rules decision and session state. Existing
+  evidence-file history is unchanged.
+* **Rules & configuration:** adds *Stale alert limit*, *Event timezone* (blank means fail
+  closed) and per-market *Min/Max alert price*.
+* **API:** `GET /api/pipeline`; `GET /api/status` now includes `pipeline`.
+
+Telegram status notifications (`core/status_notifier.py`) are built only from stored
+instruction rows and queued in the `notifications` outbox. The outbox is
+`UNIQUE(instruction_id, state)` and each row is claimed before sending, so nothing is sent
+twice. Retries back off exponentially (30 s, 60 s, ... at most 8 attempts). By default,
+READY and terminal states are notified for dispatched instructions only (rules-level
+REJECTED/STALE are not), and production origin only. Sending is disabled unless
+`notifications.enabled` and `bot_token`/`chat_id` are set in `.local/pipeline.json`. A
+send failure never changes lifecycle state; the database remains authoritative.
+
+See also: [TELEGRAM_INGESTION.md](TELEGRAM_INGESTION.md),
+[INSTRUCTION_LIFECYCLE.md](INSTRUCTION_LIFECYCLE.md), [SESSION_CONTRACT.md](SESSION_CONTRACT.md),
+[RULES_ENGINE.md](RULES_ENGINE.md), [RESULT_SCHEMA.md](RESULT_SCHEMA.md).
+
 ## Data sources and modes
 
 **REAL DATA is the default.** Alerts read `.local/oddsnotifier.sqlite3` using SQLite
@@ -56,10 +96,9 @@ exposed only a local date/time label. Received time is explicitly the snapshot's
 local ingestion time, with original displayed time retained in provenance. No
 coordinator instruction ID has been assigned to these observations.
 
-The future producer can call `core.observation_store.record_alert` with raw text,
-explicit production/sample origin, chat/message IDs, received time, source timestamp
-(if known), parser profile and provenance. Only recorded stages enter its timeline.
-There is no network listener added in this milestone.
+The recorded snapshot store above remains readable. Continuous intake is now provided by
+the pipeline service (`python -m tools.pipeline_service run`) into `.local/pipeline.sqlite3`
+(see the section above). Only recorded stages enter any timeline.
 
 **SAMPLE DATA** replays the manifest fixtures, including genuine captured examples
 clearly identified as fixture replays. It also includes synthetic football 1X2
@@ -141,7 +180,8 @@ recommendation calculation does not fabricate a historical RULES_APPLIED event.
 `core/notification_formatter.format_result` returns concise plain text for an existing
 result. The result audit shows this Telegram-style preview. Backend status/stage and
 failure reasons are preserved; source/device fields are omitted when unknown.
-No message is sent and no Telegram transport/listener is started.
+The dashboard itself sends nothing. Outbound status notifications belong to the pipeline
+service (see the pipeline section).
 
 ## Production basketball profile
 
@@ -181,8 +221,11 @@ result file modification times are not manufactured into log timestamps. Filters
 cover time, component, severity, instruction_id and device_id.
 
 ```powershell
-python -m unittest tests.test_dashboard tests.test_dashboard_real tests.test_oddsnotifier_parser tests.test_oddsnotifier_basketball_production tools.confirmation.tests.test_confirmation tools.complete_execution.tests.test_gate -v
+python -m unittest tests.test_dashboard tests.test_dashboard_real tests.test_dashboard_pipeline tests.test_oddsnotifier_parser tests.test_oddsnotifier_basketball_production tests.test_pipeline tests.test_pipeline_io tools.confirmation.tests.test_confirmation tools.complete_execution.tests.test_gate -v
 ```
+
+As of the pipeline milestone, 141 tests pass. `tests/__init__.py` makes the local
+`tests` package win over a stray site-packages `tests` package.
 
 84 tests pass: dashboard/source/health/config/log tests, strict production fixtures,
 legacy parser regressions and confirmation/execution gate regressions. Browser checks

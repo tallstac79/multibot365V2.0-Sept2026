@@ -1,3 +1,56 @@
+# MultiBot365 unattended backend pipeline: PASS (tests); live Telegram connection pending login
+
+Verified 2026-09-23. Based on a292373. Dashboard **2.0-dashboard.3**. **141 automated tests PASS**
+(84 existing + 57 new). Output: `evidence/pipeline/tests.txt`.
+
+- **Telegram intake** (`core/telegram_intake.py`, `tools/pipeline_service.py`): a Telethon
+  user-session listener. Covers live events, startup catch-up after restart, periodic
+  reconciliation of missed messages, and reconnect with backoff forever. Stores the exact
+  plain text, all entities, and Markdown rebuilt from the entities (round-trips all four
+  genuine messages). Also stores message ID, source time, receipt time and a deterministic
+  instruction_id. Every message is classified PARSED, AMBIGUOUS, INVALID, DUPLICATE or
+  IGNORED, with a reason. Edits are recorded, never executed.
+- **Parser hardening** (`core/alert_classifier.py`): only production-verified basketball
+  Totals/Spread with a bold target is PARSED. Football and basketball ML are AMBIGUOUS
+  `UNSUPPORTED_MAPPING`. Nothing is guessed. The existing parser and fixtures are
+  unchanged. Regression tests cover every genuine format.
+- **Stale/duplicate protection:** message identity is enforced by a unique index;
+  content duplicates use a selection key; a new price supersedes a pending instruction;
+  alerts over the age limit or with a started event become STALE; an unknown event
+  timezone is REJECTED (fail closed). Checks run at ingest and again before dispatch.
+- **Rules engine** (`core/rules_engine.py`): uses the existing decision-support config.
+  Global/per-market enable, stake, max stake, slippage, min EV, min/max price, stale limit
+  and event timezone. Every check result is stored.
+- **Lifecycle and idempotency** (`core/lifecycle.py`, `core/pipeline_store.py`,
+  `core/pipeline.py`): one canonical state machine with timestamped transitions.
+  Coordinator and confirmation enums are mapped, not duplicated. DISPATCHED is committed
+  before sending; a restart only polls; terminal is final; late results are audited and
+  ignored.
+- **Session contract** (`core/session_contract.py`): only a fresh AUTHENTICATED report
+  proceeds; everything else is SESSION_REQUIRED. The wire format for Android is in
+  `docs/SESSION_CONTRACT.md`.
+- **Result/audit storage:** `.local/pipeline.sqlite3` (`docs/RESULT_SCHEMA.md`). Existing
+  evidence structure is preserved and referenced by path.
+- **Dashboard:** read-only wiring of intake, lifecycle, rules decision, session, device,
+  failure reason, evidence and notification preview. REAL and SAMPLE are separated by
+  origin. No redesign. Browser check: `evidence/pipeline/browser-checks.json`.
+- **Telegram notifications** (`core/status_notifier.py`): an outbox built from stored rows,
+  unique per (instruction, state), claimed before sending, with retry backoff. Disabled
+  until configured.
+- **Safety:** `dispatch_enabled=false` by default. When enabled, it sends only the existing
+  live adapter's READY-only request (`execution_mode: "ready"`, never `confirmation_status`).
+  No Android, live-adapter, visual-control, login-UI, Tailscale or final-action code was
+  changed.
+
+Not yet live: `.local/pipeline.json` and the one-time `python -m tools.pipeline_service
+telegram-login` (the account owner's phone code) are needed before the listener connects
+to the real feed. `event_timezone` must be confirmed and set, or every alert fails closed.
+Until Android reports a `session` object in `/health`, every dispatch ends as
+SESSION_REQUIRED. Docs: `docs/TELEGRAM_INGESTION.md`, `docs/INSTRUCTION_LIFECYCLE.md`,
+`docs/SESSION_CONTRACT.md`, `docs/RULES_ENGINE.md`, `docs/RESULT_SCHEMA.md`,
+`docs/DASHBOARD.md`.
+
+---
 # MultiBot365 coordinator Tailscale dual-bind (Wi-Fi + LTE MagicDNS) - PASS
 
 Verified 2026-09-23 13:28 Europe/London. App **0.6.20-ts** (32) on Samsung SM-A136B R5CT61TE14Z.

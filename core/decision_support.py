@@ -13,9 +13,42 @@ def now():
     return datetime.now(timezone.utc).isoformat(timespec='seconds')
 
 def defaults():
-    return {'global': {'enabled': True, 'default_stake': 1.0, 'allowed_slippage': 0.0, 'max_stake': 10.0},
+    return {'global': {'enabled': True, 'default_stake': 1.0, 'allowed_slippage': 0.0, 'max_stake': 10.0,
+                       'stale_alert_seconds': 300, 'event_timezone': None},
             'sports': {sport: {'markets': {market: {'enabled': True, 'stake': None, 'minimum_ev': None,
-                        'allowed_slippage': None} for market in markets}} for sport, markets in MARKETS.items()}}
+                        'allowed_slippage': None, 'min_price': None, 'max_price': None}
+                        for market in markets}} for sport, markets in MARKETS.items()}}
+
+# Keys added after configurations were first persisted; older stored configs are
+# upgraded with these defaults. Unknown keys are still rejected.
+GLOBAL_ADDED = ('stale_alert_seconds', 'event_timezone')
+MARKET_ADDED = ('min_price', 'max_price')
+
+def upgrade(config):
+    if not isinstance(config, dict):
+        return config
+    config = copy.deepcopy(config)
+    base = defaults()
+    if isinstance(config.get('global'), dict) and set(base['global']) - set(GLOBAL_ADDED) <= set(config['global']):
+        for key in GLOBAL_ADDED:
+            config['global'].setdefault(key, base['global'][key])
+    for sport in (config.get('sports') if isinstance(config.get('sports'), dict) else {}).values():
+        for rule in (sport.get('markets') if isinstance(sport, dict) and isinstance(sport.get('markets'), dict) else {}).values():
+            if isinstance(rule, dict):
+                for key in MARKET_ADDED:
+                    rule.setdefault(key, None)
+    return config
+
+def timezone_name(value):
+    if value is None:
+        return
+    from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
+    try:
+        if not isinstance(value, str) or not value:
+            raise ValueError
+        ZoneInfo(value)
+    except (ValueError, ZoneInfoNotFoundError):
+        raise ValueError('Event timezone must be an IANA name such as Europe/London, or blank')
 
 def number(value, name, low, high, optional=False):
     if value is None and optional:
@@ -24,6 +57,7 @@ def number(value, name, low, high, optional=False):
         raise ValueError(f'{name} must be a finite number between {low} and {high}')
 
 def validate(config):
+    config = upgrade(config)
     if not isinstance(config, dict) or set(config) != {'global', 'sports'}:
         raise ValueError('Expected global and sports configuration')
     g = config['global']
@@ -32,6 +66,8 @@ def validate(config):
     number(g['max_stake'], 'Maximum stake', .01, 100000)
     number(g['default_stake'], 'Default stake', .01, g['max_stake'])
     number(g['allowed_slippage'], 'Slippage (decimal price points)', 0, 1)
+    number(g['stale_alert_seconds'], 'Stale alert limit (seconds)', 5, 86400)
+    timezone_name(g['event_timezone'])
     if not isinstance(config['sports'], dict) or set(config['sports']) != set(MARKETS):
         raise ValueError('Expected football and basketball')
     for sport, markets in MARKETS.items():
@@ -39,11 +75,15 @@ def validate(config):
         if not isinstance(s, dict) or set(s) != {'markets'} or not isinstance(s['markets'], dict) or set(s['markets']) != set(markets):
             raise ValueError(f'Invalid markets for {sport}')
         for market, rule in s['markets'].items():
-            if not isinstance(rule, dict) or set(rule) != {'enabled', 'stake', 'minimum_ev', 'allowed_slippage'} or type(rule['enabled']) is not bool:
+            if not isinstance(rule, dict) or set(rule) != set(defaults()['sports'][sport]['markets'][market]) or type(rule['enabled']) is not bool:
                 raise ValueError(f'Invalid {market} rule')
             number(rule['stake'], 'Market stake', .01, g['max_stake'], True)
             number(rule['minimum_ev'], 'Minimum displayed EV (%)', 0, 1000, True)
             number(rule['allowed_slippage'], 'Market slippage', 0, 1, True)
+            number(rule['min_price'], 'Market minimum alert price', 1.01, 1000, True)
+            number(rule['max_price'], 'Market maximum alert price', 1.01, 1000, True)
+            if rule['min_price'] is not None and rule['max_price'] is not None and rule['min_price'] > rule['max_price']:
+                raise ValueError(f'{sport} {market}: minimum price exceeds maximum price')
     return copy.deepcopy(config)
 
 class Store:
@@ -65,7 +105,7 @@ class Store:
     def get(self):
         with self.connect() as db:
             payload, timestamp = db.execute('SELECT payload, updated_at FROM config WHERE id=1').fetchone()
-        return {'config': json.loads(payload), 'updated_at': timestamp}
+        return {'config': upgrade(json.loads(payload)), 'updated_at': timestamp}
     def save(self, config):
         payload, timestamp = json.dumps(validate(config)), now()
         with self.connect() as db:

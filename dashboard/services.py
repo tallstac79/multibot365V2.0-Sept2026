@@ -15,7 +15,7 @@ from core.oddsnotifier_parser import parse_oddsnotifier, AlertFormatError, SYNTH
 from tools.coordinator_client import Client
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = '2.0-dashboard.2'
+VERSION = '2.0-dashboard.3'
 MARKETS = {'football': ['1X2', 'SPREAD', 'TOTALS'], 'basketball': ['MONEYLINE', 'SPREAD', 'TOTALS']}
 
 def now():

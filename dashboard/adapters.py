@@ -45,6 +45,7 @@ def real_alerts(snapshot, root=ROOT):
             except (KeyError,ValueError,TypeError): recommendation_reason='Stored observation lacks recommendation fields'
         row=dict(id='stored-'+str(record['record_id']), instruction_id=record.get('instruction_id'),
             received_at=record.get('received_at'), source_message_id=record.get('source_message_id'), source_timestamp=record.get('source_timestamp'),
+            source_chat_id=record.get('channel_id'),
             **{k:p.get(k) for k in ('sport','competition','fixture','market')},
             side=p.get('target_side'),line=p.get('target_line') if p.get('target_line') is not None else p.get('displayed_line'),
             alert_price=p.get('alert_price'),minimum_price=record.get('minimum_price'),displayed_ev=p.get('displayed_ev_percent'),

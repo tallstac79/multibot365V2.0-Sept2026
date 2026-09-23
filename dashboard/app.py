@@ -9,6 +9,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from dashboard.services import ROOT, Store, Health, sample_alerts
 from dashboard.adapters import real_alerts, result_history, application_logs
+from dashboard import pipeline_adapter
 
 
 def create_app(root=ROOT, db_path=None, health=None):
@@ -40,8 +41,15 @@ def create_app(root=ROOT, db_path=None, health=None):
     @app.get('/')
     def index(): return FileResponse(static / 'index.html')
 
+    def pipeline_summary():
+        try: return pipeline_adapter.summary(root)
+        except sqlite3.Error: return {'available': False, 'error': 'Pipeline store is unreadable'}
+
     @app.get('/api/status')
-    def status(): return health.get()
+    def status(): return dict(health.get(), pipeline=pipeline_summary())
+
+    @app.get('/api/pipeline')
+    def pipeline(): return pipeline_summary()
 
     @app.get('/api/config')
     def config(): return store.get()
@@ -57,17 +65,28 @@ def create_app(root=ROOT, db_path=None, health=None):
         return mode
 
     def stored_alerts():
-        try: return real_alerts(store.get(), root)
+        try:
+            live = pipeline_adapter.alerts(root, 'production')
+            seen = {(pipeline_adapter.chat_key(r['source_chat_id']), r['source_message_id']) for r in live}
+            # The recorded snapshot store and continuous intake can hold the same Telegram
+            # message; the authoritative pipeline record wins.
+            snapshot = [r for r in real_alerts(store.get(), root)
+                        if (pipeline_adapter.chat_key(r.get('source_chat_id')), r['source_message_id']) not in seen]
+            return live + snapshot
         except (sqlite3.Error, ValueError, TypeError, KeyError):
             raise HTTPException(503, 'Stored alert source is unreadable; no sample fallback')
+
+    def replayed_samples():
+        try: return pipeline_adapter.alerts(root, 'sample')
+        except sqlite3.Error: raise HTTPException(503, 'Pipeline sample records are unreadable')
 
     @app.get('/api/alerts')
     def alerts(mode: str = 'real'):
         mode = selected_mode(mode)
-        rows = sample_alerts(store.get(), root) if mode == 'sample' else stored_alerts()
+        rows = replayed_samples() + sample_alerts(store.get(), root) if mode == 'sample' else stored_alerts()
         return {'mode': mode, 'items': rows,
                 'note': 'Parser fixtures and recorded tests; no dispatch' if mode == 'sample' else
-                        'Stored production records only' if rows else 'No stored production alerts; Telegram feed is not connected'}
+                        'Stored production records only' if rows else 'No stored production alerts yet; start the pipeline service for continuous Telegram intake'}
 
     @app.get('/api/history')
     def results(q: str = '', status: str = '', limit: int = 100, offset: int = 0, mode: str = 'real'):
@@ -75,7 +94,9 @@ def create_app(root=ROOT, db_path=None, health=None):
         # An unavailable alert source must not hide independent recorded device results.
         try: linked = real_alerts(store.get(), root) if mode == 'real' else []
         except (sqlite3.Error, ValueError, TypeError, KeyError): linked = []
-        rows = result_history(root, mode, linked)
+        try: lifecycle = pipeline_adapter.history(root, 'production' if mode == 'real' else 'sample')
+        except sqlite3.Error: lifecycle = []
+        rows = lifecycle + result_history(root, mode, linked)
         rows = [r for r in rows if (not status or r['status'] == status or r['stage'] == status)
                 and q.lower() in ' '.join(str(r.get(k) or '') for k in ('instruction_id', 'fixture', 'market', 'side', 'device_id')).lower()]
         return {'mode': mode, 'total': len(rows), 'items': rows[max(0, offset):max(0, offset) + max(1, min(limit, 200))]}
