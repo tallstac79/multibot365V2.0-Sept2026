@@ -69,9 +69,10 @@ exceptions become `INVALID`.
 
 | Status | When |
 |---|---|
-| PARSED | Basketball Totals/Spread (`oddsnotifier_basketball_v1`, production-verified) with exactly one bold Bet365 target |
-| AMBIGUOUS | A recognised alert whose target is not bold, or a sport/market with no production-verified ordering (all football, basketball Moneyline). The reason starts with `UNSUPPORTED_MAPPING` where applicable. |
-| INVALID | The alert header is present but the body is malformed or uses an unsupported layout (for example several bold targets, line transitions, `EV: None`) |
+| PARSED | Complete and comparable: production-verified ordering, one bold Bet365 target, Bet365 present, equal lines with supplied EV |
+| PARSED_PARTIAL | Valid and interpreted as far as is safe, but no bold target, no Bet365 offer, or no EV (for example `EV: None (not equal lines)`, evaluated directionally per side). No instruction is created. |
+| AMBIGUOUS | A sport/market with no verified ordering (football two-sided, basketball Moneyline: `UNSUPPORTED_MAPPING`), several highlighted prices, an unlabelled side, an unresolvable market, or an unsafe spread sign |
+| INVALID | Genuinely malformed or contradictory data only (see [MARKET_INTERPRETATION.md](MARKET_INTERPRETATION.md)) |
 | DUPLICATE | Repeated live delivery of a stored message, or a different message for a selection that is already pending, dispatched or completed |
 | IGNORED | Not an OddsNotifier alert, media-only or empty, or an edit of an already-processed message |
 

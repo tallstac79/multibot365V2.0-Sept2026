@@ -27,6 +27,10 @@ log = logging.getLogger('multibot.pipeline')
 HISTORY_SCANS = ('reconcile', 'catch_up', 'backfill')
 
 
+class _LostRace(Exception):
+    """Another delivery of the same message committed between classification and storage."""
+
+
 @dataclass
 class SourceMessage:
     """One message as delivered by a source (Telegram listener, replay, test)."""
@@ -101,10 +105,17 @@ class Pipeline:
                            parsed=None, profile=None, parser_version=alert_classifier.PARSER_VERSION)
         parsed = verdict['parsed']
         instruction_id = instruction_id_for(message.origin, message.chat_id, message.message_id)
+        try:
+            return self._record(message, verdict, parsed, instruction_id, now, delivery)
+        except _LostRace:
+            # A concurrent delivery stored this message first. Retry only after our write
+            # transaction has rolled back, so the retry never waits on its own lock.
+            return self.ingest(message, delivery)
+
+    def _record(self, message, verdict, parsed, instruction_id, now, delivery):
         with self.store.tx() as db:
             if self.store.find_intake(db, message.origin, message.chat_id, message.message_id) is not None:
-                # Lost a race with a concurrent delivery of the same message.
-                return self.ingest(message, delivery)
+                raise _LostRace()
             status, reason = verdict['status'], verdict['reason']
             superseded = None
             if status == alert_classifier.PARSED:

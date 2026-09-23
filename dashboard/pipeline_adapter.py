@@ -84,8 +84,9 @@ def alerts(root, origin, limit=200):
                 received_at=m['received_at'], source_message_id=m['message_id'], source_chat_id=m['chat_id'],
                 source_timestamp=m['source_timestamp'],
                 sport=parsed.get('sport'), competition=parsed.get('competition'), fixture=parsed.get('fixture'),
-                market=parsed.get('market'), side=parsed.get('target_side'),
-                line=parsed.get('target_line') if parsed.get('target_line') is not None else parsed.get('displayed_line'),
+                market=parsed.get('market'), side=parsed.get('target_side') or parsed.get('selection_side'),
+                line=next((parsed.get(k) for k in ('target_line', 'selection_line', 'displayed_line')
+                           if parsed.get(k) is not None), None),
                 alert_price=parsed.get('alert_price'), minimum_price=i['minimum_price'] if i else None,
                 displayed_ev=parsed.get('displayed_ev_percent'), status=m['status'],
                 lifecycle_state=i['state'] if i else None, failure_reason=i['failure_reason'] if i else None,

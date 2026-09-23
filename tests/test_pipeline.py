@@ -79,11 +79,13 @@ class ClassificationTests(unittest.TestCase):
         decision = evaluate(p, config(), instruction_id='x', received_at=T0.isoformat(), now=T0)
         self.assertEqual(decision['instruction']['alternate_line'], {'current': True, 'opening': False, 'comparison': False})
 
-    def test_pasted_fixtures_without_bold_are_ambiguous_not_guessed(self):
+    def test_pasted_fixtures_without_bold_are_partial_not_guessed(self):
         for name in ('melbourne_real', 'melbourne_190_5_real', 'prague_real', 'rytas_real'):
             verdict = alert_classifier.classify((FIXTURES / f'oddsnotifier_basketball_{name}.txt').read_text(encoding='utf-8'))
-            self.assertEqual(verdict['status'], 'AMBIGUOUS', name)
+            self.assertEqual(verdict['status'], 'PARSED_PARTIAL', name)
+            self.assertIn('No highlighted Bet365 target', verdict['reason'])
             self.assertIsNone(verdict['parsed']['target_side'])
+            self.assertEqual(len(verdict['parsed']['sides']), 2)
 
     def test_unverified_football_formats_are_ambiguous_with_reason(self):
         for name in ('oddsnotifier_spread.txt', 'oddsnotifier_football_ml_linked.txt'):
@@ -101,8 +103,8 @@ class ClassificationTests(unittest.TestCase):
 
     def test_malformed_ignored_and_empty(self):
         broken = MELBOURNE['raw_text'].replace('- 1.65', '- **1.65**')
-        self.assertEqual(alert_classifier.classify(broken)['status'], 'INVALID')
-        self.assertIn('Multiple bold', alert_classifier.classify(broken)['reason'])
+        self.assertEqual(alert_classifier.classify(broken)['status'], 'AMBIGUOUS')
+        self.assertIn('More than one Bet365 price highlighted', alert_classifier.classify(broken)['reason'])
         self.assertEqual(alert_classifier.classify('New odds update on Pinnacle\ngarbage')['status'], 'INVALID')
         self.assertEqual(alert_classifier.classify('EV: None layout\nNew odds update on Pinnacle')['status'], 'IGNORED')
         self.assertEqual(alert_classifier.classify('Service notice')['status'], 'IGNORED')

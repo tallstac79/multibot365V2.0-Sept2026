@@ -18,7 +18,7 @@ from pathlib import Path
 
 from core.lifecycle import State, allowed, TERMINAL
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2  # 2: intake status PARSED_PARTIAL
 SCHEMA = '''
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS intake_messages (
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS intake_messages (
     source_timestamp TEXT,
     received_at TEXT NOT NULL,
     processed_at TEXT NOT NULL,
-    status TEXT NOT NULL CHECK (status IN ('PARSED','AMBIGUOUS','INVALID','DUPLICATE','IGNORED')),
+    status TEXT NOT NULL CHECK (status IN ('PARSED','PARSED_PARTIAL','AMBIGUOUS','INVALID','DUPLICATE','IGNORED')),
     reason TEXT,
     parser_profile TEXT,
     parser_version TEXT,
@@ -145,8 +145,35 @@ class Store:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with self.connection() as db:
             db.execute('PRAGMA journal_mode=WAL')
+            self._migrate(db)
             db.executescript(SCHEMA)
             db.execute('INSERT OR IGNORE INTO meta VALUES (?,?)', ('schema_version', str(SCHEMA_VERSION)))
+
+    @staticmethod
+    def _migrate(db):
+        """v1 -> v2: widen the intake status CHECK. SQLite cannot alter a CHECK, so the table
+        is rebuilt in one transaction (documented 12-step procedure, foreign keys off)."""
+        row = db.execute("SELECT sql FROM sqlite_master WHERE type='table' AND name='intake_messages'").fetchone()
+        if row is None or 'PARSED_PARTIAL' in row[0]:
+            return
+        create = SCHEMA[SCHEMA.index('CREATE TABLE IF NOT EXISTS intake_messages'):]
+        create = create[:create.index(');') + 2].replace('IF NOT EXISTS intake_messages', 'intake_messages_v2')
+        db.execute('PRAGMA foreign_keys=OFF')
+        db.execute('BEGIN IMMEDIATE')
+        try:
+            db.execute(create)
+            db.execute('INSERT INTO intake_messages_v2 SELECT * FROM intake_messages')
+            db.execute('DROP TABLE intake_messages')
+            db.execute('ALTER TABLE intake_messages_v2 RENAME TO intake_messages')
+            if db.execute('PRAGMA foreign_key_check').fetchall():
+                raise sqlite3.IntegrityError('Foreign key check failed during migration')
+            db.execute("INSERT OR REPLACE INTO meta VALUES ('schema_version', ?)", (str(SCHEMA_VERSION),))
+            db.execute('COMMIT')
+        except BaseException:
+            db.execute('ROLLBACK')
+            raise
+        finally:
+            db.execute('PRAGMA foreign_keys=ON')
 
     @contextmanager
     def connection(self):

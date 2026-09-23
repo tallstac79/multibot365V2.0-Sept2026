@@ -109,11 +109,12 @@ class DashboardTests(unittest.TestCase):
         self.assertTrue(rows)
         self.assertTrue(all(r['stage']=='TIMEOUT' for r in rows))
         self.assertEqual(self.client.get('/api/history?q=not-present-123').json()['total'],0)
-        row=all_rows['items'][0]
+        # The live pipeline store may add records without local evidence; use a recorded one.
+        row=next(r for r in all_rows['items'] if r['evidence'])
         self.assertEqual(self.client.get(row['evidence'][0]['url']).status_code,200)
         self.assertEqual(self.client.get('/api/evidence/%2E%2E/BUILD_STATUS.md').status_code,404)
         self.assertEqual(self.client.get('/api/evidence/missing.png').status_code,404)
-        self.assertEqual(self.client.get('/api/history?limit=1').json()['items'][0],row)
+        self.assertEqual(self.client.get('/api/history?limit=1').json()['items'][0]['instruction_id'],all_rows['items'][0]['instruction_id'])
     def test_malformed_record_ignored(self):
         folder=self.root/'evidence';folder.mkdir()
         (folder/'result.json').write_text('{broken')

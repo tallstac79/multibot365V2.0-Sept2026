@@ -1,26 +1,27 @@
 """Production classification of one source message into exactly one intake status.
 
-PARSED     a production-verified mapping with one explicit Bet365 target
-AMBIGUOUS  a recognised alert whose target or quote ordering is not production-verified
-INVALID    a recognised alert header whose body is malformed or an unsupported layout
-IGNORED    not an OddsNotifier odds alert (service notices, empty/media-only messages)
+PARSED          production-verified ordering, one explicit (bold) Bet365 target, equal lines
+                and an OddsNotifier-supplied EV: complete and comparable
+PARSED_PARTIAL  a valid alert that is interpreted as far as safely possible, but has no
+                highlighted target, no Bet365 offer, or no EV because the lines differ
+AMBIGUOUS       recognised, but ordering/side/sign cannot be resolved without guessing
+INVALID         recognised alert header with malformed or self-contradictory data
+IGNORED         not an OddsNotifier odds alert (service notices, empty/media-only messages)
 (DUPLICATE is decided by the store, never by the parser.)
 
-Only mappings confirmed from genuine production samples produce PARSED:
-basketball Totals/Spread via `oddsnotifier_basketball_v1`. Everything else is kept,
-fully parsed where the grammar allows, but never given a guessed selection.
+Market meaning (sides, line/price quality, movement, EV status) comes from
+core.market_interpretation. Layouts it does not handle fall back to the legacy parser,
+which never assigns a side to unverified orderings.
 """
 import re
 
-from core.oddsnotifier_parser import (AlertFormatError, HEADER, parse_oddsnotifier,
-                                      PRODUCTION_BASKETBALL_PROFILE)
+from core.market_interpretation import interpret, strip_non_price_bold
+from core.oddsnotifier_parser import AlertFormatError, HEADER, parse_oddsnotifier
 
-PARSER_VERSION = 'classifier-1'
-PARSED, AMBIGUOUS, INVALID, DUPLICATE, IGNORED = 'PARSED', 'AMBIGUOUS', 'INVALID', 'DUPLICATE', 'IGNORED'
-INTAKE_STATUSES = (PARSED, AMBIGUOUS, INVALID, DUPLICATE, IGNORED)
-# (sport, market) pairs whose Bet365 target mapping is confirmed from production samples.
-VERIFIED = {('basketball', 'TOTALS'): PRODUCTION_BASKETBALL_PROFILE,
-            ('basketball', 'SPREAD'): PRODUCTION_BASKETBALL_PROFILE}
+PARSER_VERSION = 'classifier-2'
+PARSED, PARSED_PARTIAL, AMBIGUOUS, INVALID, DUPLICATE, IGNORED = (
+    'PARSED', 'PARSED_PARTIAL', 'AMBIGUOUS', 'INVALID', 'DUPLICATE', 'IGNORED')
+INTAKE_STATUSES = (PARSED, PARSED_PARTIAL, AMBIGUOUS, INVALID, DUPLICATE, IGNORED)
 
 
 def detect(text):
@@ -43,33 +44,30 @@ def classify(text, *, channel_id=None, message_id=None, source_timestamp=None):
     out = dict(status=None, reason=None, parsed=None, profile=None, parser_version=PARSER_VERSION)
     if not isinstance(text, str) or not text.strip():
         return dict(out, status=IGNORED, reason='No text content (media-only or empty message)')
-    # The header must start the message; flattened pastes keep it as a prefix.
-    if not text.strip().startswith(HEADER):
+    # Telegram bolds headings; only bolded prices carry meaning. The header must start the
+    # message; flattened pastes keep it as a prefix.
+    normalized = strip_non_price_bold(text.replace(' ', ' '))
+    if not normalized.strip().startswith(HEADER):
         return dict(out, status=IGNORED, reason='Not an OddsNotifier odds-update alert')
-    sport, market = detect(text)
+    sport, market = detect(normalized)
     out.update(sport=sport, market=market)
-    source = dict(channel_id=channel_id, message_id=message_id, source_timestamp=source_timestamp) \
-        if source_timestamp else {}
-    profile = VERIFIED.get((sport, market))
-    if profile:
-        out['profile'] = profile
-        try:
-            parsed = parse_oddsnotifier(text, ordering_profile=profile, sample_provenance='unspecified', **source)
-        except AlertFormatError as error:
-            return dict(out, status=INVALID, reason=f'{sport} {market} production layout: {error}')
-        out['parsed'] = parsed
-        if not parsed.get('target_side') or not parsed.get('alert_price'):
-            return dict(out, status=AMBIGUOUS, reason='No explicit (bold) Bet365 target price; target not guessed')
-        return dict(out, status=PARSED, reason='Production-verified mapping with explicit Bet365 target')
+    source = dict(channel_id=channel_id, message_id=message_id, source_timestamp=source_timestamp)         if source_timestamp else {}
+    result = interpret(text, **source)
+    if result is not None:
+        return dict(out, **result)
     try:
-        parsed = parse_oddsnotifier(text, sample_provenance='unspecified', **source)
+        parsed = parse_oddsnotifier(normalized, sample_provenance='unspecified', **source)
     except AlertFormatError as error:
         if sport and market:
             return dict(out, status=AMBIGUOUS, reason=f'UNSUPPORTED_MAPPING: {sport} {market} has no '
                         f'production-verified layout/ordering ({error})')
+        if sport:
+            return dict(out, status=AMBIGUOUS, reason=f'MARKET_UNRESOLVED: {sport} alert without a market label or '
+                        f'fixture link; market not guessed ({error})')
         return dict(out, status=INVALID, reason=f'Unsupported or malformed alert: {error}')
     if parsed is None:
         return dict(out, status=INVALID, reason='Alert header present but layout not recognised')
+    parsed['raw_text'] = text
     out['parsed'] = parsed
     return dict(out, status=AMBIGUOUS, reason=f'UNSUPPORTED_MAPPING: {parsed["sport"]} {parsed["market"]} '
                 'quote ordering is not production-verified; no selection guessed')

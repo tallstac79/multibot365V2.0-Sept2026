@@ -1,4 +1,55 @@
-﻿# MultiBot365 live ready-only dispatch E2E - FAIL (TARGET_NOT_FOUND); dispatch re-disabled
+# MultiBot365 market interpretation and alert normalisation: PASS
+
+Verified 2026-09-23. Based on a3d19a1 (backend base 444793f). Backend parsing/analysis only.
+There were no Android, Bet365, coordinator, Tailscale or dispatch changes, and Grok's
+uncommitted Android work is left untouched. **168 automated tests PASS** (141 existing + 27
+new). Output: `evidence/market-interpretation/tests.txt`.
+
+- **New layer** `core/market_interpretation.py`, used by `core/alert_classifier.py` (classifier-2):
+  - Two-sided alerts, with optional `P -> L` line updates, alt lines, linked or unlinked
+    rows, and 🟢 or 🔵 Opening markers.
+  - Side-labelled alerts, with `Limit`, `Opening: Side`, `Spread (L): Side price ↓ [x%]`,
+    `Fair Odds` and an empty `Bet365` section.
+- **Normalised schema 5:** `selection_*`, `reference`, `comparison` (equal_line, line
+  difference/advantage, line/price quality, ev_status, supplied EV), `movement`,
+  `market_movement`, `limit` and per-side `sides[]`. Legacy fields are unchanged; the four
+  snapshot alerts match the verified parser field-for-field.
+- **Direction rules:** totals (OVER lower is better, UNDER higher is better), spread
+  normalised to the selected team's signed handicap (AWAY is the inverse of the displayed
+  HOME line), and moneyline/1X2 compared by price on the same outcome only.
+- **Unequal lines:** `EV: None (not equal lines)` gives `NOT_AVAILABLE_UNEQUAL_LINES`,
+  `price_quality NOT_COMPARABLE`, per-side directional line quality and `PARSED_PARTIAL`
+  (no longer INVALID). Kipina: OVER 2 points worse (UNFAVOURABLE), UNDER 2 points better
+  (FAVOURABLE, POTENTIAL_VALUE).
+- **Football production format** (HJK Helsinki vs Brann): PARSED_PARTIAL. Brann AWAY -1.5,
+  2.030 → 1.724 SHORTENED, supplied -11.7 %, fair 1.850, limit €200 → €400, Bet365 absent.
+- **Bet quality** is separate from line/price quality. CLEAR_VALUE_SIGNAL only for a
+  verified, highlighted, equal-line alert with a better Bet365 price and supplied EV above
+  100 %. The rules engine (rules-2) now requires it.
+- **Live corpus:** 140 genuine Feed 2 alerts are kept as a regression fixture. 90
+  previously INVALID unequal-line alerts are now PARSED_PARTIAL; 4 unlinked-fixture and 3
+  heavily-bolded alerts are now PARSED. Nothing valid is INVALID.
+- **Store schema v2** (PARSED_PARTIAL) uses a transactional migration, verified on a copy
+  of the live store. The running pipeline service (PID 17744) applies it on its next
+  restart.
+- **Fixed a race** in the pipeline (from 444793f): a losing concurrent delivery retried
+  while holding its own write lock.
+- **Dashboard:** a *Market interpretation* block in the alert detail (reference, selection,
+  movement, fair odds, limit, Bet365 or "No comparable offer captured", EV text, per-side
+  table) and a PARSED_PARTIAL filter. Browser check:
+  `evidence/market-interpretation/browser-checks.json`.
+- **Docs:** `docs/MARKET_INTERPRETATION.md`.
+
+Remaining ambiguities:
+- Bet365 spread sign reference: three live WNBA-type alerts show equal displayed lines with
+  "not equal lines". These are AMBIGUOUS.
+- The base of OddsNotifier's supplied `[x%]` is unspecified.
+- The meaning of the parenthesised Pinnacle price is unconfirmed.
+- Football two-sided ordering and all moneyline ordering are unverified.
+- The spread-line attribution in the side-labelled layout rests on a single example.
+
+---
+# MultiBot365 live ready-only dispatch E2E - FAIL (TARGET_NOT_FOUND); dispatch re-disabled
 
 Verified 2026-09-23 ~15:00 Europe/London. App **0.6.22-login (34)** on Samsung galaxy-a13-5g. Coordinator Tailscale `http://100.114.45.68:8767` / MagicDNS `galaxy-a13-5g.taila8257e.ts.net:8767`.
 
