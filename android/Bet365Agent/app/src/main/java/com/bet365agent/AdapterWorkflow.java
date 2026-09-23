@@ -15,7 +15,7 @@ final class AdapterWorkflow {
         if(!session.live())return VisualSession.failed("TIMEOUT","Workflow expired");
         session.checkpoint(name);return action.get();
     }
-    void start(String query,String market,String side,String minimumPrice,String stake,String executionMode,String confirmationStatus) {
+    void start(String query,String market,String side,String line,String minimumPrice,String stake,String executionMode,String confirmationStatus) {
         final String mode = executionMode == null || executionMode.isEmpty() ? "ready" : executionMode;
         step("OPEN_HOME",adapter::open_home)
         .thenCompose(v->step("ENSURE_SESSION",adapter::ensure_session))
@@ -25,9 +25,9 @@ final class AdapterWorkflow {
         .thenCompose(f->{fixture=f;session.put("fixture",f.json());return step("SELECT_FIXTURE",()->adapter.select_fixture(f));})
         .thenCompose(v->step("VERIFY_EVENT",()->adapter.verify_event(fixture)))
         .thenCompose(v->step("DISCOVER_MARKETS",adapter::discover_markets))
-        .thenCompose(markets->{JSONArray json=new JSONArray();for(SiteAdapter.Selection q:markets)json.put(q.json());session.put("markets",json);return step("READ_SELECTION",()->adapter.read_selection(markets,market,side));})
+        .thenCompose(markets->{JSONArray json=new JSONArray();for(SiteAdapter.Selection q:markets)json.put(q.json());session.put("markets",json);return step("READ_SELECTION",()->adapter.read_selection(markets,market,side,line));})
         .thenCompose(s->{selection=s;session.put("selection",s.json());return step("READ_LINE",()->adapter.read_line(s));})
-        .thenCompose(line->{if(!line.equals(selection.line))throw new SiteAdapter.Failure("LINE_CHANGED","Line changed while reading");return step("READ_PRICE",()->adapter.read_price(selection));})
+        .thenCompose(observedLine->{if(!observedLine.equals(selection.line))throw new SiteAdapter.Failure("LINE_CHANGED","Line changed while reading");return step("READ_PRICE",()->adapter.read_price(selection));})
         .thenCompose(price->{
             if(!price.equals(selection.price))throw new SiteAdapter.Failure("PRICE_CHANGED","Price changed while reading");
             if(Double.parseDouble(price)<Double.parseDouble(minimumPrice))

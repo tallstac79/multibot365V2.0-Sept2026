@@ -221,13 +221,18 @@ final class Bet365LiveAdapter implements SiteAdapter {
         });
     }
 
-    public CompletableFuture<Selection> read_selection(List<Selection> all, String market, String side) {
+    public CompletableFuture<Selection> read_selection(List<Selection> all, String market, String side, String line) {
         List<Selection> matches = new ArrayList<>();
-        for (Selection s : all) if (s.market.equals(market) && s.side.equals(side)) matches.add(s);
+        for (Selection s : all) {
+            if (!s.market.equals(market) || !s.side.equals(side)) continue;
+            if (line != null && !line.isEmpty() && !line.equalsIgnoreCase("NONE") && !lineEquals(s.line, line)) continue;
+            matches.add(s);
+        }
         List<Selection> open = new ArrayList<>();
         for (Selection s : matches) if ("OPEN".equals(s.availability)) open.add(s);
         List<Selection> pool = open.isEmpty() ? matches : open;
-        require(!pool.isEmpty(), "TARGET_NOT_FOUND", "No live selection for " + market + "/" + side);
+        require(!pool.isEmpty(), "TARGET_NOT_FOUND", "No live selection for " + market + "/" + side
+                + (line == null || line.isEmpty() ? "" : ("/" + line)));
         Selection pick = pool.get(0);
         require(!"SUSPENDED".equals(pick.availability), "SUSPENDED", "Selection suspended");
         require(!"UNAVAILABLE".equals(pick.availability), "UNAVAILABLE", "Selection unavailable");
@@ -235,6 +240,12 @@ final class Bet365LiveAdapter implements SiteAdapter {
         ui.put("selection_role", pick.side);
         ui.put("selection_name", pick.name);
         return CompletableFuture.completedFuture(pick);
+    }
+    private static boolean lineEquals(String a, String b) {
+        if (a == null || b == null) return a == b;
+        if (a.equals(b)) return true;
+        try { return new java.math.BigDecimal(a).compareTo(new java.math.BigDecimal(b)) == 0; }
+        catch (Exception e) { return false; }
     }
 
     public CompletableFuture<String> read_line(Selection selection) {
@@ -528,6 +539,15 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     "wager_submitted", false
             ));
         });
+    }
+
+
+    static String classifySessionState(VisualScreen s) {
+        if (s == null) return "UNKNOWN";
+        if (sessionExpired(s)) return "EXPIRED";
+        if (sessionLoggedIn(s)) return "AUTHENTICATED";
+        if (loginWall(s)) return "LOGGED_OUT";
+        return "UNKNOWN";
     }
 
     private static boolean sessionLoggedIn(VisualScreen s) {

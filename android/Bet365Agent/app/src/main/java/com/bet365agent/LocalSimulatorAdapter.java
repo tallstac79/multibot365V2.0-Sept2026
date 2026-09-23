@@ -52,10 +52,21 @@ final class LocalSimulatorAdapter implements SiteAdapter {
         require(s.has("MARKETS"),"EVENT_NOT_VERIFIED","Event navigation unavailable");ui.put("event_verified",true);
     });}
     public CompletableFuture<List<Selection>> discover_markets(){return click("MARKETS","markets_button").thenCompose(v->ui.captureTable("markets")).thenApply(this::markets);}
-    public CompletableFuture<Selection> read_selection(List<Selection> all,String market,String side){
-        List<Selection> matches=new ArrayList<>();for(Selection s:all)if(s.market.equals(market)&&s.side.equals(side))matches.add(s);
-        require(matches.size()==1,"TARGET_NOT_FOUND","Expected one selection for "+market+" / "+side);
+    public CompletableFuture<Selection> read_selection(List<Selection> all,String market,String side,String line){
+        List<Selection> matches=new ArrayList<>();
+        for(Selection s:all){
+            if(!s.market.equals(market)||!s.side.equals(side)) continue;
+            if(line!=null && !line.isEmpty() && !line.equalsIgnoreCase("NONE") && !lineEquals(s.line,line)) continue;
+            matches.add(s);
+        }
+        require(matches.size()==1,"TARGET_NOT_FOUND","Expected one selection for "+market+" / "+side+(line==null||line.isEmpty()?"":(" / "+line)));
         Selection s=matches.get(0);available(s);return CompletableFuture.completedFuture(s);
+    }
+    private static boolean lineEquals(String a,String b){
+        if(a==null||b==null) return a==b;
+        if(a.equals(b)) return true;
+        try { return new java.math.BigDecimal(a).compareTo(new java.math.BigDecimal(b))==0; }
+        catch(Exception e){ return false; }
     }
     public CompletableFuture<String> read_line(Selection selection){return ui.captureTable("line_readback").thenApply(s->exactQuote(s,selection).line);}
     public CompletableFuture<String> read_price(Selection selection){return ui.captureTable("price_readback").thenApply(s->exactQuote(s,selection).price);}

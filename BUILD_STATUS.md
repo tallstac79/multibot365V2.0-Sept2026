@@ -1,3 +1,18 @@
+﻿# MultiBot365 live Telegram intake + session contract - PASS (ready-only; dispatch still off)
+
+Verified 2026-09-23 15:11 Europe/London. Backend on `444793f` + this commit. App **0.6.21-session (33)** on Samsung R5CT61TE14Z. Dashboard **2.0-dashboard.3**. **141 automated tests PASS** (128 under `tests/` + 13 under `tools/`).
+
+- **Telegram login:** Telethon user session for OddsNotifier Feed 2 (`oddsnotifierfeed2bot` / peer 1475314653). Channel-form `-1001475314653` is incorrect for this peer.
+- **Intake:** `tools.pipeline_service run` LISTENING; real `event` deliveries persist to `.local/pipeline.sqlite3` with entities + production Markdown via `render_oddsnotifier`. Live PARSED basketball Spread/Totals with bold Bet365 target proven (e.g. message 67960 → PARSED HOME 1.74); older alerts correctly STALE; EV:None / missing fixture URL / unsupported layouts fail closed (INVALID/AMBIGUOUS/IGNORED).
+- **Config:** `.local/pipeline.json` (untracked) `dispatch_enabled=false`, notifications disabled. Rules `event_timezone=Europe/London`.
+- **Startup:** Task Scheduler `MultiBot365Pipeline` ONLOGON → `tools\run_pipeline_service.cmd` (Python 3.11, project cwd). Status Ready.
+- **Dashboard:** REAL DATA mode shows live intake/lifecycle; coordinator ONLINE; Python 3.11 only (Hermes dashboard stopped).
+- **Android session contract:** `GET /health` includes stable `device_id=galaxy-a13-5g` and `session{state,observed_at_ms,detail}` refreshed ≥60s (idle OCR probe). Observed `AUTHENTICATED` via idle probe. Accepts wire `TOTALS`→`TOTAL` and required `line` for Spread/Totals; missing line → HTTP 400 INVALID_INSTRUCTION. Preserves `ready_state.session`, observed price, `wager_submitted`. Dual Tailscale/LAN bind from a292373 preserved (endpoint `http://100.114.45.68:8767`).
+- **Ready-only:** `dispatch_enabled` remains false — no coordinator dispatch of live alerts. Milestone stays `wager_submitted=false`.
+
+**Remaining:** enable dispatch only after operator approval; prove a fresh in-window alert through READY on device; Wi‑Fi-off LTE / phone-reboot / app-restart re-verification not re-run this session (prior a292373 evidence stands).
+
+---
 # MultiBot365 unattended backend pipeline: PASS (tests); live Telegram connection pending login
 
 Verified 2026-09-23. Based on a292373. Dashboard **2.0-dashboard.3**. **141 automated tests PASS**
@@ -598,4 +613,5 @@ The app button expects the page served on host port 8765 and adb reverse tcp:876
 Earlier BUILD_STATUS reported the legacy search query ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œFulhamÃƒÂ¢Ã¢â€šÂ¬Ã‚Â passed on 2026-09-20. This historical result is preserved as context, not revalidated here. Existing legacy search/fixture code remains.
 
 No physical-action or credential blocker remains for this milestone. Tracked Gradle/build artifacts were already dirty at takeover and are excluded from the source milestone commit.
+
 

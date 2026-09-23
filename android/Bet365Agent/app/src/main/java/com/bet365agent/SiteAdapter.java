@@ -15,7 +15,7 @@ interface SiteAdapter {
     CompletableFuture<Void> select_fixture(Fixture fixture);
     CompletableFuture<Void> verify_event(Fixture fixture);
     CompletableFuture<List<Selection>> discover_markets();
-    CompletableFuture<Selection> read_selection(List<Selection> markets, String market, String side);
+    CompletableFuture<Selection> read_selection(List<Selection> markets, String market, String side, String line);
     CompletableFuture<String> read_line(Selection selection);
     CompletableFuture<String> read_price(Selection selection);
     CompletableFuture<Void> open_selection(Selection selection);

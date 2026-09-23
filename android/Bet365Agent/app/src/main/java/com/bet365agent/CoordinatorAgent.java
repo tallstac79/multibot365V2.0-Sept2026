@@ -25,6 +25,13 @@ final class CoordinatorAgent implements AutoCloseable {
     private final CoordinatorHttp http;
     private final long boot = SystemClock.elapsedRealtime();
     private volatile boolean closed;
+    private static final String DEVICE_ID = "galaxy-a13-5g";
+    private static final long SESSION_REFRESH_MS = 60_000L;
+    private final Object sessionLock = new Object();
+    private volatile String sessionState = "UNKNOWN";
+    private volatile long sessionObservedAtMs = System.currentTimeMillis();
+    private volatile String sessionDetail = "not checked yet";
+    private final Runnable sessionRefresh = this::refreshSession;
 
     CoordinatorAgent(AccessibilityService service, VisualControlRunner runner) {
         this.service = service; this.runner = runner;
@@ -45,6 +52,7 @@ final class CoordinatorAgent implements AutoCloseable {
         }
         runner.setResultListener(this::runnerFinished);
         http = new CoordinatorHttp(this);
+        main.post(sessionRefresh);
     }
     String token() { return CoordinatorConfig.token(service); }
     String endpoint() { return http.endpoint(); }
@@ -124,7 +132,7 @@ final class CoordinatorAgent implements AutoCloseable {
                 if(!runner.startExternal(instruction.runId,remaining(row,instruction.timeout))) {complete(row,"INTERNAL_ERROR","Runner rejected workflow");return;}
                 VisualSession session=new VisualSession(service,runner,instruction.runId,instruction.adapter);
                 SiteAdapter adapter=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id,instruction.sport,instruction.stake);
-                new AdapterWorkflow(session,adapter).start(instruction.text,instruction.market,instruction.side,instruction.minimumPrice,instruction.stake,instruction.executionMode,instruction.confirmationStatus);
+                new AdapterWorkflow(session,adapter).start(instruction.text,instruction.market,instruction.side,instruction.line,instruction.minimumPrice,instruction.stake,instruction.executionMode,instruction.confirmationStatus);
                 return;
             }
             String url = CoordinatorConfig.prefs(service).getString("start_url", "").trim();
@@ -161,6 +169,9 @@ final class CoordinatorAgent implements AutoCloseable {
             for(String key:new String[]{"fixture_name","home","away","competition"})put(result,key,fixture==null?JSONObject.NULL:fixture.opt(key));
             put(result,"selection",proof.opt("selection"));put(result,"final_state",proof.opt("final_state"));put(result,"ready_state",proof.opt("ready_state"));put(result,"complete_execution_ready",proof.opt("complete_execution_ready"));put(result,"place_bet_tapped",proof.opt("place_bet_tapped"));put(result,"place_bet_result",proof.opt("place_bet_result"));put(result,"place_bet_detail",proof.opt("place_bet_detail"));if(proof.has("wager_submitted"))put(result,"wager_submitted",proof.opt("wager_submitted"));
             put(result,"verification_detail",proof.optString("verification_detail",detail));
+            JSONObject ready = proof.optJSONObject("ready_state");
+            if (ready != null && ready.has("session")) noteSession(ready.optString("session"), "ready_state");
+            else if (proof.has("session")) noteSession(proof.optString("session"), "workflow");
         }
         store.complete(id, result);
         runner.releaseReservation(current.optString("run_id"));
@@ -173,12 +184,63 @@ final class CoordinatorAgent implements AutoCloseable {
     private JSONObject health() throws Exception {
         JSONObject active = store.active(), last = store.last();
         android.content.pm.PackageInfo pkg = service.getPackageManager().getPackageInfo(service.getPackageName(), 0);
+        JSONObject session;
+        synchronized (sessionLock) {
+            session = object("state", sessionState, "observed_at_ms", sessionObservedAtMs, "detail", sessionDetail == null ? "" : sessionDetail);
+        }
         return object("healthy", !closed).put("heartbeat_ms", System.currentTimeMillis()).put("uptime_ms", SystemClock.elapsedRealtime() - boot)
             .put("state", active == null ? "IDLE" : active.optString("state"))
             .put("current_instruction", active == null ? JSONObject.NULL : active.getJSONObject("payload"))
             .put("last_result", last == null ? JSONObject.NULL : last.getJSONObject("result"))
             .put("app_version", pkg.versionName).put("version_code", pkg.versionCode)
-            .put("endpoint", endpoint() == null ? JSONObject.NULL : endpoint()).put("pid", android.os.Process.myPid());
+            .put("endpoint", endpoint() == null ? JSONObject.NULL : endpoint()).put("pid", android.os.Process.myPid())
+            .put("device_id", DEVICE_ID).put("session", session);
+    }
+
+    void noteSession(String state, String detail) {
+        if (state == null || state.isEmpty()) state = "UNKNOWN";
+        // Accept legacy adapter alias.
+        if ("LOGGED_IN".equals(state)) state = "AUTHENTICATED";
+        String normalized = state.toUpperCase(java.util.Locale.US);
+        if (!Set.of("UNKNOWN","LOGGED_OUT","AUTHENTICATING","AUTHENTICATED","EXPIRED","RESTRICTED","ERROR").contains(normalized))
+            normalized = "UNKNOWN";
+        String safeDetail = detail == null ? "" : detail;
+        if (safeDetail.length() > 500) safeDetail = safeDetail.substring(0, 500);
+        synchronized (sessionLock) {
+            sessionState = normalized;
+            sessionObservedAtMs = System.currentTimeMillis();
+            sessionDetail = safeDetail;
+        }
+    }
+
+    private void refreshSession() {
+        if (closed) return;
+        try {
+            PowerManager power = (PowerManager) service.getSystemService(android.content.Context.POWER_SERVICE);
+            KeyguardManager keyguard = (KeyguardManager) service.getSystemService(android.content.Context.KEYGUARD_SERVICE);
+            if (power == null || !power.isInteractive() || (keyguard != null && keyguard.isKeyguardLocked())) {
+                noteSession("UNKNOWN", "screen locked or off");
+            } else if (store.active() != null || runner.isTextActive()) {
+                // Do not steal the runner mid-instruction; age out as UNKNOWN rather than repeating a stale AUTHENTICATED claim.
+                noteSession("UNKNOWN", "busy; deferred on-screen session check");
+            } else {
+                // Lightweight on-screen classification using a capture-only probe when idle.
+                boolean started = runner.probeSession(ocr -> {
+                    try {
+                        VisualScreen screen = new VisualScreen(ocr);
+                        String state = Bet365LiveAdapter.classifySessionState(screen);
+                        noteSession(state, "idle probe");
+                    } catch (Exception e) {
+                        noteSession("ERROR", "session probe failed: " + e.getClass().getSimpleName());
+                    }
+                });
+                if (!started) noteSession("UNKNOWN", "runner unavailable for session probe");
+            }
+        } catch (Exception e) {
+            noteSession("ERROR", "session refresh failed: " + e.getClass().getSimpleName());
+        } finally {
+            if (!closed) main.postDelayed(sessionRefresh, SESSION_REFRESH_MS);
+        }
     }
     private JSONObject acknowledgement(JSONObject row) {
         return object("instruction_id", row.optString("instruction_id"), "acknowledged", true,
@@ -207,6 +269,7 @@ final class CoordinatorAgent implements AutoCloseable {
     private CoordinatorHttp.Reply json(int code, JSONObject json) { return new CoordinatorHttp.Reply(code, "application/json; charset=utf-8", json.toString().getBytes(StandardCharsets.UTF_8)); }
     @Override public void close() {
         closed = true;
+        main.removeCallbacks(sessionRefresh);
         main.removeCallbacksAndMessages(null);
         JSONObject active = store.active();
         if (active != null) {

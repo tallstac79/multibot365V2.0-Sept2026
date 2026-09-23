@@ -13,7 +13,7 @@ import java.util.Set;
 
 /** Strict JSON schema; duplicate/unknown fields, coercion and trailing data are rejected. */
 final class CoordinatorInstruction {
-    final String id, target, text, runId, action, adapter, scenario, market, side, sport, minimumPrice, stake, executionMode, confirmationStatus;
+    final String id, target, text, runId, action, adapter, scenario, market, side, sport, line, minimumPrice, stake, executionMode, confirmationStatus;
     final boolean placeBet; // true iff execution_mode=dispatch
     final int timeout;
     final JSONObject payload;
@@ -26,8 +26,9 @@ final class CoordinatorInstruction {
                 String name = reader.nextName();
                 if (fields.containsKey(name)) throw new IllegalArgumentException("Duplicate field: " + name);
                 boolean number = "timeout_ms".equals(name);
-                Set<String> allowed = Set.of("instruction_id","action","target_text","input_text","adapter","scenario","query","market","side","sport","minimum_price","stake","timeout_ms","place_bet","execution_mode","confirmation_status");
+                Set<String> allowed = Set.of("instruction_id","action","target_text","input_text","adapter","scenario","query","market","side","sport","line","minimum_price","stake","timeout_ms","place_bet","execution_mode","confirmation_status");
                 if (!number && !allowed.contains(name)) throw new IllegalArgumentException("Unknown field: " + name);
+                if ("line".equals(name) && reader.peek() == JsonToken.NULL) { reader.nextNull(); fields.put(name, ""); continue; }
                 if (reader.peek() != (number ? JsonToken.NUMBER : JsonToken.STRING)) throw new IllegalArgumentException("Wrong field type: " + name);
                 fields.put(name, reader.nextString());
             }
@@ -36,8 +37,12 @@ final class CoordinatorInstruction {
         }
         id = fields.getOrDefault("instruction_id", ""); action=fields.getOrDefault("action", "");
         adapter=fields.getOrDefault("adapter", ""); scenario=fields.getOrDefault("scenario", "");
-        market=fields.getOrDefault("market", ""); side=fields.getOrDefault("side", "");
-        sport=fields.getOrDefault("sport", ""); minimumPrice=fields.getOrDefault("minimum_price", "");
+        String rawMarket = fields.getOrDefault("market", "");
+        market = "TOTALS".equals(rawMarket) ? "TOTAL" : rawMarket;
+        side=fields.getOrDefault("side", "");
+        sport=fields.getOrDefault("sport", "");
+        String resolvedLine=fields.getOrDefault("line", "");
+        minimumPrice=fields.getOrDefault("minimum_price", "");
         stake=fields.getOrDefault("stake", "");
         executionMode = fields.getOrDefault("execution_mode", "").isEmpty()
             ? ("true".equals(fields.getOrDefault("place_bet", "false")) ? "dispatch" : "ready")
@@ -57,7 +62,7 @@ final class CoordinatorInstruction {
             Set.of("instruction_id","action","adapter","scenario","query","market","side","sport","minimum_price","stake","timeout_ms");
         if(!action.equals("OPEN_AND_TYPE")) {
             // Optional execution fields: any subset of place_bet / execution_mode / confirmation_status
-            java.util.HashSet<String> allowedExtra = new java.util.HashSet<>(java.util.Arrays.asList("place_bet","execution_mode","confirmation_status"));
+            java.util.HashSet<String> allowedExtra = new java.util.HashSet<>(java.util.Arrays.asList("place_bet","execution_mode","confirmation_status","line"));
             java.util.HashSet<String> keys = new java.util.HashSet<>(fields.keySet());
             keys.removeAll(expected);
             if(!allowedExtra.containsAll(keys)) throw new IllegalArgumentException("Invalid schema extras");
@@ -77,7 +82,21 @@ final class CoordinatorInstruction {
                 : market.equals("MONEYLINE") ? Set.of("HOME","AWAY","DRAW")
                 : Set.of("HOME","AWAY");
             if(!sides.contains(side)) throw new IllegalArgumentException("Invalid market/side");
+            String normalizedLine = resolvedLine == null ? "" : resolvedLine.trim();
+            if(market.equals("MONEYLINE")) {
+                if(!normalizedLine.isEmpty() && !normalizedLine.equalsIgnoreCase("NONE") && !normalizedLine.equalsIgnoreCase("null"))
+                    throw new IllegalArgumentException("line not allowed for MONEYLINE");
+                resolvedLine = "";
+            } else {
+                if(normalizedLine.isEmpty() || normalizedLine.equalsIgnoreCase("NONE") || normalizedLine.equalsIgnoreCase("null"))
+                    throw new IllegalArgumentException("line required for SPREAD/TOTALS");
+                if(!normalizedLine.matches("[+-]?[0-9]+(\\.[0-9]+)?"))
+                    throw new IllegalArgumentException("Invalid line");
+                resolvedLine = normalizedLine;
+            }
         }
+        if(!action.equals("ADAPTER_WORKFLOW")) resolvedLine = "";
+        line = resolvedLine;
         timeout = Integer.parseInt(fields.get("timeout_ms"));
         if (timeout < 100 || timeout > 120000) throw new IllegalArgumentException("timeout_ms must be 100..120000");
         runId = "c_" + Base64.encodeToString(MessageDigest.getInstance("SHA-256").digest(id.getBytes(StandardCharsets.UTF_8)), Base64.NO_WRAP | Base64.URL_SAFE | Base64.NO_PADDING);

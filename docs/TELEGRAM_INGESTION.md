@@ -1,4 +1,4 @@
-# Continuous Telegram / OddsNotifier ingestion
+﻿# Continuous Telegram / OddsNotifier ingestion
 
 Code: `core/telegram_intake.py` (listener), `core/pipeline.py` (`Pipeline.ingest`),
 `core/alert_classifier.py` (classification), `tools/pipeline_service.py` (service).
@@ -111,7 +111,8 @@ Replays are stored with origin `sample` and appear only in the dashboard's SAMPL
 
 ## Live status
 
-**Not yet connected to the live feed.** The listener, catch-up, reconciliation and
+**Live on DESKTOP-IVUNJ9J:** Telethon user session authorized; listening to OddsNotifier Feed 2 via username `oddsnotifierfeed2bot` (peer `1475314653`; the Web hash `#1475314653` is **not** channel-form `-1001475314653`). `render_oddsnotifier` keeps production Markdown (links + Bet365 `**price**` only).
 reconnect paths are covered by deterministic tests with a fake Telegram client. Running it
 against the real feed needs the one-time `telegram-login` above, which requires the
 account owner's phone code.
+

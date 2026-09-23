@@ -11,6 +11,7 @@ form the production parser was verified against (**bold**, [text](url)) using UT
 offsets; the plain text and the full entity list are also stored untouched.
 """
 import asyncio
+import re
 from datetime import timezone
 import logging
 from pathlib import Path
@@ -59,6 +60,43 @@ def render(text, entities):
     return ''.join(out)
 
 
+_PRICE_BOLD = re.compile(r'^[0-9]+\.[0-9]+$')
+
+
+def render_oddsnotifier(text, entities):
+    """Markdown matching the production OddsNotifier grammar.
+
+    Telegram bolds many spans (header, sport, fixture, date, market, EV). The verified
+    basketball parser only accepts \**price**\ on the Bet365 quote row, plus \[text](url)    links without nested bold. Suppress non-price bold and bold that coincides with a link.
+    Full entity lists remain stored untouched via entity_dicts.
+    """
+    if not text:
+        return text or ''
+    units = _utf16(text)
+    link_spans = []
+    for entity in entities or []:
+        if entity.get('type') == 'text_url' and isinstance(entity.get('offset'), int) and isinstance(entity.get('length'), int):
+            link_spans.append((entity['offset'], entity['offset'] + entity['length']))
+    filtered = []
+    for entity in entities or []:
+        kind, start, length = entity.get('type'), entity.get('offset'), entity.get('length')
+        if kind == 'text_url' and isinstance(start, int) and isinstance(length, int) and length > 0:
+            filtered.append(entity)
+            continue
+        if kind != 'bold' or not isinstance(start, int) or not isinstance(length, int) or length <= 0:
+            continue
+        end = start + length
+        if start < 0 or end * 2 > len(units):
+            continue
+        fragment = units[start * 2:end * 2].decode('utf-16-le')
+        if not _PRICE_BOLD.fullmatch(fragment):
+            continue
+        if any(start >= lo and end <= hi for lo, hi in link_spans):
+            continue
+        filtered.append(entity)
+    return render(text, filtered)
+
+
 def entity_dicts(entities):
     """Telethon entity objects -> JSON-serializable dicts."""
     names = {'MessageEntityBold': 'bold', 'MessageEntityTextUrl': 'text_url', 'MessageEntityUrl': 'url',
@@ -81,7 +119,7 @@ def to_source_message(message, chat_id, *, received_at=None, edited=False, origi
     plain = message.message or ''
     stamp = message.date.astimezone(timezone.utc).isoformat() if message.date else None
     edit = getattr(message, 'edit_date', None) if edited else None
-    return SourceMessage(chat_id=str(chat_id), message_id=str(message.id), text=render(plain, entities),
+    return SourceMessage(chat_id=str(chat_id), message_id=str(message.id), text=render_oddsnotifier(plain, entities),
                          raw_text=plain, entities=entities, source_timestamp=stamp,
                          received_at=received_at or iso(utcnow()), origin=origin,
                          edit_date=edit.astimezone(timezone.utc).isoformat() if edit else None,
@@ -97,7 +135,8 @@ class TelegramIntake:
         self.api_id = int(settings['api_id'])
         self.api_hash = settings['api_hash']
         self.session = settings.get('session', '.local/telegram/oddsnotifier')
-        self.chats = [int(c) for c in settings['chats']]
+        self.chats = [int(c) if isinstance(c, int) or str(c).lstrip('-').isdigit() else str(c).lstrip('@')
+                      for c in settings['chats']]
         self.backfill = int(settings.get('backfill_on_first_start', 0))
         self.reconcile_seconds = float(settings.get('reconcile_seconds', 30))
         self.backoff_start = float(settings.get('reconnect_initial_seconds', 1))
@@ -107,13 +146,37 @@ class TelegramIntake:
         self.stopped = asyncio.Event()
         self.status = dict(state='STARTING', connected=False, last_event_at=None, last_error=None, reconnects=0)
 
+    def _session_path(self):
+        path = Path(self.session)
+        if not path.is_absolute():
+            path = Path(__file__).resolve().parents[1] / path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        return path
+
     def _client(self):
         if self.client_factory:
             return self.client_factory()
         from telethon import TelegramClient
-        Path(self.session).parent.mkdir(parents=True, exist_ok=True)
-        return TelegramClient(self.session, self.api_id, self.api_hash, auto_reconnect=True,
+        return TelegramClient(str(self._session_path()), self.api_id, self.api_hash, auto_reconnect=True,
                               connection_retries=None, retry_delay=2)
+
+    async def _entity(self, client, chat):
+        """Resolve a configured chat id or username; warm dialogs if the session lacks access_hash."""
+        from telethon import utils
+        try:
+            return await client.get_entity(chat)
+        except (ValueError, TypeError):
+            pass
+        async for dialog in client.iter_dialogs():
+            peer = utils.get_peer_id(dialog.entity)
+            entity_id = getattr(dialog.entity, 'id', None)
+            if peer == chat or entity_id == chat:
+                return dialog.entity
+            if isinstance(chat, int) and entity_id is not None:
+                # Accept channel-form (-100…) vs bare id for the same Telegram object.
+                if abs(peer) == abs(chat) or entity_id == abs(chat) % 10**10:
+                    return dialog.entity
+        return await client.get_entity(chat)
 
     async def _store(self, message, chat_id, delivery, edited=False):
         item = to_source_message(message, chat_id, edited=edited)
@@ -125,7 +188,7 @@ class TelegramIntake:
     async def catch_up(self, client):
         from telethon import utils
         for chat in self.chats:
-            entity = await client.get_entity(chat)
+            entity = await self._entity(client, chat)
             peer = utils.get_peer_id(entity)
             last = await asyncio.to_thread(self.store.last_message_id, self.origin, str(peer))
             if last is None:
@@ -142,7 +205,7 @@ class TelegramIntake:
     async def reconcile(self, client):
         from telethon import utils
         for chat in self.chats:
-            entity = await client.get_entity(chat)
+            entity = await self._entity(client, chat)
             peer = utils.get_peer_id(entity)
             recent = await client.get_messages(entity, limit=self.reconcile_limit)
             # Only messages after the first-start mark are in scope; older history is never

@@ -82,6 +82,44 @@ final class VisualControlRunner {
 
     boolean isTextActive() { return textFlow != null || reservation != null; }
 
+    /** Idle on-screen OCR probe for session health. Does not reserve an instruction or fire result listeners. */
+    synchronized boolean probeSession(Consumer<Ocr> callback) {
+        if (closed || active != null || reservation != null || textFlow != null) return false;
+        if (android.os.Build.VERSION.SDK_INT < 30) return false;
+        try {
+            service.takeScreenshot(Display.DEFAULT_DISPLAY, service.getMainExecutor(),
+                new AccessibilityService.TakeScreenshotCallback() {
+                    @Override public void onSuccess(AccessibilityService.ScreenshotResult result) {
+                        worker.execute(() -> {
+                            Bitmap copy = null;
+                            try {
+                                Bitmap bitmap = Bitmap.wrapHardwareBuffer(result.getHardwareBuffer(), result.getColorSpace());
+                                copy = bitmap.copy(Bitmap.Config.ARGB_8888, false);
+                                bitmap.recycle();
+                                result.getHardwareBuffer().close();
+                                Ocr ocr = recognize(copy);
+                                main.post(() -> {
+                                    try { callback.accept(ocr); }
+                                    catch (Exception ignored) {}
+                                });
+                            } catch (Exception e) {
+                                log("SESSION_PROBE OCR failed: " + e);
+                            } finally {
+                                if (copy != null) copy.recycle();
+                            }
+                        });
+                    }
+                    @Override public void onFailure(int errorCode) {
+                        log("SESSION_PROBE capture failed code=" + errorCode);
+                    }
+                });
+            return true;
+        } catch (Exception e) {
+            log("SESSION_PROBE exception: " + e);
+            return false;
+        }
+    }
+
     void startText(TextInstruction instruction) { tryStartText(instruction); }
 
     boolean tryStartText(TextInstruction instruction) {
