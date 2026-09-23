@@ -150,7 +150,7 @@ final class VisualControlRunner {
         deadline = SystemClock.elapsedRealtime() + timeoutMs;
         ScanStore.setVisualControlTestResult(service, "RUNNING", id);
         log("START id=" + id);
-        main.postDelayed(() -> { if (live(id)) finish(id, textFlow == null && terminalObserver == null ? "FAIL" : "TIMEOUT", "Hard deadline expired"); }, timeoutMs);
+        main.postDelayed(() -> { if (live(id)) finish(id, textFlow == null && terminalObserver == null ? "FAIL" : "TIMEOUT", "Absolute deadline expired"); }, timeoutMs);
         return true;
     }
 
@@ -180,7 +180,7 @@ final class VisualControlRunner {
     boolean withinDeadline(String id) {
         if (!live(id)) return false;
         if (SystemClock.elapsedRealtime() >= deadline) {
-            finish(id, textFlow == null && terminalObserver == null ? "FAIL" : "TIMEOUT", "Hard deadline expired"); return false;
+            finish(id, textFlow == null && terminalObserver == null ? "FAIL" : "TIMEOUT", "Absolute deadline expired"); return false;
         }
         return true;
     }

@@ -11,20 +11,41 @@ final class AdapterWorkflow {
     private SiteAdapter.Fixture fixture;
     private SiteAdapter.Selection selection;
     AdapterWorkflow(VisualSession session,SiteAdapter adapter){this.session=session;this.adapter=adapter;}
+    /** Per-stage soft budget; inactivity watchdog in CoordinatorAgent is the hard fail-closed. */
+    private static final long STAGE_SOFT_MS = 60_000L;
     private <T> CompletableFuture<T> step(String name,Supplier<CompletableFuture<T>> action){
         if(!session.live())return VisualSession.failed("TIMEOUT","Workflow expired");
-        session.checkpoint(name);return action.get();
+        session.checkpoint(name);
+        final long stageStart = android.os.SystemClock.elapsedRealtime();
+        return action.get().thenCompose(value -> {
+            long took = android.os.SystemClock.elapsedRealtime() - stageStart;
+            if (took > STAGE_SOFT_MS && session.live()) {
+                // Soft budget exceeded but still live: record and continue; absolute/inactivity watchdogs decide.
+                session.put("stage_soft_overrun_" + name, took);
+            }
+            return CompletableFuture.completedFuture(value);
+        });
     }
     void start(String query,String market,String side,String line,String minimumPrice,String stake,String executionMode,String confirmationStatus) {
         final String mode = executionMode == null || executionMode.isEmpty() ? "ready" : executionMode;
-        step("OPEN_HOME",adapter::open_home)
-        .thenCompose(v->step("ENSURE_SESSION",adapter::ensure_session))
+        // Debug/harness: intentional stall after first stage advance so inactivity watchdog can be proven.
+        // Not used by production OddsNotifier tips.
+        if ("__STALL__".equals(query)) {
+            session.checkpoint("SPORTS_HOME");
+            session.put("stall_harness", true);
+            session.delay(600_000L).whenComplete((v, error) -> {
+                if (session.live()) session.finish("TIMEOUT", "Stall harness absolute wait ended");
+            });
+            return;
+        }
+        step("SPORTS_HOME",adapter::open_home)
+        .thenCompose(v->step("SESSION_CHECK",adapter::ensure_session))
         .thenCompose(v->step("OPEN_SEARCH",adapter::open_search))
         .thenCompose(v->step("ENTER_QUERY",()->adapter.enter_query(query)))
-        .thenCompose(v->step("DISCOVER_FIXTURE",adapter::discover_fixture))
+        .thenCompose(v->step("FIXTURE_VERIFY",adapter::discover_fixture))
         .thenCompose(f->{fixture=f;session.put("fixture",f.json());return step("SELECT_FIXTURE",()->adapter.select_fixture(f));})
         .thenCompose(v->step("VERIFY_EVENT",()->adapter.verify_event(fixture)))
-        .thenCompose(v->step("DISCOVER_MARKETS",adapter::discover_markets))
+        .thenCompose(v->step("MARKET_NAV",adapter::discover_markets))
         .thenCompose(markets->{JSONArray json=new JSONArray();for(SiteAdapter.Selection q:markets)json.put(q.json());session.put("markets",json);return step("READ_SELECTION",()->adapter.read_selection(markets,market,side,line));})
         .thenCompose(s->{selection=s;session.put("selection",s.json());return step("READ_LINE",()->adapter.read_line(s));})
         .thenCompose(observedLine->{if(!observedLine.equals(selection.line))throw new SiteAdapter.Failure("LINE_CHANGED","Line changed while reading");return step("READ_PRICE",()->adapter.read_price(selection));})

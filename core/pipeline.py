@@ -52,8 +52,8 @@ class Settings:
     device_id: str = 'galaxy-a13-5g'
     dispatch_enabled: bool = False
     adapter: str = 'live_bet365'
-    device_timeout_ms: int = 120000
-    result_timeout_seconds: int = 240
+    device_timeout_ms: int = 300000  # absolute backstop; stage inactivity on device fails closed sooner
+    result_timeout_seconds: int = 360
     ready_timeout_seconds: int = 300
     session_max_age_seconds: int = DEFAULT_MAX_AGE_SECONDS
 
@@ -259,6 +259,17 @@ class Pipeline:
                     self.store.audit(db, 'RESULT_POLL_FAILED', dict(error=f'{type(error).__name__}: {error}'[:300]),
                                      row['instruction_id'], row['device_id'])
             if result is not None:
+                if isinstance(result, dict) and result.get('_pending'):
+                    # Mid-flight progress heartbeat from coordinator acknowledgement.
+                    stage = None
+                    progress = result.get('progress') if isinstance(result.get('progress'), dict) else {}
+                    stage = result.get('device_stage') or progress.get('stage')
+                    if stage and stage != row.get('device_stage'):
+                        with self.store.tx() as db:
+                            self.store.update_fields(db, row['instruction_id'], device_stage=stage)
+                            self.store.audit(db, 'DEVICE_PROGRESS', dict(progress=progress or result),
+                                             row['instruction_id'], row.get('device_id') or self.settings.device_id)
+                    continue
                 self.apply_result(row['instruction_id'], result)
                 continue
             dispatched = datetime.fromisoformat(row['dispatched_at'])

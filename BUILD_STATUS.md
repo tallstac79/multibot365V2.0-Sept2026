@@ -1,4 +1,33 @@
+---
+# MultiBot365 stage timeouts + session keepalive 0.6.28-stage vc40 - READY_FOR_LIVE_REPROOF YES
+
+Verified 2026-09-23 ~23:50 Europe/London. App **0.6.28-stage (40)** on Samsung R5CT61TE14Z / galaxy-a13-5g. Coordinator Tailscale `http://100.114.45.68:8767`. Session **AUTHENTICATED**. `dispatch_enabled=false` throughout (never flipped true).
+
+- **HOTFIX_COMMIT:** `bdcd4bb` fix(pipeline): sqlite3.Row away access for home||away query.
+- **ROOT_CAUSE:** Prior Gunma tip on-ee808246 spent ~120s DEVICE_ACTIVE with `device_stage=null`; CoordinatorAgent single hard deadline (`timeout_ms=120000`) killed as 'Coordinator hard deadline expired' before Search; mid-job `refreshSession` forced session UNKNOWN (SESSION_REQUIRED race). No progress heartbeats.
+- **Fix:** stage timings + progress heartbeats on /health and 202 ack; stage inactivity 45s fail-closed; absolute backstop 300s (schema max 600s); pre-job session refresh + job-active AUTHENTICATED keepalive (no UNKNOWN flip); `session_max_age` remains **120s**.
+- **Proof (`evidence/stage-timeout-gunma-proof/`):**
+  - **GUNMA:** Search start **20363ms**; sports_context `open_home_url`; progress ladder visible; terminal WRONG_EVENT fail-closed (fixture not on board); session AUTHENTICATED; no unexplained 120s stall.
+  - **BASKETBALL x3:** Search ~23-33s each; sports_context set; progress heartbeats; fail-closed (board/target).
+  - **FULHAM:** sports_context `already_sports_or_home`; Search **24418ms**; reached MARKET_NAV; fail-closed TARGET_NOT_FOUND on SPREAD line.
+  - **RESET_AFTER_TIMEOUT:** `__STALL__` harness -> TIMEOUT Stage inactivity 46218ms @ SPORTS_HOME; reset + SESSION_CHECK AUTHENTICATED.
+- **READY_FOR_LIVE_REPROOF=YES**. **DISPATCH_NOW=false**.
+- **Safety:** no wager; Place Bet not engaged; dispatch left **false**.
+
+---
+
 ﻿---
+# MultiBot365 stage timeouts + session keepalive 0.6.28-stage vc40 - READY_FOR_LIVE_REPROOF PENDING
+
+In progress 2026-09-23 Europe/London. App **0.6.28-stage (40)** on Samsung R5CT61TE14Z / galaxy-a13-5g. Coordinator Tailscale `http://100.114.45.68:8767`. `dispatch_enabled=false` throughout (never flipped true).
+
+- **HOTFIX:** `bdcd4bb` `fix(pipeline): sqlite3.Row away access for home||away query` (row['away'] + Row-safe session_state).
+- **ROOT_CAUSE (Gunma on-ee808246):** Coordinator single hard deadline (~120s) killed DEVICE_ACTIVE job with `device_stage=null` before Search; session refresh forced UNKNOWN mid-job; no progress heartbeats.
+- **Fix:** stage timings + progress heartbeats; stage inactivity timeout 45s; absolute backstop 300s (schema max 600s); session pre-job refresh + job-active keepalive without UNKNOWN; `session_max_age` remains **120s**.
+- **Evidence:** `evidence/stage-timeout-gunma-proof/` (running).
+- **Safety:** no wager; Place Bet not engaged; dispatch left **false**.
+
+------
 # MultiBot365 sports discovery 0.6.27-sports vc39 - READY_FOR_LIVE_REPROOF YES
 
 Verified 2026-09-23 ~22:05 Europe/London. App **0.6.27-sports (39)** on Samsung R5CT61TE14Z / galaxy-a13-5g. Coordinator Tailscale `http://100.114.45.68:8767`. Session **AUTHENTICATED**. `dispatch_enabled=false` throughout (never flipped true).
@@ -783,6 +812,7 @@ The app button expects the page served on host port 8765 and adb reverse tcp:876
 Earlier BUILD_STATUS reported the legacy search query ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“FulhamÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â passed on 2026-09-20. This historical result is preserved as context, not revalidated here. Existing legacy search/fixture code remains.
 
 No physical-action or credential blocker remains for this milestone. Tracked Gradle/build artifacts were already dirty at takeover and are excluded from the source milestone commit.
+
 
 
 

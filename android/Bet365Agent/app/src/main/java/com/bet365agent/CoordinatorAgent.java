@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.util.Log;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -32,6 +33,16 @@ final class CoordinatorAgent implements AutoCloseable {
     private volatile long sessionObservedAtMs = System.currentTimeMillis();
     private volatile String sessionDetail = "not checked yet";
     private final Runnable sessionRefresh = this::refreshSession;
+    /** Absolute backstop comes from instruction.timeout_ms; inactivity fails closed sooner. */
+    private static final long STAGE_INACTIVITY_MS = 45_000L;
+    private static final long PROGRESS_TICK_MS = 2_000L;
+    private volatile String progressInstructionId;
+    private volatile String progressStage = "IDLE";
+    private volatile long progressElapsedMs;
+    private volatile long lastProgressAtElapsed;
+    private volatile long lastProgressWallMs;
+    private org.json.JSONArray progressStages = new org.json.JSONArray();
+    private Runnable deadlineWatch;
 
     CoordinatorAgent(AccessibilityService service, VisualControlRunner runner) {
         this.service = service; this.runner = runner;
@@ -116,13 +127,7 @@ final class CoordinatorAgent implements AutoCloseable {
         if (closed || row == null || !row.isNull("result")) return;
         long remaining = remaining(row, instruction.timeout);
         if (remaining < 100) { complete(row, "TIMEOUT", "Deadline expired before dispatch"); return; }
-        main.postDelayed(() -> {
-            JSONObject current = store.get(instruction.id);
-            if (current != null && current.isNull("result")) {
-                runner.finish(instruction.runId, "TIMEOUT", "Coordinator hard deadline expired");
-                complete(current, "TIMEOUT", "Coordinator hard deadline expired");
-            }
-        }, remaining);
+        armDeadlineWatch(instruction);
         try {
             PowerManager power = (PowerManager) service.getSystemService(android.content.Context.POWER_SERVICE);
             KeyguardManager keyguard = (KeyguardManager) service.getSystemService(android.content.Context.KEYGUARD_SERVICE);
@@ -139,10 +144,14 @@ final class CoordinatorAgent implements AutoCloseable {
                 }
             } catch (Exception ignored) {}
             if (power == null || !power.isInteractive()) { complete(row, "FOCUS_FAILED", "Phone must be awake and unlocked"); return; }
+            // Phase C: refresh session observation immediately before starting a device job.
+            preJobSessionRefresh();
             store.executing(instruction.id);
             if(instruction.action.equals("ADAPTER_WORKFLOW") || instruction.action.equals("SESSION_CHECK") || instruction.action.equals("SESSION_PROBE") || instruction.action.equals("OPEN_SEARCH")) {
                 if(!runner.startExternal(instruction.runId,remaining(row,instruction.timeout))) {complete(row,"INTERNAL_ERROR","Runner rejected workflow");return;}
                 VisualSession session=new VisualSession(service,runner,instruction.runId,instruction.adapter);
+                session.setProgressListener(this::onWorkflowProgress);
+                noteProgress(instruction.id, "STARTED", 0, null);
                 if(instruction.action.equals("SESSION_PROBE")) { new SessionProbeWorkflow(session).start(); return; }
                 SiteAdapter adapter=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id,instruction.sport,instruction.stake);
                 if(instruction.action.equals("SESSION_CHECK")) new SessionCheckWorkflow(session,adapter).start();
@@ -167,6 +176,109 @@ final class CoordinatorAgent implements AutoCloseable {
             }, Math.min(1200, remaining));
         } catch (Exception e) { runner.finish(instruction.runId,"INTERNAL_ERROR","Dispatch failed: "+e.getClass().getSimpleName()); complete(row, "INTERNAL_ERROR", "Cannot open configured Chrome page: " + e.getClass().getSimpleName()); }
     }
+    private void armDeadlineWatch(CoordinatorInstruction instruction) {
+        if (deadlineWatch != null) main.removeCallbacks(deadlineWatch);
+        lastProgressAtElapsed = SystemClock.elapsedRealtime();
+        lastProgressWallMs = System.currentTimeMillis();
+        progressInstructionId = instruction.id;
+        progressStage = "STARTED";
+        progressElapsedMs = 0;
+        progressStages = new JSONArray();
+        deadlineWatch = new Runnable() {
+            @Override public void run() {
+                if (closed) return;
+                JSONObject current = store.get(instruction.id);
+                if (current == null || !current.isNull("result")) return;
+                long absLeft = remaining(current, instruction.timeout);
+                if (absLeft < 100) {
+                    runner.finish(instruction.runId, "TIMEOUT", "Absolute deadline expired");
+                    complete(current, "TIMEOUT", "Absolute deadline expired after " + instruction.timeout + "ms");
+                    return;
+                }
+                long idle = SystemClock.elapsedRealtime() - lastProgressAtElapsed;
+                if (idle > STAGE_INACTIVITY_MS) {
+                    String detail = "Stage inactivity timeout: " + progressStage + " idle " + idle + "ms (limit " + STAGE_INACTIVITY_MS + "ms)";
+                    runner.finish(instruction.runId, "TIMEOUT", detail);
+                    complete(current, "TIMEOUT", detail);
+                    return;
+                }
+                main.postDelayed(this, PROGRESS_TICK_MS);
+            }
+        };
+        main.postDelayed(deadlineWatch, PROGRESS_TICK_MS);
+    }
+
+    private static boolean advancesWatchdog(String stage) {
+        if (stage == null) return false;
+        // Capture/noise phases must NOT reset inactivity; only verified ladder stage advances do.
+        return java.util.Set.of(
+            "STARTED","SESSION_CHECK","SPORTS_HOME","SPORTS_CONTEXT","OPEN_SEARCH","FOCUS",
+            "ENTER_QUERY","QUERY_VERIFY","RESULTS_WAIT","FIXTURE_VERIFY","MARKET_NAV",
+            "OPEN_HOME","ENSURE_SESSION","DISCOVER_FIXTURE","SELECT_FIXTURE","VERIFY_EVENT",
+            "DISCOVER_MARKETS","READ_SELECTION","READ_LINE","READ_PRICE","OPEN_SELECTION",
+            "ENTER_STAKE","VERIFY_FINAL_STATE","PREPARE_COMPLETE_EXECUTION","PLACE_BET"
+        ).contains(stage);
+    }
+
+    private void onWorkflowProgress(String stage, long elapsedMs, JSONObject timing) {
+        noteProgress(progressInstructionId, stage, elapsedMs, timing);
+        if (!advancesWatchdog(stage)) return;
+        // Keep AUTHENTICATED fresh while verified stage progress continues (no UNKNOWN race).
+        synchronized (sessionLock) {
+            if ("AUTHENTICATED".equals(sessionState)) {
+                sessionObservedAtMs = System.currentTimeMillis();
+                sessionDetail = "job-active progress keepalive @" + stage;
+            }
+        }
+    }
+
+    private synchronized void noteProgress(String instructionId, String stage, long elapsedMs, JSONObject timing) {
+        if (instructionId == null) return;
+        progressInstructionId = instructionId;
+        boolean advance = advancesWatchdog(stage);
+        if (advance && stage != null && !stage.isEmpty()) progressStage = stage;
+        progressElapsedMs = elapsedMs;
+        if (advance) {
+            lastProgressAtElapsed = SystemClock.elapsedRealtime();
+            lastProgressWallMs = System.currentTimeMillis();
+        }
+        try {
+            JSONObject ev = object(
+                "stage", progressStage,
+                "elapsed_ms", elapsedMs,
+                "at_ms", lastProgressWallMs);
+            if (timing != null) ev.put("timing", timing);
+            progressStages.put(ev);
+            // Cap memory
+            if (progressStages.length() > 80) {
+                JSONArray trimmed = new JSONArray();
+                for (int i = progressStages.length() - 60; i < progressStages.length(); i++) trimmed.put(progressStages.get(i));
+                progressStages = trimmed;
+            }
+        } catch (Exception ignored) {}
+        Log.i("AgentCoordinator", "PROGRESS id=" + instructionId + " stage=" + progressStage + " elapsed_ms=" + elapsedMs);
+    }
+
+    private void preJobSessionRefresh() {
+        synchronized (sessionLock) {
+            if ("AUTHENTICATED".equals(sessionState)) {
+                sessionObservedAtMs = System.currentTimeMillis();
+                sessionDetail = "pre-job session refresh (held AUTHENTICATED; on-screen ENSURE_SESSION follows)";
+            } else {
+                sessionDetail = (sessionDetail == null ? "" : sessionDetail) + "; pre-job without AUTHENTICATED";
+            }
+        }
+    }
+
+    private JSONObject progressSnapshot() {
+        return object(
+            "stage", progressStage,
+            "elapsed_ms", progressElapsedMs,
+            "last_progress_at_ms", lastProgressWallMs,
+            "instruction_id", progressInstructionId == null ? JSONObject.NULL : progressInstructionId,
+            "stages", progressStages);
+    }
+
     private long remaining(JSONObject row, int timeout) { return timeout - (SystemClock.elapsedRealtime() - row.optLong("received_elapsed")); }
     private void runnerFinished(String runId, String status, String detail) {
         JSONObject row = store.byRun(runId);
@@ -175,7 +287,10 @@ final class CoordinatorAgent implements AutoCloseable {
     private synchronized void complete(JSONObject row, String stage, String detail) {
         String id = row.optString("instruction_id"); JSONObject current = store.get(id);
         if (current == null || !current.isNull("result")) return;
+        if (deadlineWatch != null) { main.removeCallbacks(deadlineWatch); deadlineWatch = null; }
         JSONObject result = result(id, stage, detail, Math.max(0, System.currentTimeMillis() - current.optLong("received_ms")));
+        put(result, "progress", progressSnapshot());
+        put(result, "device_stage", progressStage);
         put(result, "execution_count", current.optInt("execution_count"));
         put(result, "run_id", current.optString("run_id"));
         JSONObject proof=evidence(current);
@@ -191,6 +306,10 @@ final class CoordinatorAgent implements AutoCloseable {
         }
         store.complete(id, result);
         runner.releaseReservation(current.optString("run_id"));
+        if (id.equals(progressInstructionId)) {
+            progressInstructionId = null;
+            progressStage = "IDLE";
+        }
         Log.i("AgentCoordinator", "RESULT " + result);
     }
     private static String stage(String textStatus) {
@@ -209,13 +328,18 @@ final class CoordinatorAgent implements AutoCloseable {
                 main.post(sessionRefresh);
             }
         }
-        return object("healthy", !closed).put("heartbeat_ms", System.currentTimeMillis()).put("uptime_ms", SystemClock.elapsedRealtime() - boot)
+        JSONObject health = object("healthy", !closed).put("heartbeat_ms", System.currentTimeMillis()).put("uptime_ms", SystemClock.elapsedRealtime() - boot)
             .put("state", active == null ? "IDLE" : active.optString("state"))
             .put("current_instruction", active == null ? JSONObject.NULL : active.getJSONObject("payload"))
             .put("last_result", last == null ? JSONObject.NULL : last.getJSONObject("result"))
             .put("app_version", pkg.versionName).put("version_code", pkg.versionCode)
             .put("endpoint", endpoint() == null ? JSONObject.NULL : endpoint()).put("pid", android.os.Process.myPid())
             .put("device_id", DEVICE_ID).put("session", session);
+        if (active != null) {
+            put(health, "progress", progressSnapshot());
+            put(health, "device_stage", progressStage);
+        }
+        return health;
     }
 
     void noteSession(String state, String detail) {
@@ -242,8 +366,16 @@ final class CoordinatorAgent implements AutoCloseable {
             if (power == null || !power.isInteractive() || (keyguard != null && keyguard.isKeyguardLocked())) {
                 noteSession("UNKNOWN", "screen locked or off");
             } else if (store.active() != null) {
-                // Mid-instruction: do not steal screenshots; fail closed rather than reuse a stale AUTHENTICATED claim.
-                noteSession("UNKNOWN", "instruction active; deferred on-screen session check");
+                // Mid-instruction: do not steal screenshots / runner. Keep AUTHENTICATED fresh via keepalive
+                // so pipeline session_max_age (120s) does not race SESSION_REQUIRED while a job is active.
+                // Do NOT flip to UNKNOWN here (that caused tips queued during jobs to die as SESSION_REQUIRED).
+                synchronized (sessionLock) {
+                    if ("AUTHENTICATED".equals(sessionState)) {
+                        sessionObservedAtMs = System.currentTimeMillis();
+                        sessionDetail = "job-active session keepalive (on-screen probe deferred)";
+                    }
+                    // Non-AUTHENTICATED mid-job: leave state unchanged (fail closed for new dispatches).
+                }
             } else {
                 final long startedAt = System.currentTimeMillis();
                 boolean started = runner.probeSession(ocr -> {
@@ -273,9 +405,14 @@ final class CoordinatorAgent implements AutoCloseable {
         }
     }
     private JSONObject acknowledgement(JSONObject row) {
-        return object("instruction_id", row.optString("instruction_id"), "acknowledged", true,
+        JSONObject ack = object("instruction_id", row.optString("instruction_id"), "acknowledged", true,
             "state", row.optString("state"), "received_at_ms", row.optLong("received_ms"),
             "result_url", "/instructions/" + row.optString("instruction_id"), "execution_count", row.optInt("execution_count"));
+        if (row.isNull("result") && progressInstructionId != null && progressInstructionId.equals(row.optString("instruction_id"))) {
+            put(ack, "progress", progressSnapshot());
+            put(ack, "device_stage", progressStage);
+        }
+        return ack;
     }
     private JSONObject evidence(JSONObject row) {
         try {

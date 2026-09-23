@@ -24,10 +24,14 @@ class CoordinatorGateway:
         return self.client.submit(payload, seconds=10)
 
     def result(self, instruction_id):
-        """Terminal result dict, or None while pending / not (yet) known to the phone."""
+        """Terminal result dict, pending progress dict with _pending=True, or None if unknown."""
         code, value = self.client.request('GET', '/instructions/' + instruction_id)
         if code == 200:
             return value
+        if code == 202 and isinstance(value, dict):
+            pending = dict(value)
+            pending['_pending'] = True
+            return pending
         if code in (202, 404):
             return None
         raise ValueError(f'Unexpected result response HTTP {code}')

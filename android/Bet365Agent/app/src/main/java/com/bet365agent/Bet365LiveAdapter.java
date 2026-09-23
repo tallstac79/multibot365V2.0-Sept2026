@@ -154,9 +154,13 @@ final class Bet365LiveAdapter implements SiteAdapter {
         });
     }
 
-    public CompletableFuture<Void> open_search() {
-        // Prefer Sports product context before Search — Casino (#/AX) search is not sports discovery.
-        return ensureSportsContext().thenCompose(v -> openSearchAttempt(0));
+        public CompletableFuture<Void> open_search() {
+        // Prefer Sports product context before Search - Casino (#/AX) search is not sports discovery.
+        ui.checkpoint("SPORTS_CONTEXT");
+        return ensureSportsContext().thenCompose(v -> {
+            ui.checkpoint("OPEN_SEARCH");
+            return openSearchAttempt(0);
+        });
     }
 
     /** Robust Search open: OCR label+bounds, multi-frame verify, one relocate retry. */
@@ -346,6 +350,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
         ui.put("identity_away", expectedAway);
         List<String> ladder = buildSearchQueryLadder(homePart, expectedAway);
         ui.put("search_query_ladder", new JSONArray(ladder));
+        ui.checkpoint("FOCUS");
         return runSearchQueryLadder(ladder, 0, false);
     }
 
@@ -473,15 +478,18 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     private CompletableFuture<VisualScreen> typeSearchQueryOnce(String queryText) {
         final String typedQuery = sanitizeSearchTyped(queryText);
+        ui.checkpoint("ENTER_QUERY");
         return ui.capture("query_pre").thenCompose(s -> {
             require(!visible(s, "SIMULATOR", "SEARCHPAGE"), "TARGET_NOT_FOUND", "Simulator leaked into live search");
             if (hasLiveSearchResults(s, typedQuery)) {
+                ui.checkpoint("RESULTS_WAIT");
                 return ui.dismissKeyboard().thenCompose(v -> ui.delay(400)).thenCompose(v -> ui.capture("query_results"));
             }
             VisualScreen.Line recent = recentSearchChip(s, typedQuery);
             if (recent != null) {
+                ui.checkpoint("QUERY_VERIFY");
                 return ui.tap(recent.bounds, "Recent " + typedQuery).thenCompose(v -> ui.delay(1200))
-                        .thenCompose(v -> ui.capture("query_results"));
+                        .thenCompose(v -> { ui.checkpoint("RESULTS_WAIT"); return ui.capture("query_results"); });
             }
             CompletableFuture<Void> clear = CompletableFuture.completedFuture(null);
             VisualScreen.Line clearBtn = null;
@@ -493,8 +501,14 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 clear = ui.tap(btn.bounds, "Clear search").thenCompose(v -> ui.delay(400));
             }
             String hint = visible(s, "bet365...") ? "bet365..." : "Search";
-            return clear.thenCompose(v -> ui.type(hint, typedQuery)).thenCompose(v -> ui.dismissKeyboard())
-                    .thenCompose(v -> ui.delay(900)).thenCompose(v -> ui.capture("query_results"));
+            return clear.thenCompose(v -> ui.type(hint, typedQuery)).thenCompose(v -> {
+                        ui.checkpoint("QUERY_VERIFY");
+                        return ui.dismissKeyboard();
+                    })
+                    .thenCompose(v -> ui.delay(900)).thenCompose(v -> {
+                        ui.checkpoint("RESULTS_WAIT");
+                        return ui.capture("query_results");
+                    });
         }).thenApply(r -> {
             require(!visible(r, "SIMULATOR", "SEARCHPAGE"), "TARGET_NOT_FOUND", "Simulator leaked into live search");
             return r;
@@ -555,27 +569,49 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     /** Leave Casino / land on Sports before Search when Bet365 supports it. */
     private CompletableFuture<Void> ensureSportsContext() {
+        long t0 = android.os.SystemClock.elapsedRealtime();
         return ui.capture("sports_context_pre").thenCompose(s -> {
+            ui.put("sports_context_pre_elapsed_ms", android.os.SystemClock.elapsedRealtime() - t0);
+            ui.put("sports_context_foreground", screenTextBlob(s));
             if (!screenShowsCasinoProduct(s) && !isCasinoOnlyResults(s)) {
-                // Still prefer All Sports if we are clearly on Casino bottom-nav highlight with no sports chrome.
-                if (visible(s, "In-Play", "In-play", "Football", "Sports", "All Sports")) {
+                // Sports chrome / home is enough; basketball uses Search after Sports context.
+                if (visible(s, "In-Play", "In-play", "Football", "Basketball", "Sports", "All Sports", "Search")) {
                     ui.put("sports_context", "already_sports_or_home");
+                    ui.put("sports_context_elapsed_ms", android.os.SystemClock.elapsedRealtime() - t0);
                     return CompletableFuture.completedFuture(null);
                 }
             }
             VisualScreen.Line allSports = findBottomNav(s, "All Sports");
             if (allSports != null) {
                 ui.put("sports_context", "tap_all_sports");
-                return ui.tap(allSports.bounds, "All Sports").thenCompose(v -> ui.delay(1400));
+                ui.bumpStageRetry("SPORTS_CONTEXT");
+                return ui.tap(allSports.bounds, "All Sports").thenCompose(v -> ui.delay(1400))
+                    .thenCompose(v -> ui.capture("sports_context_after_all_sports"))
+                    .thenAccept(after -> {
+                        ui.put("sports_context_elapsed_ms", android.os.SystemClock.elapsedRealtime() - t0);
+                        ui.put("sports_context_after", screenTextBlob(after));
+                    });
             }
             VisualScreen.Line sports = findBottomNav(s, "Sports");
             if (sports != null) {
                 ui.put("sports_context", "tap_sports");
-                return ui.tap(sports.bounds, "Sports").thenCompose(v -> ui.delay(1400));
+                ui.bumpStageRetry("SPORTS_CONTEXT");
+                return ui.tap(sports.bounds, "Sports").thenCompose(v -> ui.delay(1400))
+                    .thenCompose(v -> ui.capture("sports_context_after_sports"))
+                    .thenAccept(after -> {
+                        ui.put("sports_context_elapsed_ms", android.os.SystemClock.elapsedRealtime() - t0);
+                        ui.put("sports_context_after", screenTextBlob(after));
+                    });
             }
             // Re-open sports home URL as fallback.
             ui.put("sports_context", "open_home_url");
-            return ui.open(HOME_URL).thenCompose(v -> ui.delay(1600));
+            ui.bumpStageRetry("SPORTS_CONTEXT");
+            return ui.open(HOME_URL).thenCompose(v -> ui.delay(1600))
+                .thenCompose(v -> ui.capture("sports_context_after_home"))
+                .thenAccept(after -> {
+                    ui.put("sports_context_elapsed_ms", android.os.SystemClock.elapsedRealtime() - t0);
+                    ui.put("sports_context_after", screenTextBlob(after));
+                });
         });
     }
 

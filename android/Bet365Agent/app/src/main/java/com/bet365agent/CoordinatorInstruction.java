@@ -118,7 +118,7 @@ final class CoordinatorInstruction {
         if(!action.equals("ADAPTER_WORKFLOW")) resolvedLine = "";
         line = resolvedLine;
         timeout = Integer.parseInt(fields.get("timeout_ms"));
-        if (timeout < 100 || timeout > 120000) throw new IllegalArgumentException("timeout_ms must be 100..120000");
+        if (timeout < 100 || timeout > 600000) throw new IllegalArgumentException("timeout_ms must be 100..600000");
         runId = "c_" + Base64.encodeToString(MessageDigest.getInstance("SHA-256").digest(id.getBytes(StandardCharsets.UTF_8)), Base64.NO_WRAP | Base64.URL_SAFE | Base64.NO_PADDING);
         payload = new JSONObject();for(Map.Entry<String,String> entry:fields.entrySet())payload.put(entry.getKey(),entry.getKey().equals("timeout_ms")?timeout:entry.getValue());
     }
