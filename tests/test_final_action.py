@@ -355,6 +355,44 @@ class UncertaintyTests(Base):
         self.assertEqual(self.row(second)['state'], 'QUEUED')
 
 
+class PriorityTests(Base):
+    """A2: live placement work outranks routine My Bets checks; PLACEMENT_UNKNOWN resolution stays urgent."""
+
+    def test_routine_verification_yields_to_queued_live_work(self):
+        iid = self.approved_and_dispatched()
+        self.gateway.results[iid + '-place'] = placement_result(iid)
+        self.p.tick(self.gateway)                                   # PLACED -> PLACED_UNVERIFIED (routine check due in 15 s)
+        self.clock.advance(16)
+        second = self.p.ingest(message(RYTAS))['instruction_id']
+        self.p.tick(self.gateway)
+        self.assertFalse(any(x['action'] == 'MY_BETS' for x in self.gateway.submitted))
+        self.assertIn(self.row(second)['state'], ('DISPATCHED', 'DEVICE_ACTIVE', 'AWAITING_APPROVAL'))
+        self.p.final.reject(second, 'operator')                     # phone free again: the routine check now runs
+        self.p.tick(self.gateway)
+        self.p.tick(self.gateway)
+        self.assertTrue(any(x['action'] == 'MY_BETS' for x in self.gateway.submitted))
+
+    def test_placement_unknown_resolution_outranks_live_work(self):
+        iid = self.approved_and_dispatched()
+        self.gateway.results[iid + '-place'] = placement_result(iid, 'PLACEMENT_UNKNOWN')
+        self.p.tick(self.gateway)
+        self.clock.advance(16)
+        second = self.p.ingest(message(RYTAS))['instruction_id']
+        self.p.tick(self.gateway)
+        self.assertTrue(any(x['action'] == 'MY_BETS' for x in self.gateway.submitted))
+        self.assertEqual(self.row(second)['state'], 'QUEUED')
+
+    def test_alias_candidate_from_the_phone_is_audited(self):
+        iid = self.p.ingest(message(MELBOURNE))['instruction_id']
+        refused = fail_result(iid, 'ALIAS_REQUIRED', "Event link shows 'Sopron KC v DEAC Debreceni'")
+        refused['alias_candidate'] = {'feed_home': 'Soproni KC', 'bet365_home': 'Sopron KC', 'home_verified': False}
+        self.gateway.results[iid] = refused                         # the phone's answer to the hold run
+        self.p.tick(self.gateway)
+        self.p.tick(self.gateway)
+        self.assertEqual(self.row(iid)['state'], 'TARGET_NOT_FOUND')
+        self.assertEqual(len(self.audits('ALIAS_CANDIDATE')), 1)
+
+
 class SettlementTests(Base):
     def test_open_bet_settles_and_counts_towards_loss(self):
         iid = self.approved_and_dispatched()
@@ -524,6 +562,37 @@ class HeldSlipTests(Base):
         self.p.tick(self.gateway)
         self.assertFalse(any(x['action'] == 'RESET_BETSLIP' for x in self.gateway.submitted))  # the run reset itself
         self.assertIsNone(self.p.held_instruction())
+
+    def test_queue_and_device_timings_are_persisted(self):
+        iid = self.p.ingest(message(MELBOURNE))['instruction_id']
+        self.clock.advance(7)
+        self.p.tick(self.gateway)
+        self.clock.advance(30)
+        result = ready_result(iid)
+        result['selection'].update(selection_name='Over', line='190.5')
+        self.gateway.results[iid] = result
+        self.p.tick(self.gateway)
+        row = self.row(iid)
+        self.assertEqual(row['queue_wait_ms'], 7000)
+        self.assertEqual(row['device_execution_ms'], 30000)
+        self.assertIsNotNone(row['device_started_at'])
+        self.p.final.approve(iid, 'operator')
+        self.p.tick(self.gateway)
+        self.clock.advance(6)
+        self.gateway.results[iid + '-place'] = placement_result(iid)
+        self.p.tick(self.gateway)
+        row = self.row(iid)
+        self.assertEqual(row['device_execution_ms'], 36000)          # both device runs
+        self.assertEqual(row['queue_wait_ms'], 7000)                 # first device start only
+        self.assertEqual(row['terminal_at'], row['completed_at'])
+
+    def test_malformed_event_link_is_omitted_so_the_phone_searches(self):
+        from core.pipeline import event_link
+        bad = dict(normalized_alert=json.dumps({'comparison_url': 'https://www.bet365.com/#/AX/K9'}))
+        self.assertIsNone(event_link(bad))
+        self.assertIsNone(event_link(dict(normalized_alert='not json')))
+        good = dict(normalized_alert=json.dumps({'comparison_url': 'https://www.bet365.com/#/AC/B18/C1/D19/E2/F19/I0/'}))
+        self.assertTrue(event_link(good).startswith('https://www.bet365.com/#/AC/B18/'))
 
     def test_held_slip_owns_the_phone(self):
         iid = self.held()

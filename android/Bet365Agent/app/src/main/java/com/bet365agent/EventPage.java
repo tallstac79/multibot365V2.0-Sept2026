@@ -37,6 +37,45 @@ final class EventPage {
                 || (t.contains("betting") && t.contains("has been suspended"));
     }
 
+    /** Generic tokens that never identify a club on their own. */
+    private static final java.util.Set<String> GENERIC = java.util.Set.of("basket", "basketball", "club", "team", "sport",
+            "sports", "united", "city", "town", "real", "athletic", "atletico", "academy", "college", "university", "women",
+            "ladies", "men", "reserves", "youth", "junior", "juniors", "senior", "seniors");
+
+    /**
+     * Do two team names look like variants of the same name (bookmaker vs feed spelling)? True when they share a
+     * significant token (4+ letters, not generic) or their letters agree for >= 70% (Soproni KC / Sopron KC).
+     * Used only to LABEL a refusal (ALIAS_REQUIRED vs WRONG_EVENT); it never verifies an event by itself.
+     */
+    static boolean namingVariant(String a, String b) {
+        if (a == null || b == null) return false;
+        String na = OcrText.normalize(a).toLowerCase(Locale.US), nb = OcrText.normalize(b).toLowerCase(Locale.US);
+        java.util.Set<String> ta = new java.util.HashSet<>(), tb = new java.util.HashSet<>();
+        for (String t : na.split("[^a-z0-9]+")) if (t.length() >= 4 && !GENERIC.contains(t)) ta.add(t);
+        for (String t : nb.split("[^a-z0-9]+")) if (t.length() >= 4 && !GENERIC.contains(t)) tb.add(t);
+        for (String t : ta) if (tb.contains(t)) return true;
+        // Letter overlap over the NON-generic tokens only ("Basket Club A" / "Basket Club B" must not pass on
+        // the shared generic words).
+        String la = lettersWithoutGeneric(na), lb = lettersWithoutGeneric(nb);
+        if (la.length() < 4 || lb.length() < 4) return false;
+        int common = lcs(la, lb);
+        return common * 100 >= Math.max(la.length(), lb.length()) * 70;
+    }
+
+    private static String lettersWithoutGeneric(String normalisedLower) {
+        StringBuilder b = new StringBuilder();
+        for (String t : normalisedLower.split("[^a-z0-9]+")) if (!t.isEmpty() && !GENERIC.contains(t)) b.append(t);
+        return b.toString();
+    }
+
+    private static int lcs(String a, String b) {
+        int[][] d = new int[a.length() + 1][b.length() + 1];
+        for (int i = 1; i <= a.length(); i++)
+            for (int j = 1; j <= b.length(); j++)
+                d[i][j] = a.charAt(i - 1) == b.charAt(j - 1) ? d[i - 1][j - 1] + 1 : Math.max(d[i - 1][j], d[i][j - 1]);
+        return d[a.length()][b.length()];
+    }
+
     static boolean validUrl(String url) { return url != null && URL.matcher(url.trim()).matches(); }
 
     /** Sport from the link's B code: 18 basketball, 1 football; null if unknown. */

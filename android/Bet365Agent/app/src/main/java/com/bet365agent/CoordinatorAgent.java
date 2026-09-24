@@ -348,7 +348,7 @@ final class CoordinatorAgent implements AutoCloseable {
             if(proof.has("observe"))put(result,"observe",proof.opt("observe"));
             if(proof.has("betslip_reset"))put(result,"betslip_reset",proof.opt("betslip_reset"));
             if(proof.has("betslip_clear"))put(result,"betslip_clear",proof.opt("betslip_clear"));
-            for(String key:new String[]{"route","held","returned_home","pretap","stage_timings","t_start_ms","t_pretap_done_ms","t_tap_ms","t_receipt_ms","t_home_ms"})
+            for(String key:new String[]{"route","held","returned_home","home_verified","pretap","stage_timings","t_start_ms","t_pretap_done_ms","t_tap_ms","t_receipt_ms","t_home_ms","alias_candidate","direct_event_rejected","stake_field_state","stake_clear"})
                 if(proof.has(key))put(result,key,proof.opt(key));
             JSONObject ready = proof.optJSONObject("ready_state");
             if (ready != null && ready.has("session")) noteSession(ready.optString("session"), "ready_state");
@@ -371,7 +371,7 @@ final class CoordinatorAgent implements AutoCloseable {
             "PRICE_CHANGED", "LINE_CHANGED", "SELECTION_CHANGED", "SUSPENDED", "UNAVAILABLE", "BELOW_MINIMUM",
             "INSUFFICIENT_BALANCE", "INSUFFICIENT_FUNDS", "STAKE_LIMITED", "STAKE_REJECTED", "MARKET_SUSPENDED",
             "SELECTION_UNAVAILABLE", "SPORTS_RESULTS_NOT_FOUND", "WRONG_SPORT", "CONFIRMATION_REQUIRED",
-            "BETSLIP_NOT_SINGLE", "PLACEMENT_UNKNOWN", "REJECTED", "INVALID_INSTRUCTION", "MY_BETS_UNAVAILABLE", "BOT_CHECK").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
+            "BETSLIP_NOT_SINGLE", "PLACEMENT_UNKNOWN", "REJECTED", "INVALID_INSTRUCTION", "MY_BETS_UNAVAILABLE", "BOT_CHECK", "ALIAS_REQUIRED").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
     }
     private JSONObject health() throws Exception {
         JSONObject active = store.active(), last = store.last();

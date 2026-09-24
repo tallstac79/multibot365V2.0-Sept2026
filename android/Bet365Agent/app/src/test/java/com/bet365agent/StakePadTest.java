@@ -104,6 +104,13 @@ public class StakePadTest {
         assertFalse(StakePad.check(words, "0.11", "1.83").ok);
     }
 
+    @Test public void stakeFieldStateFromRealFrames() throws Exception {
+        assertTrue(StakePad.fieldState(load("keypad_empty_20260924.txt")).equals("EMPTY"));        // £0.00 selected: no To Return
+        assertTrue(StakePad.fieldState(load("keypad_typed_8718_20260924.txt")).equals("FILLED"));  // £8,718 typed: To Return shown
+        assertTrue(StakePad.fieldState(load("keypad_typed_010_20260924.txt")).equals("FILLED"));   // £0.10 typed
+        assertTrue(StakePad.fieldState(Arrays.asList(w("Done", 514, 1342, 567, 1359))).equals("UNKNOWN"));
+    }
+
     @Test public void aWrongStakeCannotPassBothReadings() {
         // Stake really £10.10 but OCR drops the £: stake digits look right, the return (18.48) does not.
         List<GameLinesParser.Word> words = Arrays.asList(w("10.10", 20, 686, 102, 718),

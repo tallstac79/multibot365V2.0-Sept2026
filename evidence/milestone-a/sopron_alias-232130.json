@@ -1,0 +1,1151 @@
+{
+ "payload": {
+  "instruction_id": "sopron_alias-232130",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Soproni KC||Debreceni EAC",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+1.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21170159/D19/E26748278/F19/I0/",
+  "kickoff_utc": "2026-09-25T17:00"
+ },
+ "result": {
+  "instruction_id": "sopron_alias-232130",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 39857,
+  "progress": {
+   "stage": "PREPARE_COMPLETE_EXECUTION",
+   "elapsed_ms": 39742,
+   "last_progress_at_ms": 1790288530495,
+   "instruction_id": "sopron_alias-232130",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790288490826
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 18,
+     "at_ms": 1790288490833
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 26,
+     "at_ms": 1790288490843,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 26,
+      "start_ts_ms": 1790288490835,
+      "end_elapsed_ms": 10224,
+      "end_ts_ms": 1790288501033,
+      "duration_ms": 10198,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3535,
+     "at_ms": 1790288490843
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4758,
+     "at_ms": 1790288490843
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5720,
+     "at_ms": 1790288490843
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 10099,
+     "at_ms": 1790288490843
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 10224,
+     "at_ms": 1790288501041,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 10224,
+      "start_ts_ms": 1790288501033,
+      "end_elapsed_ms": 17159,
+      "end_ts_ms": 1790288507968,
+      "duration_ms": 6935,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 10233,
+     "at_ms": 1790288501041
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 17009,
+     "at_ms": 1790288501041
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 17159,
+     "at_ms": 1790288507987,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 17159,
+      "start_ts_ms": 1790288507968,
+      "end_elapsed_ms": 17181,
+      "end_ts_ms": 1790288507990,
+      "duration_ms": 22,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 17181,
+     "at_ms": 1790288508010,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 17181,
+      "start_ts_ms": 1790288507990,
+      "end_elapsed_ms": 17203,
+      "end_ts_ms": 1790288508012,
+      "duration_ms": 22,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 17203,
+     "at_ms": 1790288508028,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 17203,
+      "start_ts_ms": 1790288508012,
+      "end_elapsed_ms": 17221,
+      "end_ts_ms": 1790288508029,
+      "duration_ms": 18,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 17221,
+     "at_ms": 1790288508044,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 17221,
+      "start_ts_ms": 1790288508029,
+      "end_elapsed_ms": 17808,
+      "end_ts_ms": 1790288508617,
+      "duration_ms": 587,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 17236,
+     "at_ms": 1790288508044
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 17808,
+     "at_ms": 1790288508628,
+     "timing": {
+      "stage": "ENTER_STAKE",
+      "start_elapsed_ms": 17808,
+      "start_ts_ms": 1790288508617,
+      "end_elapsed_ms": 34114,
+      "end_ts_ms": 1790288524925,
+      "duration_ms": 16306,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 18124,
+     "at_ms": 1790288508628
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 22182,
+     "at_ms": 1790288508628
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 22334,
+     "at_ms": 1790288508628
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 23823,
+     "at_ms": 1790288508628
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 27969,
+     "at_ms": 1790288508628
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 28082,
+     "at_ms": 1790288508628
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 28356,
+     "at_ms": 1790288508628
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 28639,
+     "at_ms": 1790288508628
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 28928,
+     "at_ms": 1790288508628
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 29618,
+     "at_ms": 1790288508628
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 33002,
+     "at_ms": 1790288508628
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 33135,
+     "at_ms": 1790288508628
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 34114,
+     "at_ms": 1790288524965,
+     "timing": {
+      "stage": "VERIFY_FINAL_STATE",
+      "start_elapsed_ms": 34114,
+      "start_ts_ms": 1790288524925,
+      "end_elapsed_ms": 39671,
+      "end_ts_ms": 1790288530480,
+      "duration_ms": 5557,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 34460,
+     "at_ms": 1790288524965
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 38667,
+     "at_ms": 1790288524965
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 38962,
+     "at_ms": 1790288524965
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 39473,
+     "at_ms": 1790288524965
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 39671,
+     "at_ms": 1790288530495,
+     "timing": {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "start_elapsed_ms": 39671,
+      "start_ts_ms": 1790288530480,
+      "end_elapsed_ms": 39742,
+      "end_ts_ms": 1790288530550,
+      "duration_ms": 71,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 39742,
+     "at_ms": 1790288530495
+    }
+   ]
+  },
+  "device_stage": "PREPARE_COMPLETE_EXECUTION",
+  "execution_count": 1,
+  "run_id": "c_RwOOr1qXmvAusK87jum9Oad7gcvQieREfB-FO46_SCI",
+  "fixture_name": "Sopron KC v DEAC Debreceni",
+  "home": "Sopron KC",
+  "away": "DEAC Debreceni",
+  "competition": "6 Hungary NB 1.A ' 25 Sep 18:00",
+  "selection": {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+1.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "DEAC Debreceni",
+   "bounds": [
+    301,
+    741,
+    344,
+    790
+   ]
+  },
+  "final_state": {
+   "home": "Sopron KC",
+   "away": "DEAC Debreceni",
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+1.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "ready_state": {
+   "fixture_home": "Sopron KC",
+   "fixture_away": "DEAC Debreceni",
+   "market": "SPREAD",
+   "selection_role": "AWAY",
+   "selection_name": "DEAC Debreceni",
+   "line": "+1.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Sopron KC v DEAC Debreceni",
+   "fixture_home": "Sopron KC",
+   "fixture_away": "DEAC Debreceni",
+   "market": "SPREAD",
+   "selection_role": "AWAY",
+   "selection_name": "DEAC Debreceni",
+   "line": "+1.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "minimum_price": "1.50",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    478,
+    1325,
+    604,
+    1347
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     478,
+     1325,
+     604,
+     1347
+    ],
+    "center_x": 541,
+    "center_y": 1336,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790288530547,
+   "validation_hash": "60fcb4a04d964541b1ff5656034c0b5d"
+  },
+  "wager_submitted": false,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "route": "event_link",
+  "held": true,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 26,
+    "start_ts_ms": 1790288490835,
+    "end_elapsed_ms": 10224,
+    "end_ts_ms": 1790288501033,
+    "duration_ms": 10198,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 10224,
+    "start_ts_ms": 1790288501033,
+    "end_elapsed_ms": 17159,
+    "end_ts_ms": 1790288507968,
+    "duration_ms": 6935,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 17159,
+    "start_ts_ms": 1790288507968,
+    "end_elapsed_ms": 17181,
+    "end_ts_ms": 1790288507990,
+    "duration_ms": 22,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 17181,
+    "start_ts_ms": 1790288507990,
+    "end_elapsed_ms": 17203,
+    "end_ts_ms": 1790288508012,
+    "duration_ms": 22,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 17203,
+    "start_ts_ms": 1790288508012,
+    "end_elapsed_ms": 17221,
+    "end_ts_ms": 1790288508029,
+    "duration_ms": 18,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 17221,
+    "start_ts_ms": 1790288508029,
+    "end_elapsed_ms": 17808,
+    "end_ts_ms": 1790288508617,
+    "duration_ms": 587,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 17808,
+    "start_ts_ms": 1790288508617,
+    "end_elapsed_ms": 34114,
+    "end_ts_ms": 1790288524925,
+    "duration_ms": 16306,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 34114,
+    "start_ts_ms": 1790288524925,
+    "end_elapsed_ms": 39671,
+    "end_ts_ms": 1790288530480,
+    "duration_ms": 5557,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 39671,
+    "start_ts_ms": 1790288530480,
+    "end_elapsed_ms": 39742,
+    "end_ts_ms": 1790288530550,
+    "duration_ms": 71,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "stake_field_state": "EMPTY"
+ },
+ "run": {
+  "run_id": "c_RwOOr1qXmvAusK87jum9Oad7gcvQieREfB-FO46_SCI",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790288490808,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790288490808
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 18,
+    "wall_ts_ms": 1790288490827
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 26,
+    "wall_ts_ms": 1790288490836
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3535,
+    "wall_ts_ms": 1790288494344
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 4758,
+    "wall_ts_ms": 1790288495569
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 5720,
+    "wall_ts_ms": 1790288496531
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 10099,
+    "wall_ts_ms": 1790288500910
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 10224,
+    "wall_ts_ms": 1790288501033
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 10233,
+    "wall_ts_ms": 1790288501042
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 17009,
+    "wall_ts_ms": 1790288507819
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 17159,
+    "wall_ts_ms": 1790288507968
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 17181,
+    "wall_ts_ms": 1790288507990
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 17203,
+    "wall_ts_ms": 1790288508012
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 17221,
+    "wall_ts_ms": 1790288508030
+   },
+   {
+    "effect": "gesture",
+    "target": "SPREAD / AWAY / +1.5 / 1.83",
+    "bounds": [
+     301,
+     741,
+     344,
+     790
+    ],
+    "elapsed_ms": 17236
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 17236,
+    "wall_ts_ms": 1790288508045
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 17808,
+    "wall_ts_ms": 1790288508617
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 18124,
+    "wall_ts_ms": 1790288508934
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 22182,
+    "wall_ts_ms": 1790288512992
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     20,
+     1327,
+     214,
+     1371
+    ],
+    "elapsed_ms": 22334
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 22334,
+    "wall_ts_ms": 1790288513143
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 23823,
+    "wall_ts_ms": 1790288514632
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 27969,
+    "wall_ts_ms": 1790288518780
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     329,
+     1229,
+     389,
+     1273
+    ],
+    "elapsed_ms": 28081
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 28082,
+    "wall_ts_ms": 1790288518890
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     88,
+     1229,
+     148,
+     1273
+    ],
+    "elapsed_ms": 28356
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 28356,
+    "wall_ts_ms": 1790288519165
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     88,
+     976,
+     148,
+     1020
+    ],
+    "elapsed_ms": 28639
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 28639,
+    "wall_ts_ms": 1790288519449
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     329,
+     1229,
+     389,
+     1273
+    ],
+    "elapsed_ms": 28928
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 28928,
+    "wall_ts_ms": 1790288519737
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 29618,
+    "wall_ts_ms": 1790288520427
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 33002,
+    "wall_ts_ms": 1790288523812
+   },
+   {
+    "effect": "gesture",
+    "target": "Done",
+    "bounds": [
+     311,
+     1333,
+     587,
+     1367
+    ],
+    "elapsed_ms": 33135
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 33135,
+    "wall_ts_ms": 1790288523944
+   },
+   {
+    "phase": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 34114,
+    "wall_ts_ms": 1790288524926
+   },
+   {
+    "phase": "CAPTURE_final",
+    "elapsed_ms": 34460,
+    "wall_ts_ms": 1790288525269
+   },
+   {
+    "phase": "CAPTURED_final",
+    "elapsed_ms": 38667,
+    "wall_ts_ms": 1790288529477
+   },
+   {
+    "effect": "region_ocr",
+    "bounds": [
+     540,
+     1170,
+     715,
+     1213
+    ],
+    "artifact": "s008_final_price.png"
+   },
+   {
+    "phase": "READ_REGION_final_price",
+    "elapsed_ms": 38962,
+    "wall_ts_ms": 1790288529771
+   },
+   {
+    "phase": "READ_REGION_DONE_final_price",
+    "elapsed_ms": 39473,
+    "wall_ts_ms": 1790288530281
+   },
+   {
+    "phase": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 39671,
+    "wall_ts_ms": 1790288530480
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 39742,
+    "wall_ts_ms": 1790288530551
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png",
+   "s003_markets.png",
+   "s004_betslip_pre_stake.png",
+   "s005_stake_ui.png",
+   "s006_stake_typed.png",
+   "s007_final.png",
+   "s008_final_price.png"
+  ],
+  "gesture_attempts": 7,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 26,
+    "start_ts_ms": 1790288490835,
+    "end_elapsed_ms": 10224,
+    "end_ts_ms": 1790288501033,
+    "duration_ms": 10198,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 10224,
+    "start_ts_ms": 1790288501033,
+    "end_elapsed_ms": 17159,
+    "end_ts_ms": 1790288507968,
+    "duration_ms": 6935,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 17159,
+    "start_ts_ms": 1790288507968,
+    "end_elapsed_ms": 17181,
+    "end_ts_ms": 1790288507990,
+    "duration_ms": 22,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 17181,
+    "start_ts_ms": 1790288507990,
+    "end_elapsed_ms": 17203,
+    "end_ts_ms": 1790288508012,
+    "duration_ms": 22,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 17203,
+    "start_ts_ms": 1790288508012,
+    "end_elapsed_ms": 17221,
+    "end_ts_ms": 1790288508029,
+    "duration_ms": 18,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 17221,
+    "start_ts_ms": 1790288508029,
+    "end_elapsed_ms": 17808,
+    "end_ts_ms": 1790288508617,
+    "duration_ms": 587,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 17808,
+    "start_ts_ms": 1790288508617,
+    "end_elapsed_ms": 34114,
+    "end_ts_ms": 1790288524925,
+    "duration_ms": 16306,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 34114,
+    "start_ts_ms": 1790288524925,
+    "end_elapsed_ms": 39671,
+    "end_ts_ms": 1790288530480,
+    "duration_ms": 5557,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 39671,
+    "start_ts_ms": 1790288530480,
+    "end_elapsed_ms": 39742,
+    "end_ts_ms": 1790288530550,
+    "duration_ms": 71,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "search_query": "Soproni KC",
+  "identity_home": "Soproni KC",
+  "expected_away": "Debreceni EAC",
+  "identity_away": "Debreceni EAC",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21170159/D19/E26748278/F19/I0/",
+  "current_stage": "PREPARE_COMPLETE_EXECUTION",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "6 Hungary NB 1.A ' 25 Sep 18:00",
+   "Sopron KC vs DEAC Debreceni V",
+   "BetBuilder Game Team Quarter H g"
+  ],
+  "kickoff_verified": "25 Sep 18:00",
+  "verified_fixture": {
+   "code": "fb602795",
+   "home": "Sopron KC",
+   "away": "DEAC Debreceni",
+   "fixture_name": "Sopron KC v DEAC Debreceni",
+   "exact_fixture_text": "Home Sopron KC\nAway DEAC Debreceni",
+   "competition": "6 Hungary NB 1.A ' 25 Sep 18:00",
+   "bounds": [
+    34,
+    265,
+    691,
+    440
+   ]
+  },
+  "fixture_home": "Sopron KC",
+  "fixture_away": "DEAC Debreceni",
+  "identity_verified_home": "Soproni KC",
+  "identity_verified_away": "Debreceni EAC",
+  "event_verified": true,
+  "fixture": {
+   "code": "fb602795",
+   "home": "Sopron KC",
+   "away": "DEAC Debreceni",
+   "fixture_name": "Sopron KC v DEAC Debreceni",
+   "exact_fixture_text": "Home Sopron KC\nAway DEAC Debreceni",
+   "competition": "6 Hungary NB 1.A ' 25 Sep 18:00",
+   "bounds": [
+    34,
+    265,
+    691,
+    440
+   ]
+  },
+  "route": "event_link",
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/-1.5@1.83",
+     "SPREAD/AWAY/+1.5@1.83",
+     "MONEYLINE/HOME/NONE@1.74",
+     "MONEYLINE/AWAY/NONE@1.95"
+    ],
+    "notes": [
+     "total cell unreadable"
+    ]
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/-1.5@1.83",
+    "SPREAD/AWAY/+1.5@1.83",
+    "MONEYLINE/HOME/NONE@1.74",
+    "MONEYLINE/AWAY/NONE@1.95"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-1.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sopron KC",
+    "bounds": [
+     301,
+     656,
+     344,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "+1.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "DEAC Debreceni",
+    "bounds": [
+     301,
+     741,
+     344,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "1.74",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sopron KC",
+    "bounds": [
+     604,
+     672,
+     649,
+     689
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "1.95",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "DEAC Debreceni",
+    "bounds": [
+     604,
+     757,
+     649,
+     774
+    ]
+   }
+  ],
+  "selection_role": "AWAY",
+  "selection_name": "DEAC Debreceni",
+  "selection": {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+1.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "DEAC Debreceni",
+   "bounds": [
+    301,
+    741,
+    344,
+    790
+   ]
+  },
+  "selection_preflight": "reused clean grid read",
+  "stake_keypad": {
+   "zero": [
+    359,
+    1251
+   ],
+   "dot": [
+    118,
+    1251
+   ]
+  },
+  "stake_field_state": "EMPTY",
+  "stake_check_typed": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "3010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "stake_entered": "0.10",
+  "slip_price_region": {
+   "read": "1.83",
+   "bounds": [
+    540,
+    1170,
+    715,
+    1213
+   ]
+  },
+  "stake_check_final": {
+   "ok": true,
+   "detail": "stake box unread; To Return exactly 0.10 x 1.83",
+   "stake_digits": "",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "ready_state": {
+   "fixture_home": "Sopron KC",
+   "fixture_away": "DEAC Debreceni",
+   "market": "SPREAD",
+   "selection_role": "AWAY",
+   "selection_name": "DEAC Debreceni",
+   "line": "+1.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "final_state": {
+   "home": "Sopron KC",
+   "away": "DEAC Debreceni",
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+1.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "confirmation_gate": "NONE",
+  "prepare_frame": "reused verified final frame",
+  "stake_check_prepare": {
+   "ok": true,
+   "detail": "stake box unread; To Return exactly 0.10 x 1.83",
+   "stake_digits": "",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Sopron KC v DEAC Debreceni",
+   "fixture_home": "Sopron KC",
+   "fixture_away": "DEAC Debreceni",
+   "market": "SPREAD",
+   "selection_role": "AWAY",
+   "selection_name": "DEAC Debreceni",
+   "line": "+1.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "minimum_price": "1.50",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    478,
+    1325,
+    604,
+    1347
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     478,
+     1325,
+     604,
+     1347
+    ],
+    "center_x": 541,
+    "center_y": 1336,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790288530547,
+   "validation_hash": "60fcb4a04d964541b1ff5656034c0b5d"
+  },
+  "prepared_gesture": {
+   "type": "tap",
+   "target": "Place Bet",
+   "package": "com.android.chrome",
+   "bounds": [
+    478,
+    1325,
+    604,
+    1347
+   ],
+   "center_x": 541,
+   "center_y": 1336,
+   "duration_ms": 100,
+   "dispatched": false
+  },
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "held": true,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 39742
+ },
+ "wall": 40.43687653541565
+}

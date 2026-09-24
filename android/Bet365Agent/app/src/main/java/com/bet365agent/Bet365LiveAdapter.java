@@ -491,8 +491,29 @@ final class Bet365LiveAdapter implements SiteAdapter {
         boolean homeOk = teamPositivelyIdentified(teams[0], identityHome);
         boolean awayOk = expectedAway.isEmpty() || teamPositivelyIdentified(teams[1], expectedAway);
         if (!homeOk || !awayOk) {
-            ui.put("direct_event_rejected", "teams " + teams[0] + " v " + teams[1] + " do not verify as " + identityHome + " v " + expectedAway);
-            return null;
+            // A1: the link opened a genuine event page, so its identity result is authoritative: NO Search
+            // fallback (Search uses the same names and cannot succeed; it cost ~3 min live). Kick-off agreeing
+            // with the alert and one team verified = a bookmaker naming variant -> ALIAS_REQUIRED (Bet365's
+            // names recorded as an alias candidate for review); anything else -> WRONG_EVENT.
+            String shownKo = EventPage.kickoffText(header);
+            String wantKo = kickoffUtc == null || kickoffUtc.isEmpty() ? null : EventPage.ukDisplay(kickoffUtc);
+            boolean kickoffAgrees = shownKo != null && wantKo != null && shownKo.equals(wantKo);
+            boolean oneTeamVerified = homeOk || (awayOk && !expectedAway.isEmpty());
+            // The unverified name must look like a variant of Bet365's (Soproni KC / Sopron KC), otherwise it is
+            // simply the wrong opponent (Kyoto v Bayern Munich against a Kyoto v Shiga Lakes page).
+            boolean variant = (homeOk || EventPage.namingVariant(teams[0], identityHome))
+                    && (awayOk || EventPage.namingVariant(teams[1], expectedAway));
+            ui.put("alias_candidate", CoordinatorAgent.object("feed_home", identityHome, "feed_away", expectedAway,
+                    "bet365_home", teams[0], "bet365_away", teams[1], "event_url", ui.record.optString("event_url"),
+                    "kickoff_shown", shownKo == null ? org.json.JSONObject.NULL : shownKo,
+                    "kickoff_expected", wantKo == null ? org.json.JSONObject.NULL : wantKo,
+                    "home_verified", homeOk, "away_verified", awayOk));
+            ui.put("route", "event_link");
+            ui.put("direct_event_rejected", "identity");
+            String detail = "Event link shows '" + teams[0] + " v " + teams[1] + "'; alert says '" + identityHome + " v " + expectedAway + "'";
+            if (kickoffAgrees && oneTeamVerified && variant)
+                throw new Failure("ALIAS_REQUIRED", detail + " (same kick-off " + shownKo + "; bookmaker naming variant needs an alias)");
+            throw new Failure("WRONG_EVENT", detail + (kickoffAgrees ? "" : "; kick-off " + shownKo + " vs alert " + wantKo));
         }
         String shown = EventPage.kickoffText(header);
         if (kickoffUtc != null && !kickoffUtc.isEmpty() && shown != null) {
@@ -1066,13 +1087,20 @@ final class Bet365LiveAdapter implements SiteAdapter {
         require(keys != null, "STAKE_REJECTED", "Stake keypad not located from OCR; not guessing key positions");
         ui.put("stake_keypad", CoordinatorAgent.object("zero", new JSONArray(java.util.Arrays.asList(keys.get('0')[0], keys.get('0')[1])),
                 "dot", new JSONArray(java.util.Arrays.asList(keys.get('.')[0], keys.get('.')[1]))));
-        // No blind pre-erase: the field opens with "£0.00" selected, so typing replaces it (real frames).
-        // The readback is the safety: if it does not show exactly this stake (stake digits AND To Return),
-        // the field is erased and typed ONCE more; a second mismatch erases and fails closed.
-        return typeAmount(keys, amount).thenCompose(v -> ui.delay(400)).thenCompose(v -> ui.capture("stake_typed")).thenCompose(first -> {
+        // A5: read the field first (StakePad.fieldState on the stake-pad frame already captured):
+        //   EMPTY   "Place Bet" without a To Return line = £0.00 selected  -> type directly (no clearing)
+        //   FILLED  a To Return line = an amount is present               -> clear only its characters, verify empty, type
+        //   UNKNOWN Place Bet not read                                      -> bounded safe clear, verify empty, type
+        // The readback stays the safety: the typed stake must show exactly (stake digits AND To Return) or it is
+        // cleared and typed ONCE more; a second mismatch clears and fails closed.
+        String fieldState = StakePad.fieldState(wordsOf(uiScreen));
+        ui.put("stake_field_state", fieldState);
+        CompletableFuture<Void> ready = "EMPTY".equals(fieldState) ? CompletableFuture.completedFuture(null)
+                : clearToVerifiedEmpty(uiScreen, keys, "FILLED".equals(fieldState) ? "known" : "unknown");
+        return ready.thenCompose(v -> typeAmount(keys, amount)).thenCompose(v -> ui.delay(400)).thenCompose(v -> ui.capture("stake_typed")).thenCompose(first -> {
             if (stakeVerified(first, amount, openedPrice, "stake_check_typed")) return CompletableFuture.completedFuture(first);
             ui.put("stake_retyped", true);
-            return erase(keys, 10).thenCompose(v -> typeAmount(keys, amount)).thenCompose(v -> ui.delay(400))
+            return clearToVerifiedEmpty(first, keys, "retype").thenCompose(v -> typeAmount(keys, amount)).thenCompose(v -> ui.delay(400))
                     .thenCompose(v -> ui.capture("stake_retyped")).thenCompose(second -> {
                         if (stakeVerified(second, amount, openedPrice, "stake_check_retyped")) return CompletableFuture.completedFuture(second);
                         return erase(keys, 10).<VisualScreen>thenCompose(v -> {
@@ -1088,6 +1116,40 @@ final class Bet365LiveAdapter implements SiteAdapter {
             }
             return ui.tap(doneTapRect(done), "Done");
         });
+    }
+
+    /**
+     * Clear the stake field to a VERIFIED empty state (no To Return on the Place Bet button). A known amount:
+     * backspace its character count + 1 separator; unknown: 10 backspaces. Then re-read; one more bounded
+     * clear if still filled; otherwise fail closed. Nothing is typed into an unverified field.
+     */
+    private CompletableFuture<Void> clearToVerifiedEmpty(VisualScreen frame, java.util.Map<Character, int[]> keys, String why) {
+        int count = 10;
+        if ("known".equals(why)) {
+            String read = stakeBoxDigits(frame);
+            count = read.isEmpty() ? 10 : Math.min(10, read.length() + 2);
+        }
+        ui.put("stake_clear", CoordinatorAgent.object("why", why, "backspaces", count));
+        return erase(keys, count).thenCompose(v -> ui.delay(300)).thenCompose(v -> ui.capture("stake_cleared")).thenCompose(s -> {
+            if (!"FILLED".equals(StakePad.fieldState(wordsOf(s)))) return CompletableFuture.<Void>completedFuture(null);
+            return erase(keys, 10).thenCompose(v -> ui.delay(300)).thenCompose(v -> ui.capture("stake_cleared_2")).thenAccept(s2 ->
+                    require(!"FILLED".equals(StakePad.fieldState(wordsOf(s2))), "STAKE_REJECTED",
+                            "Stake field still holds an amount after clearing; not typing"));
+        });
+    }
+
+    /** Digits of the amount in the stake box (left of Place Bet) on a plain frame; "" if unreadable. */
+    private static String stakeBoxDigits(VisualScreen s) {
+        VisualScreen.Line place = findPlaceBetLine(s);
+        if (place == null) return "";
+        StringBuilder b = new StringBuilder();
+        for (VisualScreen.Line line : s.lines) {
+            if (line.bounds.right >= Math.min(place.bounds.left - 30, 360)) continue;
+            if (line.bounds.top < place.bounds.top - 40 || line.bounds.top > place.bounds.bottom + 60) continue;
+            if (line.text.toLowerCase(Locale.US).contains("stake")) continue;
+            b.append(line.text.replaceAll("[^0-9]", ""));
+        }
+        return b.toString();
     }
 
     private CompletableFuture<Void> typeAmount(java.util.Map<Character, int[]> keys, String amount) {
@@ -1552,12 +1614,32 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     /** After a placement: Bet365 HOME is the clean idle state (never re-taps anything). */
-    private CompletableFuture<Void> returnHome() {
+    private CompletableFuture<Void> returnHome() { return return_home_verified(); }
+
+    /** Bet365 HOME as the clean idle state, VERIFIED on screen (nav bar visible, not on My Bets). Never taps. */
+    CompletableFuture<Void> return_home_verified() {
         ui.checkpoint("RETURN_HOME");
-        return ui.open(HOME_URL).thenCompose(v -> ui.delay(1200)).thenAccept(v -> {
-            ui.put("returned_home", true);
+        return ui.open(HOME_URL).thenCompose(v -> homeVerified(1)).thenAccept(ok -> {
+            ui.put("returned_home", ok);
+            ui.put("home_verified", ok);
             ui.put("t_home_ms", System.currentTimeMillis());
-        }).exceptionally(e -> { ui.put("returned_home", false); return null; });
+        }).exceptionally(e -> { ui.put("returned_home", false); ui.put("home_verified", false); return null; });
+    }
+
+    /** HOME is verified when the address bar reads #/HO/ (or the Search bar shows) and nothing reads #/MB;
+     *  the page settles over a few seconds, so up to three captures. Nothing is tapped. */
+    private CompletableFuture<Boolean> homeVerified(int attempt) {
+        return ui.delay(attempt == 1 ? 1500 : 1200).thenCompose(v -> ui.capture("home_verify")).thenCompose(s -> {
+            boolean homeUrl = false, myBets = false;
+            for (VisualScreen.Line line : s.lines) {
+                String t = line.text;
+                if (t.contains("#/HO")) homeUrl = true;
+                if (t.contains("#/MB")) myBets = true;
+            }
+            boolean ok = !myBets && (homeUrl || visible(s, "Search"));
+            if (ok || attempt >= 3) return CompletableFuture.completedFuture(ok);
+            return homeVerified(attempt + 1);
+        });
     }
 
     private static org.json.JSONObject placement(String outcome, String detail, String reference, String potentialReturn,

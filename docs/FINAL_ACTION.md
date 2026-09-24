@@ -36,6 +36,21 @@ READY -> APPROVED (auto_approve, within limits)
   directly. The page must verify: sport from the link (B18 basketball, B1 football), both teams from
   the header (explicit aliases only), kick-off in UK time = the alert's UTC time (mismatch = WRONG_EVENT).
   Search is only the fallback (no link, invalid link, teams not verified).
+* **Event-link identity is authoritative (A1).** If the link opens a genuine event page and the strict
+  team check fails, the run stops at once: `ALIAS_REQUIRED` when the kick-off agrees, one team verified
+  and the other name looks like a variant (Soproni KC / Sopron KC; Bet365's names are audited as an
+  `ALIAS_CANDIDATE`), otherwise `WRONG_EVENT`. No Search fallback: Search uses the same names. Search
+  runs only with no link, or when the link does not open an event page. Bet365's "no longer available /
+  betting has closed" page stops as `SUSPENDED` (a dead link shows the same page; a stale feed link has
+  never been observed, a closed event has, so the fast stop wins).
+* **My Bets never keeps the phone (A2).** Every My Bets read ends with a verified return to Bet365 HOME.
+  Live placement work outranks routine checks (claimed-placement verification, settlement); only a
+  PLACEMENT_UNKNOWN resolution takes the phone ahead of queued live work.
+* **Stake field (A5).** The field is read first: EMPTY (no To Return on the button) is typed into directly;
+  FILLED is cleared by its own character count and re-read; UNKNOWN gets a bounded clear and re-read.
+  Nothing is typed into an unverified field; the exact stake + To Return readback is unchanged.
+* **Timings (A4).** Each instruction records `queue_wait_ms`, `device_started_at`, `device_execution_ms`
+  (summed over its phone runs) and `terminal_at`, with `device_stage` / `failure_reason` for refusals.
 * **Held slip.** Nothing is rebuilt after approval: if the held slip changed or disappeared the
   pre-tap check fails closed (e.g. PRICE_CHANGED, LINE_CHANGED) and the slip is cleared. While a bet
   is held the phone does nothing else (no other alerts, no My Bets checks). Expiry, rejection, pause

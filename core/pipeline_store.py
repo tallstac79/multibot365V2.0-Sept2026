@@ -18,7 +18,7 @@ from pathlib import Path
 
 from core.lifecycle import State, allowed, TERMINAL
 
-SCHEMA_VERSION = 3  # 2: intake status PARSED_PARTIAL; 3: final action (approval, placement, bets)
+SCHEMA_VERSION = 4  # 2: intake status PARSED_PARTIAL; 3: final action (approval, placement, bets); 4: queue/device timings
 SCHEMA = '''
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS intake_messages (
@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS instructions (
     dispatch_attempts INTEGER NOT NULL DEFAULT 0,
     updated_at TEXT NOT NULL,
     execution_mode TEXT, approval_requested_at TEXT, approved_at TEXT, approved_by TEXT,
-    placement_unknown_at TEXT, placement TEXT, bet_reference TEXT
+    placement_unknown_at TEXT, placement TEXT, bet_reference TEXT,
+    device_started_at TEXT, terminal_at TEXT, queue_wait_ms INTEGER, device_execution_ms INTEGER
 );
 CREATE INDEX IF NOT EXISTS instruction_state ON instructions(state, queued_at);
 CREATE INDEX IF NOT EXISTS instruction_selection ON instructions(origin, selection_key);
@@ -129,6 +130,10 @@ CREATE TABLE IF NOT EXISTS controls (
     key TEXT PRIMARY KEY, value TEXT NOT NULL, updated_at TEXT NOT NULL, updated_by TEXT
 );
 '''
+# v4 (A4): per-instruction timing. queue_wait_ms = queued_at -> first device start; device_execution_ms = phone
+# time summed over the instruction's device runs (verification + placement); terminal_at = terminal state time.
+V4_INSTRUCTION_COLUMNS = (('device_started_at', 'TEXT'), ('terminal_at', 'TEXT'), ('queue_wait_ms', 'INTEGER'),
+                          ('device_execution_ms', 'INTEGER'))
 V3_INSTRUCTION_COLUMNS = ('execution_mode', 'approval_requested_at', 'approved_at', 'approved_by',
                           'placement_unknown_at', 'placement', 'bet_reference')
 
@@ -167,6 +172,13 @@ def _dump(value):
     return None if value is None else json.dumps(value, sort_keys=True, default=str)
 
 
+def _ms_between(start, end):
+    try:
+        return int((datetime.fromisoformat(end) - datetime.fromisoformat(start.replace('Z', '+00:00'))).total_seconds() * 1000)
+    except (TypeError, ValueError, AttributeError):
+        return None
+
+
 class Store:
     def __init__(self, path, clock=utcnow):
         self.path = Path(path)
@@ -184,6 +196,25 @@ class Store:
     def _migrate(cls, db):
         cls._migrate_v2(db)
         cls._migrate_v3(db)
+        cls._migrate_v4(db)
+
+    @staticmethod
+    def _migrate_v4(db):
+        """v3 -> v4: queue/device timing columns on instructions."""
+        if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='instructions'").fetchone() is None:
+            return
+        present = {r[1] for r in db.execute('PRAGMA table_info(instructions)')}
+        missing = [(c, t) for c, t in V4_INSTRUCTION_COLUMNS if c not in present]
+        if not missing:
+            return
+        db.execute('BEGIN IMMEDIATE')
+        try:
+            for column, kind in missing:
+                db.execute(f'ALTER TABLE instructions ADD COLUMN {column} {kind}')
+            db.execute('COMMIT')
+        except Exception:
+            db.execute('ROLLBACK')
+            raise
 
     @staticmethod
     def _migrate_v3(db):
@@ -334,8 +365,16 @@ class Store:
         values['state'], values['updated_at'] = target.value, at
         if target in STAGE_COLUMNS:
             values[STAGE_COLUMNS[target]] = at
+        # A4 timings: first device start ends the queue wait; every device run adds to device_execution_ms.
+        if target == State.DEVICE_ACTIVE and not row['device_started_at']:
+            values['device_started_at'] = at
+            values['queue_wait_ms'] = _ms_between(row['queued_at'], at)
+        if current in (State.DEVICE_ACTIVE.value, State.DISPATCHED.value) and target != State.DEVICE_ACTIVE:
+            spent = _ms_between(row['device_active_at'] or row['dispatched_at'], at)
+            if spent is not None:
+                values['device_execution_ms'] = (row['device_execution_ms'] or 0) + spent
         if target in TERMINAL:
-            values.update(terminal=1, completed_at=at)
+            values.update(terminal=1, completed_at=at, terminal_at=at)
             if reason and 'failure_reason' not in values and target != State.COMPLETED:
                 values['failure_reason'] = reason
             try:

@@ -135,6 +135,25 @@ final class StakePad {
         return ocr;
     }
 
+    /**
+     * Stake field state from a betslip/stake-pad frame. EMPTY: "Place Bet" without a To Return line (the field
+     * shows the selected £0.00; real frames OCR that box as noise such as "15-", so the button's To Return line
+     * is the reliable signal). FILLED: a To Return line under Place Bet (an amount is present). UNKNOWN: the
+     * Place Bet button was not read.
+     */
+    static String fieldState(List<GameLinesParser.Word> words) {
+        GameLinesParser.Word place = null;
+        for (GameLinesParser.Word w : words) if (w.text.equalsIgnoreCase("Place")) {
+            for (GameLinesParser.Word b : words)
+                if (b.text.equalsIgnoreCase("Bet") && Math.abs(b.cy() - w.cy()) <= 10 && b.left > w.right && b.left - w.right < 40) place = w;
+            if (place != null) break;
+        }
+        if (place == null) return "UNKNOWN";
+        for (GameLinesParser.Word w : words)
+            if (isReturnWord(w.text) && w.cy() > place.cy() && w.cy() < place.bottom + 60 && w.left > place.left - 60) return "FILLED";
+        return "EMPTY";
+    }
+
     /** OCR digits equal the expected digits, or have exactly one stray leading character (a misread £). */
     static boolean agrees(String ocr, String want) {
         return ocr.equals(want) || (ocr.length() == want.length() + 1 && ocr.endsWith(want));

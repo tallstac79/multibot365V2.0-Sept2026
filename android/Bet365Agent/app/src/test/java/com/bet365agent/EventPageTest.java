@@ -41,6 +41,18 @@ public class EventPageTest {
         assertFalse(EventPage.closed(Arrays.asList("Hapoel Tel Aviv -8.0", "Selection Suspended")));   // not the page message
     }
 
+    @Test public void namingVariantsAreLabelledButWrongOpponentsAreNot() {
+        assertTrue(EventPage.namingVariant("Sopron KC", "Soproni KC"));
+        assertTrue(EventPage.namingVariant("DEAC Debreceni", "Debreceni EAC"));
+        assertTrue(EventPage.namingVariant("Shiga Lakes", "Shiga Lake Stars"));
+        assertTrue(EventPage.namingVariant("Berck/Rang du Fliers", "Berck Fliers Range"));
+        assertTrue(EventPage.namingVariant("Val de Seine", "Valdeseine"));
+        assertTrue(EventPage.namingVariant("Hiroshima Dragon\uFB02ies", "Hiroshima Dragonflies"));
+        assertFalse(EventPage.namingVariant("Shiga Lakes", "Bayern Munich"));
+        assertFalse(EventPage.namingVariant("Pays Salonais Basket 13", "Mogi Das Cruzes"));
+        assertFalse(EventPage.namingVariant("Basket Club A", "Basket Club B"));      // generic tokens do not count
+    }
+
     @Test public void kickoffIsComparedInUkTime() {
         assertEquals("25 Sep 10:35", EventPage.kickoffText(Arrays.asList("Japan B League 1 * 25 Sep 10:35")));
         assertEquals("25 Sep 10:35", EventPage.ukDisplay("2026-09-25T09:35"));     // BST = UTC+1

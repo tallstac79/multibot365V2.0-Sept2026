@@ -1,0 +1,160 @@
+{
+ "payload": {
+  "instruction_id": "dead_link-232757",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Kyoto Hannaryz||Shiga Lake Stars",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-4.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E99999999/F19/I0/",
+  "kickoff_utc": "2026-09-25T09:35"
+ },
+ "result": {
+  "instruction_id": "dead_link-232757",
+  "status": "FAIL",
+  "stage": "SUSPENDED",
+  "detail": "Bet365 event page: betting has closed or been suspended (no search fallback)",
+  "duration_ms": 5512,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 5350,
+   "last_progress_at_ms": 1790288877893,
+   "instruction_id": "dead_link-232757",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790288877865
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 27,
+     "at_ms": 1790288877877
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 39,
+     "at_ms": 1790288877893,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 39,
+      "start_ts_ms": 1790288877879,
+      "end_elapsed_ms": 5350,
+      "end_ts_ms": 1790288883189,
+      "duration_ms": 5311,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3484,
+     "at_ms": 1790288877893
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5211,
+     "at_ms": 1790288877893
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5350,
+     "at_ms": 1790288877893
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c__L3Pud-zKcTU1pYo6nbvrqO_skdGzMmXsAY7ttWj228",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Bet365 event page: betting has closed or been suspended (no search fallback)",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 39,
+    "start_ts_ms": 1790288877879,
+    "end_elapsed_ms": 5350,
+    "end_ts_ms": 1790288883189,
+    "duration_ms": 5311,
+    "status": "fail",
+    "retries": 0
+   }
+  ]
+ },
+ "run": {
+  "run_id": "c__L3Pud-zKcTU1pYo6nbvrqO_skdGzMmXsAY7ttWj228",
+  "adapter": "live_bet365",
+  "status": "SUSPENDED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790288877839,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790288877839
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 27,
+    "wall_ts_ms": 1790288877867
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 39,
+    "wall_ts_ms": 1790288877880
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3484,
+    "wall_ts_ms": 1790288881325
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5211,
+    "wall_ts_ms": 1790288883052
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 5350,
+    "wall_ts_ms": 1790288883190
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 39,
+    "start_ts_ms": 1790288877879,
+    "end_elapsed_ms": 5350,
+    "end_ts_ms": 1790288883189,
+    "duration_ms": 5311,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Kyoto Hannaryz",
+  "identity_home": "Kyoto Hannaryz",
+  "expected_away": "Shiga Lake Stars",
+  "identity_away": "Shiga Lake Stars",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E99999999/F19/I0/",
+  "current_stage": "OPEN_HOME",
+  "session": "AUTHENTICATED",
+  "direct_event_closed": true,
+  "detail": "Bet365 event page: betting has closed or been suspended (no search fallback)",
+  "duration_ms": 5350
+ },
+ "wall": 5.667721748352051
+}

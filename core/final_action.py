@@ -199,8 +199,11 @@ class FinalAction:
         return dict(instruction_id=device_instruction_id, action='MY_BETS', adapter=self.s.adapter, scenario='live',
                     view=view, timeout_ms=self.s.reconcile_timeout_ms)
 
-    def next_reconciliation(self):
-        """(purpose, instruction_id or None, view, attempt) that is due now, most urgent first."""
+    def next_reconciliation(self, urgent_only=False):
+        """(purpose, instruction_id or None, view, attempt) that is due now, most urgent first.
+
+        urgent_only (A2): live placement work is waiting, so only a PLACEMENT_UNKNOWN resolution (bet status
+        UNKNOWN) may take the phone; verification of claimed placements and settlement wait."""
         now = self.p.clock()
         with self.p.store.connection() as db:
             candidates = db.execute(
@@ -212,22 +215,24 @@ class FinalAction:
             for bet in candidates:
                 if bet['attempts'] >= self.s.reconcile_max_attempts:
                     continue
+                if urgent_only and bet['status'] != UNKNOWN:
+                    continue
                 anchor = datetime.fromisoformat(bet['last_at'] or bet['placed_at'])
                 wait = self.s.reconcile_delay_seconds * (1 if bet['attempts'] == 0 else 2)
                 if (now - anchor).total_seconds() >= wait:
                     return VERIFY, bet['instruction_id'], 'OPEN', bet['attempts'] + 1
-            if db.execute("SELECT 1 FROM bets WHERE status=?", (OPEN,)).fetchone():
+            if not urgent_only and db.execute("SELECT 1 FROM bets WHERE status=?", (OPEN,)).fetchone():
                 last = db.execute("SELECT MAX(requested_at) FROM reconciliations WHERE purpose=?", (SETTLE,)).fetchone()[0]
                 if last is None or (now - datetime.fromisoformat(last)).total_seconds() >= self.s.settlement_poll_minutes * 60:
                     count = db.execute("SELECT COUNT(*) FROM reconciliations WHERE purpose=?", (SETTLE,)).fetchone()[0]
                     return SETTLE, None, 'SETTLED', count + 1
         return None
 
-    def schedule(self, gateway, health, device_free):
+    def schedule(self, gateway, health, device_free, urgent_only=False):
         """Submit one due My Bets check if the phone is free. Returns True if submitted."""
         if not device_free or health is None or health.get('healthy') is not True or health.get('current_instruction'):
             return False
-        due = self.next_reconciliation()
+        due = self.next_reconciliation(urgent_only)
         if due is None:
             return False
         purpose, instruction_id, view, attempt = due

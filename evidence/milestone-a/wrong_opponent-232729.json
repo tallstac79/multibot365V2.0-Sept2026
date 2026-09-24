@@ -1,0 +1,212 @@
+{
+ "payload": {
+  "instruction_id": "wrong_opponent-232729",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Kyoto Hannaryz||Bayern Munich",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-4.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737823/F19/I0/",
+  "kickoff_utc": "2026-09-25T09:35"
+ },
+ "result": {
+  "instruction_id": "wrong_opponent-232729",
+  "status": "FAIL",
+  "stage": "WRONG_EVENT",
+  "detail": "Event link shows 'Kyoto Hannaryz v Shiga Lakes'; alert says 'Kyoto Hannaryz v Bayern Munich'",
+  "duration_ms": 11603,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 11095,
+   "last_progress_at_ms": 1790288850302,
+   "instruction_id": "wrong_opponent-232729",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790288850246
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 69,
+     "at_ms": 1790288850282
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 78,
+     "at_ms": 1790288850302,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 78,
+      "start_ts_ms": 1790288850284,
+      "end_elapsed_ms": 11094,
+      "end_ts_ms": 1790288861301,
+      "duration_ms": 11016,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3555,
+     "at_ms": 1790288850302
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 6736,
+     "at_ms": 1790288850302
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 7727,
+     "at_ms": 1790288850302
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 10861,
+     "at_ms": 1790288850302
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 11095,
+     "at_ms": 1790288850302
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_MTozhDXseRtKrE0rKo1jRAIQ0Z7bc-SON0P5y9k8yzQ",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'Kyoto Hannaryz v Shiga Lakes'; alert says 'Kyoto Hannaryz v Bayern Munich'",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 78,
+    "start_ts_ms": 1790288850284,
+    "end_elapsed_ms": 11094,
+    "end_ts_ms": 1790288861301,
+    "duration_ms": 11016,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "alias_candidate": {
+   "feed_home": "Kyoto Hannaryz",
+   "feed_away": "Bayern Munich",
+   "bet365_home": "Kyoto Hannaryz",
+   "bet365_away": "Shiga Lakes",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737823/F19/I0/",
+   "kickoff_shown": "25 Sep 10:35",
+   "kickoff_expected": "25 Sep 10:35",
+   "home_verified": true,
+   "away_verified": false
+  },
+  "direct_event_rejected": "identity"
+ },
+ "run": {
+  "run_id": "c_MTozhDXseRtKrE0rKo1jRAIQ0Z7bc-SON0P5y9k8yzQ",
+  "adapter": "live_bet365",
+  "status": "WRONG_EVENT",
+  "phase": "FINISHED",
+  "started_at_ms": 1790288850207,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790288850207
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 69,
+    "wall_ts_ms": 1790288850276
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 78,
+    "wall_ts_ms": 1790288850285
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3555,
+    "wall_ts_ms": 1790288853762
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 6736,
+    "wall_ts_ms": 1790288856945
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 7727,
+    "wall_ts_ms": 1790288857936
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 10861,
+    "wall_ts_ms": 1790288861070
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 11095,
+    "wall_ts_ms": 1790288861301
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 78,
+    "start_ts_ms": 1790288850284,
+    "end_elapsed_ms": 11094,
+    "end_ts_ms": 1790288861301,
+    "duration_ms": 11016,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Kyoto Hannaryz",
+  "identity_home": "Kyoto Hannaryz",
+  "expected_away": "Bayern Munich",
+  "identity_away": "Bayern Munich",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737823/F19/I0/",
+  "current_stage": "OPEN_HOME",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "6 Japan B League 1 - 25 Sep 10:35",
+   "Kyoto Hannaryz vs Shiga Lakes v",
+   "BetBuilder Game Team Quarter H: g"
+  ],
+  "alias_candidate": {
+   "feed_home": "Kyoto Hannaryz",
+   "feed_away": "Bayern Munich",
+   "bet365_home": "Kyoto Hannaryz",
+   "bet365_away": "Shiga Lakes",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737823/F19/I0/",
+   "kickoff_shown": "25 Sep 10:35",
+   "kickoff_expected": "25 Sep 10:35",
+   "home_verified": true,
+   "away_verified": false
+  },
+  "route": "event_link",
+  "direct_event_rejected": "identity",
+  "detail": "Event link shows 'Kyoto Hannaryz v Shiga Lakes'; alert says 'Kyoto Hannaryz v Bayern Munich'",
+  "duration_ms": 11094
+ },
+ "wall": 11.862706899642944
+}

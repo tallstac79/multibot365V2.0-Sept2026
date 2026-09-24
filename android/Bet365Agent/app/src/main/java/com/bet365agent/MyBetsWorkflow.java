@@ -1,6 +1,7 @@
 package com.bet365agent;
 
-/** Read-only reconciliation: open live home, confirm the session, read My Bets (OPEN or SETTLED). */
+/** Read-only reconciliation: open live home, confirm the session, read My Bets (OPEN or SETTLED), then
+ *  return to Bet365 HOME (verified on screen) so the phone is never left sitting in My Bets (A2). */
 final class MyBetsWorkflow {
     private final VisualSession session;
     private final Bet365LiveAdapter adapter;
@@ -13,11 +14,17 @@ final class MyBetsWorkflow {
         adapter.open_home()
             .thenCompose(v -> { session.checkpoint("ENSURE_SESSION"); return adapter.ensure_session(); })
             .thenCompose(v -> adapter.read_my_bets(view))
-            .whenComplete((myBets, error) -> {
+            .handle((myBets, error) -> new Object[] {myBets, error})
+            .thenCompose(pair -> adapter.return_home_verified().handle((v, e) -> pair))
+            .thenAccept(pair -> {
+                org.json.JSONObject myBets = (org.json.JSONObject) pair[0];
+                Throwable error = (Throwable) pair[1];
+                boolean home = session.record.optBoolean("home_verified", false);
                 if (error == null) {
                     session.put("my_bets", myBets);
                     session.put("verification_detail", "My Bets " + view + " read: " + myBets.optJSONArray("lines").length()
-                            + " lines over " + myBets.optJSONArray("frames").length() + " frames; no bet controls touched");
+                            + " lines over " + myBets.optJSONArray("frames").length() + " frames; no bet controls touched; HOME "
+                            + (home ? "verified" : "NOT verified"));
                     session.finish("PASS", "MY_BETS");
                 } else {
                     Throwable cause = error; while (cause.getCause() != null) cause = cause.getCause();

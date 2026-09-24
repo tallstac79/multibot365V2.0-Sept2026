@@ -384,10 +384,18 @@ class Pipeline:
         device_free = not self.store.instructions_in([State.DISPATCHED, State.DEVICE_ACTIVE])
         held = self.held_instruction()
         # A held bet owns the phone: no My Bets checks (they navigate away) until it is placed or released.
-        if not held and self.final.schedule(gateway, health, device_free and not self.final.device_busy()):
+        # A2: live placement work outranks routine My Bets checks; only PLACEMENT_UNKNOWN resolution is urgent.
+        if not held and self.final.schedule(gateway, health, device_free and not self.final.device_busy(),
+                                            urgent_only=self._live_work_pending()):
             return
         if not self.final.device_busy():
             self._dispatch_queued(gateway, health)
+
+    def _live_work_pending(self):
+        """Live placement work that can actually reach the phone (dispatch on, not paused)."""
+        if not self.settings.dispatch_enabled or self.final.paused():
+            return False
+        return bool(self.store.instructions_in([State.QUEUED, State.APPROVED]))
 
     ONE_SHOT_KEY = 'final_action_one_shot'
 
@@ -665,6 +673,9 @@ class Pipeline:
                 if placement is not None:
                     fields['placement'] = placement
             applied = self.store.transition(db, instruction_id, state, actor=source, at=iso(now), reason=reason, **fields)
+            if applied and isinstance(result.get('alias_candidate'), dict):
+                # A1: the event link opened the right event but a team name differs: evidence for an alias review.
+                self.store.audit(db, 'ALIAS_CANDIDATE', result['alias_candidate'], instruction_id)
             if applied and state == State.READY and row['execution_mode'] == 'hold':
                 # The verified bet is now on the phone's slip: it owns the phone until placed or released.
                 self.store.set_control(HELD_KEY, dict(instruction_id=instruction_id, since=iso(now)), by='dispatcher', db=db)
