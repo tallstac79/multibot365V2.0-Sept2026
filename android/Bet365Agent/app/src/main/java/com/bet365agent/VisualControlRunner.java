@@ -98,7 +98,7 @@ final class VisualControlRunner {
                                 copy = bitmap.copy(Bitmap.Config.ARGB_8888, false);
                                 bitmap.recycle();
                                 result.getHardwareBuffer().close();
-                                Ocr ocr = recognize(copy);
+                                Ocr ocr = recognizeLive(copy, TessBaseAPI.PageSegMode.PSM_AUTO);
                                 main.post(() -> {
                                     try { callback.accept(ocr); }
                                     catch (Exception ignored) {}
@@ -249,6 +249,10 @@ final class VisualControlRunner {
     void tableFrame(String id, String phase, Consumer<Ocr> next) {
         capture(id, phase, 0, bitmap -> process(id, bitmap, phase, -1, next));
     }
+    /** Second-opinion frame: Tesseract's enhanced per-word pass regardless of the engine flag (except pure fast). */
+    void enhancedFrame(String id, String phase, Consumer<Ocr> next) {
+        capture(id, phase, 0, bitmap -> process(id, bitmap, phase, -3, next));
+    }
     /** Enhanced table OCR of the screen below y=top only (the betslip); word rects are full-screen coordinates. */
     void tableFrameBelow(String id, String phase, int top, Consumer<Ocr> next) {
         capture(id, phase, 0, bitmap -> {
@@ -268,7 +272,7 @@ final class VisualControlRunner {
             if (!crop.intersect(0, 0, bitmap.getWidth(), bitmap.getHeight())) { bitmap.recycle(); finish(id,"INTERNAL_ERROR","Invalid OCR region"); return; }
             Bitmap region = Bitmap.createBitmap(bitmap, crop.left, crop.top, crop.width(), crop.height());
             if (region != bitmap) bitmap.recycle();
-            process(id, region, phase, numeric ? -2 : TessBaseAPI.PageSegMode.PSM_SINGLE_LINE, next);
+            process(id, region, phase, numeric ? -2 : -4, next);
         });
     }
 
@@ -285,7 +289,7 @@ final class VisualControlRunner {
                 try (FileOutputStream out = new FileOutputStream(new File(dir, phase + ".png"))) {
                     if (!bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)) throw new IllegalStateException("PNG encode failed");
                 }
-                Ocr result = segmentation == -1 ? recognizeLines(bitmap) : segmentation == -2 ? recognize(bitmap, TessBaseAPI.PageSegMode.PSM_SINGLE_LINE, "0123456789.+-") : recognize(bitmap, segmentation);
+                Ocr result = recognizeLive(bitmap, segmentation);
                 if (flow != null) flow.analyze(bitmap, result, phase);
                 try (FileOutputStream out = new FileOutputStream(new File(dir, phase + ".txt"))) {
                     out.write(result.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
@@ -298,6 +302,87 @@ final class VisualControlRunner {
                 });
             } catch (Exception e) { main.post(() -> finish(id, "FAIL", "OCR/evidence: " + e)); }
             finally { bitmap.recycle(); }
+        });
+    }
+
+    /**
+     * OCR engine selection (Milestone C3). "legacy" = Tesseract everywhere (the proven path); "fast" = the fast
+     * on-device engine for every read; "hybrid" = fast for plain reads, Tesseract's enhanced per-word pass for
+     * table/region re-reads. Read from the phone's config on every capture, so rollback is immediate.
+     */
+    String engine() { return CoordinatorConfig.ocrEngine(service); }
+
+    /** Benchmark / A-B entry (OCR_BENCH): OCR a stored frame with the named engine (legacy: table = enhanced path). */
+    Ocr benchOcr(Bitmap bitmap, boolean table, String engine) throws Exception {
+        if ("legacy".equals(engine)) return table ? recognizeLines(bitmap) : recognize(bitmap);
+        return fastOcr(bitmap);
+    }
+
+    private com.google.mlkit.vision.text.TextRecognizer fastRecognizer;
+    private volatile String fastEngineError;
+
+    /**
+     * The fast engine (Milestone C2): ML Kit on-device Latin text recognition, model bundled in the APK.
+     * Word-level elements with bounding boxes map straight onto the Ocr word/rect shape every parser uses.
+     * Must not run on the main thread (waits on the recogniser task).
+     */
+    Ocr fastOcr(Bitmap bitmap) throws Exception {
+        if (Looper.myLooper() == Looper.getMainLooper()) throw new IllegalStateException("fast OCR on main thread");
+        if (fastRecognizer == null)
+            fastRecognizer = com.google.mlkit.vision.text.TextRecognition.getClient(
+                    com.google.mlkit.vision.text.latin.TextRecognizerOptions.DEFAULT_OPTIONS);
+        com.google.mlkit.vision.common.InputImage image = com.google.mlkit.vision.common.InputImage.fromBitmap(bitmap, 0);
+        com.google.mlkit.vision.text.Text text = com.google.android.gms.tasks.Tasks.await(fastRecognizer.process(image), 20, java.util.concurrent.TimeUnit.SECONDS);
+        Ocr result = new Ocr(bitmap.getWidth(), bitmap.getHeight());
+        for (com.google.mlkit.vision.text.Text.TextBlock block : text.getTextBlocks())
+            for (com.google.mlkit.vision.text.Text.Line line : block.getLines())
+                for (com.google.mlkit.vision.text.Text.Element element : line.getElements()) {
+                    Rect box = element.getBoundingBox();
+                    String word = element.getText() == null ? "" : element.getText().trim();
+                    if (box == null || box.isEmpty() || word.isEmpty()) continue;
+                    result.words.add(word); result.rects.add(new Rect(box));
+                }
+        return result;
+    }
+
+    /**
+     * Live-path engine dispatch (Milestone C5, from the C4 A/B on 68 real frames):
+     *   plain / table (-1) reads : fast (ML Kit) under fast and hybrid; Tesseract (enhanced for tables) under legacy
+     *   numeric region (-2)      : Tesseract with a numeric alphabet under every engine (targeted price/amount read)
+     *   enhanced re-read (-3)    : Tesseract enhanced per-word pass (the second opinion after a failed readback);
+     *                              only the pure "fast" engine uses ML Kit here too
+     *   single-line region (-4)  : Tesseract (targeted legacy re-read, e.g. the receipt's Bet Ref line); pure fast = ML Kit
+     * A fast-engine failure never fails a run: that frame falls back to Tesseract and the error is recorded for /health.
+     */
+    private Ocr recognizeLive(Bitmap bitmap, int segmentation) throws Exception {
+        String engine = engine();
+        if (segmentation == -2) return recognize(bitmap, TessBaseAPI.PageSegMode.PSM_SINGLE_LINE, "0123456789.+-");
+        boolean pureFast = "fast".equals(engine);
+        if (segmentation == -3) return pureFast ? fastOrTesseract(bitmap, -1) : recognizeLines(bitmap);
+        if (segmentation == -4) {
+            if (pureFast) return fastOrTesseract(bitmap, TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
+            // small receipt text: the same 3x upscale + contrast pass the table re-read uses (native size read nothing)
+            Bitmap big = enhance(bitmap);
+            try { return recognize(big, TessBaseAPI.PageSegMode.PSM_SINGLE_LINE); } finally { big.recycle(); }
+        }
+        if (pureFast || "hybrid".equals(engine)) return fastOrTesseract(bitmap, segmentation);
+        return segmentation == -1 ? recognizeLines(bitmap) : recognize(bitmap, segmentation);
+    }
+
+    private Ocr fastOrTesseract(Bitmap bitmap, int segmentation) throws Exception {
+        try { return fastOcr(bitmap); }
+        catch (Exception e) { fastEngineError = e.getClass().getSimpleName() + ": " + e.getMessage(); log("FAST_OCR_FALLBACK " + fastEngineError); }
+        return segmentation == -1 ? recognizeLines(bitmap) : recognize(bitmap, segmentation);
+    }
+
+    String fastEngineError() { return fastEngineError; }
+
+    /** Warm the fast recogniser (first call loads the model) so the first live capture pays nothing. */
+    void warmFastEngine() {
+        if ("legacy".equals(engine())) return;
+        worker.execute(() -> {
+            Bitmap tiny = Bitmap.createBitmap(64, 64, Bitmap.Config.ARGB_8888);
+            try { fastOcr(tiny); } catch (Exception e) { fastEngineError = "warm-up: " + e; } finally { tiny.recycle(); }
         });
     }
 

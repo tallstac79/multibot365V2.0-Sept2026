@@ -140,6 +140,37 @@ Several captures must agree on a cell. A spread sign is only inferred from the o
 row, and the betslip must re-show the exact signed line (or Over/Under + line) in large
 text before READY.
 
+### OCR engines (Milestone C)
+
+The phone has two on-device OCR engines behind one flag (`ocr_engine`, pref on the phone,
+`/health` reports it; debug builds accept `POST /config/ocr_engine {"engine": ...}`):
+
+* `legacy` — Tesseract (tess-two), the engine of every placement so far;
+* `fast` — ML Kit Latin text recognition, model bundled in the APK (no network, no download),
+  word boxes in the same shape every parser already uses;
+* `hybrid` (default since 0.8.5-c5) — `fast` for every pre-tap read including the Game Lines
+  grid; Tesseract kept for numeric region reads (price/amount crops with a numeric alphabet),
+  for the enhanced second-opinion re-read after a failed readback, and to re-read the
+  receipt's "Bet Ref" line after the tap (the fast reading is kept; a disagreement is flagged as
+  `bet_reference_disputed` with both readings recorded as `bet_reference_fast` /
+  `bet_reference_legacy`, never silently resolved). A fast-engine exception never fails a run:
+  that frame falls back to Tesseract and `/health` shows `fast_ocr_error`.
+
+The parsers and every check are engine-independent and unchanged. `OCR_BENCH` (an action that
+never touches the screen) runs a named engine over stored frames and the same parsers; the
+A/B on 68 real frames (`evidence/ocr-bench/`) is what chose the policy:
+
+| class | legacy | fast |
+|---|---|---|
+| Game Lines grid | 13/14, 5.2 s (one wrong price on a keyboard-clipped frame) | 14/14, 0.48 s |
+| event header | 14/14, 2.1 s | 14/14, 0.36 s |
+| betslip readback | 10/14, 2.6 s (`+3.5`→`+315`, `1.83`→`183`, all fail-closed) | 14/14, 0.40 s, stake box digits read |
+| stake keypad | 14/14, 3.2 s | 14/14, 0.40 s |
+| receipt | 3/4, 2.3 s (read `YT6334352221W` as `W6334352221W`: the reference reported for the second live placement was wrong) | 4/4, 0.36 s |
+| My Bets | 2/2 runs, 10.1 s | 2/2 runs, 1.5 s |
+
+Rollback is one call (`legacy`, persisted) or the one-line default in `CoordinatorConfig`.
+
 ## Knowing the outcome: My Bets reconciliation
 
 After every tap, the backend verifies the claimed outcome in My Bets (read-only `MY_BETS`

@@ -54,6 +54,7 @@ final class CoordinatorAgent implements AutoCloseable {
 
     CoordinatorAgent(AccessibilityService service, VisualControlRunner runner) {
         this.service = service; this.runner = runner;
+        runner.warmFastEngine();   // no-op under legacy; otherwise the model is loaded before the first live capture
         sessionThread.start();
         sessionHandler = new Handler(sessionThread.getLooper());
         CoordinatorConfig.token(service);
@@ -88,6 +89,14 @@ final class CoordinatorAgent implements AutoCloseable {
         }
         if (method.equals("GET") && (path.equals("/health") || path.equals("/state"))) return json(200, health());
         if (method.equals("POST") && path.equals("/instructions")) return accept(body);
+        if (method.equals("POST") && path.equals("/config/ocr_engine") && (service.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+            // Milestone C3 feature flag (debug builds only): legacy | fast | hybrid. Rollback = one call.
+            String engine = "";
+            try { engine = new JSONObject(body).optString("engine", ""); } catch (Exception ignored) {}
+            if (!CoordinatorConfig.setOcrEngine(service, engine)) return error(400, "", "INVALID_INSTRUCTION", "engine must be legacy|fast|hybrid");
+            runner.warmFastEngine();
+            return json(200, object("ocr_engine", CoordinatorConfig.ocrEngine(service)));
+        }
         if (method.equals("POST") && path.equals("/test/restart") && (service.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
             CoordinatorHttp.Reply reply = json(202, object("acknowledged", true));
             reply.afterWrite = () -> main.postDelayed(() -> android.os.Process.killProcess(android.os.Process.myPid()), 250);
@@ -166,13 +175,17 @@ final class CoordinatorAgent implements AutoCloseable {
             // Phase C: refresh session observation immediately before starting a device job.
             preJobSessionRefresh();
             store.executing(instruction.id);
-            if(instruction.action.equals("ADAPTER_WORKFLOW") || instruction.action.equals("SESSION_CHECK") || instruction.action.equals("SESSION_PROBE") || instruction.action.equals("OPEN_SEARCH") || instruction.action.equals("MY_BETS") || instruction.action.equals("OBSERVE") || instruction.action.equals("RESET_BETSLIP") || instruction.action.equals("PLACE_HELD")) {
+            if(instruction.action.equals("ADAPTER_WORKFLOW") || instruction.action.equals("SESSION_CHECK") || instruction.action.equals("SESSION_PROBE") || instruction.action.equals("OPEN_SEARCH") || instruction.action.equals("MY_BETS") || instruction.action.equals("OBSERVE") || instruction.action.equals("RESET_BETSLIP") || instruction.action.equals("PLACE_HELD") || instruction.action.equals("OCR_BENCH")) {
                 if(!runner.startExternal(instruction.runId,remaining(row,instruction.timeout))) {complete(row,"INTERNAL_ERROR","Runner rejected workflow");return;}
                 VisualSession session=new VisualSession(service,runner,instruction.runId,instruction.adapter);
                 session.setProgressListener(this::onWorkflowProgress);
                 noteProgress(instruction.id, "STARTED", 0, null);
                 if(instruction.action.equals("SESSION_PROBE")) { new SessionProbeWorkflow(session).start(); return; }
                 if(instruction.action.equals("OBSERVE")) { new ObserveWorkflow(session, remaining(row,instruction.timeout)).start(); return; }
+                if(instruction.action.equals("OCR_BENCH")) {
+                    new OcrBenchWorkflow(session, service.getFilesDir(), runner, instruction.frames, instruction.engine).start();
+                    return;
+                }
                 if(instruction.action.equals("PLACE_HELD")) {
                     SiteAdapter mine=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id,instruction.sport,instruction.stake);
                     if(!(mine instanceof Bet365LiveAdapter)) { runner.finish(instruction.runId,"INVALID_INSTRUCTION","PLACE_HELD requires the live adapter"); return; }
@@ -339,7 +352,7 @@ final class CoordinatorAgent implements AutoCloseable {
         put(result, "run_id", current.optString("run_id"));
         JSONObject proof=evidence(current);
         String completedAction=current.optJSONObject("payload").optString("action");
-        if(proof!=null && (completedAction.equals("ADAPTER_WORKFLOW") || completedAction.equals("SESSION_CHECK") || completedAction.equals("SESSION_PROBE") || completedAction.equals("OPEN_SEARCH") || completedAction.equals("MY_BETS") || completedAction.equals("OBSERVE") || completedAction.equals("RESET_BETSLIP") || completedAction.equals("PLACE_HELD"))) {
+        if(proof!=null && (completedAction.equals("ADAPTER_WORKFLOW") || completedAction.equals("SESSION_CHECK") || completedAction.equals("SESSION_PROBE") || completedAction.equals("OPEN_SEARCH") || completedAction.equals("MY_BETS") || completedAction.equals("OBSERVE") || completedAction.equals("RESET_BETSLIP") || completedAction.equals("PLACE_HELD") || completedAction.equals("OCR_BENCH"))) {
             JSONObject fixture=proof.optJSONObject("fixture");
             for(String key:new String[]{"fixture_name","home","away","competition"})put(result,key,fixture==null?JSONObject.NULL:fixture.opt(key));
             put(result,"selection",proof.opt("selection"));put(result,"final_state",proof.opt("final_state"));put(result,"ready_state",proof.opt("ready_state"));put(result,"complete_execution_ready",proof.opt("complete_execution_ready"));put(result,"place_bet_tapped",proof.opt("place_bet_tapped"));put(result,"place_bet_result",proof.opt("place_bet_result"));put(result,"place_bet_detail",proof.opt("place_bet_detail"));if(proof.has("wager_submitted"))put(result,"wager_submitted",proof.opt("wager_submitted"));
@@ -349,7 +362,7 @@ final class CoordinatorAgent implements AutoCloseable {
             if(proof.has("observe"))put(result,"observe",proof.opt("observe"));
             if(proof.has("betslip_reset"))put(result,"betslip_reset",proof.opt("betslip_reset"));
             if(proof.has("betslip_clear"))put(result,"betslip_clear",proof.opt("betslip_clear"));
-            for(String key:new String[]{"route","held","returned_home","home_verified","pretap","stage_timings","t_start_ms","t_pretap_done_ms","t_tap_ms","t_receipt_ms","t_home_ms","alias_candidate","direct_event_rejected","stake_field_state","stake_clear","identity","identity_verdict","event_url"})
+            for(String key:new String[]{"route","held","returned_home","home_verified","pretap","stage_timings","t_start_ms","t_pretap_done_ms","t_tap_ms","t_receipt_ms","t_home_ms","alias_candidate","direct_event_rejected","stake_field_state","stake_clear","identity","identity_verdict","event_url","bench","ocr_engine","bet_reference_fast","bet_reference_legacy","bet_reference_disputed"})
                 if(proof.has(key))put(result,key,proof.opt(key));
             JSONObject ready = proof.optJSONObject("ready_state");
             if (ready != null && ready.has("session")) noteSession(ready.optString("session"), "ready_state");
@@ -393,7 +406,7 @@ final class CoordinatorAgent implements AutoCloseable {
             .put("last_result", last == null ? JSONObject.NULL : last.getJSONObject("result"))
             .put("app_version", pkg.versionName).put("version_code", pkg.versionCode)
             .put("endpoint", endpoint() == null ? JSONObject.NULL : endpoint()).put("pid", android.os.Process.myPid())
-            .put("device_id", DEVICE_ID).put("session", session);
+            .put("device_id", DEVICE_ID).put("session", session).put("ocr_engine", CoordinatorConfig.ocrEngine(service)).put("fast_ocr_error", runner.fastEngineError() == null ? JSONObject.NULL : runner.fastEngineError());
         if (active != null) {
             put(health, "progress", progressSnapshot());
             put(health, "device_stage", progressStage);
@@ -485,7 +498,7 @@ final class CoordinatorAgent implements AutoCloseable {
     private JSONObject evidence(JSONObject row) {
         try {
             String action=row.getJSONObject("payload").optString("action");
-            boolean workflow=action.equals("ADAPTER_WORKFLOW") || action.equals("SESSION_CHECK") || action.equals("SESSION_PROBE") || action.equals("OPEN_SEARCH") || action.equals("MY_BETS") || action.equals("OBSERVE") || action.equals("RESET_BETSLIP") || action.equals("PLACE_HELD");
+            boolean workflow=action.equals("ADAPTER_WORKFLOW") || action.equals("SESSION_CHECK") || action.equals("SESSION_PROBE") || action.equals("OPEN_SEARCH") || action.equals("MY_BETS") || action.equals("OBSERVE") || action.equals("RESET_BETSLIP") || action.equals("PLACE_HELD") || action.equals("OCR_BENCH");
             File file = new File(service.getFilesDir(), (workflow?"workflow/":"text/") + row.getString("run_id") + "/result.json");
             return file.isFile() ? new JSONObject(new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8)) : null;
         } catch (Exception e) { return null; }
@@ -495,7 +508,7 @@ final class CoordinatorAgent implements AutoCloseable {
         for (int i = 0; i < values.length; i += 2) put(json, (String) values[i], values[i + 1]);
         return json;
     }
-    private static void put(JSONObject json, String key, Object value) {
+    static void put(JSONObject json, String key, Object value) {
         try { json.put(key, value); } catch (Exception e) { throw new IllegalStateException(e); }
     }
     private static JSONObject result(String id, String stage, String detail, long duration) {

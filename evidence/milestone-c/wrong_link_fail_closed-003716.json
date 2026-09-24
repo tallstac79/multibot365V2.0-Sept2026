@@ -1,0 +1,235 @@
+{
+ "payload": {
+  "instruction_id": "wrong_link_fail_closed-003716",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Kyoto Hannaryz||Shiga Lake Stars",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-4.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+  "kickoff_utc": "2026-09-25T09:35"
+ },
+ "result": {
+  "instruction_id": "wrong_link_fail_closed-003716",
+  "status": "FAIL",
+  "stage": "WRONG_EVENT",
+  "detail": "Event link shows 'Besancon AC v Val de Seine'; alert says 'Kyoto Hannaryz v Shiga Lake Stars': kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+  "duration_ms": 5730,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 5612,
+   "last_progress_at_ms": 1790293037248,
+   "instruction_id": "wrong_link_fail_closed-003716",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790293037235
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 14,
+     "at_ms": 1790293037241
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 21,
+     "at_ms": 1790293037248,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 21,
+      "start_ts_ms": 1790293037242,
+      "end_elapsed_ms": 5612,
+      "end_ts_ms": 1790293042833,
+      "duration_ms": 5591,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3455,
+     "at_ms": 1790293037248
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3820,
+     "at_ms": 1790293037248
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4735,
+     "at_ms": 1790293037248
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5414,
+     "at_ms": 1790293037248
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5612,
+     "at_ms": 1790293037248
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_cWs3u7FX3KF3rnq8vbUkEvihHuhLAlwoGxX-AzDzCjg",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'Besancon AC v Val de Seine'; alert says 'Kyoto Hannaryz v Shiga Lake Stars': kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 21,
+    "start_ts_ms": 1790293037242,
+    "end_elapsed_ms": 5612,
+    "end_ts_ms": 1790293042833,
+    "duration_ms": 5591,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+   "home": {
+    "feed": "Kyoto Hannaryz",
+    "bookmaker": "Besancon AC",
+    "level": "NONE",
+    "score": 0.23,
+    "note": "different name 0.23"
+   },
+   "away": {
+    "feed": "Shiga Lake Stars",
+    "bookmaker": "Val de Seine",
+    "level": "NONE",
+    "score": 0.21,
+    "note": "different name 0.21"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": false,
+   "reversed": false
+  },
+  "identity_verdict": "MISMATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_cWs3u7FX3KF3rnq8vbUkEvihHuhLAlwoGxX-AzDzCjg",
+  "adapter": "live_bet365",
+  "status": "WRONG_EVENT",
+  "phase": "FINISHED",
+  "started_at_ms": 1790293037221,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790293037221
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 14,
+    "wall_ts_ms": 1790293037236
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 21,
+    "wall_ts_ms": 1790293037242
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3455,
+    "wall_ts_ms": 1790293040677
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3820,
+    "wall_ts_ms": 1790293041042
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 4735,
+    "wall_ts_ms": 1790293041958
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5414,
+    "wall_ts_ms": 1790293042638
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 5612,
+    "wall_ts_ms": 1790293042834
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 21,
+    "start_ts_ms": 1790293037242,
+    "end_elapsed_ms": 5612,
+    "end_ts_ms": 1790293042833,
+    "duration_ms": 5591,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Kyoto Hannaryz",
+  "identity_home": "Kyoto Hannaryz",
+  "expected_away": "Shiga Lake Stars",
+  "identity_away": "Shiga Lake Stars",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+  "current_stage": "OPEN_HOME",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "France Nationale1•25 Sep 19:00",
+   "Besancon AC vs Val de Seine v",
+   "Popular Bet Builder"
+  ],
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+   "home": {
+    "feed": "Kyoto Hannaryz",
+    "bookmaker": "Besancon AC",
+    "level": "NONE",
+    "score": 0.23,
+    "note": "different name 0.23"
+   },
+   "away": {
+    "feed": "Shiga Lake Stars",
+    "bookmaker": "Val de Seine",
+    "level": "NONE",
+    "score": 0.21,
+    "note": "different name 0.21"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": false,
+   "reversed": false
+  },
+  "identity_verdict": "MISMATCH",
+  "route": "event_link",
+  "direct_event_rejected": "identity: kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+  "detail": "Event link shows 'Besancon AC v Val de Seine'; alert says 'Kyoto Hannaryz v Shiga Lake Stars': kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+  "duration_ms": 5612
+ },
+ "wall": 6.206878185272217
+}

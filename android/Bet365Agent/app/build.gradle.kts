@@ -10,8 +10,8 @@ android {
         applicationId = "com.bet365agent"
         minSdk = 26
         targetSdk = 34
-        versionCode = 72
-        versionName = "0.8.2-b"
+        versionCode = 77
+        versionName = "0.8.7-c5"
     }
 
     buildTypes {
@@ -34,8 +34,11 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    // Tesseract OCR for visual control
+    // Tesseract OCR for visual control (legacy engine, default, rollback)
     implementation("com.rmtheis:tess-two:9.1.0")
+    // Fast on-device OCR (Milestone C2): ML Kit text recognition with the Latin model BUNDLED in the APK
+    // (no network, no model download); word-level bounding boxes.
+    implementation("com.google.mlkit:text-recognition:16.0.1")
 
     // Plain JVM unit tests for pure classifiers (no device needed)
     testImplementation("junit:junit:4.13.2")

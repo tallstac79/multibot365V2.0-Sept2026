@@ -1,0 +1,149 @@
+{
+ "payload": {
+  "action": "PLACE_HELD",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "-1.5",
+  "selection_name": "DEAC Debreceni",
+  "price": "1.83",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "execution_mode": "prepare",
+  "confirmation_status": "APPROVED",
+  "timeout_ms": 60000,
+  "instruction_id": "ptsopron-003225"
+ },
+ "result": {
+  "instruction_id": "ptsopron-003225",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "PRETAP_READY",
+  "duration_ms": 999,
+  "progress": {
+   "stage": "PRETAP_CHECK",
+   "elapsed_ms": 898,
+   "last_progress_at_ms": 1790292761099,
+   "instruction_id": "ptsopron-003225",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790292761091
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 23,
+     "at_ms": 1790292761099
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 32,
+     "at_ms": 1790292761099
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 820,
+     "at_ms": 1790292761099
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 898,
+     "at_ms": 1790292761099
+    }
+   ]
+  },
+  "device_stage": "PRETAP_CHECK",
+  "execution_count": 1,
+  "run_id": "c_SCD1pwX_yckPGY7Tuj1IzjBhRRR4cMVaAtCJzpxCsCU",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "pretap": {
+   "ok": true,
+   "selection": "DEAC Debreceni",
+   "line": "-1.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "stage_timings": [],
+  "t_start_ms": 1790292761092,
+  "t_pretap_done_ms": 1790292761967
+ },
+ "run": {
+  "run_id": "c_SCD1pwX_yckPGY7Tuj1IzjBhRRR4cMVaAtCJzpxCsCU",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790292761069,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790292761069
+   },
+   {
+    "phase": "PRETAP_CHECK",
+    "elapsed_ms": 23,
+    "wall_ts_ms": 1790292761092
+   },
+   {
+    "phase": "CAPTURE_pretap",
+    "elapsed_ms": 32,
+    "wall_ts_ms": 1790292761102
+   },
+   {
+    "phase": "CAPTURED_pretap",
+    "elapsed_ms": 820,
+    "wall_ts_ms": 1790292761889
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 898,
+    "wall_ts_ms": 1790292761967
+   }
+  ],
+  "screenshots": [
+   "s001_pretap.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [],
+  "t_start_ms": 1790292761092,
+  "stake_check_pretap": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "pretap": {
+   "ok": true,
+   "selection": "DEAC Debreceni",
+   "line": "-1.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "t_pretap_done_ms": 1790292761967,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "detail": "PRETAP_READY",
+  "duration_ms": 898
+ },
+ "wall": 1.517533779144287
+}

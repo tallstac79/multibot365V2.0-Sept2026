@@ -1359,7 +1359,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
     private CompletableFuture<VisualScreen> readbackRetry(String label, int attempt, java.util.function.BiConsumer<VisualScreen, Boolean> checks) {
         // Re-reads use the enhanced per-word OCR (3x, contrast): real slips where the plain read missed
         // "1.83" and read "£0.18" as "£0118" (Berck v Pays Salonais). The checks themselves never change.
-        CompletableFuture<VisualScreen> frame = attempt == 1 ? ui.capture(label) : ui.captureTable(label + "_enhanced");
+        CompletableFuture<VisualScreen> frame = attempt == 1 ? ui.capture(label) : ui.captureEnhanced(label + "_enhanced");
         return frame.thenCompose(s -> {
             try {
                 checks.accept(s, attempt > 1);   // true = enhanced re-read frame
@@ -1607,17 +1607,41 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     List<String> lines = texts(after);
                     PlacementClassifier.Result r = PlacementClassifier.classify(lines, findPlaceBetLine(after) != null);
                     if (!r.definitive && attempt < OUTCOME_WAITS_MS.length) return observeOutcome(attempt + 1, frames, selection, stake);
-                    String outcome = r.definitive ? r.outcome : "PLACEMENT_UNKNOWN";
-                    String detail = r.definitive ? r.detail
-                            : "No definitive outcome after " + attempt + " frames (" + r.detail + "); never re-tapped";
-                    ui.put("placement", placement(outcome, detail, r.betReference, r.potentialReturn,
-                            r.stake != null ? r.stake : stake, selection.price, frames, PlacementClassifier.receiptLines(lines)));
-                    ui.put("wager_submitted", "PLACED".equals(outcome));
-                    ui.put("place_bet_result", outcome);
-                    ui.put("place_bet_detail", detail);
-                    ui.put("t_receipt_ms", System.currentTimeMillis());
-                    return resetBetslip().thenCompose(v -> returnHome());
+                    return confirmReference(after, r).thenCompose(reference -> {
+                        String outcome = r.definitive ? r.outcome : "PLACEMENT_UNKNOWN";
+                        String detail = r.definitive ? r.detail
+                                : "No definitive outcome after " + attempt + " frames (" + r.detail + "); never re-tapped";
+                        ui.put("placement", placement(outcome, detail, reference, r.potentialReturn,
+                                r.stake != null ? r.stake : stake, selection.price, frames, PlacementClassifier.receiptLines(lines)));
+                        ui.put("wager_submitted", "PLACED".equals(outcome));
+                        ui.put("place_bet_result", outcome);
+                        ui.put("place_bet_detail", detail);
+                        ui.put("t_receipt_ms", System.currentTimeMillis());
+                        return resetBetslip().thenCompose(v -> returnHome());
+                    });
                 });
+    }
+
+    /**
+     * Hybrid engine (Milestone C5): the receipt's reference is read by both engines. On the two real receipts the
+     * fast engine read both exactly; Tesseract's full-page read had reported the second as "W6334352221W" where
+     * the screen shows "YT6334352221W" (evidence/ocr-bench). After the tap (not time-critical) the "Bet Ref" line
+     * is re-read with Tesseract's enhanced pass; the fast reading is kept and a disagreement is recorded as
+     * bet_reference_disputed with both readings, never silently resolved. My Bets reconciliation identifies the
+     * bet by fixture, selection and stake, never by reference. The placement outcome is never changed here.
+     */
+    private CompletableFuture<String> confirmReference(VisualScreen after, PlacementClassifier.Result r) {
+        if (r.betReference == null || "legacy".equals(ui.runner().engine())) return CompletableFuture.completedFuture(r.betReference);
+        VisualScreen.Line refLine = null;
+        for (VisualScreen.Line line : after.lines) if (line.text.toLowerCase(Locale.US).contains("bet ref")) { refLine = line; break; }
+        if (refLine == null) return CompletableFuture.completedFuture(r.betReference);
+        return ui.readRegion("receipt_ref", refLine.bounds, false).handle((text, e) -> {
+            String legacy = e == null ? PlacementClassifier.reference(java.util.Collections.singletonList(text == null ? "" : text)) : null;
+            ui.put("bet_reference_fast", r.betReference);
+            ui.put("bet_reference_legacy", legacy == null ? "" : legacy);
+            if (legacy != null && !legacy.equals(r.betReference)) ui.put("bet_reference_disputed", true);
+            return r.betReference;
+        });
     }
 
     /** After a placement: Bet365 HOME is the clean idle state (never re-taps anything). */

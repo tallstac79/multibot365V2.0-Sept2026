@@ -19,6 +19,14 @@ final class CoordinatorConfig {
         return token;
     }
     /** Bet365 username for visual login; app-private prefs only ? never written to evidence. */
+    /** Milestone C11: hybrid = fast on-device OCR for every pre-tap read, Tesseract for numeric regions, the
+     *  enhanced second-opinion re-read and the receipt reference. Rollback: POST /config/ocr_engine legacy (persisted)
+     *  or change this default. */
+    static String ocrEngine(Context context) { return prefs(context).getString("ocr_engine", "hybrid"); }
+    static boolean setOcrEngine(Context context, String engine) {
+        if (!java.util.Set.of("legacy", "fast", "hybrid").contains(engine)) return false;
+        return prefs(context).edit().putString("ocr_engine", engine).commit();
+    }
     static String bet365Username(Context context) { return prefs(context).getString("bet365_username", ""); }
     static String bet365Password(Context context) { return prefs(context).getString("bet365_password", ""); }
     static boolean hasBet365Credentials(Context context) {

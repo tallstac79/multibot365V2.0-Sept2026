@@ -1,0 +1,198 @@
+{
+ "payload": {
+  "instruction_id": "rssaga-002704",
+  "action": "RESET_BETSLIP",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "timeout_ms": 60000
+ },
+ "result": {
+  "instruction_id": "rssaga-002704",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "RESET_BETSLIP",
+  "duration_ms": 3497,
+  "progress": {
+   "stage": "RESET_BETSLIP",
+   "elapsed_ms": 3382,
+   "last_progress_at_ms": 1790292442453,
+   "instruction_id": "rssaga-002704",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790292442445
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 12,
+     "at_ms": 1790292442453,
+     "timing": {
+      "stage": "RESET_BETSLIP",
+      "start_elapsed_ms": 12,
+      "start_ts_ms": 1790292442447,
+      "end_elapsed_ms": 3382,
+      "end_ts_ms": 1790292445816,
+      "duration_ms": 3370,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 21,
+     "at_ms": 1790292442453
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 727,
+     "at_ms": 1790292442453
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 762,
+     "at_ms": 1790292442453
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 2528,
+     "at_ms": 1790292442453
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 3329,
+     "at_ms": 1790292442453
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 3382,
+     "at_ms": 1790292442453
+    }
+   ]
+  },
+  "device_stage": "RESET_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_f4SVjMttoVTIdA9cR7ouXvdsKYisr5t9L4wtt3OfdT4",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+  "betslip_reset": {
+   "tapped": true,
+   "control": "remove selection X",
+   "bounds": [
+    21,
+    1180,
+    42,
+    1207
+   ],
+   "place_bet_still_visible": false
+  },
+  "stage_timings": [
+   {
+    "stage": "RESET_BETSLIP",
+    "start_elapsed_ms": 12,
+    "start_ts_ms": 1790292442447,
+    "end_elapsed_ms": 3382,
+    "end_ts_ms": 1790292445816,
+    "duration_ms": 3370,
+    "status": "ok",
+    "retries": 0
+   }
+  ]
+ },
+ "run": {
+  "run_id": "c_f4SVjMttoVTIdA9cR7ouXvdsKYisr5t9L4wtt3OfdT4",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790292442434,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790292442435
+   },
+   {
+    "phase": "RESET_BETSLIP",
+    "elapsed_ms": 12,
+    "wall_ts_ms": 1790292442447
+   },
+   {
+    "phase": "CAPTURE_reset_pre",
+    "elapsed_ms": 21,
+    "wall_ts_ms": 1790292442456
+   },
+   {
+    "phase": "CAPTURED_reset_pre",
+    "elapsed_ms": 727,
+    "wall_ts_ms": 1790292443161
+   },
+   {
+    "effect": "gesture",
+    "target": "Remove selection",
+    "bounds": [
+     21,
+     1180,
+     42,
+     1207
+    ],
+    "elapsed_ms": 762
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 762,
+    "wall_ts_ms": 1790292443196
+   },
+   {
+    "phase": "CAPTURE_reset_after",
+    "elapsed_ms": 2528,
+    "wall_ts_ms": 1790292444964
+   },
+   {
+    "phase": "CAPTURED_reset_after",
+    "elapsed_ms": 3329,
+    "wall_ts_ms": 1790292445764
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 3382,
+    "wall_ts_ms": 1790292445817
+   }
+  ],
+  "screenshots": [
+   "s001_reset_pre.png",
+   "s002_reset_after.png"
+  ],
+  "gesture_attempts": 1,
+  "stage_timings": [
+   {
+    "stage": "RESET_BETSLIP",
+    "start_elapsed_ms": 12,
+    "start_ts_ms": 1790292442447,
+    "end_elapsed_ms": 3382,
+    "end_ts_ms": 1790292445816,
+    "duration_ms": 3370,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "current_stage": "RESET_BETSLIP",
+  "betslip_reset": {
+   "tapped": true,
+   "control": "remove selection X",
+   "bounds": [
+    21,
+    1180,
+    42,
+    1207
+   ],
+   "place_bet_still_visible": false
+  },
+  "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+  "detail": "RESET_BETSLIP",
+  "duration_ms": 3382
+ },
+ "wall": 3.648393392562866
+}

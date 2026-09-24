@@ -16,6 +16,7 @@ final class CoordinatorInstruction {
     final String id, target, text, runId, action, adapter, scenario, market, side, sport, line, minimumPrice, stake, executionMode, confirmationStatus, view;
     final String eventUrl, kickoffUtc, selectionName, price;
     final java.util.Map<String, String> aliases;
+    final String frames, engine;
     final boolean placeBet; // true iff execution_mode=dispatch
     final int timeout;
     final JSONObject payload;
@@ -45,7 +46,7 @@ final class CoordinatorInstruction {
                 String name = reader.nextName();
                 if (fields.containsKey(name)) throw new IllegalArgumentException("Duplicate field: " + name);
                 boolean number = "timeout_ms".equals(name);
-                Set<String> allowed = Set.of("instruction_id","action","target_text","input_text","adapter","scenario","query","market","side","sport","line","minimum_price","stake","timeout_ms","place_bet","execution_mode","confirmation_status","view","event_url","kickoff_utc","selection_name","price","aliases");
+                Set<String> allowed = Set.of("instruction_id","action","target_text","input_text","adapter","scenario","query","market","side","sport","line","minimum_price","stake","timeout_ms","place_bet","execution_mode","confirmation_status","view","event_url","kickoff_utc","selection_name","price","aliases","frames","engine");
                 if (!number && !allowed.contains(name)) throw new IllegalArgumentException("Unknown field: " + name);
                 if ("line".equals(name) && reader.peek() == JsonToken.NULL) { reader.nextNull(); fields.put(name, ""); continue; }
                 if (reader.peek() != (number ? JsonToken.NUMBER : JsonToken.STRING)) throw new IllegalArgumentException("Wrong field type: " + name);
@@ -108,6 +109,11 @@ final class CoordinatorInstruction {
             if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid PLACE_HELD schema");
             if(!fields.get("price").matches("[0-9]+\\.[0-9]{2}")) throw new IllegalArgumentException("Invalid price");
             if(!fields.get("selection_name").matches("[A-Za-z0-9 ./'&()-]{2,64}")) throw new IllegalArgumentException("Invalid selection_name");
+        } else if(action.equals("OCR_BENCH")) {
+            expected=Set.of("instruction_id","action","adapter","scenario","frames","engine","timeout_ms");
+            if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid OCR_BENCH schema");
+            if(!Set.of("legacy","fast","hybrid").contains(fields.get("engine"))) throw new IllegalArgumentException("Invalid engine");
+            if(fields.get("frames").length()>3600 || !fields.get("frames").trim().startsWith("[")) throw new IllegalArgumentException("Invalid frames");
         } else if(action.equals("RESET_BETSLIP")) {
             expected=Set.of("instruction_id","action","adapter","scenario","timeout_ms");
             if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid RESET_BETSLIP schema");
@@ -130,13 +136,13 @@ final class CoordinatorInstruction {
             base.removeAll(allowedExtra);
             if(!base.equals(expected)) throw new IllegalArgumentException("Invalid ADAPTER_WORKFLOW schema");
         }
-        boolean noText = Set.of("SESSION_CHECK","SESSION_PROBE","MY_BETS","OBSERVE","RESET_BETSLIP","PLACE_HELD").contains(action);
-        if(!Set.of("OPEN_AND_TYPE","ADAPTER_WORKFLOW","SESSION_CHECK","SESSION_PROBE","OPEN_SEARCH","MY_BETS","OBSERVE","RESET_BETSLIP","PLACE_HELD").contains(action)
+        boolean noText = Set.of("SESSION_CHECK","SESSION_PROBE","MY_BETS","OBSERVE","RESET_BETSLIP","PLACE_HELD","OCR_BENCH").contains(action);
+        if(!Set.of("OPEN_AND_TYPE","ADAPTER_WORKFLOW","SESSION_CHECK","SESSION_PROBE","OPEN_SEARCH","MY_BETS","OBSERVE","RESET_BETSLIP","PLACE_HELD","OCR_BENCH").contains(action)
             || !id.matches("[A-Za-z0-9_-]{1,64}") || (noText ? !text.isEmpty() : (!action.equals("OPEN_SEARCH") && text.isEmpty()))
             || text.length()>128 || !fields.getOrDefault("timeout_ms", "").matches("[0-9]{1,6}"))
             throw new IllegalArgumentException("Invalid schema, action, ID, text or timeout");
         if(action.equals("OPEN_AND_TYPE") && !target.matches("[A-Za-z0-9]{1,40}")) throw new IllegalArgumentException("Invalid target");
-        if(action.equals("MY_BETS") || action.equals("RESET_BETSLIP")) SiteAdapters.validate(adapter,scenario);
+        if(action.equals("MY_BETS") || action.equals("RESET_BETSLIP") || action.equals("OCR_BENCH")) SiteAdapters.validate(adapter,scenario);
         if(action.equals("PLACE_HELD")) {
             SiteAdapters.validate(adapter,scenario);
             if(!Set.of("football","basketball").contains(sport)) throw new IllegalArgumentException("Invalid sport");
@@ -172,6 +178,8 @@ final class CoordinatorInstruction {
         selectionName = fields.getOrDefault("selection_name", "");
         price = fields.getOrDefault("price", "");
         aliases = parseAliases(fields.getOrDefault("aliases", ""));
+        frames = fields.getOrDefault("frames", "");
+        engine = fields.getOrDefault("engine", "");
         timeout = Integer.parseInt(fields.get("timeout_ms"));
         if (timeout < 100 || timeout > 600000) throw new IllegalArgumentException("timeout_ms must be 100..600000");
         runId = "c_" + Base64.encodeToString(MessageDigest.getInstance("SHA-256").digest(id.getBytes(StandardCharsets.UTF_8)), Base64.NO_WRAP | Base64.URL_SAFE | Base64.NO_PADDING);

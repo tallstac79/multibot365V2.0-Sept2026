@@ -127,7 +127,17 @@ final class VisualSession {
         return delay(1200);
     }
     CompletableFuture<VisualScreen> capture(String label) { return capture(label,false); }
+    VisualControlRunner runner() { return runner; }
     CompletableFuture<VisualScreen> captureTable(String label) { return capture(label,true); }
+    /** Re-read with Tesseract's enhanced pass (the second opinion after a failed readback), whatever the engine flag. */
+    CompletableFuture<VisualScreen> captureEnhanced(String label) {
+        if(!live())return failed("TIMEOUT","Session expired");
+        String name=String.format(java.util.Locale.US,"s%03d_%s",++sequence,label);
+        checkpoint("CAPTURE_"+label);
+        CompletableFuture<VisualScreen> f=future();
+        runner.enhancedFrame(id,name,ocr->{if(live()){images.put(name+".png");checkpoint("CAPTURED_"+label);f.complete(new VisualScreen(ocr));}});
+        return f;
+    }
     CompletableFuture<VisualScreen> captureTableBelow(String label,int top) {
         if(!live())return failed("TIMEOUT","Session expired");
         String name=String.format(java.util.Locale.US,"s%03d_%s",++sequence,label);
