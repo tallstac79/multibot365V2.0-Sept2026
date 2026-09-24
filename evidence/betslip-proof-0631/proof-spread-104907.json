@@ -1,0 +1,583 @@
+{
+ "instruction_id": "proof-spread-104907",
+ "status": "FAIL",
+ "stage": "STAKE_REJECTED",
+ "detail": "Done missing after geometric digits",
+ "duration_ms": 75337,
+ "progress": {
+  "stage": "ENTER_STAKE",
+  "elapsed_ms": 75084,
+  "last_progress_at_ms": 1790243403005,
+  "instruction_id": "proof-spread-104907",
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790243348497
+   },
+   {
+    "stage": "SPORTS_HOME",
+    "elapsed_ms": 36,
+    "at_ms": 1790243348518,
+    "timing": {
+     "stage": "SPORTS_HOME",
+     "start_elapsed_ms": 36,
+     "start_ts_ms": 1790243348504,
+     "end_elapsed_ms": 53,
+     "end_ts_ms": 1790243348520,
+     "duration_ms": 17,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 53,
+    "at_ms": 1790243348536,
+    "timing": {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 53,
+     "start_ts_ms": 1790243348521,
+     "end_elapsed_ms": 10565,
+     "end_ts_ms": 1790243359033,
+     "duration_ms": 10512,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 4137,
+    "at_ms": 1790243348536
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 7309,
+    "at_ms": 1790243348536
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 7331,
+    "at_ms": 1790243348536
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 10444,
+    "at_ms": 1790243348536
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "elapsed_ms": 10565,
+    "at_ms": 1790243359061,
+    "timing": {
+     "stage": "SESSION_CHECK",
+     "start_elapsed_ms": 10565,
+     "start_ts_ms": 1790243359033,
+     "end_elapsed_ms": 13899,
+     "end_ts_ms": 1790243362367,
+     "duration_ms": 3334,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "elapsed_ms": 10597,
+    "at_ms": 1790243359061
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "elapsed_ms": 13741,
+    "at_ms": 1790243359061
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 13899,
+    "at_ms": 1790243362413,
+    "timing": {
+     "stage": "OPEN_SEARCH",
+     "start_elapsed_ms": 13899,
+     "start_ts_ms": 1790243362367,
+     "end_elapsed_ms": 13948,
+     "end_ts_ms": 1790243362415,
+     "duration_ms": 49,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "elapsed_ms": 13948,
+    "at_ms": 1790243362451,
+    "timing": {
+     "stage": "SPORTS_CONTEXT",
+     "start_elapsed_ms": 13948,
+     "start_ts_ms": 1790243362415,
+     "end_elapsed_ms": 17217,
+     "end_ts_ms": 1790243365685,
+     "duration_ms": 3269,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "elapsed_ms": 13987,
+    "at_ms": 1790243362451
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "elapsed_ms": 17054,
+    "at_ms": 1790243362451
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 17217,
+    "at_ms": 1790243365737,
+    "timing": {
+     "stage": "OPEN_SEARCH",
+     "start_elapsed_ms": 17217,
+     "start_ts_ms": 1790243365685,
+     "end_elapsed_ms": 26612,
+     "end_ts_ms": 1790243375080,
+     "duration_ms": 9395,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 17272,
+    "at_ms": 1790243365737
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 20288,
+    "at_ms": 1790243365737
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 20431,
+    "at_ms": 1790243365737
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 23493,
+    "at_ms": 1790243365737
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 23664,
+    "at_ms": 1790243365737
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 24755,
+    "at_ms": 1790243365737
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 26443,
+    "at_ms": 1790243365737
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 26612,
+    "at_ms": 1790243375135,
+    "timing": {
+     "stage": "ENTER_QUERY",
+     "start_elapsed_ms": 26612,
+     "start_ts_ms": 1790243375080,
+     "end_elapsed_ms": 26673,
+     "end_ts_ms": 1790243375140,
+     "duration_ms": 61,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "FOCUS",
+    "elapsed_ms": 26673,
+    "at_ms": 1790243375175,
+    "timing": {
+     "stage": "FOCUS",
+     "start_elapsed_ms": 26673,
+     "start_ts_ms": 1790243375140,
+     "end_elapsed_ms": 26711,
+     "end_ts_ms": 1790243375178,
+     "duration_ms": 38,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 26711,
+    "at_ms": 1790243375208,
+    "timing": {
+     "stage": "ENTER_QUERY",
+     "start_elapsed_ms": 26711,
+     "start_ts_ms": 1790243375178,
+     "end_elapsed_ms": 28571,
+     "end_ts_ms": 1790243377038,
+     "duration_ms": 1860,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 26743,
+    "at_ms": 1790243375208
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 28508,
+    "at_ms": 1790243375208
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "elapsed_ms": 28571,
+    "at_ms": 1790243377072,
+    "timing": {
+     "stage": "QUERY_VERIFY",
+     "start_elapsed_ms": 28571,
+     "start_ts_ms": 1790243377038,
+     "end_elapsed_ms": 30399,
+     "end_ts_ms": 1790243378868,
+     "duration_ms": 1828,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "elapsed_ms": 28606,
+    "at_ms": 1790243377072
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 30399,
+    "at_ms": 1790243379048,
+    "timing": {
+     "stage": "RESULTS_WAIT",
+     "start_elapsed_ms": 30399,
+     "start_ts_ms": 1790243378869,
+     "end_elapsed_ms": 34567,
+     "end_ts_ms": 1790243383034,
+     "duration_ms": 4168,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 30584,
+    "at_ms": 1790243379048
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 32502,
+    "at_ms": 1790243379048
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 32678,
+    "at_ms": 1790243379048
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 34468,
+    "at_ms": 1790243379048
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "elapsed_ms": 34567,
+    "at_ms": 1790243383071,
+    "timing": {
+     "stage": "FIXTURE_VERIFY",
+     "start_elapsed_ms": 34567,
+     "start_ts_ms": 1790243383034,
+     "end_elapsed_ms": 36540,
+     "end_ts_ms": 1790243385007,
+     "duration_ms": 1973,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "elapsed_ms": 34606,
+    "at_ms": 1790243383071
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "elapsed_ms": 36455,
+    "at_ms": 1790243383071
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 36540,
+    "at_ms": 1790243385049,
+    "timing": {
+     "stage": "SELECT_FIXTURE",
+     "start_elapsed_ms": 36540,
+     "start_ts_ms": 1790243385007,
+     "end_elapsed_ms": 39083,
+     "end_ts_ms": 1790243387550,
+     "duration_ms": 2543,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 36583,
+    "at_ms": 1790243385049
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 38410,
+    "at_ms": 1790243385049
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 38485,
+    "at_ms": 1790243385049
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 39083,
+    "at_ms": 1790243387591,
+    "timing": {
+     "stage": "VERIFY_EVENT",
+     "start_elapsed_ms": 39083,
+     "start_ts_ms": 1790243387550,
+     "end_elapsed_ms": 43444,
+     "end_ts_ms": 1790243391912,
+     "duration_ms": 4361,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 40328,
+    "at_ms": 1790243387591
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 43224,
+    "at_ms": 1790243387591
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 43444,
+    "at_ms": 1790243391968,
+    "timing": {
+     "stage": "MARKET_NAV",
+     "start_elapsed_ms": 43444,
+     "start_ts_ms": 1790243391912,
+     "end_elapsed_ms": 48635,
+     "end_ts_ms": 1790243397102,
+     "duration_ms": 5191,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 43503,
+    "at_ms": 1790243391968
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 48419,
+    "at_ms": 1790243391968
+   },
+   {
+    "stage": "READ_SELECTION",
+    "elapsed_ms": 48635,
+    "at_ms": 1790243397151,
+    "timing": {
+     "stage": "READ_SELECTION",
+     "start_elapsed_ms": 48635,
+     "start_ts_ms": 1790243397102,
+     "end_elapsed_ms": 48685,
+     "end_ts_ms": 1790243397152,
+     "duration_ms": 50,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "READ_LINE",
+    "elapsed_ms": 48685,
+    "at_ms": 1790243397199,
+    "timing": {
+     "stage": "READ_LINE",
+     "start_elapsed_ms": 48685,
+     "start_ts_ms": 1790243397152,
+     "end_elapsed_ms": 48734,
+     "end_ts_ms": 1790243397201,
+     "duration_ms": 49,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "READ_PRICE",
+    "elapsed_ms": 48734,
+    "at_ms": 1790243397245,
+    "timing": {
+     "stage": "READ_PRICE",
+     "start_elapsed_ms": 48734,
+     "start_ts_ms": 1790243397201,
+     "end_elapsed_ms": 48779,
+     "end_ts_ms": 1790243397246,
+     "duration_ms": 45,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 48779,
+    "at_ms": 1790243397291,
+    "timing": {
+     "stage": "OPEN_SELECTION",
+     "start_elapsed_ms": 48779,
+     "start_ts_ms": 1790243397246,
+     "end_elapsed_ms": 54495,
+     "end_ts_ms": 1790243402962,
+     "duration_ms": 5716,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 48827,
+    "at_ms": 1790243397291
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 53816,
+    "at_ms": 1790243397291
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 53892,
+    "at_ms": 1790243397291
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 54495,
+    "at_ms": 1790243403005,
+    "timing": {
+     "stage": "ENTER_STAKE",
+     "start_elapsed_ms": 54495,
+     "start_ts_ms": 1790243402962,
+     "end_elapsed_ms": 75083,
+     "end_ts_ms": 1790243423550,
+     "duration_ms": 20588,
+     "status": "fail",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 54539,
+    "at_ms": 1790243403005
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 57632,
+    "at_ms": 1790243403005
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 58252,
+    "at_ms": 1790243403005
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 61217,
+    "at_ms": 1790243403005
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 61439,
+    "at_ms": 1790243403005
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 62947,
+    "at_ms": 1790243403005
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 67478,
+    "at_ms": 1790243403005
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 67678,
+    "at_ms": 1790243403005
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 68510,
+    "at_ms": 1790243403005
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 69402,
+    "at_ms": 1790243403005
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 70268,
+    "at_ms": 1790243403005
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 71450,
+    "at_ms": 1790243403005
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 74894,
+    "at_ms": 1790243403005
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 75084,
+    "at_ms": 1790243403005
+   }
+  ]
+ },
+ "device_stage": "ENTER_STAKE",
+ "execution_count": 1,
+ "run_id": "c__4GOnyvCH5NQc4piNZpRaJ2a9MkO7oemsqqdvV4E9R8",
+ "fixture_name": "Hapoel Tel Aviv v Bayern Munich",
+ "home": "Hapoel Tel Aviv",
+ "away": "Bayern Munich",
+ "competition": "Basketball Casino",
+ "selection": {
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+8.0",
+  "price": "1.83",
+  "availability": "OPEN",
+  "selection_role": "AWAY",
+  "selection_name": "Bayern Munich",
+  "bounds": [
+   301,
+   881,
+   345,
+   931
+  ]
+ },
+ "verification_detail": "Done missing after geometric digits"
+}

@@ -1,0 +1,408 @@
+{
+ "instruction_id": "proof-zvezda-111751",
+ "status": "FAIL",
+ "stage": "WRONG_EVENT",
+ "detail": "Home team not visible on live event page",
+ "duration_ms": 58422,
+ "progress": {
+  "stage": "VERIFY_EVENT",
+  "elapsed_ms": 58202,
+  "last_progress_at_ms": 1790245127723,
+  "instruction_id": "proof-zvezda-111751",
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790245072716
+   },
+   {
+    "stage": "SPORTS_HOME",
+    "elapsed_ms": 23,
+    "at_ms": 1790245072724,
+    "timing": {
+     "stage": "SPORTS_HOME",
+     "start_elapsed_ms": 23,
+     "start_ts_ms": 1790245072717,
+     "end_elapsed_ms": 32,
+     "end_ts_ms": 1790245072726,
+     "duration_ms": 9,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 32,
+    "at_ms": 1790245072736,
+    "timing": {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 32,
+     "start_ts_ms": 1790245072726,
+     "end_elapsed_ms": 11148,
+     "end_ts_ms": 1790245083842,
+     "duration_ms": 11116,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 4082,
+    "at_ms": 1790245072736
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 7624,
+    "at_ms": 1790245072736
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 7640,
+    "at_ms": 1790245072736
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 11076,
+    "at_ms": 1790245072736
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "elapsed_ms": 11148,
+    "at_ms": 1790245083853,
+    "timing": {
+     "stage": "SESSION_CHECK",
+     "start_elapsed_ms": 11148,
+     "start_ts_ms": 1790245083842,
+     "end_elapsed_ms": 14578,
+     "end_ts_ms": 1790245087273,
+     "duration_ms": 3430,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "elapsed_ms": 11162,
+    "at_ms": 1790245083853
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "elapsed_ms": 14478,
+    "at_ms": 1790245083853
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 14578,
+    "at_ms": 1790245087285,
+    "timing": {
+     "stage": "OPEN_SEARCH",
+     "start_elapsed_ms": 14578,
+     "start_ts_ms": 1790245087273,
+     "end_elapsed_ms": 14593,
+     "end_ts_ms": 1790245087287,
+     "duration_ms": 15,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "elapsed_ms": 14593,
+    "at_ms": 1790245087296,
+    "timing": {
+     "stage": "SPORTS_CONTEXT",
+     "start_elapsed_ms": 14593,
+     "start_ts_ms": 1790245087287,
+     "end_elapsed_ms": 18018,
+     "end_ts_ms": 1790245090712,
+     "duration_ms": 3425,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "elapsed_ms": 14605,
+    "at_ms": 1790245087296
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "elapsed_ms": 17909,
+    "at_ms": 1790245087296
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 18018,
+    "at_ms": 1790245090727,
+    "timing": {
+     "stage": "OPEN_SEARCH",
+     "start_elapsed_ms": 18018,
+     "start_ts_ms": 1790245090712,
+     "end_elapsed_ms": 27586,
+     "end_ts_ms": 1790245100281,
+     "duration_ms": 9568,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 18035,
+    "at_ms": 1790245090727
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 21320,
+    "at_ms": 1790245090727
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 21400,
+    "at_ms": 1790245090727
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 24676,
+    "at_ms": 1790245090727
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 24786,
+    "at_ms": 1790245090727
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 25863,
+    "at_ms": 1790245090727
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 27517,
+    "at_ms": 1790245090727
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 27586,
+    "at_ms": 1790245100304,
+    "timing": {
+     "stage": "ENTER_QUERY",
+     "start_elapsed_ms": 27586,
+     "start_ts_ms": 1790245100282,
+     "end_elapsed_ms": 27615,
+     "end_ts_ms": 1790245100310,
+     "duration_ms": 29,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "FOCUS",
+    "elapsed_ms": 27615,
+    "at_ms": 1790245100332,
+    "timing": {
+     "stage": "FOCUS",
+     "start_elapsed_ms": 27615,
+     "start_ts_ms": 1790245100310,
+     "end_elapsed_ms": 27641,
+     "end_ts_ms": 1790245100335,
+     "duration_ms": 26,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 27641,
+    "at_ms": 1790245100349,
+    "timing": {
+     "stage": "ENTER_QUERY",
+     "start_elapsed_ms": 27641,
+     "start_ts_ms": 1790245100335,
+     "end_elapsed_ms": 44367,
+     "end_ts_ms": 1790245117061,
+     "duration_ms": 16726,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 27658,
+    "at_ms": 1790245100349
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 29527,
+    "at_ms": 1790245100349
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 29561,
+    "at_ms": 1790245102276,
+    "timing": {
+     "stage": "ENTER_QUERY",
+     "start_elapsed_ms": 27641,
+     "start_ts_ms": 1790245100335,
+     "end_elapsed_ms": 44367,
+     "end_ts_ms": 1790245117061,
+     "duration_ms": 16726,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 44345,
+    "at_ms": 1790245102276
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "elapsed_ms": 44367,
+    "at_ms": 1790245117080,
+    "timing": {
+     "stage": "QUERY_VERIFY",
+     "start_elapsed_ms": 44367,
+     "start_ts_ms": 1790245117061,
+     "end_elapsed_ms": 46214,
+     "end_ts_ms": 1790245118910,
+     "duration_ms": 1847,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "elapsed_ms": 44388,
+    "at_ms": 1790245117080
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 46214,
+    "at_ms": 1790245118965,
+    "timing": {
+     "stage": "RESULTS_WAIT",
+     "start_elapsed_ms": 46214,
+     "start_ts_ms": 1790245118910,
+     "end_elapsed_ms": 50383,
+     "end_ts_ms": 1790245123077,
+     "duration_ms": 4169,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 46273,
+    "at_ms": 1790245118965
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 48162,
+    "at_ms": 1790245118965
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 48303,
+    "at_ms": 1790245118965
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 50228,
+    "at_ms": 1790245118965
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "elapsed_ms": 50383,
+    "at_ms": 1790245123100,
+    "timing": {
+     "stage": "FIXTURE_VERIFY",
+     "start_elapsed_ms": 50383,
+     "start_ts_ms": 1790245123077,
+     "end_elapsed_ms": 52463,
+     "end_ts_ms": 1790245125158,
+     "duration_ms": 2080,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "elapsed_ms": 50408,
+    "at_ms": 1790245123100
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "elapsed_ms": 52381,
+    "at_ms": 1790245123100
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 52463,
+    "at_ms": 1790245125183,
+    "timing": {
+     "stage": "SELECT_FIXTURE",
+     "start_elapsed_ms": 52463,
+     "start_ts_ms": 1790245125158,
+     "end_elapsed_ms": 55020,
+     "end_ts_ms": 1790245127714,
+     "duration_ms": 2557,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 52492,
+    "at_ms": 1790245125183
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 54425,
+    "at_ms": 1790245125183
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 54450,
+    "at_ms": 1790245125183
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 55020,
+    "at_ms": 1790245127723,
+    "timing": {
+     "stage": "VERIFY_EVENT",
+     "start_elapsed_ms": 55020,
+     "start_ts_ms": 1790245127714,
+     "end_elapsed_ms": 58201,
+     "end_ts_ms": 1790245130895,
+     "duration_ms": 3181,
+     "status": "fail",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 56233,
+    "at_ms": 1790245127723
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 58113,
+    "at_ms": 1790245127723
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 58202,
+    "at_ms": 1790245127723
+   }
+  ]
+ },
+ "device_stage": "VERIFY_EVENT",
+ "execution_count": 1,
+ "run_id": "c_E2NGT17c3hdDd8QpbiaDijERLlq4RMiZfaQk4pS2Z84",
+ "fixture_name": "Crvena Zvezda v Zalgiris",
+ "home": "Crvena Zvezda",
+ "away": "Zalgiris",
+ "competition": "Basketball",
+ "verification_detail": "Home team not visible on live event page"
+}

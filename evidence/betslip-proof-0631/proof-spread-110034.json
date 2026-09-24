@@ -1,0 +1,545 @@
+{
+ "instruction_id": "proof-spread-110034",
+ "status": "PASS",
+ "stage": "PASS",
+ "detail": "READY_STATE",
+ "duration_ms": 95839,
+ "progress": {
+  "stage": "CLEAR_BETSLIP",
+  "elapsed_ms": 95669,
+  "last_progress_at_ms": 1790244127238,
+  "instruction_id": "proof-spread-110034",
+  "stages": [
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 26101,
+    "at_ms": 1790244051724
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 26263,
+    "at_ms": 1790244061140,
+    "timing": {
+     "stage": "ENTER_QUERY",
+     "start_elapsed_ms": 26263,
+     "start_ts_ms": 1790244061083,
+     "end_elapsed_ms": 26325,
+     "end_ts_ms": 1790244061144,
+     "duration_ms": 62,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "FOCUS",
+    "elapsed_ms": 26325,
+    "at_ms": 1790244061180,
+    "timing": {
+     "stage": "FOCUS",
+     "start_elapsed_ms": 26325,
+     "start_ts_ms": 1790244061144,
+     "end_elapsed_ms": 26363,
+     "end_ts_ms": 1790244061182,
+     "duration_ms": 38,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 26363,
+    "at_ms": 1790244061212,
+    "timing": {
+     "stage": "ENTER_QUERY",
+     "start_elapsed_ms": 26363,
+     "start_ts_ms": 1790244061182,
+     "end_elapsed_ms": 28345,
+     "end_ts_ms": 1790244063164,
+     "duration_ms": 1982,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 26395,
+    "at_ms": 1790244061212
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 28293,
+    "at_ms": 1790244061212
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "elapsed_ms": 28345,
+    "at_ms": 1790244063197,
+    "timing": {
+     "stage": "QUERY_VERIFY",
+     "start_elapsed_ms": 28345,
+     "start_ts_ms": 1790244063164,
+     "end_elapsed_ms": 30172,
+     "end_ts_ms": 1790244064993,
+     "duration_ms": 1827,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "elapsed_ms": 28379,
+    "at_ms": 1790244063197
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 30172,
+    "at_ms": 1790244065147,
+    "timing": {
+     "stage": "RESULTS_WAIT",
+     "start_elapsed_ms": 30172,
+     "start_ts_ms": 1790244064994,
+     "end_elapsed_ms": 34255,
+     "end_ts_ms": 1790244069074,
+     "duration_ms": 4083,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 30330,
+    "at_ms": 1790244065147
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 32227,
+    "at_ms": 1790244065147
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 32307,
+    "at_ms": 1790244065147
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 34162,
+    "at_ms": 1790244065147
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "elapsed_ms": 34255,
+    "at_ms": 1790244069111,
+    "timing": {
+     "stage": "FIXTURE_VERIFY",
+     "start_elapsed_ms": 34255,
+     "start_ts_ms": 1790244069074,
+     "end_elapsed_ms": 36318,
+     "end_ts_ms": 1790244071137,
+     "duration_ms": 2063,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "elapsed_ms": 34294,
+    "at_ms": 1790244069111
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "elapsed_ms": 36232,
+    "at_ms": 1790244069111
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 36318,
+    "at_ms": 1790244071179,
+    "timing": {
+     "stage": "SELECT_FIXTURE",
+     "start_elapsed_ms": 36318,
+     "start_ts_ms": 1790244071137,
+     "end_elapsed_ms": 38946,
+     "end_ts_ms": 1790244073765,
+     "duration_ms": 2628,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 36362,
+    "at_ms": 1790244071179
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 38260,
+    "at_ms": 1790244071179
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 38344,
+    "at_ms": 1790244071179
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 38946,
+    "at_ms": 1790244073820,
+    "timing": {
+     "stage": "VERIFY_EVENT",
+     "start_elapsed_ms": 38946,
+     "start_ts_ms": 1790244073765,
+     "end_elapsed_ms": 43363,
+     "end_ts_ms": 1790244078182,
+     "duration_ms": 4417,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 40203,
+    "at_ms": 1790244073820
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 43142,
+    "at_ms": 1790244073820
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 43363,
+    "at_ms": 1790244078238,
+    "timing": {
+     "stage": "MARKET_NAV",
+     "start_elapsed_ms": 43363,
+     "start_ts_ms": 1790244078182,
+     "end_elapsed_ms": 48660,
+     "end_ts_ms": 1790244083479,
+     "duration_ms": 5297,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 43422,
+    "at_ms": 1790244078238
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 48585,
+    "at_ms": 1790244078238
+   },
+   {
+    "stage": "READ_SELECTION",
+    "elapsed_ms": 48660,
+    "at_ms": 1790244083521,
+    "timing": {
+     "stage": "READ_SELECTION",
+     "start_elapsed_ms": 48660,
+     "start_ts_ms": 1790244083479,
+     "end_elapsed_ms": 48704,
+     "end_ts_ms": 1790244083523,
+     "duration_ms": 44,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "READ_LINE",
+    "elapsed_ms": 48704,
+    "at_ms": 1790244083566,
+    "timing": {
+     "stage": "READ_LINE",
+     "start_elapsed_ms": 48704,
+     "start_ts_ms": 1790244083523,
+     "end_elapsed_ms": 48749,
+     "end_ts_ms": 1790244083569,
+     "duration_ms": 45,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "READ_PRICE",
+    "elapsed_ms": 48749,
+    "at_ms": 1790244083611,
+    "timing": {
+     "stage": "READ_PRICE",
+     "start_elapsed_ms": 48749,
+     "start_ts_ms": 1790244083569,
+     "end_elapsed_ms": 48794,
+     "end_ts_ms": 1790244083613,
+     "duration_ms": 45,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 48794,
+    "at_ms": 1790244083656,
+    "timing": {
+     "stage": "OPEN_SELECTION",
+     "start_elapsed_ms": 48794,
+     "start_ts_ms": 1790244083613,
+     "end_elapsed_ms": 54743,
+     "end_ts_ms": 1790244089562,
+     "duration_ms": 5949,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 48839,
+    "at_ms": 1790244083656
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 53863,
+    "at_ms": 1790244083656
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 54135,
+    "at_ms": 1790244083656
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 54743,
+    "at_ms": 1790244089601,
+    "timing": {
+     "stage": "ENTER_STAKE",
+     "start_elapsed_ms": 54743,
+     "start_ts_ms": 1790244089562,
+     "end_elapsed_ms": 88400,
+     "end_ts_ms": 1790244123219,
+     "duration_ms": 33657,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 54783,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 58158,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 58628,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 61694,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 61924,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 63438,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 68056,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 68249,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 69073,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 69941,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 70796,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 71636,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 72518,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 73377,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 74258,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 75106,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 75959,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 76790,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 77673,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 79068,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 83724,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 83866,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 85069,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 88318,
+    "at_ms": 1790244089601
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 88400,
+    "at_ms": 1790244123257,
+    "timing": {
+     "stage": "VERIFY_FINAL_STATE",
+     "start_elapsed_ms": 88400,
+     "start_ts_ms": 1790244123219,
+     "end_elapsed_ms": 95668,
+     "end_ts_ms": 1790244130487,
+     "duration_ms": 7268,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 89143,
+    "at_ms": 1790244123257
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 92265,
+    "at_ms": 1790244123257
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 92382,
+    "at_ms": 1790244127238
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 92421,
+    "at_ms": 1790244127238
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 95482,
+    "at_ms": 1790244127238
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 95669,
+    "at_ms": 1790244127238
+   }
+  ]
+ },
+ "device_stage": "CLEAR_BETSLIP",
+ "execution_count": 1,
+ "run_id": "c_IuFmDGXLBHvOEkVWqll5nKQI-7vAD8_ERFyK5eDqBN8",
+ "fixture_name": "Hapoel Tel Aviv v Bayern Munich",
+ "home": "Hapoel Tel Aviv",
+ "away": "Bayern Munich",
+ "competition": "Basketball Casino",
+ "selection": {
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+8.0",
+  "price": "1.83",
+  "availability": "OPEN",
+  "selection_role": "AWAY",
+  "selection_name": "Bayern Munich",
+  "bounds": [
+   301,
+   881,
+   345,
+   931
+  ]
+ },
+ "final_state": {
+  "home": "Hapoel Tel Aviv",
+  "away": "Bayern Munich",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+8.0",
+  "price": "1.83",
+  "stake": "0.10",
+  "state": "READY",
+  "place_bet_visible": true,
+  "wager_submitted": false
+ },
+ "ready_state": {
+  "fixture_home": "Hapoel Tel Aviv",
+  "fixture_away": "Bayern Munich",
+  "market": "SPREAD",
+  "selection_role": "AWAY",
+  "selection_name": "Bayern Munich",
+  "line": "+8.0",
+  "price": "1.83",
+  "stake": "0.10",
+  "session": "LOGGED_IN",
+  "state": "READY",
+  "minimum_price_ok": true,
+  "place_bet_visible": true,
+  "wager_submitted": false,
+  "stop_before_wager": true
+ },
+ "verification_detail": "READY_STATE: session, selection, price and stake verified; stopped before wager",
+ "betslip_clear": {
+  "tapped": false,
+  "detail": "No remove icon on a selection line"
+ }
+}

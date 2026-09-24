@@ -29,8 +29,11 @@ QUEUED -> APPROVED (auto_approve, within limits)
 ```
 
 The approval notification says exactly what will be placed and gives the command
-`/approve on-xxxxxxx`. Commands are only accepted from the configured chat. Commands that
-predate the service, or are more than 5 minutes old, are never acted on. Every command
+`/approve on-xxxxxxx`. A command is obeyed only if it comes from the configured group chat
+AND from an operator user ID in `notifications.allowed_user_ids` (currently only the group
+creator). Other group members, other chats and anonymous-admin posts are audited
+(`UNAUTHORISED_COMMAND`) and ignored. With no operator configured, every command is refused.
+Commands that predate the service, or are more than 5 minutes old, are never acted on. Every command
 goes through the same checks: approval window, limits and kill switch.
 
 On the phone (execution_mode `dispatch` + confirmation `APPROVED`), the normal READY path
@@ -54,7 +57,36 @@ runs first: fixture, market, line, price, stake and betslip verification. Then:
 | REJECTED | REJECTED |
 | anything unclear | PLACEMENT_UNKNOWN (not terminal) |
 
-5. **Reset:** the betslip is reset by tapping only Done, Continue, Close or Remove All.
+5. **Reset:** the receipt banner is closed by its X (right of "Share"; never "Reuse
+   Selections"). A selection left on the slip is removed by its own X. Otherwise only Done,
+   Continue, Close or Remove All are tapped. READY/prepare runs also remove their selection,
+   so the next run is still a single. `RESET_BETSLIP` does the same on demand, on the current
+   screen.
+
+Real receipt (calibrated 2026-09-24): green banner "Bet Placed" + "Bet Ref BT…", then the
+selection, then a "Stake / To Return" row. OCR splits the reference and mangles amounts
+("£O.1 0"); the reference is informational, since My Bets identifies the bet by fixture,
+selection and stake.
+
+### Stake entry (after a real incident)
+
+In a READY proof the keypad OCR'd as one line and the old code guessed key positions,
+typing £8,718 instead of £0.10. Nothing was placed (READY never taps). Now:
+
+* key positions come only from OCR'd digit words on a validated 3×4 grid, with no guessing;
+* the field is cleared first. The typed stake must read back before Done: the stake digits AND
+  "To Return" = stake × price. If not, the field is erased and the run fails;
+* the same strict check runs after Done, at READY, before preparing and just before the tap.
+  If OCR drops the stake box, only an exact return at price ≥ 1.10 is accepted, since it
+  uniquely fixes the stake. A "Place Bet visible" screen is never evidence of the stake.
+
+### Basketball Game Lines
+
+`GameLinesParser` reads the Spread / Total / Money Line grid from word positions. Rows are
+found by the team labels (exact, or the team's letters in order when OCR fragments them).
+Several captures must agree on a cell. A spread sign is only inferred from the opposite
+row, and the betslip must re-show the exact signed line (or Over/Under + line) in large
+text before READY.
 
 ## Knowing the outcome: My Bets reconciliation
 
@@ -98,7 +130,10 @@ classifier and matcher test cases.
 
 1. **Offline:** the backend and phone unit tests above. **Done.**
 2. **Read-only live:** OBSERVE and MY_BETS on the phone. **Done** (`evidence/final-action-0629`).
-3. **Shadow capture** of your manual bets. **Next;** needs you.
+3. **Shadow capture** of your manual bets. **Done** (receipt + My Bets calibrated).
+3b. **Watched betslip proof, basketball spread/totals (READY, 0.6.41):** **Done**. Covered
+   Hapoel v Bayern spread ±8.0 and O/U 173.5, and Zvezda v Zalgiris -2.5 and O 168.5. Each run
+   ended READY with £0.10 verified and the slip cleared (`evidence/betslip-proof-0631`).
 4. **Zero-balance live tap:** with final action enabled, one approved alert. Expected
    INSUFFICIENT_FUNDS, reset, then verified absent in My Bets. You arm and approve it.
 5. **First real placement:** £0.10, approved by you. Receipt, My Bets verification,

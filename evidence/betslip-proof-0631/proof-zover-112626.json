@@ -1,0 +1,606 @@
+{
+ "instruction_id": "proof-zover-112626",
+ "status": "PASS",
+ "stage": "PASS",
+ "detail": "READY_STATE",
+ "duration_ms": 131416,
+ "progress": {
+  "stage": "CLEAR_BETSLIP",
+  "elapsed_ms": 131295,
+  "last_progress_at_ms": 1790245709248,
+  "instruction_id": "proof-zover-112626",
+  "stages": [
+   {
+    "stage": "OPEN_SEARCH",
+    "elapsed_ms": 26691,
+    "at_ms": 1790245603860
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 26779,
+    "at_ms": 1790245613450,
+    "timing": {
+     "stage": "ENTER_QUERY",
+     "start_elapsed_ms": 26779,
+     "start_ts_ms": 1790245613418,
+     "end_elapsed_ms": 26816,
+     "end_ts_ms": 1790245613455,
+     "duration_ms": 37,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "FOCUS",
+    "elapsed_ms": 26816,
+    "at_ms": 1790245613481,
+    "timing": {
+     "stage": "FOCUS",
+     "start_elapsed_ms": 26816,
+     "start_ts_ms": 1790245613455,
+     "end_elapsed_ms": 26844,
+     "end_ts_ms": 1790245613484,
+     "duration_ms": 28,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 26844,
+    "at_ms": 1790245613506,
+    "timing": {
+     "stage": "ENTER_QUERY",
+     "start_elapsed_ms": 26844,
+     "start_ts_ms": 1790245613484,
+     "end_elapsed_ms": 42539,
+     "end_ts_ms": 1790245629178,
+     "duration_ms": 15695,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 26869,
+    "at_ms": 1790245613506
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 28750,
+    "at_ms": 1790245613506
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 28778,
+    "at_ms": 1790245615432,
+    "timing": {
+     "stage": "ENTER_QUERY",
+     "start_elapsed_ms": 26844,
+     "start_ts_ms": 1790245613484,
+     "end_elapsed_ms": 42539,
+     "end_ts_ms": 1790245629178,
+     "duration_ms": 15695,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 42506,
+    "at_ms": 1790245615432
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "elapsed_ms": 42539,
+    "at_ms": 1790245629201,
+    "timing": {
+     "stage": "QUERY_VERIFY",
+     "start_elapsed_ms": 42539,
+     "start_ts_ms": 1790245629178,
+     "end_elapsed_ms": 44388,
+     "end_ts_ms": 1790245631029,
+     "duration_ms": 1849,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "elapsed_ms": 42563,
+    "at_ms": 1790245629201
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 44388,
+    "at_ms": 1790245631127,
+    "timing": {
+     "stage": "RESULTS_WAIT",
+     "start_elapsed_ms": 44388,
+     "start_ts_ms": 1790245631029,
+     "end_elapsed_ms": 48534,
+     "end_ts_ms": 1790245635173,
+     "duration_ms": 4146,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 44492,
+    "at_ms": 1790245631127
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 46358,
+    "at_ms": 1790245631127
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 46518,
+    "at_ms": 1790245631127
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "elapsed_ms": 48375,
+    "at_ms": 1790245631127
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "elapsed_ms": 48534,
+    "at_ms": 1790245635197,
+    "timing": {
+     "stage": "FIXTURE_VERIFY",
+     "start_elapsed_ms": 48534,
+     "start_ts_ms": 1790245635173,
+     "end_elapsed_ms": 50439,
+     "end_ts_ms": 1790245637078,
+     "duration_ms": 1905,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "elapsed_ms": 48560,
+    "at_ms": 1790245635197
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "elapsed_ms": 50384,
+    "at_ms": 1790245635197
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 50439,
+    "at_ms": 1790245637098,
+    "timing": {
+     "stage": "SELECT_FIXTURE",
+     "start_elapsed_ms": 50439,
+     "start_ts_ms": 1790245637078,
+     "end_elapsed_ms": 52887,
+     "end_ts_ms": 1790245639525,
+     "duration_ms": 2448,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 50460,
+    "at_ms": 1790245637098
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 52257,
+    "at_ms": 1790245637098
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "elapsed_ms": 52303,
+    "at_ms": 1790245637098
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 52887,
+    "at_ms": 1790245639544,
+    "timing": {
+     "stage": "VERIFY_EVENT",
+     "start_elapsed_ms": 52887,
+     "start_ts_ms": 1790245639525,
+     "end_elapsed_ms": 57729,
+     "end_ts_ms": 1790245644368,
+     "duration_ms": 4842,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 54108,
+    "at_ms": 1790245639544
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 57576,
+    "at_ms": 1790245639544
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 57729,
+    "at_ms": 1790245644405,
+    "timing": {
+     "stage": "MARKET_NAV",
+     "start_elapsed_ms": 57729,
+     "start_ts_ms": 1790245644368,
+     "end_elapsed_ms": 71729,
+     "end_ts_ms": 1790245658368,
+     "duration_ms": 14000,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 57768,
+    "at_ms": 1790245644405
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 64279,
+    "at_ms": 1790245644405
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 65072,
+    "at_ms": 1790245644405
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 71493,
+    "at_ms": 1790245644405
+   },
+   {
+    "stage": "READ_SELECTION",
+    "elapsed_ms": 71729,
+    "at_ms": 1790245658399,
+    "timing": {
+     "stage": "READ_SELECTION",
+     "start_elapsed_ms": 71729,
+     "start_ts_ms": 1790245658368,
+     "end_elapsed_ms": 71762,
+     "end_ts_ms": 1790245658401,
+     "duration_ms": 33,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "READ_LINE",
+    "elapsed_ms": 71762,
+    "at_ms": 1790245658424,
+    "timing": {
+     "stage": "READ_LINE",
+     "start_elapsed_ms": 71762,
+     "start_ts_ms": 1790245658401,
+     "end_elapsed_ms": 71786,
+     "end_ts_ms": 1790245658425,
+     "duration_ms": 24,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "READ_PRICE",
+    "elapsed_ms": 71786,
+    "at_ms": 1790245658445,
+    "timing": {
+     "stage": "READ_PRICE",
+     "start_elapsed_ms": 71786,
+     "start_ts_ms": 1790245658425,
+     "end_elapsed_ms": 71807,
+     "end_ts_ms": 1790245658445,
+     "duration_ms": 21,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 71807,
+    "at_ms": 1790245658464,
+    "timing": {
+     "stage": "OPEN_SELECTION",
+     "start_elapsed_ms": 71807,
+     "start_ts_ms": 1790245658445,
+     "end_elapsed_ms": 86268,
+     "end_ts_ms": 1790245672907,
+     "duration_ms": 14461,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 71827,
+    "at_ms": 1790245658464
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 78181,
+    "at_ms": 1790245658464
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 78991,
+    "at_ms": 1790245658464
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 85478,
+    "at_ms": 1790245658464
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 85690,
+    "at_ms": 1790245658464
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 86268,
+    "at_ms": 1790245672926,
+    "timing": {
+     "stage": "ENTER_STAKE",
+     "start_elapsed_ms": 86268,
+     "start_ts_ms": 1790245672907,
+     "end_elapsed_ms": 118345,
+     "end_ts_ms": 1790245704984,
+     "duration_ms": 32077,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 86288,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 89696,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 90227,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 93236,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 93409,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 94901,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 98964,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 99083,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 99896,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 100733,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 101551,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 102381,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 103198,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 104021,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 104840,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 105676,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 106498,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 107332,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 108160,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 109495,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 113342,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 113503,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 114693,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 118148,
+    "at_ms": 1790245672926
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 118345,
+    "at_ms": 1790245705007,
+    "timing": {
+     "stage": "VERIFY_FINAL_STATE",
+     "start_elapsed_ms": 118345,
+     "start_ts_ms": 1790245704984,
+     "end_elapsed_ms": 131295,
+     "end_ts_ms": 1790245717934,
+     "duration_ms": 12950,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 119073,
+    "at_ms": 1790245705007
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 122362,
+    "at_ms": 1790245705007
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 122589,
+    "at_ms": 1790245709248
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 122611,
+    "at_ms": 1790245709248
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 125835,
+    "at_ms": 1790245709248
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 125885,
+    "at_ms": 1790245709248
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 127669,
+    "at_ms": 1790245709248
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 131136,
+    "at_ms": 1790245709248
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 131295,
+    "at_ms": 1790245709248
+   }
+  ]
+ },
+ "device_stage": "CLEAR_BETSLIP",
+ "execution_count": 1,
+ "run_id": "c_EZ9xCe7nIZy3xSR4_Fl3pv4oOJp-z-jM3C8V6pJvlDs",
+ "fixture_name": "Crvena Zvezda v Zalgiris",
+ "home": "Crvena Zvezda",
+ "away": "Zalgiris",
+ "competition": "Basketball",
+ "selection": {
+  "market": "TOTAL",
+  "side": "OVER",
+  "line": "168.5",
+  "price": "1.83",
+  "availability": "OPEN",
+  "selection_role": "OVER",
+  "selection_name": "Over",
+  "bounds": [
+   436,
+   796,
+   512,
+   846
+  ]
+ },
+ "final_state": {
+  "home": "Crvena Zvezda",
+  "away": "Zalgiris",
+  "market": "TOTAL",
+  "side": "OVER",
+  "line": "168.5",
+  "price": "1.83",
+  "stake": "0.10",
+  "state": "READY",
+  "place_bet_visible": true,
+  "wager_submitted": false
+ },
+ "ready_state": {
+  "fixture_home": "Crvena Zvezda",
+  "fixture_away": "Zalgiris",
+  "market": "TOTAL",
+  "selection_role": "OVER",
+  "selection_name": "Over",
+  "line": "168.5",
+  "price": "1.83",
+  "stake": "0.10",
+  "session": "LOGGED_IN",
+  "state": "READY",
+  "minimum_price_ok": true,
+  "place_bet_visible": true,
+  "wager_submitted": false,
+  "stop_before_wager": true
+ },
+ "verification_detail": "READY_STATE: session, selection, price and stake verified; stopped before wager",
+ "betslip_clear": {
+  "tapped": true,
+  "bounds": [
+   17,
+   1175,
+   45,
+   1207
+  ],
+  "place_bet_still_visible": false
+ }
+}

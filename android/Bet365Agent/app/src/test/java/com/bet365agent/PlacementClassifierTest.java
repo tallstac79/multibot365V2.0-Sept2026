@@ -62,6 +62,35 @@ public class PlacementClassifierTest {
                 Arrays.asList("3““", "Place", "Bet"), "Hapoel Tel Aviv"));
     }
 
+    @Test public void genericResetRemovesOnlyASelectionLine() {
+        assertEquals(0, PlacementClassifier.removeAnySelectionWord(Arrays.asList("><", "Bayern", "Munich", "+8.0", "1.83")));
+        assertEquals(-1, PlacementClassifier.removeAnySelectionWord(Arrays.asList("m", "Share", "x")));
+        assertEquals(-1, PlacementClassifier.removeAnySelectionWord(Arrays.asList("x", "Reuse", "Selections")));
+        assertEquals(-1, PlacementClassifier.removeAnySelectionWord(Arrays.asList("><", "Place", "Bet")));
+    }
+
+    @Test public void collapsedSlipSelectionFoundByIndentWhenIconUnread() {
+        // Real collapsed slip: "Bayern Munich +8.0" at left 59, "Point Spread" below, X not OCR'd.
+        assertTrue(PlacementClassifier.selectionLineByIndent("Bayern Munich +8.0", 59, "Point Spread", "Bayern Munich"));
+        assertTrue(PlacementClassifier.selectionLineByIndent("Bayern Munich +8.0", 59, "Point Spread", null));
+        assertFalse(PlacementClassifier.selectionLineByIndent("Bayern Munich", 39, "Points", null));        // grid row
+        assertFalse(PlacementClassifier.selectionLineByIndent("Hapoel Tel Aviv vs Bayern", 59, "Stake", null));
+        assertFalse(PlacementClassifier.selectionLineByIndent("Bayern Munich +8.0", 59, "Point Spread", "Hapoel Tel Aviv"));
+    }
+
+    @Test public void betslipMustShowTheExactLine() {
+        java.util.List<String> spread = Arrays.asList("Bayern Munich +8.0", "Point Spread", "Hapoel Tel Aviv vs Bayern Munich");
+        assertTrue(PlacementClassifier.slipShowsLine(spread, "SPREAD", "AWAY", "Bayern Munich", "+8.0"));
+        assertTrue(PlacementClassifier.slipShowsLine(spread, "SPREAD", "AWAY", "Bayern Munich", "8.0"));
+        assertFalse(PlacementClassifier.slipShowsLine(spread, "SPREAD", "AWAY", "Bayern Munich", "-8.0"));
+        assertFalse(PlacementClassifier.slipShowsLine(spread, "SPREAD", "AWAY", "Bayern Munich", "+18.0"));
+        assertFalse(PlacementClassifier.slipShowsLine(spread, "SPREAD", "HOME", "Hapoel Tel Aviv", "-8.0"));
+        java.util.List<String> under = Arrays.asList("Under 173.5", "Game Totals");
+        assertTrue(PlacementClassifier.slipShowsLine(under, "TOTAL", "UNDER", "Under", "173.5"));
+        assertFalse(PlacementClassifier.slipShowsLine(under, "TOTAL", "OVER", "Over", "173.5"));
+        assertFalse(PlacementClassifier.slipShowsLine(under, "TOTAL", "UNDER", "Under", "172.5"));
+    }
+
     @Test public void oddsChangePromptIsReportedNeverAccepted() {
         PlacementClassifier.Result r = classify(false, "The odds have changed", "1.83 → 1.72", "Accept Changes");
         assertEquals("PRICE_CHANGED", r.outcome);

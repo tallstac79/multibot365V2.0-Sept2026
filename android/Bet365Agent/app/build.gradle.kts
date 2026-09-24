@@ -1,4 +1,4 @@
-plugins {
+﻿plugins {
     id("com.android.application")
 }
 
@@ -10,8 +10,8 @@ android {
         applicationId = "com.bet365agent"
         minSdk = 26
         targetSdk = 34
-        versionCode = 43
-        versionName = "0.6.31-receipt"
+        versionCode = 53
+        versionName = "0.6.41-slipline"
     }
 
     buildTypes {

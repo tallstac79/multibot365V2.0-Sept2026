@@ -147,6 +147,55 @@ final class PlacementClassifier {
         return rest.contains(first) ? 0 : -1;
     }
 
+    /** Remove icon at the start of ANY betslip selection line ("><  Bayern Munich +8.0 1.83"): used by the
+     *  generic reset, which does not know the selection. Needs at least two named words after the icon. */
+    static int removeAnySelectionWord(List<String> words) {
+        if (words.size() < 3 || !closeGlyph(words.get(0))) return -1;
+        int named = 0;
+        for (String w : words.subList(1, words.size())) if (w.matches(".*[A-Za-z]{2,}.*")) named++;
+        String rest = String.join(" ", words.subList(1, words.size())).toLowerCase(Locale.US);
+        if (rest.contains("share") || rest.contains("reuse") || rest.contains("place")) return -1;
+        return named >= 2 ? 0 : -1;
+    }
+
+    /** Betslip selection line whose remove icon OCR missed (real collapsed slip): the name line is indented
+     *  by the icon (left edge ~59 px) and the line below names the market ("Point Spread"). With a known
+     *  selection name the line must contain it; otherwise it must look like a selection (letters). */
+    static boolean selectionLineByIndent(String line, int left, String nextLine, String selectionName) {
+        if (left < 45 || left > 85 || line == null || nextLine == null) return false;
+        String t = line.toLowerCase(Locale.US), next = nextLine.toLowerCase(Locale.US);
+        if (t.contains("place") || t.contains("share") || t.contains("reuse") || t.contains("stake")) return false;
+        boolean market = next.contains("spread") || next.contains("total") || next.contains("money line")
+                || next.contains("moneyline") || next.contains("result") || next.contains("winner") || next.contains("handicap");
+        if (!market) return false;
+        if (selectionName != null && !selectionName.trim().isEmpty())
+            return t.contains(selectionName.trim().toLowerCase(Locale.US).split("\s+")[0]);
+        return t.matches(".*[a-z]{2,}.*");
+    }
+
+    /** The betslip re-shows the selection in large text ("Bayern Munich +8.0", "Under 173.5"): an independent
+     *  read of the line. SPREAD: team word + the exact signed line; TOTAL: Over/Under + the line. */
+    static boolean slipShowsLine(List<String> lines, String market, String side, String name, String line) {
+        if (lines == null || line == null) return false;
+        if (!"SPREAD".equals(market) && !"TOTAL".equals(market)) return true;
+        java.math.BigDecimal want;
+        try { want = new java.math.BigDecimal(line); } catch (Exception e) { return false; }
+        String plain = want.abs().setScale(1, java.math.RoundingMode.UNNECESSARY).toPlainString();
+        for (String raw : lines) {
+            String t = " " + raw.toLowerCase(Locale.US).replace(',', '.') + " ";
+            if ("TOTAL".equals(market)) {
+                String word = "OVER".equals(side) ? "over" : "under";
+                if (t.contains(" " + word + " ") && t.matches(".*(?<![\\d.])" + java.util.regex.Pattern.quote(plain) + "(?![\\d]).*")) return true;
+            } else {
+                String team = name == null ? "" : name.trim().toLowerCase(Locale.US).split("\\s+")[0];
+                String signed = want.signum() > 0 ? "+" + plain : want.signum() < 0 ? "-" + plain : plain;
+                if (!team.isEmpty() && t.contains(team)
+                        && t.matches(".*(?<![\\d.+-])" + java.util.regex.Pattern.quote(signed) + "(?![\\d]).*")) return true;
+            }
+        }
+        return false;
+    }
+
     /** True if a line is a control the reset may tap: never anything that could place or accept a bet. */
     static boolean safeResetControl(String text) {
         String t = text.trim().toLowerCase(Locale.US);

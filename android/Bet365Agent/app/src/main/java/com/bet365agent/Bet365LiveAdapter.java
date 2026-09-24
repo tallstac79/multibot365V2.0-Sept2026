@@ -25,6 +25,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
     private final VisualSession ui;
     private final String sport;
     private Fixture liveFixture;
+    /** Price of the selection put on the betslip in this run (stake x price is cross-checked with "To Return"). */
+    private String openedPrice;
     /** Last typed search query (exact). Discovery only — identity uses identityHome/Away. */
     private String lastQuery = "";
     /** Intended home team for hard fixture identity (never diluted by search aliases). */
@@ -732,7 +734,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     public CompletableFuture<Void> verify_event(Fixture fixture) {
-        return ui.delay(1200).thenCompose(v -> ui.capture("event")).thenAccept(s -> {
+        return ui.delay(1200).thenCompose(v -> eventLoaded(fixture, 1)).thenAccept(s -> {
             require(visible(s, fixture.home) || visibleLoose(s, fixture.home), "WRONG_EVENT", "Home team not visible on live event page");
             require(visible(s, fixture.away) || visibleLoose(s, fixture.away), "WRONG_EVENT", "Away team not visible on live event page");
             require(!visible(s, "SIMULATOR"), "WRONG_EVENT", "Simulator page during live event verify");
@@ -740,12 +742,36 @@ final class Bet365LiveAdapter implements SiteAdapter {
         });
     }
 
+    /** The event page can still show a loading spinner (real: Crvena Zvezda v Zalgiris). Re-capture up to 5 times
+     *  until both team names are visible; the caller then verifies the frame strictly. */
+    private CompletableFuture<VisualScreen> eventLoaded(Fixture fixture, int attempt) {
+        return ui.capture("event").thenCompose(s -> {
+            boolean both = (visible(s, fixture.home) || visibleLoose(s, fixture.home))
+                    && (visible(s, fixture.away) || visibleLoose(s, fixture.away));
+            if (both || attempt >= 5) return CompletableFuture.completedFuture(s);
+            ui.put("event_wait_attempts", attempt);
+            return ui.delay(1500).thenCompose(v -> eventLoaded(fixture, attempt + 1));
+        });
+    }
+
     public CompletableFuture<List<Selection>> discover_markets() {
+        if ("basketball".equals(sport) && liveFixture != null) {
+            // Game Lines grid: several OCR reads must agree (single frames misread digits).
+            return gridConsensus("markets", 1, new ArrayList<>(), new JSONArray()).thenApply(found -> {
+                require(!found.isEmpty(), "EVENT_NOT_VERIFIED", "Game Lines grid not read consistently (see game_lines_reads)");
+                ui.put("fixture_home", liveFixture.home);
+                ui.put("fixture_away", liveFixture.away);
+                return found;
+            });
+        }
         return ui.captureTable("markets").thenApply(s -> {
-            List<Selection> found = parseFullTimeResult(s);
+            // Basketball Game Lines grid first: rows are identified by the fixture's team labels.
+            List<Selection> found = parseGameLines(s, true);
+            boolean grid = !found.isEmpty();
+            if (!grid) found = parseFullTimeResult(s);
             if (found.isEmpty()) found = parseMarkets(s);
             require(!found.isEmpty(), "EVENT_NOT_VERIFIED", "No live market quotes parsed from Bet365 event OCR");
-            validateMoneylineIdentities(found);
+            if (!grid) validateMoneylineIdentities(found);
             JSONArray map = new JSONArray();
             for (Selection q : found) {
                 if (!"MONEYLINE".equals(q.market)) continue;
@@ -802,10 +828,27 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     public CompletableFuture<Void> open_selection(Selection selection) {
+        if ("basketball".equals(sport) && liveFixture != null) {
+            return gridConsensus("selection_preflight", 1, new ArrayList<>(), new JSONArray()).thenCompose(grid -> {
+                Selection current = null;
+                for (Selection q : grid)
+                    if (q.market.equals(selection.market) && q.side.equals(selection.side) && lineEquals(q.line, selection.line)) current = q;
+                if (current == null) {
+                    boolean sideSeen = false;
+                    for (Selection q : grid) if (q.market.equals(selection.market) && q.side.equals(selection.side)) sideSeen = true;
+                    throw new Failure(sideSeen ? "LINE_CHANGED" : "TARGET_NOT_FOUND",
+                            "Re-read has no agreed " + selection.market + "/" + selection.side + "/" + selection.line);
+                }
+                require(current.price.equals(selection.price), "PRICE_CHANGED", "Price changed before selecting live quote: " + current.price);
+                openedPrice = current.price;
+                return ui.tap(current.bounds, current.market + " / " + current.side + " / " + current.line + " / " + current.price);
+            });
+        }
         return ui.captureTable("selection_preflight").thenCompose(s -> {
             Selection current = refind(s, selection);
             require(current.price.equals(selection.price), "PRICE_CHANGED", "Price changed before selecting live quote");
             require("OPEN".equals(current.availability), current.availability.equals("SUSPENDED") ? "SUSPENDED" : "UNAVAILABLE", "Selection not open");
+            openedPrice = current.price;
             return ui.tap(current.bounds, current.market + " / " + current.side + " / " + current.line + " / " + current.price);
         });
     }
@@ -851,63 +894,82 @@ final class Bet365LiveAdapter implements SiteAdapter {
             .thenCompose(v -> ui.capture("betslip_stake"))
             .thenAccept(after -> {
                 detectBetslipFaults(after);
-                boolean ok = stakeVisible(after, amount);
-                // Bet365 often OCRs stake weakly after Done; Place Bet without Set Stake implies stake committed.
-                if (!ok && findPlaceBetLine(after) != null && !visible(after, "Set Stake")) {
-                    ok = true;
-                    ui.put("stake_ocr_weak", true);
-                }
+                // Strict: stake digits AND "To Return" (= stake x price) must both read back. A betslip
+                // showing Place Bet is NOT evidence of the right stake (real incident: £8,718 typed).
+                boolean ok = stakeVerified(after, amount, openedPrice, "stake_check_after_done");
                 require(ok, "STAKE_REJECTED", "Stake readback mismatch; wanted " + amount);
                 ui.put("stake_entered", amount);
             });
     }
 
-    private CompletableFuture<Void> enterStakeOnPad(VisualScreen uiScreen, String amount) {
-        // Prefer quick-stake chips when amount matches (+?1 / +?5 / +?20); OCR often misses light-gray keypad digits.
-        // OCR groups footer as "Remember Stake Done" ? locate via contains, tap RIGHT half for Done.
-        VisualScreen.Line done = findDoneLine(uiScreen);
-        String quick = null;
-        if ("1.00".equals(amount) || "1".equals(amount)) quick = "+?1";
-        else if ("5.00".equals(amount) || "5".equals(amount)) quick = "+?5";
-        else if ("20.00".equals(amount) || "20".equals(amount)) quick = "+?20";
-
-        if (done != null && quick != null) {
-            android.graphics.Rect tap = null;
-            for (VisualScreen.Line line : uiScreen.lines) {
-                String lt = line.text.trim().toLowerCase(java.util.Locale.US);
-                if (lt.contains("+?1") || lt.equals("+1") || lt.contains("+ 1") || lt.equals("?1") || lt.contains("+ps1")) {
-                    if ("1.00".equals(amount) || "1".equals(amount)) { tap = new android.graphics.Rect(line.bounds); break; }
-                }
-                if (lt.contains("+?5") || lt.equals("+5")) {
-                    if ("5.00".equals(amount) || "5".equals(amount)) { tap = new android.graphics.Rect(line.bounds); break; }
-                }
-                if (lt.contains("+?20") || lt.equals("+20")) {
-                    if ("20.00".equals(amount) || "20".equals(amount)) { tap = new android.graphics.Rect(line.bounds); break; }
-                }
-            }
-            if (tap == null) tap = geometricQuickStake(done, amount);
-            return ui.tap(tap, "quick:" + quick)
-                    .thenCompose(v -> ui.delay(400))
-                    .thenCompose(v -> ui.capture("stake_after_quick"))
-                    .thenCompose(s -> {
-                        VisualScreen.Line d = findDoneLine(s);
-                        require(d != null, "STAKE_REJECTED", "Done missing after quick stake");
-                        return ui.tap(doneTapRect(d), "Done");
-                    });
+    /** Type the stake on the betslip keypad. Keys are located only from OCR'd digit words on a validated
+     *  grid (StakePad.keypad); the field is cleared first; the typed stake must read back (stake digits AND
+     *  To Return) before Done is tapped. Otherwise the field is erased and the run fails. No guessed taps. */
+    private CompletableFuture<Void> enterStakeOnPad(VisualScreen uiScreen, String requested) {
+        String amount;
+        try { amount = new java.math.BigDecimal(requested.trim()).setScale(2, java.math.RoundingMode.UNNECESSARY).toPlainString(); }
+        catch (Exception e) { throw new Failure("STAKE_REJECTED", "Stake must have at most 2 decimals: " + requested); }
+        require(amount.matches("\\d{1,3}\\.\\d{2}"), "STAKE_REJECTED", "Stake must be like 0.10: " + amount);
+        java.util.Map<Character, int[]> keys = StakePad.keypad(wordsOf(uiScreen), 850);
+        require(keys != null, "STAKE_REJECTED", "Stake keypad not located from OCR; not guessing key positions");
+        ui.put("stake_keypad", CoordinatorAgent.object("zero", new JSONArray(java.util.Arrays.asList(keys.get('0')[0], keys.get('0')[1])),
+                "dot", new JSONArray(java.util.Arrays.asList(keys.get('.')[0], keys.get('.')[1]))));
+        CompletableFuture<Void> chain = erase(keys, 8);
+        for (int i = 0; i < amount.length(); i++) {
+            final char ch = amount.charAt(i);
+            chain = chain.thenCompose(v -> tapKey(keys, ch));
         }
-        if (hasDigitPad(uiScreen)) {
-            return tapStakeDigits(uiScreen, amount).thenCompose(x -> confirmStakePad());
-        }
-        if (done != null) {
-            return tapGeometricDigits(done, amount).thenCompose(x -> ui.delay(300)).thenCompose(x -> {
-                return ui.capture("stake_before_done").thenCompose(s -> {
-                    VisualScreen.Line d = findDoneLine(s);
-                    require(d != null, "STAKE_REJECTED", "Done missing after geometric digits");
-                    return ui.tap(doneTapRect(d), "Done");
+        return chain.thenCompose(v -> ui.delay(500)).thenCompose(v -> ui.capture("stake_typed")).thenCompose(s -> {
+            if (!stakeVerified(s, amount, openedPrice, "stake_check_typed")) {
+                return erase(keys, 10).<Void>thenCompose(v -> {
+                    throw new Failure("STAKE_REJECTED", "Typed stake did not read back as " + amount + "; field erased");
                 });
-            });
+            }
+            VisualScreen.Line done = findDoneLine(s);
+            if (done == null) {
+                return erase(keys, 10).<Void>thenCompose(v -> {
+                    throw new Failure("STAKE_REJECTED", "Done not visible after typing stake; field erased");
+                });
+            }
+            return ui.tap(doneTapRect(done), "Done");
+        });
+    }
+
+    private CompletableFuture<Void> tapKey(java.util.Map<Character, int[]> keys, char key) {
+        int[] c = keys.get(key);
+        require(c != null, "STAKE_REJECTED", "No keypad key for '" + key + "'");
+        android.graphics.Rect r = new android.graphics.Rect(c[0] - 30, c[1] - 22, c[0] + 30, c[1] + 22);
+        return ui.tap(r, "key:" + key).thenCompose(x -> ui.delay(220));
+    }
+
+    private CompletableFuture<Void> erase(java.util.Map<Character, int[]> keys, int times) {
+        CompletableFuture<Void> chain = CompletableFuture.completedFuture(null);
+        for (int i = 0; i < times; i++) chain = chain.thenCompose(v -> tapKey(keys, StakePad.BACKSPACE));
+        return chain;
+    }
+
+    static List<GameLinesParser.Word> wordsOf(VisualScreen screen) {
+        List<GameLinesParser.Word> words = new ArrayList<>();
+        for (VisualScreen.Line line : screen.lines) {
+            List<String> texts = screen.words(line);
+            for (int i = 0; i < texts.size(); i++) {
+                android.graphics.Rect b = screen.wordBounds(line, i);
+                words.add(new GameLinesParser.Word(texts.get(i), b.left, b.top, b.right, b.bottom));
+            }
         }
-        throw new Failure("STAKE_REJECTED", "Cannot enter stake: no Done anchor and no digit pad OCR");
+        return words;
+    }
+
+    /** Strict stake check (StakePad.check); records the evidence under the given key. */
+    private boolean stakeVerified(VisualScreen s, String stake, String price, String key) {
+        if (stake == null || price == null) {
+            ui.put(key, CoordinatorAgent.object("ok", false, "detail", "stake or price unknown"));
+            return false;
+        }
+        StakePad.Check c = StakePad.check(wordsOf(s), stake, price);
+        ui.put(key, CoordinatorAgent.object("ok", c.ok, "detail", c.detail, "stake_digits", String.valueOf(c.stakeDigits),
+                "return_digits", String.valueOf(c.returnDigits), "stake", stake, "price", price));
+        return c.ok;
     }
 
     private static VisualScreen.Line findDoneLine(VisualScreen s) {
@@ -927,44 +989,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
         return new android.graphics.Rect(left, done.bounds.top - 8, done.bounds.right + 20, done.bounds.bottom + 8);
     }
 
-    private static android.graphics.Rect geometricQuickStake(VisualScreen.Line done, String amount) {
-        int w = Math.max(720, done.bounds.right + 80);
-        int col;
-        if (amount.startsWith("20")) col = 2;
-        else if (amount.startsWith("5")) col = 1;
-        else col = 0;
-        int cx = (col == 0) ? w / 6 : (col == 1) ? w / 2 : (5 * w) / 6;
-        int cy = done.bounds.centerY() - 430;
-        return new android.graphics.Rect(cx - 50, cy - 30, cx + 50, cy + 30);
-    }
 
-    private CompletableFuture<Void> tapGeometricDigits(VisualScreen.Line done, String amount) {
-        int w = Math.max(720, done.bounds.right + 80);
-        int[] cols = new int[]{w / 6, w / 2, (5 * w) / 6};
-        // rows: 123, 456, 789, .0bk  ? offsets upward from Done
-        int[] rowY = new int[]{
-                done.bounds.centerY() - 370,
-                done.bounds.centerY() - 310,
-                done.bounds.centerY() - 250,
-                done.bounds.centerY() - 190
-        };
-        java.util.Map<Character, int[]> map = new java.util.HashMap<>();
-        map.put('1', new int[]{cols[0], rowY[0]}); map.put('2', new int[]{cols[1], rowY[0]}); map.put('3', new int[]{cols[2], rowY[0]});
-        map.put('4', new int[]{cols[0], rowY[1]}); map.put('5', new int[]{cols[1], rowY[1]}); map.put('6', new int[]{cols[2], rowY[1]});
-        map.put('7', new int[]{cols[0], rowY[2]}); map.put('8', new int[]{cols[1], rowY[2]}); map.put('9', new int[]{cols[2], rowY[2]});
-        map.put('.', new int[]{cols[0], rowY[3]}); map.put('0', new int[]{cols[1], rowY[3]});
-        CompletableFuture<Void> chain = CompletableFuture.completedFuture(null);
-        for (int i = 0; i < amount.length(); i++) {
-            final char ch = amount.charAt(i);
-            final int[] pt = map.get(ch);
-            require(pt != null, "STAKE_REJECTED", "Unsupported stake char: " + ch);
-            chain = chain.thenCompose(v -> {
-                android.graphics.Rect r = new android.graphics.Rect(pt[0] - 40, pt[1] - 30, pt[0] + 40, pt[1] + 30);
-                return ui.tap(r, "geo-key:" + ch).thenCompose(x -> ui.delay(220));
-            });
-        }
-        return chain;
-    }
 
     private static boolean hasDigitPad(VisualScreen s) {
         boolean zero = false, one = false, five = false;
@@ -1054,7 +1079,9 @@ final class Bet365LiveAdapter implements SiteAdapter {
             }
             boolean priceOk = visible(s, selection.price) || fractionalVisible(s, selection.price);
             require(priceOk, "PRICE_CHANGED", "Selection price not visible on betslip: " + selection.price);
-            require(stakeVisible(s, stake), "STAKE_REJECTED", "Stake not verified on betslip: " + stake);
+            require(PlacementClassifier.slipShowsLine(texts(s), selection.market, selection.side, selection.name, selection.line),
+                    "LINE_CHANGED", "Betslip does not show " + selection.side + " " + selection.line);
+            require(stakeVerified(s, stake, selection.price, "stake_check_final"), "STAKE_REJECTED", "Stake not verified on betslip: " + stake);
             boolean hasPlace = visible(s, "Place Bet", "Place bet");
             ui.put("ready_state", CoordinatorAgent.object(
                     "fixture_home", fixture.home,
@@ -1148,7 +1175,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
             require(priceOk, "PRICE_CHANGED", "Price missing before complete execution: " + selection.price);
             if (Double.parseDouble(selection.price) < Double.parseDouble(minimumPrice))
                 throw new Failure("BELOW_MINIMUM", "Price " + selection.price + " below minimum " + minimumPrice);
-            require(stakeVisible(s, stake), "STAKE_REJECTED", "Stake missing before complete execution: " + stake);
+            require(stakeVerified(s, stake, selection.price, "stake_check_prepare"), "STAKE_REJECTED", "Stake missing before complete execution: " + stake);
             VisualScreen.Line place = findPlaceBetLine(s);
             require(place != null, "TARGET_NOT_FOUND", "Place Bet control not visible for COMPLETE_EXECUTION_READY");
             android.graphics.Rect tap = placeBetTapRect(place);
@@ -1157,7 +1184,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
             // If OCR still shows Set Stake without stake amount, treat as not actionable
             String blob = "";
             for (VisualScreen.Line line : s.lines) blob += " " + line.text.toLowerCase(java.util.Locale.US);
-            if (blob.contains("set stake") && !stakeVisible(s, stake)) enabled = false;
+            if (blob.contains("set stake")) enabled = false;
             require(enabled, "TARGET_NOT_FOUND", "Place Bet present but not actionable");
             preparedPlaceBetBounds = new android.graphics.Rect(tap);
             long ts = System.currentTimeMillis();
@@ -1224,7 +1251,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
             require(!PlacementClassifier.multipleSelections(texts(s)), "BETSLIP_NOT_SINGLE", "Betslip not a single before Place Bet");
             boolean priceOk = visible(s, selection.price) || fractionalVisible(s, selection.price);
             require(priceOk, "PRICE_CHANGED", "Price changed before Place Bet dispatch");
-            require(stakeVisible(s, stake), "STAKE_REJECTED", "Stake missing before Place Bet dispatch");
+            require(stakeVerified(s, stake, selection.price, "stake_check_pre_dispatch"), "STAKE_REJECTED", "Stake missing before Place Bet dispatch");
             require(findPlaceBetLine(s) != null, "TARGET_NOT_FOUND", "Place Bet disappeared before dispatch");
             ui.put("place_bet_bounds", VisualSession.bounds(tap));
             // Durable intent BEFORE the gesture: from here on, any failure is reported as a
@@ -1284,6 +1311,14 @@ final class Bet365LiveAdapter implements SiteAdapter {
         ui.checkpoint("RESET_BETSLIP");
         return ui.capture("reset_pre").thenCompose(s -> {
             if (PlacementClassifier.receiptVisible(texts(s))) return dismissReceipt(s);
+            // A selection still on the slip is removed by its own X (never "Done", which would keep it).
+            android.graphics.Rect icon = removeIcon(s, null);
+            if (icon != null) {
+                return ui.tap(icon, "Remove selection").thenCompose(v -> ui.delay(1200))
+                        .thenCompose(v -> ui.capture("reset_after")).thenAccept(after ->
+                                ui.put("betslip_reset", CoordinatorAgent.object("tapped", true, "control", "remove selection X",
+                                        "bounds", VisualSession.bounds(icon), "place_bet_still_visible", findPlaceBetLine(after) != null)));
+            }
             VisualScreen.Line control = null;
             for (String want : new String[] {"Done", "Continue", "Remove All", "Clear All", "Close"}) {
                 for (VisualScreen.Line line : s.lines) {
@@ -1340,17 +1375,34 @@ final class Bet365LiveAdapter implements SiteAdapter {
                                 "receipt_still_visible", PlacementClassifier.receiptVisible(texts(after)))));
     }
 
+    /** Remove icon of a selection on the slip: the OCR'd X glyph, else (glyph not read) the icon area left of an
+     *  indented selection line with the market name beneath. Null if no selection line is recognised. */
+    private static android.graphics.Rect removeIcon(VisualScreen s, String selectionName) {
+        for (int i = 0; i < s.lines.size(); i++) {
+            VisualScreen.Line line = s.lines.get(i);
+            if (line.bounds.top < 300) continue;
+            List<String> words = s.words(line);
+            int glyph = selectionName == null ? PlacementClassifier.removeAnySelectionWord(words)
+                    : PlacementClassifier.removeSelectionWord(words, selectionName);
+            if (glyph == 0) return s.wordBounds(line, 0);
+            String next = i + 1 < s.lines.size() && s.lines.get(i + 1).bounds.top - line.bounds.bottom < 60 ? s.lines.get(i + 1).text : null;
+            if (PlacementClassifier.selectionLineByIndent(line.text, line.bounds.left, next, selectionName)) {
+                int cx = line.bounds.left - 28, cy = line.bounds.centerY();
+                return new android.graphics.Rect(cx - 14, cy - 16, cx + 14, cy + 16);
+            }
+        }
+        return null;
+    }
+
     @Override
     public CompletableFuture<Void> clear_betslip(Selection selection) {
         ui.checkpoint("CLEAR_BETSLIP");
         return ui.capture("clear_betslip_pre").thenCompose(s -> {
-            for (VisualScreen.Line line : s.lines) {
-                int index = PlacementClassifier.removeSelectionWord(s.words(line), selection == null ? null : selection.name);
-                if (index < 0) continue;
-                android.graphics.Rect icon = s.wordBounds(line, index);
+            android.graphics.Rect icon = removeIcon(s, selection == null || selection.name.isEmpty() ? null : selection.name);
+            if (icon != null) {
                 return ui.tap(icon, "Remove selection from betslip").thenCompose(v -> ui.delay(1200))
                         .thenCompose(v -> ui.capture("clear_betslip_after")).thenAccept(after ->
-                                ui.put("betslip_clear", CoordinatorAgent.object("tapped", true, "line", line.text,
+                                ui.put("betslip_clear", CoordinatorAgent.object("tapped", true,
                                         "bounds", VisualSession.bounds(icon),
                                         "place_bet_still_visible", findPlaceBetLine(after) != null)));
             }
@@ -1440,22 +1492,6 @@ final class Bet365LiveAdapter implements SiteAdapter {
         if (blob.contains("rejected") || blob.contains("not accepted")) throw new Failure("STAKE_REJECTED", "Stake rejected by Bet365 UI");
     }
 
-    private static boolean stakeVisible(VisualScreen s, String stake) {
-        if (stake == null || stake.isEmpty()) return false;
-        if (visible(s, stake)) return true;
-        if (visible(s, "\u00A3" + stake) || visible(s, "GBP" + stake)) return true;
-        // Whole-pound display "?1" for stake "1.00" ? require ? prefix so bare "1" cannot match odds OCR
-        if (stake.endsWith(".00")) {
-            String whole = stake.substring(0, stake.length() - 3);
-            if (visible(s, "\u00A3" + whole) || visible(s, "GBP" + whole)) return true;
-        }
-        // Bet365 often OCRs stake digits poorly; Place Bet without Set Stake + To Return implies stake set
-        if (findPlaceBetLine(s) != null && !visible(s, "Set Stake")
-                && (visible(s, "To Return", "to return", "Return") || visible(s, "Place Bet", "Place bet"))) {
-            return true;
-        }
-        return false;
-    }
 
     private static boolean loginWall(VisualScreen s) {
         return visible(s, "Password") && visible(s, "Log In", "Login", "Keep me Logged");
@@ -1476,7 +1512,53 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
 
+    /** Capture the Game Lines grid until two consecutive reads are identical (max 4 captures) and return the
+     *  cells agreed across reads (GameLinesParser.consensus). Every read is recorded in game_lines_reads. */
+    private CompletableFuture<List<Selection>> gridConsensus(String tag, int attempt, List<List<GameLinesParser.Cell>> reads, JSONArray log) {
+        return ui.captureTable(tag).thenCompose(s -> {
+            GameLinesParser.Result r = GameLinesParser.parse(wordsOf(s), liveFixture.home, liveFixture.away);
+            JSONArray cells = new JSONArray();
+            for (GameLinesParser.Cell c : r.cells) cells.put(c.toString());
+            log.put(CoordinatorAgent.object("tag", tag, "cells", cells, "notes", new JSONArray(r.notes)));
+            ui.put("game_lines_reads", log);
+            List<GameLinesParser.Cell> previous = reads.isEmpty() ? null : reads.get(reads.size() - 1);
+            if (!r.cells.isEmpty()) reads.add(r.cells);
+            boolean stable = previous != null && !r.cells.isEmpty() && String.valueOf(previous).equals(String.valueOf(r.cells));
+            if (!stable && attempt < 4) return ui.delay(600).thenCompose(v -> gridConsensus(tag, attempt + 1, reads, log));
+            List<Selection> out = new ArrayList<>();
+            JSONArray agreed = new JSONArray();
+            for (GameLinesParser.Cell c : GameLinesParser.consensus(reads)) {
+                android.graphics.Rect b = new android.graphics.Rect(c.bounds[0], c.bounds[1], c.bounds[2], c.bounds[3]);
+                out.add(new Selection(c.market, c.side, c.line, c.price, "OPEN", b, c.name));
+                agreed.put(c.toString());
+            }
+            ui.put("game_lines", CoordinatorAgent.object("reads", reads.size(), "agreed", agreed));
+            return CompletableFuture.completedFuture(out);
+        });
+    }
+
+    /** Basketball Game Lines grid (GameLinesParser) as selections; empty if not a basketball grid. */
+    private List<Selection> parseGameLines(VisualScreen screen, boolean record) {
+        List<Selection> out = new ArrayList<>();
+        if (!"basketball".equals(sport) || liveFixture == null) return out;
+        GameLinesParser.Result r = GameLinesParser.parse(wordsOf(screen), liveFixture.home, liveFixture.away);
+        JSONArray cells = new JSONArray();
+        for (GameLinesParser.Cell c : r.cells) {
+            android.graphics.Rect b = new android.graphics.Rect(c.bounds[0], c.bounds[1], c.bounds[2], c.bounds[3]);
+            out.add(new Selection(c.market, c.side, c.line, c.price, "OPEN", b, c.name));
+            cells.put(c.toString());
+        }
+        if (record) ui.put("game_lines", CoordinatorAgent.object("grid", r.grid, "cells", cells, "notes", new JSONArray(r.notes)));
+        return out;
+    }
+
     private Selection refind(VisualScreen screen, Selection expected) {
+        List<Selection> grid = parseGameLines(screen, false);
+        if (!grid.isEmpty()) {
+            for (Selection s : grid) if (s.market.equals(expected.market) && s.side.equals(expected.side) && lineEquals(s.line, expected.line)) return s;
+            // Line moved or cell unreadable: never fall back to another line.
+            throw new Failure("LINE_CHANGED", "Game Lines re-read has no " + expected.market + "/" + expected.side + "/" + expected.line);
+        }
         List<Selection> all = parseMarkets(screen);
         if (all.isEmpty()) all = parseFullTimeResult(screen);
         else {
@@ -1495,11 +1577,21 @@ final class Bet365LiveAdapter implements SiteAdapter {
     private List<Fixture> fixturesFromSearch(VisualScreen screen) {
         List<Fixture> result = new ArrayList<>();
         Pattern vsOnly = Pattern.compile("(?i)^(.+?)\\s+(?:v|vs)\\s+(.+)$");
-        for (VisualScreen.Line line : screen.lines) {
+        for (int li = 0; li < screen.lines.size(); li++) {
+            VisualScreen.Line line = screen.lines.get(li);
             Matcher m = vsOnly.matcher(line.text.trim());
             if (!m.matches()) continue;
             if (line.bounds.top > 1320) continue;
-            addFixture(result, screen, cleanTeam(m.group(1)), cleanTeam(m.group(2)), line.bounds);
+            String away = cleanTeam(m.group(2));
+            // Real search card (2026-09-24): "Hapoel Tel Aviv vs Bayern" + "1 2" column headers on one OCR
+            // line, "Munich" wrapped onto the next line. Append a letters-only continuation line.
+            if (li + 1 < screen.lines.size() && !m.group(2).trim().endsWith(">")) {
+                VisualScreen.Line next = screen.lines.get(li + 1);
+                String nt = next.text.trim();
+                if (continuationWord(nt) && Math.abs(next.bounds.left - line.bounds.left) <= 30
+                        && next.bounds.top - line.bounds.bottom <= 40) away = away + " " + nt;
+            }
+            addFixture(result, screen, cleanTeam(m.group(1)), away, line.bounds);
         }
         // Bet365 mobile often OCRs "Home", "v", "Away" on separate lines.
         List<VisualScreen.Line> lines = screen.lines;
@@ -1949,8 +2041,17 @@ final class Bet365LiveAdapter implements SiteAdapter {
         return sport.equals("basketball") ? "Lakers" : "Arsenal";
     }
 
-    private static String cleanTeam(String raw) {
-        return raw.replaceAll("\\s+", " ").replaceAll("[|].*$", "").trim();
+    static String cleanTeam(String raw) {
+        String t = raw.replaceAll("\\s+", " ").replaceAll("[|].*$", "").trim();
+        t = t.replaceAll("\\s*[>\u203a\u00bb]+$", "").trim();          // "Bayern Munich >" (event link chevron)
+        t = t.replaceAll("(?:\\s+(?:1|X|x|2)){2,}$", "").trim();       // merged "1 2" / "1 X 2" column headers
+        return t;
+    }
+
+    /** A wrapped team-name tail such as "Munich": 1-3 letter words, not a day, time or nav word. */
+    static boolean continuationWord(String t) {
+        return t.matches("[A-Za-z][A-Za-z.'-]*(?: [A-Za-z][A-Za-z.'-]*){0,2}") && !looksLikeNav(t)
+                && !t.matches("(?i)(mon|tue|wed|thu|fri|sat|sun|today|tomorrow|live|in-play|close)(\\s.*)?");
     }
 
     private static boolean looksLikeNav(String s) {
