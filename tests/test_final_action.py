@@ -9,7 +9,7 @@ from pathlib import Path
 
 from core import bet_matching
 from core.lifecycle import State, interpret_device_result, placement_of
-from tests.pipeline_support import MELBOURNE, RYTAS, Clock, FakeGateway, message, pipeline, fail_result
+from tests.pipeline_support import MELBOURNE, RYTAS, Clock, FakeGateway, message, pipeline, fail_result, ready_result
 
 
 def placement_result(iid, outcome='PLACED', tapped=True, **extra):
@@ -90,11 +90,12 @@ class ApprovalTests(Base):
         iid = self.p.ingest(message(MELBOURNE))['instruction_id']
         self.p.tick(self.gateway)
         self.assertEqual(self.row(iid)['state'], 'AWAITING_APPROVAL')
-        self.assertEqual(self.gateway.submitted, [])
+        self.assertEqual([x for x in self.gateway.submitted if x.get('execution_mode') == 'dispatch'], [])
         self.assertEqual(self.p.final.approve(iid[:10], 'operator'), iid)   # unique prefix, like Telegram
         self.p.tick(self.gateway)
-        payload = self.gateway.submitted[0]
+        payload = self.gateway.submitted[-1]
         self.assertEqual((payload['execution_mode'], payload['confirmation_status']), ('dispatch', 'APPROVED'))
+        self.assertEqual(payload['instruction_id'], iid + '-place')      # never the verification run's ID
         row = self.row(iid)
         self.assertEqual((row['state'], row['approved_by'], row['execution_mode']), ('DEVICE_ACTIVE', 'operator', 'dispatch'))
         for key in ('approval_requested_at', 'approved_at', 'dispatched_at'):
@@ -108,7 +109,7 @@ class ApprovalTests(Base):
             self.p.final.approve(iid, 'operator')
         self.p.tick(self.gateway)
         self.assertEqual(self.row(iid)['state'], 'STALE')
-        self.assertEqual(self.gateway.submitted, [])
+        self.assertEqual([x for x in self.gateway.submitted if x.get('execution_mode') == 'dispatch'], [])
 
     def test_reject_and_ambiguous_prefix(self):
         iid = self.p.ingest(message(MELBOURNE))['instruction_id']
@@ -130,7 +131,7 @@ class ApprovalTests(Base):
         second = self.p.ingest(message(RYTAS))['instruction_id']
         self.p.tick(self.gateway)
         self.assertEqual(self.row(second)['state'], 'QUEUED')      # nothing dispatched while paused
-        self.assertEqual(self.gateway.submitted, [])
+        self.assertEqual([x for x in self.gateway.submitted if x.get('execution_mode') == 'dispatch'], [])
         with self.assertRaises(PermissionError):
             self.p.final.approve(second, 'operator')
         self.p.final.set_paused(False, 'operator')
@@ -145,9 +146,9 @@ class LimitTests(Base):
     def test_auto_approve_within_limits_then_bets_per_day(self):
         first = self.p.ingest(message(MELBOURNE))['instruction_id']
         self.p.tick(self.gateway)
-        self.assertEqual(self.gateway.submitted[0]['execution_mode'], 'dispatch')
+        self.assertEqual([x['execution_mode'] for x in self.gateway.submitted if x['action'] == 'ADAPTER_WORKFLOW'][:2], ['ready', 'dispatch'])
         self.assertEqual(self.row(first)['approved_by'], 'auto')
-        self.gateway.results[first] = placement_result(first)
+        self.gateway.results[first + "-place"] = placement_result(first)
         self.p.tick(self.gateway)
         self.assertEqual(self.row(first)['state'], 'COMPLETED')
         second = self.p.ingest(message(RYTAS))['instruction_id']
@@ -162,14 +163,14 @@ class LimitTests(Base):
         self.p.tick(self.gateway)
         self.assertEqual(self.row(iid)['state'], 'REJECTED')
         self.assertIn('per-bet cap', self.row(iid)['failure_reason'])
-        self.assertEqual(self.gateway.submitted, [])
+        self.assertEqual([x for x in self.gateway.submitted if x.get('execution_mode') == 'dispatch'], [])
 
     def test_refused_and_pre_tap_failures_do_not_count(self):
         self.p.settings.max_bets_per_day = 1
         first = self.p.ingest(message(MELBOURNE))['instruction_id']
         self.p.tick(self.gateway)
-        self.gateway.results[first] = fail_result(first, 'TARGET_NOT_FOUND', 'fixture not on board')
-        self.gateway.results[first]['placement'] = {'tapped': False, 'outcome': 'NOT_TAPPED'}
+        self.gateway.results[first + "-place"] = fail_result(first, 'TARGET_NOT_FOUND', 'fixture not on board')
+        self.gateway.results[first + "-place"]['placement'] = {'tapped': False, 'outcome': 'NOT_TAPPED'}
         self.p.tick(self.gateway)
         self.assertEqual(self.row(first)['state'], 'TARGET_NOT_FOUND')
         self.assertIsNone(self.bet(first))
@@ -181,7 +182,7 @@ class LimitTests(Base):
 class OutcomeTests(Base):
     def test_placed_records_receipt_and_verifies_in_my_bets(self):
         iid = self.approved_and_dispatched()
-        self.gateway.results[iid] = placement_result(iid)
+        self.gateway.results[iid + "-place"] = placement_result(iid)
         self.p.tick(self.gateway)
         row, bet = self.row(iid), self.bet(iid)
         self.assertEqual((row['state'], row['bet_reference'], row['observed_price']), ('COMPLETED', 'JL1234567890', '2.20'))
@@ -209,7 +210,7 @@ class OutcomeTests(Base):
 
     def test_insufficient_funds_is_verified_absent(self):
         iid = self.approved_and_dispatched()
-        self.gateway.results[iid] = placement_result(iid, 'INSUFFICIENT_FUNDS')
+        self.gateway.results[iid + "-place"] = placement_result(iid, 'INSUFFICIENT_FUNDS')
         self.p.tick(self.gateway)
         self.assertEqual((self.row(iid)['state'], self.bet(iid)['status']), ('INSUFFICIENT_FUNDS', 'NOT_PLACED_CLAIMED'))
         self.clock.advance(16)
@@ -221,7 +222,7 @@ class OutcomeTests(Base):
 
     def test_claimed_refusal_found_in_my_bets_is_a_discrepancy(self):
         iid = self.approved_and_dispatched()
-        self.gateway.results[iid] = placement_result(iid, 'PRICE_CHANGED')
+        self.gateway.results[iid + "-place"] = placement_result(iid, 'PRICE_CHANGED')
         self.p.tick(self.gateway)
         self.clock.advance(16)
         self.p.tick(self.gateway)
@@ -235,7 +236,7 @@ class OutcomeTests(Base):
         iid = self.approved_and_dispatched()
         result = fail_result(iid, 'WRONG_EVENT', 'fixture pairing not found')
         result['placement'] = {'tapped': False, 'outcome': 'NOT_TAPPED'}
-        self.gateway.results[iid] = result
+        self.gateway.results[iid + "-place"] = result
         self.p.tick(self.gateway)
         self.assertEqual(self.row(iid)['state'], 'TARGET_NOT_FOUND')
         self.assertIsNone(self.bet(iid))
@@ -259,7 +260,7 @@ class UncertaintyTests(Base):
             self.p.tick(self.gateway)
         self.assertEqual(self.row(iid)['state'], 'PLACEMENT_UNKNOWN')
         self.assertEqual(self.bet(iid)['status'], 'UNKNOWN')
-        adapter_sends = [s for s in self.gateway.submitted if s['action'] == 'ADAPTER_WORKFLOW']
+        adapter_sends = [s for s in self.gateway.submitted if s['action'] == 'ADAPTER_WORKFLOW' and s['execution_mode'] == 'dispatch']
         self.assertEqual(len(adapter_sends), 1)
         self.clock.advance(16)
         self.p.tick(self.gateway)                      # reconcile delay elapsed: My Bets check submitted
@@ -267,11 +268,12 @@ class UncertaintyTests(Base):
         self.gateway.results[rec['device_instruction_id']] = my_bets(rec['device_instruction_id'], MELBOURNE_CARD)
         self.p.tick(self.gateway)
         self.assertEqual((self.row(iid)['state'], self.bet(iid)['status']), ('COMPLETED', 'OPEN'))
-        self.assertEqual(len([s for s in self.gateway.submitted if s['action'] == 'ADAPTER_WORKFLOW']), 1)
+        self.assertEqual(len([s for s in self.gateway.submitted if s['action'] == 'ADAPTER_WORKFLOW'
+                              and s['execution_mode'] == 'dispatch']), 1)
 
     def test_unknown_absent_twice_becomes_not_placed(self):
         iid = self.approved_and_dispatched()
-        self.gateway.results[iid] = placement_result(iid, 'PLACEMENT_UNKNOWN')
+        self.gateway.results[iid + "-place"] = placement_result(iid, 'PLACEMENT_UNKNOWN')
         self.p.tick(self.gateway)
         for _ in range(2):
             self.clock.advance(31)
@@ -283,7 +285,7 @@ class UncertaintyTests(Base):
 
     def test_unreadable_my_bets_escalates_to_manual_check(self):
         iid = self.approved_and_dispatched()
-        self.gateway.results[iid] = placement_result(iid, 'PLACEMENT_UNKNOWN')
+        self.gateway.results[iid + "-place"] = placement_result(iid, 'PLACEMENT_UNKNOWN')
         self.p.tick(self.gateway)
         for _ in range(3):
             self.clock.advance(31)
@@ -298,7 +300,7 @@ class UncertaintyTests(Base):
 
     def test_malformed_final_result_is_placement_unknown(self):
         iid = self.approved_and_dispatched()
-        self.gateway.results[iid] = {'status': 'MAYBE'}
+        self.gateway.results[iid + "-place"] = {'status': 'MAYBE'}
         self.p.tick(self.gateway)
         self.assertEqual(self.row(iid)['state'], 'PLACEMENT_UNKNOWN')
 
@@ -344,7 +346,7 @@ class UncertaintyTests(Base):
 
     def test_reconciliation_blocks_new_dispatch(self):
         iid = self.approved_and_dispatched()
-        self.gateway.results[iid] = placement_result(iid, 'PLACEMENT_UNKNOWN')
+        self.gateway.results[iid + "-place"] = placement_result(iid, 'PLACEMENT_UNKNOWN')
         self.p.tick(self.gateway)
         self.clock.advance(16)
         self.p.tick(self.gateway)                      # MY_BETS submitted, no result yet
@@ -356,7 +358,7 @@ class UncertaintyTests(Base):
 class SettlementTests(Base):
     def test_open_bet_settles_and_counts_towards_loss(self):
         iid = self.approved_and_dispatched()
-        self.gateway.results[iid] = placement_result(iid)
+        self.gateway.results[iid + "-place"] = placement_result(iid)
         self.p.tick(self.gateway)
         self.clock.advance(16)
         self.p.tick(self.gateway)
@@ -379,6 +381,79 @@ REAL = json.loads((Path(__file__).parent / 'fixtures/mybets_real_20260924.json')
 
 def real(key, view):
     return {'view': view, 'lines': [dict(line, frame=0) for line in REAL[key]['lines']]}
+
+
+class VerifyFirstTests(Base):
+    """Real sequence: READY verification on the phone -> APPROVAL NEEDED -> approve -> dispatch."""
+
+    def setUp(self):
+        super().setUp()
+        self.p = pipeline(self.p.store.path, self.clock, instant_verification=False, **self.settings)
+
+    def test_approval_is_requested_only_after_device_verification(self):
+        iid = self.p.ingest(message(MELBOURNE))['instruction_id']
+        self.p.tick(self.gateway)
+        self.assertIn(self.row(iid)['state'], ('DISPATCHED', 'DEVICE_ACTIVE'))
+        self.assertEqual(self.gateway.submitted[-1]['execution_mode'], 'ready')
+        self.assertNotIn('confirmation_status', self.gateway.submitted[-1])
+        with self.assertRaises(PermissionError):
+            self.p.final.approve(iid, 'operator')               # nothing verified yet: nothing to approve
+        self.gateway.results[iid] = ready_result(iid)
+        self.clock.advance(250)                                  # the phone's verification run takes minutes
+        self.p.tick(self.gateway)
+        row = self.row(iid)
+        self.assertEqual(row['state'], 'AWAITING_APPROVAL')
+        self.assertTrue(row['ready_at'] and row['approval_requested_at'])
+        # Operator approves more than 300 s after the alert was posted: age counts from the device
+        # verification, which the phone repeats right before the tap.
+        self.clock.advance(100)
+        self.p.final.approve(iid, 'operator')
+        self.p.tick(self.gateway)
+        self.assertIn(self.row(iid)['state'], ('DISPATCHED', 'DEVICE_ACTIVE'))
+        self.assertEqual(self.gateway.submitted[-1]['execution_mode'], 'dispatch')
+        self.assertEqual(self.gateway.submitted[-1]['confirmation_status'], 'APPROVED')
+
+    def test_failed_verification_never_asks_for_approval(self):
+        iid = self.p.ingest(message(MELBOURNE))['instruction_id']
+        self.p.tick(self.gateway)
+        self.gateway.results[iid] = fail_result(iid, 'STAKE_REJECTED', 'Typed stake did not read back')
+        self.p.tick(self.gateway)
+        self.assertEqual(self.row(iid)['state'], 'REJECTED')
+        self.assertIsNone(self.row(iid)['approval_requested_at'])
+
+
+class OneShotTests(Base):
+    settings = dict(final_action_enabled=True, final_action_one_shot=True)
+
+    def test_first_place_bet_result_disarms_everything_but_verification_continues(self):
+        first = self.p.ingest(message(MELBOURNE))['instruction_id']
+        self.p.tick(self.gateway)
+        self.p.final.approve(first, 'operator')
+        second = self.p.ingest(message(RYTAS))['instruction_id']
+        self.p.tick(self.gateway)                                   # first: Place Bet run sent
+        self.gateway.results[first + '-place'] = placement_result(first)
+        self.p.tick(self.gateway)
+        s = self.p.settings
+        self.assertEqual((s.dispatch_enabled, s.final_action_enabled, self.p.final.paused()), (False, False, True))
+        self.assertEqual(self.p.disarmed['instruction_id'], first)
+        self.assertEqual(len(self.audits('FINAL_ACTION_DISARMED')), 1)
+        sends = len(self.gateway.submitted)
+        for _ in range(3):
+            self.clock.advance(20)
+            self.p.tick(self.gateway)
+        adapter = [x for x in self.gateway.submitted[sends:] if x['action'] == 'ADAPTER_WORKFLOW']
+        self.assertEqual(adapter, [])                               # nothing else goes to the phone...
+        self.assertTrue(any(x['action'] == 'MY_BETS' for x in self.gateway.submitted[sends:]))  # ...but verification
+        self.assertNotIn(self.row(second)['state'], ('APPROVED', 'DISPATCHED'))
+
+    def test_failure_before_the_tap_also_disarms(self):
+        iid = self.p.ingest(message(MELBOURNE))['instruction_id']
+        self.p.tick(self.gateway)
+        self.p.final.approve(iid, 'operator')
+        self.p.tick(self.gateway)
+        self.gateway.results[iid + '-place'] = fail_result(iid, 'PRICE_CHANGED')
+        self.p.tick(self.gateway)
+        self.assertEqual((self.p.settings.dispatch_enabled, self.p.settings.final_action_enabled), (False, False))
 
 
 class RealMyBetsTests(unittest.TestCase):

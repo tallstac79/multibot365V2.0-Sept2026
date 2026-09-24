@@ -88,8 +88,28 @@ def message(sample=MELBOURNE, *, message_id=None, received=T0, source=None, text
                          source_timestamp=(source or received).isoformat(), **extra)
 
 
-def pipeline(path, clock, cfg=None, **settings):
+def pipeline(path, clock, cfg=None, instant_verification=True, **settings):
     cfg = cfg or config()
     values = dict(dispatch_enabled=True, device_id='galaxy-a13-5g')
     values.update(settings)
-    return Pipeline(path, lambda: cfg, Settings(**values), clock=clock)
+    p = Pipeline(path, lambda: cfg, Settings(**values), clock=clock)
+    if values.get('final_action_enabled') and instant_verification:
+        _instant_verification(p)
+    return p
+
+
+def _instant_verification(p):
+    """Final-action tests: the phone's pre-approval READY verification run answers at once, so one
+    tick takes a new alert to AWAITING_APPROVAL. The real sequence is tested in VerifyFirstTests."""
+    from core.lifecycle import State
+    tick = p.tick
+
+    def run(gateway):
+        tick(gateway)
+        pending = [r['instruction_id'] for r in p.store.instructions_in([State.DISPATCHED, State.DEVICE_ACTIVE])
+                   if r['execution_mode'] == 'ready' and r['instruction_id'] not in gateway.results]
+        if pending:
+            for iid in pending:
+                gateway.results[iid] = ready_result(iid)
+            tick(gateway)
+    p.tick = run

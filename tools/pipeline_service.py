@@ -49,10 +49,23 @@ class JsonLines(logging.Formatter):
         return json.dumps(item)
 
 
+def persist_disarm(path, disarmed):
+    """One-shot fired: write dispatch/final action OFF to the config so a restart stays disarmed."""
+    data = json.loads(Path(path).read_text(encoding='utf-8-sig'))
+    section = data.setdefault('pipeline', {})
+    if section.get('dispatch_enabled') is False and section.get('final_action_enabled') is False:
+        return
+    section.update(dispatch_enabled=False, final_action_enabled=False, final_action_one_shot=False,
+                   disarmed=disarmed)
+    Path(path).write_text(json.dumps(data, indent=2), encoding='utf-8')
+    log.warning('One-shot final action disarmed after %s; config written OFF', disarmed.get('instruction_id'))
+
+
 def load_settings(path):
     settings = dict(DEFAULTS)
     if Path(path).exists():
         settings.update(json.loads(Path(path).read_text(encoding='utf-8-sig')))
+    settings['config_path'] = Path(path)
     for key in ('database', 'rules_database', 'coordinator_config', 'status_file'):
         settings[key] = ROOT / settings[key]
     return settings
@@ -122,6 +135,8 @@ async def run(settings):
                     except Exception as error:  # Telegram outage must never stop the pipeline
                         state['commands_error'] = f'{type(error).__name__}: {error}'[:200]
                 await asyncio.to_thread(pipeline.tick, gateway)
+                if pipeline.disarmed and settings.get('config_path'):
+                    persist_disarm(settings['config_path'], pipeline.disarmed)
                 await asyncio.to_thread(notifier.enqueue)
                 await asyncio.to_thread(notifier.deliver)
             except Exception as error:  # keep running; the store stays consistent per transaction

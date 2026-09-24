@@ -39,7 +39,9 @@ def format_instruction(row):
               ('Selection', selection), ('Odds', row.get('observed_price') or row.get('alert_price')),
               ('Alert odds', row.get('alert_price') if row.get('observed_price') not in (None, row.get('alert_price'))
                else None),
-              ('Minimum', row.get('minimum_price')), ('Stake', _money(row.get('stake'))), (None, None),
+              ('Minimum', row.get('minimum_price')), ('Stake', _money(row.get('stake'))),
+              ('Verified on phone', 'fixture, market, side, line, price, stake + To Return, single selection (slip cleared)'
+               if row.get('state') == 'AWAITING_APPROVAL' and row.get('ready_at') else None), (None, None),
               ('Status', row.get('state')),
               ('Bet ref', row.get('bet_reference')),
               ('Approved by', row.get('approved_by') if row.get('execution_mode') == 'dispatch' else None),

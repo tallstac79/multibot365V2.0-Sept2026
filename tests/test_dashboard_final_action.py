@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 
 from dashboard.app import create_app
 from dashboard.services import Health
-from tests.pipeline_support import MELBOURNE, RYTAS, Clock, FakeGateway, config, message, pipeline
+from tests.pipeline_support import MELBOURNE, RYTAS, Clock, FakeGateway, config, fail_result, message, pipeline
 from tests.test_final_action import placement_result
 
 
@@ -46,7 +46,9 @@ class DashboardFinalActionTests(unittest.TestCase):
         response = self.client.post(f'/api/instructions/{iid}/approve')
         self.assertEqual(response.status_code, 200, response.text)
         self.assertEqual(tuple(self.state(iid)), ('APPROVED', 'dashboard'))
-        second = self.waiting(RYTAS)
+        self.p.tick(self.gateway)                                   # first approved bet goes to the phone
+        self.gateway.results[iid + "-place"] = fail_result(iid, 'SUSPENDED')   # ...and is refused before any tap
+        second = self.waiting(RYTAS)                                # phone free: second verified -> awaiting
         self.assertEqual(self.client.post(f'/api/instructions/{second}/reject').status_code, 200)
         self.assertEqual(self.state(second)[0], 'REJECTED')
         self.assertEqual(self.client.post(f'/api/instructions/{second}/approve').status_code, 409)
@@ -68,7 +70,7 @@ class DashboardFinalActionTests(unittest.TestCase):
         iid = self.waiting()
         self.p.final.approve(iid, 'operator')
         self.p.tick(self.gateway)
-        self.gateway.results[iid] = placement_result(iid)
+        self.gateway.results[iid + "-place"] = placement_result(iid)
         self.p.tick(self.gateway)
         items = self.client.get('/api/bets').json()['items']
         self.assertEqual((items[0]['status'], items[0]['bet_reference'], items[0]['approved_by']),

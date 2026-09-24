@@ -24,9 +24,22 @@ It cancels pending approvals and blocks all dispatch until `/resume`.
 ## Flow
 
 ```
-QUEUED -> AWAITING_APPROVAL --(/approve, dashboard, CLI)--> APPROVED -> DISPATCHED -> outcome
-QUEUED -> APPROVED (auto_approve, within limits)
+QUEUED -> DISPATCHED (READY verification on the phone; nothing placed; slip cleared)
+       -> READY -> AWAITING_APPROVAL --(/approve, dashboard, CLI)--> APPROVED
+       -> DISPATCHED as "<id>-place" (full re-verification, then ONE Place Bet tap) -> outcome
+READY -> APPROVED (auto_approve, within limits)
 ```
+
+Verify first: approval is only requested after the phone has verified the fixture, market,
+side, line, price, stake and To Return, and that the slip holds a single selection. The tap
+run uses its own device ID (`<id>-place`), because the phone's idempotency would answer a
+reused ID with the earlier READY result. Alert age for the post-approval recheck is measured
+from that verification (`ready_at`); the phone re-verifies everything right before the tap.
+
+`final_action_one_shot: true` is supervised arming. The first result of a Place Bet run
+switches dispatch and final action off (in memory and in `.local/pipeline.json`) and engages
+the kill switch; it doesn't matter whether the bet was placed, refused, failed before the tap
+or ended PLACEMENT_UNKNOWN. My Bets verification and settlement keep running.
 
 The approval notification says exactly what will be placed and gives the command
 `/approve on-xxxxxxx`. A command is obeyed only if it comes from the configured group chat

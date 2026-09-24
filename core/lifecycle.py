@@ -58,7 +58,8 @@ NEXT = {
     State.APPROVED: {State.DISPATCHED},
     State.DISPATCHED: {State.DEVICE_ACTIVE, State.READY, State.PLACEMENT_UNKNOWN},  # DEVICE_ACTIVE is optional
     State.DEVICE_ACTIVE: {State.READY, State.PLACEMENT_UNKNOWN},
-    State.READY: set(),
+    # Final-action mode: a device-verified READY becomes the approval request (or auto-approval).
+    State.READY: {State.AWAITING_APPROVAL, State.APPROVED},
     State.PLACEMENT_UNKNOWN: set(),
 }
 # Kept for callers that list the READY-only progression.

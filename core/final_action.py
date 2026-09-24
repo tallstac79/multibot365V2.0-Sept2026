@@ -99,18 +99,29 @@ class FinalAction:
     # ------------------------------------------------------------------ approval
     def on_queued(self, db, row):
         """Called by the dispatcher for a QUEUED row that passed every pre-dispatch check.
-        Returns True if the row may be dispatched now (auto-approved)."""
+
+        Verify first: the row is sent to the phone as a READY run (fixture, market, side, line,
+        price, £ stake + To Return, single selection; nothing placed, slip cleared). Only a
+        device-verified READY result asks for approval (on_verified). Returns True if the READY
+        verification may be dispatched now."""
         breach = self.limit_breach(db, row)
         if breach:
             self.p.store.transition(db, row['instruction_id'], State.REJECTED, actor='limits', reason=breach)
             return False
+        return True
+
+    def on_verified(self, db, row):
+        """READY (device-verified) -> AWAITING_APPROVAL, or APPROVED under auto-approval."""
+        breach = self.limit_breach(db, row)
+        if breach:
+            self.p.store.transition(db, row['instruction_id'], State.REJECTED, actor='limits', reason=breach)
+            return
         if self.s.auto_approve:
             self.p.store.transition(db, row['instruction_id'], State.APPROVED, actor='auto-approval',
                                     reason='Auto-approved within configured limits', approved_by='auto')
             return True
         self.p.store.transition(db, row['instruction_id'], State.AWAITING_APPROVAL, actor='dispatcher',
-                                reason=f'Operator approval required within {self.s.approval_timeout_seconds}s')
-        return False
+                                reason=f'Device verified; operator approval required within {self.s.approval_timeout_seconds}s')
 
     def resolve(self, db, reference):
         """Instruction by full ID or unique prefix (Telegram short IDs)."""

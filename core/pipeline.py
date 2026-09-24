@@ -70,6 +70,10 @@ class Settings:
     reconcile_max_attempts: int = 3
     reconcile_timeout_ms: int = 120000
     settlement_poll_minutes: int = 30
+    # Supervised arming: after the FIRST result of a Place Bet run (placed, refused, failed before the tap
+    # or PLACEMENT_UNKNOWN) dispatch and final action switch off at once and the kill switch engages.
+    # My Bets verification and settlement keep running.
+    final_action_one_shot: bool = False
     # Stale/unknown session at dispatch time: send one SESSION_CHECK (opens home, logs in if
     # needed) and wait for it instead of failing SESSION_REQUIRED straight away.
     session_warmup: bool = True
@@ -81,6 +85,11 @@ class Settings:
         return cls(**known)
 
 
+def device_instruction_id(instruction_id, execution_mode):
+    """Phone-side ID: the verification run uses the instruction ID; the Place Bet run its own ('-place')."""
+    return f'{instruction_id}-place' if execution_mode == 'dispatch' else instruction_id
+
+
 class Pipeline:
     def __init__(self, store, config_provider, settings=None, clock=utcnow):
         self.store = store if isinstance(store, Store) else Store(store, clock)
@@ -89,6 +98,8 @@ class Pipeline:
         self.settings = settings or Settings()
         self.clock = clock
         self.final = FinalAction(self)
+        self.armed_at = iso(clock())    # one-shot: only Place Bet runs dispatched after this count
+        self.disarmed = None            # set when the one-shot fired (the service persists it)
 
     # ================================================================== intake
     def ingest(self, message, delivery='event'):
@@ -263,7 +274,10 @@ class Pipeline:
         if final_action:
             if not (self.final.enabled() and row['state'] == State.APPROVED.value and row['approved_by']):
                 raise PermissionError('Final action requires an APPROVED instruction with final action enabled')
-            payload.update(execution_mode='dispatch', confirmation_status='APPROVED')
+            # Its own device ID: the phone already ran this instruction's READY verification under the plain
+            # ID, and its idempotency would answer a reused ID with that old READY result (never placing).
+            payload.update(instruction_id=device_instruction_id(row['instruction_id'], 'dispatch'),
+                           execution_mode='dispatch', confirmation_status='APPROVED')
         else:
             assert 'confirmation_status' not in payload
         return payload
@@ -273,6 +287,7 @@ class Pipeline:
         health = self.refresh_device(gateway)
         self._poll_warmup(gateway)
         self._poll_in_flight(gateway)
+        self._one_shot()
         self.final.poll(gateway)
         self._expire_ready()
         self.final.expire_approvals()
@@ -284,10 +299,31 @@ class Pipeline:
         if not self.final.device_busy():
             self._dispatch_queued(gateway, health)
 
+    ONE_SHOT_KEY = 'final_action_one_shot'
+
+    def _one_shot(self):
+        """Disarm after the first Place Bet run result since arming (see Settings.final_action_one_shot)."""
+        if not self.settings.final_action_one_shot or not (self.settings.dispatch_enabled or self.settings.final_action_enabled):
+            return
+        with self.store.connection() as db:
+            row = db.execute("SELECT instruction_id, state FROM instructions WHERE execution_mode='dispatch' "
+                             "AND state NOT IN ('APPROVED','DISPATCHED','DEVICE_ACTIVE') AND dispatched_at >= ? "
+                             "ORDER BY dispatched_at LIMIT 1", (self.armed_at,)).fetchone()
+        if row is None:
+            return
+        self.settings.dispatch_enabled = False
+        self.settings.final_action_enabled = False
+        self.final.set_paused(True, 'one-shot')
+        self.disarmed = dict(instruction_id=row['instruction_id'], state=row['state'], at=iso(self.clock()))
+        with self.store.tx() as db:
+            self.store.audit(db, 'FINAL_ACTION_DISARMED', dict(self.disarmed, reason='one-shot: first Place Bet result'),
+                             row['instruction_id'])
+        self.store.set_control(self.ONE_SHOT_KEY, self.disarmed, by='one-shot')
+
     def _poll_in_flight(self, gateway):
         for row in self.store.instructions_in([State.DISPATCHED, State.DEVICE_ACTIVE]):
             try:
-                result = gateway.result(row['instruction_id'])
+                result = gateway.result(device_instruction_id(row['instruction_id'], row['execution_mode']))
             except Exception as error:
                 result = None
                 with self.store.tx() as db:
@@ -342,7 +378,13 @@ class Pipeline:
             now = self.clock()
             config = self.config_provider()
             alert = json.loads(row['normalized_alert'])
-            recheck = evaluate(alert, config, instruction_id=row['instruction_id'], received_at=row['received_at'], now=now)
+            received = row['received_at']
+            if row['state'] == State.APPROVED.value and row['ready_at']:
+                # Verify-first final action: the phone verified the live line and price at ready_at and
+                # re-verifies them before the tap, so alert age is measured from that verification.
+                alert = {k: v for k, v in alert.items() if k != 'source_timestamp'}
+                received = row['ready_at']
+            recheck = evaluate(alert, config, instruction_id=row['instruction_id'], received_at=received, now=now)
             with self.store.tx() as db:
                 if recheck['decision'] != ACCEPT:
                     target = State.STALE if recheck['decision'] == STALE else State.REJECTED
@@ -378,8 +420,8 @@ class Pipeline:
                 final_action = self.final.enabled()
                 if final_action and row['state'] == State.QUEUED.value:
                     if not self.final.on_queued(db, row):
-                        continue  # awaiting operator approval, or rejected by a limit
-                    row = self.store.get_instruction(db, row['instruction_id'])
+                        continue  # rejected by a limit
+                    # dispatched below as a READY verification run; approval is requested on its result
                 if final_action and row['state'] == State.APPROVED.value:
                     breach = self.final.limit_breach(db, row)
                     if breach:
@@ -501,7 +543,8 @@ class Pipeline:
             final_action = row['execution_mode'] == 'dispatch'
             try:
                 state, reason, observed = interpret_device_result(result, final_action=final_action)
-                if isinstance(result, dict) and result.get('instruction_id') not in (None, instruction_id):
+                if isinstance(result, dict) and result.get('instruction_id') not in (
+                        None, instruction_id, device_instruction_id(instruction_id, row['execution_mode'])):
                     raise ValueError('Result instruction_id does not match')
             except ValueError as error:
                 self.store.audit(db, 'MALFORMED_RESULT', dict(error=str(error), result=result, source=source), instruction_id)
@@ -529,6 +572,8 @@ class Pipeline:
                 if placement is not None:
                     fields['placement'] = placement
             applied = self.store.transition(db, instruction_id, state, actor=source, at=iso(now), reason=reason, **fields)
+            if applied and state == State.READY and not final_action and self.final.enabled():
+                self.final.on_verified(db, self.store.get_instruction(db, instruction_id))
             if applied and final_action:
                 from core.lifecycle import placement_of
                 tapped = (placement_of(result) or {}).get('tapped')
