@@ -345,6 +345,17 @@ class FinalAction:
             return 'NOT_FOUND'
 
     def _apply_settlement(self, rec, my_bets):
+        try:
+            bet_matching.lines_of(my_bets)
+            with self.p.store.connection() as db:
+                for bet in db.execute('SELECT b.*, i.home, i.away FROM bets b JOIN instructions i USING(instruction_id) '
+                                      'WHERE b.status=? LIMIT 1', (OPEN,)).fetchall():
+                    bet_matching.match(dict(bet), my_bets)      # raises if the Settled view is not confirmed
+        except ValueError as error:
+            # Unconfirmed/unreadable Settled view: this check FAILED (retried next cycle). It must complete,
+            # or the open reconciliation would block every later dispatch (real: 2026-09-24 21:22).
+            self._complete(rec, 'FAILED', dict(error=str(error)[:200]))
+            return
         with self.p.store.tx() as db:
             updated = []
             for bet in db.execute('SELECT b.*, i.home, i.away FROM bets b JOIN instructions i USING(instruction_id) '

@@ -456,6 +456,31 @@ class OneShotTests(Base):
         self.assertEqual((self.p.settings.dispatch_enabled, self.p.settings.final_action_enabled), (False, False))
 
 
+class SettlementViewTests(Base):
+    def test_unconfirmed_settled_view_fails_the_check_and_never_blocks(self):
+        iid = self.p.ingest(message(MELBOURNE))['instruction_id']
+        self.p.tick(self.gateway)
+        self.p.final.approve(iid, 'operator')
+        self.p.tick(self.gateway)
+        self.gateway.results[iid + '-place'] = placement_result(iid)
+        self.p.tick(self.gateway)
+        self.clock.advance(20)
+        self.p.tick(self.gateway)
+        rec = self.reconciliations()[-1]
+        self.gateway.results[rec['device_instruction_id']] = my_bets(rec['device_instruction_id'], MELBOURNE_CARD)
+        self.p.tick(self.gateway)                                   # verified -> OPEN
+        self.clock.advance(1)
+        self.p.tick(self.gateway)                                   # first settlement check submitted
+        settle = [r for r in self.reconciliations() if r['purpose'] == 'SETTLEMENT'][-1]
+        wrong_view = {'instruction_id': settle['device_instruction_id'], 'status': 'PASS', 'stage': 'PASS',
+                      'my_bets': {'view': 'SETTLED', 'lines': [{'text': 'bet365.com/#/HO/', 'top': 80, 'frame': 0}]}}
+        self.gateway.results[settle['device_instruction_id']] = wrong_view
+        self.p.tick(self.gateway)                                   # must not raise
+        settle = [r for r in self.reconciliations() if r['purpose'] == 'SETTLEMENT'][-1]
+        self.assertEqual(settle['outcome'], 'FAILED')
+        self.assertFalse(self.p.final.device_busy())
+
+
 class HeldSlipTests(Base):
     """Verified bet held on the slip for approval; /approve taps it (PLACE_HELD), never rebuilds it."""
 
