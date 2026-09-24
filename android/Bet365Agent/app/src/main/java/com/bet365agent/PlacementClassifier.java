@@ -1,0 +1,120 @@
+package com.bet365agent;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Pure classification of what Bet365 shows after a Place Bet tap, from OCR line text only.
+ * No Android types, so it is covered by plain JVM unit tests (PlacementClassifierTest).
+ *
+ * Outcomes: PLACED, SESSION_EXPIRED, PRICE_CHANGED, LINE_CHANGED, STAKE_LIMITED,
+ * INSUFFICIENT_FUNDS, SUSPENDED, REJECTED (all definitive), or PENDING / UNKNOWN (keep
+ * watching; after the last frame the caller reports PLACEMENT_UNKNOWN). The classifier never
+ * suggests tapping anything: an odds-change "Accept" prompt is reported, never accepted.
+ */
+final class PlacementClassifier {
+    static final class Result {
+        final String outcome, detail, betReference, stake, potentialReturn;
+        final boolean definitive;
+        Result(String outcome, String detail, boolean definitive, String betReference, String stake, String potentialReturn) {
+            this.outcome = outcome; this.detail = detail; this.definitive = definitive;
+            this.betReference = betReference; this.stake = stake; this.potentialReturn = potentialReturn;
+        }
+    }
+
+    private static final Pattern REFERENCE = Pattern.compile("(?i)\\bbet\\s*ref(?:erence)?\\.?\\s*:?\\s*([A-Z0-9]{6,20})\\b");
+    private static final Pattern STAKE = Pattern.compile("(?i)\\bstake\\b[^0-9]{0,6}(\\d+(?:[.,]\\d{1,2})?)");
+    private static final Pattern RETURNS = Pattern.compile("(?i)\\b(?:to\\s+return|returns?|potential\\s+returns?)\\b[^0-9]{0,6}(\\d+(?:[.,]\\d{1,2})?)");
+
+    private PlacementClassifier() {}
+
+    static Result classify(List<String> lines, boolean placeBetStillVisible) {
+        String blob = blob(lines);
+        if (has(blob, "bet placed", "bets placed", "your bet has been placed", "bet ref", "bet reference", "receipt",
+                "bet confirmed")) {
+            return new Result("PLACED", "Bet365 receipt visible", true, group(REFERENCE, joined(lines)),
+                    money(group(STAKE, joined(lines))), money(group(RETURNS, joined(lines))));
+        }
+        if (has(blob, "password") && has(blob, "log in", "login")) {
+            return definitive("SESSION_EXPIRED", "Login wall after Place Bet");
+        }
+        if (has(blob, "line has changed", "line changed", "handicap has changed", "handicap changed", "points changed")) {
+            return definitive("LINE_CHANGED", "Bet365 reports the line changed; changes NOT accepted");
+        }
+        if (has(blob, "odds have changed", "odds changed", "price has changed", "price changed", "accept odds",
+                "accept changes", "accept price", "accept new odds")) {
+            return definitive("PRICE_CHANGED", "Bet365 reports the odds changed; changes NOT accepted");
+        }
+        if (has(blob, "max stake", "maximum stake", "stake limit", "exceeds the maximum", "stake is too high",
+                "stake offered", "offered stake")) {
+            return definitive("STAKE_LIMITED", "Bet365 limited the stake");
+        }
+        if (has(blob, "insufficient", "not enough funds", "please deposit", "deposit funds", "add funds", "top up")
+                || (has(blob, "balance") && has(blob, "not enough", "too low", "unable"))) {
+            return definitive("INSUFFICIENT_FUNDS", "Bet365 reports insufficient funds");
+        }
+        if (has(blob, "suspended", "no longer available", "selection unavailable", "market unavailable")) {
+            return definitive("SUSPENDED", "Selection or market suspended/unavailable");
+        }
+        if (has(blob, "not accepted", "bet rejected", "has been rejected", "unable to place", "could not be placed",
+                "cannot be placed")) {
+            return definitive("REJECTED", "Bet365 refused the bet");
+        }
+        if (placeBetStillVisible) return new Result("PENDING", "Place Bet still visible; no outcome yet", false, null, null, null);
+        return new Result("UNKNOWN", "No recognisable outcome on screen", false, null, null, null);
+    }
+
+    /** True if a line is a control the reset may tap: never anything that could place or accept a bet. */
+    static boolean safeResetControl(String text) {
+        String t = text.trim().toLowerCase(Locale.US);
+        if (t.contains("place") || t.contains("accept") || t.contains("confirm") || t.contains("bet now")) return false;
+        return t.equals("done") || t.equals("continue") || t.equals("close") || t.equals("remove all")
+                || t.equals("clear all") || t.equals("remove") || t.equals("clear");
+    }
+
+    /** Betslip shows more than one selection: placing would create a multiple. */
+    static boolean multipleSelections(List<String> lines) {
+        String blob = blob(lines);
+        return has(blob, "double", "treble", "multiples", "accumulator", "trixie", "yankee", "patent", "lucky 15",
+                "2 selections", "3 selections", "4 selections", "5 selections");
+    }
+
+    static List<String> receiptLines(List<String> lines) {
+        List<String> out = new ArrayList<>();
+        for (String line : lines) if (out.size() < 40 && !line.trim().isEmpty()) out.add(line.trim());
+        return out;
+    }
+
+    private static Result definitive(String outcome, String detail) {
+        return new Result(outcome, detail, true, null, null, null);
+    }
+
+    private static String blob(List<String> lines) {
+        return " " + joined(lines).toLowerCase(Locale.US).replaceAll("\\s+", " ") + " ";
+    }
+
+    private static String joined(List<String> lines) {
+        return lines == null ? "" : String.join(" | ", lines);
+    }
+
+    private static boolean has(String blob, String... phrases) {
+        for (String p : phrases) if (blob.contains(p)) return true;
+        return false;
+    }
+
+    private static String group(Pattern pattern, String text) {
+        Matcher m = pattern.matcher(text);
+        return m.find() ? m.group(1) : null;
+    }
+
+    private static String money(String value) {
+        if (value == null) return null;
+        String v = value.replace(',', '.');
+        if (!v.contains(".")) v = v + ".00";
+        else if (v.substring(v.indexOf('.') + 1).length() == 1) v = v + "0";
+        return v;
+    }
+}

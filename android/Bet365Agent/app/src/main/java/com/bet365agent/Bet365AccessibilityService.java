@@ -72,7 +72,11 @@ public class Bet365AccessibilityService extends AccessibilityService {
         // The text pipeline deliberately operates without node-tree inspection.
         if (visualRunner != null && visualRunner.isTextActive()) return;
         
-        // DEBUG: Log every event to confirm service is receiving them
+        // Legacy Milestone A/B/C tree flows only run when one is explicitly armed. Otherwise every
+        // Chrome content event triggered a full tree capture + logging on the main thread.
+        boolean legacyArmed = ScanStore.hasPendingClickFootball(this) || ScanStore.hasPendingSearchFlow(this)
+                || ScanStore.getPendingAction(this).equals("FIXTURE_TAP") || checkForceFixtureDiscoveryMode();
+        if (!legacyArmed) return;
         Log.d("Bet365A11y", ">>> onAccessibilityEvent fired: type=" + event.getEventType() + " pkg=" + event.getPackageName());
         
         // DEBUG/BYPASS: Force fixture discovery if marker file exists

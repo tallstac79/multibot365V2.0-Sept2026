@@ -388,6 +388,19 @@ class Pipeline:
     def _send(self, gateway, instruction_id, payload):
         try:
             ack = gateway.submit(payload)
+        except ValueError as error:
+            reply = error.args[0] if error.args else None
+            if isinstance(reply, dict) and reply.get('stage') == 'INVALID_INSTRUCTION':
+                # The phone refused admission (schema, stake cap): definitively nothing executed.
+                with self.store.tx() as db:
+                    self.store.audit(db, 'COORDINATOR_REFUSED', reply, instruction_id, self.settings.device_id)
+                    self.store.transition(db, instruction_id, State.REJECTED, actor='coordinator',
+                                          reason=f"Coordinator refused admission: {reply.get('detail')}")
+                return
+            with self.store.tx() as db:
+                self.store.audit(db, 'SUBMIT_UNCERTAIN', dict(error=f'{type(error).__name__}: {error}'[:300]),
+                                 instruction_id, self.settings.device_id)
+            return
         except Exception as error:
             # Uncertain delivery: keep DISPATCHED and poll the same ID; never resend a new ID.
             with self.store.tx() as db:

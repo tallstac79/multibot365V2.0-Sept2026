@@ -87,7 +87,8 @@ final class VisualSession {
             "ENTER_QUERY","QUERY_VERIFY","RESULTS_WAIT","FIXTURE_VERIFY","MARKET_NAV",
             "OPEN_HOME","ENSURE_SESSION","DISCOVER_FIXTURE","SELECT_FIXTURE","VERIFY_EVENT",
             "DISCOVER_MARKETS","READ_SELECTION","READ_LINE","READ_PRICE","OPEN_SELECTION",
-            "ENTER_STAKE","VERIFY_FINAL_STATE","PREPARE_COMPLETE_EXECUTION","PLACE_BET"
+            "ENTER_STAKE","VERIFY_FINAL_STATE","PREPARE_COMPLETE_EXECUTION","PLACE_BET",
+            "PLACE_BET_OUTCOME","RESET_BETSLIP","MY_BETS","MY_BETS_SCROLL","OBSERVE"
         ).contains(phase);
     }
     private void closeStage(long nowElapsed, String status) {
@@ -276,6 +277,22 @@ final class VisualSession {
         });
         return f;
     }
+
+    /** Vertical swipe (scroll) gesture. Never used for selection; only to reveal more lines. */
+    CompletableFuture<Void> swipe(int x,int fromY,int toY,long durationMs) {
+        if(!live())return failed("TIMEOUT","Session expired");
+        events.put(CoordinatorAgent.object("effect","swipe","x",x,"from_y",fromY,"to_y",toY,"elapsed_ms",SystemClock.elapsedRealtime()-started));
+        CompletableFuture<Void> f=future();Path path=new Path();path.moveTo(x,fromY);path.lineTo(x,toY);
+        boolean accepted=service.dispatchGesture(new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path,0,durationMs)).build(),new AccessibilityService.GestureResultCallback(){
+            public void onCompleted(GestureDescription gesture){if(live())main.postDelayed(()->{if(live())f.complete(null);},600);}
+            public void onCancelled(GestureDescription gesture){f.completeExceptionally(new SiteAdapter.Failure("CLICK_FAILED","Swipe cancelled"));}
+        },main);
+        if(!accepted)f.completeExceptionally(new SiteAdapter.Failure("CLICK_FAILED","Swipe rejected"));
+        return f;
+    }
+
+    /** Artifact name of the most recent capture (e.g. s012_place_bet_after.png), or null. */
+    String lastImage() { return images.length()==0?null:images.optString(images.length()-1,null); }
 
     CompletableFuture<Void> dismissKeyboard() {
         if(!live())return failed("TIMEOUT","Session expired");

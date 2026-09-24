@@ -90,7 +90,8 @@ final class VisualControlRunner {
             service.takeScreenshot(Display.DEFAULT_DISPLAY, service.getMainExecutor(),
                 new AccessibilityService.TakeScreenshotCallback() {
                     @Override public void onSuccess(AccessibilityService.ScreenshotResult result) {
-                        worker.execute(() -> {
+                        if (closed || worker.isShutdown()) { result.getHardwareBuffer().close(); return; }
+                        try { worker.execute(() -> {
                             Bitmap copy = null;
                             try {
                                 Bitmap bitmap = Bitmap.wrapHardwareBuffer(result.getHardwareBuffer(), result.getColorSpace());
@@ -107,7 +108,10 @@ final class VisualControlRunner {
                             } finally {
                                 if (copy != null) copy.recycle();
                             }
-                        });
+                        }); } catch (java.util.concurrent.RejectedExecutionException e) {
+                            // Runner closed while a screenshot was in flight: previously crashed the whole app.
+                            log("SESSION_PROBE dropped after runner shutdown");
+                        }
                     }
                     @Override public void onFailure(int errorCode) {
                         log("SESSION_PROBE capture failed code=" + errorCode);
@@ -260,6 +264,7 @@ final class VisualControlRunner {
     }
     private void process(String id, Bitmap bitmap, String phase, int segmentation, Consumer<Ocr> next) {
         TextEntryFlow flow = textFlow;
+        if (closed || worker.isShutdown()) { log("OCR dropped after runner shutdown id=" + id + " phase=" + phase); return; }
         worker.execute(() -> {
             try {
                 File dir = new File(service.getFilesDir(), "visual/" + id);

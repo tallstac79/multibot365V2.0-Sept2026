@@ -8,7 +8,9 @@ import org.json.JSONArray;
 
 /**
  * Live Bet365 mobile (Chrome) visual adapter.
- * Screenshot/OCR + dispatchGesture only. Stops at bet-slip verification ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ never taps Place Bet / submit.
+ * Screenshot/OCR + dispatchGesture only. READY mode stops at bet-slip verification. Place Bet is
+ * tapped only for execution_mode=dispatch with confirmation_status=APPROVED (operator/limits
+ * approved in the backend), once, and its outcome is classified from the screen afterwards.
  * Does not use LocalSimulator pages or expected-value shortcuts.
  */
 final class Bet365LiveAdapter implements SiteAdapter {
@@ -1007,6 +1009,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
             require(!visible(s, "SIMULATOR", "DRYRUN", "REVIEW OK"), "EVENT_NOT_VERIFIED", "Simulator dry-run page during live verify");
             if (loginWall(s)) throw new Failure("SESSION_EXPIRED", "Bet365 login wall during betslip verify");
             detectBetslipFaults(s);
+            require(!PlacementClassifier.multipleSelections(texts(s)), "BETSLIP_NOT_SINGLE",
+                    "Betslip shows more than one selection; a multiple would be placed");
             require(visibleLoose(s, fixture.home) || visible(s, fixture.home), "WRONG_EVENT", "Home team missing on betslip");
             require(visibleLoose(s, fixture.away) || visible(s, fixture.away) || "DRAW".equals(selection.side),
                     "WRONG_EVENT", "Away team missing on betslip");
@@ -1086,6 +1090,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
         // Revalidate READY slip, locate Place Bet, prepare gesture ? DO NOT dispatch.
         return ui.delay(400).thenCompose(v -> ui.capture("complete_execution_pre")).thenAccept(s -> {
             detectBetslipFaults(s);
+            require(!PlacementClassifier.multipleSelections(texts(s)), "BETSLIP_NOT_SINGLE",
+                    "Betslip shows more than one selection before Place Bet");
             require(visibleLoose(s, fixture.home) || visible(s, fixture.home), "WRONG_EVENT", "Home missing before complete execution");
             require(visibleLoose(s, fixture.away) || visible(s, fixture.away) || "DRAW".equals(selection.side),
                     "WRONG_EVENT", "Away missing before complete execution");
@@ -1160,20 +1166,27 @@ final class Bet365LiveAdapter implements SiteAdapter {
         });
     }
 
+    /** Waits between post-tap frames (ms): outcome is classified from up to five screens (~12 s). */
+    private static final long[] OUTCOME_WAITS_MS = {1500, 1500, 2000, 3000, 4000};
+
     public CompletableFuture<Void> place_bet(Fixture fixture, Selection selection, String stake) {
-        // REAL dispatch of prepared Place Bet gesture. ?0 account expected ? INSUFFICIENT_BALANCE = acceptance PASS.
-        if (preparedPlaceBetBounds == null || preparedPlaceBetBounds.isEmpty()) {
-            return prepare_complete_execution(fixture, selection, stake, "1.01")
-                    .thenCompose(v -> place_bet(fixture, selection, stake));
-        }
+        // REAL Place Bet tap, once. Only reached for execution_mode=dispatch + confirmation APPROVED.
+        if (preparedPlaceBetBounds == null || preparedPlaceBetBounds.isEmpty())
+            return VisualSession.failed("TARGET_NOT_FOUND", "Place Bet was not prepared with the instruction's minimum price");
         android.graphics.Rect tap = new android.graphics.Rect(preparedPlaceBetBounds);
         return ui.capture("place_bet_pre_dispatch").thenCompose(s -> {
-            // Price-change protection immediately before dispatch
+            detectBetslipFaults(s);
+            require(!PlacementClassifier.multipleSelections(texts(s)), "BETSLIP_NOT_SINGLE", "Betslip not a single before Place Bet");
             boolean priceOk = visible(s, selection.price) || fractionalVisible(s, selection.price);
             require(priceOk, "PRICE_CHANGED", "Price changed before Place Bet dispatch");
             require(stakeVisible(s, stake), "STAKE_REJECTED", "Stake missing before Place Bet dispatch");
             require(findPlaceBetLine(s) != null, "TARGET_NOT_FOUND", "Place Bet disappeared before dispatch");
             ui.put("place_bet_bounds", VisualSession.bounds(tap));
+            // Durable intent BEFORE the gesture: from here on, any failure is reported as a
+            // possible placement (never "not tapped"), so the backend reconciles and never re-taps.
+            ui.put("placement", placement("PLACEMENT_UNKNOWN", "Place Bet tap dispatching; outcome not yet classified",
+                    null, null, stake, selection.price, new JSONArray(), null));
+            ui.checkpoint("PLACE_BET");
             return ui.tap(tap, "Place Bet").thenCompose(x -> {
                 if (preparedGesture != null) {
                     try { preparedGesture.put("dispatched", true); } catch (Exception ignored) {}
@@ -1181,34 +1194,117 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 }
                 ui.put("gesture_dispatched", true);
                 ui.put("place_bet_tapped", true);
-                return ui.delay(2200);
-            }).thenCompose(x -> ui.capture("place_bet_after")).thenAccept(after -> {
-                String blob = "";
-                for (VisualScreen.Line line : after.lines) blob += " " + line.text.toLowerCase(java.util.Locale.US);
-                boolean zeroBalance = blob.contains("?0.00") || blob.contains("0.00");
-                boolean placeGone = findPlaceBetLine(after) == null;
-                boolean insufficient = blob.contains("insufficient")
-                        || (blob.contains("balance") && (blob.contains("not enough") || blob.contains("low") || blob.contains("unable")))
-                        || (blob.contains("deposit") && blob.contains("fund"))
-                        || blob.contains("funds")
-                        || (placeGone && zeroBalance);
-                boolean receipt = blob.contains("bet placed") || blob.contains("bet accepted") || blob.contains("receipt");
-                ui.put("wager_submitted", receipt);
-                if (receipt) {
-                    ui.put("place_bet_result", "PLACE_BET_SUBMITTED");
-                    ui.put("place_bet_detail", "Place Bet dispatched; acceptance/receipt visible");
-                    return;
-                }
-                if (insufficient) {
-                    ui.put("place_bet_result", "INSUFFICIENT_BALANCE");
-                    ui.put("place_bet_detail", "Real Place Bet gesture dispatched; Bet365 rejected (insufficient funds / ?0 equivalent UI)");
-                    ui.put("wager_submitted", false);
-                    return;
-                }
-                ui.put("place_bet_result", "PLACE_BET_DISPATCHED");
-                ui.put("place_bet_detail", "Place Bet gesture dispatched; post-tap UI captured (no clear receipt/insufficient OCR)");
+                return observeOutcome(1, new JSONArray(), selection, stake);
             });
         });
+    }
+
+    private CompletableFuture<Void> observeOutcome(int attempt, JSONArray frames, Selection selection, String stake) {
+        return ui.delay(OUTCOME_WAITS_MS[attempt - 1])
+                .thenCompose(v -> { ui.checkpoint("PLACE_BET_OUTCOME"); return ui.capture("place_bet_after"); })
+                .thenCompose(after -> {
+                    frames.put(ui.lastImage());
+                    List<String> lines = texts(after);
+                    PlacementClassifier.Result r = PlacementClassifier.classify(lines, findPlaceBetLine(after) != null);
+                    if (!r.definitive && attempt < OUTCOME_WAITS_MS.length) return observeOutcome(attempt + 1, frames, selection, stake);
+                    String outcome = r.definitive ? r.outcome : "PLACEMENT_UNKNOWN";
+                    String detail = r.definitive ? r.detail
+                            : "No definitive outcome after " + attempt + " frames (" + r.detail + "); never re-tapped";
+                    ui.put("placement", placement(outcome, detail, r.betReference, r.potentialReturn,
+                            r.stake != null ? r.stake : stake, selection.price, frames, PlacementClassifier.receiptLines(lines)));
+                    ui.put("wager_submitted", "PLACED".equals(outcome));
+                    ui.put("place_bet_result", outcome);
+                    ui.put("place_bet_detail", detail);
+                    return resetBetslip();
+                });
+    }
+
+    private static org.json.JSONObject placement(String outcome, String detail, String reference, String potentialReturn,
+                                                String stake, String odds, JSONArray frames, List<String> receiptLines) {
+        return CoordinatorAgent.object("tapped", true, "outcome", outcome, "detail", detail,
+                "bet_reference", reference == null ? org.json.JSONObject.NULL : reference,
+                "potential_return", potentialReturn == null ? org.json.JSONObject.NULL : potentialReturn,
+                "stake", stake, "odds", odds, "frames", frames,
+                "receipt_lines", receiptLines == null ? new JSONArray() : new JSONArray(receiptLines),
+                "classified_at_ms", System.currentTimeMillis());
+    }
+
+    /** Clear the betslip after any outcome so the next instruction starts with an empty slip.
+     *  Only whitelisted controls (Done/Continue/Close/Remove All/Clear) are ever tapped. */
+    private CompletableFuture<Void> resetBetslip() {
+        ui.checkpoint("RESET_BETSLIP");
+        return ui.capture("reset_pre").thenCompose(s -> {
+            VisualScreen.Line control = null;
+            for (String want : new String[] {"Done", "Continue", "Remove All", "Clear All", "Close"}) {
+                for (VisualScreen.Line line : s.lines) {
+                    if (line.text.trim().equalsIgnoreCase(want) && PlacementClassifier.safeResetControl(line.text)) { control = line; break; }
+                }
+                if (control != null) break;
+            }
+            if (control == null) {
+                ui.put("betslip_reset", CoordinatorAgent.object("tapped", false, "detail", "No safe reset control visible"));
+                return CompletableFuture.<Void>completedFuture(null);
+            }
+            final String label = control.text.trim();
+            return ui.tap(control.bounds, "Reset betslip: " + label).thenCompose(v -> ui.delay(900))
+                    .thenCompose(v -> ui.capture("reset_after")).thenAccept(after ->
+                            ui.put("betslip_reset", CoordinatorAgent.object("tapped", true, "control", label,
+                                    "place_bet_still_visible", findPlaceBetLine(after) != null)));
+        }).exceptionally(error -> {
+            ui.put("betslip_reset", CoordinatorAgent.object("tapped", false, "detail", "Reset failed: " + error.getClass().getSimpleName()));
+            return null;
+        });
+    }
+
+    // ------------------------------------------------------------------ My Bets (reconciliation)
+    /** Open My Bets (OPEN = unsettled, SETTLED = settled) and return every OCR line over a few scrolled frames.
+     *  Read-only: taps only the My Bets entry and its tabs; never a bet, cash-out or edit control. */
+    CompletableFuture<org.json.JSONObject> read_my_bets(String view) {
+        ui.checkpoint("MY_BETS");
+        return ui.capture("my_bets_nav").thenCompose(s -> {
+            VisualScreen.Line entry = exactLine(s, "My Bets");
+            if (entry == null) entry = firstOf(s, "My Bets");
+            require(entry != null, "MY_BETS_UNAVAILABLE", "My Bets control not visible");
+            return ui.tap(entry.bounds, "My Bets").thenCompose(v -> ui.delay(2500));
+        }).thenCompose(v -> ui.capture("my_bets_view")).thenCompose(s -> {
+            VisualScreen.Line tab = null;
+            if ("SETTLED".equals(view)) {
+                tab = exactLine(s, "Settled");
+                require(tab != null, "MY_BETS_UNAVAILABLE", "Settled tab not visible in My Bets");
+            } else {
+                for (String name : new String[] {"Unsettled", "Open", "All"}) { tab = exactLine(s, name); if (tab != null) break; }
+            }
+            ui.put("my_bets_tab", tab == null ? "default" : tab.text.trim());
+            if (tab == null) return CompletableFuture.<Void>completedFuture(null);
+            return ui.tap(tab.bounds, "My Bets tab " + tab.text.trim()).thenCompose(x -> ui.delay(2000));
+        }).thenCompose(v -> collectMyBets(0, new JSONArray(), new JSONArray(), view));
+    }
+
+    private CompletableFuture<org.json.JSONObject> collectMyBets(int frame, JSONArray lines, JSONArray frames, String view) {
+        ui.checkpoint("MY_BETS_SCROLL");
+        return ui.capture("my_bets_" + (frame + 1)).thenCompose(s -> {
+            frames.put(ui.lastImage());
+            for (VisualScreen.Line line : s.lines)
+                lines.put(CoordinatorAgent.object("text", line.text, "top", line.bounds.top, "left", line.bounds.left, "frame", frame));
+            boolean empty = visible(s, "No bets", "no open bets", "no unsettled", "You have no", "No Settled");
+            if (empty || frame >= 3) {
+                return CompletableFuture.completedFuture(CoordinatorAgent.object("view", view, "tab", ui.record.opt("my_bets_tab"),
+                        "empty", empty, "frames", frames, "lines", lines));
+            }
+            return ui.swipe(360, 1150, 450, 450).thenCompose(v -> ui.delay(1200))
+                    .thenCompose(v -> collectMyBets(frame + 1, lines, frames, view));
+        });
+    }
+
+    private static VisualScreen.Line exactLine(VisualScreen s, String text) {
+        for (VisualScreen.Line line : s.lines) if (line.text.trim().equalsIgnoreCase(text)) return line;
+        return null;
+    }
+
+    static List<String> texts(VisualScreen s) {
+        List<String> out = new ArrayList<>();
+        for (VisualScreen.Line line : s.lines) out.add(line.text);
+        return out;
     }
 
     private static VisualScreen.Line findPlaceBetLine(VisualScreen s) {
@@ -1253,11 +1349,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
     private static boolean stakeVisible(VisualScreen s, String stake) {
         if (stake == null || stake.isEmpty()) return false;
         if (visible(s, stake)) return true;
-        if (visible(s, "?" + stake) || visible(s, "GBP" + stake)) return true;
+        if (visible(s, "\u00A3" + stake) || visible(s, "GBP" + stake)) return true;
         // Whole-pound display "?1" for stake "1.00" ? require ? prefix so bare "1" cannot match odds OCR
         if (stake.endsWith(".00")) {
             String whole = stake.substring(0, stake.length() - 3);
-            if (visible(s, "?" + whole) || visible(s, "GBP" + whole)) return true;
+            if (visible(s, "\u00A3" + whole) || visible(s, "GBP" + whole)) return true;
         }
         // Bet365 often OCRs stake digits poorly; Place Bet without Set Stake + To Return implies stake set
         if (findPlaceBetLine(s) != null && !visible(s, "Set Stake")

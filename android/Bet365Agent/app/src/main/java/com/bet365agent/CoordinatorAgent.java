@@ -33,6 +33,14 @@ final class CoordinatorAgent implements AutoCloseable {
     private volatile long sessionObservedAtMs = System.currentTimeMillis();
     private volatile String sessionDetail = "not checked yet";
     private final Runnable sessionRefresh = this::refreshSession;
+    /** Session refresh runs on its own thread so a busy main looper can never freeze observed_at. */
+    private final android.os.HandlerThread sessionThread = new android.os.HandlerThread("agent-session");
+    private final Handler sessionHandler;
+    private volatile long lastRefreshAtMs;
+    private volatile String lastRefreshOutcome = "never";
+    private volatile int refreshCount;
+    /** Phone-side cap for any final-action stake, independent of the backend limits. */
+    private static final String DEFAULT_MAX_STAKE = "1.00";
     /** Absolute backstop comes from instruction.timeout_ms; inactivity fails closed sooner. */
     private static final long STAGE_INACTIVITY_MS = 45_000L;
     private static final long PROGRESS_TICK_MS = 2_000L;
@@ -46,6 +54,8 @@ final class CoordinatorAgent implements AutoCloseable {
 
     CoordinatorAgent(AccessibilityService service, VisualControlRunner runner) {
         this.service = service; this.runner = runner;
+        sessionThread.start();
+        sessionHandler = new Handler(sessionThread.getLooper());
         CoordinatorConfig.token(service);
         store = new CoordinatorStore(service);
         // Reconcile already durable text results, but never replay unfinished work.
@@ -63,7 +73,7 @@ final class CoordinatorAgent implements AutoCloseable {
         }
         runner.setResultListener(this::runnerFinished);
         http = new CoordinatorHttp(this);
-        main.post(sessionRefresh);
+        sessionHandler.post(sessionRefresh);
     }
     String token() { return CoordinatorConfig.token(service); }
     String endpoint() { return http.endpoint(); }
@@ -112,6 +122,15 @@ final class CoordinatorAgent implements AutoCloseable {
             put(duplicate, "execution_count", old.optInt("execution_count"));
             return json(409, duplicate);
         }
+        if (instruction.placeBet) {
+            try {
+                java.math.BigDecimal cap = new java.math.BigDecimal(CoordinatorConfig.prefs(service).getString("max_stake", DEFAULT_MAX_STAKE));
+                if (new java.math.BigDecimal(instruction.stake).compareTo(cap) > 0)
+                    return error(400, instruction.id, "INVALID_INSTRUCTION", "STAKE_CAP_EXCEEDED: stake " + instruction.stake + " above phone cap " + cap.toPlainString());
+            } catch (NumberFormatException e) {
+                return error(400, instruction.id, "INVALID_INSTRUCTION", "STAKE_CAP_EXCEEDED: unreadable stake or cap");
+            }
+        }
         if (closed || store.active() != null || !runner.reserve(instruction.runId)) return error(409, instruction.id, "INTERNAL_ERROR", "BUSY: one instruction at a time; ID not consumed");
         try { store.accept(instruction); }
         catch (Exception e) { runner.releaseReservation(instruction.runId); return error(500, instruction.id, "INTERNAL_ERROR", "Could not persist receipt; no action started"); }
@@ -147,12 +166,19 @@ final class CoordinatorAgent implements AutoCloseable {
             // Phase C: refresh session observation immediately before starting a device job.
             preJobSessionRefresh();
             store.executing(instruction.id);
-            if(instruction.action.equals("ADAPTER_WORKFLOW") || instruction.action.equals("SESSION_CHECK") || instruction.action.equals("SESSION_PROBE") || instruction.action.equals("OPEN_SEARCH")) {
+            if(instruction.action.equals("ADAPTER_WORKFLOW") || instruction.action.equals("SESSION_CHECK") || instruction.action.equals("SESSION_PROBE") || instruction.action.equals("OPEN_SEARCH") || instruction.action.equals("MY_BETS") || instruction.action.equals("OBSERVE")) {
                 if(!runner.startExternal(instruction.runId,remaining(row,instruction.timeout))) {complete(row,"INTERNAL_ERROR","Runner rejected workflow");return;}
                 VisualSession session=new VisualSession(service,runner,instruction.runId,instruction.adapter);
                 session.setProgressListener(this::onWorkflowProgress);
                 noteProgress(instruction.id, "STARTED", 0, null);
                 if(instruction.action.equals("SESSION_PROBE")) { new SessionProbeWorkflow(session).start(); return; }
+                if(instruction.action.equals("OBSERVE")) { new ObserveWorkflow(session, remaining(row,instruction.timeout)).start(); return; }
+                if(instruction.action.equals("MY_BETS")) {
+                    SiteAdapter mine=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id,"football","0.00");
+                    if(!(mine instanceof Bet365LiveAdapter)) { runner.finish(instruction.runId,"INVALID_INSTRUCTION","MY_BETS requires the live adapter"); return; }
+                    new MyBetsWorkflow(session,(Bet365LiveAdapter)mine,instruction.view).start();
+                    return;
+                }
                 SiteAdapter adapter=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id,instruction.sport,instruction.stake);
                 if(instruction.action.equals("SESSION_CHECK")) new SessionCheckWorkflow(session,adapter).start();
                 else if(instruction.action.equals("OPEN_SEARCH")) new SearchOpenWorkflow(session,adapter,instruction.text).start();
@@ -216,7 +242,8 @@ final class CoordinatorAgent implements AutoCloseable {
             "ENTER_QUERY","QUERY_VERIFY","RESULTS_WAIT","FIXTURE_VERIFY","MARKET_NAV",
             "OPEN_HOME","ENSURE_SESSION","DISCOVER_FIXTURE","SELECT_FIXTURE","VERIFY_EVENT",
             "DISCOVER_MARKETS","READ_SELECTION","READ_LINE","READ_PRICE","OPEN_SELECTION",
-            "ENTER_STAKE","VERIFY_FINAL_STATE","PREPARE_COMPLETE_EXECUTION","PLACE_BET"
+            "ENTER_STAKE","VERIFY_FINAL_STATE","PREPARE_COMPLETE_EXECUTION","PLACE_BET",
+            "PLACE_BET_OUTCOME","RESET_BETSLIP","MY_BETS","MY_BETS_SCROLL","OBSERVE"
         ).contains(stage);
     }
 
@@ -295,11 +322,14 @@ final class CoordinatorAgent implements AutoCloseable {
         put(result, "run_id", current.optString("run_id"));
         JSONObject proof=evidence(current);
         String completedAction=current.optJSONObject("payload").optString("action");
-        if(proof!=null && (completedAction.equals("ADAPTER_WORKFLOW") || completedAction.equals("SESSION_CHECK") || completedAction.equals("SESSION_PROBE") || completedAction.equals("OPEN_SEARCH"))) {
+        if(proof!=null && (completedAction.equals("ADAPTER_WORKFLOW") || completedAction.equals("SESSION_CHECK") || completedAction.equals("SESSION_PROBE") || completedAction.equals("OPEN_SEARCH") || completedAction.equals("MY_BETS") || completedAction.equals("OBSERVE"))) {
             JSONObject fixture=proof.optJSONObject("fixture");
             for(String key:new String[]{"fixture_name","home","away","competition"})put(result,key,fixture==null?JSONObject.NULL:fixture.opt(key));
             put(result,"selection",proof.opt("selection"));put(result,"final_state",proof.opt("final_state"));put(result,"ready_state",proof.opt("ready_state"));put(result,"complete_execution_ready",proof.opt("complete_execution_ready"));put(result,"place_bet_tapped",proof.opt("place_bet_tapped"));put(result,"place_bet_result",proof.opt("place_bet_result"));put(result,"place_bet_detail",proof.opt("place_bet_detail"));if(proof.has("wager_submitted"))put(result,"wager_submitted",proof.opt("wager_submitted"));
             put(result,"verification_detail",proof.optString("verification_detail",detail));
+            if(proof.has("placement"))put(result,"placement",proof.opt("placement"));
+            if(proof.has("my_bets"))put(result,"my_bets",proof.opt("my_bets"));
+            if(proof.has("observe"))put(result,"observe",proof.opt("observe"));
             JSONObject ready = proof.optJSONObject("ready_state");
             if (ready != null && ready.has("session")) noteSession(ready.optString("session"), "ready_state");
             else if (proof.has("session")) noteSession(proof.optString("session"), "workflow");
@@ -314,18 +344,26 @@ final class CoordinatorAgent implements AutoCloseable {
     }
     private static String stage(String textStatus) {
         if (textStatus.equals("FIELD_NOT_FOUND")) return "TARGET_NOT_FOUND";
-        return Set.of("PASS", "LOGIN_FAILED", "SESSION_EXPIRED", "FOCUS_FAILED", "INPUT_FAILED", "TEXT_NOT_VERIFIED", "TIMEOUT", "NO_FIXTURE_FOUND", "AMBIGUOUS_FIXTURE", "TARGET_NOT_FOUND", "CLICK_FAILED", "WRONG_EVENT", "EVENT_NOT_VERIFIED", "PRICE_CHANGED", "LINE_CHANGED", "SELECTION_CHANGED", "SUSPENDED", "UNAVAILABLE", "BELOW_MINIMUM").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
+        // Every adapter outcome is kept distinct: collapsing them to INTERNAL_ERROR would hide
+        // exactly the final-action outcomes (funds, stake limits, refusals) the backend must see.
+        return Set.of("PASS", "LOGIN_FAILED", "SESSION_EXPIRED", "FOCUS_FAILED", "INPUT_FAILED", "TEXT_NOT_VERIFIED", "TIMEOUT",
+            "NO_FIXTURE_FOUND", "AMBIGUOUS_FIXTURE", "TARGET_NOT_FOUND", "CLICK_FAILED", "WRONG_EVENT", "EVENT_NOT_VERIFIED",
+            "PRICE_CHANGED", "LINE_CHANGED", "SELECTION_CHANGED", "SUSPENDED", "UNAVAILABLE", "BELOW_MINIMUM",
+            "INSUFFICIENT_BALANCE", "INSUFFICIENT_FUNDS", "STAKE_LIMITED", "STAKE_REJECTED", "MARKET_SUSPENDED",
+            "SELECTION_UNAVAILABLE", "SPORTS_RESULTS_NOT_FOUND", "WRONG_SPORT", "CONFIRMATION_REQUIRED",
+            "BETSLIP_NOT_SINGLE", "PLACEMENT_UNKNOWN", "REJECTED", "INVALID_INSTRUCTION", "MY_BETS_UNAVAILABLE").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
     }
     private JSONObject health() throws Exception {
         JSONObject active = store.active(), last = store.last();
         android.content.pm.PackageInfo pkg = service.getPackageManager().getPackageInfo(service.getPackageName(), 0);
         JSONObject session;
         synchronized (sessionLock) {
-            session = object("state", sessionState, "observed_at_ms", sessionObservedAtMs, "detail", sessionDetail == null ? "" : sessionDetail);
+            session = object("state", sessionState, "observed_at_ms", sessionObservedAtMs, "detail", sessionDetail == null ? "" : sessionDetail,
+                "refresh_count", refreshCount, "last_refresh_at_ms", lastRefreshAtMs, "last_refresh_outcome", lastRefreshOutcome);
             // Watchdog: ensure the 60s refresh keeps running even if a prior delayed post was dropped.
             if (!closed && System.currentTimeMillis() - sessionObservedAtMs > SESSION_REFRESH_MS + 5_000L) {
-                main.removeCallbacks(sessionRefresh);
-                main.post(sessionRefresh);
+                sessionHandler.removeCallbacks(sessionRefresh);
+                sessionHandler.post(sessionRefresh);
             }
         }
         JSONObject health = object("healthy", !closed).put("heartbeat_ms", System.currentTimeMillis()).put("uptime_ms", SystemClock.elapsedRealtime() - boot)
@@ -360,11 +398,15 @@ final class CoordinatorAgent implements AutoCloseable {
 
     private void refreshSession() {
         if (closed) return;
+        refreshCount++;
+        lastRefreshAtMs = System.currentTimeMillis();
+        lastRefreshOutcome = "started";
         try {
             PowerManager power = (PowerManager) service.getSystemService(android.content.Context.POWER_SERVICE);
             KeyguardManager keyguard = (KeyguardManager) service.getSystemService(android.content.Context.KEYGUARD_SERVICE);
             if (power == null || !power.isInteractive() || (keyguard != null && keyguard.isKeyguardLocked())) {
                 noteSession("UNKNOWN", "screen locked or off");
+                lastRefreshOutcome = "screen locked or off";
             } else if (store.active() != null) {
                 // Mid-instruction: do not steal screenshots / runner. Keep AUTHENTICATED fresh via keepalive
                 // so pipeline session_max_age (120s) does not race SESSION_REQUIRED while a job is active.
@@ -376,6 +418,7 @@ final class CoordinatorAgent implements AutoCloseable {
                     }
                     // Non-AUTHENTICATED mid-job: leave state unchanged (fail closed for new dispatches).
                 }
+                lastRefreshOutcome = "job active";
             } else {
                 final long startedAt = System.currentTimeMillis();
                 boolean started = runner.probeSession(ocr -> {
@@ -389,19 +432,23 @@ final class CoordinatorAgent implements AutoCloseable {
                 });
                 if (!started) {
                     noteSession("UNKNOWN", "runner unavailable for session probe");
+                    lastRefreshOutcome = "runner unavailable";
                 } else {
+                    lastRefreshOutcome = "probe started";
                     // If OCR callback never arrives, age out instead of freezing observed_at.
-                    main.postDelayed(() -> {
+                    sessionHandler.postDelayed(() -> {
                         synchronized (sessionLock) {
                             if (sessionObservedAtMs < startedAt) noteSession("UNKNOWN", "session probe timed out");
                         }
                     }, 15_000L);
                 }
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             noteSession("ERROR", "session refresh failed: " + e.getClass().getSimpleName());
+            lastRefreshOutcome = "failed: " + e.getClass().getSimpleName();
         } finally {
-            if (!closed) main.postDelayed(sessionRefresh, SESSION_REFRESH_MS);
+            if (!closed) sessionHandler.postDelayed(sessionRefresh, SESSION_REFRESH_MS);
+            Log.i("AgentSession", "refresh #" + refreshCount + " outcome=" + lastRefreshOutcome + " state=" + sessionState);
         }
     }
     private JSONObject acknowledgement(JSONObject row) {
@@ -417,7 +464,7 @@ final class CoordinatorAgent implements AutoCloseable {
     private JSONObject evidence(JSONObject row) {
         try {
             String action=row.getJSONObject("payload").optString("action");
-            boolean workflow=action.equals("ADAPTER_WORKFLOW") || action.equals("SESSION_CHECK") || action.equals("SESSION_PROBE") || action.equals("OPEN_SEARCH");
+            boolean workflow=action.equals("ADAPTER_WORKFLOW") || action.equals("SESSION_CHECK") || action.equals("SESSION_PROBE") || action.equals("OPEN_SEARCH") || action.equals("MY_BETS") || action.equals("OBSERVE");
             File file = new File(service.getFilesDir(), (workflow?"workflow/":"text/") + row.getString("run_id") + "/result.json");
             return file.isFile() ? new JSONObject(new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8)) : null;
         } catch (Exception e) { return null; }
@@ -437,7 +484,8 @@ final class CoordinatorAgent implements AutoCloseable {
     private CoordinatorHttp.Reply json(int code, JSONObject json) { return new CoordinatorHttp.Reply(code, "application/json; charset=utf-8", json.toString().getBytes(StandardCharsets.UTF_8)); }
     @Override public void close() {
         closed = true;
-        main.removeCallbacks(sessionRefresh);
+        sessionHandler.removeCallbacksAndMessages(null);
+        sessionThread.quitSafely();
         main.removeCallbacksAndMessages(null);
         JSONObject active = store.active();
         if (active != null) {

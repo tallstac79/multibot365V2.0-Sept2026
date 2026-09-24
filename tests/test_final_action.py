@@ -300,6 +300,26 @@ class UncertaintyTests(Base):
         self.p.tick(self.gateway)
         self.assertEqual(self.row(iid)['state'], 'PLACEMENT_UNKNOWN')
 
+    def test_phone_refusing_admission_is_definitive(self):
+        iid = self.p.ingest(message(MELBOURNE))['instruction_id']
+        self.p.tick(self.gateway)
+        self.p.final.approve(iid, 'operator')
+
+        def refuse(payload):
+            raise ValueError({'instruction_id': iid, 'status': 'FAIL', 'stage': 'INVALID_INSTRUCTION',
+                              'detail': 'STAKE_CAP_EXCEEDED: stake 1.00 above phone cap 0.50'})
+        self.gateway.submit = refuse
+        self.p.tick(self.gateway)
+        row = self.row(iid)
+        self.assertEqual(row['state'], 'REJECTED')
+        self.assertIn('STAKE_CAP_EXCEEDED', row['failure_reason'])
+        self.assertIsNone(self.bet(iid))
+
+    def test_new_phone_stages(self):
+        self.assertEqual(interpret_device_result(dict(fail_result('x', 'BETSLIP_NOT_SINGLE'),
+                                                      placement={'tapped': False}), final_action=True)[0], State.REJECTED)
+        self.assertEqual(interpret_device_result(fail_result('x', 'WRONG_SPORT'))[0], State.TARGET_NOT_FOUND)
+
     def test_crash_after_final_dispatch_commit_never_resends(self):
         iid = self.p.ingest(message(MELBOURNE))['instruction_id']
         self.p.tick(self.gateway)

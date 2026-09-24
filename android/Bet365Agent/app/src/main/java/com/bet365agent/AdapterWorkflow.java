@@ -71,9 +71,11 @@ final class AdapterWorkflow {
         .whenComplete((v,error)->{
             if(error==null){
                 if("dispatch".equals(mode)){
-                    String detail = session.record.optString("place_bet_result", "PLACE_BET_DISPATCHED");
-                    session.put("verification_detail","DISPATCH after COMPLETE_EXECUTION_READY; wager_submitted="+session.record.opt("wager_submitted"));
-                    session.finish("PASS", detail);
+                    org.json.JSONObject placement = session.record.optJSONObject("placement");
+                    String outcome = placement == null ? "PLACEMENT_UNKNOWN" : placement.optString("outcome", "PLACEMENT_UNKNOWN");
+                    session.put("verification_detail","DISPATCH after COMPLETE_EXECUTION_READY; outcome="+outcome+"; wager_submitted="+session.record.opt("wager_submitted"));
+                    if ("PLACED".equals(outcome)) session.finish("PASS", "PLACED");
+                    else session.finish(outcome, placement == null ? "No placement record after tap" : placement.optString("detail", outcome));
                 } else if("prepare".equals(mode)){
                     session.put("verification_detail","COMPLETE_EXECUTION_READY: Place Bet located and gesture prepared; NOT dispatched");
                     session.finish("PASS","COMPLETE_EXECUTION_READY");
@@ -82,6 +84,10 @@ final class AdapterWorkflow {
                     session.finish("PASS","READY_STATE");
                 }
             } else {
+                // Final action: an explicit NOT_TAPPED record proves the failure happened before Place Bet.
+                // If a placement record exists the tap may have happened, and it is kept as-is.
+                if("dispatch".equals(mode) && !session.record.has("placement"))
+                    session.put("placement", CoordinatorAgent.object("tapped", false, "outcome", "NOT_TAPPED", "detail", "Failed before Place Bet"));
                 Throwable cause=error;while(cause.getCause()!=null)cause=cause.getCause();
                 String status=cause instanceof SiteAdapter.Failure?((SiteAdapter.Failure)cause).stage:"INTERNAL_ERROR";
                 session.finish(status,cause.getMessage()==null?cause.getClass().getSimpleName():cause.getMessage());
