@@ -25,7 +25,12 @@ final class PlacementClassifier {
         }
     }
 
-    private static final Pattern REFERENCE = Pattern.compile("(?i)\\bbet\\s*ref(?:erence)?\\.?\\s*:?\\s*([A-Z0-9]{6,20})\\b");
+    // Real receipt (2026-09-24): "Bet Ref BT4964411281W" OCR'd as "Bet Ref BT496441 1231 W", so the
+    // reference may be split by spaces; the pieces are joined. OCR digits are not trusted exactly:
+    // My Bets reconciliation identifies the bet by fixture, selection and stake, not by reference.
+    private static final Pattern REFERENCE = Pattern.compile("(?i)\\bbet\\s*ref(?:erence)?\\.?\\s*:?\\s*([A-Z0-9]{2,20}(?:\\s(?:[A-Z0-9]*\\d[A-Z0-9]*|[A-Z]\\b)){0,3})");
+    private static final Pattern MONEY_OCR = Pattern.compile("£\\s*([0-9Oo][0-9Oo.,\\s]{0,9})");
+    private static final Pattern AMOUNT = Pattern.compile("£(\\d+(?:[.,]\\d{1,2})?)");
     private static final Pattern STAKE = Pattern.compile("(?i)\\bstake\\b[^0-9]{0,6}(\\d+(?:[.,]\\d{1,2})?)");
     private static final Pattern RETURNS = Pattern.compile("(?i)\\b(?:to\\s+return|returns?|potential\\s+returns?)\\b[^0-9]{0,6}(\\d+(?:[.,]\\d{1,2})?)");
 
@@ -33,10 +38,13 @@ final class PlacementClassifier {
 
     static Result classify(List<String> lines, boolean placeBetStillVisible) {
         String blob = blob(lines);
-        if (has(blob, "bet placed", "bets placed", "your bet has been placed", "bet ref", "bet reference", "receipt",
-                "bet confirmed")) {
-            return new Result("PLACED", "Bet365 receipt visible", true, group(REFERENCE, joined(lines)),
-                    money(group(STAKE, joined(lines))), money(group(RETURNS, joined(lines))));
+        if (receiptVisible(lines)) {
+            List<String> fixed = new ArrayList<>();
+            if (lines != null) for (String line : lines) fixed.add(moneyFix(line));
+            String[] amounts = stakeAndReturn(fixed);
+            String stake = amounts[0] != null ? amounts[0] : group(STAKE, joined(fixed));
+            String ret = amounts[1] != null ? amounts[1] : group(RETURNS, joined(fixed));
+            return new Result("PLACED", "Bet365 receipt visible", true, reference(lines), money(stake), money(ret));
         }
         if (has(blob, "password") && has(blob, "log in", "login")) {
             return definitive("SESSION_EXPIRED", "Login wall after Place Bet");
@@ -65,6 +73,78 @@ final class PlacementClassifier {
         }
         if (placeBetStillVisible) return new Result("PENDING", "Place Bet still visible; no outcome yet", false, null, null, null);
         return new Result("UNKNOWN", "No recognisable outcome on screen", false, null, null, null);
+    }
+
+    /** Receipt markers. Real receipt: green banner "Bet Placed" + "Bet Ref ...", then the selection and a
+     *  "Stake  To Return" row. The banner stays on screen until its close (X) is tapped. */
+    static boolean receiptVisible(List<String> lines) {
+        return has(blob(lines), "bet placed", "bets placed", "your bet has been placed", "bet ref", "bet reference",
+                "receipt", "bet confirmed");
+    }
+
+    /** "Stake  To Return" header with the two amounts on the next line ("£O.1 0 £0.1 8" after OCR). */
+    static String[] stakeAndReturn(List<String> fixedLines) {
+        for (int i = 0; i < fixedLines.size(); i++) {
+            String t = fixedLines.get(i).toLowerCase(Locale.US);
+            if (!(t.contains("stake") && t.contains("return"))) continue;
+            List<String> found = new ArrayList<>();
+            Matcher m = AMOUNT.matcher(t);
+            while (m.find()) found.add(m.group(1));
+            if (found.size() < 2 && i + 1 < fixedLines.size()) {
+                m = AMOUNT.matcher(fixedLines.get(i + 1));
+                while (m.find()) found.add(m.group(1));
+            }
+            if (found.size() >= 2) return new String[] {found.get(0), found.get(1)};
+        }
+        return new String[] {null, null};
+    }
+
+    /** "£O.1 0" -> "£0.10": OCR letter O and stray spaces inside amounts. */
+    static String moneyFix(String text) {
+        Matcher m = MONEY_OCR.matcher(text == null ? "" : text);
+        StringBuffer out = new StringBuffer();
+        while (m.find()) {
+            String amount = m.group(1).replace(" ", "").replace('O', '0').replace('o', '0');
+            m.appendReplacement(out, Matcher.quoteReplacement("£" + amount + " "));
+        }
+        m.appendTail(out);
+        return out.toString();
+    }
+
+    static String reference(List<String> lines) {
+        for (String line : lines == null ? new ArrayList<String>() : lines) {
+            Matcher m = REFERENCE.matcher(line);
+            if (m.find()) {
+                String ref = m.group(1).replace(" ", "").toUpperCase(Locale.US);
+                if (ref.length() >= 6 && ref.matches(".*\\d.*")) return ref;
+            }
+        }
+        return null;
+    }
+
+    /** OCR of a close/remove icon: the receipt banner "X" reads as "x"; the betslip selection "X" as "><". */
+    static boolean closeGlyph(String word) {
+        String w = word == null ? "" : word.trim();
+        return w.equals("x") || w.equals("X") || w.equals("×") || w.equals("><") || w.equals(")<") || w.equals("><.");
+    }
+
+    /** Index of the receipt close icon on the banner line ("Share" then the X), or -1.
+     *  Never "Share" and never "Reuse Selections" (that would put the bet back on the slip). */
+    static int receiptCloseWord(List<String> words) {
+        int share = -1;
+        for (int i = 0; i < words.size(); i++) if (words.get(i).trim().equalsIgnoreCase("share")) share = i;
+        if (share < 0) return -1;
+        for (int i = share + 1; i < words.size(); i++) if (closeGlyph(words.get(i))) return i;
+        return -1;
+    }
+
+    /** Index of the remove-selection icon at the start of a betslip selection line ("><  Hapoel Tel Aviv -8.0 1.83"),
+     *  only when the rest of the line names the selection. -1 otherwise. */
+    static int removeSelectionWord(List<String> words, String selectionName) {
+        if (words.size() < 2 || !closeGlyph(words.get(0)) || selectionName == null || selectionName.trim().isEmpty()) return -1;
+        String rest = String.join(" ", words.subList(1, words.size())).toLowerCase(Locale.US);
+        String first = selectionName.trim().toLowerCase(Locale.US).split("\\s+")[0];
+        return rest.contains(first) ? 0 : -1;
     }
 
     /** True if a line is a control the reset may tap: never anything that could place or accept a bet. */

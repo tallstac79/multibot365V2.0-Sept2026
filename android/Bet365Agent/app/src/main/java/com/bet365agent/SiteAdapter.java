@@ -23,6 +23,9 @@ interface SiteAdapter {
     CompletableFuture<Void> verify_final_state(Fixture fixture, Selection selection, String stake);
     /** Locate Place Bet, record COMPLETE_EXECUTION_READY + prepared gesture; NEVER dispatches. */
     CompletableFuture<Void> prepare_complete_execution(Fixture fixture, Selection selection, String stake, String minimumPrice);
+    /** Remove this run's selection from the betslip (READY/prepare runs), so the next run is still a single.
+     *  Only the remove (X) icon on the selection's own line is tapped. */
+    default CompletableFuture<Void> clear_betslip(Selection selection) { return CompletableFuture.completedFuture(null); }
     /** Dispatch the prepared Place Bet gesture for real. */
     CompletableFuture<Void> place_bet(Fixture fixture, Selection selection, String stake);
 

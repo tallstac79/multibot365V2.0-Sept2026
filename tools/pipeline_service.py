@@ -96,7 +96,8 @@ async def run(settings):
     commands = None
     if notify.get('enabled') and notify.get('commands', True):
         from core.telegram_commands import BotApi, CommandHandler
-        commands = CommandHandler(pipeline, BotApi(notify['bot_token']), notify['chat_id'])
+        commands = CommandHandler(pipeline, BotApi(notify['bot_token']), notify['chat_id'],
+                                  notify.get('allowed_user_ids') or [])
     intake = None
     tasks = []
     if settings.get('telegram_intake'):

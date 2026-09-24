@@ -1275,10 +1275,15 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     /** Clear the betslip after any outcome so the next instruction starts with an empty slip.
-     *  Only whitelisted controls (Done/Continue/Close/Remove All/Clear) are ever tapped. */
+     *  A receipt is closed with its banner X (right of "Share"); otherwise only whitelisted controls
+     *  (Done/Continue/Close/Remove All/Clear) are tapped. Never "Reuse Selections". */
+    /** RESET_BETSLIP instruction: close a receipt / reset the slip on the current screen, no navigation. */
+    CompletableFuture<Void> reset_now() { return resetBetslip(); }
+
     private CompletableFuture<Void> resetBetslip() {
         ui.checkpoint("RESET_BETSLIP");
         return ui.capture("reset_pre").thenCompose(s -> {
+            if (PlacementClassifier.receiptVisible(texts(s))) return dismissReceipt(s);
             VisualScreen.Line control = null;
             for (String want : new String[] {"Done", "Continue", "Remove All", "Clear All", "Close"}) {
                 for (VisualScreen.Line line : s.lines) {
@@ -1298,6 +1303,59 @@ final class Bet365LiveAdapter implements SiteAdapter {
         }).exceptionally(error -> {
             ui.put("betslip_reset", CoordinatorAgent.object("tapped", false, "detail", "Reset failed: " + error.getClass().getSimpleName()));
             return null;
+        });
+    }
+
+    /** Close the "Bet Placed" receipt banner by its X. Real layout: "Bet Placed" / "Bet Ref ..." on the left,
+     *  "Share" and the X on the right of the same green banner. */
+    private CompletableFuture<Void> dismissReceipt(VisualScreen s) {
+        android.graphics.Rect close = null;
+        String how = null;
+        for (VisualScreen.Line line : s.lines) {
+            List<String> words = s.words(line);
+            int share = -1;
+            for (int i = 0; i < words.size(); i++) if (words.get(i).trim().equalsIgnoreCase("share")) share = i;
+            if (share < 0) continue;
+            int x = PlacementClassifier.receiptCloseWord(words);
+            if (x >= 0) { close = s.wordBounds(line, x); how = "ocr_x"; }
+            else {
+                // OCR missed the icon: it sits one icon-width right of "Share" on the same banner line.
+                android.graphics.Rect sh = s.wordBounds(line, share);
+                int cx = sh.right + Math.round(sh.width() * 1.25f);
+                close = new android.graphics.Rect(cx - 22, sh.centerY() - 22, cx + 22, sh.centerY() + 22);
+                how = "right_of_share";
+            }
+            break;
+        }
+        if (close == null) {
+            ui.put("betslip_reset", CoordinatorAgent.object("tapped", false, "detail", "Receipt visible but its close control was not found"));
+            return CompletableFuture.completedFuture(null);
+        }
+        final String method = how;
+        final android.graphics.Rect target = close;
+        return ui.tap(target, "Close receipt").thenCompose(v -> ui.delay(1200))
+                .thenCompose(v -> ui.capture("receipt_closed")).thenAccept(after ->
+                        ui.put("betslip_reset", CoordinatorAgent.object("tapped", true, "control", "receipt X",
+                                "method", method, "bounds", VisualSession.bounds(target),
+                                "receipt_still_visible", PlacementClassifier.receiptVisible(texts(after)))));
+    }
+
+    @Override
+    public CompletableFuture<Void> clear_betslip(Selection selection) {
+        ui.checkpoint("CLEAR_BETSLIP");
+        return ui.capture("clear_betslip_pre").thenCompose(s -> {
+            for (VisualScreen.Line line : s.lines) {
+                int index = PlacementClassifier.removeSelectionWord(s.words(line), selection == null ? null : selection.name);
+                if (index < 0) continue;
+                android.graphics.Rect icon = s.wordBounds(line, index);
+                return ui.tap(icon, "Remove selection from betslip").thenCompose(v -> ui.delay(1200))
+                        .thenCompose(v -> ui.capture("clear_betslip_after")).thenAccept(after ->
+                                ui.put("betslip_clear", CoordinatorAgent.object("tapped", true, "line", line.text,
+                                        "bounds", VisualSession.bounds(icon),
+                                        "place_bet_still_visible", findPlaceBetLine(after) != null)));
+            }
+            ui.put("betslip_clear", CoordinatorAgent.object("tapped", false, "detail", "No remove icon on a selection line"));
+            return CompletableFuture.<Void>completedFuture(null);
         });
     }
 

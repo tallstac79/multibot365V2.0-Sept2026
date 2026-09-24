@@ -56,6 +56,10 @@ final class VisualScreen {
         }
         return null;
     }
+    List<String> words(Line line) {
+        List<String> out=new ArrayList<>(); for(int i:line.words) out.add(original.words.get(i)); return out;
+    }
+    Rect wordBounds(Line line,int index) { return new Rect(original.rects.get(line.words.get(index))); }
     Rect valueBounds(String prefix) {
         List<Line> matches=new ArrayList<>();for(Line line:lines)if(line.text.startsWith(prefix+" "))matches.add(line);
         if(matches.size()!=1)throw new SiteAdapter.Failure("EVENT_NOT_VERIFIED","Missing unique field "+prefix);

@@ -78,6 +78,9 @@ final class CoordinatorInstruction {
             expected=Set.of("instruction_id","action","adapter","scenario","view","timeout_ms");
             if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid MY_BETS schema");
             if(!Set.of("OPEN","SETTLED").contains(fields.get("view"))) throw new IllegalArgumentException("Invalid MY_BETS view");
+        } else if(action.equals("RESET_BETSLIP")) {
+            expected=Set.of("instruction_id","action","adapter","scenario","timeout_ms");
+            if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid RESET_BETSLIP schema");
         } else if(action.equals("OBSERVE")) {
             expected=Set.of("instruction_id","action","adapter","timeout_ms");
             if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid OBSERVE schema");
@@ -94,13 +97,13 @@ final class CoordinatorInstruction {
             base.removeAll(allowedExtra);
             if(!base.equals(expected)) throw new IllegalArgumentException("Invalid ADAPTER_WORKFLOW schema");
         }
-        boolean noText = Set.of("SESSION_CHECK","SESSION_PROBE","MY_BETS","OBSERVE").contains(action);
-        if(!Set.of("OPEN_AND_TYPE","ADAPTER_WORKFLOW","SESSION_CHECK","SESSION_PROBE","OPEN_SEARCH","MY_BETS","OBSERVE").contains(action)
+        boolean noText = Set.of("SESSION_CHECK","SESSION_PROBE","MY_BETS","OBSERVE","RESET_BETSLIP").contains(action);
+        if(!Set.of("OPEN_AND_TYPE","ADAPTER_WORKFLOW","SESSION_CHECK","SESSION_PROBE","OPEN_SEARCH","MY_BETS","OBSERVE","RESET_BETSLIP").contains(action)
             || !id.matches("[A-Za-z0-9_-]{1,64}") || (noText ? !text.isEmpty() : (!action.equals("OPEN_SEARCH") && text.isEmpty()))
             || text.length()>128 || !fields.getOrDefault("timeout_ms", "").matches("[0-9]{1,6}"))
             throw new IllegalArgumentException("Invalid schema, action, ID, text or timeout");
         if(action.equals("OPEN_AND_TYPE") && !target.matches("[A-Za-z0-9]{1,40}")) throw new IllegalArgumentException("Invalid target");
-        if(action.equals("MY_BETS")) SiteAdapters.validate(adapter,scenario);
+        if(action.equals("MY_BETS") || action.equals("RESET_BETSLIP")) SiteAdapters.validate(adapter,scenario);
         if(action.equals("ADAPTER_WORKFLOW") || action.equals("SESSION_CHECK") || action.equals("OPEN_SEARCH")) {
             SiteAdapters.validate(adapter,scenario);
             if(!Set.of("football","basketball").contains(sport)) throw new IllegalArgumentException("Invalid sport");

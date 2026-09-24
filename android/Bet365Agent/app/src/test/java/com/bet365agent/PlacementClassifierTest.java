@@ -25,6 +25,43 @@ public class PlacementClassifierTest {
         assertEquals("0.18", r.potentialReturn);
     }
 
+    /** OCR lines of the real receipt (shadow capture receipt-20260924-102616, frame s011). */
+    @Test public void realReceiptFromShadowCapture() {
+        PlacementClassifier.Result r = classify(false,
+                "10227 B”? 0 (m5). 100%.", "ED 23 bet365.com/#/AC/Bl + E]", "Bet Placed", "m Share x",
+                "Bet Ref BT496441 1231 W", "A; Live Alena Reuse Selecllons", "Hapoel Tel Aviv -8.0 1.83",
+                "Point Spread", "Hapoel Tel Aviv vs Bayern Munich", "Stake To Return", "£O.1 0 £0.1 8",
+                "g Q «o» (5’ BE", "Home All Sports ln-Play My Bets Casino");
+        assertEquals("PLACED", r.outcome);
+        assertTrue(r.definitive);
+        assertEquals("BT4964411231W", r.betReference);
+        assertEquals("0.10", r.stake);
+        assertEquals("0.18", r.potentialReturn);
+    }
+
+    @Test public void realBetslipBeforeTapIsPending() {
+        PlacementClassifier.Result r = classify(true, "ED Ea bet365.com/#/AC/BW + E]", ">< Hapoel Tel Aviv -8.0 1.83",
+                "Point Spread", "Hapoel Te‘ Aviv vs Bayern Munich", "3““ Place Bet", "£0.10 To Return £018",
+                "WWW Silver £1,419‘46", "@ £050", "+£1 +£5 +£20", "Remember Stake Done");
+        assertEquals("PENDING", r.outcome);
+        assertFalse(r.definitive);
+    }
+
+    @Test public void receiptCloseIsTheXAfterShareNeverReuse() {
+        assertEquals(2, PlacementClassifier.receiptCloseWord(Arrays.asList("m", "Share", "x")));
+        assertEquals(-1, PlacementClassifier.receiptCloseWord(Arrays.asList("Live", "Alerts", "Reuse", "Selections")));
+        assertEquals(-1, PlacementClassifier.receiptCloseWord(Arrays.asList("x", "Share")));
+    }
+
+    @Test public void removeSelectionIconOnlyOnTheSelectionLine() {
+        assertEquals(0, PlacementClassifier.removeSelectionWord(
+                Arrays.asList("><", "Hapoel", "Tel", "Aviv", "-8.0", "1.83"), "Hapoel Tel Aviv"));
+        assertEquals(-1, PlacementClassifier.removeSelectionWord(
+                Arrays.asList("><", "Bayern", "Munich", "+8.0"), "Hapoel Tel Aviv"));
+        assertEquals(-1, PlacementClassifier.removeSelectionWord(
+                Arrays.asList("3““", "Place", "Bet"), "Hapoel Tel Aviv"));
+    }
+
     @Test public void oddsChangePromptIsReportedNeverAccepted() {
         PlacementClassifier.Result r = classify(false, "The odds have changed", "1.83 → 1.72", "Accept Changes");
         assertEquals("PRICE_CHANGED", r.outcome);

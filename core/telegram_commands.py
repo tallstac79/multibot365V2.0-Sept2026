@@ -1,7 +1,9 @@
 """Operator commands over the notification bot: /approve, /reject, /stop, /resume, /status.
 
-Only messages from the configured chat_id are obeyed; everything else is audited and
-ignored. The update offset is stored in the database so a restart never re-applies an old
+A command is obeyed only if it comes from the configured chat_id AND from one of the
+configured operator user IDs (notifications.allowed_user_ids). Other members of the group,
+other chats and anonymous-admin posts are audited and ignored. With no user IDs configured,
+every command is refused (fail closed). The update offset is stored in the database so a restart never re-applies an old
 command. Commands act through core.final_action, which enforces every rule (approval
 window, limits, kill switch) regardless of where the command came from.
 """
@@ -36,8 +38,9 @@ class BotApi:
 
 
 class CommandHandler:
-    def __init__(self, pipeline, api, chat_id):
+    def __init__(self, pipeline, api, chat_id, allowed_user_ids=()):
         self.p, self.api, self.chat_id = pipeline, api, str(chat_id)
+        self.allowed = {str(u).strip() for u in (allowed_user_ids or ()) if str(u).strip()}
 
     def poll(self):
         """Fetch and apply new commands. Returns the number of commands handled."""
@@ -56,18 +59,21 @@ class CommandHandler:
             offset = max(offset, int(update.get('update_id', 0)))
             message = update.get('message') or {}
             chat = str((message.get('chat') or {}).get('id', ''))
+            user = str((message.get('from') or {}).get('id', ''))
             text = (message.get('text') or '').strip()
             # Store the offset before acting so a crash never replays a command.
             self.p.store.set_control(OFFSET_KEY, offset, by='telegram')
             if now - float(message.get('date', 0)) > MAX_COMMAND_AGE_SECONDS:
                 continue  # stale command (e.g. sent while the service was down): never act on it
-            if chat != self.chat_id:
-                with self.p.store.tx() as db:
-                    self.p.store.audit(db, 'UNAUTHORISED_COMMAND', dict(chat=chat, text=text[:80]))
-                continue
             if not text.startswith('/'):
                 continue
-            reply = self.handle(text, by=f'telegram:{chat}')
+            if chat != self.chat_id or user not in self.allowed:
+                # Both must match: the operator's own account, in the configured group.
+                reason = 'chat' if chat != self.chat_id else 'user' if self.allowed else 'no operator configured'
+                with self.p.store.tx() as db:
+                    self.p.store.audit(db, 'UNAUTHORISED_COMMAND', dict(chat=chat, user=user, reason=reason, text=text[:80]))
+                continue
+            reply = self.handle(text, by=f'telegram:{chat}:{user}')
             handled += 1
             try:
                 self.api.send(self.chat_id, reply)

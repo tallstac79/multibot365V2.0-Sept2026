@@ -9,16 +9,17 @@ from tests.pipeline_support import MELBOURNE, RYTAS, T0, Clock, FakeGateway, mes
 from tests.test_final_action import placement_result
 
 CHAT = '5550001'
+OPERATOR = '7770001'
 
 
 class FakeApi:
     def __init__(self):
         self.updates, self.sent, self.next_id = [], [], 100
 
-    def push(self, text, chat=CHAT, age=0, clock=None):
+    def push(self, text, chat=CHAT, age=0, clock=None, user=OPERATOR):
         self.next_id += 1
         self.updates.append({'update_id': self.next_id, 'message': {
-            'chat': {'id': int(chat)}, 'text': text, 'date': int((clock() if clock else T0).timestamp()) - age}})
+            'chat': {'id': int(chat)}, 'from': {'id': int(user)}, 'text': text, 'date': int((clock() if clock else T0).timestamp()) - age}})
 
     def get_updates(self, offset):
         return [u for u in self.updates if u['update_id'] >= offset]
@@ -35,7 +36,7 @@ class CommandTests(unittest.TestCase):
         self.gateway = FakeGateway(self.clock)
         self.p = pipeline(Path(tmp.name) / 'p.sqlite3', self.clock, final_action_enabled=True)
         self.api = FakeApi()
-        self.handler = CommandHandler(self.p, self.api, CHAT)
+        self.handler = CommandHandler(self.p, self.api, CHAT, [OPERATOR])
         self.api.push('/stop')                           # already waiting before the service started
         self.assertEqual(self.handler.poll(), 0)         # first run: baseline, never acted on
         self.assertFalse(self.p.final.paused())
@@ -65,13 +66,34 @@ class CommandTests(unittest.TestCase):
             self.assertEqual(db.execute("SELECT COUNT(*) FROM audit_events WHERE kind='UNAUTHORISED_COMMAND'").fetchone()[0], 1)
         self.assertEqual(self.api.sent, [])
 
+    def test_other_group_members_cannot_command(self):
+        iid = self.p.ingest(message(MELBOURNE))['instruction_id']
+        self.p.tick(self.gateway)
+        for text in (f'/approve {iid[:10]}', '/stop', '/resume', f'/reject {iid[:10]}'):
+            self.api.push(text, user='8880002', clock=self.clock)          # right group, wrong person
+        self.api.push('/stop', chat='999', clock=self.clock)             # right person, wrong chat
+        self.assertEqual(self.handler.poll(), 0)
+        self.assertEqual(self.state(iid), 'AWAITING_APPROVAL')
+        self.assertFalse(self.p.final.paused())
+        self.assertEqual(self.api.sent, [])
+        with self.p.store.connection() as db:
+            reasons = [r[0] for r in db.execute(
+                "SELECT json_extract(detail,'$.reason') FROM audit_events WHERE kind='UNAUTHORISED_COMMAND' ORDER BY id")]
+        self.assertEqual(reasons, ['user'] * 4 + ['chat'])
+
+    def test_no_operator_configured_refuses_everything(self):
+        closed = CommandHandler(self.p, self.api, CHAT, [])
+        self.api.push('/stop', clock=self.clock)
+        self.assertEqual(closed.poll(), 0)
+        self.assertFalse(self.p.final.paused())
+
     def test_commands_are_never_replayed(self):
         iid = self.p.ingest(message(MELBOURNE))['instruction_id']
         self.p.tick(self.gateway)
         self.api.push(f'/reject {iid}', clock=self.clock)
         self.handler.poll()
         self.handler.poll()
-        restarted = CommandHandler(self.p, self.api, CHAT)
+        restarted = CommandHandler(self.p, self.api, CHAT, [OPERATOR])
         self.assertEqual(restarted.poll(), 0)
         self.assertEqual(len(self.api.sent), 1)
 

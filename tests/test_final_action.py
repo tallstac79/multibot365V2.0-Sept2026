@@ -394,6 +394,15 @@ class RealMyBetsTests(unittest.TestCase):
         for bet in never:
             self.assertFalse(bet_matching.match(bet, live)['found'], bet)
 
+    def test_real_spread_bet_matches_only_its_own_side_and_line(self):
+        # Receipt capture 2026-09-24: £0.10 Hapoel Tel Aviv -8.0 @ 1.83 (Bet Ref BT4964411281W).
+        live = json.loads((Path(__file__).parent / 'fixtures/mybets_spread_20260924.json').read_text(encoding='utf-8'))
+        base = dict(home='Hapoel Tel Aviv', away='Bayern Munich', market='SPREAD', stake='0.10', odds='1.83')
+        self.assertTrue(bet_matching.match(dict(base, selection='HOME', line='-8.0'), live)['found'])
+        for other in (dict(selection='AWAY', line='8.0'), dict(selection='HOME', line='-7.5'),
+                      dict(market='TOTALS', selection='OVER', line='173.5'), dict(selection='HOME', line='-8.0', stake='1.00')):
+            self.assertFalse(bet_matching.match(dict(base, **other), live)['found'], other)
+
     """Real My Bets screens from shadow capture (operator placed £0.10 singles by hand)."""
     austria = dict(home='Austria', away='Israel', market='1X2', selection='HOME', line=None, stake='0.10', odds='1.44')
 

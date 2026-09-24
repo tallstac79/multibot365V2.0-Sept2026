@@ -65,7 +65,11 @@ final class AdapterWorkflow {
             return step("PREPARE_COMPLETE_EXECUTION",()->adapter.prepare_complete_execution(fixture,selection,stake,minimumPrice));
         })
         .thenCompose(v->{
-            if(!"dispatch".equals(mode)) return CompletableFuture.completedFuture(null);
+            if(!"dispatch".equals(mode)) {
+                // READY/prepare stop before the wager: take the selection back off the slip. Best effort,
+                // recorded in betslip_clear; it never changes the READY verdict.
+                return adapter.clear_betslip(selection).exceptionally(e->{session.put("betslip_clear_error",String.valueOf(e));return null;});
+            }
             return step("PLACE_BET",()->adapter.place_bet(fixture,selection,stake));
         })
         .whenComplete((v,error)->{
