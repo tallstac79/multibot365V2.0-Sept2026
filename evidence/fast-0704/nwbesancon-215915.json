@@ -1,0 +1,136 @@
+{
+ "payload": {
+  "action": "PLACE_HELD",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+1.5",
+  "selection_name": "Val de Seine",
+  "price": "2.20",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "execution_mode": "prepare",
+  "confirmation_status": "APPROVED",
+  "timeout_ms": 60000,
+  "instruction_id": "nwbesancon-215915"
+ },
+ "result": {
+  "instruction_id": "nwbesancon-215915",
+  "status": "FAIL",
+  "stage": "SESSION_EXPIRED",
+  "detail": "Not logged in at the pre-tap check",
+  "duration_ms": 9119,
+  "progress": {
+   "stage": "PRETAP_CHECK",
+   "elapsed_ms": 8973,
+   "last_progress_at_ms": 1790283595325,
+   "instruction_id": "nwbesancon-215915",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790283595316
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 25,
+     "at_ms": 1790283595325
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 34,
+     "at_ms": 1790283595325
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 3012,
+     "at_ms": 1790283595325
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 3486,
+     "at_ms": 1790283595325
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 8887,
+     "at_ms": 1790283595325
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 8973,
+     "at_ms": 1790283595325
+    }
+   ]
+  },
+  "device_stage": "PRETAP_CHECK",
+  "execution_count": 1,
+  "run_id": "c_EcLbwVOwZJaAyzmRqOzTyYws15EM5lgqiqDA-duprCA",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Not logged in at the pre-tap check",
+  "stage_timings": [],
+  "t_start_ms": 1790283595317
+ },
+ "run": {
+  "run_id": "c_EcLbwVOwZJaAyzmRqOzTyYws15EM5lgqiqDA-duprCA",
+  "adapter": "live_bet365",
+  "status": "SESSION_EXPIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790283595292,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790283595292
+   },
+   {
+    "phase": "PRETAP_CHECK",
+    "elapsed_ms": 25,
+    "wall_ts_ms": 1790283595318
+   },
+   {
+    "phase": "CAPTURE_pretap",
+    "elapsed_ms": 34,
+    "wall_ts_ms": 1790283595327
+   },
+   {
+    "phase": "CAPTURED_pretap",
+    "elapsed_ms": 3012,
+    "wall_ts_ms": 1790283598305
+   },
+   {
+    "phase": "CAPTURE_pretap_enhanced",
+    "elapsed_ms": 3486,
+    "wall_ts_ms": 1790283598779
+   },
+   {
+    "phase": "CAPTURED_pretap_enhanced",
+    "elapsed_ms": 8887,
+    "wall_ts_ms": 1790283604182
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 8973,
+    "wall_ts_ms": 1790283604266
+   }
+  ],
+  "screenshots": [
+   "s001_pretap.png",
+   "s002_pretap_enhanced.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [],
+  "t_start_ms": 1790283595317,
+  "readback_rereads": [
+   "pretap 1: PRICE_CHANGED Approved price 2.20 not on the slip"
+  ],
+  "detail": "Not logged in at the pre-tap check",
+  "duration_ms": 8973
+ },
+ "wall": 9.929210186004639
+}

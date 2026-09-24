@@ -111,6 +111,7 @@ final class StakePad {
         BigDecimal raw = new BigDecimal(stake).multiply(new BigDecimal(price));
         String down = digits(raw.setScale(2, RoundingMode.DOWN).toPlainString());
         String half = digits(raw.setScale(2, RoundingMode.HALF_UP).toPlainString());
+        rd = dotReadAsOne(rd, down, half);
         if (stakeUnread) {
             if (new BigDecimal(price).compareTo(new BigDecimal("1.10")) < 0)
                 return new Check(false, "Stake box unread and price below 1.10: return alone is not conclusive", sd, rd);
@@ -121,6 +122,17 @@ final class StakePad {
         if (!agrees(rd, down) && !agrees(rd, half))
             return new Check(false, "To Return reads '" + returnText + "' not " + stake + " x " + price, sd, rd);
         return new Check(true, "stake " + stake + " and return agree", sd, rd);
+    }
+
+    /**
+     * Real slips (Besancon, Berck): "£0.18" OCR'd as "£0118", the decimal point read as "1". Only for amounts
+     * under £1 ("0" integer part) and only at the exact decimal position: "0" + "1" + the two decimals. A
+     * real Bet365 amount is never shown as "01.18", so this cannot turn a different amount into the expected one.
+     */
+    static String dotReadAsOne(String ocr, String... wants) {
+        for (String want : wants)
+            if (want.startsWith("0") && want.length() == 3 && ocr.equals("0" + "1" + want.substring(1))) return want;
+        return ocr;
     }
 
     /** OCR digits equal the expected digits, or have exactly one stray leading character (a misread £). */

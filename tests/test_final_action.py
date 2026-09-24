@@ -146,7 +146,8 @@ class LimitTests(Base):
     def test_auto_approve_within_limits_then_bets_per_day(self):
         first = self.p.ingest(message(MELBOURNE))['instruction_id']
         self.p.tick(self.gateway)
-        self.assertEqual([x['execution_mode'] for x in self.gateway.submitted if x['action'] == 'ADAPTER_WORKFLOW'][:2], ['ready', 'dispatch'])
+        self.assertEqual([(x['action'], x['execution_mode']) for x in self.gateway.submitted if x['action'] in ('ADAPTER_WORKFLOW', 'PLACE_HELD')][:2],
+                         [('ADAPTER_WORKFLOW', 'hold'), ('PLACE_HELD', 'dispatch')])
         self.assertEqual(self.row(first)['approved_by'], 'auto')
         self.gateway.results[first + "-place"] = placement_result(first)
         self.p.tick(self.gateway)
@@ -260,7 +261,7 @@ class UncertaintyTests(Base):
             self.p.tick(self.gateway)
         self.assertEqual(self.row(iid)['state'], 'PLACEMENT_UNKNOWN')
         self.assertEqual(self.bet(iid)['status'], 'UNKNOWN')
-        adapter_sends = [s for s in self.gateway.submitted if s['action'] == 'ADAPTER_WORKFLOW' and s['execution_mode'] == 'dispatch']
+        adapter_sends = [s for s in self.gateway.submitted if s['action'] == 'PLACE_HELD']
         self.assertEqual(len(adapter_sends), 1)
         self.clock.advance(16)
         self.p.tick(self.gateway)                      # reconcile delay elapsed: My Bets check submitted
@@ -268,8 +269,7 @@ class UncertaintyTests(Base):
         self.gateway.results[rec['device_instruction_id']] = my_bets(rec['device_instruction_id'], MELBOURNE_CARD)
         self.p.tick(self.gateway)
         self.assertEqual((self.row(iid)['state'], self.bet(iid)['status']), ('COMPLETED', 'OPEN'))
-        self.assertEqual(len([s for s in self.gateway.submitted if s['action'] == 'ADAPTER_WORKFLOW'
-                              and s['execution_mode'] == 'dispatch']), 1)
+        self.assertEqual(len([s for s in self.gateway.submitted if s['action'] == 'PLACE_HELD']), 1)   # never re-tapped
 
     def test_unknown_absent_twice_becomes_not_placed(self):
         iid = self.approved_and_dispatched()
@@ -394,7 +394,7 @@ class VerifyFirstTests(Base):
         iid = self.p.ingest(message(MELBOURNE))['instruction_id']
         self.p.tick(self.gateway)
         self.assertIn(self.row(iid)['state'], ('DISPATCHED', 'DEVICE_ACTIVE'))
-        self.assertEqual(self.gateway.submitted[-1]['execution_mode'], 'ready')
+        self.assertEqual(self.gateway.submitted[-1]['execution_mode'], 'hold')   # verify + keep the bet on the slip
         self.assertNotIn('confirmation_status', self.gateway.submitted[-1])
         with self.assertRaises(PermissionError):
             self.p.final.approve(iid, 'operator')               # nothing verified yet: nothing to approve
@@ -454,6 +454,84 @@ class OneShotTests(Base):
         self.gateway.results[iid + '-place'] = fail_result(iid, 'PRICE_CHANGED')
         self.p.tick(self.gateway)
         self.assertEqual((self.p.settings.dispatch_enabled, self.p.settings.final_action_enabled), (False, False))
+
+
+class HeldSlipTests(Base):
+    """Verified bet held on the slip for approval; /approve taps it (PLACE_HELD), never rebuilds it."""
+
+    def setUp(self):
+        super().setUp()
+        self.p = pipeline(self.p.store.path, self.clock, instant_verification=False, **self.settings)
+
+    def held(self, sample=MELBOURNE):
+        iid = self.p.ingest(message(sample))['instruction_id']
+        self.p.tick(self.gateway)
+        result = ready_result(iid)
+        result['selection'].update(selection_name='Over', line='190.5')
+        self.gateway.results[iid] = result
+        self.p.tick(self.gateway)
+        self.assertEqual(self.row(iid)['state'], 'AWAITING_APPROVAL')
+        return iid
+
+    def test_hold_run_uses_the_event_link_and_kickoff(self):
+        iid = self.p.ingest(message(MELBOURNE))['instruction_id']
+        self.p.tick(self.gateway)
+        payload = self.gateway.submitted[-1]
+        self.assertEqual((payload['action'], payload['execution_mode']), ('ADAPTER_WORKFLOW', 'hold'))
+        self.assertEqual(payload['event_url'], 'https://www.bet365.com/#/AC/B18/C21167989/D19/E26735656/F19/I0/')
+        self.assertEqual(payload['kickoff_utc'], '2026-09-24T09:30')
+        self.assertNotIn('confirmation_status', payload)
+
+    def test_approve_taps_the_held_slip_without_rebuilding(self):
+        iid = self.held()
+        self.p.final.approve(iid, 'operator')
+        self.p.tick(self.gateway)
+        payload = self.gateway.submitted[-1]
+        self.assertEqual(payload['action'], 'PLACE_HELD')
+        self.assertEqual(payload['instruction_id'], iid + '-place')
+        self.assertEqual((payload['selection_name'], payload['line'], payload['price'], payload['stake']),
+                         ('Over', '190.5', '2.20', self.row(iid)['stake']))
+        self.assertEqual((payload['execution_mode'], payload['confirmation_status']), ('dispatch', 'APPROVED'))
+        self.assertEqual(len([x for x in self.gateway.submitted if x['action'] == 'ADAPTER_WORKFLOW']), 1)  # no rebuild
+        self.gateway.results[iid + '-place'] = placement_result(iid)
+        self.p.tick(self.gateway)
+        self.assertEqual(self.row(iid)['state'], 'COMPLETED')
+        self.p.tick(self.gateway)
+        self.assertFalse(any(x['action'] == 'RESET_BETSLIP' for x in self.gateway.submitted))  # the run reset itself
+        self.assertIsNone(self.p.held_instruction())
+
+    def test_held_slip_owns_the_phone(self):
+        iid = self.held()
+        other = self.p.ingest(message(RYTAS))['instruction_id']
+        for _ in range(3):
+            self.clock.advance(10)
+            self.p.tick(self.gateway)
+        self.assertEqual(self.row(other)['state'], 'QUEUED')         # waits; the held bet is on the slip
+        self.assertEqual(self.p.held_instruction(), iid)
+
+    def test_expired_approval_clears_the_held_slip_then_frees_the_phone(self):
+        iid = self.held()
+        self.clock.advance(121)
+        self.p.tick(self.gateway)
+        self.assertEqual(self.row(iid)['state'], 'STALE')
+        self.p.tick(self.gateway)
+        resets = [x for x in self.gateway.submitted if x['action'] == 'RESET_BETSLIP']
+        self.assertEqual(len(resets), 1)
+        self.assertIsNone(self.p.held_instruction())
+        self.assertFalse(any(x['action'] == 'PLACE_HELD' for x in self.gateway.submitted))
+
+    def test_pre_tap_refusal_clears_the_slip_and_is_not_a_bet(self):
+        iid = self.held()
+        self.p.final.approve(iid, 'operator')
+        self.p.tick(self.gateway)
+        refused = fail_result(iid, 'PRICE_CHANGED', 'Approved price 2.20 not on the slip')
+        refused['placement'] = {'tapped': False, 'outcome': 'NOT_TAPPED'}
+        self.gateway.results[iid + '-place'] = refused
+        self.p.tick(self.gateway)
+        self.assertEqual(self.row(iid)['state'], 'PRICE_CHANGED')
+        self.p.tick(self.gateway)
+        self.assertEqual(len([x for x in self.gateway.submitted if x['action'] == 'RESET_BETSLIP']), 1)
+        self.assertIsNone(self.bet(iid))
 
 
 class RealMyBetsTests(unittest.TestCase):

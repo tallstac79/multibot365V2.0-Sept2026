@@ -1,0 +1,18 @@
+   0.0s  alert_received
+ingest: {"instruction_id": "on-388f4c6cc757381397ffd930", "state": "QUEUED", "reason": "Production-verified mapping, explicit Bet365 target, equal-line EV supplied"}
+   0.7s  phone_accepted
+  34.0s  APPROVAL_NEEDED
+state: AWAITING_APPROVAL None
+        phone OPEN_HOME                    done at   8.1s
+        phone MARKET_NAV                   done at  12.6s
+        phone READ_SELECTION               done at  12.6s
+        phone READ_LINE                    done at  12.6s
+        phone READ_PRICE                   done at  12.6s
+        phone OPEN_SELECTION               done at  13.2s
+        phone ENTER_STAKE                  done at  28.7s
+        phone VERIFY_FINAL_STATE           done at  32.7s
+        phone PREPARE_COMPLETE_EXECUTION   done at  32.7s
+PLACE_HELD prepare: PASS PRETAP_READY in 4.1s (phone pre-tap check 3.5s)
+waiting for the approval window to expire (nothing approved) ...
+released: STALE reset sent rs-d6cb51d67955dca5066b1fe5
+E2E DONE

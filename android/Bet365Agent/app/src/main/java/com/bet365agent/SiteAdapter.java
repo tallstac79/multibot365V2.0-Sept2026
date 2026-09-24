@@ -26,6 +26,10 @@ interface SiteAdapter {
     /** Remove this run's selection from the betslip (READY/prepare runs), so the next run is still a single.
      *  Only the remove (X) icon on the selection's own line is tapped. */
     default CompletableFuture<Void> clear_betslip(Selection selection) { return CompletableFuture.completedFuture(null); }
+    /** The instruction's target (market/side/line): lets the adapter skip extra reads of unrelated markets. */
+    default void set_target(String market, String side, String line) {}
+    /** Open the alert's exact event link and verify it (sport, both teams, kick-off). Null = not usable: search instead. */
+    default CompletableFuture<Fixture> open_event_direct(String url, String query, String kickoffUtc) { return CompletableFuture.completedFuture(null); }
     /** Dispatch the prepared Place Bet gesture for real. */
     CompletableFuture<Void> place_bet(Fixture fixture, Selection selection, String stake);
 

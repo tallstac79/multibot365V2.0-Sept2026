@@ -14,6 +14,10 @@ import java.util.Map;
  *    vs Bet365 search "Kyoto Hannaryz vs Shiga Lakes, Fri 25 Sep 10:35" (UK time = 09:35 UTC),
  *    same home team, Bet365's Kyoto team page lists only this fixture; the club rebranded
  *    from Shiga Lakestars to Shiga Lakes in 2023.
+ *  - "Berck Fliers Range" -> "Berck/Rang du Fliers": live alert on-a9f4768d (France Nationale 1,
+ *    25.09.2026 18:00 UTC, v Pays Salonais Basket 13) vs Bet365 search "Berck/Rang du Fliers vs Pays
+ *    Salonais Basket 13, Fri 25 Sep 19:00" (UK time = 18:00 UTC); same opponent, same kick-off; the club
+ *    is Berck / Rang-du-Fliers (the feed's "Fliers Range" is its reordered name).
  */
 final class TeamAliases {
     private static final Map<String, String> CANONICAL;
@@ -21,6 +25,7 @@ final class TeamAliases {
         Map<String, String> m = new HashMap<>();
         m.put("shiga lake stars", "shiga lakes");
         m.put("shiga lakestars", "shiga lakes");
+        m.put("berck fliers range", "berck/rang du fliers");
         CANONICAL = Collections.unmodifiableMap(m);
     }
 

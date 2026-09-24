@@ -24,17 +24,25 @@ It cancels pending approvals and blocks all dispatch until `/resume`.
 ## Flow
 
 ```
-QUEUED -> DISPATCHED (READY verification on the phone; nothing placed; slip cleared)
-       -> READY -> AWAITING_APPROVAL --(/approve, dashboard, CLI)--> APPROVED
-       -> DISPATCHED as "<id>-place" (full re-verification, then ONE Place Bet tap) -> outcome
+QUEUED -> DISPATCHED "hold" run (event link -> verify -> bet on slip, £0.10 + To Return verified,
+          Place Bet located, NOT tapped, slip KEPT) -> READY -> AWAITING_APPROVAL (Telegram)
+       --(/approve)--> APPROVED -> DISPATCHED "PLACE_HELD" as "<id>-place":
+          one-frame pre-tap check of the held slip (login, same selection + exact line, approved price
+          >= minimum, stake + To Return, one selection, Place Bet) -> ONE tap -> receipt -> reset -> HOME
 READY -> APPROVED (auto_approve, within limits)
 ```
 
-Verify first: approval is only requested after the phone has verified the fixture, market,
-side, line, price, stake and To Return, and that the slip holds a single selection. The tap
-run uses its own device ID (`<id>-place`), because the phone's idempotency would answer a
-reused ID with the earlier READY result. Alert age for the post-approval recheck is measured
-from that verification (`ready_at`); the phone re-verifies everything right before the tap.
+* **Event link first.** The alert's Bet365 link (`comparison_url`, `#/AC/B18/...`) is opened
+  directly. The page must verify: sport from the link (B18 basketball, B1 football), both teams from
+  the header (explicit aliases only), kick-off in UK time = the alert's UTC time (mismatch = WRONG_EVENT).
+  Search is only the fallback (no link, invalid link, teams not verified).
+* **Held slip.** Nothing is rebuilt after approval: if the held slip changed or disappeared the
+  pre-tap check fails closed (e.g. PRICE_CHANGED, LINE_CHANGED) and the slip is cleared. While a bet
+  is held the phone does nothing else (no other alerts, no My Bets checks). Expiry, rejection, pause
+  or a pre-tap refusal sends RESET_BETSLIP (removes it by its own X).
+* **OCR re-reads.** A slip check that fails on one frame is re-read (targeted price box, then the
+  enhanced per-word OCR), max 3 frames; one frame must pass every check.
+* Alert age for the post-approval recheck is measured from the phone verification (`ready_at`).
 
 `final_action_one_shot: true` is supervised arming. The first result of a Place Bet run
 switches dispatch and final action off (in memory and in `.local/pipeline.json`) and engages

@@ -14,6 +14,7 @@ import java.util.Set;
 /** Strict JSON schema; duplicate/unknown fields, coercion and trailing data are rejected. */
 final class CoordinatorInstruction {
     final String id, target, text, runId, action, adapter, scenario, market, side, sport, line, minimumPrice, stake, executionMode, confirmationStatus, view;
+    final String eventUrl, kickoffUtc, selectionName, price;
     final boolean placeBet; // true iff execution_mode=dispatch
     final int timeout;
     final JSONObject payload;
@@ -26,7 +27,7 @@ final class CoordinatorInstruction {
                 String name = reader.nextName();
                 if (fields.containsKey(name)) throw new IllegalArgumentException("Duplicate field: " + name);
                 boolean number = "timeout_ms".equals(name);
-                Set<String> allowed = Set.of("instruction_id","action","target_text","input_text","adapter","scenario","query","market","side","sport","line","minimum_price","stake","timeout_ms","place_bet","execution_mode","confirmation_status","view");
+                Set<String> allowed = Set.of("instruction_id","action","target_text","input_text","adapter","scenario","query","market","side","sport","line","minimum_price","stake","timeout_ms","place_bet","execution_mode","confirmation_status","view","event_url","kickoff_utc","selection_name","price");
                 if (!number && !allowed.contains(name)) throw new IllegalArgumentException("Unknown field: " + name);
                 if ("line".equals(name) && reader.peek() == JsonToken.NULL) { reader.nextNull(); fields.put(name, ""); continue; }
                 if (reader.peek() != (number ? JsonToken.NUMBER : JsonToken.STRING)) throw new IllegalArgumentException("Wrong field type: " + name);
@@ -47,13 +48,18 @@ final class CoordinatorInstruction {
         executionMode = fields.getOrDefault("execution_mode", "").isEmpty()
             ? ("true".equals(fields.getOrDefault("place_bet", "false")) ? "dispatch" : "ready")
             : fields.get("execution_mode");
-        if(action.equals("ADAPTER_WORKFLOW") && !Set.of("ready","prepare","dispatch").contains(executionMode))
+        if(action.equals("ADAPTER_WORKFLOW") && !Set.of("ready","hold","prepare","dispatch").contains(executionMode))
             throw new IllegalArgumentException("Invalid execution_mode");
+        if(action.equals("PLACE_HELD") && !Set.of("prepare","dispatch").contains(executionMode))
+            throw new IllegalArgumentException("Invalid PLACE_HELD execution_mode");
         confirmationStatus = fields.getOrDefault("confirmation_status", "NONE");
         if(action.equals("ADAPTER_WORKFLOW") && !Set.of("NONE","APPROVED").contains(confirmationStatus))
             throw new IllegalArgumentException("Invalid confirmation_status");
-        if(action.equals("ADAPTER_WORKFLOW") && !"ready".equals(executionMode) && !"APPROVED".equals(confirmationStatus))
+        // hold never taps (it stops with the verified bet on the slip), so it needs no approval.
+        if(action.equals("ADAPTER_WORKFLOW") && !"ready".equals(executionMode) && !"hold".equals(executionMode) && !"APPROVED".equals(confirmationStatus))
             throw new IllegalArgumentException("confirmation_status APPROVED required for prepare/dispatch");
+        if(action.equals("PLACE_HELD") && !"APPROVED".equals(confirmationStatus))
+            throw new IllegalArgumentException("confirmation_status APPROVED required for PLACE_HELD");
         placeBet = "dispatch".equals(executionMode);
         if(fields.containsKey("place_bet") && !Set.of("true","false").contains(fields.get("place_bet")))
             throw new IllegalArgumentException("Invalid place_bet");
@@ -78,6 +84,12 @@ final class CoordinatorInstruction {
             expected=Set.of("instruction_id","action","adapter","scenario","view","timeout_ms");
             if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid MY_BETS schema");
             if(!Set.of("OPEN","SETTLED").contains(fields.get("view"))) throw new IllegalArgumentException("Invalid MY_BETS view");
+        } else if(action.equals("PLACE_HELD")) {
+            expected=Set.of("instruction_id","action","adapter","scenario","sport","market","side","line","selection_name","price",
+                    "minimum_price","stake","execution_mode","confirmation_status","timeout_ms");
+            if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid PLACE_HELD schema");
+            if(!fields.get("price").matches("[0-9]+\\.[0-9]{2}")) throw new IllegalArgumentException("Invalid price");
+            if(!fields.get("selection_name").matches("[A-Za-z0-9 ./'&()-]{2,64}")) throw new IllegalArgumentException("Invalid selection_name");
         } else if(action.equals("RESET_BETSLIP")) {
             expected=Set.of("instruction_id","action","adapter","scenario","timeout_ms");
             if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid RESET_BETSLIP schema");
@@ -89,7 +101,10 @@ final class CoordinatorInstruction {
             if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid SESSION_PROBE schema");
         } else {
             expected=Set.of("instruction_id","action","adapter","scenario","query","market","side","sport","minimum_price","stake","timeout_ms");
-            java.util.HashSet<String> allowedExtra = new java.util.HashSet<>(java.util.Arrays.asList("place_bet","execution_mode","confirmation_status","line"));
+            java.util.HashSet<String> allowedExtra = new java.util.HashSet<>(java.util.Arrays.asList("place_bet","execution_mode","confirmation_status","line","event_url","kickoff_utc"));
+            if(fields.containsKey("event_url") && !EventPage.validUrl(fields.get("event_url"))) throw new IllegalArgumentException("Invalid event_url");
+            if(fields.containsKey("kickoff_utc") && !fields.get("kickoff_utc").matches("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"))
+                throw new IllegalArgumentException("Invalid kickoff_utc");
             java.util.HashSet<String> keys = new java.util.HashSet<>(fields.keySet());
             keys.removeAll(expected);
             if(!allowedExtra.containsAll(keys)) throw new IllegalArgumentException("Invalid schema extras");
@@ -97,18 +112,22 @@ final class CoordinatorInstruction {
             base.removeAll(allowedExtra);
             if(!base.equals(expected)) throw new IllegalArgumentException("Invalid ADAPTER_WORKFLOW schema");
         }
-        boolean noText = Set.of("SESSION_CHECK","SESSION_PROBE","MY_BETS","OBSERVE","RESET_BETSLIP").contains(action);
-        if(!Set.of("OPEN_AND_TYPE","ADAPTER_WORKFLOW","SESSION_CHECK","SESSION_PROBE","OPEN_SEARCH","MY_BETS","OBSERVE","RESET_BETSLIP").contains(action)
+        boolean noText = Set.of("SESSION_CHECK","SESSION_PROBE","MY_BETS","OBSERVE","RESET_BETSLIP","PLACE_HELD").contains(action);
+        if(!Set.of("OPEN_AND_TYPE","ADAPTER_WORKFLOW","SESSION_CHECK","SESSION_PROBE","OPEN_SEARCH","MY_BETS","OBSERVE","RESET_BETSLIP","PLACE_HELD").contains(action)
             || !id.matches("[A-Za-z0-9_-]{1,64}") || (noText ? !text.isEmpty() : (!action.equals("OPEN_SEARCH") && text.isEmpty()))
             || text.length()>128 || !fields.getOrDefault("timeout_ms", "").matches("[0-9]{1,6}"))
             throw new IllegalArgumentException("Invalid schema, action, ID, text or timeout");
         if(action.equals("OPEN_AND_TYPE") && !target.matches("[A-Za-z0-9]{1,40}")) throw new IllegalArgumentException("Invalid target");
         if(action.equals("MY_BETS") || action.equals("RESET_BETSLIP")) SiteAdapters.validate(adapter,scenario);
+        if(action.equals("PLACE_HELD")) {
+            SiteAdapters.validate(adapter,scenario);
+            if(!Set.of("football","basketball").contains(sport)) throw new IllegalArgumentException("Invalid sport");
+        }
         if(action.equals("ADAPTER_WORKFLOW") || action.equals("SESSION_CHECK") || action.equals("OPEN_SEARCH")) {
             SiteAdapters.validate(adapter,scenario);
             if(!Set.of("football","basketball").contains(sport)) throw new IllegalArgumentException("Invalid sport");
         }
-        if(action.equals("ADAPTER_WORKFLOW")) {
+        if(action.equals("ADAPTER_WORKFLOW") || action.equals("PLACE_HELD")) {
             if(!minimumPrice.matches("[0-9]+\\.[0-9]{2}") || !stake.matches("[0-9]+\\.[0-9]{2}")) throw new IllegalArgumentException("Invalid minimum_price or stake");
             if(!Set.of("MONEYLINE","SPREAD","TOTAL").contains(market)) throw new IllegalArgumentException("Invalid market");
             Set<String> sides = market.equals("TOTAL") ? Set.of("OVER","UNDER")
@@ -127,9 +146,13 @@ final class CoordinatorInstruction {
                 resolvedLine = normalizedLine;
             }
         }
-        if(!action.equals("ADAPTER_WORKFLOW")) resolvedLine = "";
+        if(!action.equals("ADAPTER_WORKFLOW") && !action.equals("PLACE_HELD")) resolvedLine = "";
         line = resolvedLine;
         view = fields.getOrDefault("view", "");
+        eventUrl = fields.getOrDefault("event_url", "");
+        kickoffUtc = fields.getOrDefault("kickoff_utc", "");
+        selectionName = fields.getOrDefault("selection_name", "");
+        price = fields.getOrDefault("price", "");
         timeout = Integer.parseInt(fields.get("timeout_ms"));
         if (timeout < 100 || timeout > 600000) throw new IllegalArgumentException("timeout_ms must be 100..600000");
         runId = "c_" + Base64.encodeToString(MessageDigest.getInstance("SHA-256").digest(id.getBytes(StandardCharsets.UTF_8)), Base64.NO_WRAP | Base64.URL_SAFE | Base64.NO_PADDING);

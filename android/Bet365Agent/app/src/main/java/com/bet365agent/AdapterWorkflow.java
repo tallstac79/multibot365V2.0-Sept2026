@@ -27,6 +27,21 @@ final class AdapterWorkflow {
         });
     }
     void start(String query,String market,String side,String line,String minimumPrice,String stake,String executionMode,String confirmationStatus) {
+        start(query,market,side,line,minimumPrice,stake,executionMode,confirmationStatus,"","");
+    }
+
+    /** Search route: Home -> session -> Search -> results -> fixture -> event page. */
+    private CompletableFuture<Void> searchRoute(String query) {
+        return step("SPORTS_HOME",adapter::open_home)
+        .thenCompose(v->step("SESSION_CHECK",adapter::ensure_session))
+        .thenCompose(v->step("OPEN_SEARCH",adapter::open_search))
+        .thenCompose(v->step("ENTER_QUERY",()->adapter.enter_query(query)))
+        .thenCompose(v->step("FIXTURE_VERIFY",adapter::discover_fixture))
+        .thenCompose(f->{fixture=f;session.put("fixture",f.json());return step("SELECT_FIXTURE",()->adapter.select_fixture(f));})
+        .thenCompose(v->step("VERIFY_EVENT",()->adapter.verify_event(fixture)));
+    }
+
+    void start(String query,String market,String side,String line,String minimumPrice,String stake,String executionMode,String confirmationStatus,String eventUrl,String kickoffUtc) {
         final String mode = executionMode == null || executionMode.isEmpty() ? "ready" : executionMode;
         // Debug/harness: intentional stall after first stage advance so inactivity watchdog can be proven.
         // Not used by production OddsNotifier tips.
@@ -38,13 +53,20 @@ final class AdapterWorkflow {
             });
             return;
         }
-        step("SPORTS_HOME",adapter::open_home)
-        .thenCompose(v->step("SESSION_CHECK",adapter::ensure_session))
-        .thenCompose(v->step("OPEN_SEARCH",adapter::open_search))
-        .thenCompose(v->step("ENTER_QUERY",()->adapter.enter_query(query)))
-        .thenCompose(v->step("FIXTURE_VERIFY",adapter::discover_fixture))
-        .thenCompose(f->{fixture=f;session.put("fixture",f.json());return step("SELECT_FIXTURE",()->adapter.select_fixture(f));})
-        .thenCompose(v->step("VERIFY_EVENT",()->adapter.verify_event(fixture)))
+        adapter.set_target(market, side, line);
+        // Primary: the alert's exact event link (verified); Search only if absent, invalid or not verified.
+        CompletableFuture<Void> located;
+        if (eventUrl != null && !eventUrl.isEmpty()) {
+            located = step("OPEN_EVENT",()->adapter.open_event_direct(eventUrl,query,kickoffUtc)).thenCompose(f->{
+                if (f != null) { fixture=f; session.put("fixture",f.json()); session.put("route","event_link"); return CompletableFuture.<Void>completedFuture(null); }
+                session.put("route","search_fallback");
+                return searchRoute(query);
+            });
+        } else {
+            session.put("route","search");
+            located = searchRoute(query);
+        }
+        located
         .thenCompose(v->step("MARKET_NAV",adapter::discover_markets))
         .thenCompose(markets->{JSONArray json=new JSONArray();for(SiteAdapter.Selection q:markets)json.put(q.json());session.put("markets",json);return step("READ_SELECTION",()->adapter.read_selection(markets,market,side,line));})
         .thenCompose(s->{selection=s;session.put("selection",s.json());return step("READ_LINE",()->adapter.read_line(s));})
@@ -59,12 +81,17 @@ final class AdapterWorkflow {
         .thenCompose(v->step("VERIFY_FINAL_STATE",()->adapter.verify_final_state(fixture,selection,stake)))
         .thenCompose(v->{
             if("ready".equals(mode)) return CompletableFuture.completedFuture(null);
-            if(!"APPROVED".equals(confirmationStatus))
+            if(!"hold".equals(mode) && !"APPROVED".equals(confirmationStatus))
                 throw new SiteAdapter.Failure("CONFIRMATION_REQUIRED","execution_mode "+mode+" requires confirmation_status APPROVED");
             session.put("confirmation_gate", confirmationStatus);
             return step("PREPARE_COMPLETE_EXECUTION",()->adapter.prepare_complete_execution(fixture,selection,stake,minimumPrice));
         })
         .thenCompose(v->{
+            if("hold".equals(mode)) {
+                // Verified bet stays on the slip (stake entered, Place Bet located) for PLACE_HELD after approval.
+                session.put("held", true);
+                return CompletableFuture.completedFuture(null);
+            }
             if(!"dispatch".equals(mode)) {
                 // READY/prepare stop before the wager: take the selection back off the slip. Best effort,
                 // recorded in betslip_clear; it never changes the READY verdict.
@@ -80,6 +107,9 @@ final class AdapterWorkflow {
                     session.put("verification_detail","DISPATCH after COMPLETE_EXECUTION_READY; outcome="+outcome+"; wager_submitted="+session.record.opt("wager_submitted"));
                     if ("PLACED".equals(outcome)) session.finish("PASS", "PLACED");
                     else session.finish(outcome, placement == null ? "No placement record after tap" : placement.optString("detail", outcome));
+                } else if("hold".equals(mode)){
+                    session.put("verification_detail","HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept");
+                    session.finish("PASS","COMPLETE_EXECUTION_READY");
                 } else if("prepare".equals(mode)){
                     session.put("verification_detail","COMPLETE_EXECUTION_READY: Place Bet located and gesture prepared; NOT dispatched");
                     session.finish("PASS","COMPLETE_EXECUTION_READY");
@@ -94,7 +124,11 @@ final class AdapterWorkflow {
                     session.put("placement", CoordinatorAgent.object("tapped", false, "outcome", "NOT_TAPPED", "detail", "Failed before Place Bet"));
                 Throwable cause=error;while(cause.getCause()!=null)cause=cause.getCause();
                 String status=cause instanceof SiteAdapter.Failure?((SiteAdapter.Failure)cause).stage:"INTERNAL_ERROR";
-                session.finish(status,cause.getMessage()==null?cause.getClass().getSimpleName():cause.getMessage());
+                String message=cause.getMessage()==null?cause.getClass().getSimpleName():cause.getMessage();
+                if(!"dispatch".equals(mode) && selection!=null && session.live()) {
+                    // A failed verify/hold run may have put our selection on the slip: remove it (never taps Place Bet).
+                    adapter.clear_betslip(selection).whenComplete((x,e)->session.finish(status,message));
+                } else session.finish(status,message);
             }
         });
     }

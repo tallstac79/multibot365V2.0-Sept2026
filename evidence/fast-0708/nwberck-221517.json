@@ -1,0 +1,197 @@
+{
+ "payload": {
+  "action": "PLACE_HELD",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+3.5",
+  "selection_name": "Pays Salonais Basket 13",
+  "price": "2.20",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "execution_mode": "prepare",
+  "confirmation_status": "APPROVED",
+  "timeout_ms": 60000,
+  "instruction_id": "nwberck-221517"
+ },
+ "result": {
+  "instruction_id": "nwberck-221517",
+  "status": "FAIL",
+  "stage": "PRICE_CHANGED",
+  "detail": "Approved price 2.20 not on the slip",
+  "duration_ms": 15365,
+  "progress": {
+   "stage": "PRETAP_CHECK",
+   "elapsed_ms": 15249,
+   "last_progress_at_ms": 1790284590722,
+   "instruction_id": "nwberck-221517",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790284590715
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 22,
+     "at_ms": 1790284590722
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 30,
+     "at_ms": 1790284590722
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 2943,
+     "at_ms": 1790284590722
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 3122,
+     "at_ms": 1790284590722
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 3468,
+     "at_ms": 1790284590722
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 3852,
+     "at_ms": 1790284590722
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 9204,
+     "at_ms": 1790284590722
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 9678,
+     "at_ms": 1790284590722
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 15024,
+     "at_ms": 1790284590722
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 15249,
+     "at_ms": 1790284590722
+    }
+   ]
+  },
+  "device_stage": "PRETAP_CHECK",
+  "execution_count": 1,
+  "run_id": "c_9JlCBA1_KlhUfeuqBCFqn-tmGfjLvbnhZB9Yuj9N1vg",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Approved price 2.20 not on the slip",
+  "stage_timings": [],
+  "t_start_ms": 1790284590716
+ },
+ "run": {
+  "run_id": "c_9JlCBA1_KlhUfeuqBCFqn-tmGfjLvbnhZB9Yuj9N1vg",
+  "adapter": "live_bet365",
+  "status": "PRICE_CHANGED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790284590693,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790284590693
+   },
+   {
+    "phase": "PRETAP_CHECK",
+    "elapsed_ms": 22,
+    "wall_ts_ms": 1790284590716
+   },
+   {
+    "phase": "CAPTURE_pretap",
+    "elapsed_ms": 30,
+    "wall_ts_ms": 1790284590724
+   },
+   {
+    "phase": "CAPTURED_pretap",
+    "elapsed_ms": 2943,
+    "wall_ts_ms": 1790284593636
+   },
+   {
+    "effect": "region_ocr",
+    "bounds": [
+     540,
+     1170,
+     715,
+     1219
+    ],
+    "artifact": "s002_pretap_price.png"
+   },
+   {
+    "phase": "READ_REGION_pretap_price",
+    "elapsed_ms": 3122,
+    "wall_ts_ms": 1790284593816
+   },
+   {
+    "phase": "READ_REGION_DONE_pretap_price",
+    "elapsed_ms": 3468,
+    "wall_ts_ms": 1790284594162
+   },
+   {
+    "phase": "CAPTURE_pretap_enhanced",
+    "elapsed_ms": 3852,
+    "wall_ts_ms": 1790284594545
+   },
+   {
+    "phase": "CAPTURED_pretap_enhanced",
+    "elapsed_ms": 9204,
+    "wall_ts_ms": 1790284599899
+   },
+   {
+    "phase": "CAPTURE_pretap_enhanced",
+    "elapsed_ms": 9678,
+    "wall_ts_ms": 1790284600372
+   },
+   {
+    "phase": "CAPTURED_pretap_enhanced",
+    "elapsed_ms": 15024,
+    "wall_ts_ms": 1790284605719
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 15249,
+    "wall_ts_ms": 1790284605943
+   }
+  ],
+  "screenshots": [
+   "s001_pretap.png",
+   "s002_pretap_price.png",
+   "s003_pretap_enhanced.png",
+   "s004_pretap_enhanced.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [],
+  "t_start_ms": 1790284590716,
+  "slip_price_region": {
+   "read": "1.83",
+   "bounds": [
+    540,
+    1170,
+    715,
+    1219
+   ]
+  },
+  "readback_rereads": [
+   "pretap 2: PRICE_CHANGED Approved price 2.20 not on the slip"
+  ],
+  "detail": "Approved price 2.20 not on the slip",
+  "duration_ms": 15249
+ },
+ "wall": 15.660860061645508
+}

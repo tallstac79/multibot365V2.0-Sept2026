@@ -1,0 +1,1073 @@
+{
+ "payload": {
+  "instruction_id": "besancon-213623",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Besancon||Val De Seine",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+3.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+  "kickoff_utc": "2026-09-25T18:00"
+ },
+ "result": {
+  "instruction_id": "besancon-213623",
+  "status": "FAIL",
+  "stage": "LINE_CHANGED",
+  "detail": "Betslip does not show AWAY +3.5",
+  "duration_ms": 60024,
+  "progress": {
+   "stage": "CLEAR_BETSLIP",
+   "elapsed_ms": 59731,
+   "last_progress_at_ms": 1790282236840,
+   "instruction_id": "besancon-213623",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790282184211
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 26,
+     "at_ms": 1790282184229
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 40,
+     "at_ms": 1790282184247,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 40,
+      "start_ts_ms": 1790282184231,
+      "end_elapsed_ms": 7775,
+      "end_ts_ms": 1790282191967,
+      "duration_ms": 7735,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 2838,
+     "at_ms": 1790282184247
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4110,
+     "at_ms": 1790282184247
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5026,
+     "at_ms": 1790282184247
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 7616,
+     "at_ms": 1790282184247
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 7775,
+     "at_ms": 1790282192003,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 7775,
+      "start_ts_ms": 1790282191967,
+      "end_elapsed_ms": 17546,
+      "end_ts_ms": 1790282201738,
+      "duration_ms": 9771,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 7814,
+     "at_ms": 1790282192003
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 12200,
+     "at_ms": 1790282192003
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 12982,
+     "at_ms": 1790282192003
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 17365,
+     "at_ms": 1790282192003
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 17546,
+     "at_ms": 1790282201785,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 17546,
+      "start_ts_ms": 1790282201738,
+      "end_elapsed_ms": 17595,
+      "end_ts_ms": 1790282201787,
+      "duration_ms": 49,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 17595,
+     "at_ms": 1790282201821,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 17595,
+      "start_ts_ms": 1790282201787,
+      "end_elapsed_ms": 17630,
+      "end_ts_ms": 1790282201822,
+      "duration_ms": 35,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 17630,
+     "at_ms": 1790282201847,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 17630,
+      "start_ts_ms": 1790282201822,
+      "end_elapsed_ms": 17657,
+      "end_ts_ms": 1790282201849,
+      "duration_ms": 27,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 17657,
+     "at_ms": 1790282201873,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 17657,
+      "start_ts_ms": 1790282201849,
+      "end_elapsed_ms": 27805,
+      "end_ts_ms": 1790282211997,
+      "duration_ms": 10148,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 17684,
+     "at_ms": 1790282201873
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 22006,
+     "at_ms": 1790282201873
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 22755,
+     "at_ms": 1790282201873
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 27131,
+     "at_ms": 1790282201873
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 27218,
+     "at_ms": 1790282201873
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 27805,
+     "at_ms": 1790282212066,
+     "timing": {
+      "stage": "ENTER_STAKE",
+      "start_elapsed_ms": 27805,
+      "start_ts_ms": 1790282211997,
+      "end_elapsed_ms": 49270,
+      "end_ts_ms": 1790282233462,
+      "duration_ms": 21465,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 27876,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 30211,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 30722,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 33250,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 33416,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 34914,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 39120,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 39182,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 39461,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 39768,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 40078,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 40784,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 45054,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 45231,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 46422,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 49060,
+     "at_ms": 1790282212066
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 49270,
+     "at_ms": 1790282233487,
+     "timing": {
+      "stage": "VERIFY_FINAL_STATE",
+      "start_elapsed_ms": 49270,
+      "start_ts_ms": 1790282233462,
+      "end_elapsed_ms": 59731,
+      "end_ts_ms": 1790282243922,
+      "duration_ms": 10461,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 49999,
+     "at_ms": 1790282233487
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 52444,
+     "at_ms": 1790282233487
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 52625,
+     "at_ms": 1790282236840
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 52650,
+     "at_ms": 1790282236840
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 55151,
+     "at_ms": 1790282236840
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 55203,
+     "at_ms": 1790282236840
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 56988,
+     "at_ms": 1790282236840
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 59570,
+     "at_ms": 1790282236840
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 59731,
+     "at_ms": 1790282236840
+    }
+   ]
+  },
+  "device_stage": "CLEAR_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_ownIw8aeWslzGT1SMJWwqsQkBClYS5B06CsMZYK1hy4",
+  "fixture_name": "Besancon AC v Val de Seine",
+  "home": "Besancon AC",
+  "away": "Val de Seine",
+  "competition": "6 France Nationale1 ' 25 Sep 19:00",
+  "selection": {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+3.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Val de Seine",
+   "bounds": [
+    301,
+    741,
+    344,
+    790
+   ]
+  },
+  "verification_detail": "Betslip does not show AWAY +3.5",
+  "betslip_clear": {
+   "tapped": true,
+   "bounds": [
+    16,
+    1174,
+    44,
+    1206
+   ],
+   "place_bet_still_visible": false
+  },
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 40,
+    "start_ts_ms": 1790282184231,
+    "end_elapsed_ms": 7775,
+    "end_ts_ms": 1790282191967,
+    "duration_ms": 7735,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 7775,
+    "start_ts_ms": 1790282191967,
+    "end_elapsed_ms": 17546,
+    "end_ts_ms": 1790282201738,
+    "duration_ms": 9771,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 17546,
+    "start_ts_ms": 1790282201738,
+    "end_elapsed_ms": 17595,
+    "end_ts_ms": 1790282201787,
+    "duration_ms": 49,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 17595,
+    "start_ts_ms": 1790282201787,
+    "end_elapsed_ms": 17630,
+    "end_ts_ms": 1790282201822,
+    "duration_ms": 35,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 17630,
+    "start_ts_ms": 1790282201822,
+    "end_elapsed_ms": 17657,
+    "end_ts_ms": 1790282201849,
+    "duration_ms": 27,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 17657,
+    "start_ts_ms": 1790282201849,
+    "end_elapsed_ms": 27805,
+    "end_ts_ms": 1790282211997,
+    "duration_ms": 10148,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 27805,
+    "start_ts_ms": 1790282211997,
+    "end_elapsed_ms": 49270,
+    "end_ts_ms": 1790282233462,
+    "duration_ms": 21465,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 49270,
+    "start_ts_ms": 1790282233462,
+    "end_elapsed_ms": 59731,
+    "end_ts_ms": 1790282243922,
+    "duration_ms": 10461,
+    "status": "fail",
+    "retries": 0
+   }
+  ]
+ },
+ "run": {
+  "run_id": "c_ownIw8aeWslzGT1SMJWwqsQkBClYS5B06CsMZYK1hy4",
+  "adapter": "live_bet365",
+  "status": "LINE_CHANGED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790282184192,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 1,
+    "wall_ts_ms": 1790282184192
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 26,
+    "wall_ts_ms": 1790282184218
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 40,
+    "wall_ts_ms": 1790282184232
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 2838,
+    "wall_ts_ms": 1790282187030
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 4110,
+    "wall_ts_ms": 1790282188302
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 5026,
+    "wall_ts_ms": 1790282189219
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 7616,
+    "wall_ts_ms": 1790282191810
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 7775,
+    "wall_ts_ms": 1790282191967
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 7814,
+    "wall_ts_ms": 1790282192006
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 12200,
+    "wall_ts_ms": 1790282196394
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 12982,
+    "wall_ts_ms": 1790282197174
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 17365,
+    "wall_ts_ms": 1790282201559
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 17546,
+    "wall_ts_ms": 1790282201738
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 17595,
+    "wall_ts_ms": 1790282201787
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 17630,
+    "wall_ts_ms": 1790282201822
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 17657,
+    "wall_ts_ms": 1790282201849
+   },
+   {
+    "phase": "CAPTURE_selection_preflight",
+    "elapsed_ms": 17684,
+    "wall_ts_ms": 1790282201876
+   },
+   {
+    "phase": "CAPTURED_selection_preflight",
+    "elapsed_ms": 22006,
+    "wall_ts_ms": 1790282206199
+   },
+   {
+    "phase": "CAPTURE_selection_preflight",
+    "elapsed_ms": 22755,
+    "wall_ts_ms": 1790282206947
+   },
+   {
+    "phase": "CAPTURED_selection_preflight",
+    "elapsed_ms": 27131,
+    "wall_ts_ms": 1790282211323
+   },
+   {
+    "effect": "gesture",
+    "target": "SPREAD / AWAY / +3.5 / 1.83",
+    "bounds": [
+     301,
+     741,
+     344,
+     790
+    ],
+    "elapsed_ms": 27218
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 27218,
+    "wall_ts_ms": 1790282211409
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 27805,
+    "wall_ts_ms": 1790282211997
+   },
+   {
+    "phase": "CAPTURE_overlay_check",
+    "elapsed_ms": 27876,
+    "wall_ts_ms": 1790282212067
+   },
+   {
+    "phase": "CAPTURED_overlay_check",
+    "elapsed_ms": 30211,
+    "wall_ts_ms": 1790282214405
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 30722,
+    "wall_ts_ms": 1790282214914
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 33250,
+    "wall_ts_ms": 1790282217444
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     20,
+     1327,
+     214,
+     1371
+    ],
+    "elapsed_ms": 33416
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 33416,
+    "wall_ts_ms": 1790282217608
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 34914,
+    "wall_ts_ms": 1790282219106
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 39120,
+    "wall_ts_ms": 1790282223314
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     329,
+     1229,
+     389,
+     1273
+    ],
+    "elapsed_ms": 39182
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 39182,
+    "wall_ts_ms": 1790282223374
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     88,
+     1229,
+     148,
+     1273
+    ],
+    "elapsed_ms": 39461
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 39461,
+    "wall_ts_ms": 1790282223653
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     88,
+     976,
+     148,
+     1020
+    ],
+    "elapsed_ms": 39768
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 39768,
+    "wall_ts_ms": 1790282223961
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     329,
+     1229,
+     389,
+     1273
+    ],
+    "elapsed_ms": 40078
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 40078,
+    "wall_ts_ms": 1790282224269
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 40784,
+    "wall_ts_ms": 1790282224976
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 45054,
+    "wall_ts_ms": 1790282229248
+   },
+   {
+    "effect": "gesture",
+    "target": "Done",
+    "bounds": [
+     311,
+     1333,
+     587,
+     1367
+    ],
+    "elapsed_ms": 45231
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 45231,
+    "wall_ts_ms": 1790282229423
+   },
+   {
+    "phase": "CAPTURE_betslip_stake",
+    "elapsed_ms": 46422,
+    "wall_ts_ms": 1790282230615
+   },
+   {
+    "phase": "CAPTURED_betslip_stake",
+    "elapsed_ms": 49060,
+    "wall_ts_ms": 1790282233254
+   },
+   {
+    "phase": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 49270,
+    "wall_ts_ms": 1790282233462
+   },
+   {
+    "phase": "CAPTURE_final",
+    "elapsed_ms": 49999,
+    "wall_ts_ms": 1790282234190
+   },
+   {
+    "phase": "CAPTURED_final",
+    "elapsed_ms": 52444,
+    "wall_ts_ms": 1790282236637
+   },
+   {
+    "phase": "CLEAR_BETSLIP",
+    "elapsed_ms": 52625,
+    "wall_ts_ms": 1790282236816
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_pre",
+    "elapsed_ms": 52650,
+    "wall_ts_ms": 1790282236841
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_pre",
+    "elapsed_ms": 55151,
+    "wall_ts_ms": 1790282239342
+   },
+   {
+    "effect": "gesture",
+    "target": "Remove selection from betslip",
+    "bounds": [
+     16,
+     1174,
+     44,
+     1206
+    ],
+    "elapsed_ms": 55203
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 55203,
+    "wall_ts_ms": 1790282239395
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_after",
+    "elapsed_ms": 56988,
+    "wall_ts_ms": 1790282241181
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_after",
+    "elapsed_ms": 59570,
+    "wall_ts_ms": 1790282243764
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 59731,
+    "wall_ts_ms": 1790282243923
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png",
+   "s003_markets.png",
+   "s004_markets.png",
+   "s005_selection_preflight.png",
+   "s006_selection_preflight.png",
+   "s007_overlay_check.png",
+   "s008_betslip_pre_stake.png",
+   "s009_stake_ui.png",
+   "s010_stake_typed.png",
+   "s011_betslip_stake.png",
+   "s012_final.png",
+   "s013_clear_betslip_pre.png",
+   "s014_clear_betslip_after.png"
+  ],
+  "gesture_attempts": 8,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 40,
+    "start_ts_ms": 1790282184231,
+    "end_elapsed_ms": 7775,
+    "end_ts_ms": 1790282191967,
+    "duration_ms": 7735,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 7775,
+    "start_ts_ms": 1790282191967,
+    "end_elapsed_ms": 17546,
+    "end_ts_ms": 1790282201738,
+    "duration_ms": 9771,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 17546,
+    "start_ts_ms": 1790282201738,
+    "end_elapsed_ms": 17595,
+    "end_ts_ms": 1790282201787,
+    "duration_ms": 49,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 17595,
+    "start_ts_ms": 1790282201787,
+    "end_elapsed_ms": 17630,
+    "end_ts_ms": 1790282201822,
+    "duration_ms": 35,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 17630,
+    "start_ts_ms": 1790282201822,
+    "end_elapsed_ms": 17657,
+    "end_ts_ms": 1790282201849,
+    "duration_ms": 27,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 17657,
+    "start_ts_ms": 1790282201849,
+    "end_elapsed_ms": 27805,
+    "end_ts_ms": 1790282211997,
+    "duration_ms": 10148,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 27805,
+    "start_ts_ms": 1790282211997,
+    "end_elapsed_ms": 49270,
+    "end_ts_ms": 1790282233462,
+    "duration_ms": 21465,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 49270,
+    "start_ts_ms": 1790282233462,
+    "end_elapsed_ms": 59731,
+    "end_ts_ms": 1790282243922,
+    "duration_ms": 10461,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Besancon",
+  "identity_home": "Besancon",
+  "expected_away": "Val De Seine",
+  "identity_away": "Val De Seine",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+  "current_stage": "VERIFY_FINAL_STATE",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "6 France Nationale1 ' 25 Sep 19:00",
+   "Besancon AC vs Val de Seine V",
+   "Bet Builder 4;"
+  ],
+  "kickoff_verified": "25 Sep 19:00",
+  "verified_fixture": {
+   "code": "4377152d",
+   "home": "Besancon AC",
+   "away": "Val de Seine",
+   "fixture_name": "Besancon AC v Val de Seine",
+   "exact_fixture_text": "Home Besancon AC\nAway Val de Seine",
+   "competition": "6 France Nationale1 ' 25 Sep 19:00",
+   "bounds": [
+    34,
+    265,
+    691,
+    440
+   ]
+  },
+  "fixture_home": "Besancon AC",
+  "fixture_away": "Val de Seine",
+  "identity_verified_home": "Besancon",
+  "identity_verified_away": "Val De Seine",
+  "event_verified": true,
+  "fixture": {
+   "code": "4377152d",
+   "home": "Besancon AC",
+   "away": "Val de Seine",
+   "fixture_name": "Besancon AC v Val de Seine",
+   "exact_fixture_text": "Home Besancon AC\nAway Val de Seine",
+   "competition": "6 France Nationale1 ' 25 Sep 19:00",
+   "bounds": [
+    34,
+    265,
+    691,
+    440
+   ]
+  },
+  "route": "event_link",
+  "game_lines_reads": [
+   {
+    "tag": "selection_preflight",
+    "cells": [
+     "SPREAD/HOME/-3.5@1.83",
+     "SPREAD/AWAY/+3.5@1.83"
+    ],
+    "notes": [
+     "total cell unreadable"
+    ]
+   },
+   {
+    "tag": "selection_preflight",
+    "cells": [
+     "SPREAD/HOME/-3.5@1.83",
+     "SPREAD/AWAY/+3.5@1.83"
+    ],
+    "notes": [
+     "total cell unreadable"
+    ]
+   }
+  ],
+  "game_lines": {
+   "reads": 2,
+   "agreed": [
+    "SPREAD/HOME/-3.5@1.83",
+    "SPREAD/AWAY/+3.5@1.83"
+   ],
+   "fast_path": false
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-3.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Besancon AC",
+    "bounds": [
+     301,
+     656,
+     344,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "+3.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Val de Seine",
+    "bounds": [
+     301,
+     741,
+     344,
+     790
+    ]
+   }
+  ],
+  "selection_role": "AWAY",
+  "selection_name": "Val de Seine",
+  "selection": {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+3.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Val de Seine",
+   "bounds": [
+    301,
+    741,
+    344,
+    790
+   ]
+  },
+  "stake_keypad": {
+   "zero": [
+    359,
+    1251
+   ],
+   "dot": [
+    118,
+    1251
+   ]
+  },
+  "stake_check_typed": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "3010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "stake_check_after_done": {
+   "ok": true,
+   "detail": "stake box unread; To Return exactly 0.10 x 1.83",
+   "stake_digits": "",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "stake_entered": "0.10",
+  "betslip_clear": {
+   "tapped": true,
+   "bounds": [
+    16,
+    1174,
+    44,
+    1206
+   ],
+   "place_bet_still_visible": false
+  },
+  "detail": "Betslip does not show AWAY +3.5",
+  "duration_ms": 59731
+ },
+ "wall": 60.9352867603302
+}

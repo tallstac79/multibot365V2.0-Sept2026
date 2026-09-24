@@ -1,0 +1,158 @@
+{
+ "payload": {
+  "action": "PLACE_HELD",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+3.5",
+  "selection_name": "Val de Seine",
+  "price": "1.83",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "execution_mode": "prepare",
+  "confirmation_status": "APPROVED",
+  "timeout_ms": 60000,
+  "instruction_id": "nebesancon-214031"
+ },
+ "result": {
+  "instruction_id": "nebesancon-214031",
+  "status": "FAIL",
+  "stage": "LINE_CHANGED",
+  "detail": "Slip does not show AWAY +3.5",
+  "duration_ms": 8365,
+  "progress": {
+   "stage": "PRETAP_CHECK",
+   "elapsed_ms": 8230,
+   "last_progress_at_ms": 1790282504934,
+   "instruction_id": "nebesancon-214031",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790282504926
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 12,
+     "at_ms": 1790282504934
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 22,
+     "at_ms": 1790282504934
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 2396,
+     "at_ms": 1790282504934
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 2829,
+     "at_ms": 1790282504934
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 5219,
+     "at_ms": 1790282504934
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 5710,
+     "at_ms": 1790282504934
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 8028,
+     "at_ms": 1790282504934
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 8230,
+     "at_ms": 1790282504934
+    }
+   ]
+  },
+  "device_stage": "PRETAP_CHECK",
+  "execution_count": 1,
+  "run_id": "c_ujlPTSS3rM1U7OX9AiZ2jIks_6ilescQOatzw9Y4Iy0",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Slip does not show AWAY +3.5",
+  "stage_timings": [],
+  "t_start_ms": 1790282504927
+ },
+ "run": {
+  "run_id": "c_ujlPTSS3rM1U7OX9AiZ2jIks_6ilescQOatzw9Y4Iy0",
+  "adapter": "live_bet365",
+  "status": "LINE_CHANGED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790282504914,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790282504914
+   },
+   {
+    "phase": "PRETAP_CHECK",
+    "elapsed_ms": 12,
+    "wall_ts_ms": 1790282504927
+   },
+   {
+    "phase": "CAPTURE_pretap",
+    "elapsed_ms": 22,
+    "wall_ts_ms": 1790282504937
+   },
+   {
+    "phase": "CAPTURED_pretap",
+    "elapsed_ms": 2396,
+    "wall_ts_ms": 1790282507311
+   },
+   {
+    "phase": "CAPTURE_pretap",
+    "elapsed_ms": 2829,
+    "wall_ts_ms": 1790282507744
+   },
+   {
+    "phase": "CAPTURED_pretap",
+    "elapsed_ms": 5219,
+    "wall_ts_ms": 1790282510136
+   },
+   {
+    "phase": "CAPTURE_pretap",
+    "elapsed_ms": 5710,
+    "wall_ts_ms": 1790282510625
+   },
+   {
+    "phase": "CAPTURED_pretap",
+    "elapsed_ms": 8028,
+    "wall_ts_ms": 1790282512944
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 8230,
+    "wall_ts_ms": 1790282513145
+   }
+  ],
+  "screenshots": [
+   "s001_pretap.png",
+   "s002_pretap.png",
+   "s003_pretap.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [],
+  "t_start_ms": 1790282504927,
+  "readback_rereads": [
+   "pretap 1: LINE_CHANGED Slip does not show AWAY +3.5",
+   "pretap 2: LINE_CHANGED Slip does not show AWAY +3.5"
+  ],
+  "detail": "Slip does not show AWAY +3.5",
+  "duration_ms": 8230
+ },
+ "wall": 8.838324546813965
+}

@@ -1,0 +1,359 @@
+{
+ "payload": {
+  "instruction_id": "berck-214615",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Berck Fliers Range||Pays Salonais Basket 13",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+3.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747383/F19/I0/",
+  "kickoff_utc": "2026-09-25T18:00"
+ },
+ "result": {
+  "instruction_id": "berck-214615",
+  "status": "FAIL",
+  "stage": "EVENT_NOT_VERIFIED",
+  "detail": "Game Lines grid not read consistently (see game_lines_reads)",
+  "duration_ms": 27379,
+  "progress": {
+   "stage": "MARKET_NAV",
+   "elapsed_ms": 27210,
+   "last_progress_at_ms": 1790282782488,
+   "instruction_id": "berck-214615",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790282776117
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 13,
+     "at_ms": 1790282776125
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 23,
+     "at_ms": 1790282776136,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 23,
+      "start_ts_ms": 1790282776128,
+      "end_elapsed_ms": 6363,
+      "end_ts_ms": 1790282782468,
+      "duration_ms": 6340,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3471,
+     "at_ms": 1790282776136
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 6212,
+     "at_ms": 1790282776136
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 6363,
+     "at_ms": 1790282782488,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 6363,
+      "start_ts_ms": 1790282782468,
+      "end_elapsed_ms": 27210,
+      "end_ts_ms": 1790282803314,
+      "duration_ms": 20847,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 6386,
+     "at_ms": 1790282782488
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 10982,
+     "at_ms": 1790282782488
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 11736,
+     "at_ms": 1790282782488
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 16323,
+     "at_ms": 1790282782488
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 17064,
+     "at_ms": 1790282782488
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 21697,
+     "at_ms": 1790282782488
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 22450,
+     "at_ms": 1790282782488
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 27044,
+     "at_ms": 1790282782488
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 27210,
+     "at_ms": 1790282782488
+    }
+   ]
+  },
+  "device_stage": "MARKET_NAV",
+  "execution_count": 1,
+  "run_id": "c_aNutlShj6Qlcyw2kkZPZ_LhMbPg41-YH5uc-hQ2ta9U",
+  "fixture_name": "Berck/Rang du Fliers v Pays Salonais Basket 13",
+  "home": "Berck/Rang du Fliers",
+  "away": "Pays Salonais Basket 13",
+  "competition": "6 France Nationale1 ' 25 Sep 19:00",
+  "verification_detail": "Game Lines grid not read consistently (see game_lines_reads)",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 23,
+    "start_ts_ms": 1790282776128,
+    "end_elapsed_ms": 6363,
+    "end_ts_ms": 1790282782468,
+    "duration_ms": 6340,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 6363,
+    "start_ts_ms": 1790282782468,
+    "end_elapsed_ms": 27210,
+    "end_ts_ms": 1790282803314,
+    "duration_ms": 20847,
+    "status": "fail",
+    "retries": 0
+   }
+  ]
+ },
+ "run": {
+  "run_id": "c_aNutlShj6Qlcyw2kkZPZ_LhMbPg41-YH5uc-hQ2ta9U",
+  "adapter": "live_bet365",
+  "status": "EVENT_NOT_VERIFIED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790282776104,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790282776104
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 13,
+    "wall_ts_ms": 1790282776118
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 23,
+    "wall_ts_ms": 1790282776128
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3471,
+    "wall_ts_ms": 1790282779578
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 6212,
+    "wall_ts_ms": 1790282782319
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 6363,
+    "wall_ts_ms": 1790282782468
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 6386,
+    "wall_ts_ms": 1790282782491
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 10982,
+    "wall_ts_ms": 1790282787089
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 11736,
+    "wall_ts_ms": 1790282787841
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 16323,
+    "wall_ts_ms": 1790282792430
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 17064,
+    "wall_ts_ms": 1790282793171
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 21697,
+    "wall_ts_ms": 1790282797804
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 22450,
+    "wall_ts_ms": 1790282798557
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 27044,
+    "wall_ts_ms": 1790282803151
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 27210,
+    "wall_ts_ms": 1790282803315
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_markets.png",
+   "s003_markets.png",
+   "s004_markets.png",
+   "s005_markets.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 23,
+    "start_ts_ms": 1790282776128,
+    "end_elapsed_ms": 6363,
+    "end_ts_ms": 1790282782468,
+    "duration_ms": 6340,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 6363,
+    "start_ts_ms": 1790282782468,
+    "end_elapsed_ms": 27210,
+    "end_ts_ms": 1790282803314,
+    "duration_ms": 20847,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Berck Fliers Range",
+  "identity_home": "Berck Fliers Range",
+  "expected_away": "Pays Salonais Basket 13",
+  "identity_away": "Pays Salonais Basket 13",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747383/F19/I0/",
+  "current_stage": "MARKET_NAV",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "6 France Nationale1 ' 25 Sep 19:00",
+   "Berck/Rang du Fliers vs Pays Salonais Basket 13",
+   "Bet Builder"
+  ],
+  "kickoff_verified": "25 Sep 19:00",
+  "verified_fixture": {
+   "code": "f0de40f5",
+   "home": "Berck/Rang du Fliers",
+   "away": "Pays Salonais Basket 13",
+   "fixture_name": "Berck/Rang du Fliers v Pays Salonais Basket 13",
+   "exact_fixture_text": "Home Berck/Rang du Fliers\nAway Pays Salonais Basket 13",
+   "competition": "6 France Nationale1 ' 25 Sep 19:00",
+   "bounds": [
+    33,
+    265,
+    688,
+    431
+   ]
+  },
+  "fixture_home": "Berck/Rang du Fliers",
+  "fixture_away": "Pays Salonais Basket 13",
+  "identity_verified_home": "Berck Fliers Range",
+  "identity_verified_away": "Pays Salonais Basket 13",
+  "event_verified": true,
+  "fixture": {
+   "code": "f0de40f5",
+   "home": "Berck/Rang du Fliers",
+   "away": "Pays Salonais Basket 13",
+   "fixture_name": "Berck/Rang du Fliers v Pays Salonais Basket 13",
+   "exact_fixture_text": "Home Berck/Rang du Fliers\nAway Pays Salonais Basket 13",
+   "competition": "6 France Nationale1 ' 25 Sep 19:00",
+   "bounds": [
+    33,
+    265,
+    688,
+    431
+   ]
+  },
+  "route": "event_link",
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [],
+    "notes": [
+     "team rows not identified home=false away=false"
+    ]
+   },
+   {
+    "tag": "markets",
+    "cells": [],
+    "notes": [
+     "team rows not identified home=false away=false"
+    ]
+   },
+   {
+    "tag": "markets",
+    "cells": [],
+    "notes": [
+     "team rows not identified home=false away=false"
+    ]
+   },
+   {
+    "tag": "markets",
+    "cells": [],
+    "notes": [
+     "team rows not identified home=false away=false"
+    ]
+   }
+  ],
+  "game_lines": {
+   "reads": 0,
+   "agreed": [],
+   "fast_path": false
+  },
+  "detail": "Game Lines grid not read consistently (see game_lines_reads)",
+  "duration_ms": 27210
+ },
+ "wall": 28.130526065826416
+}

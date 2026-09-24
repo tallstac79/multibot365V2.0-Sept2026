@@ -15,6 +15,13 @@ public class TeamAliasesTest {
         assertTrue(Bet365LiveAdapter.identityForTest("Kyoto Hannaryz", "Kyoto Hannaryz"));
     }
 
+    @Test public void berckFeedNameMatchesBet365Name() {
+        assertTrue(Bet365LiveAdapter.identityForTest("Berck/Rang du Fliers", "Berck Fliers Range"));
+        assertFalse(Bet365LiveAdapter.identityForTest("Pays Salonais Basket 13", "Berck Fliers Range"));
+        assertFalse(Bet365LiveAdapter.identityForTest("Berck/Rang du Fliers", "Pays Salonais Basket 13"));
+        assertEquals("fliers range", TeamAliases.canonical("fliers range"));
+    }
+
     @Test public void aliasIsExactAndTeamSpecific() {
         assertEquals("lake stars", TeamAliases.canonical("lake stars"));               // no partial-name aliasing
         assertEquals("shiga lake stars b", TeamAliases.canonical("shiga lake stars b"));

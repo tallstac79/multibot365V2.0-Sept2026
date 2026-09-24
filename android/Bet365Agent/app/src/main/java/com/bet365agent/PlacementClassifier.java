@@ -86,7 +86,9 @@ final class PlacementClassifier {
     static String[] stakeAndReturn(List<String> fixedLines) {
         for (int i = 0; i < fixedLines.size(); i++) {
             String t = fixedLines.get(i).toLowerCase(Locale.US);
-            if (!(t.contains("stake") && t.contains("return"))) continue;
+            // OCR splits words: real receipt HT5515901931W read the header as "Sta ke To Return".
+            String compact = t.replace(" ", "");
+            if (!(compact.contains("stake") && compact.contains("return"))) continue;
             List<String> found = new ArrayList<>();
             Matcher m = AMOUNT.matcher(t);
             while (m.find()) found.add(m.group(1));

@@ -166,13 +166,20 @@ final class CoordinatorAgent implements AutoCloseable {
             // Phase C: refresh session observation immediately before starting a device job.
             preJobSessionRefresh();
             store.executing(instruction.id);
-            if(instruction.action.equals("ADAPTER_WORKFLOW") || instruction.action.equals("SESSION_CHECK") || instruction.action.equals("SESSION_PROBE") || instruction.action.equals("OPEN_SEARCH") || instruction.action.equals("MY_BETS") || instruction.action.equals("OBSERVE") || instruction.action.equals("RESET_BETSLIP")) {
+            if(instruction.action.equals("ADAPTER_WORKFLOW") || instruction.action.equals("SESSION_CHECK") || instruction.action.equals("SESSION_PROBE") || instruction.action.equals("OPEN_SEARCH") || instruction.action.equals("MY_BETS") || instruction.action.equals("OBSERVE") || instruction.action.equals("RESET_BETSLIP") || instruction.action.equals("PLACE_HELD")) {
                 if(!runner.startExternal(instruction.runId,remaining(row,instruction.timeout))) {complete(row,"INTERNAL_ERROR","Runner rejected workflow");return;}
                 VisualSession session=new VisualSession(service,runner,instruction.runId,instruction.adapter);
                 session.setProgressListener(this::onWorkflowProgress);
                 noteProgress(instruction.id, "STARTED", 0, null);
                 if(instruction.action.equals("SESSION_PROBE")) { new SessionProbeWorkflow(session).start(); return; }
                 if(instruction.action.equals("OBSERVE")) { new ObserveWorkflow(session, remaining(row,instruction.timeout)).start(); return; }
+                if(instruction.action.equals("PLACE_HELD")) {
+                    SiteAdapter mine=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id,instruction.sport,instruction.stake);
+                    if(!(mine instanceof Bet365LiveAdapter)) { runner.finish(instruction.runId,"INVALID_INSTRUCTION","PLACE_HELD requires the live adapter"); return; }
+                    new PlaceHeldWorkflow(session,(Bet365LiveAdapter)mine).start(instruction.market,instruction.side,instruction.line,
+                            instruction.selectionName,instruction.price,instruction.minimumPrice,instruction.stake,instruction.executionMode);
+                    return;
+                }
                 if(instruction.action.equals("RESET_BETSLIP")) {
                     SiteAdapter mine=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id,"football","0.00");
                     if(!(mine instanceof Bet365LiveAdapter)) { runner.finish(instruction.runId,"INVALID_INSTRUCTION","RESET_BETSLIP requires the live adapter"); return; }
@@ -191,7 +198,7 @@ final class CoordinatorAgent implements AutoCloseable {
                 SiteAdapter adapter=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id,instruction.sport,instruction.stake);
                 if(instruction.action.equals("SESSION_CHECK")) new SessionCheckWorkflow(session,adapter).start();
                 else if(instruction.action.equals("OPEN_SEARCH")) new SearchOpenWorkflow(session,adapter,instruction.text).start();
-                else new AdapterWorkflow(session,adapter).start(instruction.text,instruction.market,instruction.side,instruction.line,instruction.minimumPrice,instruction.stake,instruction.executionMode,instruction.confirmationStatus);
+                else new AdapterWorkflow(session,adapter).start(instruction.text,instruction.market,instruction.side,instruction.line,instruction.minimumPrice,instruction.stake,instruction.executionMode,instruction.confirmationStatus,instruction.eventUrl,instruction.kickoffUtc);
                 return;
             }
             String url = CoordinatorConfig.prefs(service).getString("start_url", "").trim();
@@ -252,7 +259,7 @@ final class CoordinatorAgent implements AutoCloseable {
             "OPEN_HOME","ENSURE_SESSION","DISCOVER_FIXTURE","SELECT_FIXTURE","VERIFY_EVENT",
             "DISCOVER_MARKETS","READ_SELECTION","READ_LINE","READ_PRICE","OPEN_SELECTION",
             "ENTER_STAKE","VERIFY_FINAL_STATE","PREPARE_COMPLETE_EXECUTION","PLACE_BET",
-            "PLACE_BET_OUTCOME","RESET_BETSLIP","CLEAR_BETSLIP","MY_BETS","MY_BETS_SCROLL","OBSERVE"
+            "PLACE_BET_OUTCOME","RESET_BETSLIP","CLEAR_BETSLIP","MY_BETS","MY_BETS_SCROLL","OBSERVE","OPEN_EVENT","PRETAP_CHECK","RETURN_HOME"
         ).contains(stage);
     }
 
@@ -331,7 +338,7 @@ final class CoordinatorAgent implements AutoCloseable {
         put(result, "run_id", current.optString("run_id"));
         JSONObject proof=evidence(current);
         String completedAction=current.optJSONObject("payload").optString("action");
-        if(proof!=null && (completedAction.equals("ADAPTER_WORKFLOW") || completedAction.equals("SESSION_CHECK") || completedAction.equals("SESSION_PROBE") || completedAction.equals("OPEN_SEARCH") || completedAction.equals("MY_BETS") || completedAction.equals("OBSERVE") || completedAction.equals("RESET_BETSLIP"))) {
+        if(proof!=null && (completedAction.equals("ADAPTER_WORKFLOW") || completedAction.equals("SESSION_CHECK") || completedAction.equals("SESSION_PROBE") || completedAction.equals("OPEN_SEARCH") || completedAction.equals("MY_BETS") || completedAction.equals("OBSERVE") || completedAction.equals("RESET_BETSLIP") || completedAction.equals("PLACE_HELD"))) {
             JSONObject fixture=proof.optJSONObject("fixture");
             for(String key:new String[]{"fixture_name","home","away","competition"})put(result,key,fixture==null?JSONObject.NULL:fixture.opt(key));
             put(result,"selection",proof.opt("selection"));put(result,"final_state",proof.opt("final_state"));put(result,"ready_state",proof.opt("ready_state"));put(result,"complete_execution_ready",proof.opt("complete_execution_ready"));put(result,"place_bet_tapped",proof.opt("place_bet_tapped"));put(result,"place_bet_result",proof.opt("place_bet_result"));put(result,"place_bet_detail",proof.opt("place_bet_detail"));if(proof.has("wager_submitted"))put(result,"wager_submitted",proof.opt("wager_submitted"));
@@ -341,6 +348,8 @@ final class CoordinatorAgent implements AutoCloseable {
             if(proof.has("observe"))put(result,"observe",proof.opt("observe"));
             if(proof.has("betslip_reset"))put(result,"betslip_reset",proof.opt("betslip_reset"));
             if(proof.has("betslip_clear"))put(result,"betslip_clear",proof.opt("betslip_clear"));
+            for(String key:new String[]{"route","held","returned_home","pretap","stage_timings","t_start_ms","t_pretap_done_ms","t_tap_ms","t_receipt_ms","t_home_ms"})
+                if(proof.has(key))put(result,key,proof.opt(key));
             JSONObject ready = proof.optJSONObject("ready_state");
             if (ready != null && ready.has("session")) noteSession(ready.optString("session"), "ready_state");
             else if (proof.has("session")) noteSession(proof.optString("session"), "workflow");
@@ -475,7 +484,7 @@ final class CoordinatorAgent implements AutoCloseable {
     private JSONObject evidence(JSONObject row) {
         try {
             String action=row.getJSONObject("payload").optString("action");
-            boolean workflow=action.equals("ADAPTER_WORKFLOW") || action.equals("SESSION_CHECK") || action.equals("SESSION_PROBE") || action.equals("OPEN_SEARCH") || action.equals("MY_BETS") || action.equals("OBSERVE") || action.equals("RESET_BETSLIP");
+            boolean workflow=action.equals("ADAPTER_WORKFLOW") || action.equals("SESSION_CHECK") || action.equals("SESSION_PROBE") || action.equals("OPEN_SEARCH") || action.equals("MY_BETS") || action.equals("OBSERVE") || action.equals("RESET_BETSLIP") || action.equals("PLACE_HELD");
             File file = new File(service.getFilesDir(), (workflow?"workflow/":"text/") + row.getString("run_id") + "/result.json");
             return file.isFile() ? new JSONObject(new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8)) : null;
         } catch (Exception e) { return null; }

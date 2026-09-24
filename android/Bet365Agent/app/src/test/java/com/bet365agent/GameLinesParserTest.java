@@ -117,9 +117,25 @@ public class GameLinesParserTest {
         assertTrue(got, !got.contains("SPREAD"));
     }
 
-    @Test public void wrongTeamsFindNoGrid() throws Exception {
+    @Test public void truncatedGridLabelsUseRowPosition() throws Exception {
+        // Berck/Rang du Fliers v Pays Salonais Basket 13: labels "Berck/Rang du Fl..." / "Pays Salonais Ba...".
+        GameLinesParser.Result r = GameLinesParser.parse(load("gamelines_berck_20260924.txt"),
+                "Berck/Rang du Fliers", "Pays Salonais Basket 13");
+        assertTrue(r.notes.toString(), r.grid);
+        assertTrue(r.notes.toString(), r.notes.toString().contains("rows by position"));
+        String got = cells(r);
+        assertTrue(got, got.contains("SPREAD/HOME/-3.5@1.83") && got.contains("SPREAD/AWAY/+3.5@1.83"));
+        assertTrue(got, got.contains("TOTAL/OVER/156.5@1.83") && got.contains("TOTAL/UNDER/156.5@1.83"));
+        assertEquals("Pays Salonais Basket 13", r.cells.get(1).name);   // slip must show this name + "+3.5"
+    }
+
+    @Test public void unmatchedLabelsAreFlaggedAsPositionRows() throws Exception {
+        // Names always come from the verified event header / search gate. If the grid labels do not spell
+        // them, rows are taken by position AND flagged; the betslip name+signed-line check is the backstop.
         GameLinesParser.Result r = GameLinesParser.parse(real(), "Real Madrid", "Bayern Munich");
-        assertTrue(r.cells.isEmpty());
+        assertTrue(r.notes.toString().contains("rows by position"));
+        GameLinesParser.Result exact = GameLinesParser.parse(real(), "Hapoel Tel Aviv", "Bayern Munich");
+        assertTrue(exact.notes.toString(), exact.notes.isEmpty());
     }
 
     @Test public void spreadWithNoReadableSignIsLeftOut() throws Exception {

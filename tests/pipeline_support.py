@@ -107,7 +107,7 @@ def _instant_verification(p):
     def run(gateway):
         tick(gateway)
         pending = [r['instruction_id'] for r in p.store.instructions_in([State.DISPATCHED, State.DEVICE_ACTIVE])
-                   if r['execution_mode'] == 'ready' and r['instruction_id'] not in gateway.results]
+                   if r['execution_mode'] in ('ready', 'hold') and r['instruction_id'] not in gateway.results]
         if pending:
             for iid in pending:
                 gateway.results[iid] = ready_result(iid)

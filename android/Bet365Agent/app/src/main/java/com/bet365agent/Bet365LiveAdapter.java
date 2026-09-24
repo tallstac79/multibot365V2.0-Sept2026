@@ -27,6 +27,47 @@ final class Bet365LiveAdapter implements SiteAdapter {
     private Fixture liveFixture;
     /** Price of the selection put on the betslip in this run (stake x price is cross-checked with "To Return"). */
     private String openedPrice;
+    private String targetMarket = "", targetSide = "", targetLine = "";
+    private String expectedPrice;    // price the slip must show (set by the check that uses readbackRetry)
+    private String slipPriceRead;    // targeted numeric read of the slip's price box, once per check
+
+    /** Price box at the right end of the slip's selection row (the row that shows the signed line / Over-Under). */
+    private android.graphics.Rect slipPriceBox(VisualScreen s) {
+        if (targetLine == null) return null;
+        String token = targetLine.replace("+", "").replace("-", "");
+        for (VisualScreen.Line line : s.lines) {
+            if (line.bounds.top < 900 || line.bounds.top > 1350) continue;
+            String t = line.text;
+            if (token.isEmpty() ? false : t.contains(token)) {
+                int left = Math.max(line.bounds.right + 10, 540);
+                return new android.graphics.Rect(left, line.bounds.top - 10, 715, line.bounds.bottom + 12);
+            }
+        }
+        return null;
+    }
+
+    /** Price shown on the slip: plain OCR anywhere, or the targeted read of the slip's own price box. */
+    private boolean slipPriceShown(VisualScreen s, String price) {
+        return visible(s, price) || fractionalVisible(s, price) || price.equals(slipPriceRead);
+    }
+    private long cleanGridAtMs = 0;                 // when a clean (fast-path) grid read was taken
+    private VisualScreen lastFinal; private long lastFinalAtMs = 0;   // frame that passed verify_final_state
+
+    @Override
+    public void set_target(String market, String side, String line) {
+        targetMarket = market == null ? "" : market; targetSide = side == null ? "" : side; targetLine = line == null ? "" : line;
+    }
+
+    /** First grid read is clean for THIS bet: the target cell was read and no parser note concerns its market. */
+    private boolean targetClean(GameLinesParser.Result r) {
+        if (!r.grid || targetMarket.isEmpty()) return false;
+        String key = targetMarket.toLowerCase(Locale.US);
+        for (String note : r.notes) if (note.toLowerCase(Locale.US).contains(key)) return false;
+        for (GameLinesParser.Cell c : r.cells)
+            if (c.market.equals(targetMarket) && c.side.equals(targetSide)
+                    && (targetLine.isEmpty() || "NONE".equals(c.line) || lineEquals(c.line, targetLine))) return true;
+        return false;
+    }
     /** Last typed search query (exact). Discovery only — identity uses identityHome/Away. */
     private String lastQuery = "";
     /** Intended home team for hard fixture identity (never diluted by search aliases). */
@@ -370,6 +411,15 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     public CompletableFuture<Void> enter_query(String query) {
+        String homePart = setIdentity(query);
+        List<String> ladder = buildSearchQueryLadder(homePart, expectedAway);
+        ui.put("search_query_ladder", new JSONArray(ladder));
+        ui.checkpoint("FOCUS");
+        return runSearchQueryLadder(ladder, 0, false);
+    }
+
+    /** Identity from "Home||Away": identityHome / expectedAway (both checked by every fixture gate). */
+    private String setIdentity(String query) {
         String raw = (query == null || query.trim().isEmpty()) ? defaultQuery() : query.trim();
         // Support optional "Home||Away" encoding: discovery ladder may alias; identity stays hard.
         String awayHint = "";
@@ -386,10 +436,78 @@ final class Bet365LiveAdapter implements SiteAdapter {
         ui.put("identity_home", identityHome);
         if (!expectedAway.isEmpty()) ui.put("expected_away", expectedAway);
         ui.put("identity_away", expectedAway);
-        List<String> ladder = buildSearchQueryLadder(homePart, expectedAway);
-        ui.put("search_query_ladder", new JSONArray(ladder));
-        ui.checkpoint("FOCUS");
-        return runSearchQueryLadder(ladder, 0, false);
+        return homePart;
+    }
+
+    // ------------------------------------------------------------------ direct event link
+    /**
+     * Open the alert's exact Bet365 event link and verify it: sport (link B-code), login, both teams from
+     * the header (explicit aliases only, correct home/away pairing), kick-off vs the alert's UTC time.
+     * Returns null (caller searches instead) if the link is unusable or the teams cannot be verified;
+     * a kick-off mismatch with matching teams fails closed (WRONG_EVENT).
+     */
+    @Override
+    public CompletableFuture<Fixture> open_event_direct(String url, String query, String kickoffUtc) {
+        setIdentity(query);
+        if (!EventPage.validUrl(url)) { ui.put("direct_event_rejected", "invalid link"); return CompletableFuture.completedFuture(null); }
+        String linkSport = EventPage.sportOf(url);
+        if (linkSport == null || !linkSport.equals(sport)) {
+            ui.put("direct_event_rejected", "link sport " + linkSport + " is not " + sport);
+            return CompletableFuture.completedFuture(null);
+        }
+        ui.put("event_url", url);
+        return ui.open(url).thenCompose(v -> directEventLoaded(1)).thenCompose(s -> {
+            if (sessionLoggedIn(s)) { ui.put("session", "AUTHENTICATED"); return CompletableFuture.completedFuture(s); }
+            // Not clearly logged in: the normal session step (may re-home / log in), then back to the event.
+            return ensure_session().thenCompose(v -> ui.open(url)).thenCompose(v -> directEventLoaded(1));
+        }).thenApply(s -> verifyDirectEvent(s, kickoffUtc));
+    }
+
+    private CompletableFuture<VisualScreen> directEventLoaded(int attempt) {
+        return ui.delay(attempt == 1 ? 2200 : 900).thenCompose(v -> ui.capture("event_direct")).thenCompose(s -> {
+            if (EventPage.teams(headerLines(s)) != null || attempt >= 5) return CompletableFuture.completedFuture(s);
+            ui.put("event_direct_wait", attempt);
+            return directEventLoaded(attempt + 1);
+        });
+    }
+
+    private static List<String> headerLines(VisualScreen s) {
+        List<String> out = new ArrayList<>();
+        for (VisualScreen.Line line : s.lines) if (line.bounds.top >= 230 && line.bounds.top <= 480) out.add(line.text);
+        return out;
+    }
+
+    private Fixture verifyDirectEvent(VisualScreen s, String kickoffUtc) {
+        require(!visible(s, "SIMULATOR"), "WRONG_EVENT", "Simulator page on direct event link");
+        List<String> header = headerLines(s);
+        String[] teams = EventPage.teams(header);
+        ui.put("direct_event_header", new JSONArray(header));
+        if (teams == null) { ui.put("direct_event_rejected", "header teams not read"); return null; }
+        boolean homeOk = teamPositivelyIdentified(teams[0], identityHome);
+        boolean awayOk = expectedAway.isEmpty() || teamPositivelyIdentified(teams[1], expectedAway);
+        if (!homeOk || !awayOk) {
+            ui.put("direct_event_rejected", "teams " + teams[0] + " v " + teams[1] + " do not verify as " + identityHome + " v " + expectedAway);
+            return null;
+        }
+        String shown = EventPage.kickoffText(header);
+        if (kickoffUtc != null && !kickoffUtc.isEmpty() && shown != null) {
+            String want = EventPage.ukDisplay(kickoffUtc);
+            if (!shown.equals(want))
+                throw new Failure("WRONG_EVENT", "Event link kick-off " + shown + " (UK) is not the alert's " + want + " (UK)");
+            ui.put("kickoff_verified", shown);
+        } else ui.put("kickoff_verified", shown == null ? "not shown (in-play or unread)" : "no alert kick-off");
+        android.graphics.Rect bounds = new android.graphics.Rect();
+        for (VisualScreen.Line line : s.lines) if (line.bounds.top >= 230 && line.bounds.top <= 480) bounds.union(line.bounds);
+        Fixture f = new Fixture(Integer.toHexString((teams[0] + "|" + teams[1]).toLowerCase(Locale.US).hashCode()),
+                teams[0], teams[1], header.isEmpty() ? "" : header.get(0), bounds);
+        liveFixture = f;
+        ui.put("verified_fixture", f.json());
+        ui.put("fixture_home", f.home);
+        ui.put("fixture_away", f.away);
+        ui.put("identity_verified_home", identityHome);
+        ui.put("identity_verified_away", expectedAway);
+        ui.put("event_verified", true);
+        return f;
     }
 
     /**
@@ -849,6 +967,14 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     public CompletableFuture<Void> open_selection(Selection selection) {
+        if ("basketball".equals(sport) && liveFixture != null && cleanGridAtMs > 0
+                && android.os.SystemClock.elapsedRealtime() - cleanGridAtMs < 8000) {
+            // The static event page was read cleanly <8 s ago; the betslip then re-shows the exact line and
+            // price (verify_final_state), so a second full grid read before tapping the cell adds nothing.
+            ui.put("selection_preflight", "reused clean grid read");
+            openedPrice = selection.price;
+            return ui.tap(selection.bounds, selection.market + " / " + selection.side + " / " + selection.line + " / " + selection.price);
+        }
         if ("basketball".equals(sport) && liveFixture != null) {
             return gridConsensus("selection_preflight", 1, new ArrayList<>(), new JSONArray()).thenCompose(grid -> {
                 Selection current = null;
@@ -877,9 +1003,13 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     public CompletableFuture<Void> enter_stake(String stake) {
         String amount = (stake == null || stake.isEmpty()) ? "0.00" : stake.trim();
-        return dismissChromeMenu(0)
-            .thenCompose(v -> ui.delay(400))
+        return ui.delay(300)
             .thenCompose(v -> ui.capture("betslip_pre_stake"))
+            .thenCompose(first -> {
+                boolean chromeMenu = visible(first, "Incognito") && (visible(first, "Bookmarks") || visible(first, "New tab") || visible(first, "History"));
+                if (!chromeMenu) return CompletableFuture.completedFuture(first);
+                return dismissChromeMenu(0).thenCompose(v -> ui.capture("betslip_pre_stake"));
+            })
             .thenCompose(s -> {
                 detectBetslipFaults(s);
                 require(visible(s, "Set Stake", "Stake", "Place Bet", "Bet Slip", "Betslip", "Quick Bet")
@@ -910,15 +1040,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 require(visible(uiScreen, "Done") || hasDigitPad(uiScreen) || visible(uiScreen, "Remember Stake", "Remember"),
                         "TARGET_NOT_FOUND", "Stake pad not visible after Set Stake");
                 return enterStakeOnPad(uiScreen, amount)
-                        .thenCompose(x -> ui.delay(600));
+                        .thenCompose(x -> ui.delay(400));
             })
-            .thenCompose(v -> ui.capture("betslip_stake"))
-            .thenAccept(after -> {
-                detectBetslipFaults(after);
-                // Strict: stake digits AND "To Return" (= stake x price) must both read back. A betslip
-                // showing Place Bet is NOT evidence of the right stake (real incident: £8,718 typed).
-                boolean ok = stakeVerified(after, amount, openedPrice, "stake_check_after_done");
-                require(ok, "STAKE_REJECTED", "Stake readback mismatch; wanted " + amount);
+            .thenAccept(v -> {
+                // Typed stake was verified before Done (stake digits AND To Return). The slip after Done is
+                // re-verified strictly by verify_final_state (and again before the tap): no extra read here.
                 ui.put("stake_entered", amount);
             });
     }
@@ -935,17 +1061,20 @@ final class Bet365LiveAdapter implements SiteAdapter {
         require(keys != null, "STAKE_REJECTED", "Stake keypad not located from OCR; not guessing key positions");
         ui.put("stake_keypad", CoordinatorAgent.object("zero", new JSONArray(java.util.Arrays.asList(keys.get('0')[0], keys.get('0')[1])),
                 "dot", new JSONArray(java.util.Arrays.asList(keys.get('.')[0], keys.get('.')[1]))));
-        CompletableFuture<Void> chain = erase(keys, 8);
-        for (int i = 0; i < amount.length(); i++) {
-            final char ch = amount.charAt(i);
-            chain = chain.thenCompose(v -> tapKey(keys, ch));
-        }
-        return chain.thenCompose(v -> ui.delay(500)).thenCompose(v -> ui.capture("stake_typed")).thenCompose(s -> {
-            if (!stakeVerified(s, amount, openedPrice, "stake_check_typed")) {
-                return erase(keys, 10).<Void>thenCompose(v -> {
-                    throw new Failure("STAKE_REJECTED", "Typed stake did not read back as " + amount + "; field erased");
-                });
-            }
+        // No blind pre-erase: the field opens with "£0.00" selected, so typing replaces it (real frames).
+        // The readback is the safety: if it does not show exactly this stake (stake digits AND To Return),
+        // the field is erased and typed ONCE more; a second mismatch erases and fails closed.
+        return typeAmount(keys, amount).thenCompose(v -> ui.delay(400)).thenCompose(v -> ui.capture("stake_typed")).thenCompose(first -> {
+            if (stakeVerified(first, amount, openedPrice, "stake_check_typed")) return CompletableFuture.completedFuture(first);
+            ui.put("stake_retyped", true);
+            return erase(keys, 10).thenCompose(v -> typeAmount(keys, amount)).thenCompose(v -> ui.delay(400))
+                    .thenCompose(v -> ui.capture("stake_retyped")).thenCompose(second -> {
+                        if (stakeVerified(second, amount, openedPrice, "stake_check_retyped")) return CompletableFuture.completedFuture(second);
+                        return erase(keys, 10).<VisualScreen>thenCompose(v -> {
+                            throw new Failure("STAKE_REJECTED", "Typed stake did not read back as " + amount + " after one retype; field erased");
+                        });
+                    });
+        }).thenCompose(s -> {
             VisualScreen.Line done = findDoneLine(s);
             if (done == null) {
                 return erase(keys, 10).<Void>thenCompose(v -> {
@@ -956,11 +1085,20 @@ final class Bet365LiveAdapter implements SiteAdapter {
         });
     }
 
+    private CompletableFuture<Void> typeAmount(java.util.Map<Character, int[]> keys, String amount) {
+        CompletableFuture<Void> chain = CompletableFuture.completedFuture(null);
+        for (int i = 0; i < amount.length(); i++) {
+            final char ch = amount.charAt(i);
+            chain = chain.thenCompose(v -> tapKey(keys, ch));
+        }
+        return chain;
+    }
+
     private CompletableFuture<Void> tapKey(java.util.Map<Character, int[]> keys, char key) {
         int[] c = keys.get(key);
         require(c != null, "STAKE_REJECTED", "No keypad key for '" + key + "'");
         android.graphics.Rect r = new android.graphics.Rect(c[0] - 30, c[1] - 22, c[0] + 30, c[1] + 22);
-        return ui.tap(r, "key:" + key).thenCompose(x -> ui.delay(220));
+        return ui.tap(r, "key:" + key, 150);   // keypad keys register at once; no 450 ms page settle
     }
 
     private CompletableFuture<Void> erase(java.util.Map<Character, int[]> keys, int times) {
@@ -1085,7 +1223,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     public CompletableFuture<Void> verify_final_state(Fixture fixture, Selection selection, String stake) {
         // STOP BEFORE WAGER: full betslip readback ? READY_STATE. Never tap Place Bet / Submit.
-        return ui.delay(700).thenCompose(v -> ui.capture("final")).thenAccept(s -> {
+        expectedPrice = selection.price; slipPriceRead = null;
+        return ui.delay(300).thenCompose(v -> readbackRetry("final", 1, (s, enhanced) -> {
             require(!visible(s, "SIMULATOR", "DRYRUN", "REVIEW OK"), "EVENT_NOT_VERIFIED", "Simulator dry-run page during live verify");
             if (loginWall(s)) throw new Failure("SESSION_EXPIRED", "Bet365 login wall during betslip verify");
             detectBetslipFaults(s);
@@ -1098,7 +1237,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 require(visible(s, selection.name) || visibleLoose(s, selection.name),
                         "SELECTION_CHANGED", "selection_name not visible on betslip: " + selection.name);
             }
-            boolean priceOk = visible(s, selection.price) || fractionalVisible(s, selection.price);
+            boolean priceOk = slipPriceShown(s, selection.price);
             require(priceOk, "PRICE_CHANGED", "Selection price not visible on betslip: " + selection.price);
             require(PlacementClassifier.slipShowsLine(texts(s), selection.market, selection.side, selection.name, selection.line),
                     "LINE_CHANGED", "Betslip does not show " + selection.side + " " + selection.line);
@@ -1132,6 +1271,48 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     "place_bet_visible", hasPlace,
                     "wager_submitted", false
             ));
+        })).thenAccept(s -> { lastFinal = s; lastFinalAtMs = android.os.SystemClock.elapsedRealtime(); });
+    }
+
+    /** Readback stages the slip may fail on one OCR frame ("+3.5" read as "+315"): re-captured, max 3 reads. */
+    private static final java.util.Set<String> REREAD_STAGES = java.util.Set.of(
+            "LINE_CHANGED", "PRICE_CHANGED", "STAKE_REJECTED", "SELECTION_CHANGED", "WRONG_EVENT", "TARGET_NOT_FOUND");
+
+    /**
+     * Capture and run the checks; if they fail on a readback stage, capture again (max 3 reads). A pass
+     * still needs every check on ONE frame; a real difference fails all three and is reported as is.
+     */
+    private CompletableFuture<VisualScreen> readbackRetry(String label, int attempt, java.util.function.BiConsumer<VisualScreen, Boolean> checks) {
+        // Re-reads use the enhanced per-word OCR (3x, contrast): real slips where the plain read missed
+        // "1.83" and read "£0.18" as "£0118" (Berck v Pays Salonais). The checks themselves never change.
+        CompletableFuture<VisualScreen> frame = attempt == 1 ? ui.capture(label) : ui.captureTable(label + "_enhanced");
+        return frame.thenCompose(s -> {
+            try {
+                checks.accept(s, attempt > 1);   // true = enhanced re-read frame
+                return CompletableFuture.completedFuture(s);
+            } catch (Failure f) {
+                if (attempt >= 3 || !REREAD_STAGES.contains(f.stage)) throw f;
+                // The slip's right-aligned price is often missed by the plain read (real: Berck slip): read just
+                // that box (numeric, single line) once and re-check THIS frame; it must equal the price exactly.
+                if (attempt == 1 && "PRICE_CHANGED".equals(f.stage) && expectedPrice != null && slipPriceRead == null) {
+                    android.graphics.Rect box = slipPriceBox(s);
+                    if (box != null) {
+                        return ui.readRegion(label + "_price", box, true).thenCompose(text -> {
+                            slipPriceRead = text == null ? "" : text.replaceAll("[^0-9.]", "");
+                            ui.put("slip_price_region", CoordinatorAgent.object("read", slipPriceRead, "bounds", VisualSession.bounds(box)));
+                            try { checks.accept(s, false); return CompletableFuture.completedFuture(s); }
+                            catch (Failure again) {
+                                if (!REREAD_STAGES.contains(again.stage)) throw again;
+                                return ui.delay(300).thenCompose(v -> readbackRetry(label, attempt + 1, checks));
+                            }
+                        });
+                    }
+                }
+                JSONArray log = ui.record.optJSONArray("readback_rereads");
+                if (log == null) { log = new JSONArray(); ui.put("readback_rereads", log); }
+                log.put(label + " " + attempt + ": " + f.stage + " " + f.getMessage());
+                return ui.delay(300).thenCompose(v -> readbackRetry(label, attempt + 1, checks));
+            }
         });
     }
 
@@ -1181,7 +1362,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     public CompletableFuture<Void> prepare_complete_execution(Fixture fixture, Selection selection, String stake, String minimumPrice) {
         // Revalidate READY slip, locate Place Bet, prepare gesture ? DO NOT dispatch.
-        return ui.delay(400).thenCompose(v -> ui.capture("complete_execution_pre")).thenAccept(s -> {
+        CompletableFuture<VisualScreen> frame = lastFinal != null && android.os.SystemClock.elapsedRealtime() - lastFinalAtMs < 4000
+                ? CompletableFuture.completedFuture(lastFinal)
+                : ui.delay(400).thenCompose(v -> ui.capture("complete_execution_pre"));
+        if (lastFinal != null) ui.put("prepare_frame", "reused verified final frame");
+        return frame.thenAccept(s -> {
             detectBetslipFaults(s);
             require(!PlacementClassifier.multipleSelections(texts(s)), "BETSLIP_NOT_SINGLE",
                     "Betslip shows more than one selection before Place Bet");
@@ -1192,7 +1377,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 require(visible(s, selection.name) || visibleLoose(s, selection.name),
                         "SELECTION_CHANGED", "selection_name missing before complete execution");
             }
-            boolean priceOk = visible(s, selection.price) || fractionalVisible(s, selection.price);
+            boolean priceOk = slipPriceShown(s, selection.price);   // same evidence as verify_final_state (incl. targeted price read)
             require(priceOk, "PRICE_CHANGED", "Price missing before complete execution: " + selection.price);
             if (Double.parseDouble(selection.price) < Double.parseDouble(minimumPrice))
                 throw new Failure("BELOW_MINIMUM", "Price " + selection.price + " below minimum " + minimumPrice);
@@ -1274,12 +1459,20 @@ final class Bet365LiveAdapter implements SiteAdapter {
             require(priceOk, "PRICE_CHANGED", "Price changed before Place Bet dispatch");
             require(stakeVerified(s, stake, selection.price, "stake_check_pre_dispatch"), "STAKE_REJECTED", "Stake missing before Place Bet dispatch");
             require(findPlaceBetLine(s) != null, "TARGET_NOT_FOUND", "Place Bet disappeared before dispatch");
+            return tapPlaceBetOnce(tap, selection, stake);
+        });
+    }
+
+    /** The single Place Bet tap: durable intent first, one gesture, then outcome classification. */
+    private CompletableFuture<Void> tapPlaceBetOnce(android.graphics.Rect tap, Selection selection, String stake) {
+        {
             ui.put("place_bet_bounds", VisualSession.bounds(tap));
             // Durable intent BEFORE the gesture: from here on, any failure is reported as a
             // possible placement (never "not tapped"), so the backend reconciles and never re-taps.
             ui.put("placement", placement("PLACEMENT_UNKNOWN", "Place Bet tap dispatching; outcome not yet classified",
                     null, null, stake, selection.price, new JSONArray(), null));
             ui.checkpoint("PLACE_BET");
+            ui.put("t_tap_ms", System.currentTimeMillis());
             return ui.tap(tap, "Place Bet").thenCompose(x -> {
                 if (preparedGesture != null) {
                     try { preparedGesture.put("dispatched", true); } catch (Exception ignored) {}
@@ -1289,6 +1482,46 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 ui.put("place_bet_tapped", true);
                 return observeOutcome(1, new JSONArray(), selection, stake);
             });
+        }
+    }
+
+    /**
+     * PLACE_HELD pre-tap check on the CURRENT screen (one capture, no navigation): logged in, one selection,
+     * the approved selection and exact line on the slip, the approved price (>= minimum), the stake with
+     * a matching To Return, and Place Bet present. Then one tap (dispatch) or nothing (prepare).
+     * Anything different fails closed; the bet is never rebuilt after approval.
+     */
+    CompletableFuture<Void> place_held(String market, String side, String line, String name, String price,
+                                       String minimumPrice, String stake, boolean dispatch) {
+        ui.checkpoint("PRETAP_CHECK");
+        expectedPrice = price; slipPriceRead = null; targetLine = line == null ? "" : line;
+        final android.graphics.Rect[] tapHolder = new android.graphics.Rect[1];
+        return readbackRetry("pretap", 1, (s, enhanced) -> {
+            List<String> t = texts(s);
+            // Login is judged on the plain first frame (checked first; a login failure is never re-read).
+            // Enhanced re-read frames distort the header, so they only re-check the slip.
+            if (!enhanced) require(sessionLoggedIn(s), "SESSION_EXPIRED", "Not logged in at the pre-tap check");
+            detectBetslipFaults(s);
+            require(!PlacementClassifier.receiptVisible(t), "REJECTED", "A receipt is showing, not the held slip");
+            require(!PlacementClassifier.multipleSelections(t), "BETSLIP_NOT_SINGLE", "Betslip is not a single");
+            require(visible(s, name) || visibleLoose(s, name), "SELECTION_CHANGED", "Held selection '" + name + "' not on the slip");
+            require(PlacementClassifier.slipShowsLine(t, market, side, name, line), "LINE_CHANGED", "Slip does not show " + side + " " + line);
+            require(slipPriceShown(s, price), "PRICE_CHANGED", "Approved price " + price + " not on the slip");
+            require(new java.math.BigDecimal(price).compareTo(new java.math.BigDecimal(minimumPrice)) >= 0,
+                    "BELOW_MINIMUM", "Price " + price + " below minimum " + minimumPrice);
+            require(stakeVerified(s, stake, price, "stake_check_pretap"), "STAKE_REJECTED", "Held stake does not read back as " + stake);
+            VisualScreen.Line place = findPlaceBetLine(s);
+            require(place != null, "TARGET_NOT_FOUND", "Place Bet not on the held slip");
+            android.graphics.Rect tap = placeBetTapRect(place);
+            require(!tap.isEmpty() && tap.width() > 20 && tap.height() > 10, "TARGET_NOT_FOUND", "Place Bet bounds not actionable");
+            ui.put("pretap", CoordinatorAgent.object("ok", true, "selection", name, "line", line, "price", price, "stake", stake,
+                    "place_bet_bounds", VisualSession.bounds(tap)));
+            ui.put("t_pretap_done_ms", System.currentTimeMillis());
+            tapHolder[0] = tap;
+        }).thenCompose(s -> {
+            if (!dispatch) return CompletableFuture.<Void>completedFuture(null);
+            Selection selection = new Selection(market, side, line, price, "OPEN", tapHolder[0], name);
+            return tapPlaceBetOnce(tapHolder[0], selection, stake);
         });
     }
 
@@ -1308,8 +1541,18 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     ui.put("wager_submitted", "PLACED".equals(outcome));
                     ui.put("place_bet_result", outcome);
                     ui.put("place_bet_detail", detail);
-                    return resetBetslip();
+                    ui.put("t_receipt_ms", System.currentTimeMillis());
+                    return resetBetslip().thenCompose(v -> returnHome());
                 });
+    }
+
+    /** After a placement: Bet365 HOME is the clean idle state (never re-taps anything). */
+    private CompletableFuture<Void> returnHome() {
+        ui.checkpoint("RETURN_HOME");
+        return ui.open(HOME_URL).thenCompose(v -> ui.delay(1200)).thenAccept(v -> {
+            ui.put("returned_home", true);
+            ui.put("t_home_ms", System.currentTimeMillis());
+        }).exceptionally(e -> { ui.put("returned_home", false); return null; });
     }
 
     private static org.json.JSONObject placement(String outcome, String detail, String reference, String potentialReturn,
@@ -1545,15 +1788,19 @@ final class Bet365LiveAdapter implements SiteAdapter {
             List<GameLinesParser.Cell> previous = reads.isEmpty() ? null : reads.get(reads.size() - 1);
             if (!r.cells.isEmpty()) reads.add(r.cells);
             boolean stable = previous != null && !r.cells.isEmpty() && String.valueOf(previous).equals(String.valueOf(r.cells));
-            if (!stable && attempt < 4) return ui.delay(600).thenCompose(v -> gridConsensus(tag, attempt + 1, reads, log));
+            // Fast path: a first read with no parser notes (every cell read, signs explicit or paired, O/U
+            // consistent) is used as is: the betslip re-shows the exact line and price before READY/tap.
+            boolean clean = attempt == 1 && ((r.grid && r.notes.isEmpty() && r.cells.size() >= 4) || targetClean(r));
+            if (!stable && !clean && attempt < 4) return ui.delay(600).thenCompose(v -> gridConsensus(tag, attempt + 1, reads, log));
             List<Selection> out = new ArrayList<>();
             JSONArray agreed = new JSONArray();
-            for (GameLinesParser.Cell c : GameLinesParser.consensus(reads)) {
+            for (GameLinesParser.Cell c : clean ? r.cells : GameLinesParser.consensus(reads)) {
                 android.graphics.Rect b = new android.graphics.Rect(c.bounds[0], c.bounds[1], c.bounds[2], c.bounds[3]);
                 out.add(new Selection(c.market, c.side, c.line, c.price, "OPEN", b, c.name));
                 agreed.put(c.toString());
             }
-            ui.put("game_lines", CoordinatorAgent.object("reads", reads.size(), "agreed", agreed));
+            ui.put("game_lines", CoordinatorAgent.object("reads", reads.size(), "agreed", agreed, "fast_path", clean));
+            if (clean) cleanGridAtMs = android.os.SystemClock.elapsedRealtime();
             return CompletableFuture.completedFuture(out);
         });
     }

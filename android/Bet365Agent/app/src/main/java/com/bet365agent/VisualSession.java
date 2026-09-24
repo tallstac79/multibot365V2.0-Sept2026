@@ -128,6 +128,14 @@ final class VisualSession {
     }
     CompletableFuture<VisualScreen> capture(String label) { return capture(label,false); }
     CompletableFuture<VisualScreen> captureTable(String label) { return capture(label,true); }
+    CompletableFuture<VisualScreen> captureTableBelow(String label,int top) {
+        if(!live())return failed("TIMEOUT","Session expired");
+        String name=String.format(java.util.Locale.US,"s%03d_%s",++sequence,label);
+        checkpoint("CAPTURE_"+label);
+        CompletableFuture<VisualScreen> f=future();
+        runner.tableFrameBelow(id,name,top,ocr->{if(live()){images.put(name+".png");checkpoint("CAPTURED_"+label);f.complete(new VisualScreen(ocr));}});
+        return f;
+    }
     private CompletableFuture<VisualScreen> capture(String label,boolean table) {
         if(!live())return failed("TIMEOUT","Session expired");
         String name=String.format(java.util.Locale.US,"s%03d_%s",++sequence,label);
@@ -145,7 +153,8 @@ final class VisualSession {
         runner.regionFrame(id,name,bounds,numeric,ocr->{if(live()){images.put(name+".png");checkpoint("READ_REGION_DONE_"+label);f.complete(String.join(" ",ocr.words));}});
         return f;
     }
-    CompletableFuture<Void> tap(Rect box,String description) {
+    CompletableFuture<Void> tap(Rect box,String description) { return tap(box,description,450); }
+    CompletableFuture<Void> tap(Rect box,String description,long settleMs) {
         if(!live())return failed("TIMEOUT","Session expired");
         if(box.isEmpty()||box.left<0||box.top<0)return failed("CLICK_FAILED","Invalid visual bounds");
         put("gesture_attempts",record.optInt("gesture_attempts")+1);
@@ -153,7 +162,7 @@ final class VisualSession {
         checkpoint("GESTURE_DISPATCHING"); // durable intent before effect; no replay after restart
         CompletableFuture<Void> f=future();Path path=new Path();path.moveTo(box.exactCenterX(),box.exactCenterY());
         boolean accepted=service.dispatchGesture(new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path,0,100)).build(),new AccessibilityService.GestureResultCallback(){
-            public void onCompleted(GestureDescription gesture){if(live())main.postDelayed(()->{if(live())f.complete(null);},450);}
+            public void onCompleted(GestureDescription gesture){if(live())main.postDelayed(()->{if(live())f.complete(null);},settleMs);}
             public void onCancelled(GestureDescription gesture){f.completeExceptionally(new SiteAdapter.Failure("CLICK_FAILED","Gesture cancelled"));}
         },main);
         if(!accepted)f.completeExceptionally(new SiteAdapter.Failure("CLICK_FAILED","Gesture rejected"));

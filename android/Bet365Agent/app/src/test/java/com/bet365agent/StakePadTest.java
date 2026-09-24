@@ -94,6 +94,16 @@ public class StakePadTest {
         assertFalse("price too low for return-only", StakePad.check(words, "0.10", "1.05").ok);
     }
 
+    @Test public void decimalPointReadAsOneOnlyUnderOnePound() {
+        assertTrue(StakePad.dotReadAsOne("0118", "018", "018").equals("018"));     // £0.18 read as £0118
+        assertTrue(StakePad.dotReadAsOne("1183", "183", "183").equals("1183"));    // £1.83 vs £11.83: ambiguous, no fix
+        assertTrue(StakePad.dotReadAsOne("0128", "018", "018").equals("0128"));    // not the decimal position
+        List<GameLinesParser.Word> words = Arrays.asList(w("Place", 478, 1324, 550, 1346), w("Bet", 560, 1325, 604, 1346),
+                w("To", 464, 1362, 485, 1377), w("Return", 493, 1362, 552, 1377), w("£0118", 560, 1362, 611, 1377));
+        assertTrue(StakePad.check(words, "0.10", "1.83").ok);
+        assertFalse(StakePad.check(words, "0.11", "1.83").ok);
+    }
+
     @Test public void aWrongStakeCannotPassBothReadings() {
         // Stake really £10.10 but OCR drops the £: stake digits look right, the return (18.48) does not.
         List<GameLinesParser.Word> words = Arrays.asList(w("10.10", 20, 686, 102, 718),

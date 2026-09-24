@@ -249,6 +249,19 @@ final class VisualControlRunner {
     void tableFrame(String id, String phase, Consumer<Ocr> next) {
         capture(id, phase, 0, bitmap -> process(id, bitmap, phase, -1, next));
     }
+    /** Enhanced table OCR of the screen below y=top only (the betslip); word rects are full-screen coordinates. */
+    void tableFrameBelow(String id, String phase, int top, Consumer<Ocr> next) {
+        capture(id, phase, 0, bitmap -> {
+            int y = Math.max(0, Math.min(top, bitmap.getHeight() - 20));
+            Bitmap region = Bitmap.createBitmap(bitmap, 0, y, bitmap.getWidth(), bitmap.getHeight() - y);
+            if (region != bitmap) bitmap.recycle();
+            process(id, region, phase, -1, ocr -> {
+                for (Rect r : ocr.rects) r.offset(0, y);
+                next.accept(ocr);
+            });
+        });
+    }
+
     void regionFrame(String id, String phase, Rect bounds, boolean numeric, Consumer<Ocr> next) {
         capture(id, phase, 0, bitmap -> {
             Rect crop = new Rect(bounds); crop.inset(-8, -8);

@@ -39,6 +39,18 @@ public class PlacementClassifierTest {
         assertEquals("0.18", r.potentialReturn);
     }
 
+    /** First supervised live placement (on-ca8c7974): "Stake" OCR'd as "Sta ke"; return must be 0.18, not the stake. */
+    @Test public void liveReceiptWithSplitStakeHeader() {
+        PlacementClassifier.Result r = classify(false, "2057 \u00ae 0 e.\u00bb 5).: 100%.", "ED 23 bet365.com/#/AC/Bi + E2]",
+                "Bet Placed", "m Share x", "Bet Ref HT5515901931W", ";; Live Aieris Reuse Selections", "Val de Seine +3.5 1.83",
+                "Point Spread", "Besancon AC vs Val de Seine", "Sta ke To Return", "\u00a3O.1 0 \u00a30.1 8",
+                "g Q \u00abo\u00bb @9 BEE", "Hume All Sparts ln-Play My Bets Casino", "III C) <");
+        assertEquals("PLACED", r.outcome);
+        assertEquals("HT5515901931W", r.betReference);
+        assertEquals("0.10", r.stake);
+        assertEquals("0.18", r.potentialReturn);
+    }
+
     @Test public void realBetslipBeforeTapIsPending() {
         PlacementClassifier.Result r = classify(true, "ED Ea bet365.com/#/AC/BW + E]", ">< Hapoel Tel Aviv -8.0 1.83",
                 "Point Spread", "Hapoel Te‘ Aviv vs Bayern Munich", "3““ Place Bet", "£0.10 To Return £018",

@@ -31,7 +31,7 @@ from core.status_notifier import Notifier, TelegramBotSender, DEFAULT_STATES  # 
 log = logging.getLogger('multibot.pipeline_service')
 DEFAULTS = {'database': '.local/pipeline.sqlite3', 'rules_database': '.local/dashboard.sqlite3',
             'coordinator_config': '.local/coordinator.json', 'status_file': '.local/pipeline_status.json',
-            'tick_seconds': 2, 'pipeline': {}, 'telegram_intake': None, 'notifications': {'enabled': False}}
+            'tick_seconds': 1, 'pipeline': {}, 'telegram_intake': None, 'notifications': {'enabled': False}}
 
 
 class JsonLines(logging.Formatter):

@@ -69,6 +69,21 @@ final class GameLinesParser {
         int labelLimit = spreadX - 80;
         int[] homeRow = labelRow(words, home, labelLimit, headerBottom);
         int[] awayRow = homeRow == null ? null : labelRow(words, away, labelLimit, homeRow[0] + 10);
+        if (homeRow == null || awayRow == null) {
+            // Real (Berck/Rang du Fliers v Pays Salonais Basket 13): Bet365 truncates long names in the grid
+            // ("Berck/Rang du Fl...") and the dim labels OCR as noise. The event's teams were verified from the
+            // page header; Bet365 lists home first, so take the first two label rows under this grid's header.
+            // The betslip must then show the chosen team WITH its signed line (verify_final_state / pre-tap),
+            // so a swapped row fails closed there.
+            List<Word> labels = new ArrayList<>();
+            for (Word w : words) if (w.right < labelLimit && w.top > headerBottom && w.top < headerBottom + 260) labels.add(w);
+            List<List<Word>> rows = groups(labels);
+            if (rows.size() >= 2) {
+                homeRow = new int[] {rows.get(0).get(0).cy()};
+                awayRow = new int[] {rows.get(1).get(0).cy()};
+                r.notes.add("rows by position (grid labels truncated or unread)");
+            }
+        }
         if (homeRow == null || awayRow == null || awayRow[0] <= homeRow[0] || homeRow[0] == awayRow[0]) {
             r.notes.add("team rows not identified home=" + (homeRow != null) + " away=" + (awayRow != null)); return r;
         }

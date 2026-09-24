@@ -17,6 +17,7 @@ from datetime import datetime
 import hashlib
 import json
 import logging
+import re
 
 from core import alert_classifier
 from core.final_action import FinalAction
@@ -83,6 +84,21 @@ class Settings:
     def from_dict(cls, values):
         known = {k: v for k, v in (values or {}).items() if k in cls.__dataclass_fields__}
         return cls(**known)
+
+
+EVENT_URL = re.compile(r'^https://www\.bet365\.com/#/AC/B(\d{1,3})(/[A-Z]\d{1,12}){2,8}/?$')
+KICKOFF = re.compile(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$')
+SELECTION_NAME = re.compile(r"^[A-Za-z0-9 ./'&()-]{2,64}$")
+HELD_KEY = 'held_slip'
+
+
+def event_link(row):
+    """The alert's Bet365 event link if it is a well-formed #/AC/ link; else None (the phone searches)."""
+    try:
+        url = (json.loads(row['normalized_alert'] or '{}') or {}).get('comparison_url')
+    except (ValueError, TypeError):
+        return None
+    return url if isinstance(url, str) and EVENT_URL.match(url) else None
 
 
 def device_instruction_id(instruction_id, execution_mode):
@@ -266,21 +282,92 @@ class Pipeline:
         (execution_mode 'dispatch' + confirmation_status 'APPROVED') is built only for an
         APPROVED instruction while final action is enabled and not paused.
         """
+        if final_action:
+            if not (self.final.enabled() and row['state'] == State.APPROVED.value and row['approved_by']):
+                raise PermissionError('Final action requires an APPROVED instruction with final action enabled')
+            return self.place_held_payload(row)
+        # Final action enabled: 'hold' = verify everything and leave the bet on the slip with the stake
+        # entered and Place Bet located (never tapped) for the approval. Otherwise READY-only.
+        mode = 'hold' if self.final.enabled() else 'ready'
         payload = dict(instruction_id=row['instruction_id'], action='ADAPTER_WORKFLOW', adapter=self.settings.adapter,
                        scenario='live', query=(f"{row['home']}||{row['away']}" if row['away'] else row['home']),
                        sport=row['sport'], market=row['market'], side=row['selection'], line=row['line'],
                        minimum_price=row['minimum_price'], stake=row['stake'], timeout_ms=self.settings.device_timeout_ms,
-                       execution_mode='ready')
-        if final_action:
-            if not (self.final.enabled() and row['state'] == State.APPROVED.value and row['approved_by']):
-                raise PermissionError('Final action requires an APPROVED instruction with final action enabled')
-            # Its own device ID: the phone already ran this instruction's READY verification under the plain
-            # ID, and its idempotency would answer a reused ID with that old READY result (never placing).
-            payload.update(instruction_id=device_instruction_id(row['instruction_id'], 'dispatch'),
-                           execution_mode='dispatch', confirmation_status='APPROVED')
-        else:
-            assert 'confirmation_status' not in payload
+                       execution_mode=mode)
+        url = event_link(row)
+        if url:
+            payload['event_url'] = url                      # primary route: open the exact event
+        if row['event_time'] and KICKOFF.match(row['event_time']):
+            payload['kickoff_utc'] = row['event_time']
+        assert 'confirmation_status' not in payload
         return payload
+
+    def place_held_payload(self, row):
+        """PLACE_HELD: tap the bet the phone verified and left on the slip. Expected values come from the
+        hold run's own result (the names/line as Bet365 shows them). Its own device ID ('-place')."""
+        result = json.loads(row['result_payload'] or '{}')
+        selection = result.get('selection') if isinstance(result.get('selection'), dict) else {}
+        ready = result.get('ready_state') if isinstance(result.get('ready_state'), dict) else {}
+        name = selection.get('selection_name') or ready.get('selection_name')
+        if not name and row['market'] == 'TOTALS':
+            name = 'Over' if row['selection'] == 'OVER' else 'Under'
+        if not name:
+            name = row['selection_name']   # feed name; the phone still requires it visible on the slip
+        price = selection.get('price') or ready.get('price') or row['observed_price']
+        line = selection.get('line') if row['market'] != 'ML' else ''
+        if row['market'] in ('SPREAD', 'TOTALS') and not line:
+            line = row['line']
+        if not (name and SELECTION_NAME.match(str(name)) and price):
+            raise PermissionError('Held selection details missing from the verification result')
+        return dict(instruction_id=device_instruction_id(row['instruction_id'], 'dispatch'), action='PLACE_HELD',
+                    adapter=self.settings.adapter, scenario='live', sport=row['sport'], market=row['market'],
+                    side=row['selection'], line=line or '', selection_name=str(name), price=str(price),
+                    minimum_price=row['minimum_price'], stake=row['stake'], execution_mode='dispatch',
+                    confirmation_status='APPROVED', timeout_ms=90000)
+
+    # ------------------------------------------------------------------ held slip (one bet on the phone)
+    HELD_ACTIVE = ('READY', 'AWAITING_APPROVAL', 'APPROVED', 'DISPATCHED', 'DEVICE_ACTIVE')
+
+    def held_instruction(self):
+        """Instruction whose verified bet is on the phone's slip awaiting approval/placement, else None."""
+        held = self.store.control(HELD_KEY)
+        return held.get('instruction_id') if isinstance(held, dict) and not held.get('released') else None
+
+    def _release_hold(self, gateway, health):
+        """A held bet that will not be placed (expired, rejected, paused, failed before the tap) is cleared
+        from the slip with RESET_BETSLIP (removes it by its own X; never taps Place Bet)."""
+        held = self.store.control(HELD_KEY)
+        if not isinstance(held, dict) or held.get('released'):
+            return
+        with self.store.connection() as db:
+            row = self.store.get_instruction(db, held['instruction_id'])
+        if row is None:
+            self.store.set_control(HELD_KEY, dict(held, released='missing'), by='dispatcher')
+            return
+        if row['state'] in self.HELD_ACTIVE:
+            return
+        placement = json.loads(row['placement'] or 'null') if row['placement'] else None
+        if isinstance(placement, dict) and placement.get('tapped') is not False and row['execution_mode'] == 'dispatch':
+            # Place Bet was (or may have been) tapped: that run closed the receipt and returned home itself.
+            self.store.set_control(HELD_KEY, dict(held, released='placement run'), by='dispatcher')
+            return
+        if health is None or health.get('healthy') is not True or health.get('current_instruction'):
+            return  # phone busy/offline: retry next tick
+        device_id = 'rs-' + hashlib.sha256(row['instruction_id'].encode()).hexdigest()[:24]
+        try:
+            gateway.submit(dict(instruction_id=device_id, action='RESET_BETSLIP', adapter=self.settings.adapter,
+                                scenario='live', timeout_ms=60000))
+            outcome = 'reset sent'
+        except Exception as error:
+            reply = error.args[0] if error.args else None
+            if not (isinstance(reply, dict) and reply.get('stage') == 'DUPLICATE'):
+                with self.store.tx() as db:
+                    self.store.audit(db, 'HELD_SLIP_RESET_FAILED', dict(error=str(error)[:200]), row['instruction_id'])
+                return
+            outcome = 'reset already sent'
+        with self.store.tx() as db:
+            self.store.audit(db, 'HELD_SLIP_RELEASED', dict(state=row['state'], reset=device_id, outcome=outcome), row['instruction_id'])
+        self.store.set_control(HELD_KEY, dict(held, released=outcome, reset=device_id), by='dispatcher')
 
     def tick(self, gateway):
         """One dispatcher cycle. Safe to call repeatedly and after any restart."""
@@ -288,13 +375,16 @@ class Pipeline:
         self._poll_warmup(gateway)
         self._poll_in_flight(gateway)
         self._one_shot()
+        self._release_hold(gateway, health)
         self.final.poll(gateway)
         self._expire_ready()
         self.final.expire_approvals()
         # Placement verification outranks new work: an unresolved tap blocks nothing else
         # being learnt, but the phone does one thing at a time.
         device_free = not self.store.instructions_in([State.DISPATCHED, State.DEVICE_ACTIVE])
-        if self.final.schedule(gateway, health, device_free and not self.final.device_busy()):
+        held = self.held_instruction()
+        # A held bet owns the phone: no My Bets checks (they navigate away) until it is placed or released.
+        if not held and self.final.schedule(gateway, health, device_free and not self.final.device_busy()):
             return
         if not self.final.device_busy():
             self._dispatch_queued(gateway, health)
@@ -374,7 +464,10 @@ class Pipeline:
         # Approved final actions first: an operator is waiting on them.
         candidates.sort(key=lambda r: 0 if r['state'] == State.APPROVED.value else 1)
         warmup_for = None
+        held = self.held_instruction()
         for row in candidates:
+            if held and row['instruction_id'] != held:
+                continue  # the phone holds another verified bet on its slip; wait (may age out as STALE)
             now = self.clock()
             config = self.config_provider()
             alert = json.loads(row['normalized_alert'])
@@ -572,6 +665,9 @@ class Pipeline:
                 if placement is not None:
                     fields['placement'] = placement
             applied = self.store.transition(db, instruction_id, state, actor=source, at=iso(now), reason=reason, **fields)
+            if applied and state == State.READY and row['execution_mode'] == 'hold':
+                # The verified bet is now on the phone's slip: it owns the phone until placed or released.
+                self.store.set_control(HELD_KEY, dict(instruction_id=instruction_id, since=iso(now)), by='dispatcher', db=db)
             if applied and state == State.READY and not final_action and self.final.enabled():
                 self.final.on_verified(db, self.store.get_instruction(db, instruction_id))
             if applied and final_action:
