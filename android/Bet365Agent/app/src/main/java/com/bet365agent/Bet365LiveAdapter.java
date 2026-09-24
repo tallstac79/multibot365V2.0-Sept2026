@@ -529,17 +529,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 return ui.tap(recent.bounds, "Recent " + typedQuery).thenCompose(v -> ui.delay(1200))
                         .thenCompose(v -> { ui.checkpoint("RESULTS_WAIT"); return ui.capture("query_results"); });
             }
-            CompletableFuture<Void> clear = CompletableFuture.completedFuture(null);
-            VisualScreen.Line clearBtn = null;
-            for (VisualScreen.Line line : s.lines) {
-                if (line.text.equalsIgnoreCase("x") && line.bounds.top < 280 && line.bounds.left > 400) { clearBtn = line; break; }
-            }
-            if (clearBtn != null) {
-                VisualScreen.Line btn = clearBtn;
-                clear = ui.tap(btn.bounds, "Clear search").thenCompose(v -> ui.delay(400));
-            }
-            String hint = visible(s, "bet365...") ? "bet365..." : "Search";
-            return clear.thenCompose(v -> ui.type(hint, typedQuery)).thenCompose(v -> {
+            // Type only into a verifiably empty field (placeholder showing): see ensureEmptySearch.
+            return ensureEmptySearch(0).thenCompose(v -> ui.capture("query_ready")).thenCompose(ready -> {
+                String hint = visible(ready, "bet365...") ? "bet365..." : "Search";
+                return ui.type(hint, typedQuery);
+            }).thenCompose(v -> {
                         ui.checkpoint("QUERY_VERIFY");
                         return ui.dismissKeyboard();
                     })
@@ -554,15 +548,42 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     private CompletableFuture<Void> clearSearchField() {
-        return ui.capture("ladder_clear").thenCompose(s -> {
-            VisualScreen.Line clearBtn = null;
-            for (VisualScreen.Line line : s.lines) {
-                if (line.text.equalsIgnoreCase("x") && line.bounds.top < 280 && line.bounds.left > 400) { clearBtn = line; break; }
+        return ensureEmptySearch(0);
+    }
+
+    /**
+     * Leave the open search bar verifiably empty (only the "Search bet365..." placeholder), found by
+     * geometry (SearchBar: magnifier left, Close right), not by the word "Search". Bounded:
+     * attempts 0-1 tap the word-level clear X and re-check; then Close, re-home to Sports and re-open
+     * Search once (attempt 3); otherwise fail closed. Never types into, or taps, an ambiguous bar.
+     * Real failure fixed: the old line-level "x" match missed the X in "Q Kyoto ... Stars X Close".
+     */
+    private CompletableFuture<Void> ensureEmptySearch(int attempt) {
+        return ui.capture("search_field_" + attempt).thenCompose(s -> {
+            SearchBar.Bar bar = SearchBar.locate(wordsOf(s));
+            JSONArray log = ui.record.optJSONArray("search_bar_checks");
+            if (log == null) { log = new JSONArray(); ui.put("search_bar_checks", log); }
+            log.put(bar == null ? CoordinatorAgent.object("attempt", attempt, "bar", false)
+                    : CoordinatorAgent.object("attempt", attempt, "bar", true, "candidates", bar.candidates, "text", bar.text,
+                    "empty", bar.empty, "clear", bar.clear == null ? org.json.JSONObject.NULL : new JSONArray(java.util.Arrays.asList(
+                            bar.clear[0], bar.clear[1], bar.clear[2], bar.clear[3]))));
+            if (bar != null && bar.candidates != 1)
+                throw new Failure("TARGET_NOT_FOUND", bar.candidates + " search-bar candidates; not tapping an ambiguous control");
+            if (bar != null && bar.empty) return CompletableFuture.completedFuture(null);
+            if (bar != null && bar.clear != null && attempt < 2) {
+                android.graphics.Rect x = new android.graphics.Rect(bar.clear[0], bar.clear[1], bar.clear[2], bar.clear[3]);
+                return ui.tap(x, "Clear search (X)").thenCompose(v -> ui.delay(600)).thenCompose(v -> ensureEmptySearch(attempt + 1));
             }
-            if (clearBtn != null) {
-                return ui.tap(clearBtn.bounds, "Clear search ladder").thenCompose(v -> ui.delay(500));
+            if (attempt < 3) {
+                ui.bumpStageRetry("OPEN_SEARCH");
+                CompletableFuture<Void> close = bar == null ? CompletableFuture.completedFuture(null)
+                        : ui.tap(new android.graphics.Rect(bar.close[0], bar.close[1], bar.close[2], bar.close[3]), "Close search")
+                            .thenCompose(v -> ui.delay(700));
+                return close.thenCompose(v -> ensureSportsContext()).thenCompose(v -> openSearchAttempt(0))
+                        .thenCompose(v -> ui.delay(400)).thenCompose(v -> ensureEmptySearch(3));
             }
-            return CompletableFuture.completedFuture(null);
+            throw new Failure("TARGET_NOT_FOUND", bar == null ? "Search bar not identified after re-opening Search"
+                    : "Search field still holds '" + bar.text + "' after clear and re-open; not typing");
         });
     }
 
