@@ -14,6 +14,7 @@ and the Android adapter owns everything on the phone.
 """
 from dataclasses import dataclass, field
 from datetime import datetime
+import hashlib
 import json
 import logging
 
@@ -69,6 +70,10 @@ class Settings:
     reconcile_max_attempts: int = 3
     reconcile_timeout_ms: int = 120000
     settlement_poll_minutes: int = 30
+    # Stale/unknown session at dispatch time: send one SESSION_CHECK (opens home, logs in if
+    # needed) and wait for it instead of failing SESSION_REQUIRED straight away.
+    session_warmup: bool = True
+    session_warmup_timeout_seconds: int = 120
 
     @classmethod
     def from_dict(cls, values):
@@ -266,6 +271,7 @@ class Pipeline:
     def tick(self, gateway):
         """One dispatcher cycle. Safe to call repeatedly and after any restart."""
         health = self.refresh_device(gateway)
+        self._poll_warmup(gateway)
         self._poll_in_flight(gateway)
         self.final.poll(gateway)
         self._expire_ready()
@@ -331,6 +337,7 @@ class Pipeline:
         in_flight = self.store.instructions_in([State.DISPATCHED, State.DEVICE_ACTIVE])
         # Approved final actions first: an operator is waiting on them.
         candidates.sort(key=lambda r: 0 if r['state'] == State.APPROVED.value else 1)
+        warmup_for = None
         for row in candidates:
             now = self.clock()
             config = self.config_provider()
@@ -358,8 +365,15 @@ class Pipeline:
                 session = self.store.session(self.settings.device_id)
                 permitted, why = session_gate(session, now, self.settings.session_max_age_seconds)
                 if not permitted:
+                    decision = self._warmup_decision(row, session, health, bool(in_flight))
+                    if decision == 'WAIT':
+                        continue
+                    if decision == 'START':
+                        warmup_for = row
+                        break
                     self.store.transition(db, row['instruction_id'], State.SESSION_REQUIRED, actor='dispatcher',
-                                          reason=why, session_state=(session or {}).get('state', 'UNKNOWN'))
+                                          reason=why + ('' if decision == 'FAIL' else f' ({decision})'),
+                                          session_state=(session or {}).get('state', 'UNKNOWN'))
                     continue
                 final_action = self.final.enabled()
                 if final_action and row['state'] == State.QUEUED.value:
@@ -384,6 +398,62 @@ class Pipeline:
                     continue
             in_flight = [row]
             self._send(gateway, row['instruction_id'], payload)
+        if warmup_for is not None:
+            self._start_warmup(gateway, warmup_for)
+
+    # ------------------------------------------------------------------ session warm-up
+    WARMUP_KEY = 'session_warmup'
+
+    def _warmup_decision(self, row, session, health, busy):
+        """START a SESSION_CHECK, WAIT for one, or FAIL (SESSION_REQUIRED) for this row."""
+        state = (session or {}).get('state')
+        if not self.settings.session_warmup or state in ('RESTRICTED', 'ERROR'):
+            return 'FAIL'
+        warm = self.store.control(self.WARMUP_KEY)
+        if warm and warm.get('instruction_id') == row['instruction_id']:
+            if warm.get('done_at'):
+                return 'FAIL'  # a SESSION_CHECK already ran for this instruction and did not help
+            return 'WAIT'
+        if warm and not warm.get('done_at'):
+            return 'WAIT'      # another instruction's warm-up is running; the phone is busy
+        if busy or health.get('current_instruction'):
+            return 'WAIT'
+        return 'START'
+
+    def _start_warmup(self, gateway, row):
+        digest = hashlib.sha256(row['instruction_id'].encode()).hexdigest()[:20]
+        device_id = f'sc-{digest}'
+        payload = dict(instruction_id=device_id, action='SESSION_CHECK', adapter=self.settings.adapter, scenario='live',
+                       sport=row['sport'], timeout_ms=self.settings.session_warmup_timeout_seconds * 1000)
+        self.store.set_control(self.WARMUP_KEY, dict(id=device_id, instruction_id=row['instruction_id'],
+                                                     requested_at=iso(self.clock()), done_at=None, outcome=None),
+                               by='dispatcher')
+        try:
+            ack = gateway.submit(payload)
+            detail = dict(ack=ack)
+        except Exception as error:
+            detail = dict(error=f'{type(error).__name__}: {error}'[:300])
+        with self.store.tx() as db:
+            self.store.audit(db, 'SESSION_WARMUP', dict(payload=payload, **detail), row['instruction_id'],
+                             self.settings.device_id)
+
+    def _poll_warmup(self, gateway):
+        warm = self.store.control(self.WARMUP_KEY)
+        if not warm or warm.get('done_at'):
+            return
+        outcome = None
+        try:
+            result = gateway.result(warm['id'])
+            if isinstance(result, dict) and not result.get('_pending'):
+                outcome = f"{result.get('status')}/{result.get('stage')}: {result.get('detail')}"
+        except Exception as error:
+            outcome = None if isinstance(error, OSError) else f'poll failed: {type(error).__name__}'
+        age = (self.clock() - datetime.fromisoformat(warm['requested_at'])).total_seconds()
+        if outcome is None and age > self.settings.session_warmup_timeout_seconds + 30:
+            outcome = 'no result before timeout'
+        if outcome is not None:
+            warm.update(done_at=iso(self.clock()), outcome=outcome[:300])
+            self.store.set_control(self.WARMUP_KEY, warm, by='dispatcher')
 
     def _send(self, gateway, instruction_id, payload):
         try:

@@ -36,6 +36,26 @@ final class VisualScreen {
         return matches.get(0);
     }
     boolean has(String exact) { for(Line line:lines) if(line.text.equals(exact)) return true; return false; }
+    /** Bounds of just the words of a phrase (case-insensitive), even when OCR merged it into a longer
+     *  line such as "Home All Sports In-Play My Bets". Only lines whose top is within [minTop,maxTop]. */
+    Rect phraseBounds(String phrase,int minTop,int maxTop) {
+        String[] want=phrase.trim().toLowerCase(Locale.US).split("\\s+");
+        for(Line line:lines) {
+            if(line.bounds.top<minTop||line.bounds.top>maxTop) continue;
+            for(int start=0;start+want.length<=line.words.size();start++) {
+                boolean match=true;
+                for(int k=0;k<want.length&&match;k++) {
+                    String word=original.words.get(line.words.get(start+k)).toLowerCase(Locale.US).replaceAll("[^a-z0-9-]","");
+                    match=word.equals(want[k].replaceAll("[^a-z0-9-]",""));
+                }
+                if(!match) continue;
+                Rect r=new Rect();
+                for(int k=0;k<want.length;k++) r.union(original.rects.get(line.words.get(start+k)));
+                return r;
+            }
+        }
+        return null;
+    }
     Rect valueBounds(String prefix) {
         List<Line> matches=new ArrayList<>();for(Line line:lines)if(line.text.startsWith(prefix+" "))matches.add(line);
         if(matches.size()!=1)throw new SiteAdapter.Failure("EVENT_NOT_VERIFIED","Missing unique field "+prefix);

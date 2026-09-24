@@ -351,7 +351,7 @@ final class CoordinatorAgent implements AutoCloseable {
             "PRICE_CHANGED", "LINE_CHANGED", "SELECTION_CHANGED", "SUSPENDED", "UNAVAILABLE", "BELOW_MINIMUM",
             "INSUFFICIENT_BALANCE", "INSUFFICIENT_FUNDS", "STAKE_LIMITED", "STAKE_REJECTED", "MARKET_SUSPENDED",
             "SELECTION_UNAVAILABLE", "SPORTS_RESULTS_NOT_FOUND", "WRONG_SPORT", "CONFIRMATION_REQUIRED",
-            "BETSLIP_NOT_SINGLE", "PLACEMENT_UNKNOWN", "REJECTED", "INVALID_INSTRUCTION", "MY_BETS_UNAVAILABLE").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
+            "BETSLIP_NOT_SINGLE", "PLACEMENT_UNKNOWN", "REJECTED", "INVALID_INSTRUCTION", "MY_BETS_UNAVAILABLE", "BOT_CHECK").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
     }
     private JSONObject health() throws Exception {
         JSONObject active = store.active(), last = store.last();

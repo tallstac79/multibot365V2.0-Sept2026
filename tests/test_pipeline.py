@@ -304,6 +304,7 @@ class SessionTests(Base):
         for state in ('LOGGED_OUT', 'EXPIRED', 'AUTHENTICATING', 'RESTRICTED', 'ERROR', 'UNKNOWN', None):
             with self.subTest(state=state):
                 self.setUp()
+                self.p.settings.session_warmup = False
                 self.gateway.session = state
                 iid = self.queued()
                 self.p.tick(self.gateway)
@@ -311,17 +312,54 @@ class SessionTests(Base):
                 self.assertEqual(self.gateway.submitted, [])
 
     def test_stale_and_malformed_session_reports_fail_closed(self):
+        self.p.settings.session_warmup = False
         self.gateway.session_age = 600
         iid = self.queued()
         self.p.tick(self.gateway)
         self.assertEqual(self.row(iid)['state'], 'SESSION_REQUIRED')
         self.assertIn('old', self.row(iid)['failure_reason'])
         self.setUp()
+        self.p.settings.session_warmup = False
         self.gateway.session = 'NOT_A_STATE'
         iid = self.queued()
         self.p.tick(self.gateway)
         self.assertEqual(self.row(iid)['state'], 'SESSION_REQUIRED')
         self.assertTrue(self.audits('MALFORMED_SESSION_REPORT'))
+
+    def warmup_id(self):
+        return self.p.store.control('session_warmup')['id']
+
+    def test_warmup_session_check_then_dispatch(self):
+        self.gateway.session = 'UNKNOWN'                 # idle phone not showing Bet365
+        iid = self.queued()
+        self.p.tick(self.gateway)
+        self.assertEqual([s['action'] for s in self.gateway.submitted], ['SESSION_CHECK'])
+        self.assertEqual(self.gateway.submitted[0]['sport'], 'basketball')
+        self.assertEqual(self.row(iid)['state'], 'QUEUED')
+        self.p.tick(self.gateway)                        # still running: nothing else sent
+        self.assertEqual(len(self.gateway.submitted), 1)
+        self.gateway.session = 'AUTHENTICATED'           # the SESSION_CHECK opened home and confirmed
+        self.gateway.results[self.warmup_id()] = {'status': 'PASS', 'stage': 'PASS', 'detail': 'SESSION_AUTHENTICATED'}
+        self.p.tick(self.gateway)
+        self.assertEqual(self.gateway.submitted[-1]['action'], 'ADAPTER_WORKFLOW')
+        self.assertEqual(self.row(iid)['state'], 'DEVICE_ACTIVE')
+
+    def test_warmup_failure_ends_session_required_once(self):
+        self.gateway.session = 'LOGGED_OUT'
+        iid = self.queued()
+        self.p.tick(self.gateway)
+        self.gateway.results[self.warmup_id()] = {'status': 'FAIL', 'stage': 'LOGIN_FAILED', 'detail': 'no credentials'}
+        self.p.tick(self.gateway)
+        self.p.tick(self.gateway)
+        self.assertEqual(self.row(iid)['state'], 'SESSION_REQUIRED')
+        self.assertEqual([s['action'] for s in self.gateway.submitted], ['SESSION_CHECK'])   # one attempt only
+
+    def test_restricted_never_warms_up(self):
+        self.gateway.session = 'RESTRICTED'
+        iid = self.queued()
+        self.p.tick(self.gateway)
+        self.assertEqual(self.row(iid)['state'], 'SESSION_REQUIRED')
+        self.assertEqual(self.gateway.submitted, [])
 
     def test_authenticated_permits_progression_and_history_recorded(self):
         self.gateway.session = 'LOGGED_OUT'

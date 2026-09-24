@@ -1,0 +1,121 @@
+{
+ "run_id": "c_YmRlQUj2rrQj9wONB6OdHn-WFfJ7XVpuLM8Spw7GrzY",
+ "adapter": "live_bet365",
+ "status": "LOGIN_FAILED",
+ "phase": "FINISHED",
+ "started_at_ms": 1790238762452,
+ "events": [
+  {
+   "phase": "STARTED",
+   "elapsed_ms": 1,
+   "wall_ts_ms": 1790238762452
+  },
+  {
+   "phase": "OPEN_HOME",
+   "elapsed_ms": 15,
+   "wall_ts_ms": 1790238762467
+  },
+  {
+   "phase": "OPEN_HOME",
+   "elapsed_ms": 26,
+   "wall_ts_ms": 1790238762478
+  },
+  {
+   "phase": "CAPTURE_home",
+   "elapsed_ms": 4118,
+   "wall_ts_ms": 1790238766570
+  },
+  {
+   "phase": "CAPTURED_home",
+   "elapsed_ms": 6174,
+   "wall_ts_ms": 1790238768627
+  },
+  {
+   "phase": "CAPTURE_home_ready",
+   "elapsed_ms": 6204,
+   "wall_ts_ms": 1790238768656
+  },
+  {
+   "phase": "CAPTURED_home_ready",
+   "elapsed_ms": 8315,
+   "wall_ts_ms": 1790238770767
+  },
+  {
+   "phase": "ENSURE_SESSION",
+   "elapsed_ms": 8336,
+   "wall_ts_ms": 1790238770788
+  },
+  {
+   "phase": "CAPTURE_session",
+   "elapsed_ms": 8352,
+   "wall_ts_ms": 1790238770804
+  },
+  {
+   "phase": "CAPTURED_session",
+   "elapsed_ms": 9479,
+   "wall_ts_ms": 1790238771931
+  },
+  {
+   "phase": "OPEN_HOME",
+   "elapsed_ms": 9493,
+   "wall_ts_ms": 1790238771945
+  },
+  {
+   "phase": "CAPTURE_session_rehome",
+   "elapsed_ms": 11645,
+   "wall_ts_ms": 1790238774099
+  },
+  {
+   "phase": "CAPTURED_session_rehome",
+   "elapsed_ms": 12866,
+   "wall_ts_ms": 1790238775318
+  },
+  {
+   "phase": "FINISHED",
+   "elapsed_ms": 12884,
+   "wall_ts_ms": 1790238775336
+  }
+ ],
+ "screenshots": [
+  "s001_home.png",
+  "s002_home_ready.png",
+  "s003_session.png",
+  "s004_session_rehome.png"
+ ],
+ "gesture_attempts": 0,
+ "stage_timings": [
+  {
+   "stage": "OPEN_HOME",
+   "start_elapsed_ms": 15,
+   "start_ts_ms": 1790238762467,
+   "end_elapsed_ms": 8336,
+   "end_ts_ms": 1790238770788,
+   "duration_ms": 8321,
+   "status": "ok",
+   "retries": 0
+  },
+  {
+   "stage": "ENSURE_SESSION",
+   "start_elapsed_ms": 8336,
+   "start_ts_ms": 1790238770788,
+   "end_elapsed_ms": 9493,
+   "end_ts_ms": 1790238771945,
+   "duration_ms": 1157,
+   "status": "ok",
+   "retries": 0
+  },
+  {
+   "stage": "OPEN_HOME",
+   "start_elapsed_ms": 9493,
+   "start_ts_ms": 1790238771945,
+   "end_elapsed_ms": 12884,
+   "end_ts_ms": 1790238775336,
+   "duration_ms": 3391,
+   "status": "fail",
+   "retries": 0
+  }
+ ],
+ "current_stage": "OPEN_HOME",
+ "detail": "Bet365 session state unclear; login wall not confirmed",
+ "duration_ms": 12884
+}

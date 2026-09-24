@@ -121,7 +121,9 @@ final class VisualSession {
     CompletableFuture<Void> open(String url) {
         if(!live())return failed("TIMEOUT","Session expired");
         checkpoint("OPEN_HOME");
-        service.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(url)).setPackage("com.android.chrome").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        // EXTRA_APPLICATION_ID makes Chrome reuse this app's tab instead of opening a new one per workflow.
+        service.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(url)).setPackage("com.android.chrome").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            .putExtra(android.provider.Browser.EXTRA_APPLICATION_ID,service.getPackageName()));
         return delay(1200);
     }
     CompletableFuture<VisualScreen> capture(String label) { return capture(label,false); }

@@ -1,0 +1,777 @@
+{
+ "instruction_id": "mybets-smoke2-1790239074",
+ "status": "PASS",
+ "stage": "PASS",
+ "detail": "MY_BETS",
+ "duration_ms": 48990,
+ "progress": {
+  "stage": "MY_BETS_SCROLL",
+  "elapsed_ms": 48704,
+  "last_progress_at_ms": 1790239118640,
+  "instruction_id": "mybets-smoke2-1790239074",
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790239075122
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 33,
+    "at_ms": 1790239075142,
+    "timing": {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 33,
+     "start_ts_ms": 1790239075124,
+     "end_elapsed_ms": 13251,
+     "end_ts_ms": 1790239088343,
+     "duration_ms": 13218,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 53,
+    "at_ms": 1790239075157,
+    "timing": {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 33,
+     "start_ts_ms": 1790239075124,
+     "end_elapsed_ms": 13251,
+     "end_ts_ms": 1790239088343,
+     "duration_ms": 13218,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 4115,
+    "at_ms": 1790239075157
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 7677,
+    "at_ms": 1790239075157
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 7710,
+    "at_ms": 1790239075157
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 13113,
+    "at_ms": 1790239075157
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 13251,
+    "at_ms": 1790239088363,
+    "timing": {
+     "stage": "ENSURE_SESSION",
+     "start_elapsed_ms": 13251,
+     "start_ts_ms": 1790239088343,
+     "end_elapsed_ms": 18659,
+     "end_ts_ms": 1790239093750,
+     "duration_ms": 5408,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 13275,
+    "at_ms": 1790239088363
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 18500,
+    "at_ms": 1790239088363
+   },
+   {
+    "stage": "MY_BETS",
+    "elapsed_ms": 18659,
+    "at_ms": 1790239093778,
+    "timing": {
+     "stage": "MY_BETS",
+     "start_elapsed_ms": 18659,
+     "start_ts_ms": 1790239093751,
+     "end_elapsed_ms": 29643,
+     "end_ts_ms": 1790239104735,
+     "duration_ms": 10984,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "MY_BETS",
+    "elapsed_ms": 18689,
+    "at_ms": 1790239093778
+   },
+   {
+    "stage": "MY_BETS",
+    "elapsed_ms": 23855,
+    "at_ms": 1790239093778
+   },
+   {
+    "stage": "MY_BETS",
+    "elapsed_ms": 23996,
+    "at_ms": 1790239093778
+   },
+   {
+    "stage": "MY_BETS",
+    "elapsed_ms": 27103,
+    "at_ms": 1790239093778
+   },
+   {
+    "stage": "MY_BETS",
+    "elapsed_ms": 29569,
+    "at_ms": 1790239093778
+   },
+   {
+    "stage": "MY_BETS_SCROLL",
+    "elapsed_ms": 29643,
+    "at_ms": 1790239104765,
+    "timing": {
+     "stage": "MY_BETS_SCROLL",
+     "start_elapsed_ms": 29643,
+     "start_ts_ms": 1790239104735,
+     "end_elapsed_ms": 48704,
+     "end_ts_ms": 1790239123795,
+     "duration_ms": 19061,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "MY_BETS_SCROLL",
+    "elapsed_ms": 29676,
+    "at_ms": 1790239104765
+   },
+   {
+    "stage": "MY_BETS_SCROLL",
+    "elapsed_ms": 32122,
+    "at_ms": 1790239104765
+   },
+   {
+    "stage": "MY_BETS_SCROLL",
+    "elapsed_ms": 34512,
+    "at_ms": 1790239109663,
+    "timing": {
+     "stage": "MY_BETS_SCROLL",
+     "start_elapsed_ms": 29643,
+     "start_ts_ms": 1790239104735,
+     "end_elapsed_ms": 48704,
+     "end_ts_ms": 1790239123795,
+     "duration_ms": 19061,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "MY_BETS_SCROLL",
+    "elapsed_ms": 34575,
+    "at_ms": 1790239109663
+   },
+   {
+    "stage": "MY_BETS_SCROLL",
+    "elapsed_ms": 36449,
+    "at_ms": 1790239109663
+   },
+   {
+    "stage": "MY_BETS_SCROLL",
+    "elapsed_ms": 38841,
+    "at_ms": 1790239114040,
+    "timing": {
+     "stage": "MY_BETS_SCROLL",
+     "start_elapsed_ms": 29643,
+     "start_ts_ms": 1790239104735,
+     "end_elapsed_ms": 48704,
+     "end_ts_ms": 1790239123795,
+     "duration_ms": 19061,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "MY_BETS_SCROLL",
+    "elapsed_ms": 38952,
+    "at_ms": 1790239114040
+   },
+   {
+    "stage": "MY_BETS_SCROLL",
+    "elapsed_ms": 41122,
+    "at_ms": 1790239114040
+   },
+   {
+    "stage": "MY_BETS_SCROLL",
+    "elapsed_ms": 43428,
+    "at_ms": 1790239118640,
+    "timing": {
+     "stage": "MY_BETS_SCROLL",
+     "start_elapsed_ms": 29643,
+     "start_ts_ms": 1790239104735,
+     "end_elapsed_ms": 48704,
+     "end_ts_ms": 1790239123795,
+     "duration_ms": 19061,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "MY_BETS_SCROLL",
+    "elapsed_ms": 43552,
+    "at_ms": 1790239118640
+   },
+   {
+    "stage": "MY_BETS_SCROLL",
+    "elapsed_ms": 48551,
+    "at_ms": 1790239118640
+   },
+   {
+    "stage": "MY_BETS_SCROLL",
+    "elapsed_ms": 48704,
+    "at_ms": 1790239118640
+   }
+  ]
+ },
+ "device_stage": "MY_BETS_SCROLL",
+ "execution_count": 1,
+ "run_id": "c_fFrivHyMz_5SZi7wP0OmfoziNlRRGOR84Rlx6HsCFbg",
+ "fixture_name": null,
+ "home": null,
+ "away": null,
+ "competition": null,
+ "verification_detail": "My Bets OPEN read: 86 lines over 4 frames; no bet controls touched",
+ "my_bets": {
+  "view": "OPEN",
+  "tab": "default",
+  "empty": false,
+  "frames": [
+   "s006_my_bets_1.png",
+   "s007_my_bets_2.png",
+   "s008_my_bets_3.png",
+   "s009_my_bets_4.png"
+  ],
+  "lines": [
+   {
+    "text": "09138 >‘:' ° (m \"s?“ 100%I",
+    "top": 15,
+    "left": 56,
+    "frame": 0
+   },
+   {
+    "text": "m ‘23 bet365.com/#/|P/PO + @",
+    "top": 81,
+    "left": 30,
+    "frame": 0
+   },
+   {
+    "text": "bet365 Rewards Log In",
+    "top": 176,
+    "left": 19,
+    "frame": 0
+   },
+   {
+    "text": "I I, O s!!!",
+    "top": 261,
+    "left": 414,
+    "frame": 0
+   },
+   {
+    "text": "Favourites Foct’baii Tennis Baseball Basketbz",
+    "top": 296,
+    "left": 21,
+    "frame": 0
+   },
+   {
+    "text": "Popular",
+    "top": 312,
+    "left": 164,
+    "frame": 0
+   },
+   {
+    "text": "|T| Cricket",
+    "top": 399,
+    "left": 15,
+    "frame": 0
+   },
+   {
+    "text": "South Africa vs Australia -",
+    "top": 475,
+    "left": 57,
+    "frame": 0
+   },
+   {
+    "text": "it?",
+    "top": 485,
+    "left": 20,
+    "frame": 0
+   },
+   {
+    "text": "1st ODI",
+    "top": 504,
+    "left": 58,
+    "frame": 0
+   },
+   {
+    "text": "Match Winner 2-Way",
+    "top": 558,
+    "left": 443,
+    "frame": 0
+   },
+   {
+    "text": "9 South Africa 22/1",
+    "top": 604,
+    "left": 19,
+    "frame": 0
+   },
+   {
+    "text": "11/8 4/7",
+    "top": 638,
+    "left": 427,
+    "frame": 0
+   },
+   {
+    "text": "6) Australia",
+    "top": 666,
+    "left": 19,
+    "frame": 0
+   },
+   {
+    "text": "ﬁr E]",
+    "top": 717,
+    "left": 20,
+    "frame": 0
+   },
+   {
+    "text": "India A vs Australia A -",
+    "top": 782,
+    "left": 58,
+    "frame": 0
+   },
+   {
+    "text": "if",
+    "top": 792,
+    "left": 20,
+    "frame": 0
+   },
+   {
+    "text": "Tour Match",
+    "top": 810,
+    "left": 56,
+    "frame": 0
+   },
+   {
+    "text": "Match Winner 3-Way",
+    "top": 866,
+    "left": 443,
+    "frame": 0
+   },
+   {
+    "text": ". India A 334 & 172/6",
+    "top": 911,
+    "left": 19,
+    "frame": 0
+   },
+   {
+    "text": "1/9 13/2 33/1",
+    "top": 945,
+    "left": 406,
+    "frame": 0
+   },
+   {
+    "text": "6) Australia A 171 All Out",
+    "top": 974,
+    "left": 19,
+    "frame": 0
+   },
+   {
+    "text": "ﬁr",
+    "top": 1026,
+    "left": 20,
+    "frame": 0
+   },
+   {
+    "text": "Q Q (m) @ EB",
+    "top": 1416,
+    "left": 46,
+    "frame": 0
+   },
+   {
+    "text": "Hume All Sparts ln-Play My Bets",
+    "top": 1472,
+    "left": 43,
+    "frame": 0
+   },
+   {
+    "text": "III C)",
+    "top": 1543,
+    "left": 149,
+    "frame": 0
+   },
+   {
+    "text": "09138 >‘:‘ ° W?“ 100%.",
+    "top": 15,
+    "left": 56,
+    "frame": 1
+   },
+   {
+    "text": "m a; bet365.com/#/IP/PO + E]",
+    "top": 81,
+    "left": 30,
+    "frame": 1
+   },
+   {
+    "text": "bet365 Rewards Log In",
+    "top": 176,
+    "left": 19,
+    "frame": 1
+   },
+   {
+    "text": "Information and transmission delays V",
+    "top": 570,
+    "left": 182,
+    "frame": 1
+   },
+   {
+    "text": "Settings",
+    "top": 704,
+    "left": 20,
+    "frame": 1
+   },
+   {
+    "text": "Language V Odds Display V",
+    "top": 800,
+    "left": 21,
+    "frame": 1
+   },
+   {
+    "text": "Promotions",
+    "top": 901,
+    "left": 20,
+    "frame": 1
+   },
+   {
+    "text": "Open Account Offer Current Rewards",
+    "top": 997,
+    "left": 20,
+    "frame": 1
+   },
+   {
+    "text": "Audio",
+    "top": 1098,
+    "left": 19,
+    "frame": 1
+   },
+   {
+    "text": "Horse Racing Greyhounds",
+    "top": 1193,
+    "left": 21,
+    "frame": 1
+   },
+   {
+    "text": "Football Cricket",
+    "top": 1268,
+    "left": 21,
+    "frame": 1
+   },
+   {
+    "text": "Form & Stats",
+    "top": 1370,
+    "left": 20,
+    "frame": 1
+   },
+   {
+    "text": "9 Q (m) @ E",
+    "top": 1416,
+    "left": 46,
+    "frame": 1
+   },
+   {
+    "text": "Home All Sports ln-Play My Bets casino",
+    "top": 1472,
+    "left": 43,
+    "frame": 1
+   },
+   {
+    "text": "III C) <",
+    "top": 1543,
+    "left": 148,
+    "frame": 1
+   },
+   {
+    "text": "09:38 ® (W ”at, ..II 100%.",
+    "top": 15,
+    "left": 56,
+    "frame": 2
+   },
+   {
+    "text": "m a; bet365.com/#/IP/PO + [33",
+    "top": 81,
+    "left": 30,
+    "frame": 2
+   },
+   {
+    "text": "bet365 Rewards Log In",
+    "top": 176,
+    "left": 19,
+    "frame": 2
+   },
+   {
+    "text": "Horse Racing Greyhounds",
+    "top": 247,
+    "left": 21,
+    "frame": 2
+   },
+   {
+    "text": "Football Cricket",
+    "top": 322,
+    "left": 21,
+    "frame": 2
+   },
+   {
+    "text": "Form 8. Stats",
+    "top": 424,
+    "left": 20,
+    "frame": 2
+   },
+   {
+    "text": "Football Stats Sports Stats",
+    "top": 519,
+    "left": 21,
+    "frame": 2
+   },
+   {
+    "text": "Horse Racing Archive Australian Horse Form",
+    "top": 594,
+    "left": 21,
+    "frame": 2
+   },
+   {
+    "text": "Scores 8. Results",
+    "top": 695,
+    "left": 20,
+    "frame": 2
+   },
+   {
+    "text": "Live Scores Results",
+    "top": 791,
+    "left": 21,
+    "frame": 2
+   },
+   {
+    "text": "Help",
+    "top": 911,
+    "left": 20,
+    "frame": 2
+   },
+   {
+    "text": "Deposits Withdrawals",
+    "top": 1007,
+    "left": 21,
+    "frame": 2
+   },
+   {
+    "text": "Contact Us bet365 FAQ",
+    "top": 1082,
+    "left": 20,
+    "frame": 2
+   },
+   {
+    "text": "Terms and Conditions Safer Gambling",
+    "top": 1157,
+    "left": 19,
+    "frame": 2
+   },
+   {
+    "text": "Technical Issues Privacy Policy",
+    "top": 1232,
+    "left": 19,
+    "frame": 2
+   },
+   {
+    "text": "Cookie Policy Fair Payouts",
+    "top": 1307,
+    "left": 20,
+    "frame": 2
+   },
+   {
+    "text": "Cnmnlaints Procedure R I l les",
+    "top": 1382,
+    "left": 20,
+    "frame": 2
+   },
+   {
+    "text": "ﬁr Q a») @ El",
+    "top": 1416,
+    "left": 46,
+    "frame": 2
+   },
+   {
+    "text": "Home All Sports ln-Play My Bets casino",
+    "top": 1472,
+    "left": 43,
+    "frame": 2
+   },
+   {
+    "text": "0 <",
+    "top": 1543,
+    "left": 348,
+    "frame": 2
+   },
+   {
+    "text": "09:38 ®E§§ o 63%...” 100%.",
+    "top": 14,
+    "left": 56,
+    "frame": 3
+   },
+   {
+    "text": "m 2; bet365.com/#/IP/PO + @J",
+    "top": 81,
+    "left": 30,
+    "frame": 3
+   },
+   {
+    "text": "bet365 Rewards Log In",
+    "top": 176,
+    "left": 19,
+    "frame": 3
+   },
+   {
+    "text": "Technical Issues Privacy Policy",
+    "top": 284,
+    "left": 19,
+    "frame": 3
+   },
+   {
+    "text": "Cookie Policy Fair Payouts",
+    "top": 359,
+    "left": 20,
+    "frame": 3
+   },
+   {
+    "text": "Complaints Procedure Rules",
+    "top": 434,
+    "left": 20,
+    "frame": 3
+   },
+   {
+    "text": "Sites",
+    "top": 535,
+    "left": 20,
+    "frame": 3
+   },
+   {
+    "text": "Careers Partners",
+    "top": 632,
+    "left": 20,
+    "frame": 3
+   },
+   {
+    "text": "Sports & Betting News",
+    "top": 707,
+    "left": 20,
+    "frame": 3
+   },
+   {
+    "text": "*5\"",
+    "top": 844,
+    "left": 417,
+    "frame": 3
+   },
+   {
+    "text": "I x",
+    "top": 848,
+    "left": 418,
+    "frame": 3
+   },
+   {
+    "text": "cuAMrIoNs",
+    "top": 904,
+    "left": 394,
+    "frame": 3
+   },
+   {
+    "text": "LEAGUE",
+    "top": 917,
+    "left": 410,
+    "frame": 3
+   },
+   {
+    "text": "OFFICIAL GLOBAL numm",
+    "top": 943,
+    "left": 257,
+    "frame": 3
+   },
+   {
+    "text": "Ga bl Aware mﬂkémagmcnou \" I 3 IA",
+    "top": 1055,
+    "left": 19,
+    "frame": 3
+   },
+   {
+    "text": "m e",
+    "top": 1076,
+    "left": 59,
+    "frame": 3
+   },
+   {
+    "text": "5?: GORDON MOODV",
+    "top": 1096,
+    "left": 274,
+    "frame": 3
+   },
+   {
+    "text": "GAMBLING mm 5,0,, @1133:",
+    "top": 1167,
+    "left": 19,
+    "frame": 3
+   },
+   {
+    "text": "COMMISSION",
+    "top": 1192,
+    "left": 20,
+    "frame": 3
+   },
+   {
+    "text": "@pport amCare",
+    "top": 1275,
+    "left": 32,
+    "frame": 3
+   },
+   {
+    "text": "starts here",
+    "top": 1328,
+    "left": 132,
+    "frame": 3
+   },
+   {
+    "text": "0808 8020 133",
+    "top": 1358,
+    "left": 39,
+    "frame": 3
+   },
+   {
+    "text": "ﬁr Q (\"9 Q) E113",
+    "top": 1416,
+    "left": 46,
+    "frame": 3
+   },
+   {
+    "text": "Home All Sports ln-Play My Bets casino",
+    "top": 1472,
+    "left": 43,
+    "frame": 3
+   },
+   {
+    "text": "III C) <",
+    "top": 1543,
+    "left": 148,
+    "frame": 3
+   }
+  ]
+ }
+}

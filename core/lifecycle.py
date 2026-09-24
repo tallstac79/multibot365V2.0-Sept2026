@@ -101,6 +101,7 @@ DEVICE_STAGE_MAP = {
     'STAKE_LIMITED': State.STAKE_LIMITED,
     'LOGIN_FAILED': State.SESSION_REQUIRED, 'SESSION_REQUIRED': State.SESSION_REQUIRED,
     'SESSION_EXPIRED': State.SESSION_REQUIRED,
+    'BOT_CHECK': State.SESSION_REQUIRED,  # site security check did not clear: needs a human, never automated
     'TIMEOUT': State.TIMEOUT,
     # INTERNAL_ERROR, CLICK_FAILED, FOCUS_FAILED, INPUT_FAILED, TEXT_NOT_VERIFIED and any
     # unrecognised stage map to UNKNOWN: the device outcome cannot be trusted.

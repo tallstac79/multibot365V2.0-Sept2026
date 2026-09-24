@@ -45,7 +45,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     public CompletableFuture<Void> open_home() {
-        return ui.open(HOME_URL).thenCompose(v -> ui.delay(2800)).thenCompose(v -> ui.capture("home")).thenCompose(s -> {
+        return ui.open(HOME_URL).thenCompose(v -> ui.delay(2800)).thenCompose(v -> settle("home", 0)).thenCompose(s -> {
             require(!visible(s, "SIMULATOR", "SEARCHPAGE", "Fictional interface"),
                     "TARGET_NOT_FOUND", "Simulator page visible during live Bet365 run");
             return dismissCookiesIfPresent(s).thenCompose(v -> ui.capture("home_ready")).thenAccept(ready -> {
@@ -64,8 +64,41 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
 
+    /** Passive wait while Bet365 shows its security verification or loading splash. Never taps it:
+     *  an interactive challenge, or one that does not clear by itself, fails closed as BOT_CHECK. */
+    private CompletableFuture<VisualScreen> settle(String label, int attempt) {
+        return ui.capture(label).thenCompose(s -> {
+            if (!settling(s)) return CompletableFuture.completedFuture(s);
+            boolean interactive = interactiveBotCheck(s);
+            if (interactive || attempt >= 6) {
+                ui.put("bot_check", CoordinatorAgent.object("interactive", interactive, "waited_attempts", attempt));
+                throw new Failure("BOT_CHECK", interactive
+                        ? "Bet365 security check needs a human; the agent never interacts with it"
+                        : "Bet365 security verification or splash did not clear automatically");
+            }
+            ui.checkpoint("OPEN_HOME");
+            return ui.delay(4000).thenCompose(v -> settle(label + "_settle", attempt + 1));
+        });
+    }
+
+    static boolean botCheck(VisualScreen s) {
+        return visible(s, "security verification", "Security verification", "Verifying", "not a bot", "Cloudflare", "CLOUDFLARE",
+                "Verify you are human", "Checking your browser", "Just a moment");
+    }
+
+    static boolean interactiveBotCheck(VisualScreen s) {
+        return visible(s, "Verify you are human", "I am human", "not a robot", "Select all images");
+    }
+
+    /** Security check, or the bare Bet365 logo splash before the page has rendered. */
+    private static boolean settling(VisualScreen s) {
+        if (botCheck(s)) return true;
+        return s.lines.size() <= 16 && visible(s, "bet365")
+                && !visible(s, "Log In", "Login", "Search", "In-Play", "In-play", "Sports", "My Bets", "Football", "Password");
+    }
+
     public CompletableFuture<Void> ensure_session() {
-        return ui.capture("session").thenCompose(s -> {
+        return settle("session", 0).thenCompose(s -> {
             if (sessionLoggedIn(s)) {
                 ui.put("session", "AUTHENTICATED");
                 return CompletableFuture.completedFuture(null);
@@ -76,7 +109,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     || visible(s, "Password");
             if (!needsLogin) {
                 // Ambiguous mid-navigation (common after Search reset): reopen home once, then reclassify.
-                return ui.open(HOME_URL).thenCompose(v -> ui.delay(900)).thenCompose(v -> ui.capture("session_rehome")).thenCompose(s2 -> {
+                return ui.open(HOME_URL).thenCompose(v -> ui.delay(900)).thenCompose(v -> settle("session_rehome", 0)).thenCompose(s2 -> {
                     if (sessionLoggedIn(s2)) {
                         ui.put("session", "AUTHENTICATED");
                         return CompletableFuture.completedFuture(null);
@@ -113,9 +146,9 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 String t = line.text.trim();
                 if ((t.equalsIgnoreCase("Log In") || t.equalsIgnoreCase("Login")) && line.bounds.top < 350) { loginBtn = line; break; }
             }
-            if (loginBtn == null) throw new Failure("LOGIN_FAILED", "Log In control not visible on live Bet365");
-            VisualScreen.Line btn = loginBtn;
-            openForm = ui.tap(btn.bounds, "Log In").thenCompose(v -> ui.delay(900));
+            android.graphics.Rect loginRect = loginBtn != null ? loginBtn.bounds : first.phraseBounds("Log In", 0, 350);
+            if (loginRect == null) throw new Failure("LOGIN_FAILED", "Log In control not visible on live Bet365");
+            openForm = ui.tap(loginRect, "Log In").thenCompose(v -> ui.delay(900));
         }
         String user = CoordinatorConfig.bet365Username(ui.service);
         String pass = CoordinatorConfig.bet365Password(ui.service);
@@ -140,8 +173,9 @@ final class Bet365LiveAdapter implements SiteAdapter {
                             if (line.text.trim().equalsIgnoreCase("Log In") || line.text.trim().equalsIgnoreCase("Login")) { submit = line; break; }
                         }
                     }
-                    require(submit != null, "LOGIN_FAILED", "Login submit button not visible");
-                    return ui.tap(submit.bounds, "Log In submit").thenCompose(z -> ui.delay(2500)).thenCompose(z -> ui.capture("session_after_login")).thenAccept(after -> {
+                    android.graphics.Rect submitRect = submit != null ? submit.bounds : filled.phraseBounds("Log In", 400, 2000);
+                    require(submitRect != null, "LOGIN_FAILED", "Login submit button not visible");
+                    return ui.tap(submitRect, "Log In submit").thenCompose(z -> ui.delay(2500)).thenCompose(z -> ui.capture("session_after_login")).thenAccept(after -> {
                         if (loginWall(after) || visible(after, "Log In", "Login") || visible(after, "Password")) {
                             throw new Failure("LOGIN_FAILED", "Bet365 login did not succeed: Log In still visible");
                         }
@@ -1058,8 +1092,18 @@ final class Bet365LiveAdapter implements SiteAdapter {
         if (s == null) return "UNKNOWN";
         if (sessionExpired(s)) return "EXPIRED";
         if (sessionLoggedIn(s)) return "AUTHENTICATED";
-        if (loginWall(s)) return "LOGGED_OUT";
+        if (loginWall(s) || headerLogIn(s)) return "LOGGED_OUT";
         return "UNKNOWN";
+    }
+
+    /** Bet365 header offers "Log In" (possibly OCR-merged, e.g. "bet365 Rewards Log In"): logged out. */
+    private static boolean headerLogIn(VisualScreen s) {
+        for (VisualScreen.Line line : s.lines) {
+            if (line.bounds.top > 320) continue;
+            String t = " " + line.text.trim().toLowerCase(Locale.US) + " ";
+            if (t.contains(" log in ") || t.contains(" login ")) return true;
+        }
+        return false;
     }
 
     private static boolean sessionLoggedIn(VisualScreen s) {
@@ -1068,9 +1112,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
         boolean headerLogin = false, join = false;
         for (VisualScreen.Line line : s.lines) {
             if (line.bounds.top > 320) continue;
-            String t = line.text.trim();
-            if (t.equalsIgnoreCase("Log In") || t.equalsIgnoreCase("Login")) headerLogin = true;
-            if (t.equalsIgnoreCase("Join") || t.equalsIgnoreCase("Join Now")) join = true;
+            String t = " " + line.text.trim().toLowerCase(Locale.US) + " ";
+            // Contains, not equals: OCR often merges the header into "bet365 Rewards Log In".
+            if (t.contains(" log in ") || t.contains(" login ")) headerLogin = true;
+            if (t.contains(" join ") || t.contains(" join now ")) join = true;
         }
         if (headerLogin && join) return false;
         if (visible(s, "Log Out", "Logout", "Deposit", "My Account")) return true;
@@ -1262,20 +1307,31 @@ final class Bet365LiveAdapter implements SiteAdapter {
     CompletableFuture<org.json.JSONObject> read_my_bets(String view) {
         ui.checkpoint("MY_BETS");
         return ui.capture("my_bets_nav").thenCompose(s -> {
-            VisualScreen.Line entry = exactLine(s, "My Bets");
-            if (entry == null) entry = firstOf(s, "My Bets");
+            // Word-level bounds: the bottom nav OCRs as one line ("Home All Sports In-Play My Bets").
+            android.graphics.Rect entry = s.phraseBounds("My Bets", 1100, 2000);
+            if (entry == null) entry = s.phraseBounds("My Bets", 0, 1100);
             require(entry != null, "MY_BETS_UNAVAILABLE", "My Bets control not visible");
-            return ui.tap(entry.bounds, "My Bets").thenCompose(v -> ui.delay(2500));
+            return ui.tap(entry, "My Bets").thenCompose(v -> ui.delay(2500));
         }).thenCompose(v -> ui.capture("my_bets_view")).thenCompose(s -> {
             VisualScreen.Line tab = null;
             if ("SETTLED".equals(view)) {
                 tab = exactLine(s, "Settled");
-                require(tab != null, "MY_BETS_UNAVAILABLE", "Settled tab not visible in My Bets");
+                if (tab == null) {
+                    android.graphics.Rect word = s.phraseBounds("Settled", 150, 700);
+                    require(word != null, "MY_BETS_UNAVAILABLE", "Settled tab not visible in My Bets");
+                    ui.put("my_bets_tab", "Settled");
+                    return ui.tap(word, "My Bets tab Settled").thenCompose(x -> ui.delay(2000));
+                }
             } else {
                 for (String name : new String[] {"Unsettled", "Open", "All"}) { tab = exactLine(s, name); if (tab != null) break; }
             }
             ui.put("my_bets_tab", tab == null ? "default" : tab.text.trim());
-            if (tab == null) return CompletableFuture.<Void>completedFuture(null);
+            if (tab == null) {
+                android.graphics.Rect word = "SETTLED".equals(view) ? null : s.phraseBounds("Unsettled", 150, 700);
+                if (word == null) return CompletableFuture.<Void>completedFuture(null);
+                ui.put("my_bets_tab", "Unsettled");
+                return ui.tap(word, "My Bets tab Unsettled").thenCompose(x -> ui.delay(2000));
+            }
             return ui.tap(tab.bounds, "My Bets tab " + tab.text.trim()).thenCompose(x -> ui.delay(2000));
         }).thenCompose(v -> collectMyBets(0, new JSONArray(), new JSONArray(), view));
     }
