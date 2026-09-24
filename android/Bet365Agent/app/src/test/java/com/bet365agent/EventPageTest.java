@@ -32,6 +32,15 @@ public class EventPageTest {
         assertNull(EventPage.teams(Arrays.asList("Game Lines", "Spread Total Money Li...")));
     }
 
+    @Test public void closedEventPageIsRecognised() throws Exception {
+        java.util.List<String> words = new java.util.ArrayList<>();
+        for (GameLinesParser.Word w : StakePadTest.load("event_closed_araraquara_20260924.txt")) words.add(w.text);
+        assertTrue(EventPage.closed(words));
+        assertFalse(EventPage.closed(Arrays.asList("Japan B League 1 * 25 Sep 10:35", "Kyoto Hannaryz vs Shiga Lakes",
+                "Game Lines", "Spread Total Money Li...")));
+        assertFalse(EventPage.closed(Arrays.asList("Hapoel Tel Aviv -8.0", "Selection Suspended")));   // not the page message
+    }
+
     @Test public void kickoffIsComparedInUkTime() {
         assertEquals("25 Sep 10:35", EventPage.kickoffText(Arrays.asList("Japan B League 1 * 25 Sep 10:35")));
         assertEquals("25 Sep 10:35", EventPage.ukDisplay("2026-09-25T09:35"));     // BST = UTC+1

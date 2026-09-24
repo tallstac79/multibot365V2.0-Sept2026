@@ -465,7 +465,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     private CompletableFuture<VisualScreen> directEventLoaded(int attempt) {
         return ui.delay(attempt == 1 ? 2200 : 900).thenCompose(v -> ui.capture("event_direct")).thenCompose(s -> {
-            if (EventPage.teams(headerLines(s)) != null || attempt >= 5) return CompletableFuture.completedFuture(s);
+            if (EventPage.teams(headerLines(s)) != null || EventPage.closed(texts(s)) || attempt >= 5)
+                return CompletableFuture.completedFuture(s);
             ui.put("event_direct_wait", attempt);
             return directEventLoaded(attempt + 1);
         });
@@ -479,6 +480,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     private Fixture verifyDirectEvent(VisualScreen s, String kickoffUtc) {
         require(!visible(s, "SIMULATOR"), "WRONG_EVENT", "Simulator page on direct event link");
+        if (EventPage.closed(texts(s))) {
+            ui.put("direct_event_closed", true);
+            throw new Failure("SUSPENDED", "Bet365 event page: betting has closed or been suspended (no search fallback)");
+        }
         List<String> header = headerLines(s);
         String[] teams = EventPage.teams(header);
         ui.put("direct_event_header", new JSONArray(header));

@@ -26,6 +26,17 @@ final class EventPage {
 
     private EventPage() {}
 
+    /**
+     * Bet365's closed-event page: "Sorry, this page is no longer available. Betting has closed or has been
+     * suspended." (real: Araraquara v Mogi Das Cruzes, 2026-09-24). No bet is possible on that event, so the
+     * run stops at once (SUSPENDED) instead of spending minutes on a search that cannot succeed.
+     */
+    static boolean closed(List<String> lines) {
+        String t = " " + OcrText.normalize(String.join(" ", lines)).toLowerCase(Locale.US).replaceAll("\s+", " ") + " ";
+        return t.contains("no longer available") || t.contains("betting has closed")
+                || (t.contains("betting") && t.contains("has been suspended"));
+    }
+
     static boolean validUrl(String url) { return url != null && URL.matcher(url.trim()).matches(); }
 
     /** Sport from the link's B code: 18 basketball, 1 football; null if unknown. */
