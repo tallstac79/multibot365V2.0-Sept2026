@@ -42,7 +42,7 @@ final class EventPage {
     /** {home, away} from the header ("Kyoto Hannaryz vs Shiga Lakes" or "Hapoel Tel Aviv VS Bayern Munich"). */
     static String[] teams(List<String> headerLines) {
         for (String raw : headerLines) {
-            String t = raw.replaceAll("[^A-Za-z0-9/ .'&()-]", " ").replaceAll("\\s+", " ").trim();
+            String t = OcrText.normalize(raw).replaceAll("[^A-Za-z0-9/ .'&()-]", " ").replaceAll("\\s+", " ").trim();
             Matcher m = VS.matcher(t);
             if (!m.matches()) continue;
             String home = tidy(m.group(1)), away = tidy(m.group(2));

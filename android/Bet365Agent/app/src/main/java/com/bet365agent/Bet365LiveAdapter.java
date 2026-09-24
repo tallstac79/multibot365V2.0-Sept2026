@@ -2459,7 +2459,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
         /** Strip gender/competition suffixes for identity compare (W)/(M)/Women — not search aliases. */
         private static String normalizeTeamIdentity(String raw) {
         if (raw == null) return "";
-        String t = raw.trim().replaceAll("\\s+", " ");
+        String t = OcrText.normalize(raw).trim().replaceAll("\\s+", " ");
         t = t.replaceAll("(?i)\\s*\\((?:W|M|F|Women|Men)\\)\\s*$", "");
         t = t.replaceAll("(?i)\\s+(?:Women|Men|Womens|Ladies)$", "");
         // Explicit per-team canonical names only (TeamAliases), e.g. Shiga Lake Stars -> Shiga Lakes.

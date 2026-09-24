@@ -14,6 +14,7 @@ final class VisualScreen {
     private final VisualControlRunner.Ocr original;
     VisualScreen(VisualControlRunner.Ocr ocr) {
         original=ocr;
+        for(int i=0;i<ocr.words.size();i++) ocr.words.set(i,OcrText.normalize(ocr.words.get(i)));   // e.g. ligature fl
         List<Integer> order=new ArrayList<>();
         for(int i=0;i<ocr.words.size();i++) if(!ocr.words.get(i).isEmpty()) order.add(i);
         order.sort(Comparator.comparingInt(i->ocr.rects.get(i).centerY()));
