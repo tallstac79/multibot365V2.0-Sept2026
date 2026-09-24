@@ -1,3 +1,29 @@
+# MultiBot365 final action (Place Bet) built: backend + phone 0.6.29-final - OFFLINE/READ-ONLY PROVEN
+
+Built 2026-09-24 on branch `claude/final-action` (b02287e, 0b9b577, 54d039c + docs). **215 backend tests
+PASS** plus phone JVM unit tests (PlacementClassifier). APK **0.6.29-final (vc41)** installed on
+galaxy-a13-5g. Final action and dispatch remain **OFF** in `.local/pipeline.json`; the running pipeline
+service (PID 4572) still runs the pre-branch code until it is restarted. Docs: `docs/FINAL_ACTION.md`.
+
+- **Backend:** approval (Telegram `/approve` from the configured chat, dashboard, CLI) or auto-approve
+  within limits; per-bet/phone stake caps, bets/stake/loss per day; kill switch. Outcomes:
+  COMPLETED / INSUFFICIENT_FUNDS / STAKE_LIMITED / PRICE_CHANGED / SUSPENDED / REJECTED / NOT_PLACED;
+  uncertain taps -> PLACEMENT_UNKNOWN -> My Bets reconciliation, never re-tapped. Settlement from
+  My Bets. Store schema v3 (migration verified on a live-DB copy). Session warm-up SESSION_CHECK.
+- **Phone:** single Place Bet tap with intent persisted first; five-frame outcome classification;
+  whitelist-only betslip reset; single-selection guard; MY_BETS and OBSERVE actions; outcome stages
+  no longer collapsed to INTERNAL_ERROR; session refresh on its own thread (was frozen 8 h); legacy
+  accessibility tree capture gated (was running on every Chrome event); screenshot-after-shutdown crash
+  guarded; pound sign fixed; header "Log In" merged by OCR no longer reported as AUTHENTICATED;
+  word-level taps; Cloudflare checks waited passively, never interacted with (BOT_CHECK).
+- **Audit fixes:** row.get crash in the progress path; outdated timeout test; exception text in logs.
+- **Live evidence (read-only):** OBSERVE 5 frames PASS; MY_BETS navigation PASS after word-level tap
+  fix (`evidence/final-action-0629`); shadow-capture tool smoke PASS.
+- **Not yet proven:** shadow capture of real receipts; zero-balance live tap; first approved £0.10
+  placement; settlement; basketball spread/totals READY on the current APK. Timezone config still
+  Europe/London (should be UTC, awaiting confirmation). Account currently logged out on the phone.
+
+---
 ---
 # MultiBot365 stage timeouts + session keepalive 0.6.28-stage vc40 - READY_FOR_LIVE_REPROOF YES
 
