@@ -67,7 +67,8 @@ final class GameLinesParser {
         // The price sits right of the "Money Li..." label's first word.
         Integer moneyX = moneyH != null && Math.abs(moneyH.cy() - spreadH.cy()) <= 25 ? Math.max(moneyH.cx() + 20, totalX + 120) : null;
         int labelLimit = spreadX - 80;
-        int[] homeRow = labelRow(words, home, labelLimit, headerBottom), awayRow = labelRow(words, away, labelLimit, headerBottom);
+        int[] homeRow = labelRow(words, home, labelLimit, headerBottom);
+        int[] awayRow = homeRow == null ? null : labelRow(words, away, labelLimit, homeRow[0] + 10);
         if (homeRow == null || awayRow == null || awayRow[0] <= homeRow[0] || homeRow[0] == awayRow[0]) {
             r.notes.add("team rows not identified home=" + (homeRow != null) + " away=" + (awayRow != null)); return r;
         }
@@ -177,7 +178,7 @@ final class GameLinesParser {
             if (m.matches() && line == null) {
                 if (linePattern == TOTAL) {
                     String l = m.group(1) == null ? "" : m.group(1).toUpperCase(Locale.US);
-                    letter = l.equals("0") ? "O" : l;
+                    letter = l.equals("0") ? "" : l; // "0": O, or a U forced to 0 by the numeric re-read; row order + slip decide
                     line = m.group(2) + "." + m.group(3);
                 } else line = m.group(1) + m.group(2) + "." + m.group(3);
             }
@@ -205,10 +206,11 @@ final class GameLinesParser {
         if (team == null || team.trim().isEmpty()) return null;
         List<Word> labels = new ArrayList<>();
         for (Word w : words) if (w.right < labelLimit && w.top > belowY) labels.add(w);
-        // Exact first; else the first label row that fuzzily spells the team. Real dim labels OCR in pieces:
-        // "Cr )rvena Z» ZveZ( zdz la" for "Crvena Zvezda", "Zalg )iris" for "Zalgiris".
-        for (List<Word> g : groups(labels)) if (norm(joined(g)).equals(norm(team))) return new int[] {g.get(0).cy()};
-        for (List<Word> g : groups(labels)) if (fuzzyTeam(joined(g), team)) return new int[] {g.get(0).cy()};
+        // The FIRST label row (top-down) that spells the team, exactly or fuzzily: the page repeats the grid
+        // ("1st Half" below Game Lines), so a cleaner read further down must never win. Real dim labels OCR in
+        // pieces: "Cr )rvena Z» ZveZ( zdz la" for "Crvena Zvezda", "Zalg )iris" for "Zalgiris".
+        for (List<Word> g : groups(labels))
+            if (norm(joined(g)).equals(norm(team)) || fuzzyTeam(joined(g), team)) return new int[] {g.get(0).cy()};
         return null;
     }
 

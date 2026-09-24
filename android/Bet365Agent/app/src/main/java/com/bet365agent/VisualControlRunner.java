@@ -300,14 +300,57 @@ final class VisualControlRunner {
                 String rough=coarse.words.get(index); if(rough.isEmpty())continue;
                 Rect box = new Rect(coarse.rects.get(index)); box.inset(-8, -8); box.intersect(0,0,bitmap.getWidth(),bitmap.getHeight());
                 Bitmap crop = Bitmap.createBitmap(bitmap, box.left, box.top, box.width(), box.height());
+                Bitmap clear = enhance(crop);
                 try {
                     tess.setVariable("tessedit_char_whitelist",rough.matches(".*[0-9].*") && rough.replaceAll("[^A-Za-z]", "").length() <= 1 ? "0123456789.+-" : "");
-                    tess.setImage(crop); String text = tess.getUTF8Text();
+                    if (coarse.rects.get(index).height() > 34) {
+                        // Coarse pass merged a stacked cell ("-9.5" over "1.83"): re-read as a block, one word per
+                        // text line, each with its own bounds mapped back from the 3x enhanced crop.
+                        tess.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_BLOCK);
+                        tess.setImage(clear); tess.getUTF8Text();
+                        ResultIterator it = tess.getResultIterator();
+                        if (it != null) {
+                            try {
+                                it.begin();
+                                do {
+                                    String line = it.getUTF8Text(TessBaseAPI.PageIteratorLevel.RIL_TEXTLINE);
+                                    Rect r = it.getBoundingRect(TessBaseAPI.PageIteratorLevel.RIL_TEXTLINE);
+                                    if (line == null || line.trim().isEmpty() || r == null || r.isEmpty()) continue;
+                                    Rect mapped = new Rect(box.left + (r.left - 24) / 3, box.top + (r.top - 24) / 3,
+                                            box.left + (r.right - 24) / 3, box.top + (r.bottom - 24) / 3);
+                                    mapped.intersect(coarse.rects.get(index));
+                                    result.words.add(line.trim().replaceAll("\\s+", " ")); result.rects.add(mapped);
+                                } while (it.next(TessBaseAPI.PageIteratorLevel.RIL_TEXTLINE));
+                            } finally { it.delete(); }
+                        }
+                        tess.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
+                        continue;
+                    }
+                    tess.setImage(clear); String text = tess.getUTF8Text();
                     if (text != null && !text.trim().isEmpty()) { result.words.add(text.trim().replaceAll("\\s+", " ")); result.rects.add(new Rect(coarse.rects.get(index))); }
-                } finally { if(crop!=bitmap)crop.recycle(); }
+                } finally { if(crop!=bitmap)crop.recycle(); if(clear!=crop)clear.recycle(); }
             }
             return result;
         } finally { tess.end(); }
+    }
+
+    /** Table cell crop for the re-read: 3x upscale, grayscale, inverted when the background is dark (bet365's
+     *  yellow prices on grey read as "1083" for 1.83 at native size), plus a plain border. Never adds content. */
+    static Bitmap enhance(Bitmap crop) {
+        int w = crop.getWidth() * 3, h = crop.getHeight() * 3, pad = 24;
+        Bitmap big = Bitmap.createScaledBitmap(crop, w, h, true);
+        int[] px = new int[w * h];
+        big.getPixels(px, 0, w, 0, 0, w, h);
+        if (big != crop) big.recycle();
+        long sum = 0;
+        for (int i = 0; i < px.length; i++) { int p = px[i]; int l = (299 * ((p >> 16) & 255) + 587 * ((p >> 8) & 255) + 114 * (p & 255)) / 1000; px[i] = l; sum += l; }
+        boolean dark = sum / Math.max(1, px.length) < 128;
+        int bg = dark ? 255 - (int) (sum / Math.max(1, px.length)) : (int) (sum / Math.max(1, px.length));
+        for (int i = 0; i < px.length; i++) { int l = dark ? 255 - px[i] : px[i]; px[i] = 0xFF000000 | (l << 16) | (l << 8) | l; }
+        Bitmap out = Bitmap.createBitmap(w + 2 * pad, h + 2 * pad, Bitmap.Config.ARGB_8888);
+        out.eraseColor(0xFF000000 | (bg << 16) | (bg << 8) | bg);
+        out.setPixels(px, 0, w, pad, pad, w, h);
+        return out;
     }
 
     private Ocr recognize(Bitmap bitmap) throws Exception {

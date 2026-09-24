@@ -107,6 +107,16 @@ public class GameLinesParserTest {
         assertEquals("12.5", GameLinesParser.repairMinus("12.5", "-2.5"));
     }
 
+    @Test public void repeatedGridBelowNeverWinsAndDotAsZeroIsNotGuessed() throws Exception {
+        // Hapoel Jerusalem v Bnei Herzliya: Game Lines, then "1st Half" with the same labels (away read exactly
+        // there). Rows must come from the FIRST grid; its prices OCR'd as "1083" / "4020" and are left out.
+        GameLinesParser.Result r = GameLinesParser.parse(load("gamelines_hapoeljlm_bnei_20260924.txt"), "Hapoel Jerusalem", "Bnei Herzliya");
+        assertTrue(r.notes.toString(), r.grid);
+        String got = cells(r);
+        assertTrue(got, !got.contains("4.5") && !got.contains("87.5") && !got.contains("1.36") && !got.contains("1.80"));
+        assertTrue(got, !got.contains("SPREAD"));
+    }
+
     @Test public void wrongTeamsFindNoGrid() throws Exception {
         GameLinesParser.Result r = GameLinesParser.parse(real(), "Real Madrid", "Bayern Munich");
         assertTrue(r.cells.isEmpty());
