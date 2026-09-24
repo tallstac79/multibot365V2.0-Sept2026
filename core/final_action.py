@@ -302,6 +302,10 @@ class FinalAction:
                 return 'FAILED'
             detail = dict(match=found, frames=my_bets.get('frames'))
             now = iso(self.p.clock())
+            if found['confidence'] == 'INCONCLUSIVE':
+                # A collapsed card could be this bet: neither found nor absent. Retry; never infer NOT_PLACED.
+                self._complete(rec, 'FAILED', dict(detail, reason='collapsed card could be this bet'), db)
+                return 'FAILED'
             if found['found']:
                 self._complete(rec, 'FOUND', detail, db)
                 self.p.store.upsert_bet(db, row['instruction_id'], status=OPEN, verified_at=now,

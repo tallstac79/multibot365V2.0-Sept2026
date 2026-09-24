@@ -27,9 +27,11 @@ MELBOURNE_CARD = ['Single', 'Over 190.5', 'Total Points - Game', 'SE Melbourne P
 
 
 def my_bets(rid, lines, view='OPEN'):
+    address = 'bet365.com/#/MB/U' if view == 'OPEN' else 'bet365.com/#/MB/S'
     return {'instruction_id': rid, 'status': 'PASS', 'stage': 'PASS', 'detail': 'MY_BETS',
             'my_bets': {'view': view, 'frames': ['s001_my_bets.png'],
-                        'lines': [{'text': t, 'top': 100 + 40 * i, 'left': 20, 'frame': 0} for i, t in enumerate(lines)]}}
+                        'lines': [{'text': t, 'top': 100 + 40 * i, 'left': 20, 'frame': 0}
+                                  for i, t in enumerate(['10:03', address] + list(lines))]}}
 
 
 class Base(unittest.TestCase):
@@ -370,6 +372,61 @@ class SettlementTests(Base):
         self.assertEqual(self.bet(iid)['status'], 'LOST')
         with self.p.store.connection() as db:
             self.assertEqual(self.p.final.exposure_today(db)['loss'], 1)
+
+
+REAL = json.loads((Path(__file__).parent / 'fixtures/mybets_real_20260924.json').read_text(encoding='utf-8'))['frames']
+
+
+def real(key, view):
+    return {'view': view, 'lines': [dict(line, frame=0) for line in REAL[key]['lines']]}
+
+
+class RealMyBetsTests(unittest.TestCase):
+    def test_live_unsettled_with_several_singles(self):
+        live = json.loads((Path(__file__).parent / 'fixtures/mybets_live_20260924.json').read_text(encoding='utf-8'))
+        placed = [dict(home='Austria', away='Israel', market='1X2', selection='HOME', stake='0.10', odds='1.44'),
+                  dict(home='Hapoel Tel Aviv', away='Bayern Munich', market='MONEYLINE', selection='HOME', stake='0.10', odds='1.23'),
+                  dict(home='Panathinaikos', away='Paris', market='MONEYLINE', selection='HOME', stake='0.10', odds='1.17')]
+        for bet in placed:
+            self.assertTrue(bet_matching.match(bet, live)['found'], bet['home'])
+        never = [dict(home='Hapoel Tel Aviv', away='Bayern Munich', market='MONEYLINE', selection='AWAY', stake='0.10', odds='3.75'),
+                 dict(home='Austria', away='Israel', market='1X2', selection='HOME', stake='1.00', odds='1.44')]
+        for bet in never:
+            self.assertFalse(bet_matching.match(bet, live)['found'], bet)
+
+    """Real My Bets screens from shadow capture (operator placed £0.10 singles by hand)."""
+    austria = dict(home='Austria', away='Israel', market='1X2', selection='HOME', line=None, stake='0.10', odds='1.44')
+
+    def test_newest_expanded_card_is_an_exact_match_despite_ocr_noise(self):
+        found = bet_matching.match(self.austria, real('unsettled', 'OPEN'))       # stake OCR'd as "£O.1 0"
+        self.assertEqual((found['found'], found['confidence']), (True, 'EXACT'))
+
+    def test_collapsed_card_is_inconclusive_never_absent(self):
+        portugal = dict(home='Portugal', away='Wales', market='1X2', selection='HOME', stake='0.10', odds='1.16')
+        self.assertEqual(bet_matching.match(portugal, real('unsettled', 'OPEN'))['confidence'], 'INCONCLUSIVE')
+
+    def test_stake_is_read_from_the_same_card_only(self):
+        wrong_stake = dict(self.austria, stake='1.00')                          # "£1.00 Single Arsenal" is another card
+        self.assertFalse(bet_matching.match(wrong_stake, real('unsettled', 'OPEN'))['found'])
+
+    def test_bet_not_placed_is_not_found(self):
+        norway = dict(home='Norway', away='Denmark', market='1X2', selection='HOME', stake='0.10', odds='1.85')
+        self.assertFalse(bet_matching.match(norway, real('unsettled', 'OPEN'))['found'])
+
+    def test_live_tab_or_unconfirmed_view_never_proves_absence(self):
+        with self.assertRaises(ValueError):
+            bet_matching.match(self.austria, real('live_empty', 'OPEN'))           # "There are currently no bets"
+        with self.assertRaises(ValueError):
+            bet_matching.match(self.austria, real('unsettled', 'SETTLED'))
+
+    def test_settled_cards(self):
+        gremio = dict(home='Gremio', away='Vasco da Gama', market='1X2', selection='HOME', stake='300.00')
+        found = bet_matching.match(gremio, real('settled_expanded', 'SETTLED'))
+        # A Bet Builder card has no 'Gremio <odds>' selection line: not a 1X2 single, so not our bet,
+        # but its settlement is still read correctly.
+        self.assertEqual((found['found'], found['status'], found['returns']), (False, 'RETURNED', '514.29'))
+        psv = dict(home='PSV', away='Shakhtar', market='1X2', selection='HOME', stake='250.00')
+        self.assertEqual(bet_matching.match(psv, real('settled_list', 'SETTLED'))['status'], 'LOST')
 
 
 class MatchingTests(unittest.TestCase):

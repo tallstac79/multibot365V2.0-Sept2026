@@ -6,8 +6,15 @@ and the stake all appear inside one bet-card-sized window of consecutive lines. 
 compared in decimal or fractional form. Anything weaker is NOT a match: reconciliation
 must never claim a bet exists (or does not) on partial evidence.
 
-These heuristics are calibrated on synthetic cards until real My Bets captures exist
-(shadow capture); the tests pin the behaviour so calibration changes are visible.
+Calibrated on real My Bets screens (shadow capture 2026-09-24, tests/fixtures/
+mybets_real_20260924.json):
+* each bet is a card that starts with a header such as "£0.10 Single" or "£300.00 Bet Builder";
+* only the newest card is expanded; older ones collapse to "£0.10 Single Portugal";
+* the fixture appears as two lines next to the kick-off ("Austria Thu 24 Sep" / "Israel 19:45");
+* OCR mangles amounts ("£O.1 0"), so money is normalised first;
+* settled cards say "£514.29 Returned" or "... Lost".
+A collapsed card that could be ours is INCONCLUSIVE, never "not found". The view must be
+confirmed from the address bar (#/MB/U unsettled, #/MB/S settled) before absence counts.
 """
 from decimal import Decimal, InvalidOperation
 import re
@@ -19,8 +26,19 @@ REFERENCE = re.compile(r'\b(?:bet\s*ref(?:erence)?\.?:?\s*)([A-Z0-9]{6,20})\b', 
 MONEY = r'[£€$]?\s?(\d+(?:[.,]\d{1,2})?)'
 
 
+def _money_fix(text):
+    """'£O.1 0' -> '£0.10 ': OCR letter O and stray spaces inside amounts."""
+    return re.sub(r'£\s*([0-9Oo][0-9Oo.,\s]{0,9})',
+                  lambda m: '£' + m.group(1).replace(' ', '').replace('O', '0').replace('o', '0').strip() + ' ', text)
+
+
 def _norm(text):
-    return re.sub(r'\s+', ' ', re.sub(r'[^0-9a-z+\-./£ ]', ' ', str(text).lower())).strip()
+    text = _money_fix(str(text))
+    return re.sub(r'\s+', ' ', re.sub(r'[^0-9a-z+\-./£# ]', ' ', text.lower())).strip()
+
+
+CARD_HEADER = re.compile(r'^£\d+(?:\.\d{1,2})?\s+(single|double|treble|bet builder|accumulator|trixie|yankee|patent|lucky|\d+ fold)')
+VIEW_MARKERS = {'OPEN': '/mb/u', 'SETTLED': '/mb/s'}
 
 
 def _tokens(name):
@@ -82,24 +100,36 @@ def stake_present(blob, stake):
     return False
 
 
+ODDS_TOKEN = re.compile(r'(?<![\d.:/])(\d+\.\d{2,3}|\d+/\d+)(?![\d.:])')
+
+
 def selection_present(blob, instruction):
+    """The card's selection line: the side and its line/odds on ONE line ("Hapoel Tel Aviv 1.23",
+    "Rytas Vilnius -18.5", "Over 190.5"). A fixture line such as "Bayern Munich 17:00" is not a
+    selection, so an unplaced AWAY bet never matches a HOME card of the same game."""
     market, side, line = instruction.get('market'), instruction.get('selection'), instruction.get('line')
+    segments = [seg.strip() for seg in blob.split('|')]
     if market == 'TOTALS':
+        if line is None:
+            return False
         word = 'over' if side == 'OVER' else 'under'
-        return word in blob and line is not None and re.search(rf'(?<![\d.]){re.escape(plain(line))}(?![\d])', blob) is not None
+        return any(re.search(rf'\b{word}\b', seg) and re.search(rf'(?<![\d.]){re.escape(plain(line))}(?![\d])', seg)
+                   for seg in segments)
     if market == 'SPREAD':
         team, other = ((instruction.get('home'), instruction.get('away')) if side == 'HOME'
                        else (instruction.get('away'), instruction.get('home')))
-        if not team_present(blob, team, other) or line is None:
+        if line is None:
             return False
         value = Decimal(line)
         text = plain(abs(value))
         signed = ('+' if value > 0 else '-' if value < 0 else '') + text
-        return re.search(rf'(?<![\d.]){re.escape(signed)}(?![\d])', blob) is not None or \
-            (value == 0 and re.search(r'(?<![\d.])0(?:\.0)?(?![\d])', blob) is not None)
+        pattern = (rf'(?<![\d.]){re.escape(signed)}(?![\d])' if value != 0 else r'(?<![\d.])0(?:\.0)?(?![\d])')
+        return any(team_present(seg, team, other) and re.search(pattern, seg) for seg in segments)
     team, other = {'HOME': (instruction.get('home'), instruction.get('away')),
                    'AWAY': (instruction.get('away'), instruction.get('home'))}.get(side, (None, None))
-    return team_present(blob, team, other) if team else 'draw' in blob
+    if not team:
+        return any(re.search(r'\bdraw\b', seg) and ODDS_TOKEN.search(seg) for seg in segments)
+    return any(team_present(seg, team, other) and ODDS_TOKEN.search(seg) for seg in segments)
 
 
 def lines_of(my_bets):
@@ -112,39 +142,105 @@ def lines_of(my_bets):
     return [r['text'] for r in ordered]
 
 
-def match(instruction, my_bets):
-    """Return dict(found, confidence, window, bet_reference, status, returns) for one instruction."""
+def _check_card(instruction, text):
+    home, away = instruction.get('home'), instruction.get('away')
+    return dict(fixture=team_present(text, home, away) and team_present(text, away, home),
+                one_team=team_present(text, home, away) or team_present(text, away, home),
+                selection=selection_present(text, instruction), stake=stake_present(text, instruction.get('stake')),
+                odds=odds_present(text, instruction.get('odds') or instruction.get('observed_price')
+                                  or instruction.get('alert_price')))
+
+
+def _found(checks):
+    """Stake and selection always; then both teams, or exact odds plus at least one team.
+    Real cards often lose one fixture line to OCR ("Thu 24 Sep" / "19:45" without names)."""
+    return checks['stake'] and checks['selection'] and (checks['fixture'] or (checks['odds'] and checks['one_team']))
+
+
+def _cards(normalised):
+    """Split into bet cards at each '£x Single/Bet Builder...' header. None if no header is seen.
+    Lines above the first header (below the address bar) form a card of their own: an expanded
+    settled card shows its details above its header."""
+    cards, current, preamble = [], None, []
+    for index, line in enumerate(normalised):
+        if CARD_HEADER.match(line):
+            current = [index]
+            cards.append(current)
+        elif current is not None:
+            current.append(index)
+        elif index >= 2:
+            preamble.append(index)
+    if not cards:
+        return None
+    return ([preamble] if preamble else []) + cards
+
+
+def _settlement(text):
+    status = None
+    for word, value in SETTLED_WORDS:
+        if re.search(rf'\b{re.escape(word)}\b', text):
+            status = value
+            break
+    returns = None
+    for pattern in (r'£(\d+(?:\.\d{1,2})?)\s*returned', r'return(?:ed|s)?\s*:?\s*£\s?(\d+(?:\.\d{1,2})?)'):
+        found = re.search(pattern, text)
+        if found:
+            returns = found.group(1)
+            break
+    return status, returns
+
+
+def match(instruction, my_bets, view=None):
+    """Return dict(found, confidence, window, bet_reference, status, returns) for one instruction.
+
+    confidence: EXACT/STRONG (found), INCONCLUSIVE (a collapsed card could be this bet),
+    PARTIAL / NO_FIXTURE_TEXT (not found). Raises ValueError if the requested view is not
+    confirmed by the address bar, or the result has no lines: absence is then unproven.
+    """
     lines = lines_of(my_bets)
     normalised = [_norm(t) for t in lines]
-    best = None
+    view = view or (my_bets.get('view') if isinstance(my_bets, dict) else None)
+    if view in VIEW_MARKERS and not any(VIEW_MARKERS[view] in line for line in normalised[:4]):
+        raise ValueError(f'My Bets {view} view not confirmed by the address bar')
+    cards = _cards(normalised)
+    if cards:
+        best = None
+        for card in cards:
+            text = ' | '.join(normalised[i] for i in card)
+            checks = _check_card(instruction, text)
+            score = sum(checks.values()) + (2 if _found(checks) else 0)
+            raw = ' | '.join(lines[i] for i in card)
+            collapsed = len(card) == 1 and CARD_HEADER.match(normalised[card[0]]) is not None
+            candidate = collapsed and checks['stake'] and (
+                team_present(text, instruction.get('home'), instruction.get('away'))
+                or team_present(text, instruction.get('away'), instruction.get('home')))
+            if best is None or score > best['score'] or (candidate and not best.get('candidate')):
+                best = dict(score=score, window=raw, text=text, candidate=candidate, **checks)
+        found = _found(best)
+        status, returns = _settlement(best['text'])
+        reference = REFERENCE.search(best['window'])
+        confidence = ('EXACT' if found and best['odds'] else 'STRONG' if found
+                      else 'INCONCLUSIVE' if best['candidate'] else 'PARTIAL')
+        return dict(found=found, confidence=confidence, window=best['window'],
+                    checks={k: best[k] for k in ('fixture', 'selection', 'stake', 'odds')},
+                    bet_reference=reference.group(1) if reference else None, status=status, returns=returns)
+    # No card headers recognised: fall back to a sliding window around fixture text.
     home, away = instruction.get('home'), instruction.get('away')
+    best = None
     for index, text in enumerate(normalised):
         if not (team_present(text, home, away) or team_present(text, away, home)):
             continue
         window = ' | '.join(normalised[max(0, index - WINDOW_BEFORE): index + WINDOW_AFTER])
-        fixture = team_present(window, home, away) and team_present(window, away, home)
-        selection = selection_present(window, instruction)
-        stake = stake_present(window, instruction.get('stake'))
-        odds = odds_present(window, instruction.get('odds') or instruction.get('observed_price')
-                            or instruction.get('alert_price'))
-        score = sum((fixture, selection, stake, odds))
+        checks = _check_card(instruction, window)
+        score = sum(checks.values()) + (2 if _found(checks) else 0)
         if best is None or score > best['score']:
             raw = ' | '.join(lines[max(0, index - WINDOW_BEFORE): index + WINDOW_AFTER])
-            best = dict(score=score, fixture=fixture, selection=selection, stake=stake, odds=odds, window=raw)
+            best = dict(score=score, window=raw, text=window, **checks)
     if best is None:
         return dict(found=False, confidence='NO_FIXTURE_TEXT', window=None, bet_reference=None, status=None, returns=None)
-    found = best['fixture'] and best['selection'] and best['stake']
+    found = _found(best)
     reference = REFERENCE.search(best['window'])
-    status = None
-    lower = best['window'].lower()
-    for word, value in SETTLED_WORDS:
-        if re.search(rf'\b{re.escape(word)}\b', lower):
-            status = value
-            break
-    returns = None
-    ret = re.search(r'return(?:ed|s)?\s*:?\s*' + MONEY, lower)
-    if ret:
-        returns = ret.group(1).replace(',', '.')
+    status, returns = _settlement(best['text'])
     confidence = 'EXACT' if found and best['odds'] else 'STRONG' if found else 'PARTIAL'
     return dict(found=found, confidence=confidence, window=best['window'], checks={k: best[k] for k in
                 ('fixture', 'selection', 'stake', 'odds')}, bet_reference=reference.group(1) if reference else None,

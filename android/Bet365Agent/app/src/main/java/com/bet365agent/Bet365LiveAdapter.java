@@ -1305,35 +1305,15 @@ final class Bet365LiveAdapter implements SiteAdapter {
     /** Open My Bets (OPEN = unsettled, SETTLED = settled) and return every OCR line over a few scrolled frames.
      *  Read-only: taps only the My Bets entry and its tabs; never a bet, cash-out or edit control. */
     CompletableFuture<org.json.JSONObject> read_my_bets(String view) {
+        // Direct address, not tab taps: real screens showed the tab labelled "Open" is the Live tab
+        // (in-play only), which would make a placed bet look absent. The backend also checks the
+        // address bar (#/MB/U or #/MB/S) before trusting absence.
+        String url = "SETTLED".equals(view) ? "https://www.bet365.com/#/MB/S" : "https://www.bet365.com/#/MB/U";
         ui.checkpoint("MY_BETS");
-        return ui.capture("my_bets_nav").thenCompose(s -> {
-            // Word-level bounds: the bottom nav OCRs as one line ("Home All Sports In-Play My Bets").
-            android.graphics.Rect entry = s.phraseBounds("My Bets", 1100, 2000);
-            if (entry == null) entry = s.phraseBounds("My Bets", 0, 1100);
-            require(entry != null, "MY_BETS_UNAVAILABLE", "My Bets control not visible");
-            return ui.tap(entry, "My Bets").thenCompose(v -> ui.delay(2500));
-        }).thenCompose(v -> ui.capture("my_bets_view")).thenCompose(s -> {
-            VisualScreen.Line tab = null;
-            if ("SETTLED".equals(view)) {
-                tab = exactLine(s, "Settled");
-                if (tab == null) {
-                    android.graphics.Rect word = s.phraseBounds("Settled", 150, 700);
-                    require(word != null, "MY_BETS_UNAVAILABLE", "Settled tab not visible in My Bets");
-                    ui.put("my_bets_tab", "Settled");
-                    return ui.tap(word, "My Bets tab Settled").thenCompose(x -> ui.delay(2000));
-                }
-            } else {
-                for (String name : new String[] {"Unsettled", "Open", "All"}) { tab = exactLine(s, name); if (tab != null) break; }
-            }
-            ui.put("my_bets_tab", tab == null ? "default" : tab.text.trim());
-            if (tab == null) {
-                android.graphics.Rect word = "SETTLED".equals(view) ? null : s.phraseBounds("Unsettled", 150, 700);
-                if (word == null) return CompletableFuture.<Void>completedFuture(null);
-                ui.put("my_bets_tab", "Unsettled");
-                return ui.tap(word, "My Bets tab Unsettled").thenCompose(x -> ui.delay(2000));
-            }
-            return ui.tap(tab.bounds, "My Bets tab " + tab.text.trim()).thenCompose(x -> ui.delay(2000));
-        }).thenCompose(v -> collectMyBets(0, new JSONArray(), new JSONArray(), view));
+        ui.put("my_bets_url", url);
+        ui.put("my_bets_tab", "SETTLED".equals(view) ? "Settled" : "Unsettled");
+        return ui.open(url).thenCompose(v -> ui.delay(2500)).thenCompose(v -> settle("my_bets_view", 0))
+                .thenCompose(s -> collectMyBets(0, new JSONArray(), new JSONArray(), view));
     }
 
     private CompletableFuture<org.json.JSONObject> collectMyBets(int frame, JSONArray lines, JSONArray frames, String view) {
@@ -1342,7 +1322,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
             frames.put(ui.lastImage());
             for (VisualScreen.Line line : s.lines)
                 lines.put(CoordinatorAgent.object("text", line.text, "top", line.bounds.top, "left", line.bounds.left, "frame", frame));
-            boolean empty = visible(s, "No bets", "no open bets", "no unsettled", "You have no", "No Settled");
+            boolean empty = visible(s, "No bets", "no bets to display", "no open bets", "no unsettled", "You have no", "No Settled");
             if (empty || frame >= 3) {
                 return CompletableFuture.completedFuture(CoordinatorAgent.object("view", view, "tab", ui.record.opt("my_bets_tab"),
                         "empty", empty, "frames", frames, "lines", lines));
