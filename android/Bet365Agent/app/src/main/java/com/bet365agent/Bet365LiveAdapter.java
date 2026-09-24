@@ -28,6 +28,19 @@ final class Bet365LiveAdapter implements SiteAdapter {
     /** Price of the selection put on the betslip in this run (stake x price is cross-checked with "To Return"). */
     private String openedPrice;
     private String targetMarket = "", targetSide = "", targetLine = "";
+    /** Instruction-supplied aliases (feed -> bookmaker). Static because the fixture gates are static; the
+     *  coordinator runs one instruction at a time and every run sets it before use. */
+    private static volatile java.util.Map<String, String> instructionAliases = java.util.Collections.emptyMap();
+
+    @Override
+    public void set_aliases(java.util.Map<String, String> aliases) {
+        instructionAliases = aliases == null ? java.util.Collections.emptyMap() : aliases;
+    }
+
+    private static org.json.JSONObject sideJson(EventIdentity.Side side) {
+        return side == null ? null : CoordinatorAgent.object("feed", side.feed, "bookmaker", side.bookmaker, "level", side.level.name(),
+                "score", Math.round(side.score * 100) / 100.0, "note", side.note);
+    }
     private String expectedPrice;    // price the slip must show (set by the check that uses readbackRetry)
     private String slipPriceRead;    // targeted numeric read of the slip's price box, once per check
 
@@ -488,40 +501,34 @@ final class Bet365LiveAdapter implements SiteAdapter {
         String[] teams = EventPage.teams(header);
         ui.put("direct_event_header", new JSONArray(header));
         if (teams == null) { ui.put("direct_event_rejected", "header teams not read"); return null; }
-        boolean homeOk = teamPositivelyIdentified(teams[0], identityHome);
-        boolean awayOk = expectedAway.isEmpty() || teamPositivelyIdentified(teams[1], expectedAway);
-        if (!homeOk || !awayOk) {
-            // A1: the link opened a genuine event page, so its identity result is authoritative: NO Search
-            // fallback (Search uses the same names and cannot succeed; it cost ~3 min live). Kick-off agreeing
-            // with the alert and one team verified = a bookmaker naming variant -> ALIAS_REQUIRED (Bet365's
-            // names recorded as an alias candidate for review); anything else -> WRONG_EVENT.
-            String shownKo = EventPage.kickoffText(header);
-            String wantKo = kickoffUtc == null || kickoffUtc.isEmpty() ? null : EventPage.ukDisplay(kickoffUtc);
-            boolean kickoffAgrees = shownKo != null && wantKo != null && shownKo.equals(wantKo);
-            boolean oneTeamVerified = homeOk || (awayOk && !expectedAway.isEmpty());
-            // The unverified name must look like a variant of Bet365's (Soproni KC / Sopron KC), otherwise it is
-            // simply the wrong opponent (Kyoto v Bayern Munich against a Kyoto v Shiga Lakes page).
-            boolean variant = (homeOk || EventPage.namingVariant(teams[0], identityHome))
-                    && (awayOk || EventPage.namingVariant(teams[1], expectedAway));
-            ui.put("alias_candidate", CoordinatorAgent.object("feed_home", identityHome, "feed_away", expectedAway,
-                    "bet365_home", teams[0], "bet365_away", teams[1], "event_url", ui.record.optString("event_url"),
-                    "kickoff_shown", shownKo == null ? org.json.JSONObject.NULL : shownKo,
-                    "kickoff_expected", wantKo == null ? org.json.JSONObject.NULL : wantKo,
-                    "home_verified", homeOk, "away_verified", awayOk));
-            ui.put("route", "event_link");
-            ui.put("direct_event_rejected", "identity");
-            String detail = "Event link shows '" + teams[0] + " v " + teams[1] + "'; alert says '" + identityHome + " v " + expectedAway + "'";
-            if (kickoffAgrees && oneTeamVerified && variant)
-                throw new Failure("ALIAS_REQUIRED", detail + " (same kick-off " + shownKo + "; bookmaker naming variant needs an alias)");
-            throw new Failure("WRONG_EVENT", detail + (kickoffAgrees ? "" : "; kick-off " + shownKo + " vs alert " + wantKo));
-        }
+        // Milestone B: the event identity resolver decides (sport, both teams, pairing, kick-off). The page was
+        // opened from the alert's own link, so it is the anchor; the resolver's verdict is authoritative (A1).
         String shown = EventPage.kickoffText(header);
-        if (kickoffUtc != null && !kickoffUtc.isEmpty() && shown != null) {
-            String want = EventPage.ukDisplay(kickoffUtc);
-            if (!shown.equals(want))
-                throw new Failure("WRONG_EVENT", "Event link kick-off " + shown + " (UK) is not the alert's " + want + " (UK)");
-            ui.put("kickoff_verified", shown);
-        } else ui.put("kickoff_verified", shown == null ? "not shown (in-play or unread)" : "no alert kick-off");
+        String want = kickoffUtc == null || kickoffUtc.isEmpty() ? null : EventPage.ukDisplay(kickoffUtc);
+        String feedAway = expectedAway.isEmpty() ? teams[1] : expectedAway;
+        EventIdentity.Result id = EventIdentity.resolve(
+                new EventIdentity.Event(sport, identityHome, feedAway, want, null, false),
+                new EventIdentity.Event(sport, teams[0], teams[1], shown, header.isEmpty() ? null : header.get(0), true), instructionAliases);
+        ui.put("identity", CoordinatorAgent.object("verdict", id.verdict.name(), "reason", id.reason, "home", sideJson(id.home),
+                "away", sideJson(id.away), "kickoff_known", id.kickoffKnown, "kickoff_agrees", id.kickoffAgrees, "reversed", id.reversed));
+        ui.put("identity_verdict", id.verdict.name());
+        ui.put("route", "event_link");
+        if (!id.aliasCandidates.isEmpty()) {
+            org.json.JSONObject cands = new org.json.JSONObject();
+            for (java.util.Map.Entry<String, String> e : id.aliasCandidates.entrySet()) { try { cands.put(e.getKey(), e.getValue()); } catch (Exception ignored) {} }
+            ui.put("alias_candidate", CoordinatorAgent.object("feed_home", identityHome, "feed_away", feedAway, "bet365_home", teams[0],
+                    "bet365_away", teams[1], "event_url", ui.record.optString("event_url"),
+                    "kickoff_shown", shown == null ? org.json.JSONObject.NULL : shown, "kickoff_expected", want == null ? org.json.JSONObject.NULL : want,
+                    "verdict", id.verdict.name(), "confidence", id.candidateConfidence == null ? org.json.JSONObject.NULL : id.candidateConfidence,
+                    "candidates", cands, "sport", sport));
+        }
+        if (!id.accepted()) {
+            ui.put("direct_event_rejected", "identity: " + id.reason);
+            String detail = "Event link shows '" + teams[0] + " v " + teams[1] + "'; alert says '" + identityHome + " v " + feedAway + "': " + id.reason;
+            // AMBIGUOUS = a naming variant without corroboration -> needs an alias; everything else is the wrong event.
+            throw new Failure(id.verdict == EventIdentity.Verdict.AMBIGUOUS ? "ALIAS_REQUIRED" : "WRONG_EVENT", detail);
+        }
+        ui.put("kickoff_verified", id.kickoffKnown ? shown : (shown == null ? "not shown (in-play or unread)" : "no alert kick-off"));
         android.graphics.Rect bounds = new android.graphics.Rect();
         for (VisualScreen.Line line : s.lines) if (line.bounds.top >= 230 && line.bounds.top <= 480) bounds.union(line.bounds);
         Fixture f = new Fixture(Integer.toHexString((teams[0] + "|" + teams[1]).toLowerCase(Locale.US).hashCode()),
@@ -2559,6 +2566,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
     /** Positive team identity: exact or contains full multi-word query; no OCR confusion aliases. */
     private static boolean teamPositivelyIdentified(String teamName, String requested) {
         if (teamName == null || requested == null) return false;
+        // Milestone B: exact / canonical / alias (registry or instruction) through the resolver; protected
+        // markers (women, reserves, age groups) that differ never match, whatever the text below says.
+        EventIdentity.Side side = EventIdentity.matchSide(requested, teamName, instructionAliases);
+        if (side.atLeast(EventIdentity.Level.ALIAS)) return true;
+        if (!side.markersAgree) return false;
         String t = normalizeTeamIdentity(teamName);
         String r = normalizeTeamIdentity(requested);
         if (t.isEmpty() || r.isEmpty()) return false;

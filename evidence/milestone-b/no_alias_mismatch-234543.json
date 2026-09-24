@@ -1,0 +1,213 @@
+{
+ "payload": {
+  "instruction_id": "no_alias_mismatch-234543",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Besancon||Riverside Club",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+1.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+  "kickoff_utc": "2026-09-25T18:00"
+ },
+ "result": {
+  "instruction_id": "no_alias_mismatch-234543",
+  "status": "FAIL",
+  "stage": "WRONG_EVENT",
+  "detail": "Event link shows 'Besancon AC v Val de Seine'; alert says 'Besancon v Riverside Club': 'Riverside Club' is not 'Val de Seine' (different name 0.44)",
+  "duration_ms": 6353,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 6184,
+   "last_progress_at_ms": 1790289943623,
+   "instruction_id": "no_alias_mismatch-234543",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790289943603
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 17,
+     "at_ms": 1790289943612
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 28,
+     "at_ms": 1790289943623,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 28,
+      "start_ts_ms": 1790289943615,
+      "end_elapsed_ms": 6184,
+      "end_ts_ms": 1790289949770,
+      "duration_ms": 6156,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3467,
+     "at_ms": 1790289943623
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 6010,
+     "at_ms": 1790289943623
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 6184,
+     "at_ms": 1790289943623
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_XY9DIL9cm86krZcNp7O_rLHx4O2erXKd6Gq6XWmwPRU",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'Besancon AC v Val de Seine'; alert says 'Besancon v Riverside Club': 'Riverside Club' is not 'Val de Seine' (different name 0.44)",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 28,
+    "start_ts_ms": 1790289943615,
+    "end_elapsed_ms": 6184,
+    "end_ts_ms": 1790289949770,
+    "duration_ms": 6156,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: 'Riverside Club' is not 'Val de Seine' (different name 0.44)",
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "'Riverside Club' is not 'Val de Seine' (different name 0.44)",
+   "home": {
+    "feed": "Besancon",
+    "bookmaker": "Besancon AC",
+    "level": "CANONICAL",
+    "score": 1,
+    "note": "canonical tokens equal"
+   },
+   "away": {
+    "feed": "Riverside Club",
+    "bookmaker": "Val de Seine",
+    "level": "NONE",
+    "score": 0.44,
+    "note": "different name 0.44"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "MISMATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_XY9DIL9cm86krZcNp7O_rLHx4O2erXKd6Gq6XWmwPRU",
+  "adapter": "live_bet365",
+  "status": "WRONG_EVENT",
+  "phase": "FINISHED",
+  "started_at_ms": 1790289943586,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790289943586
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 17,
+    "wall_ts_ms": 1790289943604
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 28,
+    "wall_ts_ms": 1790289943615
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3467,
+    "wall_ts_ms": 1790289947054
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 6010,
+    "wall_ts_ms": 1790289949599
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 6184,
+    "wall_ts_ms": 1790289949771
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 28,
+    "start_ts_ms": 1790289943615,
+    "end_elapsed_ms": 6184,
+    "end_ts_ms": 1790289949770,
+    "duration_ms": 6156,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Besancon",
+  "identity_home": "Besancon",
+  "expected_away": "Riverside Club",
+  "identity_away": "Riverside Club",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+  "current_stage": "OPEN_HOME",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "6 France Nationale1 ' 25 Sep 19:00",
+   "Besancon AC vs Val de Seine",
+   "Bet Builder"
+  ],
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "'Riverside Club' is not 'Val de Seine' (different name 0.44)",
+   "home": {
+    "feed": "Besancon",
+    "bookmaker": "Besancon AC",
+    "level": "CANONICAL",
+    "score": 1,
+    "note": "canonical tokens equal"
+   },
+   "away": {
+    "feed": "Riverside Club",
+    "bookmaker": "Val de Seine",
+    "level": "NONE",
+    "score": 0.44,
+    "note": "different name 0.44"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "MISMATCH",
+  "route": "event_link",
+  "direct_event_rejected": "identity: 'Riverside Club' is not 'Val de Seine' (different name 0.44)",
+  "detail": "Event link shows 'Besancon AC v Val de Seine'; alert says 'Besancon v Riverside Club': 'Riverside Club' is not 'Val de Seine' (different name 0.44)",
+  "duration_ms": 6184
+ },
+ "wall": 6.7131452560424805
+}

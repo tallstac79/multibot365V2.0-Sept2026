@@ -18,7 +18,7 @@ from pathlib import Path
 
 from core.lifecycle import State, allowed, TERMINAL
 
-SCHEMA_VERSION = 4  # 2: intake status PARSED_PARTIAL; 3: final action (approval, placement, bets); 4: queue/device timings
+SCHEMA_VERSION = 5  # 2: PARSED_PARTIAL; 3: final action; 4: queue/device timings; 5: identity registry (aliases, event cache)
 SCHEMA = '''
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS intake_messages (
@@ -128,6 +128,17 @@ CREATE TABLE IF NOT EXISTS reconciliations (
 );
 CREATE TABLE IF NOT EXISTS controls (
     key TEXT PRIMARY KEY, value TEXT NOT NULL, updated_at TEXT NOT NULL, updated_by TEXT
+);
+CREATE TABLE IF NOT EXISTS alias_candidates (
+    id INTEGER PRIMARY KEY, sport TEXT NOT NULL, source_name TEXT NOT NULL, bookmaker_name TEXT NOT NULL,
+    evidence TEXT, confidence TEXT NOT NULL, status TEXT NOT NULL CHECK(status IN ('candidate','promoted','review','rejected')),
+    first_seen TEXT NOT NULL, last_seen TEXT NOT NULL, times_seen INTEGER NOT NULL DEFAULT 1, promoted_at TEXT,
+    UNIQUE(sport, source_name, bookmaker_name)
+);
+CREATE TABLE IF NOT EXISTS event_cache (
+    id INTEGER PRIMARY KEY, sport TEXT NOT NULL, feed_home TEXT NOT NULL, feed_away TEXT NOT NULL, kickoff_utc TEXT NOT NULL,
+    event_url TEXT NOT NULL, bookmaker_home TEXT, bookmaker_away TEXT, competition TEXT, resolved_at TEXT NOT NULL,
+    UNIQUE(sport, feed_home, feed_away, kickoff_utc)
 );
 '''
 # v4 (A4): per-instruction timing. queue_wait_ms = queued_at -> first device start; device_execution_ms = phone

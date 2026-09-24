@@ -1,0 +1,149 @@
+{
+ "payload": {
+  "action": "PLACE_HELD",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+1.5",
+  "selection_name": "Val de Seine",
+  "price": "1.83",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "execution_mode": "prepare",
+  "confirmation_status": "APPROVED",
+  "timeout_ms": 60000,
+  "instruction_id": "ptsupplied_alias-234458"
+ },
+ "result": {
+  "instruction_id": "ptsupplied_alias-234458",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "PRETAP_READY",
+  "duration_ms": 3299,
+  "progress": {
+   "stage": "PRETAP_CHECK",
+   "elapsed_ms": 3194,
+   "last_progress_at_ms": 1790289931068,
+   "instruction_id": "ptsupplied_alias-234458",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790289931062
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 22,
+     "at_ms": 1790289931068
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 31,
+     "at_ms": 1790289931068
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 2994,
+     "at_ms": 1790289931068
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 3194,
+     "at_ms": 1790289931068
+    }
+   ]
+  },
+  "device_stage": "PRETAP_CHECK",
+  "execution_count": 1,
+  "run_id": "c_4Ahn9ZGcMN3tojndwsGCiZXc7LmYLB3xrd5M9PUX5BA",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "pretap": {
+   "ok": true,
+   "selection": "Val de Seine",
+   "line": "+1.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    478,
+    1324,
+    604,
+    1346
+   ]
+  },
+  "stage_timings": [],
+  "t_start_ms": 1790289931062,
+  "t_pretap_done_ms": 1790289934233
+ },
+ "run": {
+  "run_id": "c_4Ahn9ZGcMN3tojndwsGCiZXc7LmYLB3xrd5M9PUX5BA",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790289931040,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790289931041
+   },
+   {
+    "phase": "PRETAP_CHECK",
+    "elapsed_ms": 22,
+    "wall_ts_ms": 1790289931063
+   },
+   {
+    "phase": "CAPTURE_pretap",
+    "elapsed_ms": 31,
+    "wall_ts_ms": 1790289931072
+   },
+   {
+    "phase": "CAPTURED_pretap",
+    "elapsed_ms": 2994,
+    "wall_ts_ms": 1790289934035
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 3194,
+    "wall_ts_ms": 1790289934234
+   }
+  ],
+  "screenshots": [
+   "s001_pretap.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [],
+  "t_start_ms": 1790289931062,
+  "stake_check_pretap": {
+   "ok": true,
+   "detail": "stake box unread; To Return exactly 0.10 x 1.83",
+   "stake_digits": "",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "pretap": {
+   "ok": true,
+   "selection": "Val de Seine",
+   "line": "+1.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    478,
+    1324,
+    604,
+    1346
+   ]
+  },
+  "t_pretap_done_ms": 1790289934233,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "detail": "PRETAP_READY",
+  "duration_ms": 3194
+ },
+ "wall": 3.6343705654144287
+}

@@ -21,6 +21,7 @@ import re
 
 from core import alert_classifier
 from core.final_action import FinalAction
+from core.identity_registry import IdentityRegistry
 from core.lifecycle import State, TERMINAL, DEVICE_OWNED, interpret_device_result, CONFIRMATION_MAP
 from core.pipeline_store import Store, iso, utcnow, instruction_id_for, selection_key
 from core.rules_engine import evaluate, ACCEPT, STALE, selection_name as rules_selection_name
@@ -114,6 +115,7 @@ class Pipeline:
         self.settings = settings or Settings()
         self.clock = clock
         self.final = FinalAction(self)
+        self.identity = IdentityRegistry(self.store)
         self.armed_at = iso(clock())    # one-shot: only Place Bet runs dispatched after this count
         self.disarmed = None            # set when the one-shot fired (the service persists it)
 
@@ -299,6 +301,11 @@ class Pipeline:
             payload['event_url'] = url                      # primary route: open the exact event
         if row['event_time'] and KICKOFF.match(row['event_time']):
             payload['kickoff_utc'] = row['event_time']
+        # B6/B7: promoted aliases and the names Bet365 used for this same fixture before travel with the run.
+        with self.store.connection() as db:
+            aliases = self.identity.aliases_for(db, row['sport'], row['home'], row['away'], payload.get('kickoff_utc'))
+        if aliases:
+            payload['aliases'] = json.dumps(aliases)
         assert 'confirmation_status' not in payload
         return payload
 
@@ -674,8 +681,17 @@ class Pipeline:
                     fields['placement'] = placement
             applied = self.store.transition(db, instruction_id, state, actor=source, at=iso(now), reason=reason, **fields)
             if applied and isinstance(result.get('alias_candidate'), dict):
-                # A1: the event link opened the right event but a team name differs: evidence for an alias review.
-                self.store.audit(db, 'ALIAS_CANDIDATE', result['alias_candidate'], instruction_id)
+                # A1/B6: the event link opened the right event but a team name differs: record the sighting
+                # (strict promotion policy in IdentityRegistry) and audit the evidence.
+                cand = result['alias_candidate']
+                self.store.audit(db, 'ALIAS_CANDIDATE', cand, instruction_id)
+                for feed_name, book_name in (cand.get('candidates') or {}).items():
+                    self.identity.record_candidate(db, row['sport'], feed_name, book_name, cand, cand.get('confidence'), instruction_id)
+            if applied and result.get('route') == 'event_link' and state in (State.READY, State.COMPLETED) \
+                    and result.get('home') and result.get('away') and result.get('event_url'):
+                # B7: the resolved event for this fixture and kick-off (never reused for another kick-off).
+                self.identity.record_event(db, row['sport'], row['home'], row['away'], row['event_time'], result['event_url'],
+                                           result['home'], result['away'], row['competition'])
             if applied and state == State.READY and row['execution_mode'] == 'hold':
                 # The verified bet is now on the phone's slip: it owns the phone until placed or released.
                 self.store.set_control(HELD_KEY, dict(instruction_id=instruction_id, since=iso(now)), by='dispatcher', db=db)

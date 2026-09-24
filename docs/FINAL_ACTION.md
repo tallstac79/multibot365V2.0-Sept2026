@@ -43,6 +43,22 @@ READY -> APPROVED (auto_approve, within limits)
   runs only with no link, or when the link does not open an event page. Bet365's "no longer available /
   betting has closed" page stops as `SUSPENDED` (a dead link shows the same page; a stale feed link has
   never been observed, a closed event has, so the fast stop wins).
+* **Event identity resolver (B).** `EventIdentity` (phone, pure Java) identifies the EVENT: sport, both
+  teams, their pairing and the kick-off, anchored on the alert's own Bet365 link. Team layers: EXACT (NFKC,
+  case, whitespace) > CANONICAL (diacritics, punctuation, slash/hyphen, safe affixes FC/BC/KC/AC ...) >
+  ALIAS (explicit registry `TeamAliases`, or aliases supplied with the instruction) > VARIANT (controlled
+  fuzzy score, one signal only). Protected markers (women, reserves/II/B, U21 ...) must agree or the team is
+  a MISMATCH. Verdicts: EXACT / CANONICAL_MATCH / ALIAS_MATCH / HIGH_CONFIDENCE_EVENT_MATCH (own link +
+  agreeing kick-off + one team ALIAS-or-better + the other a strong variant: accepted, and the variant is
+  reported as an alias candidate) / AMBIGUOUS (variant without that corroboration -> ALIAS_REQUIRED) /
+  MISMATCH (sport, kick-off, markers, wrong opponent, reversed home/away -> WRONG_EVENT). Reversed pairings
+  are never accepted: a HOME/AWAY selection would land on the other team.
+* **Alias registry and event cache (B6/B7, backend `core/identity_registry.py`).** Candidates from the
+  phone are recorded with evidence (`alias_candidates`). Promotion is strict and audited: "deterministic"
+  (score >= 0.85 with full event corroboration) on first sight, "high" after 2 sightings, anything else
+  stays for review; a conflicting bookmaker name demotes. Promoted aliases and the names Bet365 used for
+  the same fixture and kick-off (`event_cache`, never another kick-off, 36 h after it) travel with each
+  instruction as `aliases`.
 * **My Bets never keeps the phone (A2).** Every My Bets read ends with a verified return to Bet365 HOME.
   Live placement work outranks routine checks (claimed-placement verification, settlement); only a
   PLACEMENT_UNKNOWN resolution takes the phone ahead of queued live work.

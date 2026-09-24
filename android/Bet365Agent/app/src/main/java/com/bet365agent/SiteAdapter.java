@@ -28,6 +28,8 @@ interface SiteAdapter {
     default CompletableFuture<Void> clear_betslip(Selection selection) { return CompletableFuture.completedFuture(null); }
     /** The instruction's target (market/side/line): lets the adapter skip extra reads of unrelated markets. */
     default void set_target(String market, String side, String line) {}
+    /** Aliases supplied with the instruction (feed name -> bookmaker name), from the backend's registry/cache. */
+    default void set_aliases(java.util.Map<String, String> aliases) {}
     /** Open the alert's exact event link and verify it (sport, both teams, kick-off). Null = not usable: search instead. */
     default CompletableFuture<Fixture> open_event_direct(String url, String query, String kickoffUtc) { return CompletableFuture.completedFuture(null); }
     /** Dispatch the prepared Place Bet gesture for real. */

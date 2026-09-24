@@ -1,0 +1,20 @@
+# name | prior outcome | expected verdict | feed sport | feed home | feed away | feed kick-off (UK) | page sport | page home | page away | page kick-off (UK) | anchored (page opened from the alert's own link)
+Kyoto Hannaryz v Shiga Lake Stars (live on-03419b83, 5 runs) | WRONG_EVENT | ALIAS_MATCH | basketball | Kyoto Hannaryz | Shiga Lake Stars | 25 Sep 10:35 | basketball | Kyoto Hannaryz | Shiga Lakes | 25 Sep 10:35 | true
+Berck Fliers Range v Pays Salonais Basket 13 (live on-a9f4768d) | WRONG_EVENT | ALIAS_MATCH | basketball | Berck Fliers Range | Pays Salonais Basket 13 | 25 Sep 19:00 | basketball | Berck/Rang du Fliers | Pays Salonais Basket 13 | 25 Sep 19:00 | true
+Soproni KC v Debreceni EAC (live on-baaa1c7f) | WRONG_EVENT | ALIAS_MATCH | basketball | Soproni KC | Debreceni EAC | 25 Sep 18:00 | basketball | Sopron KC | DEAC Debreceni | 25 Sep 18:00 | true
+Soproni without any registry alias (resolver only) | WRONG_EVENT | HIGH_CONFIDENCE_EVENT_MATCH | basketball | Soproni | DEAC Debreceni | 25 Sep 18:00 | basketball | Sopron KC | DEAC Debreceni | 25 Sep 18:00 | true
+Saga Ballooners v Hiroshima Dragonflies (live on-e5072bbf, ligature) | WRONG_EVENT | EXACT | basketball | Saga Ballooners | Hiroshima Dragonflies | 25 Sep 10:45 | basketball | Saga Ballooners | Hiroshima Dragonﬂies | 25 Sep 10:45 | true
+Araraquara v Mogi Das Cruzes (live on-9c1f8694, closed event; search showed the senior team) | WRONG_EVENT | MISMATCH | basketball | Araraquara | Mogi Das Cruzes | - | basketball | Corinthians | Mogi das Cruzes | - | false
+Hapoel Tel Aviv v Bayern Munich (Euroleague proof) | PASS | EXACT | basketball | Hapoel Tel Aviv | Bayern Munich | 24 Sep 17:00 | basketball | Hapoel Tel Aviv | Bayern Munich | 24 Sep 17:00 | false
+Crvena Zvezda v Zalgiris (Euroleague proof) | PASS | EXACT | basketball | Crvena Zvezda | Zalgiris | 24 Sep 19:00 | basketball | Crvena Zvezda | Zalgiris | 24 Sep 19:00 | false
+Hapoel Jerusalem v Bnei Herzliya (PREPARE proof) | PASS | EXACT | basketball | Hapoel Jerusalem | Bnei Herzliya | 25 Sep 12:00 | basketball | Hapoel Jerusalem | Bnei Herzliya | 25 Sep 12:00 | false
+Besancon v Val De Seine (two live placements) | PASS | CANONICAL_MATCH | basketball | Besancon | Val De Seine | 25 Sep 19:00 | basketball | Besancon AC | Val de Seine | 25 Sep 19:00 | true
+Besancon v Val De Seine, page OCR 'Besancon Ac' | PASS | CANONICAL_MATCH | basketball | Besancon | Val De Seine | 25 Sep 19:00 | basketball | Besancon Ac | Val de Seine | 25 Sep 19:00 | true
+Fulham v Crystal Palace (football search proof) | PASS | EXACT | football | Fulham | Crystal Palace | - | football | Fulham | Crystal Palace | - | false
+BC Beroe v Ferrol vs search 'Beroe (W) v Uni Ferrol (W)' (women marker) | accepted by legacy containment | MISMATCH | basketball | BC Beroe | Ferrol | - | basketball | Beroe (W) | Uni Ferrol (W) | - | false
+Chartres v Levharti Chomutov vs search 'Chartres (W) v Levhartice' | not found | MISMATCH | basketball | Chartres | Levharti Chomutov | - | basketball | Chartres (W) | Levhartice | - | false
+Kyoto Hannaryz v Bayern Munich against the Kyoto page (wrong opponent) | WRONG_EVENT | MISMATCH | basketball | Kyoto Hannaryz | Bayern Munich | 25 Sep 10:35 | basketball | Kyoto Hannaryz | Shiga Lakes | 25 Sep 10:35 | true
+Kyoto/Shiga names against the Besancon page (wrong link) | WRONG_EVENT | MISMATCH | basketball | Kyoto Hannaryz | Shiga Lake Stars | 25 Sep 10:35 | basketball | Besancon Ac | Val de Seine | 25 Sep 19:00 | true
+Besancon v Valdeseine synthetic variant (Milestone A ALIAS_REQUIRED test) | ALIAS_REQUIRED | HIGH_CONFIDENCE_EVENT_MATCH | basketball | Besancon | Valdeseine | 25 Sep 19:00 | basketball | Besancon Ac | Val de Seine | 25 Sep 19:00 | true
+Gunma Crane Thunders vs garbage search row | not found | MISMATCH | basketball | Gunma Crane Thunders | Ryukyu Golden Kings | - | basketball | (F1 Serbia & Yes (v Greece) | View 3 more leg | - | false
+Hapoel Tel Aviv search row OCR 'Bayern 1 2' (merged headers, pre-cleanTeam) | WRONG_EVENT (fixed 0.6.32) | AMBIGUOUS | basketball | Hapoel Tel Aviv | Bayern Munich | - | basketball | Hapoel Tel Aviv | Bayern 1 2 | - | false

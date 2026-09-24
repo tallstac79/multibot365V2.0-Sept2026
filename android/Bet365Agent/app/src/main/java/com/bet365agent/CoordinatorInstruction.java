@@ -15,9 +15,27 @@ import java.util.Set;
 final class CoordinatorInstruction {
     final String id, target, text, runId, action, adapter, scenario, market, side, sport, line, minimumPrice, stake, executionMode, confirmationStatus, view;
     final String eventUrl, kickoffUtc, selectionName, price;
+    final java.util.Map<String, String> aliases;
     final boolean placeBet; // true iff execution_mode=dispatch
     final int timeout;
     final JSONObject payload;
+
+    /** "aliases": a small JSON object {feed name: bookmaker name}; at most 8 entries of plain team-name text. */
+    static java.util.Map<String, String> parseAliases(String json) {
+        java.util.Map<String, String> out = new java.util.LinkedHashMap<>();
+        if (json == null || json.trim().isEmpty()) return out;
+        JSONObject o;
+        try { o = new JSONObject(json); } catch (Exception e) { throw new IllegalArgumentException("Invalid aliases"); }
+        if (o.length() > 8) throw new IllegalArgumentException("Too many aliases");
+        for (java.util.Iterator<String> it = o.keys(); it.hasNext(); ) {
+            String k = it.next(); Object v = o.opt(k);
+            if (!(v instanceof String) || !k.matches("[A-Za-z0-9 ./'&()-]{2,64}") || !((String) v).matches("[A-Za-z0-9 ./'&()-]{2,64}"))
+                throw new IllegalArgumentException("Invalid alias entry");
+            out.put(EventIdentity.plain(k), (String) v);
+        }
+        return out;
+    }
+
     CoordinatorInstruction(String json) throws Exception {
         Map<String, String> fields = new HashMap<>();
         try (JsonReader reader = new JsonReader(new StringReader(json))) {
@@ -27,7 +45,7 @@ final class CoordinatorInstruction {
                 String name = reader.nextName();
                 if (fields.containsKey(name)) throw new IllegalArgumentException("Duplicate field: " + name);
                 boolean number = "timeout_ms".equals(name);
-                Set<String> allowed = Set.of("instruction_id","action","target_text","input_text","adapter","scenario","query","market","side","sport","line","minimum_price","stake","timeout_ms","place_bet","execution_mode","confirmation_status","view","event_url","kickoff_utc","selection_name","price");
+                Set<String> allowed = Set.of("instruction_id","action","target_text","input_text","adapter","scenario","query","market","side","sport","line","minimum_price","stake","timeout_ms","place_bet","execution_mode","confirmation_status","view","event_url","kickoff_utc","selection_name","price","aliases");
                 if (!number && !allowed.contains(name)) throw new IllegalArgumentException("Unknown field: " + name);
                 if ("line".equals(name) && reader.peek() == JsonToken.NULL) { reader.nextNull(); fields.put(name, ""); continue; }
                 if (reader.peek() != (number ? JsonToken.NUMBER : JsonToken.STRING)) throw new IllegalArgumentException("Wrong field type: " + name);
@@ -101,7 +119,7 @@ final class CoordinatorInstruction {
             if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid SESSION_PROBE schema");
         } else {
             expected=Set.of("instruction_id","action","adapter","scenario","query","market","side","sport","minimum_price","stake","timeout_ms");
-            java.util.HashSet<String> allowedExtra = new java.util.HashSet<>(java.util.Arrays.asList("place_bet","execution_mode","confirmation_status","line","event_url","kickoff_utc"));
+            java.util.HashSet<String> allowedExtra = new java.util.HashSet<>(java.util.Arrays.asList("place_bet","execution_mode","confirmation_status","line","event_url","kickoff_utc","aliases"));
             if(fields.containsKey("event_url") && !EventPage.validUrl(fields.get("event_url"))) throw new IllegalArgumentException("Invalid event_url");
             if(fields.containsKey("kickoff_utc") && !fields.get("kickoff_utc").matches("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"))
                 throw new IllegalArgumentException("Invalid kickoff_utc");
@@ -153,6 +171,7 @@ final class CoordinatorInstruction {
         kickoffUtc = fields.getOrDefault("kickoff_utc", "");
         selectionName = fields.getOrDefault("selection_name", "");
         price = fields.getOrDefault("price", "");
+        aliases = parseAliases(fields.getOrDefault("aliases", ""));
         timeout = Integer.parseInt(fields.get("timeout_ms"));
         if (timeout < 100 || timeout > 600000) throw new IllegalArgumentException("timeout_ms must be 100..600000");
         runId = "c_" + Base64.encodeToString(MessageDigest.getInstance("SHA-256").digest(id.getBytes(StandardCharsets.UTF_8)), Base64.NO_WRAP | Base64.URL_SAFE | Base64.NO_PADDING);
