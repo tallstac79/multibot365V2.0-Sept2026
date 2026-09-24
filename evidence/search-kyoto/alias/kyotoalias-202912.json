@@ -1,0 +1,2390 @@
+{
+ "result": {
+  "instruction_id": "kyotoalias-202912",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "READY_STATE",
+  "duration_ms": 218553,
+  "progress": {
+   "stage": "CLEAR_BETSLIP",
+   "elapsed_ms": 218304,
+   "last_progress_at_ms": 1790278364256,
+   "instruction_id": "kyotoalias-202912",
+   "stages": [
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 120503,
+     "at_ms": 1790278270453
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 122404,
+     "at_ms": 1790278270453
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 122465,
+     "at_ms": 1790278276349,
+     "timing": {
+      "stage": "ENTER_QUERY",
+      "start_elapsed_ms": 116567,
+      "start_ts_ms": 1790278270418,
+      "end_elapsed_ms": 134695,
+      "end_ts_ms": 1790278288546,
+      "duration_ms": 18128,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 134646,
+     "at_ms": 1790278276349
+    },
+    {
+     "stage": "QUERY_VERIFY",
+     "elapsed_ms": 134695,
+     "at_ms": 1790278288579,
+     "timing": {
+      "stage": "QUERY_VERIFY",
+      "start_elapsed_ms": 134695,
+      "start_ts_ms": 1790278288546,
+      "end_elapsed_ms": 136563,
+      "end_ts_ms": 1790278290415,
+      "duration_ms": 1868,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "QUERY_VERIFY",
+     "elapsed_ms": 134729,
+     "at_ms": 1790278288579
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 136563,
+     "at_ms": 1790278290580,
+     "timing": {
+      "stage": "RESULTS_WAIT",
+      "start_elapsed_ms": 136563,
+      "start_ts_ms": 1790278290416,
+      "end_elapsed_ms": 140477,
+      "end_ts_ms": 1790278294327,
+      "duration_ms": 3914,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 136732,
+     "at_ms": 1790278290580
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 138566,
+     "at_ms": 1790278290580
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 138635,
+     "at_ms": 1790278290580
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 140396,
+     "at_ms": 1790278290580
+    },
+    {
+     "stage": "FIXTURE_VERIFY",
+     "elapsed_ms": 140477,
+     "at_ms": 1790278294357,
+     "timing": {
+      "stage": "FIXTURE_VERIFY",
+      "start_elapsed_ms": 140477,
+      "start_ts_ms": 1790278294327,
+      "end_elapsed_ms": 142349,
+      "end_ts_ms": 1790278296199,
+      "duration_ms": 1872,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "FIXTURE_VERIFY",
+     "elapsed_ms": 140509,
+     "at_ms": 1790278294357
+    },
+    {
+     "stage": "FIXTURE_VERIFY",
+     "elapsed_ms": 142279,
+     "at_ms": 1790278294357
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 142349,
+     "at_ms": 1790278296231,
+     "timing": {
+      "stage": "SELECT_FIXTURE",
+      "start_elapsed_ms": 142349,
+      "start_ts_ms": 1790278296200,
+      "end_elapsed_ms": 144769,
+      "end_ts_ms": 1790278298620,
+      "duration_ms": 2420,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 142382,
+     "at_ms": 1790278296231
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 144112,
+     "at_ms": 1790278296231
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 144177,
+     "at_ms": 1790278296231
+    },
+    {
+     "stage": "VERIFY_EVENT",
+     "elapsed_ms": 144769,
+     "at_ms": 1790278298655,
+     "timing": {
+      "stage": "VERIFY_EVENT",
+      "start_elapsed_ms": 144769,
+      "start_ts_ms": 1790278298620,
+      "end_elapsed_ms": 149265,
+      "end_ts_ms": 1790278303115,
+      "duration_ms": 4496,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_EVENT",
+     "elapsed_ms": 146008,
+     "at_ms": 1790278298655
+    },
+    {
+     "stage": "VERIFY_EVENT",
+     "elapsed_ms": 149196,
+     "at_ms": 1790278298655
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 149265,
+     "at_ms": 1790278303147,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 149265,
+      "start_ts_ms": 1790278303115,
+      "end_elapsed_ms": 162170,
+      "end_ts_ms": 1790278316020,
+      "duration_ms": 12905,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 149299,
+     "at_ms": 1790278303147
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 155341,
+     "at_ms": 1790278303147
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 156039,
+     "at_ms": 1790278303147
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 162078,
+     "at_ms": 1790278303147
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 162170,
+     "at_ms": 1790278316056,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 162170,
+      "start_ts_ms": 1790278316020,
+      "end_elapsed_ms": 162207,
+      "end_ts_ms": 1790278316057,
+      "duration_ms": 37,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 162207,
+     "at_ms": 1790278316094,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 162207,
+      "start_ts_ms": 1790278316057,
+      "end_elapsed_ms": 162245,
+      "end_ts_ms": 1790278316096,
+      "duration_ms": 38,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 162245,
+     "at_ms": 1790278316133,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 162245,
+      "start_ts_ms": 1790278316096,
+      "end_elapsed_ms": 162285,
+      "end_ts_ms": 1790278316136,
+      "duration_ms": 40,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 162285,
+     "at_ms": 1790278316173,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 162285,
+      "start_ts_ms": 1790278316136,
+      "end_elapsed_ms": 175959,
+      "end_ts_ms": 1790278329810,
+      "duration_ms": 13674,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 162325,
+     "at_ms": 1790278316173
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 168322,
+     "at_ms": 1790278316173
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 169167,
+     "at_ms": 1790278316173
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 175270,
+     "at_ms": 1790278316173
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 175369,
+     "at_ms": 1790278316173
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 175959,
+     "at_ms": 1790278329843,
+     "timing": {
+      "stage": "ENTER_STAKE",
+      "start_elapsed_ms": 175959,
+      "start_ts_ms": 1790278329810,
+      "end_elapsed_ms": 206733,
+      "end_ts_ms": 1790278360584,
+      "duration_ms": 30774,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 175994,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 179050,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 179539,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 182414,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 182487,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 183977,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 188357,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 188415,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 189224,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 190060,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 190900,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 191758,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 192602,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 193452,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 194310,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 195165,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 196031,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 196887,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 197727,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 199072,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 202556,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 202630,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 203821,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 206643,
+     "at_ms": 1790278329843
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 206733,
+     "at_ms": 1790278360615,
+     "timing": {
+      "stage": "VERIFY_FINAL_STATE",
+      "start_elapsed_ms": 206733,
+      "start_ts_ms": 1790278360584,
+      "end_elapsed_ms": 218304,
+      "end_ts_ms": 1790278372154,
+      "duration_ms": 11571,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 207469,
+     "at_ms": 1790278360615
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 210268,
+     "at_ms": 1790278360615
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 210375,
+     "at_ms": 1790278364256
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 210408,
+     "at_ms": 1790278364256
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 213162,
+     "at_ms": 1790278364256
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 213228,
+     "at_ms": 1790278364256
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 215020,
+     "at_ms": 1790278364256
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 218242,
+     "at_ms": 1790278364256
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 218304,
+     "at_ms": 1790278364256
+    }
+   ]
+  },
+  "device_stage": "CLEAR_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_tQZ7febv265WDf4XafNPhXijqMRjcjjEk1K-cmipePc",
+  "fixture_name": "Kyoto Hannaryz v Shiga Lakes",
+  "home": "Kyoto Hannaryz",
+  "away": "Shiga Lakes",
+  "competition": "I Kyoto Hannaryz >",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-4.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Kyoto Hannaryz",
+   "bounds": [
+    301,
+    655,
+    345,
+    705
+   ]
+  },
+  "final_state": {
+   "home": "Kyoto Hannaryz",
+   "away": "Shiga Lakes",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-4.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "ready_state": {
+   "fixture_home": "Kyoto Hannaryz",
+   "fixture_away": "Shiga Lakes",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Kyoto Hannaryz",
+   "line": "-4.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "verification_detail": "READY_STATE: session, selection, price and stake verified; stopped before wager",
+  "betslip_clear": {
+   "tapped": true,
+   "bounds": [
+    17,
+    1178,
+    45,
+    1210
+   ],
+   "place_bet_still_visible": false
+  }
+ },
+ "run": {
+  "run_id": "c_tQZ7febv265WDf4XafNPhXijqMRjcjjEk1K-cmipePc",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790278153851,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 1,
+    "wall_ts_ms": 1790278153851
+   },
+   {
+    "phase": "SPORTS_HOME",
+    "elapsed_ms": 26,
+    "wall_ts_ms": 1790278153877
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 39,
+    "wall_ts_ms": 1790278153890
+   },
+   {
+    "phase": "CAPTURE_home",
+    "elapsed_ms": 4129,
+    "wall_ts_ms": 1790278157982
+   },
+   {
+    "phase": "CAPTURED_home",
+    "elapsed_ms": 7294,
+    "wall_ts_ms": 1790278161145
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 7369,
+    "wall_ts_ms": 1790278161219
+   },
+   {
+    "phase": "CAPTURE_home_settle",
+    "elapsed_ms": 11386,
+    "wall_ts_ms": 1790278165238
+   },
+   {
+    "phase": "CAPTURED_home_settle",
+    "elapsed_ms": 15198,
+    "wall_ts_ms": 1790278169051
+   },
+   {
+    "phase": "CAPTURE_home_ready",
+    "elapsed_ms": 15233,
+    "wall_ts_ms": 1790278169083
+   },
+   {
+    "phase": "CAPTURED_home_ready",
+    "elapsed_ms": 19135,
+    "wall_ts_ms": 1790278172986
+   },
+   {
+    "phase": "SESSION_CHECK",
+    "elapsed_ms": 19204,
+    "wall_ts_ms": 1790278173055
+   },
+   {
+    "phase": "CAPTURE_session",
+    "elapsed_ms": 19225,
+    "wall_ts_ms": 1790278173076
+   },
+   {
+    "phase": "CAPTURED_session",
+    "elapsed_ms": 23154,
+    "wall_ts_ms": 1790278177007
+   },
+   {
+    "phase": "OPEN_SEARCH",
+    "elapsed_ms": 23290,
+    "wall_ts_ms": 1790278177142
+   },
+   {
+    "phase": "SPORTS_CONTEXT",
+    "elapsed_ms": 23324,
+    "wall_ts_ms": 1790278177176
+   },
+   {
+    "phase": "CAPTURE_sports_context_pre",
+    "elapsed_ms": 23363,
+    "wall_ts_ms": 1790278177214
+   },
+   {
+    "phase": "CAPTURED_sports_context_pre",
+    "elapsed_ms": 27247,
+    "wall_ts_ms": 1790278181100
+   },
+   {
+    "phase": "OPEN_SEARCH",
+    "elapsed_ms": 27372,
+    "wall_ts_ms": 1790278181223
+   },
+   {
+    "phase": "CAPTURE_search_button",
+    "elapsed_ms": 27406,
+    "wall_ts_ms": 1790278181256
+   },
+   {
+    "phase": "CAPTURED_search_button",
+    "elapsed_ms": 31202,
+    "wall_ts_ms": 1790278185052
+   },
+   {
+    "phase": "CAPTURE_search_button_clear",
+    "elapsed_ms": 31242,
+    "wall_ts_ms": 1790278185093
+   },
+   {
+    "phase": "CAPTURED_search_button_clear",
+    "elapsed_ms": 35114,
+    "wall_ts_ms": 1790278188967
+   },
+   {
+    "effect": "gesture",
+    "target": "Search",
+    "bounds": [
+     47,
+     268,
+     200,
+     313
+    ],
+    "elapsed_ms": 35253
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 35253,
+    "wall_ts_ms": 1790278189104
+   },
+   {
+    "phase": "CAPTURE_search_after_0_5s",
+    "elapsed_ms": 36356,
+    "wall_ts_ms": 1790278190207
+   },
+   {
+    "phase": "CAPTURED_search_after_0_5s",
+    "elapsed_ms": 38298,
+    "wall_ts_ms": 1790278192149
+   },
+   {
+    "phase": "CAPTURE_search_after_1_5s",
+    "elapsed_ms": 39361,
+    "wall_ts_ms": 1790278193212
+   },
+   {
+    "phase": "CAPTURED_search_after_1_5s",
+    "elapsed_ms": 41180,
+    "wall_ts_ms": 1790278195032
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 41266,
+    "wall_ts_ms": 1790278195116
+   },
+   {
+    "phase": "FOCUS",
+    "elapsed_ms": 41293,
+    "wall_ts_ms": 1790278195144
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 41321,
+    "wall_ts_ms": 1790278195171
+   },
+   {
+    "phase": "CAPTURE_query_pre",
+    "elapsed_ms": 41349,
+    "wall_ts_ms": 1790278195200
+   },
+   {
+    "phase": "CAPTURED_query_pre",
+    "elapsed_ms": 43181,
+    "wall_ts_ms": 1790278197031
+   },
+   {
+    "phase": "CAPTURE_search_field_0",
+    "elapsed_ms": 43228,
+    "wall_ts_ms": 1790278197079
+   },
+   {
+    "phase": "CAPTURED_search_field_0",
+    "elapsed_ms": 44995,
+    "wall_ts_ms": 1790278198845
+   },
+   {
+    "phase": "CAPTURE_query_ready",
+    "elapsed_ms": 45050,
+    "wall_ts_ms": 1790278198901
+   },
+   {
+    "phase": "CAPTURED_query_ready",
+    "elapsed_ms": 46970,
+    "wall_ts_ms": 1790278200823
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 47122,
+    "wall_ts_ms": 1790278200972
+   },
+   {
+    "phase": "QUERY_VERIFIED",
+    "elapsed_ms": 59644,
+    "wall_ts_ms": 1790278213495
+   },
+   {
+    "phase": "QUERY_VERIFY",
+    "elapsed_ms": 59699,
+    "wall_ts_ms": 1790278213549
+   },
+   {
+    "phase": "DISMISS_KEYBOARD",
+    "elapsed_ms": 59736,
+    "wall_ts_ms": 1790278213587
+   },
+   {
+    "phase": "RESULTS_WAIT",
+    "elapsed_ms": 61575,
+    "wall_ts_ms": 1790278215426
+   },
+   {
+    "phase": "CAPTURE_query_results",
+    "elapsed_ms": 61731,
+    "wall_ts_ms": 1790278215582
+   },
+   {
+    "phase": "CAPTURED_query_results",
+    "elapsed_ms": 63794,
+    "wall_ts_ms": 1790278217645
+   },
+   {
+    "phase": "CAPTURE_casino_recover_pre",
+    "elapsed_ms": 63847,
+    "wall_ts_ms": 1790278217698
+   },
+   {
+    "phase": "CAPTURED_casino_recover_pre",
+    "elapsed_ms": 65889,
+    "wall_ts_ms": 1790278219739
+   },
+   {
+    "effect": "gesture",
+    "target": "Close casino search",
+    "bounds": [
+     38,
+     175,
+     682,
+     208
+    ],
+    "elapsed_ms": 65950
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 65950,
+    "wall_ts_ms": 1790278219800
+   },
+   {
+    "phase": "CAPTURE_sports_context_pre",
+    "elapsed_ms": 67252,
+    "wall_ts_ms": 1790278221105
+   },
+   {
+    "phase": "CAPTURED_sports_context_pre",
+    "elapsed_ms": 69218,
+    "wall_ts_ms": 1790278223071
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 69407,
+    "wall_ts_ms": 1790278223258
+   },
+   {
+    "phase": "CAPTURE_sports_context_after_home",
+    "elapsed_ms": 72342,
+    "wall_ts_ms": 1790278226195
+   },
+   {
+    "phase": "CAPTURED_sports_context_after_home",
+    "elapsed_ms": 74992,
+    "wall_ts_ms": 1790278228844
+   },
+   {
+    "phase": "CAPTURE_search_button",
+    "elapsed_ms": 75034,
+    "wall_ts_ms": 1790278228885
+   },
+   {
+    "phase": "CAPTURED_search_button",
+    "elapsed_ms": 78918,
+    "wall_ts_ms": 1790278232768
+   },
+   {
+    "phase": "CAPTURE_search_button_clear",
+    "elapsed_ms": 78991,
+    "wall_ts_ms": 1790278232842
+   },
+   {
+    "phase": "CAPTURED_search_button_clear",
+    "elapsed_ms": 82949,
+    "wall_ts_ms": 1790278236800
+   },
+   {
+    "effect": "gesture",
+    "target": "Search",
+    "bounds": [
+     47,
+     268,
+     200,
+     313
+    ],
+    "elapsed_ms": 83007
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 83007,
+    "wall_ts_ms": 1790278236857
+   },
+   {
+    "phase": "CAPTURE_search_after_0_5s",
+    "elapsed_ms": 84098,
+    "wall_ts_ms": 1790278237948
+   },
+   {
+    "phase": "CAPTURED_search_after_0_5s",
+    "elapsed_ms": 85457,
+    "wall_ts_ms": 1790278239309
+   },
+   {
+    "phase": "CAPTURE_search_after_1_5s",
+    "elapsed_ms": 86644,
+    "wall_ts_ms": 1790278240495
+   },
+   {
+    "phase": "CAPTURED_search_after_1_5s",
+    "elapsed_ms": 88554,
+    "wall_ts_ms": 1790278242405
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 88619,
+    "wall_ts_ms": 1790278242470
+   },
+   {
+    "phase": "CAPTURE_query_pre",
+    "elapsed_ms": 88656,
+    "wall_ts_ms": 1790278242507
+   },
+   {
+    "phase": "CAPTURED_query_pre",
+    "elapsed_ms": 90573,
+    "wall_ts_ms": 1790278244423
+   },
+   {
+    "phase": "CAPTURE_search_field_0",
+    "elapsed_ms": 90641,
+    "wall_ts_ms": 1790278244492
+   },
+   {
+    "phase": "CAPTURED_search_field_0",
+    "elapsed_ms": 92556,
+    "wall_ts_ms": 1790278246407
+   },
+   {
+    "phase": "CAPTURE_query_ready",
+    "elapsed_ms": 92626,
+    "wall_ts_ms": 1790278246477
+   },
+   {
+    "phase": "CAPTURED_query_ready",
+    "elapsed_ms": 94567,
+    "wall_ts_ms": 1790278248417
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 94632,
+    "wall_ts_ms": 1790278248482
+   },
+   {
+    "phase": "QUERY_VERIFIED",
+    "elapsed_ms": 107072,
+    "wall_ts_ms": 1790278260923
+   },
+   {
+    "phase": "QUERY_VERIFY",
+    "elapsed_ms": 107134,
+    "wall_ts_ms": 1790278260985
+   },
+   {
+    "phase": "DISMISS_KEYBOARD",
+    "elapsed_ms": 107172,
+    "wall_ts_ms": 1790278261023
+   },
+   {
+    "phase": "RESULTS_WAIT",
+    "elapsed_ms": 109011,
+    "wall_ts_ms": 1790278262865
+   },
+   {
+    "phase": "CAPTURE_query_results",
+    "elapsed_ms": 109187,
+    "wall_ts_ms": 1790278263038
+   },
+   {
+    "phase": "CAPTURED_query_results",
+    "elapsed_ms": 111257,
+    "wall_ts_ms": 1790278265107
+   },
+   {
+    "phase": "CAPTURE_search_field_0",
+    "elapsed_ms": 111319,
+    "wall_ts_ms": 1790278265170
+   },
+   {
+    "phase": "CAPTURED_search_field_0",
+    "elapsed_ms": 113326,
+    "wall_ts_ms": 1790278267177
+   },
+   {
+    "effect": "gesture",
+    "target": "Clear search (X)",
+    "bounds": [
+     567,
+     181,
+     590,
+     204
+    ],
+    "elapsed_ms": 113383
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 113383,
+    "wall_ts_ms": 1790278267233
+   },
+   {
+    "phase": "CAPTURE_search_field_1",
+    "elapsed_ms": 114576,
+    "wall_ts_ms": 1790278268427
+   },
+   {
+    "phase": "CAPTURED_search_field_1",
+    "elapsed_ms": 116503,
+    "wall_ts_ms": 1790278270354
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 116567,
+    "wall_ts_ms": 1790278270418
+   },
+   {
+    "phase": "CAPTURE_query_pre",
+    "elapsed_ms": 116605,
+    "wall_ts_ms": 1790278270456
+   },
+   {
+    "phase": "CAPTURED_query_pre",
+    "elapsed_ms": 118523,
+    "wall_ts_ms": 1790278272373
+   },
+   {
+    "phase": "CAPTURE_search_field_0",
+    "elapsed_ms": 118586,
+    "wall_ts_ms": 1790278272437
+   },
+   {
+    "phase": "CAPTURED_search_field_0",
+    "elapsed_ms": 120441,
+    "wall_ts_ms": 1790278274292
+   },
+   {
+    "phase": "CAPTURE_query_ready",
+    "elapsed_ms": 120503,
+    "wall_ts_ms": 1790278274353
+   },
+   {
+    "phase": "CAPTURED_query_ready",
+    "elapsed_ms": 122404,
+    "wall_ts_ms": 1790278276255
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 122465,
+    "wall_ts_ms": 1790278276315
+   },
+   {
+    "phase": "QUERY_VERIFIED",
+    "elapsed_ms": 134646,
+    "wall_ts_ms": 1790278288497
+   },
+   {
+    "phase": "QUERY_VERIFY",
+    "elapsed_ms": 134695,
+    "wall_ts_ms": 1790278288546
+   },
+   {
+    "phase": "DISMISS_KEYBOARD",
+    "elapsed_ms": 134729,
+    "wall_ts_ms": 1790278288580
+   },
+   {
+    "phase": "RESULTS_WAIT",
+    "elapsed_ms": 136563,
+    "wall_ts_ms": 1790278290417
+   },
+   {
+    "phase": "CAPTURE_query_results",
+    "elapsed_ms": 136732,
+    "wall_ts_ms": 1790278290583
+   },
+   {
+    "phase": "CAPTURED_query_results",
+    "elapsed_ms": 138566,
+    "wall_ts_ms": 1790278292417
+   },
+   {
+    "phase": "CAPTURE_query_results_sports",
+    "elapsed_ms": 138635,
+    "wall_ts_ms": 1790278292485
+   },
+   {
+    "phase": "CAPTURED_query_results_sports",
+    "elapsed_ms": 140396,
+    "wall_ts_ms": 1790278294246
+   },
+   {
+    "phase": "FIXTURE_VERIFY",
+    "elapsed_ms": 140477,
+    "wall_ts_ms": 1790278294327
+   },
+   {
+    "phase": "CAPTURE_fixtures",
+    "elapsed_ms": 140509,
+    "wall_ts_ms": 1790278294360
+   },
+   {
+    "phase": "CAPTURED_fixtures",
+    "elapsed_ms": 142279,
+    "wall_ts_ms": 1790278296129
+   },
+   {
+    "phase": "SELECT_FIXTURE",
+    "elapsed_ms": 142349,
+    "wall_ts_ms": 1790278296200
+   },
+   {
+    "phase": "CAPTURE_fixture_preflight",
+    "elapsed_ms": 142382,
+    "wall_ts_ms": 1790278296233
+   },
+   {
+    "phase": "CAPTURED_fixture_preflight",
+    "elapsed_ms": 144112,
+    "wall_ts_ms": 1790278297962
+   },
+   {
+    "effect": "gesture",
+    "target": "Kyoto Hannaryz v Shiga Lakes",
+    "bounds": [
+     20,
+     464,
+     621,
+     487
+    ],
+    "elapsed_ms": 144177
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 144177,
+    "wall_ts_ms": 1790278298027
+   },
+   {
+    "phase": "VERIFY_EVENT",
+    "elapsed_ms": 144769,
+    "wall_ts_ms": 1790278298620
+   },
+   {
+    "phase": "CAPTURE_event",
+    "elapsed_ms": 146008,
+    "wall_ts_ms": 1790278299859
+   },
+   {
+    "phase": "CAPTURED_event",
+    "elapsed_ms": 149196,
+    "wall_ts_ms": 1790278303046
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 149265,
+    "wall_ts_ms": 1790278303116
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 149299,
+    "wall_ts_ms": 1790278303149
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 155341,
+    "wall_ts_ms": 1790278309192
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 156039,
+    "wall_ts_ms": 1790278309890
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 162078,
+    "wall_ts_ms": 1790278315928
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 162170,
+    "wall_ts_ms": 1790278316020
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 162207,
+    "wall_ts_ms": 1790278316057
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 162245,
+    "wall_ts_ms": 1790278316096
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 162285,
+    "wall_ts_ms": 1790278316136
+   },
+   {
+    "phase": "CAPTURE_selection_preflight",
+    "elapsed_ms": 162325,
+    "wall_ts_ms": 1790278316176
+   },
+   {
+    "phase": "CAPTURED_selection_preflight",
+    "elapsed_ms": 168322,
+    "wall_ts_ms": 1790278322174
+   },
+   {
+    "phase": "CAPTURE_selection_preflight",
+    "elapsed_ms": 169167,
+    "wall_ts_ms": 1790278323018
+   },
+   {
+    "phase": "CAPTURED_selection_preflight",
+    "elapsed_ms": 175270,
+    "wall_ts_ms": 1790278329121
+   },
+   {
+    "effect": "gesture",
+    "target": "SPREAD / HOME / -4.5 / 1.83",
+    "bounds": [
+     301,
+     655,
+     345,
+     705
+    ],
+    "elapsed_ms": 175369
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 175369,
+    "wall_ts_ms": 1790278329219
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 175959,
+    "wall_ts_ms": 1790278329810
+   },
+   {
+    "phase": "CAPTURE_overlay_check",
+    "elapsed_ms": 175994,
+    "wall_ts_ms": 1790278329844
+   },
+   {
+    "phase": "CAPTURED_overlay_check",
+    "elapsed_ms": 179050,
+    "wall_ts_ms": 1790278332901
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 179539,
+    "wall_ts_ms": 1790278333390
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 182414,
+    "wall_ts_ms": 1790278336264
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     20,
+     1327,
+     214,
+     1371
+    ],
+    "elapsed_ms": 182486
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 182487,
+    "wall_ts_ms": 1790278336337
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 183977,
+    "wall_ts_ms": 1790278337828
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 188357,
+    "wall_ts_ms": 1790278342207
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     570,
+     1228,
+     630,
+     1272
+    ],
+    "elapsed_ms": 188414
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 188415,
+    "wall_ts_ms": 1790278342265
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     570,
+     1228,
+     630,
+     1272
+    ],
+    "elapsed_ms": 189224
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 189224,
+    "wall_ts_ms": 1790278343075
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     570,
+     1228,
+     630,
+     1272
+    ],
+    "elapsed_ms": 190060
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 190060,
+    "wall_ts_ms": 1790278343911
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     570,
+     1228,
+     630,
+     1272
+    ],
+    "elapsed_ms": 190899
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 190900,
+    "wall_ts_ms": 1790278344751
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     570,
+     1228,
+     630,
+     1272
+    ],
+    "elapsed_ms": 191758
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 191758,
+    "wall_ts_ms": 1790278345609
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     570,
+     1228,
+     630,
+     1272
+    ],
+    "elapsed_ms": 192602
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 192602,
+    "wall_ts_ms": 1790278346453
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     570,
+     1228,
+     630,
+     1272
+    ],
+    "elapsed_ms": 193452
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 193452,
+    "wall_ts_ms": 1790278347303
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     570,
+     1228,
+     630,
+     1272
+    ],
+    "elapsed_ms": 194309
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 194310,
+    "wall_ts_ms": 1790278348160
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 195164
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 195165,
+    "wall_ts_ms": 1790278349017
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     89,
+     1228,
+     149,
+     1272
+    ],
+    "elapsed_ms": 196031
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 196031,
+    "wall_ts_ms": 1790278349882
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     89,
+     975,
+     149,
+     1019
+    ],
+    "elapsed_ms": 196887
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 196887,
+    "wall_ts_ms": 1790278350738
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 197727
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 197727,
+    "wall_ts_ms": 1790278351578
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 199072,
+    "wall_ts_ms": 1790278352923
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 202556,
+    "wall_ts_ms": 1790278356407
+   },
+   {
+    "effect": "gesture",
+    "target": "Done",
+    "bounds": [
+     311,
+     1333,
+     587,
+     1367
+    ],
+    "elapsed_ms": 202630
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 202630,
+    "wall_ts_ms": 1790278356480
+   },
+   {
+    "phase": "CAPTURE_betslip_stake",
+    "elapsed_ms": 203821,
+    "wall_ts_ms": 1790278357672
+   },
+   {
+    "phase": "CAPTURED_betslip_stake",
+    "elapsed_ms": 206643,
+    "wall_ts_ms": 1790278360493
+   },
+   {
+    "phase": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 206733,
+    "wall_ts_ms": 1790278360584
+   },
+   {
+    "phase": "CAPTURE_final",
+    "elapsed_ms": 207469,
+    "wall_ts_ms": 1790278361319
+   },
+   {
+    "phase": "CAPTURED_final",
+    "elapsed_ms": 210268,
+    "wall_ts_ms": 1790278364119
+   },
+   {
+    "phase": "CLEAR_BETSLIP",
+    "elapsed_ms": 210375,
+    "wall_ts_ms": 1790278364226
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_pre",
+    "elapsed_ms": 210408,
+    "wall_ts_ms": 1790278364259
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_pre",
+    "elapsed_ms": 213162,
+    "wall_ts_ms": 1790278367013
+   },
+   {
+    "effect": "gesture",
+    "target": "Remove selection from betslip",
+    "bounds": [
+     17,
+     1178,
+     45,
+     1210
+    ],
+    "elapsed_ms": 213228
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 213228,
+    "wall_ts_ms": 1790278367078
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_after",
+    "elapsed_ms": 215020,
+    "wall_ts_ms": 1790278368871
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_after",
+    "elapsed_ms": 218242,
+    "wall_ts_ms": 1790278372092
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 218304,
+    "wall_ts_ms": 1790278372154
+   }
+  ],
+  "screenshots": [
+   "s001_home.png",
+   "s002_home_settle.png",
+   "s003_home_ready.png",
+   "s004_session.png",
+   "s005_sports_context_pre.png",
+   "s006_search_button.png",
+   "s007_search_button_clear.png",
+   "s008_search_after_0_5s.png",
+   "s009_search_after_1_5s.png",
+   "s010_query_pre.png",
+   "s011_search_field_0.png",
+   "s012_query_ready.png",
+   "s013_query_results.png",
+   "s014_casino_recover_pre.png",
+   "s015_sports_context_pre.png",
+   "s016_sports_context_after_home.png",
+   "s017_search_button.png",
+   "s018_search_button_clear.png",
+   "s019_search_after_0_5s.png",
+   "s020_search_after_1_5s.png",
+   "s021_query_pre.png",
+   "s022_search_field_0.png",
+   "s023_query_ready.png",
+   "s024_query_results.png",
+   "s025_search_field_0.png",
+   "s026_search_field_1.png",
+   "s027_query_pre.png",
+   "s028_search_field_0.png",
+   "s029_query_ready.png",
+   "s030_query_results.png",
+   "s031_query_results_sports.png",
+   "s032_fixtures.png",
+   "s033_fixture_preflight.png",
+   "s034_event.png",
+   "s035_markets.png",
+   "s036_markets.png",
+   "s037_selection_preflight.png",
+   "s038_selection_preflight.png",
+   "s039_overlay_check.png",
+   "s040_betslip_pre_stake.png",
+   "s041_stake_ui.png",
+   "s042_stake_typed.png",
+   "s043_betslip_stake.png",
+   "s044_final.png",
+   "s045_clear_betslip_pre.png",
+   "s046_clear_betslip_after.png"
+  ],
+  "gesture_attempts": 21,
+  "stage_timings": [
+   {
+    "stage": "SPORTS_HOME",
+    "start_elapsed_ms": 26,
+    "start_ts_ms": 1790278153877,
+    "end_elapsed_ms": 39,
+    "end_ts_ms": 1790278153890,
+    "duration_ms": 13,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 39,
+    "start_ts_ms": 1790278153890,
+    "end_elapsed_ms": 19204,
+    "end_ts_ms": 1790278173054,
+    "duration_ms": 19165,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "start_elapsed_ms": 19204,
+    "start_ts_ms": 1790278173054,
+    "end_elapsed_ms": 23290,
+    "end_ts_ms": 1790278177141,
+    "duration_ms": 4086,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 23290,
+    "start_ts_ms": 1790278177141,
+    "end_elapsed_ms": 23324,
+    "end_ts_ms": 1790278177175,
+    "duration_ms": 34,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "start_elapsed_ms": 23324,
+    "start_ts_ms": 1790278177175,
+    "end_elapsed_ms": 27372,
+    "end_ts_ms": 1790278181223,
+    "duration_ms": 4048,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 27372,
+    "start_ts_ms": 1790278181223,
+    "end_elapsed_ms": 41266,
+    "end_ts_ms": 1790278195116,
+    "duration_ms": 13894,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 41266,
+    "start_ts_ms": 1790278195116,
+    "end_elapsed_ms": 41293,
+    "end_ts_ms": 1790278195144,
+    "duration_ms": 27,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FOCUS",
+    "start_elapsed_ms": 41293,
+    "start_ts_ms": 1790278195144,
+    "end_elapsed_ms": 41321,
+    "end_ts_ms": 1790278195171,
+    "duration_ms": 28,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 41321,
+    "start_ts_ms": 1790278195171,
+    "end_elapsed_ms": 59699,
+    "end_ts_ms": 1790278213549,
+    "duration_ms": 18378,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "start_elapsed_ms": 59699,
+    "start_ts_ms": 1790278213549,
+    "end_elapsed_ms": 61575,
+    "end_ts_ms": 1790278215426,
+    "duration_ms": 1876,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "start_elapsed_ms": 61575,
+    "start_ts_ms": 1790278215426,
+    "end_elapsed_ms": 69407,
+    "end_ts_ms": 1790278223258,
+    "duration_ms": 7832,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 69407,
+    "start_ts_ms": 1790278223258,
+    "end_elapsed_ms": 88619,
+    "end_ts_ms": 1790278242469,
+    "duration_ms": 19212,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 88619,
+    "start_ts_ms": 1790278242469,
+    "end_elapsed_ms": 107134,
+    "end_ts_ms": 1790278260985,
+    "duration_ms": 18515,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "start_elapsed_ms": 107134,
+    "start_ts_ms": 1790278260985,
+    "end_elapsed_ms": 109011,
+    "end_ts_ms": 1790278262864,
+    "duration_ms": 1877,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "start_elapsed_ms": 109011,
+    "start_ts_ms": 1790278262864,
+    "end_elapsed_ms": 116567,
+    "end_ts_ms": 1790278270418,
+    "duration_ms": 7556,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 116567,
+    "start_ts_ms": 1790278270418,
+    "end_elapsed_ms": 134695,
+    "end_ts_ms": 1790278288546,
+    "duration_ms": 18128,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "start_elapsed_ms": 134695,
+    "start_ts_ms": 1790278288546,
+    "end_elapsed_ms": 136563,
+    "end_ts_ms": 1790278290415,
+    "duration_ms": 1868,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "start_elapsed_ms": 136563,
+    "start_ts_ms": 1790278290416,
+    "end_elapsed_ms": 140477,
+    "end_ts_ms": 1790278294327,
+    "duration_ms": 3914,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "start_elapsed_ms": 140477,
+    "start_ts_ms": 1790278294327,
+    "end_elapsed_ms": 142349,
+    "end_ts_ms": 1790278296199,
+    "duration_ms": 1872,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "start_elapsed_ms": 142349,
+    "start_ts_ms": 1790278296200,
+    "end_elapsed_ms": 144769,
+    "end_ts_ms": 1790278298620,
+    "duration_ms": 2420,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "start_elapsed_ms": 144769,
+    "start_ts_ms": 1790278298620,
+    "end_elapsed_ms": 149265,
+    "end_ts_ms": 1790278303115,
+    "duration_ms": 4496,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 149265,
+    "start_ts_ms": 1790278303115,
+    "end_elapsed_ms": 162170,
+    "end_ts_ms": 1790278316020,
+    "duration_ms": 12905,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 162170,
+    "start_ts_ms": 1790278316020,
+    "end_elapsed_ms": 162207,
+    "end_ts_ms": 1790278316057,
+    "duration_ms": 37,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 162207,
+    "start_ts_ms": 1790278316057,
+    "end_elapsed_ms": 162245,
+    "end_ts_ms": 1790278316096,
+    "duration_ms": 38,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 162245,
+    "start_ts_ms": 1790278316096,
+    "end_elapsed_ms": 162285,
+    "end_ts_ms": 1790278316136,
+    "duration_ms": 40,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 162285,
+    "start_ts_ms": 1790278316136,
+    "end_elapsed_ms": 175959,
+    "end_ts_ms": 1790278329810,
+    "duration_ms": 13674,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 175959,
+    "start_ts_ms": 1790278329810,
+    "end_elapsed_ms": 206733,
+    "end_ts_ms": 1790278360584,
+    "duration_ms": 30774,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 206733,
+    "start_ts_ms": 1790278360584,
+    "end_elapsed_ms": 218304,
+    "end_ts_ms": 1790278372154,
+    "duration_ms": 11571,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "current_stage": "VERIFY_FINAL_STATE",
+  "session": "AUTHENTICATED",
+  "sports_context_pre_elapsed_ms": 2153,
+  "sports_context_foreground": "20:30 > 0 Ga ﬁ...‘ 100%. | m 2; bet365.com/#/AX/K‘3 + [23 E | Q Kyoto Hannaryz Stars X Close | Shigaake | Casino | 1 2 3 4 5 6 7 8 9 0 | q w e r t y u i o p | a s d f g h j k | | 4} z x c v b n m (E) | !#1 English (UK) Go | _",
+  "sports_context": "open_home_url",
+  "sports_context_elapsed_ms": 7784,
+  "search_control_text": "Q Search",
+  "search_control_bounds": [
+   53,
+   274,
+   194,
+   307
+  ],
+  "search_tap_bounds": [
+   47,
+   268,
+   200,
+   313
+  ],
+  "search_tap_xy": [
+   123,
+   290
+  ],
+  "search_tap_attempt": 1,
+  "search_ui_open": true,
+  "search_open_via": "verify_1_5s",
+  "search_query": "Kyoto Hannaryz",
+  "identity_home": "Kyoto Hannaryz",
+  "expected_away": "Shiga Lake Stars",
+  "identity_away": "Shiga Lake Stars",
+  "search_query_ladder": [
+   "Kyoto Hannaryz Shiga Lake Stars",
+   "Kyoto Hannaryz",
+   "Shiga Lake Stars"
+  ],
+  "search_ladder_index": 1,
+  "search_ladder_query": "Kyoto Hannaryz",
+  "search_bar_checks": [
+   {
+    "attempt": 0,
+    "bar": true,
+    "candidates": 1,
+    "text": "Search bet365...",
+    "empty": true,
+    "clear": null
+   },
+   {
+    "attempt": 0,
+    "bar": true,
+    "candidates": 1,
+    "text": "Search bet365...",
+    "empty": true,
+    "clear": null
+   },
+   {
+    "attempt": 0,
+    "bar": true,
+    "candidates": 1,
+    "text": "Kyoto Hannaryz Shiga Lake Stars|",
+    "empty": false,
+    "clear": [
+     567,
+     181,
+     590,
+     204
+    ]
+   },
+   {
+    "attempt": 1,
+    "bar": true,
+    "candidates": 1,
+    "text": "Search bet365...",
+    "empty": true,
+    "clear": null
+   },
+   {
+    "attempt": 0,
+    "bar": true,
+    "candidates": 1,
+    "text": "Search bet365...",
+    "empty": true,
+    "clear": null
+   }
+  ],
+  "query_evidence": {
+   "run_id": "c_tQZ7febv265WDf4XafNPhXijqMRjcjjEk1K-cmipePc",
+   "requested_text": "Kyoto Hannaryz",
+   "field_hint": "bet365...",
+   "package": "com.android.chrome",
+   "mechanism": "AccessibilityInputConnection.commitText",
+   "started_at_ms": 1790278276351,
+   "started_elapsed_ms": 11113470,
+   "timeout_ms": 60000,
+   "status": "PASS",
+   "field_bounds": [
+    124,
+    157,
+    487,
+    224
+   ],
+   "pre_screenshot": "files/visual/c_tQZ7febv265WDf4XafNPhXijqMRjcjjEk1K-cmipePc/before.png",
+   "post_screenshot": "files/visual/c_tQZ7febv265WDf4XafNPhXijqMRjcjjEk1K-cmipePc/after.png",
+   "verification_result": "EXACT_INPUT_OCR_SOFT",
+   "input_attempts": 1,
+   "events": [
+    {
+     "phase": "STARTED",
+     "elapsed_ms": 1
+    },
+    {
+     "phase": "LOCATING",
+     "elapsed_ms": 7
+    },
+    {
+     "phase": "FOCUS_DISPATCHING",
+     "elapsed_ms": 1897
+    },
+    {
+     "phase": "FOCUS_GESTURE_COMPLETED",
+     "elapsed_ms": 2010
+    },
+    {
+     "phase": "FOCUS_CONFIRMED",
+     "elapsed_ms": 2223
+    },
+    {
+     "phase": "INPUT_COMMITTING",
+     "elapsed_ms": 3901
+    },
+    {
+     "phase": "INPUT_SENT",
+     "elapsed_ms": 3913
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 4523
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 6766
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 9703
+    },
+    {
+     "phase": "FINISHED",
+     "elapsed_ms": 12075
+    }
+   ],
+   "phase": "FINISHED",
+   "focus_cycle": 0,
+   "focus_baseline_generation": 19,
+   "focus_tap_elapsed_ms": 11115367,
+   "focus_tap_xy": [
+    305,
+    190
+   ],
+   "editor_package": "com.android.chrome",
+   "editor_generation": 20,
+   "editor_start_elapsed_ms": 11115559,
+   "ime_window_visible": false,
+   "focus_signals": {
+    "fresh_generation": true,
+    "generation": 20,
+    "baseline_generation": 19,
+    "ime_window_visible": false,
+    "focus_cycle": 0
+   },
+   "focused_screenshot": "files/visual/c_tQZ7febv265WDf4XafNPhXijqMRjcjjEk1K-cmipePc/focused.png",
+   "focused_field_bounds": [
+    124,
+    157,
+    487,
+    224
+   ],
+   "wrong_field": false,
+   "prior_text_length": 0,
+   "visible_field_text": "to Hannaryz",
+   "ocr_verify_attempt": 2,
+   "post_field_bounds": [
+    124,
+    157,
+    487,
+    224
+   ],
+   "observed_text": "Kyoto Hannaryz",
+   "exact_input_match": true,
+   "visual_text_match": false,
+   "bounds_unchanged": true,
+   "focus_session_fresh": true,
+   "ocr_gate": "SOFT_SUPPORTING",
+   "ocr_soft_pass": true,
+   "detail": "Exact editor value verified; OCR supporting evidence imperfect but field/focus gates held",
+   "ended_at_ms": 1790278288425,
+   "duration_ms": 12075
+  },
+  "casino_only_rejected": true,
+  "casino_only_query": "Kyoto Hannaryz Shiga Lake Stars",
+  "sports_context_after": "2030 ® 0 (m ”#1.: 100%. | ED 2; bet365.com/#/HO/ + | '15? 3) ﬂ 9‘ | Faothall Scores Horses Greyhaunds | POR v WAL Nations League Racing Casino ENG | '35) UEFA Nations League View All | Thu 24 Sep 1 X 2 | 3 Portugal | . Wales | 19:45 | UEFA Nations League A Thu 19:45 | 3 Portugal v Wales . | III C) <",
+  "search_result_fixtures": [
+   {
+    "code": "535bc65b",
+    "home": "Kyoto Hannaryz",
+    "away": "Shiga Lakes",
+    "fixture_name": "Kyoto Hannaryz v Shiga Lakes",
+    "exact_fixture_text": "Home Kyoto Hannaryz\nAway Shiga Lakes",
+    "competition": "I Kyoto Hannaryz >",
+    "bounds": [
+     20,
+     464,
+     621,
+     487
+    ]
+   }
+  ],
+  "search_ocr_readback": "2013’] ® O (a ”$1.: 100%. | m ‘23 bet365.com/#/AX/K9 + | Q Kyoto Hannarsz X Close | Basketball | I Kyoto Hannaryz > | Kyoto Hannaryz vs Shiga 1 2 | Lakes | -4.5 1’83 + 4.5 1‘83 | Fri 25 Sep10:35 | ﬁr Q (<°>) (5’ @l | Home All Sports ln-Play My Bets casino | I“ O <",
+  "verified_fixture": {
+   "code": "535bc65b",
+   "home": "Kyoto Hannaryz",
+   "away": "Shiga Lakes",
+   "fixture_name": "Kyoto Hannaryz v Shiga Lakes",
+   "exact_fixture_text": "Home Kyoto Hannaryz\nAway Shiga Lakes",
+   "competition": "I Kyoto Hannaryz >",
+   "bounds": [
+    20,
+    464,
+    621,
+    487
+   ]
+  },
+  "fixture_home": "Kyoto Hannaryz",
+  "fixture_away": "Shiga Lakes",
+  "discovery_query": "Kyoto Hannaryz",
+  "identity_verified_home": "Kyoto Hannaryz",
+  "identity_verified_away": "Shiga Lake Stars",
+  "stage_soft_overrun_ENTER_QUERY": 99185,
+  "discovered_fixtures": [
+   {
+    "code": "535bc65b",
+    "home": "Kyoto Hannaryz",
+    "away": "Shiga Lakes",
+    "fixture_name": "Kyoto Hannaryz v Shiga Lakes",
+    "exact_fixture_text": "Home Kyoto Hannaryz\nAway Shiga Lakes",
+    "competition": "I Kyoto Hannaryz >",
+    "bounds": [
+     20,
+     464,
+     621,
+     487
+    ]
+   }
+  ],
+  "sport_observed": "basketball",
+  "fixture": {
+   "code": "535bc65b",
+   "home": "Kyoto Hannaryz",
+   "away": "Shiga Lakes",
+   "fixture_name": "Kyoto Hannaryz v Shiga Lakes",
+   "exact_fixture_text": "Home Kyoto Hannaryz\nAway Shiga Lakes",
+   "competition": "I Kyoto Hannaryz >",
+   "bounds": [
+    20,
+    464,
+    621,
+    487
+   ]
+  },
+  "event_verified": true,
+  "game_lines_reads": [
+   {
+    "tag": "selection_preflight",
+    "cells": [
+     "SPREAD/HOME/-4.5@1.83",
+     "SPREAD/AWAY/+4.5@1.83",
+     "TOTAL/OVER/167.5@1.83",
+     "TOTAL/UNDER/167.5@1.83",
+     "MONEYLINE/HOME/NONE@1.47",
+     "MONEYLINE/AWAY/NONE@2.55"
+    ],
+    "notes": []
+   },
+   {
+    "tag": "selection_preflight",
+    "cells": [
+     "SPREAD/HOME/-4.5@1.83",
+     "SPREAD/AWAY/+4.5@1.83",
+     "TOTAL/OVER/167.5@1.83",
+     "TOTAL/UNDER/167.5@1.83",
+     "MONEYLINE/HOME/NONE@1.47",
+     "MONEYLINE/AWAY/NONE@2.55"
+    ],
+    "notes": []
+   }
+  ],
+  "game_lines": {
+   "reads": 2,
+   "agreed": [
+    "SPREAD/HOME/-4.5@1.83",
+    "SPREAD/AWAY/+4.5@1.83",
+    "TOTAL/OVER/167.5@1.83",
+    "TOTAL/UNDER/167.5@1.83",
+    "MONEYLINE/HOME/NONE@1.47",
+    "MONEYLINE/AWAY/NONE@2.55"
+   ]
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-4.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Kyoto Hannaryz",
+    "bounds": [
+     301,
+     655,
+     345,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "+4.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Shiga Lakes",
+    "bounds": [
+     301,
+     740,
+     345,
+     790
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "167.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     436,
+     655,
+     512,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "167.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     437,
+     740,
+     512,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "1.47",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Kyoto Hannaryz",
+    "bounds": [
+     604,
+     672,
+     648,
+     689
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "2.55",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Shiga Lakes",
+    "bounds": [
+     603,
+     757,
+     648,
+     774
+    ]
+   }
+  ],
+  "selection_role": "HOME",
+  "selection_name": "Kyoto Hannaryz",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-4.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Kyoto Hannaryz",
+   "bounds": [
+    301,
+    655,
+    345,
+    705
+   ]
+  },
+  "stake_keypad": {
+   "zero": [
+    360,
+    1250
+   ],
+   "dot": [
+    119,
+    1250
+   ]
+  },
+  "stake_check_typed": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "3010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "stake_check_after_done": {
+   "ok": true,
+   "detail": "stake box unread; To Return exactly 0.10 x 1.83",
+   "stake_digits": "",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "stake_entered": "0.10",
+  "stake_check_final": {
+   "ok": true,
+   "detail": "stake box unread; To Return exactly 0.10 x 1.83",
+   "stake_digits": "",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "ready_state": {
+   "fixture_home": "Kyoto Hannaryz",
+   "fixture_away": "Shiga Lakes",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Kyoto Hannaryz",
+   "line": "-4.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "final_state": {
+   "home": "Kyoto Hannaryz",
+   "away": "Shiga Lakes",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-4.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "betslip_clear": {
+   "tapped": true,
+   "bounds": [
+    17,
+    1178,
+    45,
+    1210
+   ],
+   "place_bet_still_visible": false
+  },
+  "verification_detail": "READY_STATE: session, selection, price and stake verified; stopped before wager",
+  "detail": "READY_STATE",
+  "duration_ms": 218304
+ }
+}

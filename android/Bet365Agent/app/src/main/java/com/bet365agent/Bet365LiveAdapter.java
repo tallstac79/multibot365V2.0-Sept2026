@@ -2215,8 +2215,12 @@ final class Bet365LiveAdapter implements SiteAdapter {
         String t = raw.trim().replaceAll("\\s+", " ");
         t = t.replaceAll("(?i)\\s*\\((?:W|M|F|Women|Men)\\)\\s*$", "");
         t = t.replaceAll("(?i)\\s+(?:Women|Men|Womens|Ladies)$", "");
-        return t.trim().toLowerCase(Locale.US);
+        // Explicit per-team canonical names only (TeamAliases), e.g. Shiga Lake Stars -> Shiga Lakes.
+        return TeamAliases.canonical(t.trim().toLowerCase(Locale.US));
     }
+
+    /** Test hook: the fixture identity gate used on search results. */
+    static boolean identityForTest(String teamName, String requested) { return teamPositivelyIdentified(teamName, requested); }
 
     /** Positive team identity: exact or contains full multi-word query; no OCR confusion aliases. */
     private static boolean teamPositivelyIdentified(String teamName, String requested) {
