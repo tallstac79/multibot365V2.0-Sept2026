@@ -129,6 +129,18 @@ def history(root, origin):
         return rows
 
 
+def bets(root):
+    db = _open(root)
+    if db is None:
+        return []
+    with closing(db):
+        if not db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='bets'").fetchone():
+            return []
+        return [dict(r, evidence=_json(r['evidence'])) for r in db.execute(
+            'SELECT b.*, i.state AS lifecycle_state, i.approved_by FROM bets b JOIN instructions i USING(instruction_id) '
+            'ORDER BY b.id DESC LIMIT 200')]
+
+
 def summary(root):
     """Service heartbeat, device/session state, lifecycle counts and outbox (production only)."""
     status_path = Path(root) / STATUS
@@ -153,4 +165,11 @@ def summary(root):
         active = db.execute("SELECT instruction_id,state,fixture,market,selection,updated_at FROM instructions "
                             "WHERE origin='production' AND terminal=0 ORDER BY updated_at DESC LIMIT 10").fetchall()
         out['active'] = [dict(r) for r in active]
+        if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='controls'").fetchone():
+            paused = db.execute("SELECT value FROM controls WHERE key='paused'").fetchone()
+            out['paused'] = bool(json.loads(paused[0])) if paused else False
+            out['awaiting_approval'] = [dict(r) for r in db.execute(
+                "SELECT instruction_id, fixture, market, selection, line, alert_price, stake, approval_requested_at "
+                "FROM instructions WHERE state='AWAITING_APPROVAL' ORDER BY approval_requested_at")]
+            out['bets'] = {r[0]: r[1] for r in db.execute('SELECT status, COUNT(*) FROM bets GROUP BY status')}
     return out

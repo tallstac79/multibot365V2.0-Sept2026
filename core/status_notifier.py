@@ -13,7 +13,10 @@ import urllib.request
 from core.lifecycle import TERMINAL
 from core.pipeline_store import iso, utcnow
 
-DEFAULT_STATES = ('READY',) + tuple(sorted(s.value for s in TERMINAL))
+DEFAULT_STATES = ('READY', 'AWAITING_APPROVAL', 'PLACEMENT_UNKNOWN') + tuple(sorted(s.value for s in TERMINAL))
+SHORT_ID = 10  # Telegram commands accept this unique prefix of an instruction ID
+# Operational alerts raised from the audit log (not instruction states).
+EVENT_KINDS = ('MANUAL_CHECK_REQUIRED', 'PLACEMENT_DISCREPANCY')
 MAX_ATTEMPTS = 8
 
 
@@ -38,16 +41,45 @@ def format_instruction(row):
                else None),
               ('Minimum', row.get('minimum_price')), ('Stake', _money(row.get('stake'))), (None, None),
               ('Status', row.get('state')),
+              ('Bet ref', row.get('bet_reference')),
+              ('Approved by', row.get('approved_by') if row.get('execution_mode') == 'dispatch' else None),
               ('Reason', row.get('failure_reason') if row.get('state') != 'COMPLETED' else None),
               ('Device stage', row.get('device_stage')),
               ('Instruction', row.get('instruction_id')), ('Device', row.get('device_id'))]
-    lines = ['MultiBot365', '']
+    headline = {'AWAITING_APPROVAL': 'APPROVAL NEEDED', 'COMPLETED': 'BET PLACED' if row.get('execution_mode') == 'dispatch'
+                else None, 'PLACEMENT_UNKNOWN': 'PLACEMENT UNCERTAIN'}.get(row.get('state'))
+    lines = ['MultiBot365' + (f' - {headline}' if headline else ''), '']
     for label, value in fields:
         if label is None:
             lines.append('')
         elif value not in (None, ''):
             lines.append(f"{label}: {' '.join(str(value).split())[:300]}")
+    short = (row.get('instruction_id') or '')[:SHORT_ID]
+    if row.get('state') == 'AWAITING_APPROVAL':
+        lines += ['', f'Reply /approve {short} to place this bet, or /reject {short}.',
+                  'No reply = no bet (the approval window expires).']
+    elif row.get('state') == 'PLACEMENT_UNKNOWN':
+        lines += ['', 'Place Bet was tapped but the result was not clear. Checking My Bets now; nothing will be re-tapped.']
     return '\n'.join(lines).replace('\n\n\n', '\n\n')
+
+
+def format_event(kind, instruction, detail):
+    row = dict(instruction or {})
+    title = {'MANUAL_CHECK_REQUIRED': 'MANUAL CHECK REQUIRED', 'PLACEMENT_DISCREPANCY': 'PLACEMENT DISCREPANCY'}.get(kind, kind)
+    text = [f'MultiBot365 - {title}', '', f"Event: {row.get('fixture')}", f"Instruction: {row.get('instruction_id')}"]
+    if kind == 'MANUAL_CHECK_REQUIRED':
+        text.append('A Place Bet tap may have placed a bet, but My Bets could not be read. Please check My Bets on the phone.')
+    else:
+        text.append('The device outcome and My Bets disagree. Please check My Bets on the phone.')
+    text.append(f"Detail: {' '.join(str(detail).split())[:300]}")
+    return '\n'.join(text)
+
+
+def format_settlement(bet):
+    return '\n'.join(['MultiBot365 - BET SETTLED', '', f"Event: {bet['fixture']}",
+                      f"Selection: {bet['selection']} {bet['line'] or ''}".rstrip(), f"Stake: {_money(bet['stake'])}",
+                      f"Result: {bet['status']}", f"Returns: {_money(bet['returns']) or 'n/a'}",
+                      f"Instruction: {bet['instruction_id']}"])
 
 
 class Notifier:
@@ -62,14 +94,23 @@ class Notifier:
         query = (f"SELECT * FROM instructions i WHERE state IN ({marks}) AND origin='production' AND NOT EXISTS "
                  f"(SELECT 1 FROM notifications n WHERE n.instruction_id=i.instruction_id AND n.state=i.state)")
         if not self.include_undispatched:
-            query += " AND (dispatched_at IS NOT NULL OR state='READY')"
+            query += " AND (dispatched_at IS NOT NULL OR state IN ('READY','AWAITING_APPROVAL'))"
         created = 0
+        now = iso(self.clock())
+        insert = ('INSERT OR IGNORE INTO notifications(instruction_id,state,text,created_at,next_attempt_at) '
+                  'VALUES (?,?,?,?,?)')
         with self.store.tx() as db:
             for row in db.execute(query, self.states).fetchall():
-                db.execute('INSERT OR IGNORE INTO notifications(instruction_id,state,text,created_at,next_attempt_at) '
-                           'VALUES (?,?,?,?,?)', (row['instruction_id'], row['state'], format_instruction(row),
-                                                  iso(self.clock()), iso(self.clock())))
-                created += 1
+                created += db.execute(insert, (row['instruction_id'], row['state'], format_instruction(row), now, now)).rowcount
+            marks = ','.join('?' * len(EVENT_KINDS))
+            for event in db.execute(f'SELECT * FROM audit_events WHERE kind IN ({marks})', EVENT_KINDS).fetchall():
+                instruction = db.execute('SELECT * FROM instructions WHERE instruction_id=?',
+                                         (event['instruction_id'],)).fetchone()
+                created += db.execute(insert, (event['instruction_id'] or '', f"EVENT:{event['kind']}:{event['id']}",
+                                               format_event(event['kind'], instruction, event['detail']), now, now)).rowcount
+            for bet in db.execute("SELECT * FROM bets WHERE status IN ('WON','LOST','VOID','CASHED_OUT','RETURNED')").fetchall():
+                created += db.execute(insert, (bet['instruction_id'], f"SETTLED:{bet['status']}", format_settlement(bet),
+                                               now, now)).rowcount
         return created
 
     def deliver(self):

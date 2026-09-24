@@ -18,6 +18,7 @@ import json
 import logging
 
 from core import alert_classifier
+from core.final_action import FinalAction
 from core.lifecycle import State, TERMINAL, DEVICE_OWNED, interpret_device_result, CONFIRMATION_MAP
 from core.pipeline_store import Store, iso, utcnow, instruction_id_for, selection_key
 from core.rules_engine import evaluate, ACCEPT, STALE, selection_name as rules_selection_name
@@ -56,6 +57,18 @@ class Settings:
     result_timeout_seconds: int = 360
     ready_timeout_seconds: int = 300
     session_max_age_seconds: int = DEFAULT_MAX_AGE_SECONDS
+    # Final action (Place Bet). Off unless explicitly enabled; see core/final_action.py.
+    final_action_enabled: bool = False
+    auto_approve: bool = False
+    approval_timeout_seconds: int = 120
+    max_stake_per_bet: str = '1.00'
+    max_bets_per_day: int = 5
+    max_daily_stake: str = '5.00'
+    max_daily_loss: str = '5.00'
+    reconcile_delay_seconds: int = 15
+    reconcile_max_attempts: int = 3
+    reconcile_timeout_ms: int = 120000
+    settlement_poll_minutes: int = 30
 
     @classmethod
     def from_dict(cls, values):
@@ -70,6 +83,7 @@ class Pipeline:
         self.config_provider = config_provider   # () -> decision-support config dict
         self.settings = settings or Settings()
         self.clock = clock
+        self.final = FinalAction(self)
 
     # ================================================================== intake
     def ingest(self, message, delivery='event'):
@@ -229,25 +243,40 @@ class Pipeline:
                 self.store.audit(db, 'MALFORMED_SESSION_REPORT', dict(error=str(error), payload=payload, source=source),
                                  device_id=self.settings.device_id, at=iso(now))
 
-    def build_payload(self, row):
-        """Coordinator request for the existing live adapter. READY-only: never a wager.
+    def build_payload(self, row, final_action=False):
+        """Coordinator request for the live adapter.
 
-        execution_mode is always 'ready' and confirmation is never APPROVED here, so the
-        proven adapter stops before its final action. Final action remains out of scope.
+        READY-only by default: execution_mode 'ready' stops before Place Bet. A final action
+        (execution_mode 'dispatch' + confirmation_status 'APPROVED') is built only for an
+        APPROVED instruction while final action is enabled and not paused.
         """
         payload = dict(instruction_id=row['instruction_id'], action='ADAPTER_WORKFLOW', adapter=self.settings.adapter,
-                       scenario='live', query=(f"{row['home']}||{row['away']}" if row['away'] else row['home']), sport=row['sport'], market=row['market'],
-                       side=row['selection'], line=row['line'], minimum_price=row['minimum_price'],
-                       stake=row['stake'], timeout_ms=self.settings.device_timeout_ms, execution_mode='ready')
-        assert payload['execution_mode'] == 'ready' and 'confirmation_status' not in payload
+                       scenario='live', query=(f"{row['home']}||{row['away']}" if row['away'] else row['home']),
+                       sport=row['sport'], market=row['market'], side=row['selection'], line=row['line'],
+                       minimum_price=row['minimum_price'], stake=row['stake'], timeout_ms=self.settings.device_timeout_ms,
+                       execution_mode='ready')
+        if final_action:
+            if not (self.final.enabled() and row['state'] == State.APPROVED.value and row['approved_by']):
+                raise PermissionError('Final action requires an APPROVED instruction with final action enabled')
+            payload.update(execution_mode='dispatch', confirmation_status='APPROVED')
+        else:
+            assert 'confirmation_status' not in payload
         return payload
 
     def tick(self, gateway):
         """One dispatcher cycle. Safe to call repeatedly and after any restart."""
         health = self.refresh_device(gateway)
         self._poll_in_flight(gateway)
+        self.final.poll(gateway)
         self._expire_ready()
-        self._dispatch_queued(gateway, health)
+        self.final.expire_approvals()
+        # Placement verification outranks new work: an unresolved tap blocks nothing else
+        # being learnt, but the phone does one thing at a time.
+        device_free = not self.store.instructions_in([State.DISPATCHED, State.DEVICE_ACTIVE])
+        if self.final.schedule(gateway, health, device_free and not self.final.device_busy()):
+            return
+        if not self.final.device_busy():
+            self._dispatch_queued(gateway, health)
 
     def _poll_in_flight(self, gateway):
         for row in self.store.instructions_in([State.DISPATCHED, State.DEVICE_ACTIVE]):
@@ -261,23 +290,31 @@ class Pipeline:
             if result is not None:
                 if isinstance(result, dict) and result.get('_pending'):
                     # Mid-flight progress heartbeat from coordinator acknowledgement.
-                    stage = None
                     progress = result.get('progress') if isinstance(result.get('progress'), dict) else {}
                     stage = result.get('device_stage') or progress.get('stage')
-                    if stage and stage != row.get('device_stage'):
+                    if stage and stage != row['device_stage']:
                         with self.store.tx() as db:
                             self.store.update_fields(db, row['instruction_id'], device_stage=stage)
                             self.store.audit(db, 'DEVICE_PROGRESS', dict(progress=progress or result),
-                                             row['instruction_id'], row.get('device_id') or self.settings.device_id)
+                                             row['instruction_id'], row['device_id'] or self.settings.device_id)
+                    result = None
+                else:
+                    self.apply_result(row['instruction_id'], result)
                     continue
-                self.apply_result(row['instruction_id'], result)
-                continue
             dispatched = datetime.fromisoformat(row['dispatched_at'])
             if (self.clock() - dispatched).total_seconds() > self.settings.result_timeout_seconds:
                 with self.store.tx() as db:
-                    self.store.transition(db, row['instruction_id'], State.TIMEOUT, actor='dispatcher',
-                                          reason=f'No device result within {self.settings.result_timeout_seconds}s; '
-                                                 'outcome unknown, never re-dispatched')
+                    if row['execution_mode'] == 'dispatch':
+                        # The tap may have happened: reconcile via My Bets, never re-dispatch.
+                        if self.store.transition(db, row['instruction_id'], State.PLACEMENT_UNKNOWN, actor='dispatcher',
+                                                 reason=f'No device result within {self.settings.result_timeout_seconds}s '
+                                                        'after a final-action dispatch; reconciling via My Bets'):
+                            self.final.record_outcome(db, self.store.get_instruction(db, row['instruction_id']),
+                                                      State.PLACEMENT_UNKNOWN, None)
+                    else:
+                        self.store.transition(db, row['instruction_id'], State.TIMEOUT, actor='dispatcher',
+                                              reason=f'No device result within {self.settings.result_timeout_seconds}s; '
+                                                     'outcome unknown, never re-dispatched')
 
     def _expire_ready(self):
         for row in self.store.instructions_in([State.READY]):
@@ -287,11 +324,14 @@ class Pipeline:
                                           reason=f'READY not confirmed within {self.settings.ready_timeout_seconds}s')
 
     def _dispatch_queued(self, gateway, health):
-        queued = self.store.instructions_in([State.QUEUED])
-        if not queued:
+        candidates = self.store.instructions_in([State.APPROVED, State.QUEUED])
+        if not candidates:
             return
+        paused = self.final.paused()
         in_flight = self.store.instructions_in([State.DISPATCHED, State.DEVICE_ACTIVE])
-        for row in queued:
+        # Approved final actions first: an operator is waiting on them.
+        candidates.sort(key=lambda r: 0 if r['state'] == State.APPROVED.value else 1)
+        for row in candidates:
             now = self.clock()
             config = self.config_provider()
             alert = json.loads(row['normalized_alert'])
@@ -302,8 +342,11 @@ class Pipeline:
                     self.store.transition(db, row['instruction_id'], target, actor='dispatcher',
                                           reason='Pre-dispatch recheck: ' + recheck['reason'], detail=recheck)
                     continue
-                if not self.settings.dispatch_enabled:
-                    continue  # Remains QUEUED until it ages out as STALE; nothing is sent.
+                if not self.settings.dispatch_enabled or paused:
+                    if row['state'] == State.APPROVED.value:
+                        self.store.transition(db, row['instruction_id'], State.REJECTED, actor='dispatcher',
+                                              reason='Dispatch disabled or paused after approval; nothing sent')
+                    continue  # QUEUED rows wait and age out as STALE; nothing is sent.
                 if health is None:
                     self.store.transition(db, row['instruction_id'], State.DEVICE_OFFLINE, actor='dispatcher',
                                           reason='DEVICE_OFFLINE: coordinator unreachable at dispatch time')
@@ -316,14 +359,26 @@ class Pipeline:
                 permitted, why = session_gate(session, now, self.settings.session_max_age_seconds)
                 if not permitted:
                     self.store.transition(db, row['instruction_id'], State.SESSION_REQUIRED, actor='dispatcher',
-                                          reason=why, session_state=(session or {}).get('state', 'UNKNOWN') if isinstance(session, dict) or session is None else session['state'])
+                                          reason=why, session_state=(session or {}).get('state', 'UNKNOWN'))
                     continue
+                final_action = self.final.enabled()
+                if final_action and row['state'] == State.QUEUED.value:
+                    if not self.final.on_queued(db, row):
+                        continue  # awaiting operator approval, or rejected by a limit
+                    row = self.store.get_instruction(db, row['instruction_id'])
+                if final_action and row['state'] == State.APPROVED.value:
+                    breach = self.final.limit_breach(db, row)
+                    if breach:
+                        self.store.transition(db, row['instruction_id'], State.REJECTED, actor='limits', reason=breach)
+                        continue
                 if in_flight or health.get('current_instruction'):
                     continue  # One instruction at a time; wait (it may later go STALE).
-                payload = self.build_payload(row)
+                payload = self.build_payload(row, final_action=final_action and row['state'] == State.APPROVED.value)
                 # Commit DISPATCHED before sending: a crash after this point can never resend.
                 if not self.store.transition(db, row['instruction_id'], State.DISPATCHED, actor='dispatcher',
-                                             reason='Sent to coordinator', dispatch_payload=payload,
+                                             reason='Sent to coordinator' + (' (FINAL ACTION: Place Bet approved)'
+                                                                             if payload['execution_mode'] == 'dispatch' else ''),
+                                             dispatch_payload=payload, execution_mode=payload['execution_mode'],
                                              dispatch_attempts=row['dispatch_attempts'] + 1,
                                              session_state=session['state']):
                     continue
@@ -360,15 +415,19 @@ class Pipeline:
                 self.store.audit(db, 'LATE_OR_DUPLICATE_RESULT_IGNORED', dict(result=result, state=row['state'],
                                                                              source=source), instruction_id)
                 return row['state']
+            final_action = row['execution_mode'] == 'dispatch'
             try:
-                state, reason, observed = interpret_device_result(result)
+                state, reason, observed = interpret_device_result(result, final_action=final_action)
                 if isinstance(result, dict) and result.get('instruction_id') not in (None, instruction_id):
                     raise ValueError('Result instruction_id does not match')
             except ValueError as error:
                 self.store.audit(db, 'MALFORMED_RESULT', dict(error=str(error), result=result, source=source), instruction_id)
-                self.store.transition(db, instruction_id, State.UNKNOWN, actor=source, at=iso(now),
+                target = State.PLACEMENT_UNKNOWN if final_action else State.UNKNOWN
+                self.store.transition(db, instruction_id, target, actor=source, at=iso(now),
                                       reason=f'MALFORMED_RESULT: {error}', result_payload=result)
-                return State.UNKNOWN.value
+                if final_action:
+                    self.final.record_outcome(db, self.store.get_instruction(db, instruction_id), target, None)
+                return target.value
             if state is None:
                 return row['state']  # DUPLICATE echo of the original; keep waiting for it.
             ready = result.get('ready_state') if isinstance(result.get('ready_state'), dict) else {}
@@ -382,7 +441,16 @@ class Pipeline:
             if state == State.READY and row['state'] == State.DISPATCHED.value:
                 self.store.transition(db, instruction_id, State.DEVICE_ACTIVE, actor=source, at=iso(now),
                                       reason='Device result received')
-            self.store.transition(db, instruction_id, state, actor=source, at=iso(now), reason=reason, **fields)
+            if final_action:
+                placement = result.get('placement') if isinstance(result.get('placement'), dict) else None
+                if placement is not None:
+                    fields['placement'] = placement
+            applied = self.store.transition(db, instruction_id, state, actor=source, at=iso(now), reason=reason, **fields)
+            if applied and final_action:
+                from core.lifecycle import placement_of
+                tapped = (placement_of(result) or {}).get('tapped')
+                if tapped is not False:  # a tap happened or may have happened: record and verify
+                    self.final.record_outcome(db, self.store.get_instruction(db, instruction_id), state, result)
             return state.value
 
     def apply_confirmation(self, instruction_id, decision_status, detail=''):

@@ -4,6 +4,10 @@
     python -m tools.pipeline_service telegram-login   # one-time interactive Telegram login
     python -m tools.pipeline_service status           # JSON summary of the store
     python -m tools.pipeline_service replay FILE      # ingest one text file as SAMPLE origin
+    python -m tools.pipeline_service approve ID       # approve an AWAITING_APPROVAL final action
+    python -m tools.pipeline_service reject ID        # decline it
+    python -m tools.pipeline_service pause|resume     # kill switch
+    python -m tools.pipeline_service bets             # placed bets and their verification/settlement
 
 Settings: untracked .local/pipeline.json (see docs/TELEGRAM_INGESTION.md). Rules come
 from the dashboard's decision-support store and are re-read every cycle.
@@ -40,6 +44,8 @@ class JsonLines(logging.Formatter):
         for key in ('instruction_id', 'device_id'):
             if hasattr(record, key):
                 item[key] = getattr(record, key)
+        if record.exc_info:
+            item['error'] = self.formatException(record.exc_info)[-2000:]
         return json.dumps(item)
 
 
@@ -87,6 +93,10 @@ async def run(settings):
     notify = settings['notifications'] or {}
     sender = TelegramBotSender(notify['bot_token'], notify['chat_id']) if notify.get('enabled') else None
     notifier = Notifier(store, sender, notify.get('states', DEFAULT_STATES), notify.get('include_undispatched', False))
+    commands = None
+    if notify.get('enabled') and notify.get('commands', True):
+        from core.telegram_commands import BotApi, CommandHandler
+        commands = CommandHandler(pipeline, BotApi(notify['bot_token']), notify['chat_id'])
     intake = None
     tasks = []
     if settings.get('telegram_intake'):
@@ -99,9 +109,17 @@ async def run(settings):
     async def cycle():
         while True:
             state = dict(heartbeat_at=iso(utcnow()), dispatch_enabled=pipeline.settings.dispatch_enabled,
+                         final_action_enabled=pipeline.settings.final_action_enabled,
+                         auto_approve=pipeline.settings.auto_approve, paused=pipeline.final.paused(),
                          intake=intake.status if intake else dict(state='NOT_CONFIGURED'),
-                         notifications='ENABLED' if sender else 'DISABLED', last_error=None)
+                         notifications='ENABLED' if sender else 'DISABLED',
+                         commands='ENABLED' if commands else 'DISABLED', last_error=None)
             try:
+                if commands:
+                    try:
+                        await asyncio.to_thread(commands.poll)
+                    except Exception as error:  # Telegram outage must never stop the pipeline
+                        state['commands_error'] = f'{type(error).__name__}: {error}'[:200]
                 await asyncio.to_thread(pipeline.tick, gateway)
                 await asyncio.to_thread(notifier.enqueue)
                 await asyncio.to_thread(notifier.deliver)
@@ -126,8 +144,28 @@ def status(settings):
             instructions={r[0]: r[1] for r in db.execute('SELECT state, COUNT(*) FROM instructions GROUP BY state')},
             devices=[dict(r) for r in db.execute('SELECT device_id,status,checked_at,error FROM device_state')],
             sessions=[dict(r) for r in db.execute('SELECT * FROM session_state')],
-            notifications_pending=db.execute('SELECT COUNT(*) FROM notifications WHERE sent_at IS NULL').fetchone()[0])
+            notifications_pending=db.execute('SELECT COUNT(*) FROM notifications WHERE sent_at IS NULL').fetchone()[0],
+            bets={r[0]: r[1] for r in db.execute('SELECT status, COUNT(*) FROM bets GROUP BY status')},
+            paused=bool(json.loads((db.execute("SELECT value FROM controls WHERE key='paused'").fetchone() or ['false'])[0])))
     print(json.dumps(summary, indent=2))
+
+
+def operator(settings, command, reference=None):
+    _, pipeline = build(settings)
+    by = 'cli'
+    try:
+        if command == 'approve':
+            print('APPROVED', pipeline.final.approve(reference, by))
+        elif command == 'reject':
+            print('REJECTED', pipeline.final.reject(reference, by))
+        elif command in ('pause', 'resume'):
+            pipeline.final.set_paused(command == 'pause', by)
+            print('PAUSED' if command == 'pause' else 'RESUMED')
+        else:
+            print(json.dumps(pipeline.store.bets(), indent=2))
+    except (LookupError, PermissionError) as error:
+        print('NOT DONE:', error)
+        raise SystemExit(1)
 
 
 def replay(settings, path, chat_id, message_id):
@@ -165,6 +203,10 @@ def main():
     play.add_argument('file')
     play.add_argument('--chat-id', default='-999')
     play.add_argument('--message-id', required=True)
+    for name in ('approve', 'reject'):
+        sub.add_parser(name).add_argument('id')
+    for name in ('pause', 'resume', 'bets'):
+        sub.add_parser(name)
     args = parser.parse_args()
     settings = load_settings(args.settings)
     if args.command == 'run':
@@ -177,6 +219,8 @@ def main():
         status(settings)
     elif args.command == 'telegram-login':
         asyncio.run(telegram_login(settings))
+    elif args.command in ('approve', 'reject', 'pause', 'resume', 'bets'):
+        operator(settings, args.command, getattr(args, 'id', None))
     else:
         replay(settings, args.file, args.chat_id, args.message_id)
 

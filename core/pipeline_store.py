@@ -18,7 +18,7 @@ from pathlib import Path
 
 from core.lifecycle import State, allowed, TERMINAL
 
-SCHEMA_VERSION = 2  # 2: intake status PARSED_PARTIAL
+SCHEMA_VERSION = 3  # 2: intake status PARSED_PARTIAL; 3: final action (approval, placement, bets)
 SCHEMA = '''
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS intake_messages (
@@ -68,7 +68,9 @@ CREATE TABLE IF NOT EXISTS instructions (
     dispatched_at TEXT, device_active_at TEXT, ready_at TEXT, completed_at TEXT,
     duration_ms INTEGER,
     dispatch_attempts INTEGER NOT NULL DEFAULT 0,
-    updated_at TEXT NOT NULL
+    updated_at TEXT NOT NULL,
+    execution_mode TEXT, approval_requested_at TEXT, approved_at TEXT, approved_by TEXT,
+    placement_unknown_at TEXT, placement TEXT, bet_reference TEXT
 );
 CREATE INDEX IF NOT EXISTS instruction_state ON instructions(state, queued_at);
 CREATE INDEX IF NOT EXISTS instruction_selection ON instructions(origin, selection_key);
@@ -104,14 +106,41 @@ CREATE TABLE IF NOT EXISTS notifications (
     created_at TEXT NOT NULL, sent_at TEXT, attempts INTEGER NOT NULL DEFAULT 0, last_error TEXT,
     next_attempt_at TEXT, UNIQUE (instruction_id, state)
 );
+CREATE TABLE IF NOT EXISTS bets (
+    id INTEGER PRIMARY KEY,
+    instruction_id TEXT NOT NULL UNIQUE REFERENCES instructions(instruction_id),
+    status TEXT NOT NULL,
+    bet_reference TEXT, fixture TEXT, market TEXT, selection TEXT, line TEXT,
+    stake TEXT, odds TEXT, potential_return TEXT, returns TEXT,
+    placed_at TEXT, verified_at TEXT, settled_at TEXT, source TEXT, evidence TEXT,
+    updated_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS reconciliations (
+    id INTEGER PRIMARY KEY,
+    device_instruction_id TEXT NOT NULL UNIQUE,
+    purpose TEXT NOT NULL,
+    instruction_id TEXT,
+    view TEXT NOT NULL,
+    attempt INTEGER NOT NULL,
+    requested_at TEXT NOT NULL,
+    submitted_at TEXT, completed_at TEXT, outcome TEXT, detail TEXT
+);
+CREATE TABLE IF NOT EXISTS controls (
+    key TEXT PRIMARY KEY, value TEXT NOT NULL, updated_at TEXT NOT NULL, updated_by TEXT
+);
 '''
+V3_INSTRUCTION_COLUMNS = ('execution_mode', 'approval_requested_at', 'approved_at', 'approved_by',
+                          'placement_unknown_at', 'placement', 'bet_reference')
 
 STAGE_COLUMNS = {State.PARSED: 'parsed_at', State.RULES_APPLIED: 'rules_applied_at', State.QUEUED: 'queued_at',
-                 State.DISPATCHED: 'dispatched_at', State.DEVICE_ACTIVE: 'device_active_at', State.READY: 'ready_at'}
+                 State.AWAITING_APPROVAL: 'approval_requested_at', State.APPROVED: 'approved_at',
+                 State.DISPATCHED: 'dispatched_at', State.DEVICE_ACTIVE: 'device_active_at', State.READY: 'ready_at',
+                 State.PLACEMENT_UNKNOWN: 'placement_unknown_at'}
 UPDATABLE = {'failure_reason', 'device_stage', 'observed_price', 'device_id', 'session_state', 'rules_result',
-             'dispatch_payload', 'result_payload', 'evidence', 'dispatch_attempts', 'minimum_price', 'stake'}
+             'dispatch_payload', 'result_payload', 'evidence', 'dispatch_attempts', 'minimum_price', 'stake',
+             'execution_mode', 'approved_by', 'placement', 'bet_reference'}
 JSON_COLUMNS = {'normalized_alert', 'rules_result', 'dispatch_payload', 'result_payload', 'evidence',
-                'entities', 'normalized', 'provenance', 'detail', 'health'}
+                'entities', 'normalized', 'provenance', 'detail', 'health', 'placement'}
 
 
 def utcnow():
@@ -148,9 +177,35 @@ class Store:
             self._migrate(db)
             db.executescript(SCHEMA)
             db.execute('INSERT OR IGNORE INTO meta VALUES (?,?)', ('schema_version', str(SCHEMA_VERSION)))
+            db.execute("UPDATE meta SET value=? WHERE key='schema_version' AND CAST(value AS INTEGER) < ?",
+                       (str(SCHEMA_VERSION), SCHEMA_VERSION))
+
+    @classmethod
+    def _migrate(cls, db):
+        cls._migrate_v2(db)
+        cls._migrate_v3(db)
 
     @staticmethod
-    def _migrate(db):
+    def _migrate_v3(db):
+        """v2 -> v3: add final-action columns to instructions (new tables are created by SCHEMA)."""
+        if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='instructions'").fetchone() is None:
+            return
+        present = {r[1] for r in db.execute('PRAGMA table_info(instructions)')}
+        missing = [c for c in V3_INSTRUCTION_COLUMNS if c not in present]
+        if not missing:
+            return
+        db.execute('BEGIN IMMEDIATE')
+        try:
+            for column in missing:
+                db.execute(f'ALTER TABLE instructions ADD COLUMN {column} TEXT')
+            db.execute("INSERT OR REPLACE INTO meta VALUES ('schema_version', '3')")
+            db.execute('COMMIT')
+        except BaseException:
+            db.execute('ROLLBACK')
+            raise
+
+    @staticmethod
+    def _migrate_v2(db):
         """v1 -> v2: widen the intake status CHECK. SQLite cannot alter a CHECK, so the table
         is rebuilt in one transaction (documented 12-step procedure, foreign keys off)."""
         row = db.execute("SELECT sql FROM sqlite_master WHERE type='table' AND name='intake_messages'").fetchone()
@@ -167,7 +222,7 @@ class Store:
             db.execute('ALTER TABLE intake_messages_v2 RENAME TO intake_messages')
             if db.execute('PRAGMA foreign_key_check').fetchall():
                 raise sqlite3.IntegrityError('Foreign key check failed during migration')
-            db.execute("INSERT OR REPLACE INTO meta VALUES ('schema_version', ?)", (str(SCHEMA_VERSION),))
+            db.execute("INSERT OR REPLACE INTO meta VALUES ('schema_version', '2')")
             db.execute('COMMIT')
         except BaseException:
             db.execute('ROLLBACK')
@@ -351,3 +406,38 @@ class Store:
         with self.connection() as db:
             row = db.execute('SELECT * FROM session_state WHERE device_id=?', (device_id,)).fetchone()
         return dict(row) if row else None
+
+    # ---- final action: controls, bets, reconciliations ---------------------------------
+    def control(self, key, default=None):
+        with self.connection() as db:
+            row = db.execute('SELECT value FROM controls WHERE key=?', (key,)).fetchone()
+        return json.loads(row[0]) if row else default
+
+    def set_control(self, key, value, by='system', db=None):
+        values = (key, json.dumps(value), iso(self.clock()), by)
+        sql = ('INSERT INTO controls VALUES (?,?,?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value, '
+               'updated_at=excluded.updated_at, updated_by=excluded.updated_by')
+        if db is not None:
+            db.execute(sql, values)
+            return
+        with self.tx() as tx:
+            tx.execute(sql, values)
+            self.audit(tx, 'CONTROL_CHANGED', dict(key=key, value=value, by=by))
+
+    def upsert_bet(self, db, instruction_id, **fields):
+        fields = {k: (_dump(v) if k == 'evidence' else v) for k, v in fields.items()}
+        fields['updated_at'] = iso(self.clock())
+        existing = db.execute('SELECT id FROM bets WHERE instruction_id=?', (instruction_id,)).fetchone()
+        if existing:
+            db.execute(f'UPDATE bets SET {",".join(f"{k}=?" for k in fields)} WHERE instruction_id=?',
+                       (*fields.values(), instruction_id))
+        else:
+            fields['instruction_id'] = instruction_id
+            db.execute(f'INSERT INTO bets({",".join(fields)}) VALUES ({",".join("?" * len(fields))})', tuple(fields.values()))
+
+    def bets(self, statuses=None):
+        with self.connection() as db:
+            if statuses:
+                marks = ','.join('?' * len(statuses))
+                return [dict(r) for r in db.execute(f'SELECT * FROM bets WHERE status IN ({marks}) ORDER BY id', statuses)]
+            return [dict(r) for r in db.execute('SELECT * FROM bets ORDER BY id')]

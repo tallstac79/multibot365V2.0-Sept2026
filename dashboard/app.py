@@ -12,6 +12,16 @@ from dashboard.adapters import real_alerts, result_history, application_logs
 from dashboard import pipeline_adapter
 
 
+def operator_pipeline(root):
+    """Writable pipeline for operator actions only (approve/reject/pause). Uses the same settings
+    file as the service, so every final-action rule (window, limits, kill switch) applies."""
+    from tools.pipeline_service import load_settings, build
+    settings = load_settings(Path(root) / '.local/pipeline.json')
+    settings['database'] = Path(root) / '.local/pipeline.sqlite3'
+    settings['rules_database'] = Path(root) / '.local/dashboard.sqlite3'
+    return build(settings)[1]
+
+
 def create_app(root=ROOT, db_path=None, health=None):
     app = FastAPI(title='MultiBot365 local dashboard', docs_url=None, redoc_url=None)
     store = Store(db_path or root / '.local/dashboard.sqlite3')
@@ -47,6 +57,35 @@ def create_app(root=ROOT, db_path=None, health=None):
 
     @app.get('/api/status')
     def status(): return dict(health.get(), pipeline=pipeline_summary())
+
+    def operator_action(action):
+        try:
+            return action(operator_pipeline(root))
+        except LookupError as error:
+            raise HTTPException(404, str(error))
+        except PermissionError as error:
+            raise HTTPException(409, str(error))
+
+    @app.post('/api/instructions/{instruction_id}/approve')
+    def approve(instruction_id: str):
+        return {'approved': operator_action(lambda p: p.final.approve(instruction_id, 'dashboard'))}
+
+    @app.post('/api/instructions/{instruction_id}/reject')
+    def reject(instruction_id: str):
+        return {'rejected': operator_action(lambda p: p.final.reject(instruction_id, 'dashboard'))}
+
+    @app.post('/api/controls/pause')
+    def pause(value: dict):
+        paused = value.get('paused')
+        if not isinstance(paused, bool):
+            raise HTTPException(422, 'paused must be true or false')
+        operator_action(lambda p: p.final.set_paused(paused, 'dashboard'))
+        return {'paused': paused}
+
+    @app.get('/api/bets')
+    def bets():
+        try: return {'items': pipeline_adapter.bets(root)}
+        except sqlite3.Error: raise HTTPException(503, 'Pipeline store is unreadable')
 
     @app.get('/api/pipeline')
     def pipeline(): return pipeline_summary()

@@ -394,7 +394,7 @@ class DispatchTests(Base):
     def test_coordinator_timeout_never_resubmits(self):
         iid = self.queued()
         self.p.tick(self.gateway)
-        for _ in range(5):
+        for _ in range(7):                     # result_timeout_seconds is 360 since 1e7d675
             self.clock.advance(60)
             self.p.tick(self.gateway)
         row = self.row(iid)
