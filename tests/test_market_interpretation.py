@@ -401,8 +401,10 @@ class ProductionRegressionTests(unittest.TestCase):
         self.assertEqual(statuses['67961'], 'AMBIGUOUS')       # no market label and no fixture link
         self.assertEqual(statuses['67998'], 'PARSED')          # linked Kipina, EV None: UNDER implied from the lines (2026-09-25)
         counts = {s: list(statuses.values()).count(s) for s in set(statuses.values())}
-        self.assertGreaterEqual(counts['PARSED_PARTIAL'], 80)
-        self.assertGreaterEqual(counts['PARSED'], 26)
+        # 2026-09-25: unequal-line alerts with a Bet365 line now get an implied target, so the corpus' 80+ formerly
+        # PARSED_PARTIAL alerts are PARSED; only alerts without a Bet365 section could remain partial.
+        self.assertLessEqual(counts.get('PARSED_PARTIAL', 0), 5)
+        self.assertGreaterEqual(counts['PARSED'], 100)
 
     def test_every_live_parsed_alert_has_consistent_interpretation(self):
         for message_id, text in CORPUS.items():
