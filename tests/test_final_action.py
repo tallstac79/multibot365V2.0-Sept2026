@@ -22,7 +22,7 @@ def placement_result(iid, outcome='PLACED', tapped=True, **extra):
             'detail': 'PLACED' if placed else outcome, 'placement': placement, 'wager_submitted': placed}
 
 
-MELBOURNE_CARD = ['Single', 'Over 190.5', 'Total Points - Game', 'SE Melbourne Phoenix v Melbourne United',
+MELBOURNE_CARD = ['£1.00 Single', 'Over 190.5', 'Total Points - Game', 'SE Melbourne Phoenix v Melbourne United',
                   'Stake £1.00', '6/5', 'To Return £2.20', 'Bet Ref JL1234567890']
 
 
@@ -209,7 +209,7 @@ class OutcomeTests(Base):
                 self.assertEqual(result.value, state)
                 self.assertTrue(reason.startswith(outcome))
 
-    def test_insufficient_funds_is_verified_absent(self):
+    def test_insufficient_funds_claim_remains_unverified_without_complete_coverage(self):
         iid = self.approved_and_dispatched()
         self.gateway.results[iid + "-place"] = placement_result(iid, 'INSUFFICIENT_FUNDS')
         self.p.tick(self.gateway)
@@ -219,7 +219,7 @@ class OutcomeTests(Base):
         rec = self.reconciliations()[0]
         self.gateway.results[rec['device_instruction_id']] = my_bets(rec['device_instruction_id'], ['You have no open bets'])
         self.p.tick(self.gateway)
-        self.assertEqual(self.bet(iid)['status'], 'NOT_PLACED')
+        self.assertEqual(self.bet(iid)['status'], 'NOT_PLACED_CLAIMED')
 
     def test_claimed_refusal_found_in_my_bets_is_a_discrepancy(self):
         iid = self.approved_and_dispatched()
@@ -271,7 +271,7 @@ class UncertaintyTests(Base):
         self.assertEqual((self.row(iid)['state'], self.bet(iid)['status']), ('COMPLETED', 'OPEN'))
         self.assertEqual(len([s for s in self.gateway.submitted if s['action'] == 'PLACE_HELD']), 1)   # never re-tapped
 
-    def test_unknown_absent_twice_becomes_not_placed(self):
+    def test_two_incomplete_reads_never_prove_absence(self):
         iid = self.approved_and_dispatched()
         self.gateway.results[iid + "-place"] = placement_result(iid, 'PLACEMENT_UNKNOWN')
         self.p.tick(self.gateway)
@@ -281,7 +281,7 @@ class UncertaintyTests(Base):
             rec = self.reconciliations()[-1]
             self.gateway.results[rec['device_instruction_id']] = my_bets(rec['device_instruction_id'], ['No open bets'])
             self.p.tick(self.gateway)
-        self.assertEqual((self.row(iid)['state'], self.bet(iid)['status']), ('NOT_PLACED', 'NOT_PLACED'))
+        self.assertEqual((self.row(iid)['state'], self.bet(iid)['status']), ('PLACEMENT_UNKNOWN', 'UNKNOWN'))
 
     def test_unreadable_my_bets_escalates_to_manual_check(self):
         iid = self.approved_and_dispatched()
@@ -654,7 +654,8 @@ class RealMyBetsTests(unittest.TestCase):
                   dict(home='Hapoel Tel Aviv', away='Bayern Munich', market='MONEYLINE', selection='HOME', stake='0.10', odds='1.23'),
                   dict(home='Panathinaikos', away='Paris', market='MONEYLINE', selection='HOME', stake='0.10', odds='1.17')]
         for bet in placed:
-            self.assertTrue(bet_matching.match(bet, live)['found'], bet['home'])
+            # Austria's actual frame lost BOTH fixture names; selection-only OCR cannot establish opponent.
+            self.assertEqual(bet_matching.match(bet, live)['found'], bet['home'] != 'Austria', bet['home'])
         never = [dict(home='Hapoel Tel Aviv', away='Bayern Munich', market='MONEYLINE', selection='AWAY', stake='0.10', odds='3.75'),
                  dict(home='Austria', away='Israel', market='1X2', selection='HOME', stake='1.00', odds='1.44')]
         for bet in never:
@@ -725,7 +726,7 @@ class MatchingTests(unittest.TestCase):
     def test_spread_signed_line_and_settled_status(self):
         rytas = dict(home='Rytas Vilnius', away='Shanghai Sharks', market='SPREAD', selection='HOME', line='-18.5',
                      stake='0.10', odds='1.83')
-        card = ['Rytas Vilnius -18.5', 'Handicap', 'Rytas Vilnius v Shanghai Sharks', 'Stake £0.10', '1.83', 'Won',
+        card = ['£0.10 Single', 'Rytas Vilnius -18.5', 'Handicap', 'Rytas Vilnius v Shanghai Sharks', 'Stake £0.10', '1.83', 'Won',
                 'Returned £0.18']
         found = bet_matching.match(rytas, self.lines(card))
         self.assertEqual((found['found'], found['status'], found['returns']), (True, 'WON', '0.18'))

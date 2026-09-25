@@ -1,0 +1,194 @@
+{
+  "healthy": true,
+  "heartbeat_ms": 1790372428021,
+  "uptime_ms": 566,
+  "state": "IDLE",
+  "current_instruction": null,
+  "last_result": {
+    "instruction_id": "self-session-1790372086626",
+    "status": "FAIL",
+    "stage": "LOGIN_FAILED",
+    "detail": "Login form contains a different account; not typing over it",
+    "duration_ms": 9487,
+    "progress": {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 9322,
+      "last_progress_at_ms": 1790372092220,
+      "instruction_id": "self-session-1790372086626",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790372086768
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 14,
+          "at_ms": 1790372086775,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 14,
+            "start_ts_ms": 1790372086769,
+            "end_elapsed_ms": 5454,
+            "end_ts_ms": 1790372092209,
+            "duration_ms": 5440,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 21,
+          "at_ms": 1790372086781,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 14,
+            "start_ts_ms": 1790372086769,
+            "end_elapsed_ms": 5454,
+            "end_ts_ms": 1790372092209,
+            "duration_ms": 5440,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4053,
+          "at_ms": 1790372086781
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4639,
+          "at_ms": 1790372086781
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4662,
+          "at_ms": 1790372086781
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 5432,
+          "at_ms": 1790372086781
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 5454,
+          "at_ms": 1790372092220,
+          "timing": {
+            "stage": "ENSURE_SESSION",
+            "start_elapsed_ms": 5454,
+            "start_ts_ms": 1790372092209,
+            "end_elapsed_ms": 9322,
+            "end_ts_ms": 1790372096077,
+            "duration_ms": 3868,
+            "status": "fail",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 5466,
+          "at_ms": 1790372092220
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 6255,
+          "at_ms": 1790372092220
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 6741,
+          "at_ms": 1790372092220
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 8064,
+          "at_ms": 1790372092220
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 8681,
+          "at_ms": 1790372092220
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 8783,
+          "at_ms": 1790372092220
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 9296,
+          "at_ms": 1790372092220
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 9322,
+          "at_ms": 1790372092220
+        }
+      ]
+    },
+    "device_stage": "ENSURE_SESSION",
+    "execution_count": 1,
+    "run_id": "c_4RdULTz8RwIy0m12eqOZjkTWdobmQMGHXUJMhLHIueA",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "Login form contains a different account; not typing over it",
+    "stage_timings": [
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 14,
+        "start_ts_ms": 1790372086769,
+        "end_elapsed_ms": 5454,
+        "end_ts_ms": 1790372092209,
+        "duration_ms": 5440,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "ENSURE_SESSION",
+        "start_elapsed_ms": 5454,
+        "start_ts_ms": 1790372092209,
+        "end_elapsed_ms": 9322,
+        "end_ts_ms": 1790372096077,
+        "duration_ms": 3868,
+        "status": "fail",
+        "retries": 0
+      }
+    ],
+    "session_path": [
+      {
+        "saw": "LOGGED_OUT",
+        "state": "LOGIN_IN_PROGRESS",
+        "attempts": 0
+      }
+    ],
+    "session_machine": "LOGIN_IN_PROGRESS"
+  },
+  "app_version": "0.9.18-hardened",
+  "version_code": 101,
+  "phone_final_action_armed": false,
+  "diagnostics_active": false,
+  "endpoint": "http://100.114.45.68:8767",
+  "pid": 17680,
+  "device_id": "galaxy-a13-5g",
+  "session": {
+    "state": "UNKNOWN",
+    "observed_at_ms": 1790372427455,
+    "detail": "not checked yet",
+    "refresh_count": 1,
+    "last_refresh_at_ms": 1790372427487,
+    "last_refresh_outcome": "probe started"
+  },
+  "ocr_engine": "hybrid",
+  "fast_ocr_error": null,
+  "credentials_configured": true,
+  "credential_store": "encrypted",
+  "session_recovery": {
+    "last_attempt_at_ms": 0,
+    "attempts_last_hour": 0,
+    "last_outcome": "none"
+  }
+}

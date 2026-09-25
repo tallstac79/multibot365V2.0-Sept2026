@@ -103,7 +103,7 @@ final class EventIdentity {
     /** plain + diacritics stripped + every non-alphanumeric run (punctuation, slash, hyphen) as one space. */
     static String normalise(String s) {
         String t = Normalizer.normalize(plain(s), Normalizer.Form.NFD).replaceAll("\\p{M}+", "");
-        return t.replaceAll("[^a-z0-9]+", " ").trim();
+        return t.replaceAll("[^a-z0-9]+", " ").trim().replaceAll("\\bu ([12][0-9])\\b", "u$1");
     }
 
     static Set<String> markers(String normalised) {
@@ -112,7 +112,9 @@ final class EventIdentity {
             if (t.isEmpty()) continue;
             if (WOMEN.matcher(t).matches()) out.add("women");
             else if (AGE.matcher(t).matches()) out.add(t.replace("-", ""));
-            else if (RESERVE.matcher(t).matches()) out.add("reserve");
+            else if (RESERVE.matcher(t).matches()) out.add(t.matches("res|reserves") ? "reserve" :
+                    t.matches("jr|juniors") ? "junior" : t.equals("dev") ? "development" :
+                    t.equals("amateurs") ? "amateur" : t);
         }
         return out;
     }
@@ -196,6 +198,24 @@ final class EventIdentity {
     }
 
     // ------------------------------------------------------------------ event level (B4, B8)
+    static String competitionKey(String value) {
+        String withoutDate = value == null ? "" : value.replaceAll("(?i)\\s+\\d{1,2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*.*$", "");
+        String key = normalise(withoutDate);
+        // Observed provider label (Seoul/Wonju) includes the global region; bookmaker omits it.
+        return key.equals("world club friendlies") ? "club friendlies" : key;
+    }
+
+    /** Production gate: naming similarity alone never establishes event identity. */
+    static Result resolveVerified(Event feed, Event page, Map<String,String> aliases, boolean women) {
+        Result r = resolve(feed, page, aliases, women);
+        if (!r.accepted()) return r;
+        String fc = competitionKey(feed.competition), pc = competitionKey(page.competition);
+        if (!r.kickoffKnown || !r.kickoffAgrees || fc.isEmpty() || pc.isEmpty() || !fc.equals(pc))
+            return new Result(Verdict.AMBIGUOUS, "Known matching kick-off and competition required", r.home, r.away,
+                    r.kickoffKnown, r.kickoffAgrees, false, Collections.emptyMap(), null);
+        return r;
+    }
+
     static Result resolve(Event feed, Event page, Map<String, String> extraAliases) {
         return resolve(feed, page, extraAliases, false);
     }

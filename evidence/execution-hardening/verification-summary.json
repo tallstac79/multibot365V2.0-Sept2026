@@ -1,0 +1,156 @@
+{
+  "backend": {
+    "passed": 301,
+    "failed": 0
+  },
+  "android": {
+    "tests": 102,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "apk": {
+    "version": "0.9.18-hardened",
+    "version_code": 101,
+    "sha256": "4a48b9c5ebc0cc2b868c7c80e24a38fd4af82dff577c89885adec7f7cefbac8f"
+  },
+  "dashboard_js_syntax": "PASS",
+  "git_diff_whitespace": "PASS",
+  "ocr": {
+    "individual_passed": 67,
+    "individual_total": 68,
+    "aggregate_passed": 2,
+    "aggregate_total": 2,
+    "failure": "Four non-target spread/total cells unreadable in one Hapoel/Bayern grid frame; preserved as a failed benchmark row"
+  },
+  "phone_regression": {
+    "checks": [
+      {
+        "tag": "session",
+        "ok": true
+      },
+      {
+        "tag": "hold",
+        "ok": true
+      },
+      {
+        "tag": "duplicate",
+        "ok": true
+      },
+      {
+        "tag": "wrong-held-event",
+        "ok": true
+      },
+      {
+        "tag": "changed-held-price",
+        "ok": true
+      },
+      {
+        "tag": "pretap-prepare",
+        "ok": true
+      },
+      {
+        "tag": "reset",
+        "ok": true
+      },
+      {
+        "tag": "wrong-link",
+        "ok": true
+      },
+      {
+        "tag": "worse-line",
+        "ok": true
+      },
+      {
+        "tag": "cleanup",
+        "ok": true
+      }
+    ],
+    "passed": 10,
+    "total": 10,
+    "final_action_dispatched": false
+  },
+  "execution_disarmed": true,
+  "feed_timezone": "UTC",
+  "feed_timezone_verified": false,
+  "execution_tolerances": null,
+  "dashboard_stale_heartbeat_probe": {
+    "fresh": false,
+    "heartbeat_age_seconds": 2544.496324
+  },
+  "dashboard_version": "2.0-dashboard.4",
+  "reboot_regression": {
+    "checks": [
+      {
+        "tag": "reboot",
+        "ok": true
+      },
+      {
+        "tag": "duplicate-after-reboot",
+        "ok": true
+      },
+      {
+        "tag": "session",
+        "ok": true
+      },
+      {
+        "tag": "search-hold",
+        "ok": true
+      },
+      {
+        "tag": "cleanup",
+        "ok": true
+      }
+    ],
+    "passed": 5,
+    "total": 5,
+    "final_action_dispatched": false
+  },
+  "current_state": {
+    "observed_at": "2026-09-25T22:08:14.575691+00:00",
+    "backend_pid": 20264,
+    "dashboard_pid": 21752,
+    "dashboard_version": "2.0-dashboard.4",
+    "phone": {
+      "state": "IDLE",
+      "app_version": "0.9.18-hardened",
+      "version_code": 101,
+      "phone_final_action_armed": false,
+      "diagnostics_active": false,
+      "session": {
+        "state": "AUTHENTICATED",
+        "observed_at_ms": 1790374021900,
+        "detail": "probe deferred: active job or diagnostics lease",
+        "refresh_count": 5,
+        "last_refresh_at_ms": 1790374088173,
+        "last_refresh_outcome": "job active"
+      },
+      "credential_store": "encrypted"
+    },
+    "service": {
+      "heartbeat_at": "2026-09-25T22:08:08.471+00:00",
+      "fresh": true,
+      "heartbeat_age_seconds": 6.056072,
+      "rules_engine": "rules-5-feed-qualified",
+      "parser_version": "classifier-3-sharp",
+      "event_timezone": "UTC",
+      "feed_timezone_verified": false,
+      "dispatch_enabled": false,
+      "final_action_enabled": false,
+      "paused": true,
+      "auto_approve": false
+    },
+    "intake_state": "LISTENING",
+    "service_error_present": false,
+    "safety_flags": {
+      "dispatch_enabled": false,
+      "final_action_enabled": false,
+      "final_action_one_shot": false,
+      "auto_approve": false
+    },
+    "bets": {
+      "OPEN": 2
+    },
+    "active_instruction_counts": {}
+  }
+}

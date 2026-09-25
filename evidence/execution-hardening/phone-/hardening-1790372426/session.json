@@ -1,0 +1,199 @@
+{
+  "ok": false,
+  "payload": {
+    "action": "SESSION_CHECK",
+    "sport": "basketball",
+    "instruction_id": "hardening-1790372426-session",
+    "adapter": "live_bet365",
+    "scenario": "live",
+    "timeout_ms": 120000
+  },
+  "ack": {
+    "instruction_id": "hardening-1790372426-session",
+    "acknowledged": true,
+    "state": "ACCEPTED",
+    "received_at_ms": 1790372429094,
+    "result_url": "/instructions/hardening-1790372426-session",
+    "execution_count": 0
+  },
+  "result": {
+    "instruction_id": "hardening-1790372426-session",
+    "status": "FAIL",
+    "stage": "LOGIN_FAILED",
+    "detail": "Remembered account field did not clear to its placeholder",
+    "duration_ms": 19061,
+    "progress": {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 10999,
+      "last_progress_at_ms": 1790372442497,
+      "instruction_id": "hardening-1790372426-session",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790372437080
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 37,
+          "at_ms": 1790372437112,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 37,
+            "start_ts_ms": 1790372437106,
+            "end_elapsed_ms": 5407,
+            "end_ts_ms": 1790372442476,
+            "duration_ms": 5370,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 45,
+          "at_ms": 1790372437124,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 37,
+            "start_ts_ms": 1790372437106,
+            "end_elapsed_ms": 5407,
+            "end_ts_ms": 1790372442476,
+            "duration_ms": 5370,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4091,
+          "at_ms": 1790372437124
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4652,
+          "at_ms": 1790372437124
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4703,
+          "at_ms": 1790372437124
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 5337,
+          "at_ms": 1790372437124
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 5407,
+          "at_ms": 1790372442497,
+          "timing": {
+            "stage": "ENSURE_SESSION",
+            "start_elapsed_ms": 5407,
+            "start_ts_ms": 1790372442476,
+            "end_elapsed_ms": 10998,
+            "end_ts_ms": 1790372448066,
+            "duration_ms": 5591,
+            "status": "fail",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 5431,
+          "at_ms": 1790372442497
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 6118,
+          "at_ms": 1790372442497
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 6581,
+          "at_ms": 1790372442497
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 7935,
+          "at_ms": 1790372442497
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 8538,
+          "at_ms": 1790372442497
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 8642,
+          "at_ms": 1790372442497
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 9153,
+          "at_ms": 1790372442497
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 9242,
+          "at_ms": 1790372442497
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 10226,
+          "at_ms": 1790372442497
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 10873,
+          "at_ms": 1790372442497
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 10999,
+          "at_ms": 1790372442497
+        }
+      ]
+    },
+    "device_stage": "ENSURE_SESSION",
+    "execution_count": 1,
+    "run_id": "c_hmNkZz_FAJn8RgaEt_I2kY9eSaXRhE47Xfisb1LWceM",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "Remembered account field did not clear to its placeholder",
+    "stage_timings": [
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 37,
+        "start_ts_ms": 1790372437106,
+        "end_elapsed_ms": 5407,
+        "end_ts_ms": 1790372442476,
+        "duration_ms": 5370,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "ENSURE_SESSION",
+        "start_elapsed_ms": 5407,
+        "start_ts_ms": 1790372442476,
+        "end_elapsed_ms": 10998,
+        "end_ts_ms": 1790372448066,
+        "duration_ms": 5591,
+        "status": "fail",
+        "retries": 0
+      }
+    ],
+    "session_path": [
+      {
+        "saw": "LOGGED_OUT",
+        "state": "LOGIN_IN_PROGRESS",
+        "attempts": 0
+      }
+    ],
+    "session_machine": "LOGIN_IN_PROGRESS"
+  },
+  "expected": "PASS",
+  "wall_seconds": 19.875
+}

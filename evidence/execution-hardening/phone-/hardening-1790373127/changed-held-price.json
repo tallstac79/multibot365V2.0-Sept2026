@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "code": 400,
+  "result": {
+    "instruction_id": "hardening-1790373127-hold-place",
+    "status": "FAIL",
+    "stage": "INVALID_INSTRUCTION",
+    "detail": "Held selection changed: price",
+    "duration_ms": 0
+  },
+  "payload": {
+    "action": "PLACE_HELD",
+    "sport": "basketball",
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "selection_name": "Kirchheim",
+    "price": "999.00",
+    "minimum_price": "1.01",
+    "stake": "0.10",
+    "execution_mode": "prepare",
+    "confirmation_status": "APPROVED",
+    "held_instruction_id": "hardening-1790373127-hold",
+    "home": "Kirchheim",
+    "away": "SBB Baskets Wolmirstedt",
+    "competition": "germany pro a",
+    "kickoff_utc": "2026-09-26T16:00",
+    "period": "FULL_GAME",
+    "instruction_id": "hardening-1790373127-hold-place",
+    "adapter": "live_bet365",
+    "scenario": "live",
+    "timeout_ms": 120000
+  }
+}

@@ -28,6 +28,12 @@ final class Bet365LiveAdapter implements SiteAdapter {
     /** Price of the selection put on the betslip in this run (stake x price is cross-checked with "To Return"). */
     private String openedPrice;
     private String targetMarket = "", targetSide = "", targetLine = "";
+    private String contextKickoff = "", contextCompetition = "", contextPeriod = "", lineTolerance = "";
+    private org.json.JSONObject heldContext;
+    @Override public void set_event_context(String kickoff, String competition, String period, String tolerance) {
+        contextKickoff = kickoff; contextCompetition = competition; contextPeriod = period; lineTolerance = tolerance;
+    }
+    void set_held_context(org.json.JSONObject context) { heldContext = context; }
     /** Instruction-supplied aliases (feed -> bookmaker). Static because the fixture gates are static; the
      *  coordinator runs one instruction at a time and every run sets it before use. */
     private static volatile java.util.Map<String, String> instructionAliases = java.util.Collections.emptyMap();
@@ -65,7 +71,12 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     /** Price shown on the slip: plain OCR anywhere, or the targeted read of the slip's own price box. */
     private boolean slipPriceShown(VisualScreen s, String price) {
-        return visible(s, price) || fractionalVisible(s, price) || price.equals(slipPriceRead);
+        VisualScreen.Line place = findPlaceBetLine(s);
+        if (place == null) return false;
+        for (VisualScreen.Line line : s.lines)
+            if (line.bounds.top > place.bounds.top - 230 && line.bounds.bottom < place.bounds.top
+                    && java.util.Arrays.asList(line.text.split("\\s+")).contains(price)) return true;
+        return price.equals(slipPriceRead);
     }
     private long cleanGridAtMs = 0;                 // when a clean (fast-path) grid read was taken
     private VisualScreen lastFinal; private long lastFinalAtMs = 0;   // frame that passed verify_final_state
@@ -131,6 +142,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
             // Chrome's own prompts ("Chrome notifications make things easier", sign-in, save password) can sit over a
             // page that is still loading; real run 2026-09-25 07:46 waited 24 s behind one and reported BOT_CHECK.
             Control prompt = chromePromptControl(s);
+            if (prompt == null && chromePasswordPrompt(s) && attempt < 6) {
+                // Chrome's compact save bubble has Save/settings but no Never button.
+                // Back may also leave Chrome; explicitly restore HOME before observing again.
+                return ui.dismissBrowserPrompt(HOME_URL).thenCompose(v -> settle(label + "_prompt", attempt + 1));
+            }
             if (prompt != null && attempt < 6) {
                 ui.put("chrome_prompt_dismissed", prompt.label);
                 return ui.tap(prompt.box, prompt.label).thenCompose(v -> ui.delay(900))
@@ -191,13 +207,16 @@ final class Bet365LiveAdapter implements SiteAdapter {
             sessionPath.put(CoordinatorAgent.object("saw", seen.name(), "state", next == null ? "UNOBSERVED" : next.name(), "attempts", attempts));
             ui.put("session_machine", next == null ? "UNOBSERVED" : next.name());
             if (seen == SessionMachine.Observation.UNKNOWN) {
-                // Nothing recognisable (mid-navigation, still loading): back to HOME once, then one more bounded look.
-                if (relooks >= 2) {
+                // After submission the home content can render before its account header.
+                // Keep observing that response; reloading it restarts the delayed header load.
+                boolean afterLogin = state == SessionMachine.State.LOGIN_IN_PROGRESS;
+                if (relooks >= (afterLogin ? 6 : 2)) {
                     ui.put("session", "UNKNOWN");
                     throw new Failure("LOGIN_FAILED", "Bet365 session state unclear: no account, login or challenge markers on screen");
                 }
                 final SessionMachine.State keep = state;
-                CompletableFuture<Void> back = relooks == 0 ? ui.open(HOME_URL).thenCompose(v -> ui.delay(1500)) : ui.delay(1500);
+                CompletableFuture<Void> back = !afterLogin && relooks == 0
+                        ? ui.open(HOME_URL).thenCompose(v -> ui.delay(1500)) : ui.delay(afterLogin ? 2500 : 1500);
                 return back.thenCompose(v -> sessionStep(keep, attempts, relooks + 1, label + "_relook"));
             }
             ui.put("session", SessionMachine.wireState(next));
@@ -278,14 +297,28 @@ final class Bet365LiveAdapter implements SiteAdapter {
             // (2026-09-25): placeholder "Username or email", and "Forgot Username Password?" below it, so "Username"
             // is not unique but "email" is.
             // After a reboot Bet365 pre-fills the remembered username (no placeholder, a clear "X" instead): if it is
-            // this account, only the password is typed; a different account is never typed over (fail closed).
-            String prefilled = null;
-            for (GameLinesParser.Word w : wordsOf(form)) if (w.top > 250 && w.top < 400 && w.text.contains("@")) prefilled = w.text.trim();
+            // this exact account, only the password is typed. Otherwise clear and refill the
+            // configured account through the verified empty-field flow before any password entry.
+            LoginAccount.State account = LoginAccount.inspect(wordsOf(form), user);
             CompletableFuture<Void> userStep;
-            if (prefilled != null) {
-                require(prefilled.equalsIgnoreCase(user.trim()), "LOGIN_FAILED", "Login form is pre-filled with a different account; not typing over it");
+            if (account == LoginAccount.State.MATCH) {
                 ui.put("login_user_prefilled", true);
                 userStep = CompletableFuture.completedFuture(null);
+            } else if (account == LoginAccount.State.DIFFERENT) {
+                // The site can remember a username after login with an email. Do not assume
+                // they name the same account: clear only the observed username control,
+                // require its empty placeholder, then enter the configured account anew.
+                GameLinesParser.Word clear = LoginAccount.clearControl(wordsOf(form));
+                require(clear != null, "LOGIN_FAILED", "No unique clear control on remembered account field");
+                userStep = ui.tap(new android.graphics.Rect(clear.left, clear.top, clear.right, clear.bottom), "Clear remembered login account")
+                    .thenCompose(x -> ui.delay(400)).thenCompose(x -> ui.capture("login_account_cleared"))
+                    .thenCompose(empty -> {
+                        require(LoginAccount.inspect(wordsOf(empty), user) == LoginAccount.State.EMPTY,
+                                "LOGIN_FAILED", "Remembered account field did not clear to its placeholder");
+                        String hint = uniqueHint(empty, "email", "Email", "Username", "username");
+                        require(hint != null, "LOGIN_FAILED", "Empty account field has no unique placeholder");
+                        return ui.type(hint, user); // TextEntryFlow verifies the committed value.
+                    });
             } else {
                 String hintUser = uniqueHint(form, "email", "Email", "Username", "username");
                 require(hintUser != null, "LOGIN_FAILED", "No unique username placeholder on the Bet365 login form");
@@ -321,6 +354,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 "Set Chrome as default", "Chrome notifications", "Enhanced ad privacy", "Sign in to get your bookmarks");
     }
 
+    private static boolean chromePasswordPrompt(VisualScreen s) {
+        return visible(s, "Save password?", "Save password", "Update password?");
+    }
+
     /** Chrome prompts (first run, notifications) and the Bet365 cookie wall sit on top of the page: declined / accepted
      *  before the session is judged or Log In is tapped. Real frame 2026-09-25 07:31: "Chrome notifications make things
      *  easier" over the logged-out home, cookie banner below it. Bounded to three rounds. */
@@ -334,6 +371,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
         if (attempt >= 3) return CompletableFuture.completedFuture(s);
         Control control = cookieControl(s);
         if (control == null) control = chromePromptControl(s);
+        if (control == null && chromePasswordPrompt(s)) {
+            return ui.dismissBrowserPrompt(HOME_URL).thenCompose(v -> ui.capture("browser_prompt_dismissed"))
+                    .thenCompose(a -> clearOverlays(a, attempt + 1));
+        }
         if (control == null) return CompletableFuture.completedFuture(s);   // nothing actionable on top: no blind loops
         ui.put("overlay_dismissed_" + attempt, control.label);
         final Control c = control;
@@ -650,10 +691,12 @@ final class Bet365LiveAdapter implements SiteAdapter {
         // opened from the alert's own link, so it is the anchor; the resolver's verdict is authoritative (A1).
         String shown = EventPage.kickoffText(header);
         String want = kickoffUtc == null || kickoffUtc.isEmpty() ? null : EventPage.ukDisplay(kickoffUtc);
-        String feedAway = expectedAway.isEmpty() ? teams[1] : expectedAway;
-        EventIdentity.Result id = EventIdentity.resolve(
-                new EventIdentity.Event(sport, identityHome, feedAway, want, null, false),
-                new EventIdentity.Event(sport, teams[0], teams[1], shown, header.isEmpty() ? null : header.get(0), true), instructionAliases, womensCompetition);
+        require(!expectedAway.isEmpty(), "WRONG_EVENT", "Alert opponent is required");
+        require("FULL_GAME".equals(contextPeriod), "WRONG_EVENT", "Full-game period required");
+        String feedAway = expectedAway;
+        EventIdentity.Result id = EventIdentity.resolveVerified(
+                new EventIdentity.Event(sport, identityHome, feedAway, want, contextCompetition, false),
+                new EventIdentity.Event(sport, teams[0], teams[1], shown, header.isEmpty() ? null : header.get(0), !ui.record.optString("event_url").isEmpty()), instructionAliases, womensCompetition);
         ui.put("identity", CoordinatorAgent.object("verdict", id.verdict.name(), "reason", id.reason, "home", sideJson(id.home),
                 "away", sideJson(id.away), "kickoff_known", id.kickoffKnown, "kickoff_agrees", id.kickoffAgrees, "reversed", id.reversed));
         ui.put("identity_verdict", id.verdict.name());
@@ -685,6 +728,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
         ui.put("identity_verified_home", identityHome);
         ui.put("identity_verified_away", expectedAway);
         ui.put("event_verified", true);
+        ui.put("event_context", CoordinatorAgent.object("home", f.home, "away", f.away,
+                "competition", EventIdentity.competitionKey(f.competition), "kickoff_utc", kickoffUtc, "period", contextPeriod));
         return f;
     }
 
@@ -1051,11 +1096,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     public CompletableFuture<Void> verify_event(Fixture fixture) {
+        ui.record.remove("event_url");  // Search alone is not the source alert's direct-link anchor.
         return ui.delay(1200).thenCompose(v -> eventLoaded(fixture, 1)).thenAccept(s -> {
-            require(visible(s, fixture.home) || visibleLoose(s, fixture.home), "WRONG_EVENT", "Home team not visible on live event page");
-            require(visible(s, fixture.away) || visibleLoose(s, fixture.away), "WRONG_EVENT", "Away team not visible on live event page");
-            require(!visible(s, "SIMULATOR"), "WRONG_EVENT", "Simulator page during live event verify");
-            ui.put("event_verified", true);
+            require(verifyDirectEvent(s, contextKickoff) != null, "WRONG_EVENT", "Search event context not verified");
+            ui.put("route", "search");
         });
     }
 
@@ -1112,7 +1156,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
         List<Selection> matches = new ArrayList<>();
         for (Selection s : all) {
             if (!s.market.equals(market) || !s.side.equals(side)) continue;
-            if (line != null && !line.isEmpty() && !line.equalsIgnoreCase("NONE") && !lineEquals(s.line, line)) continue;
+            if (line != null && !line.isEmpty() && !line.equalsIgnoreCase("NONE")
+                    && !ExecutionTolerance.line(market, side, line, s.line, lineTolerance)) continue;
             matches.add(s);
         }
         List<Selection> open = new ArrayList<>();
@@ -1120,7 +1165,9 @@ final class Bet365LiveAdapter implements SiteAdapter {
         List<Selection> pool = open.isEmpty() ? matches : open;
         require(!pool.isEmpty(), "TARGET_NOT_FOUND", "No live selection for " + market + "/" + side
                 + (line == null || line.isEmpty() ? "" : ("/" + line)));
+        require(pool.size() == 1, "TARGET_NOT_FOUND", "Multiple executable lines; no implicit alternate-line choice");
         Selection pick = pool.get(0);
+        targetLine = pick.line;
         require(!"SUSPENDED".equals(pick.availability), "SUSPENDED", "Selection suspended");
         require(!"UNAVAILABLE".equals(pick.availability), "UNAVAILABLE", "Selection unavailable");
         validateOneIdentity(pick);
@@ -1696,6 +1743,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     /** The single Place Bet tap: durable intent first, one gesture, then outcome classification. */
     private CompletableFuture<Void> tapPlaceBetOnce(android.graphics.Rect tap, Selection selection, String stake) {
+        require(CoordinatorConfig.finalActionArmed(ui.service), "CONFIRMATION_REQUIRED", "Phone final-action permission expired or disarmed");
         {
             ui.put("place_bet_bounds", VisualSession.bounds(tap));
             // Durable intent BEFORE the gesture: from here on, any failure is reported as a
@@ -1727,6 +1775,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
         ui.checkpoint("PRETAP_CHECK");
         expectedPrice = price; slipPriceRead = null; targetLine = line == null ? "" : line;
         final android.graphics.Rect[] tapHolder = new android.graphics.Rect[1];
+        final HeldSlipQuote[] quoteHolder = new HeldSlipQuote[1];
         return readbackRetry("pretap", 1, (s, enhanced) -> {
             List<String> t = texts(s);
             // Login is judged on the plain first frame (checked first; a login failure is never re-read).
@@ -1736,22 +1785,37 @@ final class Bet365LiveAdapter implements SiteAdapter {
             require(!PlacementClassifier.receiptVisible(t), "REJECTED", "A receipt is showing, not the held slip");
             require(!PlacementClassifier.multipleSelections(t), "BETSLIP_NOT_SINGLE", "Betslip is not a single");
             require(visible(s, name) || visibleLoose(s, name), "SELECTION_CHANGED", "Held selection '" + name + "' not on the slip");
-            require(PlacementClassifier.slipShowsLine(t, market, side, name, line), "LINE_CHANGED", "Slip does not show " + side + " " + line);
-            require(slipPriceShown(s, price), "PRICE_CHANGED", "Approved price " + price + " not on the slip");
-            require(new java.math.BigDecimal(price).compareTo(new java.math.BigDecimal(minimumPrice)) >= 0,
-                    "BELOW_MINIMUM", "Price " + price + " below minimum " + minimumPrice);
-            require(stakeVerified(s, stake, price, "stake_check_pretap"), "STAKE_REJECTED", "Held stake does not read back as " + stake);
             VisualScreen.Line place = findPlaceBetLine(s);
             require(place != null, "TARGET_NOT_FOUND", "Place Bet not on the held slip");
+            require(heldContext != null, "WRONG_EVENT", "Original held event context missing");
+            List<GameLinesParser.Word> slipLines = new ArrayList<>();
+            for (VisualScreen.Line l : s.lines) slipLines.add(new GameLinesParser.Word(l.text, l.bounds.left, l.bounds.top, l.bounds.right, l.bounds.bottom));
+            require(HeldSlipIdentity.matches(slipLines, heldContext.optString("home"), heldContext.optString("away"), market, place.bounds.top),
+                    "WRONG_EVENT", "Both approved teams and full-game market must be inside this slip");
+            HeldSlipQuote quote = HeldSlipQuote.read(slipLines, name, market, place.bounds.top);
+            require(quote != null, "PRICE_CHANGED", "Current slip selection line and price unreadable");
+            require("MONEYLINE".equals(market) || ExecutionTolerance.line(market, side, heldContext.optString("requested_line"),
+                    quote.line, heldContext.optString("max_line_deterioration")), "LINE_CHANGED", "Alert-to-live line deterioration exceeds tolerance");
+            require(new java.math.BigDecimal(quote.price).compareTo(new java.math.BigDecimal(minimumPrice)) >= 0,
+                    "BELOW_MINIMUM", "Current slip price below alert-to-live minimum");
+            require(stakeVerified(s, stake, quote.price, "stake_check_pretap"), "STAKE_REJECTED", "Held stake/return does not agree with current slip price");
+            quoteHolder[0] = quote;
+            List<String> header = headerLines(s);
+            require(EventPage.ukDisplay(heldContext.optString("kickoff_utc")).equals(EventPage.kickoffText(header)),
+                    "WRONG_EVENT", "Fresh event kick-off does not match held event");
+            require(!header.isEmpty() && EventIdentity.competitionKey(header.get(0)).equals(heldContext.optString("competition")),
+                    "WRONG_EVENT", "Fresh competition does not match held event");
+            require(java.time.Instant.now().isBefore(java.time.LocalDateTime.parse(heldContext.optString("kickoff_utc")).toInstant(java.time.ZoneOffset.UTC)),
+                    "REJECTED", "Held event has started");
             android.graphics.Rect tap = placeBetTapRect(place);
             require(!tap.isEmpty() && tap.width() > 20 && tap.height() > 10, "TARGET_NOT_FOUND", "Place Bet bounds not actionable");
-            ui.put("pretap", CoordinatorAgent.object("ok", true, "selection", name, "line", line, "price", price, "stake", stake,
+            ui.put("pretap", CoordinatorAgent.object("ok", true, "selection", name, "line", quote.line, "price", quote.price, "stake", stake,
                     "place_bet_bounds", VisualSession.bounds(tap)));
             ui.put("t_pretap_done_ms", System.currentTimeMillis());
             tapHolder[0] = tap;
         }).thenCompose(s -> {
             if (!dispatch) return CompletableFuture.<Void>completedFuture(null);
-            Selection selection = new Selection(market, side, line, price, "OPEN", tapHolder[0], name);
+            Selection selection = new Selection(market, side, quoteHolder[0].line, quoteHolder[0].price, "OPEN", tapHolder[0], name);
             return tapPlaceBetOnce(tapHolder[0], selection, stake);
         });
     }
@@ -1770,6 +1834,17 @@ final class Bet365LiveAdapter implements SiteAdapter {
                                 : "No definitive outcome after " + attempt + " frames (" + r.detail + "); never re-tapped";
                         ui.put("placement", placement(outcome, detail, reference, r.potentialReturn,
                                 r.stake != null ? r.stake : stake, selection.price, frames, PlacementClassifier.receiptLines(lines)));
+                        org.json.JSONObject facts = new org.json.JSONObject();
+                        if ("PLACED".equals(outcome)) {
+                            CoordinatorAgent.put(facts, "stake", r.stake == null ? org.json.JSONObject.NULL : r.stake);
+                            Pattern term = Pattern.compile("(?i)^" + Pattern.quote(selection.name) + "\\s+([+-]?\\d+(?:\\.\\d+)?)\\s+(\\d+\\.\\d{2})$");
+                            for (String receiptLine : PlacementClassifier.receiptLines(lines)) {
+                                Matcher m = term.matcher(OcrText.normalize(receiptLine));
+                                if (m.matches()) { CoordinatorAgent.put(facts, "line", m.group(1)); CoordinatorAgent.put(facts, "odds", m.group(2)); }
+                            }
+                        }
+                        CoordinatorAgent.put(ui.record.optJSONObject("placement"), "actual_terms", facts);
+                        CoordinatorAgent.put(ui.record.optJSONObject("placement"), "terms_source", "actual_terms contains parsed receipt facts only; legacy odds may be pre-tap");
                         ui.put("wager_submitted", "PLACED".equals(outcome));
                         ui.put("place_bet_result", outcome);
                         ui.put("place_bet_detail", detail);

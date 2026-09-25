@@ -1,0 +1,269 @@
+{
+  "healthy": true,
+  "heartbeat_ms": 1790372663451,
+  "uptime_ms": 33887,
+  "state": "IDLE",
+  "current_instruction": null,
+  "last_result": {
+    "instruction_id": "hardening-1790372628-session",
+    "status": "FAIL",
+    "stage": "LOGIN_FAILED",
+    "detail": "No input connection for secret field",
+    "duration_ms": 31076,
+    "progress": {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 23284,
+      "last_progress_at_ms": 1790372650028,
+      "instruction_id": "hardening-1790372628-session",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790372638896
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 78,
+          "at_ms": 1790372638954,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 78,
+            "start_ts_ms": 1790372638944,
+            "end_elapsed_ms": 5572,
+            "end_ts_ms": 1790372644437,
+            "duration_ms": 5494,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 90,
+          "at_ms": 1790372638960,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 78,
+            "start_ts_ms": 1790372638944,
+            "end_elapsed_ms": 5572,
+            "end_ts_ms": 1790372644437,
+            "duration_ms": 5494,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4139,
+          "at_ms": 1790372638960
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4744,
+          "at_ms": 1790372638960
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4823,
+          "at_ms": 1790372638960
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 5527,
+          "at_ms": 1790372638960
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 5572,
+          "at_ms": 1790372644446,
+          "timing": {
+            "stage": "ENSURE_SESSION",
+            "start_elapsed_ms": 5572,
+            "start_ts_ms": 1790372644438,
+            "end_elapsed_ms": 11122,
+            "end_ts_ms": 1790372649988,
+            "duration_ms": 5550,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 5581,
+          "at_ms": 1790372644446
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 6301,
+          "at_ms": 1790372644446
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 6759,
+          "at_ms": 1790372644446
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 8103,
+          "at_ms": 1790372644446
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 8732,
+          "at_ms": 1790372644446
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 8854,
+          "at_ms": 1790372644446
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 9369,
+          "at_ms": 1790372644446
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 9415,
+          "at_ms": 1790372644446
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 10391,
+          "at_ms": 1790372644446
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 10976,
+          "at_ms": 1790372644446
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 11122,
+          "at_ms": 1790372650028,
+          "timing": {
+            "stage": "ENTER_QUERY",
+            "start_elapsed_ms": 11122,
+            "start_ts_ms": 1790372649988,
+            "end_elapsed_ms": 23283,
+            "end_ts_ms": 1790372662148,
+            "duration_ms": 12161,
+            "status": "fail",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 14983,
+          "at_ms": 1790372650028
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 15412,
+          "at_ms": 1790372650028
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 15444,
+          "at_ms": 1790372650028
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 15998,
+          "at_ms": 1790372650028
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 16051,
+          "at_ms": 1790372650028
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 16337,
+          "at_ms": 1790372650028
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 19770,
+          "at_ms": 1790372650028
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 23284,
+          "at_ms": 1790372650028
+        }
+      ]
+    },
+    "device_stage": "ENTER_QUERY",
+    "execution_count": 1,
+    "run_id": "c_SglAcyW-QxuCs0Gwd49aT45qqMuhaS1LezEyc1ljat4",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "No input connection for secret field",
+    "stage_timings": [
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 78,
+        "start_ts_ms": 1790372638944,
+        "end_elapsed_ms": 5572,
+        "end_ts_ms": 1790372644437,
+        "duration_ms": 5494,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "ENSURE_SESSION",
+        "start_elapsed_ms": 5572,
+        "start_ts_ms": 1790372644438,
+        "end_elapsed_ms": 11122,
+        "end_ts_ms": 1790372649988,
+        "duration_ms": 5550,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "ENTER_QUERY",
+        "start_elapsed_ms": 11122,
+        "start_ts_ms": 1790372649988,
+        "end_elapsed_ms": 23283,
+        "end_ts_ms": 1790372662148,
+        "duration_ms": 12161,
+        "status": "fail",
+        "retries": 0
+      }
+    ],
+    "session_path": [
+      {
+        "saw": "LOGGED_OUT",
+        "state": "LOGIN_IN_PROGRESS",
+        "attempts": 0
+      }
+    ],
+    "session_machine": "LOGIN_IN_PROGRESS"
+  },
+  "app_version": "0.9.18-hardened",
+  "version_code": 101,
+  "phone_final_action_armed": false,
+  "diagnostics_active": true,
+  "endpoint": "http://100.114.45.68:8767",
+  "pid": 18012,
+  "device_id": "galaxy-a13-5g",
+  "session": {
+    "state": "LOGGED_OUT",
+    "observed_at_ms": 1790372662386,
+    "detail": "LOGIN_FAILED; automatic recovery did not authenticate",
+    "refresh_count": 1,
+    "last_refresh_at_ms": 1790372629598,
+    "last_refresh_outcome": "probe started"
+  },
+  "ocr_engine": "hybrid",
+  "fast_ocr_error": null,
+  "credentials_configured": true,
+  "credential_store": "encrypted",
+  "session_recovery": {
+    "last_attempt_at_ms": 0,
+    "attempts_last_hour": 0,
+    "last_outcome": "none"
+  }
+}

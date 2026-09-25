@@ -1,0 +1,1145 @@
+{
+  "healthy": true,
+  "heartbeat_ms": 1790372630183,
+  "uptime_ms": 618,
+  "state": "IDLE",
+  "current_instruction": null,
+  "last_result": {
+    "instruction_id": "bench-hybrid-1790372600-7",
+    "status": "PASS",
+    "stage": "PASS",
+    "detail": "OCR_BENCH",
+    "duration_ms": 3518,
+    "progress": {
+      "stage": "STARTED",
+      "elapsed_ms": 3278,
+      "last_progress_at_ms": 1790372600629,
+      "instruction_id": "bench-hybrid-1790372600-7",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790372600629
+        },
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 12,
+          "at_ms": 1790372600629
+        },
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 3278,
+          "at_ms": 1790372600629
+        }
+      ]
+    },
+    "device_stage": "STARTED",
+    "execution_count": 1,
+    "run_id": "c_uTmssyh9CaEuvsXYntzF7cEHSSKnn5dWs5Rwo1_K5eE",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "OCR benchmark: 8 stored frames, engine hybrid; no screen interaction",
+    "stage_timings": [],
+    "bench": {
+      "engine": "hybrid",
+      "frames": [
+        {
+          "p": "c_4ofmX2P_z62wHphRYkaUh22NApbIvW2FxD32rA9e_hA/s005_my_bets_1.png",
+          "c": "mybets",
+          "engine": "hybrid",
+          "latency_ms": 343,
+          "table": false,
+          "word_count": 81,
+          "text": "22:56 D C al 100% | G o bet365.com/#/MB/U + 43 | bet365 \u00a33.69 (+ | Open Live Settled | \u00a30.10 Single | 3 Reuse Selections Share | O Val de Seine +1.5 1.83 | Point Spread | i Besancon AC Fri 25 Sep | Val de Seine 19:00 | Stake To Return | \u00a30.10 \u00a30.18 | \u00a30.10 Single | 3 Reuse Selections Share | o Val de Seine +3.5 1.83 | Point Spread | i Besancon AC Fri 25 Sep | Val de Seine 19:00 | Stake To | \u00a30.10 \u00a30.18 | (o) | Home All Sports In-Play My Bets Casino | ",
+          "parsed": {
+            "lines": [
+              {
+                "text": "22:56 D C al 100%",
+                "top": 14,
+                "left": 56,
+                "frame": 0
+              },
+              {
+                "text": "G o bet365.com/#/MB/U + 43",
+                "top": 82,
+                "left": 30,
+                "frame": 0
+              },
+              {
+                "text": "bet365 \u00a33.69 (+",
+                "top": 176,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "Open Live Settled",
+                "top": 272,
+                "left": 36,
+                "frame": 0
+              },
+              {
+                "text": "\u00a30.10 Single",
+                "top": 367,
+                "left": 50,
+                "frame": 0
+              },
+              {
+                "text": "3 Reuse Selections Share",
+                "top": 451,
+                "left": 100,
+                "frame": 0
+              },
+              {
+                "text": "O Val de Seine +1.5 1.83",
+                "top": 524,
+                "left": 70,
+                "frame": 0
+              },
+              {
+                "text": "Point Spread",
+                "top": 565,
+                "left": 92,
+                "frame": 0
+              },
+              {
+                "text": "i Besancon AC Fri 25 Sep",
+                "top": 626,
+                "left": 74,
+                "frame": 0
+              },
+              {
+                "text": "Val de Seine 19:00",
+                "top": 654,
+                "left": 104,
+                "frame": 0
+              },
+              {
+                "text": "Stake To Return",
+                "top": 774,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "\u00a30.10 \u00a30.18",
+                "top": 807,
+                "left": 52,
+                "frame": 0
+              },
+              {
+                "text": "\u00a30.10 Single",
+                "top": 928,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "3 Reuse Selections Share",
+                "top": 1013,
+                "left": 100,
+                "frame": 0
+              },
+              {
+                "text": "o Val de Seine +3.5 1.83",
+                "top": 1082,
+                "left": 72,
+                "frame": 0
+              },
+              {
+                "text": "Point Spread",
+                "top": 1124,
+                "left": 92,
+                "frame": 0
+              },
+              {
+                "text": "i Besancon AC Fri 25 Sep",
+                "top": 1185,
+                "left": 74,
+                "frame": 0
+              },
+              {
+                "text": "Val de Seine 19:00",
+                "top": 1214,
+                "left": 104,
+                "frame": 0
+              },
+              {
+                "text": "Stake To",
+                "top": 1333,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "\u00a30.10 \u00a30.18",
+                "top": 1366,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "(o)",
+                "top": 1419,
+                "left": 345,
+                "frame": 0
+              },
+              {
+                "text": "Home All Sports In-Play My Bets Casino",
+                "top": 1470,
+                "left": 44,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "p": "c_4ofmX2P_z62wHphRYkaUh22NApbIvW2FxD32rA9e_hA/s006_my_bets_2.png",
+          "c": "mybets",
+          "engine": "hybrid",
+          "latency_ms": 353,
+          "table": false,
+          "word_count": 66,
+          "text": "22:56 D C al 100% | o bet365.com/#/MB/U + 43 | bet365 \u00a33.69 ) | Besancon AC Fri 25 Sep | Val de Seine 19:00 | Stake To Return | \u00a30.10 \u00a30.18 | \u00a31.00 Single | Reuse Selections Share | O Arsenal 1.33 | Full Time Result | Arsenal Sat 10 Oct | Leeds 12:30 | Stake To Return | \u00a31.00 \u00a31.33 | Information and transmission delays V | Settings | Language Odds Display v | (o) | Home All Sports In-Play My Bets Casino | ",
+          "parsed": {
+            "lines": [
+              {
+                "text": "22:56 D C al 100%",
+                "top": 14,
+                "left": 56,
+                "frame": 0
+              },
+              {
+                "text": "o bet365.com/#/MB/U + 43",
+                "top": 83,
+                "left": 107,
+                "frame": 0
+              },
+              {
+                "text": "bet365 \u00a33.69 )",
+                "top": 176,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "Besancon AC Fri 25 Sep",
+                "top": 241,
+                "left": 106,
+                "frame": 0
+              },
+              {
+                "text": "Val de Seine 19:00",
+                "top": 270,
+                "left": 94,
+                "frame": 0
+              },
+              {
+                "text": "Stake To Return",
+                "top": 388,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "\u00a30.10 \u00a30.18",
+                "top": 421,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "\u00a31.00 Single",
+                "top": 542,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "Reuse Selections Share",
+                "top": 625,
+                "left": 145,
+                "frame": 0
+              },
+              {
+                "text": "O Arsenal 1.33",
+                "top": 698,
+                "left": 71,
+                "frame": 0
+              },
+              {
+                "text": "Full Time Result",
+                "top": 740,
+                "left": 93,
+                "frame": 0
+              },
+              {
+                "text": "Arsenal Sat 10 Oct",
+                "top": 786,
+                "left": 89,
+                "frame": 0
+              },
+              {
+                "text": "Leeds 12:30",
+                "top": 836,
+                "left": 91,
+                "frame": 0
+              },
+              {
+                "text": "Stake To Return",
+                "top": 932,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "\u00a31.00 \u00a31.33",
+                "top": 964,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "Information and transmission delays V",
+                "top": 1098,
+                "left": 182,
+                "frame": 0
+              },
+              {
+                "text": "Settings",
+                "top": 1229,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Language Odds Display v",
+                "top": 1328,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "(o)",
+                "top": 1419,
+                "left": 345,
+                "frame": 0
+              },
+              {
+                "text": "Home All Sports In-Play My Bets Casino",
+                "top": 1470,
+                "left": 44,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "p": "c_4ofmX2P_z62wHphRYkaUh22NApbIvW2FxD32rA9e_hA/s007_my_bets_3.png",
+          "c": "mybets",
+          "engine": "hybrid",
+          "latency_ms": 298,
+          "table": false,
+          "word_count": 52,
+          "text": "22:56 D C al 100% | o bet365.com/#/MB/U + 43 | bet365 \u00a33.69 \u00a2 | Settings | Language Odds Display | Audio | Horse Racing Greyhounds | Football Cricket | Form & Stats | Football Stats Sports Stats | Horse Racing Archive Australian Horse Form | Scores & Results | Live Scores Results | Help | Deposits Withdrawals | ((o) | Home All Sports In-Play My Bets Casino | ",
+          "parsed": {
+            "lines": [
+              {
+                "text": "22:56 D C al 100%",
+                "top": 14,
+                "left": 56,
+                "frame": 0
+              },
+              {
+                "text": "o bet365.com/#/MB/U + 43",
+                "top": 82,
+                "left": 107,
+                "frame": 0
+              },
+              {
+                "text": "bet365 \u00a33.69 \u00a2",
+                "top": 176,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "Settings",
+                "top": 288,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "Language Odds Display",
+                "top": 382,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Audio",
+                "top": 485,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "Horse Racing Greyhounds",
+                "top": 581,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Football Cricket",
+                "top": 656,
+                "left": 21,
+                "frame": 0
+              },
+              {
+                "text": "Form & Stats",
+                "top": 759,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Football Stats Sports Stats",
+                "top": 852,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Horse Racing Archive Australian Horse Form",
+                "top": 929,
+                "left": 21,
+                "frame": 0
+              },
+              {
+                "text": "Scores & Results",
+                "top": 1031,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Live Scores Results",
+                "top": 1124,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Help",
+                "top": 1246,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Deposits Withdrawals",
+                "top": 1341,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "((o)",
+                "top": 1419,
+                "left": 345,
+                "frame": 0
+              },
+              {
+                "text": "Home All Sports In-Play My Bets Casino",
+                "top": 1470,
+                "left": 44,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "p": "c_4ofmX2P_z62wHphRYkaUh22NApbIvW2FxD32rA9e_hA/s008_my_bets_4.png",
+          "c": "mybets",
+          "engine": "hybrid",
+          "latency_ms": 353,
+          "table": false,
+          "word_count": 59,
+          "text": "22:56 D C al 100% | G o bet365.com/#/MB/U + 43 | bet365 \u00a33.69 \u00a2 | Help | Deposits Withdravwals | Contact Us bet365 FAQ | Terms and Conditions Safer Gambling | Technical lssues Privacy Policy | Cookie Policy Fair Payouts | Complaints Procedure Rules | Deposit Limits | Sites | Careers Partners | Sports & Betting News | bet365 | CHAMPIONS | LEAGUE | OFFICIAL GLOBAL PARTNER | (o) | Home All Sports In-Play My Bets Casino | ",
+          "parsed": {
+            "lines": [
+              {
+                "text": "22:56 D C al 100%",
+                "top": 14,
+                "left": 56,
+                "frame": 0
+              },
+              {
+                "text": "G o bet365.com/#/MB/U + 43",
+                "top": 82,
+                "left": 30,
+                "frame": 0
+              },
+              {
+                "text": "bet365 \u00a33.69 \u00a2",
+                "top": 176,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "Help",
+                "top": 298,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Deposits Withdravwals",
+                "top": 394,
+                "left": 21,
+                "frame": 0
+              },
+              {
+                "text": "Contact Us bet365 FAQ",
+                "top": 469,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Terms and Conditions Safer Gambling",
+                "top": 544,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "Technical lssues Privacy Policy",
+                "top": 619,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "Cookie Policy Fair Payouts",
+                "top": 691,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "Complaints Procedure Rules",
+                "top": 769,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Deposit Limits",
+                "top": 841,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Sites",
+                "top": 945,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Careers Partners",
+                "top": 1041,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "Sports & Betting News",
+                "top": 1117,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "bet365",
+                "top": 1283,
+                "left": 239,
+                "frame": 0
+              },
+              {
+                "text": "CHAMPIONS",
+                "top": 1309,
+                "left": 393,
+                "frame": 0
+              },
+              {
+                "text": "LEAGUE",
+                "top": 1327,
+                "left": 410,
+                "frame": 0
+              },
+              {
+                "text": "OFFICIAL GLOBAL PARTNER",
+                "top": 1353,
+                "left": 257,
+                "frame": 0
+              },
+              {
+                "text": "(o)",
+                "top": 1419,
+                "left": 345,
+                "frame": 0
+              },
+              {
+                "text": "Home All Sports In-Play My Bets Casino",
+                "top": 1470,
+                "left": 44,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "p": "c_CV0RVETihjklLlhI9zgR0bQsn8-fSsTH4jr7AQY6J8Q/s006_my_bets_1.png",
+          "c": "mybets",
+          "engine": "hybrid",
+          "latency_ms": 414,
+          "table": false,
+          "word_count": 88,
+          "text": "20:58 B C al 100% | G o bet365.com/#/MB/U + 33 | bet365 \u00a33.40 ) | Open Live Settled | \u00a30.10 Single | 3 Reuse Selections Share | O Val de Seine +3.5 1.83 | Point Spread | i Besancon AC Fri 25 Sep | Val de Seine 19:00 | Stake To Return | \u00a30.10 \u00a30.18 | \u00a30.10 Single | 3 Reuse Selections Share | Panathinaikos 1.17 | Money Line | Q4 05:03 1 2 Half 3 4 T | Panathinaikos 31 11 42 27 12 81 | Paris 17 14 31 13 16 60 | Stake To Return | (o) | Home All Sports In-Play My Bets Casino | ",
+          "parsed": {
+            "lines": [
+              {
+                "text": "20:58 B C al 100%",
+                "top": 14,
+                "left": 56,
+                "frame": 0
+              },
+              {
+                "text": "G o bet365.com/#/MB/U + 33",
+                "top": 81,
+                "left": 30,
+                "frame": 0
+              },
+              {
+                "text": "bet365 \u00a33.40 )",
+                "top": 176,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "Open Live Settled",
+                "top": 272,
+                "left": 36,
+                "frame": 0
+              },
+              {
+                "text": "\u00a30.10 Single",
+                "top": 367,
+                "left": 50,
+                "frame": 0
+              },
+              {
+                "text": "3 Reuse Selections Share",
+                "top": 451,
+                "left": 100,
+                "frame": 0
+              },
+              {
+                "text": "O Val de Seine +3.5 1.83",
+                "top": 524,
+                "left": 70,
+                "frame": 0
+              },
+              {
+                "text": "Point Spread",
+                "top": 564,
+                "left": 92,
+                "frame": 0
+              },
+              {
+                "text": "i Besancon AC Fri 25 Sep",
+                "top": 626,
+                "left": 74,
+                "frame": 0
+              },
+              {
+                "text": "Val de Seine 19:00",
+                "top": 654,
+                "left": 104,
+                "frame": 0
+              },
+              {
+                "text": "Stake To Return",
+                "top": 773,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "\u00a30.10 \u00a30.18",
+                "top": 807,
+                "left": 52,
+                "frame": 0
+              },
+              {
+                "text": "\u00a30.10 Single",
+                "top": 925,
+                "left": 50,
+                "frame": 0
+              },
+              {
+                "text": "3 Reuse Selections Share",
+                "top": 1013,
+                "left": 100,
+                "frame": 0
+              },
+              {
+                "text": "Panathinaikos 1.17",
+                "top": 1085,
+                "left": 93,
+                "frame": 0
+              },
+              {
+                "text": "Money Line",
+                "top": 1126,
+                "left": 93,
+                "frame": 0
+              },
+              {
+                "text": "Q4 05:03 1 2 Half 3 4 T",
+                "top": 1191,
+                "left": 70,
+                "frame": 0
+              },
+              {
+                "text": "Panathinaikos 31 11 42 27 12 81",
+                "top": 1229,
+                "left": 113,
+                "frame": 0
+              },
+              {
+                "text": "Paris 17 14 31 13 16 60",
+                "top": 1273,
+                "left": 112,
+                "frame": 0
+              },
+              {
+                "text": "Stake To Return",
+                "top": 1376,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "(o)",
+                "top": 1419,
+                "left": 345,
+                "frame": 0
+              },
+              {
+                "text": "Home All Sports In-Play My Bets Casino",
+                "top": 1470,
+                "left": 44,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "p": "c_CV0RVETihjklLlhI9zgR0bQsn8-fSsTH4jr7AQY6J8Q/s007_my_bets_2.png",
+          "c": "mybets",
+          "engine": "hybrid",
+          "latency_ms": 418,
+          "table": false,
+          "word_count": 82,
+          "text": "20:58 B C al 100% | G o bet365.com/#/MB/U + 33 | bet365 \u00a33.40 +) | Q4 05:05 1 2 Half 3 4 T | Panathinaikos 31 11 42 27 12 81 | Paris 17 14 31 13 16 60 | Stake To Return | \u00a30.10 \u00a30.11 | \u00a30.10 Single | Reuse Selections Share | \u2022Austria 1.44 | Full Time Result | Austria 1 | Israel E Peretz In Possession | 50:27 | Stake To Return | \u00a30.10 \u00a30.14 | \u00a30.10 Single | Reuse Selections Share | \u2022 Portugal 1.16 | Full Time Result | (o) | Home All Sports In-Play My Bets Casino | ",
+          "parsed": {
+            "lines": [
+              {
+                "text": "20:58 B C al 100%",
+                "top": 14,
+                "left": 56,
+                "frame": 0
+              },
+              {
+                "text": "G o bet365.com/#/MB/U + 33",
+                "top": 81,
+                "left": 30,
+                "frame": 0
+              },
+              {
+                "text": "bet365 \u00a33.40 +)",
+                "top": 176,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "Q4 05:05 1 2 Half 3 4 T",
+                "top": 245,
+                "left": 70,
+                "frame": 0
+              },
+              {
+                "text": "Panathinaikos 31 11 42 27 12 81",
+                "top": 284,
+                "left": 113,
+                "frame": 0
+              },
+              {
+                "text": "Paris 17 14 31 13 16 60",
+                "top": 326,
+                "left": 112,
+                "frame": 0
+              },
+              {
+                "text": "Stake To Return",
+                "top": 431,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "\u00a30.10 \u00a30.11",
+                "top": 461,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "\u00a30.10 Single",
+                "top": 586,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "Reuse Selections Share",
+                "top": 668,
+                "left": 134,
+                "frame": 0
+              },
+              {
+                "text": "\u2022Austria 1.44",
+                "top": 742,
+                "left": 57,
+                "frame": 0
+              },
+              {
+                "text": "Full Time Result",
+                "top": 783,
+                "left": 93,
+                "frame": 0
+              },
+              {
+                "text": "Austria 1",
+                "top": 851,
+                "left": 92,
+                "frame": 0
+              },
+              {
+                "text": "Israel E Peretz In Possession",
+                "top": 895,
+                "left": 92,
+                "frame": 0
+              },
+              {
+                "text": "50:27",
+                "top": 948,
+                "left": 52,
+                "frame": 0
+              },
+              {
+                "text": "Stake To Return",
+                "top": 1031,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "\u00a30.10 \u00a30.14",
+                "top": 1062,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "\u00a30.10 Single",
+                "top": 1183,
+                "left": 50,
+                "frame": 0
+              },
+              {
+                "text": "Reuse Selections Share",
+                "top": 1271,
+                "left": 135,
+                "frame": 0
+              },
+              {
+                "text": "\u2022 Portugal 1.16",
+                "top": 1340,
+                "left": 57,
+                "frame": 0
+              },
+              {
+                "text": "Full Time Result",
+                "top": 1381,
+                "left": 92,
+                "frame": 0
+              },
+              {
+                "text": "(o)",
+                "top": 1419,
+                "left": 345,
+                "frame": 0
+              },
+              {
+                "text": "Home All Sports In-Play My Bets Casino",
+                "top": 1470,
+                "left": 44,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "p": "c_CV0RVETihjklLlhI9zgR0bQsn8-fSsTH4jr7AQY6J8Q/s008_my_bets_3.png",
+          "c": "mybets",
+          "engine": "hybrid",
+          "latency_ms": 397,
+          "table": false,
+          "word_count": 60,
+          "text": "20:58 B C al 100% | o bet365.com/#/MB/U + 33 | bet365 \u00a33.40 | \u00a30.10 Single | 3 Reuse Selections Share | \u2022 Portugal 1.16 | Full Time Result | Portugal 1 | Wales B Davies In Possession 0 | 55:27 | Stake To Return | \u00a30.10 \u00a30.11 | \u00a31.00 Single Arsenal | Information and transmission delays v | Settings | Language v Odds Display v | Audio | ((o) | Home All Sports In-Play My Bets Casino | ",
+          "parsed": {
+            "lines": [
+              {
+                "text": "20:58 B C al 100%",
+                "top": 14,
+                "left": 56,
+                "frame": 0
+              },
+              {
+                "text": "o bet365.com/#/MB/U + 33",
+                "top": 83,
+                "left": 107,
+                "frame": 0
+              },
+              {
+                "text": "bet365 \u00a33.40",
+                "top": 176,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "\u00a30.10 Single",
+                "top": 238,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "3 Reuse Selections Share",
+                "top": 327,
+                "left": 100,
+                "frame": 0
+              },
+              {
+                "text": "\u2022 Portugal 1.16",
+                "top": 394,
+                "left": 57,
+                "frame": 0
+              },
+              {
+                "text": "Full Time Result",
+                "top": 439,
+                "left": 93,
+                "frame": 0
+              },
+              {
+                "text": "Portugal 1",
+                "top": 504,
+                "left": 92,
+                "frame": 0
+              },
+              {
+                "text": "Wales B Davies In Possession 0",
+                "top": 549,
+                "left": 92,
+                "frame": 0
+              },
+              {
+                "text": "55:27",
+                "top": 605,
+                "left": 52,
+                "frame": 0
+              },
+              {
+                "text": "Stake To Return",
+                "top": 687,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "\u00a30.10 \u00a30.11",
+                "top": 718,
+                "left": 51,
+                "frame": 0
+              },
+              {
+                "text": "\u00a31.00 Single Arsenal",
+                "top": 839,
+                "left": 50,
+                "frame": 0
+              },
+              {
+                "text": "Information and transmission delays v",
+                "top": 980,
+                "left": 182,
+                "frame": 0
+              },
+              {
+                "text": "Settings",
+                "top": 1111,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Language v Odds Display v",
+                "top": 1206,
+                "left": 21,
+                "frame": 0
+              },
+              {
+                "text": "Audio",
+                "top": 1311,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "((o)",
+                "top": 1419,
+                "left": 345,
+                "frame": 0
+              },
+              {
+                "text": "Home All Sports In-Play My Bets Casino",
+                "top": 1470,
+                "left": 44,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "p": "c_CV0RVETihjklLlhI9zgR0bQsn8-fSsTH4jr7AQY6J8Q/s009_my_bets_4.png",
+          "c": "mybets",
+          "engine": "hybrid",
+          "latency_ms": 334,
+          "table": false,
+          "word_count": 61,
+          "text": "20:58 B C al 100% | G o bet365.com/#/MB/U + 33 | bet365 \u00a33.40 ) | Language Odds Display | Audio | Horse Racing Greyhounds | Football Cricket | Form & Stats | Football Stats Sports Stats | Horse Racing Archive Australian Horse Form | Scores & Results | Live Scores Results | Help | Deposits Withdrawals | Contact Us bet365 FAQ | Terms and Conditions Safer Gambling | (o) | Home All Sports In-Play My Bets Casino | ",
+          "parsed": {
+            "lines": [
+              {
+                "text": "20:58 B C al 100%",
+                "top": 14,
+                "left": 56,
+                "frame": 0
+              },
+              {
+                "text": "G o bet365.com/#/MB/U + 33",
+                "top": 81,
+                "left": 30,
+                "frame": 0
+              },
+              {
+                "text": "bet365 \u00a33.40 )",
+                "top": 176,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "Language Odds Display",
+                "top": 261,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Audio",
+                "top": 366,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "Horse Racing Greyhounds",
+                "top": 459,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Football Cricket",
+                "top": 536,
+                "left": 21,
+                "frame": 0
+              },
+              {
+                "text": "Form & Stats",
+                "top": 637,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Football Stats Sports Stats",
+                "top": 731,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Horse Racing Archive Australian Horse Form",
+                "top": 808,
+                "left": 21,
+                "frame": 0
+              },
+              {
+                "text": "Scores & Results",
+                "top": 909,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Live Scores Results",
+                "top": 1005,
+                "left": 21,
+                "frame": 0
+              },
+              {
+                "text": "Help",
+                "top": 1125,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Deposits Withdrawals",
+                "top": 1219,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Contact Us bet365 FAQ",
+                "top": 1296,
+                "left": 20,
+                "frame": 0
+              },
+              {
+                "text": "Terms and Conditions Safer Gambling",
+                "top": 1368,
+                "left": 19,
+                "frame": 0
+              },
+              {
+                "text": "(o)",
+                "top": 1419,
+                "left": 345,
+                "frame": 0
+              },
+              {
+                "text": "Home All Sports In-Play My Bets Casino",
+                "top": 1470,
+                "left": 44,
+                "frame": 0
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "app_version": "0.9.18-hardened",
+  "version_code": 101,
+  "phone_final_action_armed": false,
+  "diagnostics_active": false,
+  "endpoint": "http://100.114.45.68:8767",
+  "pid": 18012,
+  "device_id": "galaxy-a13-5g",
+  "session": {
+    "state": "UNKNOWN",
+    "observed_at_ms": 1790372629565,
+    "detail": "not checked yet",
+    "refresh_count": 1,
+    "last_refresh_at_ms": 1790372629598,
+    "last_refresh_outcome": "probe started"
+  },
+  "ocr_engine": "hybrid",
+  "fast_ocr_error": null,
+  "credentials_configured": true,
+  "credential_store": "encrypted",
+  "session_recovery": {
+    "last_attempt_at_ms": 0,
+    "attempts_last_hour": 0,
+    "last_outcome": "none"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "instruction_id": "on-ca8c7974821c387ff822222b",
+  "before": {
+    "id": 1,
+    "instruction_id": "on-ca8c7974821c387ff822222b",
+    "status": "OPEN",
+    "bet_reference": "HT5515901931W",
+    "fixture": "Besancon vs Val De Seine",
+    "market": "SPREAD",
+    "selection": "AWAY",
+    "line": "+3.5",
+    "stake": "0.10",
+    "odds": "1.83",
+    "potential_return": "0.10",
+    "returns": null,
+    "placed_at": "2026-09-24T19:57:58.151+00:00",
+    "verified_at": "2026-09-24T19:59:00.880+00:00",
+    "settled_at": null,
+    "source": "device",
+    "evidence": "{\"frames\": [\"s029_place_bet_after.png\", \"s030_place_bet_after.png\"], \"receipt_lines\": [\"2057 \\u00ae 0 e.\\u00bb 5).: 100%.\", \"ED 23 bet365.com/#/AC/Bi + E2]\", \"Bet Placed\", \"m Share x\", \"Bet Ref HT5515901931W\", \";; Live Aieris Reuse Selections\", \"Val de Seine +3.5 1.83\", \"Point Spread\", \"Besancon AC vs Val de Seine\", \"Sta ke To Return\", \"\\u00a3O.1 0 \\u00a30.1 8\", \"g Q \\u00abo\\u00bb @9 BEE\", \"Hume All Sparts ln-Play My Bets Casino\", \"III C) <\"]}",
+    "updated_at": "2026-09-24T19:59:00.880+00:00",
+    "requested_line": null,
+    "requested_odds": null,
+    "requested_stake": null,
+    "verified_line": null,
+    "verified_odds": null,
+    "verified_stake": null,
+    "actual_line": null,
+    "actual_odds": null,
+    "actual_stake": null,
+    "terms_provenance": null
+  },
+  "after": {
+    "potential_return": "0.18",
+    "actual_line": "+3.5",
+    "actual_odds": "1.83",
+    "actual_stake": "0.10"
+  },
+  "provenance": {
+    "receipt_path": "evidence/live-first-placement/s030_place_bet_after.png",
+    "sha256": "44da3e1399ff21af3b8c58aa7dbd3c55b7eeef431998af0dae4cd54ec05489f3",
+    "method": "visually inspected original receipt",
+    "actual": {
+      "line": "+3.5",
+      "odds": "1.83",
+      "stake": "0.10",
+      "potential_return": "0.18"
+    },
+    "reason": "Old OCR confused stake with To Return; settlement and returns remain unknown"
+  }
+}

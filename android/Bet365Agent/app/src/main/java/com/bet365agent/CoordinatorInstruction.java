@@ -15,6 +15,7 @@ import java.util.Set;
 final class CoordinatorInstruction {
     final String id, target, text, runId, action, adapter, scenario, market, side, sport, line, minimumPrice, stake, executionMode, confirmationStatus, view;
     final String eventUrl, kickoffUtc, selectionName, price;
+    final String competition, period, lineTolerance, heldInstructionId, home, away;
     final java.util.Map<String, String> aliases;
     final boolean competitionWomen;
     final String frames, engine;
@@ -48,7 +49,7 @@ final class CoordinatorInstruction {
      * "Invalid schema extras".
      */
     static void checkWorkflowExtras(Map<String, String> fields) {
-        java.util.HashSet<String> allowedExtra = new java.util.HashSet<>(java.util.Arrays.asList("place_bet","execution_mode","confirmation_status","line","event_url","kickoff_utc","aliases","competition_women"));
+        java.util.HashSet<String> allowedExtra = new java.util.HashSet<>(java.util.Arrays.asList("place_bet","execution_mode","confirmation_status","line","event_url","kickoff_utc","aliases","competition_women","competition","period","max_line_deterioration"));
         if(fields.containsKey("event_url") && !EventPage.validUrl(fields.get("event_url"))) throw new IllegalArgumentException("Invalid event_url");
         if(fields.containsKey("kickoff_utc") && !fields.get("kickoff_utc").matches("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"))
             throw new IllegalArgumentException("Invalid kickoff_utc");
@@ -71,7 +72,7 @@ final class CoordinatorInstruction {
                 String name = reader.nextName();
                 if (fields.containsKey(name)) throw new IllegalArgumentException("Duplicate field: " + name);
                 boolean number = "timeout_ms".equals(name);
-                Set<String> allowed = Set.of("instruction_id","action","target_text","input_text","adapter","scenario","query","market","side","sport","line","minimum_price","stake","timeout_ms","place_bet","execution_mode","confirmation_status","view","event_url","kickoff_utc","selection_name","price","aliases","frames","engine","competition_women");
+                Set<String> allowed = Set.of("instruction_id","action","target_text","input_text","adapter","scenario","query","market","side","sport","line","minimum_price","stake","timeout_ms","place_bet","execution_mode","confirmation_status","view","event_url","kickoff_utc","selection_name","price","aliases","frames","engine","competition_women","competition","period","max_line_deterioration","held_instruction_id","home","away");
                 if (!number && !allowed.contains(name)) throw new IllegalArgumentException("Unknown field: " + name);
                 if ("line".equals(name) && reader.peek() == JsonToken.NULL) { reader.nextNull(); fields.put(name, ""); continue; }
                 if (reader.peek() != (number ? JsonToken.NUMBER : JsonToken.STRING)) throw new IllegalArgumentException("Wrong field type: " + name);
@@ -130,7 +131,7 @@ final class CoordinatorInstruction {
             if(!Set.of("OPEN","SETTLED").contains(fields.get("view"))) throw new IllegalArgumentException("Invalid MY_BETS view");
         } else if(action.equals("PLACE_HELD")) {
             expected=Set.of("instruction_id","action","adapter","scenario","sport","market","side","line","selection_name","price",
-                    "minimum_price","stake","execution_mode","confirmation_status","timeout_ms");
+                    "minimum_price","stake","execution_mode","confirmation_status","timeout_ms","held_instruction_id","home","away","competition","period","kickoff_utc");
             if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid PLACE_HELD schema");
             if(!fields.get("price").matches("[0-9]+\\.[0-9]{2}")) throw new IllegalArgumentException("Invalid price");
             if(!fields.get("selection_name").matches("[A-Za-z0-9 ./'&()-]{2,64}")) throw new IllegalArgumentException("Invalid selection_name");
@@ -191,6 +192,14 @@ final class CoordinatorInstruction {
         view = fields.getOrDefault("view", "");
         eventUrl = fields.getOrDefault("event_url", "");
         kickoffUtc = fields.getOrDefault("kickoff_utc", "");
+        competition = fields.getOrDefault("competition", "");
+        period = fields.getOrDefault("period", "");
+        lineTolerance = fields.getOrDefault("max_line_deterioration", "");
+        heldInstructionId = fields.getOrDefault("held_instruction_id", "");
+        home = fields.getOrDefault("home", ""); away = fields.getOrDefault("away", "");
+        if (action.equals("PLACE_HELD") && (!id.equals(heldInstructionId + "-place") || home.isEmpty() || away.isEmpty()
+                || competition.isEmpty() || !"FULL_GAME".equals(period) || kickoffUtc.isEmpty()))
+            throw new IllegalArgumentException("Complete original held event context required");
         selectionName = fields.getOrDefault("selection_name", "");
         price = fields.getOrDefault("price", "");
         aliases = parseAliases(fields.getOrDefault("aliases", ""));

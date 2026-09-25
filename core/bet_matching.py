@@ -56,6 +56,14 @@ def plain(value):
 def team_present(blob, name, other=None):
     """At least half of the team's words, including one that distinguishes it from the opponent
     ('SE Melbourne Phoenix' vs 'Melbourne United' needs 'phoenix', not just 'melbourne')."""
+    if '|' in blob:
+        return any(team_present(part, name, other) for part in blob.split('|'))
+    def protected(value):
+        text = re.sub(r'\bu[ -](\d{2})\b', r'u\1', str(value).lower())
+        parts = set(re.findall(r'\b(?:w|women|womens|ladies|u\d{2}|ii|iii|b|reserves?|academy|youth|juniors?)\b', text))
+        return {'women' if p in ('w','women','womens','ladies') else 'reserve' if p in ('reserve','reserves') else p for p in parts}
+    if protected(blob) != protected(name):
+        return False
     tokens = _tokens(name)
     if not tokens:
         return False
@@ -152,9 +160,9 @@ def _check_card(instruction, text):
 
 
 def _found(checks):
-    """Stake and selection always; then both teams, or exact odds plus at least one team.
-    Real cards often lose one fixture line to OCR ("Thu 24 Sep" / "19:45" without names)."""
-    return checks['stake'] and checks['selection'] and (checks['fixture'] or (checks['odds'] and checks['one_team']))
+    """Require stake, selection and both teams on one bounded card.
+    Missing opponent text is inconclusive, even when the odds happen to match."""
+    return checks['stake'] and checks['selection'] and checks['fixture']
 
 
 def _cards(normalised):
@@ -197,6 +205,17 @@ def match(instruction, my_bets, view=None):
     PARTIAL / NO_FIXTURE_TEXT (not found). Raises ValueError if the requested view is not
     confirmed by the address bar, or the result has no lines: absence is then unproven.
     """
+    frames = sorted({r.get('frame', 0) for r in my_bets.get('lines', []) if isinstance(r, dict)})
+    if len(frames) > 1:
+        # Never borrow a fixture, selection or stake from a different screenshot/card.
+        results = []
+        for frame in frames:
+            sub = dict(my_bets, lines=[r for r in my_bets['lines'] if r.get('frame',0)==frame])
+            try: results.append(match(instruction, sub, view))
+            except ValueError: continue
+        found = [r for r in results if r['found']]
+        if found: return found[0]
+        return dict(found=False, confidence='INCONCLUSIVE', window=None, bet_reference=None, status=None, returns=None)
     lines = lines_of(my_bets)
     normalised = [_norm(t) for t in lines]
     view = view or (my_bets.get('view') if isinstance(my_bets, dict) else None)
@@ -224,24 +243,5 @@ def match(instruction, my_bets, view=None):
         return dict(found=found, confidence=confidence, window=best['window'],
                     checks={k: best[k] for k in ('fixture', 'selection', 'stake', 'odds')},
                     bet_reference=reference.group(1) if reference else None, status=status, returns=returns)
-    # No card headers recognised: fall back to a sliding window around fixture text.
-    home, away = instruction.get('home'), instruction.get('away')
-    best = None
-    for index, text in enumerate(normalised):
-        if not (team_present(text, home, away) or team_present(text, away, home)):
-            continue
-        window = ' | '.join(normalised[max(0, index - WINDOW_BEFORE): index + WINDOW_AFTER])
-        checks = _check_card(instruction, window)
-        score = sum(checks.values()) + (2 if _found(checks) else 0)
-        if best is None or score > best['score']:
-            raw = ' | '.join(lines[max(0, index - WINDOW_BEFORE): index + WINDOW_AFTER])
-            best = dict(score=score, window=raw, text=window, **checks)
-    if best is None:
-        return dict(found=False, confidence='NO_FIXTURE_TEXT', window=None, bet_reference=None, status=None, returns=None)
-    found = _found(best)
-    reference = REFERENCE.search(best['window'])
-    status, returns = _settlement(best['text'])
-    confidence = 'EXACT' if found and best['odds'] else 'STRONG' if found else 'PARTIAL'
-    return dict(found=found, confidence=confidence, window=best['window'], checks={k: best[k] for k in
-                ('fixture', 'selection', 'stake', 'odds')}, bet_reference=reference.group(1) if reference else None,
-                status=status, returns=returns)
+    # No reliable card boundary: a sliding window could join two different bets.
+    return dict(found=False, confidence='INCONCLUSIVE', window=None, bet_reference=None, status=None, returns=None)

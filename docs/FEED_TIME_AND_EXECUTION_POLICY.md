@@ -122,3 +122,9 @@ After account confirmation, update the timezone and verification flag, then reru
 only timestamp/stale/event-start tests (`tests.test_feed_time` plus the relevant
 pipeline stale/dispatch tests). Strategy and slippage interpretation need no
 change or full-suite rerun merely because that timezone confirmation arrives.
+
+The focused confirmation check is:
+
+```text
+python -m unittest tests.test_feed_time tests.test_pipeline.IntakeTests.test_stale_by_age_event_started_and_unknown_timezone tests.test_pipeline.IntakeTests.test_queued_alert_goes_stale_before_dispatch -q
+```

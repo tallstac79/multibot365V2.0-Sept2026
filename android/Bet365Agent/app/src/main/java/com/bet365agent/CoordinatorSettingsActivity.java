@@ -22,6 +22,16 @@ public class CoordinatorSettingsActivity extends Activity {
         EditText user = new EditText(this); user.setSingleLine(true); user.setHint("Bet365 username / email"); user.setText(CoordinatorConfig.bet365Username(this)); layout.addView(user);
         EditText pass = new EditText(this); pass.setSingleLine(true); pass.setHint("Bet365 password"); pass.setTransformationMethod(PasswordTransformationMethod.getInstance()); pass.setText(CoordinatorConfig.bet365Password(this)); layout.addView(pass);
         Button save = new Button(this); save.setText("Save connection + Bet365 settings"); layout.addView(save);
+        Button arm = new Button(this); arm.setText("Allow approved final actions on this phone for 1 hour"); layout.addView(arm);
+        arm.setOnClickListener(v -> new android.app.AlertDialog.Builder(this)
+                .setMessage("Allow this phone to place real approved bets for one hour? Backend approval and stake limits still apply.")
+                .setNegativeButton("Cancel", null).setPositiveButton("Arm phone", (d, w) -> {
+                    long now = android.os.SystemClock.elapsedRealtime();
+                    CoordinatorConfig.prefs(this).edit().putLong("final_action_at_elapsed", now).putLong("final_action_until_elapsed", now + 3_600_000L)
+                            .putInt("final_action_boot", android.provider.Settings.Global.getInt(getContentResolver(), "boot_count", -1)).commit();
+                }).show());
+        Button disarm = new Button(this); disarm.setText("Disarm final actions on this phone"); layout.addView(disarm);
+        disarm.setOnClickListener(v -> CoordinatorConfig.prefs(this).edit().remove("final_action_until_elapsed").commit());
         save.setOnClickListener(v -> {
             String secret = token.getText().toString(), target = url.getText().toString().trim();
             android.net.Uri uri = android.net.Uri.parse(target);

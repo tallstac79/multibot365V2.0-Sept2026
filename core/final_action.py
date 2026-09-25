@@ -171,11 +171,18 @@ class FinalAction:
     def record_outcome(self, db, row, state, result):
         """Create/update the bets row for a final-action instruction after its device result."""
         placement = (result or {}).get('placement') if isinstance((result or {}).get('placement'), dict) else {}
+        observed = (result or {}).get('pretap') or (result or {}).get('selection') or {}
+        actual = placement.get('actual_terms') or {}
         common = dict(fixture=row['fixture'], market=row['market'], selection=row['selection'], line=row['line'],
                       stake=placement.get('stake') or row['stake'], odds=placement.get('odds') or row['observed_price']
                       or row['alert_price'], potential_return=placement.get('potential_return'),
                       bet_reference=placement.get('bet_reference'), placed_at=iso(self.p.clock()),
                       evidence=dict(frames=placement.get('frames'), receipt_lines=placement.get('receipt_lines')))
+        common.update(requested_line=row['line'], requested_odds=row['alert_price'], requested_stake=row['stake'],
+                      verified_line=observed.get('line'), verified_odds=observed.get('price'), verified_stake=observed.get('stake'),
+                      actual_line=actual.get('line'), actual_odds=actual.get('odds'), actual_stake=actual.get('stake'),
+                      terms_provenance=json.dumps(dict(requested='alert/instruction', verified='phone pre-tap observation',
+                          actual='receipt fields only; missing values unknown', legacy_display='may contain requested/pre-tap fallback')))
         if state == State.COMPLETED:
             status = PLACED_UNVERIFIED
         elif state == State.PLACEMENT_UNKNOWN:
@@ -318,9 +325,9 @@ class FinalAction:
                 return 'FAILED'
             detail = dict(match=found, frames=my_bets.get('frames'))
             now = iso(self.p.clock())
-            if found['confidence'] == 'INCONCLUSIVE':
+            if found['confidence'] == 'INCONCLUSIVE' or (not found['found'] and my_bets.get('coverage_complete') is not True):
                 # A collapsed card could be this bet: neither found nor absent. Retry; never infer NOT_PLACED.
-                self._complete(rec, 'FAILED', dict(detail, reason='collapsed card could be this bet'), db)
+                self._complete(rec, 'FAILED', dict(detail, reason='card identity or complete account coverage unproven; absence cannot be inferred'), db)
                 return 'FAILED'
             if found['found']:
                 self._complete(rec, 'FOUND', detail, db)

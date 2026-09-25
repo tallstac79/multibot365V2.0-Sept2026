@@ -7,6 +7,7 @@ in REAL DATA, 'sample' rows only in SAMPLE DATA.
 """
 import json
 import sqlite3
+from datetime import datetime, timezone
 from contextlib import closing
 from pathlib import Path
 from urllib.parse import quote
@@ -148,6 +149,11 @@ def summary(root):
         service = json.loads(status_path.read_text(encoding='utf-8')) if status_path.exists() else None
     except (OSError, ValueError):
         service = {'error': 'Unreadable service status file'}
+    if service:
+        try:
+            age = (datetime.now(timezone.utc) - datetime.fromisoformat(service['heartbeat_at'].replace('Z','+00:00'))).total_seconds()
+        except (KeyError, ValueError, TypeError): age = None
+        service.update(heartbeat_age_seconds=age, fresh=age is not None and 0 <= age <= 30)
     out = dict(service=service, devices=[], sessions=[], lifecycle={}, intake={}, notifications=[], available=False)
     db = _open(root)
     if db is None:

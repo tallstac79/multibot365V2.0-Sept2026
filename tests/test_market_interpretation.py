@@ -438,7 +438,7 @@ class MigrationTests(unittest.TestCase):
                 self.assertEqual(db.execute('SELECT COUNT(*) FROM intake_messages').fetchone()[0], 2)
                 self.assertEqual(db.execute('SELECT intake_id FROM instructions').fetchone()[0], 1)
                 self.assertEqual(db.execute('PRAGMA foreign_key_check').fetchall(), [])
-                self.assertEqual(db.execute("SELECT value FROM meta WHERE key='schema_version'").fetchone()[0], '5')
+                self.assertEqual(db.execute("SELECT value FROM meta WHERE key='schema_version'").fetchone()[0], '6')
             Store(path)  # idempotent re-open
 
 

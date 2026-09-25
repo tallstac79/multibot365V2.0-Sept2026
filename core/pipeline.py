@@ -22,10 +22,10 @@ import re
 from core import alert_classifier
 from core.final_action import FinalAction
 from core.competition_gender import womens_competition
-from core.identity_registry import IdentityRegistry
+from core.scoped_identity import IdentityRegistry
 from core.lifecycle import State, TERMINAL, DEVICE_OWNED, interpret_device_result, CONFIRMATION_MAP
 from core.pipeline_store import Store, iso, utcnow, instruction_id_for, selection_key
-from core.rules_engine import evaluate, ACCEPT, STALE, selection_name as rules_selection_name
+from core.rules_engine import evaluate, ACCEPT, STALE, selection_name as rules_selection_name, time_assumptions
 from core.session_contract import parse_report, gate as session_gate, DEFAULT_MAX_AGE_SECONDS
 
 log = logging.getLogger('multibot.pipeline')
@@ -188,6 +188,17 @@ class Pipeline:
                                      instruction_id=instruction_id if status == alert_classifier.PARSED else None,
                                      parser_profile=verdict.get('profile'), parser_version=verdict.get('parser_version'),
                                      normalized=parsed)
+            if parsed and parsed.get('scheduled_at_local'):
+                try:
+                    timing = time_assumptions(parsed, self.config_provider(), now)
+                except (ValueError, TypeError, KeyError):
+                    timing = {}  # The rules engine below records invalid configuration and rejects.
+                if timing.get('timezone_eligibility_uncertain'):
+                    timing.update(intake_id=intake_id, source_timestamp=message.source_timestamp,
+                                  received_at=message.received_at, fixture=parsed.get('fixture'))
+                    self.store.audit(db, 'TIMEZONE_ELIGIBILITY_UNCERTAIN', timing)
+                    log.warning('TIMEZONE_ELIGIBILITY_UNCERTAIN feed_timezone_verified=false intake=%s %s',
+                                intake_id, json.dumps(timing, sort_keys=True))
             if status != alert_classifier.PARSED:
                 return dict(intake_id=intake_id, status=status, reason=reason, instruction_id=None)
             self.store.create_instruction(
@@ -243,9 +254,12 @@ class Pipeline:
                         f'Same selection already {state.value} as {row["instruction_id"]}; not processed twice', None)
             if state in TERMINAL:
                 continue
-            if row['alert_price'] == parsed.get('alert_price'):
+            previous = json.loads(row['normalized_alert'] or '{}')
+            context = ('opening', 'pinnacle', 'market_movement', 'highlighted_side', 'comparison',
+                       'displayed_ev_percent', 'quote_mapping')
+            if row['alert_price'] == parsed.get('alert_price') and all(previous.get(k) == parsed.get(k) for k in context):
                 return (alert_classifier.DUPLICATE,
-                        f'Same selection and price already pending as {row["instruction_id"]}', None)
+                        f'Same selection, price and movement context already pending as {row["instruction_id"]}', None)
             superseded = row['instruction_id']
         return status, reason, superseded
 
@@ -315,11 +329,19 @@ class Pipeline:
         url = event_link(row)
         if url:
             payload['event_url'] = url                      # primary route: open the exact event
-        if row['event_time'] and KICKOFF.match(row['event_time']):
-            payload['kickoff_utc'] = row['event_time']
+        rules = json.loads(row['rules_result'] or '{}')
+        terms = rules.get('instruction') or {}
+        if terms.get('max_line_deterioration') is not None:
+            payload['max_line_deterioration'] = terms['max_line_deterioration']
+        start = (rules.get('instruction') or {}).get('event_start_utc')
+        if start and rules.get('feed_timezone_verified') is True:
+            payload['kickoff_utc'] = datetime.fromisoformat(start).strftime('%Y-%m-%dT%H:%M')
+        if row['competition']:
+            payload['competition'] = row['competition']
+        payload['period'] = 'FULL_GAME'
         # B6/B7: promoted aliases and the names Bet365 used for this same fixture before travel with the run.
         with self.store.connection() as db:
-            aliases = self.identity.aliases_for(db, row['sport'], row['home'], row['away'], payload.get('kickoff_utc'))
+            aliases = self.identity.aliases_for(db, row['sport'], row['home'], row['away'], payload.get('kickoff_utc'), row['competition'])
         if aliases:
             payload['aliases'] = json.dumps(aliases)
         # Competition-aware women's marker: the phone may supply a missing "(W)" only for a women's competition.
@@ -345,11 +367,15 @@ class Pipeline:
             line = row['line']
         if not (name and SELECTION_NAME.match(str(name)) and price):
             raise PermissionError('Held selection details missing from the verification result')
+        context = result.get('event_context') or {}
+        if not result.get('held') or any(not context.get(k) for k in ('home','away','competition','kickoff_utc','period')):
+            raise PermissionError('Original held event identity missing; verify a new hold')
         return dict(instruction_id=device_instruction_id(row['instruction_id'], 'dispatch'), action='PLACE_HELD',
                     adapter=self.settings.adapter, scenario='live', sport=row['sport'], market=row['market'],
                     side=row['selection'], line=line or '', selection_name=str(name), price=str(price),
                     minimum_price=row['minimum_price'], stake=row['stake'], execution_mode='dispatch',
-                    confirmation_status='APPROVED', timeout_ms=90000)
+                    confirmation_status='APPROVED', timeout_ms=90000, held_instruction_id=row['instruction_id'],
+                    **{k: context[k] for k in ('home','away','competition','kickoff_utc','period')})
 
     # ------------------------------------------------------------------ held slip (one bet on the phone)
     HELD_ACTIVE = ('READY', 'AWAITING_APPROVAL', 'APPROVED', 'DISPATCHED', 'DEVICE_ACTIVE')
@@ -398,6 +424,9 @@ class Pipeline:
     def tick(self, gateway):
         """One dispatcher cycle. Safe to call repeatedly and after any restart."""
         health = self.refresh_device(gateway)
+        if health and health.get('diagnostics_active'):
+            self._poll_in_flight(gateway)
+            return  # lease suppresses reset, warmup, reconciliation and dispatch; polling remains safe
         self._poll_warmup(gateway)
         self._poll_in_flight(gateway)
         self._one_shot()
@@ -683,6 +712,16 @@ class Pipeline:
                 return target.value
             if state is None:
                 return row['state']  # DUPLICATE echo of the original; keep waiting for it.
+            if state == State.READY and not final_action:
+                from core.execution_terms import compare
+                policy = (json.loads(row['rules_result'] or '{}').get('instruction') or {})
+                quote = compare(dict(market=row['market'],side=row['selection'],line=row['line'],price=row['alert_price']),
+                                result.get('selection') or {}, odds_tolerance=policy.get('max_odds_deterioration'),
+                                line_tolerance=policy.get('max_line_deterioration'))
+                self.store.audit(db, 'ALERT_TO_LIVE_COMPARISON', quote, instruction_id)
+                result = dict(result, execution_comparison=quote)
+                if not quote['acceptable']:
+                    state, reason = State.PRICE_CHANGED, 'NO BET: ' + quote['reason']
             ready = result.get('ready_state') if isinstance(result.get('ready_state'), dict) else {}
             fields = dict(result_payload=result, device_stage=result.get('stage'), observed_price=observed)
             if isinstance(result.get('evidence'), list):
@@ -705,11 +744,12 @@ class Pipeline:
                 cand = result['alias_candidate']
                 self.store.audit(db, 'ALIAS_CANDIDATE', cand, instruction_id)
                 for feed_name, book_name in (cand.get('candidates') or {}).items():
-                    self.identity.record_candidate(db, row['sport'], feed_name, book_name, cand, cand.get('confidence'), instruction_id)
+                    proof = dict(cand, identity=result.get('identity'), event_context=result.get('event_context'), event_url=result.get('event_url'))
+                    self.identity.record_candidate(db, row['sport'], feed_name, book_name, proof, cand.get('confidence'), instruction_id, row['competition'])
             if applied and result.get('route') == 'event_link' and state in (State.READY, State.COMPLETED) \
-                    and result.get('home') and result.get('away') and result.get('event_url'):
+                    and result.get('home') and result.get('away') and result.get('event_url') and result.get('event_context'):
                 # B7: the resolved event for this fixture and kick-off (never reused for another kick-off).
-                self.identity.record_event(db, row['sport'], row['home'], row['away'], row['event_time'], result['event_url'],
+                self.identity.record_event(db, row['sport'], row['home'], row['away'], result['event_context'].get('kickoff_utc'), result['event_url'],
                                            result['home'], result['away'], row['competition'])
             if applied and state == State.READY and row['execution_mode'] == 'hold':
                 # The verified bet is now on the phone's slip: it owns the phone until placed or released.

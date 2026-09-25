@@ -56,7 +56,7 @@ public class EventIdentityTest {
         assertEquals("berck du fliers rang", EventIdentity.canonicalTokens(EventIdentity.normalise("Berck/Rang du Fliers")));
         assertEquals("[women]", EventIdentity.markers(EventIdentity.normalise("Beroe (W)")).toString());
         assertEquals("[u21]", EventIdentity.markers(EventIdentity.normalise("Spain U21")).toString());
-        assertEquals("[reserve]", EventIdentity.markers(EventIdentity.normalise("Real Madrid B")).toString());
+        assertEquals("[b]", EventIdentity.markers(EventIdentity.normalise("Real Madrid B")).toString());
     }
 
     @Test public void teamLevels() {

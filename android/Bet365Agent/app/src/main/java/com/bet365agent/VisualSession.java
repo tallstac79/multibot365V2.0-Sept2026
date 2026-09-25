@@ -300,7 +300,10 @@ final class VisualSession {
             // Another field already holds the editor session (real: Bet365 auto-focuses the pre-filled username after a
             // reboot). Like TextEntryFlow: blur on a neutral spot just below the field, wait for the session to end,
             // then focus the field so a NEW session is what receives the secret.
-            Rect blur = new Rect(box.left, box.bottom + 20, box.left + 40, box.bottom + 40);
+            // OCR may merge the background with the Password row, putting box.left
+            // outside the login modal. Blurring there closes the modal entirely.
+            int centre = box.centerX();
+            Rect blur = new Rect(centre - 20, box.bottom + 20, centre + 20, box.bottom + 40);
             put("secret_blur_xy", bounds(blur));
             tap(blur, "secret-field blur", 150).thenAccept(v -> secretBlurWait(method, box, hint, secret, attempt, 0, f))
                 .exceptionally(e -> { f.completeExceptionally(e); return null; });
@@ -326,7 +329,9 @@ final class VisualSession {
     private void secretAwait(AgentInputMethod method, long baseline, Rect box, String hint, String secret, int attempt, int polls, CompletableFuture<Void> f) {
         if(!live()) return;
         android.accessibilityservice.InputMethod.AccessibilityInputConnection ac = method.getCurrentInputStarted() ? method.getCurrentInputConnection() : null;
-        if (ac != null && method.generation() != baseline) {   // a NEW editor session, never the previous field's
+        android.view.inputmethod.EditorInfo editor = method.getCurrentInputEditorInfo();
+        if (ac != null && method.generation() != baseline && editor != null
+                && SecretEditor.matches(editor.packageName, editor.inputType)) {
             try {
                 ac.commitText(secret, 1, null);
                 put("secret_field_hint", hint); put("secret_entered", true); put("secret_focus_attempts", attempt + 1);
@@ -361,6 +366,12 @@ final class VisualSession {
     CompletableFuture<Void> dismissKeyboard() {
         if(!live())return failed("TIMEOUT","Session expired");
         checkpoint("DISMISS_KEYBOARD");service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);return delay(900);
+    }
+    CompletableFuture<Void> dismissBrowserPrompt(String returnUrl) {
+        if(!live())return failed("TIMEOUT","Session expired");
+        checkpoint("DISMISS_BROWSER_PROMPT");
+        service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+        return delay(500).thenCompose(v -> open(returnUrl)).thenCompose(v -> delay(1500));
     }
     void finish(String status,String detail) { if(done)return;terminated(status,detail);runner.finish(id,status,detail); }
     private void terminated(String status,String detail) {

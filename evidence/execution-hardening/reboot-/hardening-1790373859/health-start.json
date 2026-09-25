@@ -1,0 +1,540 @@
+{
+  "healthy": true,
+  "heartbeat_ms": 1790373861658,
+  "uptime_ms": 731,
+  "state": "IDLE",
+  "current_instruction": null,
+  "last_result": {
+    "instruction_id": "hardening-1790373521-session",
+    "status": "FAIL",
+    "stage": "LOGIN_FAILED",
+    "detail": "Bet365 session state unclear: no account, login or challenge markers on screen",
+    "duration_ms": 68985,
+    "progress": {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 68780,
+      "last_progress_at_ms": 1790373611647,
+      "instruction_id": "hardening-1790373521-session",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790373574622
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 36,
+          "at_ms": 1790373574630,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 36,
+            "start_ts_ms": 1790373574623,
+            "end_elapsed_ms": 18212,
+            "end_ts_ms": 1790373592799,
+            "duration_ms": 18176,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 44,
+          "at_ms": 1790373574636,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 36,
+            "start_ts_ms": 1790373574623,
+            "end_elapsed_ms": 18212,
+            "end_ts_ms": 1790373592799,
+            "duration_ms": 18176,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4120,
+          "at_ms": 1790373574636
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 5309,
+          "at_ms": 1790373574636
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 5429,
+          "at_ms": 1790373580036,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 36,
+            "start_ts_ms": 1790373574623,
+            "end_elapsed_ms": 18212,
+            "end_ts_ms": 1790373592799,
+            "duration_ms": 18176,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 9451,
+          "at_ms": 1790373580036
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 10447,
+          "at_ms": 1790373580036
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 10520,
+          "at_ms": 1790373585154,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 36,
+            "start_ts_ms": 1790373574623,
+            "end_elapsed_ms": 18212,
+            "end_ts_ms": 1790373592799,
+            "duration_ms": 18176,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 14570,
+          "at_ms": 1790373585154
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 16131,
+          "at_ms": 1790373585154
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 16210,
+          "at_ms": 1790373585154
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 18038,
+          "at_ms": 1790373585154
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 18212,
+          "at_ms": 1790373592876,
+          "timing": {
+            "stage": "ENSURE_SESSION",
+            "start_elapsed_ms": 18212,
+            "start_ts_ms": 1790373592799,
+            "end_elapsed_ms": 20670,
+            "end_ts_ms": 1790373595257,
+            "duration_ms": 2458,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 18290,
+          "at_ms": 1790373592876
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 19757,
+          "at_ms": 1790373592876
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 20670,
+          "at_ms": 1790373595340,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 20670,
+            "start_ts_ms": 1790373595258,
+            "end_elapsed_ms": 37024,
+            "end_ts_ms": 1790373611611,
+            "duration_ms": 16354,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 23555,
+          "at_ms": 1790373595340
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 24144,
+          "at_ms": 1790373595340
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 24303,
+          "at_ms": 1790373599014,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 20670,
+            "start_ts_ms": 1790373595258,
+            "end_elapsed_ms": 37024,
+            "end_ts_ms": 1790373611611,
+            "duration_ms": 16354,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 28431,
+          "at_ms": 1790373599014
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 29221,
+          "at_ms": 1790373599014
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 29812,
+          "at_ms": 1790373599014
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 31225,
+          "at_ms": 1790373599014
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 31846,
+          "at_ms": 1790373599014
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 32523,
+          "at_ms": 1790373599014
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 33301,
+          "at_ms": 1790373599014
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 33997,
+          "at_ms": 1790373599014
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 34586,
+          "at_ms": 1790373599014
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 34625,
+          "at_ms": 1790373599014
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 35228,
+          "at_ms": 1790373599014
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 35269,
+          "at_ms": 1790373599014
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 36255,
+          "at_ms": 1790373599014
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 36949,
+          "at_ms": 1790373599014
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 37024,
+          "at_ms": 1790373611647,
+          "timing": {
+            "stage": "ENTER_QUERY",
+            "start_elapsed_ms": 37024,
+            "start_ts_ms": 1790373611611,
+            "end_elapsed_ms": 68780,
+            "end_ts_ms": 1790373643366,
+            "duration_ms": 31756,
+            "status": "fail",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 41049,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 41487,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 41529,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 42110,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 42170,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 42469,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 42883,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 43342,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 43963,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 44028,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 47125,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 47546,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 47701,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 48655,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 48932,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 51742,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 52120,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 54957,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 55307,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 58138,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 58521,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 61415,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 61791,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 64678,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 65141,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 68016,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 68332,
+          "at_ms": 1790373611647
+        },
+        {
+          "stage": "ENTER_QUERY",
+          "elapsed_ms": 68780,
+          "at_ms": 1790373611647
+        }
+      ]
+    },
+    "device_stage": "ENTER_QUERY",
+    "execution_count": 1,
+    "run_id": "c_3lvt9NcNNiw8BPT96ZbXgpWQVqme1HWWCz414JvCJfI",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "Bet365 session state unclear: no account, login or challenge markers on screen",
+    "stage_timings": [
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 36,
+        "start_ts_ms": 1790373574623,
+        "end_elapsed_ms": 18212,
+        "end_ts_ms": 1790373592799,
+        "duration_ms": 18176,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "ENSURE_SESSION",
+        "start_elapsed_ms": 18212,
+        "start_ts_ms": 1790373592799,
+        "end_elapsed_ms": 20670,
+        "end_ts_ms": 1790373595257,
+        "duration_ms": 2458,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 20670,
+        "start_ts_ms": 1790373595258,
+        "end_elapsed_ms": 37024,
+        "end_ts_ms": 1790373611611,
+        "duration_ms": 16354,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "ENTER_QUERY",
+        "start_elapsed_ms": 37024,
+        "start_ts_ms": 1790373611611,
+        "end_elapsed_ms": 68780,
+        "end_ts_ms": 1790373643366,
+        "duration_ms": 31756,
+        "status": "fail",
+        "retries": 0
+      }
+    ],
+    "session_path": [
+      {
+        "saw": "UNKNOWN",
+        "state": "UNOBSERVED",
+        "attempts": 0
+      },
+      {
+        "saw": "LOGGED_OUT",
+        "state": "LOGIN_IN_PROGRESS",
+        "attempts": 0
+      },
+      {
+        "saw": "UNKNOWN",
+        "state": "LOGIN_IN_PROGRESS",
+        "attempts": 1
+      },
+      {
+        "saw": "UNKNOWN",
+        "state": "LOGIN_IN_PROGRESS",
+        "attempts": 1
+      },
+      {
+        "saw": "UNKNOWN",
+        "state": "LOGIN_IN_PROGRESS",
+        "attempts": 1
+      },
+      {
+        "saw": "UNKNOWN",
+        "state": "LOGIN_IN_PROGRESS",
+        "attempts": 1
+      },
+      {
+        "saw": "UNKNOWN",
+        "state": "LOGIN_IN_PROGRESS",
+        "attempts": 1
+      },
+      {
+        "saw": "UNKNOWN",
+        "state": "LOGIN_IN_PROGRESS",
+        "attempts": 1
+      },
+      {
+        "saw": "UNKNOWN",
+        "state": "LOGIN_IN_PROGRESS",
+        "attempts": 1
+      }
+    ],
+    "session_machine": "LOGIN_IN_PROGRESS",
+    "login_submitted": true
+  },
+  "app_version": "0.9.18-hardened",
+  "version_code": 101,
+  "phone_final_action_armed": false,
+  "diagnostics_active": false,
+  "endpoint": "http://100.114.45.68:8767",
+  "pid": 13379,
+  "device_id": "galaxy-a13-5g",
+  "session": {
+    "state": "UNKNOWN",
+    "observed_at_ms": 1790373861631,
+    "detail": "idle probe",
+    "refresh_count": 1,
+    "last_refresh_at_ms": 1790373860958,
+    "last_refresh_outcome": "probe started"
+  },
+  "ocr_engine": "hybrid",
+  "fast_ocr_error": null,
+  "credentials_configured": true,
+  "credential_store": "encrypted",
+  "session_recovery": {
+    "last_attempt_at_ms": 0,
+    "attempts_last_hour": 0,
+    "last_outcome": "none"
+  }
+}

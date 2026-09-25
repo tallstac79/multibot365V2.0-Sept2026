@@ -78,6 +78,8 @@ final class CoordinatorAgent implements AutoCloseable {
     }
     String token() { return CoordinatorConfig.token(service); }
     String endpoint() { return http.endpoint(); }
+    private volatile long diagnosticsUntilElapsed;
+    private boolean diagnosticsActive() { return android.os.SystemClock.elapsedRealtime() < diagnosticsUntilElapsed; }
 
     CoordinatorHttp.Reply route(String method, String path, String body) throws Exception {
         if (method.equals("GET") && Set.of("/neutral/text.html", "/neutral/simulator.html").contains(path.split("\\?", 2)[0])) {
@@ -89,6 +91,12 @@ final class CoordinatorAgent implements AutoCloseable {
         }
         if (method.equals("GET") && (path.equals("/health") || path.equals("/state"))) return json(200, health());
         if (method.equals("POST") && path.equals("/instructions")) return accept(body);
+        if (method.equals("POST") && path.equals("/diagnostics")) {
+            int seconds = new JSONObject(body).getInt("seconds");
+            if (seconds < 0 || seconds > 1800) return error(400, "", "INVALID_INSTRUCTION", "seconds must be 0..1800");
+            diagnosticsUntilElapsed = android.os.SystemClock.elapsedRealtime() + seconds * 1000L;
+            return json(200, object("diagnostics_active", diagnosticsActive(), "seconds", seconds));
+        }
         if (method.equals("POST") && path.equals("/config/ocr_engine") && (service.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
             // Milestone C3 feature flag (debug builds only): legacy | fast | hybrid. Rollback = one call.
             String engine = "";
@@ -131,7 +139,14 @@ final class CoordinatorAgent implements AutoCloseable {
             put(duplicate, "execution_count", old.optInt("execution_count"));
             return json(409, duplicate);
         }
+        if (instruction.action.equals("PLACE_HELD")) {
+            try { HeldInstruction.verify(instruction.payload, store.get(instruction.heldInstructionId)); }
+            catch (Exception e) { return error(400, instruction.id, "INVALID_INSTRUCTION", e.getMessage()); }
+        }
         if (instruction.placeBet) {
+            if (!"PLACE_HELD".equals(instruction.action)) return error(400, instruction.id, "INVALID_INSTRUCTION", "Final actions require the original verified hold");
+            if (diagnosticsActive()) return error(400, instruction.id, "INVALID_INSTRUCTION", "Diagnostics lease prohibits final actions");
+            if (!CoordinatorConfig.finalActionArmed(service)) return error(400, instruction.id, "INVALID_INSTRUCTION", "PHONE_DISARMED: local arming required");
             try {
                 java.math.BigDecimal cap = new java.math.BigDecimal(CoordinatorConfig.prefs(service).getString("max_stake", DEFAULT_MAX_STAKE));
                 if (new java.math.BigDecimal(instruction.stake).compareTo(cap) > 0)
@@ -189,6 +204,9 @@ final class CoordinatorAgent implements AutoCloseable {
                 if(instruction.action.equals("PLACE_HELD")) {
                     SiteAdapter mine=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id,instruction.sport,instruction.stake);
                     if(!(mine instanceof Bet365LiveAdapter)) { runner.finish(instruction.runId,"INVALID_INSTRUCTION","PLACE_HELD requires the live adapter"); return; }
+                    JSONObject held = store.get(instruction.heldInstructionId);
+                    JSONObject context = HeldInstruction.verify(instruction.payload, held);
+                    ((Bet365LiveAdapter)mine).set_held_context(context);
                     new PlaceHeldWorkflow(session,(Bet365LiveAdapter)mine).start(instruction.market,instruction.side,instruction.line,
                             instruction.selectionName,instruction.price,instruction.minimumPrice,instruction.stake,instruction.executionMode);
                     return;
@@ -211,6 +229,7 @@ final class CoordinatorAgent implements AutoCloseable {
                 SiteAdapter adapter=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id,instruction.sport,instruction.stake);
                 adapter.set_aliases(instruction.aliases);
                 adapter.set_competition_women(instruction.competitionWomen);
+                adapter.set_event_context(instruction.kickoffUtc, instruction.competition, instruction.period, instruction.lineTolerance);
                 if(instruction.action.equals("SESSION_CHECK")) new SessionCheckWorkflow(session,adapter).start();
                 else if(instruction.action.equals("OPEN_SEARCH")) new SearchOpenWorkflow(session,adapter,instruction.text).start();
                 else new AdapterWorkflow(session,adapter).start(instruction.text,instruction.market,instruction.side,instruction.line,instruction.minimumPrice,instruction.stake,instruction.executionMode,instruction.confirmationStatus,instruction.eventUrl,instruction.kickoffUtc);
@@ -363,11 +382,12 @@ final class CoordinatorAgent implements AutoCloseable {
             if(proof.has("observe"))put(result,"observe",proof.opt("observe"));
             if(proof.has("betslip_reset"))put(result,"betslip_reset",proof.opt("betslip_reset"));
             if(proof.has("betslip_clear"))put(result,"betslip_clear",proof.opt("betslip_clear"));
-            for(String key:new String[]{"route","held","returned_home","home_verified","pretap","stage_timings","t_start_ms","t_pretap_done_ms","t_tap_ms","t_receipt_ms","t_home_ms","alias_candidate","direct_event_rejected","stake_field_state","stake_clear","identity","identity_verdict","event_url","bench","ocr_engine","bet_reference_fast","bet_reference_legacy","bet_reference_disputed","session_path","session_machine","session_recovered","chrome_first_run_dismissed","login_submitted"})
+            for(String key:new String[]{"event_context","route","held","returned_home","home_verified","pretap","stage_timings","t_start_ms","t_pretap_done_ms","t_tap_ms","t_receipt_ms","t_home_ms","alias_candidate","direct_event_rejected","stake_field_state","stake_clear","identity","identity_verdict","event_url","bench","ocr_engine","bet_reference_fast","bet_reference_legacy","bet_reference_disputed","session_path","session_machine","session_recovered","chrome_first_run_dismissed","login_submitted"})
                 if(proof.has(key))put(result,key,proof.opt(key));
             JSONObject ready = proof.optJSONObject("ready_state");
             if (ready != null && ready.has("session")) noteSession(ready.optString("session"), "ready_state");
             else if (proof.has("session")) noteSession(proof.optString("session"), "workflow");
+            if ("LOGIN_FAILED".equals(stage)) noteSession("LOGGED_OUT", "LOGIN_FAILED; automatic recovery did not authenticate");
         }
         store.complete(id, result);
         runner.releaseReservation(current.optString("run_id"));
@@ -405,7 +425,8 @@ final class CoordinatorAgent implements AutoCloseable {
             .put("state", active == null ? "IDLE" : active.optString("state"))
             .put("current_instruction", active == null ? JSONObject.NULL : active.getJSONObject("payload"))
             .put("last_result", last == null ? JSONObject.NULL : last.getJSONObject("result"))
-            .put("app_version", pkg.versionName).put("version_code", pkg.versionCode)
+            .put("app_version", pkg.versionName).put("version_code", pkg.versionCode).put("phone_final_action_armed", CoordinatorConfig.finalActionArmed(service))
+            .put("diagnostics_active", diagnosticsActive())
             .put("endpoint", endpoint() == null ? JSONObject.NULL : endpoint()).put("pid", android.os.Process.myPid())
             .put("device_id", DEVICE_ID).put("session", session).put("ocr_engine", CoordinatorConfig.ocrEngine(service)).put("fast_ocr_error", runner.fastEngineError() == null ? JSONObject.NULL : runner.fastEngineError())
             .put("credentials_configured", CoordinatorConfig.hasBet365Credentials(service)).put("credential_store", SecureCredentials.storeKind())
@@ -443,6 +464,7 @@ final class CoordinatorAgent implements AutoCloseable {
     private volatile String lastSelfHealOutcome = "none";
 
     private void maybeSelfHeal(String state) {
+        if (diagnosticsActive()) return;
         if (closed || !("LOGGED_OUT".equals(state) || "EXPIRED".equals(state) || "UNKNOWN_PERSISTENT".equals(state))) return;
         if (!CoordinatorConfig.hasBet365Credentials(service)) { lastSelfHealOutcome = "skipped: no credentials configured"; return; }
         long now = System.currentTimeMillis();
@@ -478,15 +500,13 @@ final class CoordinatorAgent implements AutoCloseable {
             if (power == null || !power.isInteractive() || (keyguard != null && keyguard.isKeyguardLocked())) {
                 noteSession("UNKNOWN", "screen locked or off");
                 lastRefreshOutcome = "screen locked or off";
-            } else if (store.active() != null) {
+            } else if (store.active() != null || diagnosticsActive()) {
                 // Mid-instruction: do not steal screenshots / runner. Keep AUTHENTICATED fresh via keepalive
                 // so pipeline session_max_age (120s) does not race SESSION_REQUIRED while a job is active.
                 // Do NOT flip to UNKNOWN here (that caused tips queued during jobs to die as SESSION_REQUIRED).
                 synchronized (sessionLock) {
-                    if ("AUTHENTICATED".equals(sessionState)) {
-                        sessionObservedAtMs = System.currentTimeMillis();
-                        sessionDetail = "job-active session keepalive (on-screen probe deferred)";
-                    }
+                    // Observation age must remain honest while the on-screen probe is deferred.
+                    sessionDetail = "probe deferred: active job or diagnostics lease";
                     // Non-AUTHENTICATED mid-job: leave state unchanged (fail closed for new dispatches).
                 }
                 lastRefreshOutcome = "job active";

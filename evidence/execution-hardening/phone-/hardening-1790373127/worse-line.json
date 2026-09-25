@@ -1,0 +1,220 @@
+{
+  "ok": true,
+  "payload": {
+    "action": "ADAPTER_WORKFLOW",
+    "sport": "basketball",
+    "query": "Kirchheim||SBB Baskets Wolmirstedt",
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "+999.5",
+    "minimum_price": "1.01",
+    "stake": "0.10",
+    "execution_mode": "hold",
+    "event_url": "https://www.bet365.com/#/AC/B18/C21170155/D19/E26748183/F19/I0/",
+    "kickoff_utc": "2026-09-26T16:00",
+    "competition": "Germany Pro A",
+    "period": "FULL_GAME",
+    "max_line_deterioration": "0",
+    "instruction_id": "hardening-1790373127-worse-line",
+    "adapter": "live_bet365",
+    "scenario": "live",
+    "timeout_ms": 120000
+  },
+  "ack": {
+    "instruction_id": "hardening-1790373127-worse-line",
+    "acknowledged": true,
+    "state": "ACCEPTED",
+    "received_at_ms": 1790373172927,
+    "result_url": "/instructions/hardening-1790373127-worse-line",
+    "execution_count": 0
+  },
+  "result": {
+    "instruction_id": "hardening-1790373127-worse-line",
+    "status": "FAIL",
+    "stage": "TARGET_NOT_FOUND",
+    "detail": "No live selection for SPREAD/HOME/+999.5",
+    "duration_ms": 7643,
+    "progress": {
+      "stage": "READ_SELECTION",
+      "elapsed_ms": 7467,
+      "last_progress_at_ms": 1790373180511,
+      "instruction_id": "hardening-1790373127-worse-line",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790373173060
+        },
+        {
+          "stage": "OPEN_EVENT",
+          "elapsed_ms": 16,
+          "at_ms": 1790373173068
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 24,
+          "at_ms": 1790373173079,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 24,
+            "start_ts_ms": 1790373173070,
+            "end_elapsed_ms": 5422,
+            "end_ts_ms": 1790373178468,
+            "duration_ms": 5398,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 3462,
+          "at_ms": 1790373173079
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 3708,
+          "at_ms": 1790373173079
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4624,
+          "at_ms": 1790373173079
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 5338,
+          "at_ms": 1790373173079
+        },
+        {
+          "stage": "MARKET_NAV",
+          "elapsed_ms": 5422,
+          "at_ms": 1790373178481,
+          "timing": {
+            "stage": "MARKET_NAV",
+            "start_elapsed_ms": 5422,
+            "start_ts_ms": 1790373178468,
+            "end_elapsed_ms": 7443,
+            "end_ts_ms": 1790373180488,
+            "duration_ms": 2021,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "MARKET_NAV",
+          "elapsed_ms": 5437,
+          "at_ms": 1790373178481
+        },
+        {
+          "stage": "MARKET_NAV",
+          "elapsed_ms": 6058,
+          "at_ms": 1790373178481
+        },
+        {
+          "stage": "MARKET_NAV",
+          "elapsed_ms": 6718,
+          "at_ms": 1790373178481
+        },
+        {
+          "stage": "MARKET_NAV",
+          "elapsed_ms": 7376,
+          "at_ms": 1790373178481
+        },
+        {
+          "stage": "READ_SELECTION",
+          "elapsed_ms": 7443,
+          "at_ms": 1790373180511,
+          "timing": {
+            "stage": "READ_SELECTION",
+            "start_elapsed_ms": 7443,
+            "start_ts_ms": 1790373180488,
+            "end_elapsed_ms": 7467,
+            "end_ts_ms": 1790373180512,
+            "duration_ms": 24,
+            "status": "fail",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "READ_SELECTION",
+          "elapsed_ms": 7467,
+          "at_ms": 1790373180511
+        }
+      ]
+    },
+    "device_stage": "READ_SELECTION",
+    "execution_count": 1,
+    "run_id": "c_vxHqgWZP-YQ6agNjCoiLFOQELoJwp-94UVYZVMlROwc",
+    "fixture_name": "Kirchheim v SBB Baskets Wolmirstedt",
+    "home": "Kirchheim",
+    "away": "SBB Baskets Wolmirstedt",
+    "competition": "Germany Pro A 26 Sep 17:00",
+    "verification_detail": "No live selection for SPREAD/HOME/+999.5",
+    "event_context": {
+      "home": "Kirchheim",
+      "away": "SBB Baskets Wolmirstedt",
+      "competition": "germany pro a",
+      "kickoff_utc": "2026-09-26T16:00",
+      "period": "FULL_GAME"
+    },
+    "route": "event_link",
+    "stage_timings": [
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 24,
+        "start_ts_ms": 1790373173070,
+        "end_elapsed_ms": 5422,
+        "end_ts_ms": 1790373178468,
+        "duration_ms": 5398,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "MARKET_NAV",
+        "start_elapsed_ms": 5422,
+        "start_ts_ms": 1790373178468,
+        "end_elapsed_ms": 7443,
+        "end_ts_ms": 1790373180488,
+        "duration_ms": 2021,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "READ_SELECTION",
+        "start_elapsed_ms": 7443,
+        "start_ts_ms": 1790373180488,
+        "end_elapsed_ms": 7467,
+        "end_ts_ms": 1790373180512,
+        "duration_ms": 24,
+        "status": "fail",
+        "retries": 0
+      }
+    ],
+    "identity": {
+      "verdict": "EXACT",
+      "reason": "both teams exact",
+      "home": {
+        "feed": "Kirchheim",
+        "bookmaker": "Kirchheim",
+        "level": "EXACT",
+        "score": 1,
+        "note": "exact"
+      },
+      "away": {
+        "feed": "SBB Baskets Wolmirstedt",
+        "bookmaker": "SBB Baskets Wolmirstedt",
+        "level": "EXACT",
+        "score": 1,
+        "note": "exact"
+      },
+      "kickoff_known": true,
+      "kickoff_agrees": true,
+      "reversed": false
+    },
+    "identity_verdict": "EXACT",
+    "event_url": "https://www.bet365.com/#/AC/B18/C21170155/D19/E26748183/F19/I0/"
+  },
+  "expected": "TARGET_NOT_FOUND",
+  "poll_errors": [],
+  "wall_seconds": 8.25
+}

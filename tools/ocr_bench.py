@@ -133,11 +133,13 @@ def score(fr, out):
         for t in truth:
             key = t.rsplit('@', 1)[0].rsplit('/', 1)[0]
             got = by_side.get(key)
+            if got is None: errs.append('labelled_cell_missing')
             if got and got != t:
                 tl, tp = t.rsplit('@', 1)[0].rsplit('/', 1)[1], t.rsplit('@', 1)[1]
                 gl, gp = got.rsplit('@', 1)[0].rsplit('/', 1)[1], got.rsplit('@', 1)[1]
                 if tl != gl: errs.append('wrong_sign' if tl.lstrip('+-') == gl.lstrip('+-') else 'wrong_line')
                 if tp != gp: errs.append('wrong_price')
+        if len(by_side) != len(cells): errs.append('conflicting_cells_for_side')
         over = [c for c in cells if c.startswith('TOTAL/OVER')]; under = [c for c in cells if c.startswith('TOTAL/UNDER')]
         if over and under and over[0].split('/')[2].split('@')[0] != under[0].split('/')[2].split('@')[0]: errs.append('over_under_inconsistent')
         ok = not errs and (fr.get('target') is None or fr['target'] in cells)

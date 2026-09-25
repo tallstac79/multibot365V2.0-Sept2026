@@ -28,6 +28,7 @@ interface SiteAdapter {
     default CompletableFuture<Void> clear_betslip(Selection selection) { return CompletableFuture.completedFuture(null); }
     /** The instruction's target (market/side/line): lets the adapter skip extra reads of unrelated markets. */
     default void set_target(String market, String side, String line) {}
+    default void set_event_context(String kickoffUtc, String competition, String period, String lineTolerance) {}
     /** Aliases supplied with the instruction (feed name -> bookmaker name), from the backend's registry/cache. */
     default void set_aliases(java.util.Map<String, String> aliases) {}
     /** The backend established the competition as women's: a missing "(W)" on a feed name may be supplied (resolver rule). */

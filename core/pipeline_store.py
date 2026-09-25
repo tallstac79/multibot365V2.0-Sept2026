@@ -18,7 +18,7 @@ from pathlib import Path
 
 from core.lifecycle import State, allowed, TERMINAL
 
-SCHEMA_VERSION = 5  # 2: PARSED_PARTIAL; 3: final action; 4: queue/device timings; 5: identity registry (aliases, event cache)
+SCHEMA_VERSION = 6  # 6: explicit bet-term provenance and scoped independent alias observations
 SCHEMA = '''
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS intake_messages (
@@ -114,6 +114,9 @@ CREATE TABLE IF NOT EXISTS bets (
     bet_reference TEXT, fixture TEXT, market TEXT, selection TEXT, line TEXT,
     stake TEXT, odds TEXT, potential_return TEXT, returns TEXT,
     placed_at TEXT, verified_at TEXT, settled_at TEXT, source TEXT, evidence TEXT,
+    requested_line TEXT, requested_odds TEXT, requested_stake TEXT,
+    verified_line TEXT, verified_odds TEXT, verified_stake TEXT,
+    actual_line TEXT, actual_odds TEXT, actual_stake TEXT, terms_provenance TEXT,
     updated_at TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS reconciliations (
@@ -139,6 +142,16 @@ CREATE TABLE IF NOT EXISTS event_cache (
     id INTEGER PRIMARY KEY, sport TEXT NOT NULL, feed_home TEXT NOT NULL, feed_away TEXT NOT NULL, kickoff_utc TEXT NOT NULL,
     event_url TEXT NOT NULL, bookmaker_home TEXT, bookmaker_away TEXT, competition TEXT, resolved_at TEXT NOT NULL,
     UNIQUE(sport, feed_home, feed_away, kickoff_utc)
+);
+CREATE TABLE IF NOT EXISTS scoped_alias_candidates (
+    id INTEGER PRIMARY KEY, sport TEXT NOT NULL, competition TEXT NOT NULL, source_name TEXT NOT NULL,
+    bookmaker_name TEXT NOT NULL, evidence TEXT, confidence TEXT, status TEXT NOT NULL,
+    first_seen TEXT, last_seen TEXT, times_seen INTEGER NOT NULL DEFAULT 0, promoted_at TEXT,
+    UNIQUE(sport, competition, source_name, bookmaker_name)
+);
+CREATE TABLE IF NOT EXISTS alias_observations (
+    candidate_id INTEGER NOT NULL REFERENCES scoped_alias_candidates(id), event_key TEXT NOT NULL,
+    observed_at TEXT NOT NULL, UNIQUE(candidate_id,event_key)
 );
 '''
 # v4 (A4): per-instruction timing. queue_wait_ms = queued_at -> first device start; device_execution_ms = phone
@@ -208,6 +221,12 @@ class Store:
         cls._migrate_v2(db)
         cls._migrate_v3(db)
         cls._migrate_v4(db)
+        if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='bets'").fetchone():
+            present = {r[1] for r in db.execute('PRAGMA table_info(bets)')}
+            with db:
+                for c in ('requested_line','requested_odds','requested_stake','verified_line','verified_odds','verified_stake',
+                          'actual_line','actual_odds','actual_stake','terms_provenance'):
+                    if c not in present: db.execute(f'ALTER TABLE bets ADD COLUMN {c} TEXT')
 
     @staticmethod
     def _migrate_v4(db):

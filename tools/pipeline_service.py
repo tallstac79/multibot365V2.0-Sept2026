@@ -27,6 +27,8 @@ from core.decision_support import Store as ConfigStore  # noqa: E402
 from core.pipeline import Pipeline, Settings, SourceMessage  # noqa: E402
 from core.pipeline_store import Store, iso, utcnow  # noqa: E402
 from core.status_notifier import Notifier, TelegramBotSender, DEFAULT_STATES  # noqa: E402
+from core.rules_engine import ENGINE_VERSION
+from core.alert_classifier import PARSER_VERSION
 
 log = logging.getLogger('multibot.pipeline_service')
 DEFAULTS = {'database': '.local/pipeline.sqlite3', 'rules_database': '.local/dashboard.sqlite3',
@@ -123,12 +125,17 @@ async def run(settings):
     async def cycle():
         while True:
             state = dict(heartbeat_at=iso(utcnow()), dispatch_enabled=pipeline.settings.dispatch_enabled,
+                         rules_engine=ENGINE_VERSION, parser_version=PARSER_VERSION,
+                         event_timezone=None, feed_timezone_verified=False,
                          final_action_enabled=pipeline.settings.final_action_enabled,
                          auto_approve=pipeline.settings.auto_approve, paused=pipeline.final.paused(),
                          intake=intake.status if intake else dict(state='NOT_CONFIGURED'),
                          notifications='ENABLED' if sender else 'DISABLED',
                          commands='ENABLED' if commands else 'DISABLED', last_error=None)
             try:
+                policy = pipeline.config_provider()['global']
+                state.update(event_timezone=policy.get('event_timezone'),
+                             feed_timezone_verified=policy.get('feed_timezone_verified', False))
                 if commands:
                     try:
                         await asyncio.to_thread(commands.poll)
