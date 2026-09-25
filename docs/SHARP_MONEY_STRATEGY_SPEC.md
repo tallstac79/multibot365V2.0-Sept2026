@@ -91,13 +91,13 @@ Local evidence and interpretation:
 10. Positive line advantage is a favourable-line observation, not measured positive
     EV. Apply the existing configured line-advantage floor and price bounds; record
     EV as unavailable. Do not compare decimal prices across different handicaps.
-11. Minimum acceptable Pinnacle movement is an operator policy, not inferable from
-    the alert corpus. Add a nullable `min_sharp_movement` rule: unset fails closed;
-    zero permits any strictly nonzero move, positive values impose that floor.
-    Preserve the inherited 1.0-point line-advantage setting; do not represent it as
-    a proven optimum. No live config is changed during this audit. Price bounds,
-    maximum gaps, alternate-line treatment and price-only eligibility remain
-    unvalidated policy questions. No acceptance-rate target is used.
+11. OddsNotifier's configured source supplies upstream movement qualification.
+    Require genuine nonzero opening-to-current movement; nullable
+    `min_sharp_movement` is optional and unset does not reject. An explicitly
+    configured floor is additional operator policy. Preserve existing value
+    checks without inventing global price bounds. Alert-to-live odds and line
+    deterioration limits are market-specific and require approval from the
+    evidence in [FEED_TIME_AND_EXECUTION_POLICY.md](FEED_TIME_AND_EXECUTION_POLICY.md).
 12. Apply enabled markets, timestamp age, unstarted event with known timezone,
     decimal odds, configured price/EV bounds and stake cap. Recheck at dispatch.
     An old normalized alert lacking this strategy evidence must be rejected, not
@@ -116,7 +116,9 @@ if spread orientation uncertain: AMBIGUOUS
 if offer.worse_line: NO BET
 if equal_line and no EV bound to candidate: NO BET
 if unequal_line: EV = unavailable       # never fabricated
-if min_sharp_movement unset: REJECT     # missing strategy policy
+if configured extra movement floor fails: REJECT  # unset adds no floor
+if feed_timezone_verified is false: REJECT  # execution timing only
+if execution tolerances unset: REJECT  # pending operator choice
 if any configured threshold fails: REJECT
 if timestamps expired or event started: STALE
 otherwise: ACCEPT for eligibility only # dispatch and final action remain OFF
@@ -156,41 +158,41 @@ interchangeable with a placed bet, a verified receipt, or a settled result.
 | missing highlight, nonzero net move | Net candidate | Unequal-line assessment allowed; no fabricated EV |
 
 Real examples are appended below from frozen source messages. Direction is separate
-from execution eligibility; unset movement policy blocks otherwise eligible cases.
+from execution eligibility; unverified timezone and unset execution tolerances block otherwise eligible cases.
 
 ## Real source examples
 
 | Intake ID / fixture | Market | Opening → current → candidate | Bet365 same-side offer | Highlight / EV | Strategy assessment |
 |---|---|---|---|---|---|
-| 9: Rytas Vilnius vs Shanghai Sharks | TOTALS | 185.5 → 184 → UNDER | 184 @ 2.00 | UNDER / 109.91% | equal_line_supplied_edge; minimum movement policy pending |
-| 11: Japan vs Thailand | SPREAD | -49.5 → -56.5 → HOME | -58.5 @ 1.83 | none / None (not equal lines) | moved_too_far; minimum movement policy pending |
+| 9: Rytas Vilnius vs Shanghai Sharks | TOTALS | 185.5 → 184 → UNDER | 184 @ 2.00 | UNDER / 109.91% | equal_line_supplied_edge |
+| 11: Japan vs Thailand | SPREAD | -49.5 → -56.5 → HOME | -58.5 @ 1.83 | none / None (not equal lines) | moved_too_far |
 | 12: Kosice Wolves vs BK Inter Bratislava | SPREAD | 11 → 16.5 → AWAY | -16.5 @ 1.95 | HOME / 106.48% | no_proven_same_side_value; No supplied equal-line EV bound to the sharp side |
-| 13: Kosice Wolves vs BK Inter Bratislava | SPREAD | 11 → 11.5 → AWAY | -11.5 @ 1.83 | AWAY / 112.84% | equal_line_supplied_edge; minimum movement policy pending |
-| 15: Bisons Loimaa vs Salon Vilpas Vikings | TOTALS | 167.5 → 164.5 → UNDER | 166.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced; minimum movement policy pending |
+| 13: Kosice Wolves vs BK Inter Bratislava | SPREAD | 11 → 11.5 → AWAY | -11.5 @ 1.83 | AWAY / 112.84% | equal_line_supplied_edge |
+| 15: Bisons Loimaa vs Salon Vilpas Vikings | TOTALS | 167.5 → 164.5 → UNDER | 166.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced |
 | 18: Randers Cimbria vs Svendborg Rabbits | SPREAD | -4.5 → -3 → AWAY | 3 @ 1.68 | HOME / 112.66% | no_proven_same_side_value; No supplied equal-line EV bound to the sharp side |
 | 19: Neftchi vs KK Parnu | TOTALS | 165.5 → 167.5 → OVER | 167.5 @ 1.83 | UNDER / 107.40% | no_proven_same_side_value; No supplied equal-line EV bound to the sharp side |
-| 20: Neftchi vs KK Parnu | TOTALS | 165.5 → 164.5 → UNDER | 167.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced; minimum movement policy pending |
-| 21: Bisons Loimaa vs Salon Vilpas Vikings | SPREAD | 11.5 → -2.5 → HOME | -5.5 @ 1.83 | none / None (not equal lines) | moved_too_far; minimum movement policy pending |
-| 23: Metapan vs Brujos de Izalco BC | TOTALS | 155.5 → 157.5 → OVER | 155.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced; minimum movement policy pending |
-| 25: Metapan vs Brujos de Izalco BC | TOTALS | 155.5 → 158.5 → OVER | 155.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced; minimum movement policy pending |
+| 20: Neftchi vs KK Parnu | TOTALS | 165.5 → 164.5 → UNDER | 167.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced |
+| 21: Bisons Loimaa vs Salon Vilpas Vikings | SPREAD | 11.5 → -2.5 → HOME | -5.5 @ 1.83 | none / None (not equal lines) | moved_too_far |
+| 23: Metapan vs Brujos de Izalco BC | TOTALS | 155.5 → 157.5 → OVER | 155.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced |
+| 25: Metapan vs Brujos de Izalco BC | TOTALS | 155.5 → 158.5 → OVER | 155.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced |
 | 28: Bisons Loimaa vs Salon Vilpas Vikings | SPREAD | 11.5 → 2 → HOME | -4 @ 1.83 | none / None (not equal lines) | ambiguous; Cross-book favourite disagreement; Bet365 orientation needs verification |
-| 35: KD Ilirija vs KK Nova Gorica Mladi | SPREAD | -24.5 → -25.5 → HOME | -25.5 @ 2.10 | HOME / 106.40% | equal_line_supplied_edge; minimum movement policy pending |
-| 37: Kipina Basket vs Kauhajoki Karhu Basket | TOTALS | 170.5 → 166.5 → UNDER | 168.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced; minimum movement policy pending |
-| 38: Republic of Korea vs Indonesia | TOTALS | 142 → 148 → OVER | 148 @ 2.25 | OVER / 116.77% | equal_line_supplied_edge; minimum movement policy pending |
+| 35: KD Ilirija vs KK Nova Gorica Mladi | SPREAD | -24.5 → -25.5 → HOME | -25.5 @ 2.10 | HOME / 106.40% | equal_line_supplied_edge |
+| 37: Kipina Basket vs Kauhajoki Karhu Basket | TOTALS | 170.5 → 166.5 → UNDER | 168.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced |
+| 38: Republic of Korea vs Indonesia | TOTALS | 142 → 148 → OVER | 148 @ 2.25 | OVER / 116.77% | equal_line_supplied_edge |
 | 46: Kipina Basket vs Kauhajoki Karhu Basket | TOTALS | 170.5 → 170.5 → none | displayed 168.5; side unresolved | none / None (not equal lines) | insufficient_data; Unchanged opening/current line; price-only strategy not established |
 | 48: Atletico Boca Juniors vs NBA G League United | SPREAD | 13 → 12 → HOME | 12 @ 1.83 | AWAY / 110.88% | no_proven_same_side_value; No supplied equal-line EV bound to the sharp side |
-| 114: Bisons Loimaa vs Salon Vilpas Vikings | SPREAD | 11.5 → 7.5 → HOME | 9.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced; minimum movement policy pending |
+| 114: Bisons Loimaa vs Salon Vilpas Vikings | SPREAD | 11.5 → 7.5 → HOME | 9.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced |
 | 165: BMS Herlev vs Gladsaxe BK | SPREAD | -6.5 → 3 → AWAY | 1.5 @ 1.74 | none / None (not equal lines) | ambiguous; Cross-book favourite disagreement; Bet365 orientation needs verification |
-| 275: Apagebask Guarulhos vs Santo Andre | TOTALS | 127.5 → 130 → OVER | 127.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced; minimum movement policy pending |
-| 341: CD Castro vs CSD Colo Colo | SPREAD | 4.5 → -4.5 → HOME | -1.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced; minimum movement policy pending |
+| 275: Apagebask Guarulhos vs Santo Andre | TOTALS | 127.5 → 130 → OVER | 127.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced |
+| 341: CD Castro vs CSD Colo Colo | SPREAD | 4.5 → -4.5 → HOME | -1.5 @ 1.83 | none / None (not equal lines) | favourable_line_unpriced |
 | 349: BC Tartu vs BC Kalev/Cramo | SPREAD | -3 → 3 → AWAY | 1.5 @ 1.83 | none / None (not equal lines) | ambiguous; Cross-book favourite disagreement; Bet365 orientation needs verification |
 | 364: Seattle Storm vs Dallas Wings | SPREAD | 9.5 → 7.5 → HOME | -9.5 @ 1.80 | none / None (not equal lines) | ambiguous; Cross-book favourite disagreement; Bet365 orientation needs verification |
-| 601: BK Loko Trutnov vs Slovanka MB | SPREAD | -26 → -24 → AWAY | 11.5 @ 1.83 | none / None (not equal lines) | moved_too_far; minimum movement policy pending |
+| 601: BK Loko Trutnov vs Slovanka MB | SPREAD | -26 → -24 → AWAY | 11.5 @ 1.83 | none / None (not equal lines) | moved_too_far |
 | 681: Japan vs Chinese Taipei | SPREAD | -23 → -23 → none | displayed 18.5; side unresolved | none / None (not equal lines) | insufficient_data; Unchanged opening/current line; price-only strategy not established |
 | 863: Japan vs Chinese Taipei | SPREAD | -23 → -26.5 → HOME | 26.5 @ 1.83 | AWAY / 106.83% | ambiguous; Cross-book favourite disagreement; Bet365 orientation needs verification |
 | 1081: Norrkoping Dolphins vs Umea Basket | SPREAD | -22 → -23.5 → HOME | -23.5 @ 1.66 | AWAY / 107.59% | no_proven_same_side_value; No supplied equal-line EV bound to the sharp side |
-| 1223: Norrkoping Dolphins vs Umea Basket | SPREAD | -22 → -25 → HOME | -27.5 @ 1.83 | none / None (not equal lines) | moved_too_far; minimum movement policy pending |
-| 1317: Norrkoping Dolphins vs Umea Basket | TOTALS | 173 → 174 → OVER | 174 @ 2.00 | OVER / 110.75% | equal_line_supplied_edge; minimum movement policy pending |
+| 1223: Norrkoping Dolphins vs Umea Basket | SPREAD | -22 → -25 → HOME | -27.5 @ 1.83 | none / None (not equal lines) | moved_too_far |
+| 1317: Norrkoping Dolphins vs Umea Basket | TOTALS | 173 → 174 → OVER | 174 @ 2.00 | OVER / 110.75% | equal_line_supplied_edge |
 | 1325: Norrkoping Dolphins vs Umea Basket | SPREAD | -22 → -25.5 → HOME | -25.5 @ 1.74 | AWAY / 108.31% | no_proven_same_side_value; No supplied equal-line EV bound to the sharp side |
 
 
@@ -207,7 +209,7 @@ or unlabelled markets. Old targets oppose net movement in 207 cases; highlights 
 it in 126. These supersede the exploratory counts for full-corpus reporting.
 
 This is proof of a deterministic interpretation of the requested strategy, not proof
-of positive expected profit. Unset movement policy blocks execution eligibility.
+of positive expected profit. Unverified timezone and unset execution tolerances block execution eligibility.
 The 30 examples above are independent raw-offer assessments; e.g. alert 863 is also
 INVALID in the production grammar because numeric EV accompanies unequal signed lines.
 

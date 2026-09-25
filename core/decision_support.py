@@ -15,15 +15,16 @@ def now():
 def defaults():
     return {'global': {'enabled': True, 'default_stake': 1.0, 'allowed_slippage': 0.0, 'max_stake': 10.0,
                        'stale_alert_seconds': 300, 'event_timezone': None, 'min_line_advantage': 1.0,
-                       'min_sharp_movement': None},
+                       'min_sharp_movement': None, 'feed_timezone_verified': False},
             'sports': {sport: {'markets': {market: {'enabled': True, 'stake': None, 'minimum_ev': None,
-                        'allowed_slippage': None, 'min_price': None, 'max_price': None}
+                        'allowed_slippage': None, 'min_price': None, 'max_price': None,
+                        'max_odds_deterioration': None, 'max_line_deterioration': None}
                         for market in markets}} for sport, markets in MARKETS.items()}}
 
 # Keys added after configurations were first persisted; older stored configs are
 # upgraded with these defaults. Unknown keys are still rejected.
-GLOBAL_ADDED = ('stale_alert_seconds', 'event_timezone', 'min_line_advantage', 'min_sharp_movement')
-MARKET_ADDED = ('min_price', 'max_price')
+GLOBAL_ADDED = ('stale_alert_seconds', 'event_timezone', 'min_line_advantage', 'min_sharp_movement', 'feed_timezone_verified')
+MARKET_ADDED = ('min_price', 'max_price', 'max_odds_deterioration', 'max_line_deterioration')
 
 def upgrade(config):
     if not isinstance(config, dict):
@@ -69,6 +70,8 @@ def validate(config):
     number(g['allowed_slippage'], 'Slippage (decimal price points)', 0, 1)
     number(g['stale_alert_seconds'], 'Stale alert limit (seconds)', 5, 86400)
     timezone_name(g['event_timezone'])
+    if type(g['feed_timezone_verified']) is not bool:
+        raise ValueError('feed_timezone_verified must be a boolean')
     number(g['min_line_advantage'], 'Minimum favourable line advantage (points)', 0.5, 50)
     number(g['min_sharp_movement'], 'Minimum Pinnacle opening movement (points)', 0, 100, optional=True)
     if not isinstance(config['sports'], dict) or set(config['sports']) != set(MARKETS):
@@ -83,6 +86,8 @@ def validate(config):
             number(rule['stake'], 'Market stake', .01, g['max_stake'], True)
             number(rule['minimum_ev'], 'Minimum displayed EV (%)', 0, 1000, True)
             number(rule['allowed_slippage'], 'Market slippage', 0, 1, True)
+            number(rule['max_odds_deterioration'], 'Maximum odds deterioration (decimal points)', 0, 1, True)
+            number(rule['max_line_deterioration'], 'Maximum line deterioration (points)', 0, 50, True)
             number(rule['min_price'], 'Market minimum alert price', 1.01, 1000, True)
             number(rule['max_price'], 'Market maximum alert price', 1.01, 1000, True)
             if rule['min_price'] is not None and rule['max_price'] is not None and rule['min_price'] > rule['max_price']:

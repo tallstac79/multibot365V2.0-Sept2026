@@ -1,0 +1,19 @@
+{
+  "frozen_records": 1507,
+  "frozen_alerts": 1506,
+  "decisions_with_unverified_timezone": {
+    "AMBIGUOUS": 416,
+    "IGNORED": 1,
+    "REJECT": 1062,
+    "STALE": 18,
+    "INVALID": 10
+  },
+  "research_execution_tolerances": "zero deterioration; comparison scenario only, not saved configuration",
+  "timezone_sensitive_start_checks": 258,
+  "timezone_sensitive_overall_decisions": 171,
+  "stored_instruction_results": 26,
+  "complete_alert_live_quotes": 6,
+  "corrected_side_matches": 6,
+  "recommendation": "Consider zero odds and zero line deterioration initially; no saved policy change. Sample too small to justify widening.",
+  "limitations": "Observed quote pairs are selected historical attempts under the previous strategy, not placements or independent opportunities; no full-corpus live prices exist."
+}

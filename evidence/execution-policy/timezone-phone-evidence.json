@@ -1,0 +1,299 @@
+[
+  {
+    "instruction_id": "on-f60790912f832e069a602cfc",
+    "fixture": "Orchies vs Lyon",
+    "feed_wall_time": "2026-09-25T18:00",
+    "phone_header": null,
+    "identity": {
+      "away": {
+        "bookmaker": "LYONSO",
+        "feed": "Lyon",
+        "level": "NONE",
+        "note": "different name 0.67",
+        "score": 0.67
+      },
+      "home": {
+        "bookmaker": "Orchies",
+        "feed": "Orchies",
+        "level": "EXACT",
+        "note": "exact",
+        "score": 1
+      },
+      "kickoff_agrees": true,
+      "kickoff_known": true,
+      "reason": "'Lyon' is not 'LYONSO' (different name 0.67)",
+      "reversed": false,
+      "verdict": "MISMATCH"
+    }
+  },
+  {
+    "instruction_id": "on-16d6f1f1a238bdefc6fd71f2",
+    "fixture": "Berck Fliers Range vs Pays Salonais Basket 13",
+    "feed_wall_time": "2026-09-25T18:00",
+    "phone_header": "France Nationale 1 25 Sep 19:00",
+    "identity": {
+      "away": {
+        "bookmaker": "Pays Salonais Basket",
+        "feed": "Pays Salonais Basket 13",
+        "level": "VARIANT",
+        "note": "naming variant 1.00",
+        "score": 1
+      },
+      "home": {
+        "bookmaker": "Berck/Rang du Fliers",
+        "feed": "Berck Fliers Range",
+        "level": "ALIAS",
+        "note": "registry alias",
+        "score": 1
+      },
+      "kickoff_agrees": true,
+      "kickoff_known": true,
+      "reason": "event link + kick-off 25 Sep 19:00 + 'Berck Fliers Range' exact; 'Pays Salonais Basket 13' is a naming variant of 'Pays Salonais Basket' (1.00)",
+      "reversed": false,
+      "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+    }
+  },
+  {
+    "instruction_id": "on-c7e5d94c9f015affa329186c",
+    "fixture": "Explosivas de Moca vs Leonas De Ponce",
+    "feed_wall_time": "2026-09-26T00:00",
+    "phone_header": null,
+    "identity": {
+      "away": {
+        "bookmaker": "Leonas de Ponce",
+        "feed": "Leonas De Ponce",
+        "level": "EXACT",
+        "note": "exact",
+        "score": 1
+      },
+      "home": {
+        "bookmaker": "Explosivas de Moca (W)",
+        "feed": "Explosivas de Moca",
+        "level": "NONE",
+        "note": "protected markers differ [] vs [women]",
+        "score": 0
+      },
+      "kickoff_agrees": true,
+      "kickoff_known": true,
+      "reason": "'Explosivas de Moca' vs 'Explosivas de Moca (W)': protected markers differ [] vs [women]",
+      "reversed": false,
+      "verdict": "MISMATCH"
+    }
+  },
+  {
+    "instruction_id": "on-3df5c41a1856a1ab0a12fc25",
+    "fixture": "Boras Basket vs Nassjo Basket",
+    "feed_wall_time": "2026-09-25T17:04",
+    "phone_header": "Sweden Basketligan 25 Sep 18:04",
+    "identity": {
+      "away": {
+        "bookmaker": "Nassjo Basket",
+        "feed": "Nassjo Basket",
+        "level": "EXACT",
+        "note": "exact",
+        "score": 1
+      },
+      "home": {
+        "bookmaker": "Boras Basket",
+        "feed": "Boras Basket",
+        "level": "EXACT",
+        "note": "exact",
+        "score": 1
+      },
+      "kickoff_agrees": true,
+      "kickoff_known": true,
+      "reason": "both teams exact",
+      "reversed": false,
+      "verdict": "EXACT"
+    }
+  },
+  {
+    "instruction_id": "on-f6c235162caf57aea4e8925d",
+    "fixture": "Boras Basket vs Nassjo Basket",
+    "feed_wall_time": "2026-09-25T17:04",
+    "phone_header": "Sweden Basketligan • 25 Sep 18:04",
+    "identity": {
+      "away": {
+        "bookmaker": "Nassjo Basket",
+        "feed": "Nassjo Basket",
+        "level": "EXACT",
+        "note": "exact",
+        "score": 1
+      },
+      "home": {
+        "bookmaker": "Boras Basket",
+        "feed": "Boras Basket",
+        "level": "EXACT",
+        "note": "exact",
+        "score": 1
+      },
+      "kickoff_agrees": true,
+      "kickoff_known": true,
+      "reason": "both teams exact",
+      "reversed": false,
+      "verdict": "EXACT"
+    }
+  },
+  {
+    "instruction_id": "on-2c8f54db639fd1099e88bbb7",
+    "fixture": "Seoul SK Knights vs Wonju Dongbu Promy",
+    "feed_wall_time": "2026-09-26T05:00",
+    "phone_header": "Club Friendlies 26 Sep 06:00",
+    "identity": {
+      "away": {
+        "bookmaker": "Wonju Promy",
+        "feed": "Wonju Dongbu Promy",
+        "level": "VARIANT",
+        "note": "naming variant 1.00",
+        "score": 1
+      },
+      "home": {
+        "bookmaker": "Seoul Knights",
+        "feed": "Seoul SK Knights",
+        "level": "CANONICAL",
+        "note": "canonical tokens equal",
+        "score": 1
+      },
+      "kickoff_agrees": true,
+      "kickoff_known": true,
+      "reason": "event link + kick-off 26 Sep 06:00 + 'Seoul SK Knights' exact; 'Wonju Dongbu Promy' is a naming variant of 'Wonju Promy' (1.00)",
+      "reversed": false,
+      "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+    }
+  },
+  {
+    "instruction_id": "on-d0c9a4033e16c9ee01fb4d41",
+    "fixture": "Rytas Vilnius vs Atletico Boca Juniors",
+    "feed_wall_time": "2026-09-26T11:30",
+    "phone_header": null,
+    "identity": {
+      "away": {
+        "bookmaker": "Boca Juniors",
+        "feed": "Atletico Boca Juniors",
+        "level": "VARIANT",
+        "note": "naming variant 1.00",
+        "score": 1
+      },
+      "home": {
+        "bookmaker": "Rytas",
+        "feed": "Rytas Vilnius",
+        "level": "VARIANT",
+        "note": "naming variant 1.00",
+        "score": 1
+      },
+      "kickoff_agrees": true,
+      "kickoff_known": true,
+      "reason": "both teams only resemble the page's names; no exact team to anchor on",
+      "reversed": false,
+      "verdict": "AMBIGUOUS"
+    }
+  },
+  {
+    "instruction_id": "on-b3c290e65122c4aef06dcb29",
+    "fixture": "Explosivas de Moca vs Leonas De Ponce",
+    "feed_wall_time": "2026-09-26T00:00",
+    "phone_header": "Puerto Rico Superior Nacional Women 26 Sep 01:00",
+    "identity": {
+      "away": {
+        "bookmaker": "Leonas de Ponce",
+        "feed": "Leonas De Ponce",
+        "level": "EXACT",
+        "note": "exact",
+        "score": 1
+      },
+      "home": {
+        "bookmaker": "Explosivas de Moca (W)",
+        "feed": "Explosivas de Moca",
+        "level": "VARIANT",
+        "note": "women's marker supplied by the competition; names agree 1.00",
+        "score": 1
+      },
+      "kickoff_agrees": true,
+      "kickoff_known": true,
+      "reason": "event link + kick-off 26 Sep 01:00 + 'Leonas De Ponce' exact; 'Explosivas de Moca' is a naming variant of 'Explosivas de Moca (W)' (1.00)",
+      "reversed": false,
+      "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+    }
+  },
+  {
+    "instruction_id": "on-205de8454e182f2de4fd9052",
+    "fixture": "Poitiers vs Evreux",
+    "feed_wall_time": "2026-09-25T18:00",
+    "phone_header": "France Ligue B 25 Sep 19:00",
+    "identity": {
+      "away": {
+        "bookmaker": "Evreux",
+        "feed": "Evreux",
+        "level": "EXACT",
+        "note": "exact",
+        "score": 1
+      },
+      "home": {
+        "bookmaker": "Poitiers",
+        "feed": "Poitiers",
+        "level": "EXACT",
+        "note": "exact",
+        "score": 1
+      },
+      "kickoff_agrees": true,
+      "kickoff_known": true,
+      "reason": "both teams exact",
+      "reversed": false,
+      "verdict": "EXACT"
+    }
+  },
+  {
+    "instruction_id": "on-628da5f5c4b471eb1ef7f49c",
+    "fixture": "Seoul SK Knights vs Wonju Dongbu Promy",
+    "feed_wall_time": "2026-09-26T05:00",
+    "phone_header": "Club Friendlies 26 Sep 06:00",
+    "identity": {
+      "away": {
+        "bookmaker": "Wonju Promy",
+        "feed": "Wonju Dongbu Promy",
+        "level": "ALIAS",
+        "note": "instruction alias",
+        "score": 1
+      },
+      "home": {
+        "bookmaker": "Seoul Knights",
+        "feed": "Seoul SK Knights",
+        "level": "CANONICAL",
+        "note": "canonical tokens equal",
+        "score": 1
+      },
+      "kickoff_agrees": true,
+      "kickoff_known": true,
+      "reason": "both teams via aliases",
+      "reversed": false,
+      "verdict": "ALIAS_MATCH"
+    }
+  },
+  {
+    "instruction_id": "on-0d5e1ef972d82943e8726fc4",
+    "fixture": "ASC Denain vs Blois",
+    "feed_wall_time": "2026-09-25T18:00",
+    "phone_header": "France Ligue B • 25 Sep 19:00",
+    "identity": {
+      "away": {
+        "bookmaker": "Blois",
+        "feed": "Blois",
+        "level": "EXACT",
+        "note": "exact",
+        "score": 1
+      },
+      "home": {
+        "bookmaker": "Denain",
+        "feed": "ASC Denain",
+        "level": "VARIANT",
+        "note": "naming variant 1.00",
+        "score": 1
+      },
+      "kickoff_agrees": true,
+      "kickoff_known": true,
+      "reason": "event link + kick-off 25 Sep 19:00 + 'Blois' exact; 'ASC Denain' is a naming variant of 'Denain' (1.00)",
+      "reversed": false,
+      "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+    }
+  }
+]

@@ -63,8 +63,10 @@ class FakeGateway:
 
 def ready_result(instruction_id, price='2.20', session_state='LOGGED_IN'):
     return {'instruction_id': instruction_id, 'status': 'PASS', 'stage': 'PASS', 'detail': 'READY_STATE',
+            'held': True, 'event_context': {'home':'SE Melbourne Phoenix','away':'Melbourne United',
+                'competition':'australia nbl','period':'FULL_GAME','kickoff_utc':'2026-09-24T09:30'},
             'duration_ms': 70000, 'execution_count': 1, 'fixture_name': 'SE Melbourne Phoenix v Melbourne United',
-            'selection': {'market': 'TOTALS', 'side': 'OVER', 'line': '190.5', 'price': price},
+            'selection': {'market': 'TOTALS', 'side': 'OVER', 'line': '190.5', 'price': price, 'selection_name':'Over'},
             'ready_state': {'state': 'READY', 'price': price, 'stake': '1.00', 'session': session_state,
                             'wager_submitted': False},
             'evidence': ['evidence/example/s019_final.png']}
@@ -78,8 +80,11 @@ def fail_result(instruction_id, stage, detail='x'):
 def config(**global_changes):
     value = defaults()
     # Explicit TEST policy; the live configuration remains unset and fails closed.
-    value['global'].update(event_timezone='UTC', stale_alert_seconds=300, min_sharp_movement=0.5)
+    value['global'].update(event_timezone='UTC', feed_timezone_verified=True, stale_alert_seconds=300, min_sharp_movement=0.5)
     value['global'].update(global_changes)
+    for sport in value['sports'].values():
+        for rule in sport['markets'].values():
+            rule.update(max_odds_deterioration=value['global']['allowed_slippage'], max_line_deterioration=0)
     return value
 
 
@@ -111,6 +116,13 @@ def _instant_verification(p):
                    if r['execution_mode'] in ('ready', 'hold') and r['instruction_id'] not in gateway.results]
         if pending:
             for iid in pending:
-                gateway.results[iid] = ready_result(iid)
+                with p.store.connection() as db:
+                    row = p.store.get_instruction(db,iid)
+                    payload = json.loads(row['dispatch_payload'])
+                result = ready_result(iid, row['alert_price'])
+                result['selection'].update(market=row['market'],side=row['selection'],line=row['line'],selection_name=row['selection_name'])
+                result['event_context'].update(home=row['home'],away=row['away'],competition=row['competition'],kickoff_utc=payload['kickoff_utc'])
+                result['ready_state']['stake'] = row['stake']
+                gateway.results[iid] = result
             tick(gateway)
     p.tick = run

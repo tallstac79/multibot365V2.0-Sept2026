@@ -15,7 +15,7 @@ import json
 from core.decision_support import validate
 from core.market_interpretation import ACTIONABLE_SIGNALS, SHARP_SOURCE, VERSION, sharp_signal, dec
 
-ENGINE_VERSION = 'rules-4-sharp'
+ENGINE_VERSION = 'rules-5-feed-qualified'
 ACCEPT, REJECT, STALE = 'ACCEPT', 'REJECT', 'STALE'
 
 
@@ -36,13 +36,42 @@ def event_start(alert, tz_name):
         return None
     from zoneinfo import ZoneInfo
     local = datetime.fromisoformat(alert['scheduled_at_local'])
-    return local.replace(tzinfo=ZoneInfo(tz_name)).astimezone(timezone.utc)
+    zone = ZoneInfo(tz_name)
+    if local.tzinfo is not None:
+        raise ValueError('Feed event wall time must not contain an offset')
+    candidates = set()
+    for fold in (0, 1):
+        utc = local.replace(tzinfo=zone, fold=fold).astimezone(timezone.utc)
+        if utc.astimezone(zone).replace(tzinfo=None) == local:
+            candidates.add(utc)
+    if len(candidates) != 1:
+        raise ValueError('Ambiguous or nonexistent local event time')
+    return candidates.pop()
 
 
 def selection_name(alert):
     side = alert.get('target_side')
     return {'HOME': alert.get('home'), 'AWAY': alert.get('away'), 'OVER': 'Over', 'UNDER': 'Under',
             'DRAW': 'Draw'}.get(side)
+
+
+def time_assumptions(alert, config, now):
+    """Explain provisional event-time interpretations without altering strategy fields."""
+    g = validate(config)['global']
+    alternatives = {}
+    for zone in dict.fromkeys([g['event_timezone'], 'UTC', 'Europe/London']):
+        if not zone:
+            continue
+        try:
+            candidate = event_start(alert, zone)
+            alternatives[zone] = dict(event_start_utc=candidate.isoformat() if candidate else None,
+                                      event_not_started=now < candidate if candidate else None)
+        except (ValueError, KeyError):
+            alternatives[zone] = dict(event_start_utc=None, event_not_started=None)
+    return dict(feed_timezone_verified=g['feed_timezone_verified'],
+                event_timezone=g['event_timezone'], event_time_assumptions=alternatives,
+                timezone_eligibility_uncertain=not g['feed_timezone_verified'] and
+                len({v['event_not_started'] for v in alternatives.values()}) > 1)
 
 
 def evaluate(alert, config, *, instruction_id, received_at, now=None):
@@ -100,9 +129,9 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
               f"Bet365 line advantage {advantage} points vs minimum {g['min_line_advantage']}")
     minimum_move = g['min_sharp_movement']
     magnitude = dec(signal.get('magnitude'))
-    check('sharp_movement', minimum_move is not None and magnitude is not None and magnitude > 0
-          and magnitude >= Decimal(str(minimum_move)),
-          'Minimum Pinnacle movement policy is not configured; no threshold invented' if minimum_move is None
+    check('sharp_movement', magnitude is not None and magnitude > 0
+          and (minimum_move is None or magnitude >= Decimal(str(minimum_move))),
+          'Feed-qualified signal; genuine nonzero opening-to-current movement required; no duplicate movement floor' if minimum_move is None
           else f'Pinnacle net movement {magnitude} points vs minimum {minimum_move}')
     sport, market = alert.get('sport'), alert.get('market')
     rule = config['sports'].get(sport, {}).get('markets', {}).get(market)
@@ -121,6 +150,14 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
     limit = g['stale_alert_seconds']
     check('alert_age', age is not None and age <= limit,
           f'{int(age)}s old (limit {limit}s)' if age is not None else 'alert receipt time unknown', STALE)
+    check('timestamp_consistency', age is not None and all((v - now).total_seconds() <= 30 for v in anchors),
+          'Source/receipt times must not exceed the current clock by more than 30 seconds')
+    # Timezone uncertainty is an eligibility gate only: target selection and offer
+    # quality above are unchanged. Preserve both candidate conversions for review.
+    result.update(time_assumptions(alert, config, now))
+    check('feed_timezone_verified', g['feed_timezone_verified'],
+          f"Feed timezone {g['event_timezone']} is " + ('operator verified' if g['feed_timezone_verified'] else
+          'provisional/unverified; event-start eligibility fails closed'))
     try:
         start = event_start(alert, g['event_timezone'])
     except (ValueError, KeyError):
@@ -154,11 +191,15 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
         if valid_price and rule['max_price'] is not None:
             check('max_price', price <= Decimal(str(rule['max_price'])), f"price {price} vs maximum {rule['max_price']}")
 
+    if rule is not None:
+        check('execution_tolerances', rule['max_odds_deterioration'] is not None and rule['max_line_deterioration'] is not None,
+              f"{sport} {market}: alert-to-live odds tolerance {rule['max_odds_deterioration']}, "
+              f"line tolerance {rule['max_line_deterioration']}; both require explicit operator configuration")
     if result['decision'] is not None:
         return result
     stake = rule['stake'] if rule['stake'] is not None else g['default_stake']
     stake = min(stake, g['max_stake'])
-    slippage = rule['allowed_slippage'] if rule['allowed_slippage'] is not None else g['allowed_slippage']
+    slippage = rule['max_odds_deterioration']
     minimum = max(Decimal('1.01'), price - Decimal(str(slippage)))
     check('stake', 0 < stake <= g['max_stake'], f'stake {stake:.2f} (max {g["max_stake"]:.2f})')
     alternate = alert.get('alternate_line') or {}
@@ -173,6 +214,7 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
         # Per-group "(alt. line)" markers exactly as parsed: current (Pinnacle), opening, comparison (Bet365).
         alternate_line={k: bool(alternate.get(k)) for k in ('current', 'opening', 'comparison')},
         alert_price=str(alert.get('alert_price')), minimum_price=str(minimum), stake=f'{stake:.2f}',
+        max_odds_deterioration=str(slippage), max_line_deterioration=str(rule['max_line_deterioration']),
         displayed_ev_percent=alert.get('displayed_ev_percent'), bet_quality=quality,
         signal_reason=quality, line_advantage=comparison.get('line_advantage'),
         target_source=alert.get('target_price_source'), implied_target=alert.get('implied_target'),

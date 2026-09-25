@@ -47,8 +47,10 @@ class RealSharpTargets(unittest.TestCase):
         v=classify(ROWS[46]['text']);self.assertEqual(v['status'],'AMBIGUOUS');self.assertIsNone(v['parsed']['target_side'])
     def test_numeric_ev_across_opposite_signed_lines_invalid(self):
         self.assertEqual(classify(ROWS[863]['text'])['status'],'INVALID')
-    def test_unset_policy_fails_closed(self):
-        d=decide(9,config(min_sharp_movement=None));self.assertEqual((d['decision'],d['reason'].split(':')[0]),('REJECT','sharp_movement'))
+    def test_feed_qualified_signal_needs_no_duplicate_movement_floor(self):
+        d=decide(9,config(min_sharp_movement=None));self.assertEqual(d['decision'],'ACCEPT')
+        flat=parsed(46)
+        self.assertEqual(decide(46,config(min_sharp_movement=None),alert=flat)['decision'],'REJECT')
     def test_explicit_movement_floor(self):
         self.assertEqual(decide(9,config(min_sharp_movement=2))['decision'],'REJECT')
         self.assertEqual(decide(9,config(min_sharp_movement=1.5))['decision'],'ACCEPT')
