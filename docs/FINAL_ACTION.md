@@ -132,6 +132,15 @@ typing £8,718 instead of £0.10. Nothing was placed (READY never taps). Now:
   If OCR drops the stake box, only an exact return at price ≥ 1.10 is accepted, since it
   uniquely fixes the stake. A "Place Bet visible" screen is never evidence of the stake.
 
+Waits on this path are state-driven (0.8.8-stake): instead of fixed sleeps, the phone
+re-captures (250–300 ms apart, bounded) until the state the next check needs is visibly
+present — the betslip, the OCR-located keypad, the typed stake reading back — and the
+existing `require()` on that frame still decides. The betslip readback after Done and the
+pre-tap check re-read a slip that is still rendering with a plain second frame; the third
+read is Tesseract's enhanced pass (a different engine). Evidence PNGs are encoded after
+the OCR result is handed on, and the single Place Bet tap waits for every pending evidence
+write before the gesture. `tools/stake_profile.py` prints the per-step timings of a run.
+
 ### Basketball Game Lines
 
 `GameLinesParser` reads the Spread / Total / Money Line grid from word positions. Rows are

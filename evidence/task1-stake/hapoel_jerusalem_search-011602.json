@@ -1,0 +1,2187 @@
+{
+ "payload": {
+  "instruction_id": "hapoel_jerusalem_search-011602",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Hapoel Jerusalem||Bnei Herzliya",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-9.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold"
+ },
+ "result": {
+  "instruction_id": "hapoel_jerusalem_search-011602",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 31047,
+  "progress": {
+   "stage": "PREPARE_COMPLETE_EXECUTION",
+   "elapsed_ms": 30910,
+   "last_progress_at_ms": 1790295393659,
+   "instruction_id": "hapoel_jerusalem_search-011602",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790295362805
+    },
+    {
+     "stage": "SPORTS_HOME",
+     "elapsed_ms": 12,
+     "at_ms": 1790295362813,
+     "timing": {
+      "stage": "SPORTS_HOME",
+      "start_elapsed_ms": 12,
+      "start_ts_ms": 1790295362806,
+      "end_elapsed_ms": 20,
+      "end_ts_ms": 1790295362814,
+      "duration_ms": 8,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 20,
+     "at_ms": 1790295362822,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 20,
+      "start_ts_ms": 1790295362814,
+      "end_elapsed_ms": 5165,
+      "end_ts_ms": 1790295367959,
+      "duration_ms": 5145,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4057,
+     "at_ms": 1790295362822
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4516,
+     "at_ms": 1790295362822
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4555,
+     "at_ms": 1790295362822
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5136,
+     "at_ms": 1790295362822
+    },
+    {
+     "stage": "SESSION_CHECK",
+     "elapsed_ms": 5165,
+     "at_ms": 1790295367972,
+     "timing": {
+      "stage": "SESSION_CHECK",
+      "start_elapsed_ms": 5165,
+      "start_ts_ms": 1790295367959,
+      "end_elapsed_ms": 5809,
+      "end_ts_ms": 1790295368603,
+      "duration_ms": 644,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SESSION_CHECK",
+     "elapsed_ms": 5184,
+     "at_ms": 1790295367972
+    },
+    {
+     "stage": "SESSION_CHECK",
+     "elapsed_ms": 5778,
+     "at_ms": 1790295367972
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 5809,
+     "at_ms": 1790295368616,
+     "timing": {
+      "stage": "OPEN_SEARCH",
+      "start_elapsed_ms": 5809,
+      "start_ts_ms": 1790295368603,
+      "end_elapsed_ms": 5824,
+      "end_ts_ms": 1790295368618,
+      "duration_ms": 15,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SPORTS_CONTEXT",
+     "elapsed_ms": 5824,
+     "at_ms": 1790295368627,
+     "timing": {
+      "stage": "SPORTS_CONTEXT",
+      "start_elapsed_ms": 5824,
+      "start_ts_ms": 1790295368618,
+      "end_elapsed_ms": 6441,
+      "end_ts_ms": 1790295369234,
+      "duration_ms": 617,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SPORTS_CONTEXT",
+     "elapsed_ms": 5836,
+     "at_ms": 1790295368627
+    },
+    {
+     "stage": "SPORTS_CONTEXT",
+     "elapsed_ms": 6396,
+     "at_ms": 1790295368627
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 6441,
+     "at_ms": 1790295369245,
+     "timing": {
+      "stage": "OPEN_SEARCH",
+      "start_elapsed_ms": 6441,
+      "start_ts_ms": 1790295369234,
+      "end_elapsed_ms": 9948,
+      "end_ts_ms": 1790295372742,
+      "duration_ms": 3507,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 6454,
+     "at_ms": 1790295369245
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 7135,
+     "at_ms": 1790295369245
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 7205,
+     "at_ms": 1790295369245
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 7922,
+     "at_ms": 1790295369245
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 7988,
+     "at_ms": 1790295369245
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 9074,
+     "at_ms": 1790295369245
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 9843,
+     "at_ms": 1790295369245
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 9948,
+     "at_ms": 1790295372787,
+     "timing": {
+      "stage": "ENTER_QUERY",
+      "start_elapsed_ms": 9948,
+      "start_ts_ms": 1790295372742,
+      "end_elapsed_ms": 10000,
+      "end_ts_ms": 1790295372794,
+      "duration_ms": 52,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "FOCUS",
+     "elapsed_ms": 10000,
+     "at_ms": 1790295372818,
+     "timing": {
+      "stage": "FOCUS",
+      "start_elapsed_ms": 10000,
+      "start_ts_ms": 1790295372794,
+      "end_elapsed_ms": 10026,
+      "end_ts_ms": 1790295372819,
+      "duration_ms": 26,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 10026,
+     "at_ms": 1790295372835,
+     "timing": {
+      "stage": "ENTER_QUERY",
+      "start_elapsed_ms": 10026,
+      "start_ts_ms": 1790295372819,
+      "end_elapsed_ms": 18088,
+      "end_ts_ms": 1790295380881,
+      "duration_ms": 8062,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 10043,
+     "at_ms": 1790295372835
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 10952,
+     "at_ms": 1790295372835
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 11091,
+     "at_ms": 1790295372835
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 11811,
+     "at_ms": 1790295372835
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 11878,
+     "at_ms": 1790295372835
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 12373,
+     "at_ms": 1790295372835
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 12398,
+     "at_ms": 1790295375207,
+     "timing": {
+      "stage": "ENTER_QUERY",
+      "start_elapsed_ms": 10026,
+      "start_ts_ms": 1790295372819,
+      "end_elapsed_ms": 18088,
+      "end_ts_ms": 1790295380881,
+      "duration_ms": 8062,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 18065,
+     "at_ms": 1790295375207
+    },
+    {
+     "stage": "QUERY_VERIFY",
+     "elapsed_ms": 18088,
+     "at_ms": 1790295380902,
+     "timing": {
+      "stage": "QUERY_VERIFY",
+      "start_elapsed_ms": 18088,
+      "start_ts_ms": 1790295380881,
+      "end_elapsed_ms": 19939,
+      "end_ts_ms": 1790295382734,
+      "duration_ms": 1851,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "QUERY_VERIFY",
+     "elapsed_ms": 18110,
+     "at_ms": 1790295380902
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 19939,
+     "at_ms": 1790295382864,
+     "timing": {
+      "stage": "RESULTS_WAIT",
+      "start_elapsed_ms": 19939,
+      "start_ts_ms": 1790295382735,
+      "end_elapsed_ms": 20918,
+      "end_ts_ms": 1790295383711,
+      "duration_ms": 979,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 20073,
+     "at_ms": 1790295382864
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 20433,
+     "at_ms": 1790295382864
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 20477,
+     "at_ms": 1790295382864
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 20839,
+     "at_ms": 1790295382864
+    },
+    {
+     "stage": "FIXTURE_VERIFY",
+     "elapsed_ms": 20918,
+     "at_ms": 1790295383735,
+     "timing": {
+      "stage": "FIXTURE_VERIFY",
+      "start_elapsed_ms": 20918,
+      "start_ts_ms": 1790295383712,
+      "end_elapsed_ms": 21319,
+      "end_ts_ms": 1790295384112,
+      "duration_ms": 401,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "FIXTURE_VERIFY",
+     "elapsed_ms": 20943,
+     "at_ms": 1790295383735
+    },
+    {
+     "stage": "FIXTURE_VERIFY",
+     "elapsed_ms": 21256,
+     "at_ms": 1790295383735
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 21319,
+     "at_ms": 1790295384137,
+     "timing": {
+      "stage": "SELECT_FIXTURE",
+      "start_elapsed_ms": 21319,
+      "start_ts_ms": 1790295384112,
+      "end_elapsed_ms": 22277,
+      "end_ts_ms": 1790295385071,
+      "duration_ms": 958,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 21345,
+     "at_ms": 1790295384137
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 21667,
+     "at_ms": 1790295384137
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 21699,
+     "at_ms": 1790295384137
+    },
+    {
+     "stage": "VERIFY_EVENT",
+     "elapsed_ms": 22277,
+     "at_ms": 1790295385100,
+     "timing": {
+      "stage": "VERIFY_EVENT",
+      "start_elapsed_ms": 22277,
+      "start_ts_ms": 1790295385071,
+      "end_elapsed_ms": 24346,
+      "end_ts_ms": 1790295387140,
+      "duration_ms": 2069,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_EVENT",
+     "elapsed_ms": 23511,
+     "at_ms": 1790295385100
+    },
+    {
+     "stage": "VERIFY_EVENT",
+     "elapsed_ms": 24181,
+     "at_ms": 1790295385100
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 24346,
+     "at_ms": 1790295387172,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 24346,
+      "start_ts_ms": 1790295387140,
+      "end_elapsed_ms": 25008,
+      "end_ts_ms": 1790295387802,
+      "duration_ms": 662,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 24380,
+     "at_ms": 1790295387172
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 24958,
+     "at_ms": 1790295387172
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 25008,
+     "at_ms": 1790295387829,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 25008,
+      "start_ts_ms": 1790295387802,
+      "end_elapsed_ms": 25038,
+      "end_ts_ms": 1790295387831,
+      "duration_ms": 30,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 25038,
+     "at_ms": 1790295387876,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 25038,
+      "start_ts_ms": 1790295387831,
+      "end_elapsed_ms": 25084,
+      "end_ts_ms": 1790295387877,
+      "duration_ms": 46,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 25084,
+     "at_ms": 1790295387905,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 25084,
+      "start_ts_ms": 1790295387877,
+      "end_elapsed_ms": 25113,
+      "end_ts_ms": 1790295387907,
+      "duration_ms": 29,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 25113,
+     "at_ms": 1790295387962,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 25113,
+      "start_ts_ms": 1790295387907,
+      "end_elapsed_ms": 25956,
+      "end_ts_ms": 1790295388751,
+      "duration_ms": 843,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 25169,
+     "at_ms": 1790295387962
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 25956,
+     "at_ms": 1790295388897,
+     "timing": {
+      "stage": "ENTER_STAKE",
+      "start_elapsed_ms": 25956,
+      "start_ts_ms": 1790295388752,
+      "end_elapsed_ms": 30192,
+      "end_ts_ms": 1790295392986,
+      "duration_ms": 4236,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 26106,
+     "at_ms": 1790295388897
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 26656,
+     "at_ms": 1790295388897
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 26698,
+     "at_ms": 1790295388897
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 27433,
+     "at_ms": 1790295388897
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 27932,
+     "at_ms": 1790295388897
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 28000,
+     "at_ms": 1790295388897
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 28286,
+     "at_ms": 1790295388897
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 28606,
+     "at_ms": 1790295388897
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 28917,
+     "at_ms": 1790295388897
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 29237,
+     "at_ms": 1790295388897
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 29780,
+     "at_ms": 1790295388897
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 29897,
+     "at_ms": 1790295388897
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 30192,
+     "at_ms": 1790295393036,
+     "timing": {
+      "stage": "VERIFY_FINAL_STATE",
+      "start_elapsed_ms": 30192,
+      "start_ts_ms": 1790295392986,
+      "end_elapsed_ms": 30833,
+      "end_ts_ms": 1790295393626,
+      "duration_ms": 641,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 30245,
+     "at_ms": 1790295393036
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 30745,
+     "at_ms": 1790295393036
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 30833,
+     "at_ms": 1790295393659,
+     "timing": {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "start_elapsed_ms": 30833,
+      "start_ts_ms": 1790295393626,
+      "end_elapsed_ms": 30910,
+      "end_ts_ms": 1790295393703,
+      "duration_ms": 77,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 30910,
+     "at_ms": 1790295393659
+    }
+   ]
+  },
+  "device_stage": "PREPARE_COMPLETE_EXECUTION",
+  "execution_count": 1,
+  "run_id": "c_rgQwfAGEewRlXo9eIezU1p0j39VsSDxFmZmIPWOycvo",
+  "fixture_name": "Hapoel Jerusalem v Bnei Herzliya",
+  "home": "Hapoel Jerusalem",
+  "away": "Bnei Herzliya",
+  "competition": "Basketball Casino",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-9.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Hapoel Jerusalem",
+   "bounds": [
+    301,
+    655,
+    344,
+    705
+   ]
+  },
+  "final_state": {
+   "home": "Hapoel Jerusalem",
+   "away": "Bnei Herzliya",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-9.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "ready_state": {
+   "fixture_home": "Hapoel Jerusalem",
+   "fixture_away": "Bnei Herzliya",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Hapoel Jerusalem",
+   "line": "-9.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Hapoel Jerusalem v Bnei Herzliya",
+   "fixture_home": "Hapoel Jerusalem",
+   "fixture_away": "Bnei Herzliya",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Hapoel Jerusalem",
+   "line": "-9.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "minimum_price": "1.50",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    20,
+    1293,
+    604,
+    1319
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     20,
+     1293,
+     604,
+     1319
+    ],
+    "center_x": 312,
+    "center_y": 1306,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790295393699,
+   "validation_hash": "a0b89746908e2ac4e12c5d38f18260e7"
+  },
+  "wager_submitted": false,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "route": "search",
+  "held": true,
+  "stage_timings": [
+   {
+    "stage": "SPORTS_HOME",
+    "start_elapsed_ms": 12,
+    "start_ts_ms": 1790295362806,
+    "end_elapsed_ms": 20,
+    "end_ts_ms": 1790295362814,
+    "duration_ms": 8,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 20,
+    "start_ts_ms": 1790295362814,
+    "end_elapsed_ms": 5165,
+    "end_ts_ms": 1790295367959,
+    "duration_ms": 5145,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "start_elapsed_ms": 5165,
+    "start_ts_ms": 1790295367959,
+    "end_elapsed_ms": 5809,
+    "end_ts_ms": 1790295368603,
+    "duration_ms": 644,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 5809,
+    "start_ts_ms": 1790295368603,
+    "end_elapsed_ms": 5824,
+    "end_ts_ms": 1790295368618,
+    "duration_ms": 15,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "start_elapsed_ms": 5824,
+    "start_ts_ms": 1790295368618,
+    "end_elapsed_ms": 6441,
+    "end_ts_ms": 1790295369234,
+    "duration_ms": 617,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 6441,
+    "start_ts_ms": 1790295369234,
+    "end_elapsed_ms": 9948,
+    "end_ts_ms": 1790295372742,
+    "duration_ms": 3507,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 9948,
+    "start_ts_ms": 1790295372742,
+    "end_elapsed_ms": 10000,
+    "end_ts_ms": 1790295372794,
+    "duration_ms": 52,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FOCUS",
+    "start_elapsed_ms": 10000,
+    "start_ts_ms": 1790295372794,
+    "end_elapsed_ms": 10026,
+    "end_ts_ms": 1790295372819,
+    "duration_ms": 26,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 10026,
+    "start_ts_ms": 1790295372819,
+    "end_elapsed_ms": 18088,
+    "end_ts_ms": 1790295380881,
+    "duration_ms": 8062,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "start_elapsed_ms": 18088,
+    "start_ts_ms": 1790295380881,
+    "end_elapsed_ms": 19939,
+    "end_ts_ms": 1790295382734,
+    "duration_ms": 1851,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "start_elapsed_ms": 19939,
+    "start_ts_ms": 1790295382735,
+    "end_elapsed_ms": 20918,
+    "end_ts_ms": 1790295383711,
+    "duration_ms": 979,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "start_elapsed_ms": 20918,
+    "start_ts_ms": 1790295383712,
+    "end_elapsed_ms": 21319,
+    "end_ts_ms": 1790295384112,
+    "duration_ms": 401,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "start_elapsed_ms": 21319,
+    "start_ts_ms": 1790295384112,
+    "end_elapsed_ms": 22277,
+    "end_ts_ms": 1790295385071,
+    "duration_ms": 958,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "start_elapsed_ms": 22277,
+    "start_ts_ms": 1790295385071,
+    "end_elapsed_ms": 24346,
+    "end_ts_ms": 1790295387140,
+    "duration_ms": 2069,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 24346,
+    "start_ts_ms": 1790295387140,
+    "end_elapsed_ms": 25008,
+    "end_ts_ms": 1790295387802,
+    "duration_ms": 662,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 25008,
+    "start_ts_ms": 1790295387802,
+    "end_elapsed_ms": 25038,
+    "end_ts_ms": 1790295387831,
+    "duration_ms": 30,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 25038,
+    "start_ts_ms": 1790295387831,
+    "end_elapsed_ms": 25084,
+    "end_ts_ms": 1790295387877,
+    "duration_ms": 46,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 25084,
+    "start_ts_ms": 1790295387877,
+    "end_elapsed_ms": 25113,
+    "end_ts_ms": 1790295387907,
+    "duration_ms": 29,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 25113,
+    "start_ts_ms": 1790295387907,
+    "end_elapsed_ms": 25956,
+    "end_ts_ms": 1790295388751,
+    "duration_ms": 843,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 25956,
+    "start_ts_ms": 1790295388752,
+    "end_elapsed_ms": 30192,
+    "end_ts_ms": 1790295392986,
+    "duration_ms": 4236,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 30192,
+    "start_ts_ms": 1790295392986,
+    "end_elapsed_ms": 30833,
+    "end_ts_ms": 1790295393626,
+    "duration_ms": 641,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 30833,
+    "start_ts_ms": 1790295393626,
+    "end_elapsed_ms": 30910,
+    "end_ts_ms": 1790295393703,
+    "duration_ms": 77,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "stake_field_state": "EMPTY"
+ },
+ "run": {
+  "run_id": "c_rgQwfAGEewRlXo9eIezU1p0j39VsSDxFmZmIPWOycvo",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790295362793,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790295362793
+   },
+   {
+    "phase": "SPORTS_HOME",
+    "elapsed_ms": 12,
+    "wall_ts_ms": 1790295362806
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 20,
+    "wall_ts_ms": 1790295362815
+   },
+   {
+    "phase": "CAPTURE_home",
+    "elapsed_ms": 4057,
+    "wall_ts_ms": 1790295366853
+   },
+   {
+    "phase": "CAPTURED_home",
+    "elapsed_ms": 4516,
+    "wall_ts_ms": 1790295367310
+   },
+   {
+    "phase": "CAPTURE_home_ready",
+    "elapsed_ms": 4555,
+    "wall_ts_ms": 1790295367349
+   },
+   {
+    "phase": "CAPTURED_home_ready",
+    "elapsed_ms": 5136,
+    "wall_ts_ms": 1790295367931
+   },
+   {
+    "phase": "SESSION_CHECK",
+    "elapsed_ms": 5165,
+    "wall_ts_ms": 1790295367959
+   },
+   {
+    "phase": "CAPTURE_session",
+    "elapsed_ms": 5184,
+    "wall_ts_ms": 1790295367978
+   },
+   {
+    "phase": "CAPTURED_session",
+    "elapsed_ms": 5778,
+    "wall_ts_ms": 1790295368571
+   },
+   {
+    "phase": "OPEN_SEARCH",
+    "elapsed_ms": 5809,
+    "wall_ts_ms": 1790295368604
+   },
+   {
+    "phase": "SPORTS_CONTEXT",
+    "elapsed_ms": 5824,
+    "wall_ts_ms": 1790295368618
+   },
+   {
+    "phase": "CAPTURE_sports_context_pre",
+    "elapsed_ms": 5836,
+    "wall_ts_ms": 1790295368630
+   },
+   {
+    "phase": "CAPTURED_sports_context_pre",
+    "elapsed_ms": 6396,
+    "wall_ts_ms": 1790295369190
+   },
+   {
+    "phase": "OPEN_SEARCH",
+    "elapsed_ms": 6441,
+    "wall_ts_ms": 1790295369234
+   },
+   {
+    "phase": "CAPTURE_search_button",
+    "elapsed_ms": 6454,
+    "wall_ts_ms": 1790295369247
+   },
+   {
+    "phase": "CAPTURED_search_button",
+    "elapsed_ms": 7135,
+    "wall_ts_ms": 1790295369930
+   },
+   {
+    "phase": "CAPTURE_search_button_clear",
+    "elapsed_ms": 7205,
+    "wall_ts_ms": 1790295369998
+   },
+   {
+    "phase": "CAPTURED_search_button_clear",
+    "elapsed_ms": 7922,
+    "wall_ts_ms": 1790295370716
+   },
+   {
+    "effect": "gesture",
+    "target": "Search",
+    "bounds": [
+     107,
+     273,
+     199,
+     304
+    ],
+    "elapsed_ms": 7988
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 7988,
+    "wall_ts_ms": 1790295370782
+   },
+   {
+    "phase": "CAPTURE_search_after_0_5s",
+    "elapsed_ms": 9074,
+    "wall_ts_ms": 1790295371867
+   },
+   {
+    "phase": "CAPTURED_search_after_0_5s",
+    "elapsed_ms": 9843,
+    "wall_ts_ms": 1790295372637
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 9948,
+    "wall_ts_ms": 1790295372743
+   },
+   {
+    "phase": "FOCUS",
+    "elapsed_ms": 10000,
+    "wall_ts_ms": 1790295372794
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 10026,
+    "wall_ts_ms": 1790295372819
+   },
+   {
+    "phase": "CAPTURE_query_pre",
+    "elapsed_ms": 10043,
+    "wall_ts_ms": 1790295372836
+   },
+   {
+    "phase": "CAPTURED_query_pre",
+    "elapsed_ms": 10952,
+    "wall_ts_ms": 1790295373746
+   },
+   {
+    "phase": "CAPTURE_search_field_0",
+    "elapsed_ms": 11091,
+    "wall_ts_ms": 1790295373884
+   },
+   {
+    "phase": "CAPTURED_search_field_0",
+    "elapsed_ms": 11811,
+    "wall_ts_ms": 1790295374605
+   },
+   {
+    "phase": "CAPTURE_query_ready",
+    "elapsed_ms": 11878,
+    "wall_ts_ms": 1790295374672
+   },
+   {
+    "phase": "CAPTURED_query_ready",
+    "elapsed_ms": 12373,
+    "wall_ts_ms": 1790295375167
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 12398,
+    "wall_ts_ms": 1790295375191
+   },
+   {
+    "phase": "QUERY_VERIFIED",
+    "elapsed_ms": 18065,
+    "wall_ts_ms": 1790295380859
+   },
+   {
+    "phase": "QUERY_VERIFY",
+    "elapsed_ms": 18088,
+    "wall_ts_ms": 1790295380881
+   },
+   {
+    "phase": "DISMISS_KEYBOARD",
+    "elapsed_ms": 18110,
+    "wall_ts_ms": 1790295380903
+   },
+   {
+    "phase": "RESULTS_WAIT",
+    "elapsed_ms": 19939,
+    "wall_ts_ms": 1790295382735
+   },
+   {
+    "phase": "CAPTURE_query_results",
+    "elapsed_ms": 20073,
+    "wall_ts_ms": 1790295382867
+   },
+   {
+    "phase": "CAPTURED_query_results",
+    "elapsed_ms": 20433,
+    "wall_ts_ms": 1790295383226
+   },
+   {
+    "phase": "CAPTURE_query_results_sports",
+    "elapsed_ms": 20477,
+    "wall_ts_ms": 1790295383270
+   },
+   {
+    "phase": "CAPTURED_query_results_sports",
+    "elapsed_ms": 20839,
+    "wall_ts_ms": 1790295383632
+   },
+   {
+    "phase": "FIXTURE_VERIFY",
+    "elapsed_ms": 20918,
+    "wall_ts_ms": 1790295383712
+   },
+   {
+    "phase": "CAPTURE_fixtures",
+    "elapsed_ms": 20943,
+    "wall_ts_ms": 1790295383736
+   },
+   {
+    "phase": "CAPTURED_fixtures",
+    "elapsed_ms": 21256,
+    "wall_ts_ms": 1790295384049
+   },
+   {
+    "phase": "SELECT_FIXTURE",
+    "elapsed_ms": 21319,
+    "wall_ts_ms": 1790295384112
+   },
+   {
+    "phase": "CAPTURE_fixture_preflight",
+    "elapsed_ms": 21345,
+    "wall_ts_ms": 1790295384138
+   },
+   {
+    "phase": "CAPTURED_fixture_preflight",
+    "elapsed_ms": 21667,
+    "wall_ts_ms": 1790295384461
+   },
+   {
+    "effect": "gesture",
+    "target": "Hapoel Jerusalem v Bnei Herzliya",
+    "bounds": [
+     21,
+     397,
+     480,
+     424
+    ],
+    "elapsed_ms": 21699
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 21699,
+    "wall_ts_ms": 1790295384492
+   },
+   {
+    "phase": "VERIFY_EVENT",
+    "elapsed_ms": 22277,
+    "wall_ts_ms": 1790295385071
+   },
+   {
+    "phase": "CAPTURE_event",
+    "elapsed_ms": 23511,
+    "wall_ts_ms": 1790295386306
+   },
+   {
+    "phase": "CAPTURED_event",
+    "elapsed_ms": 24181,
+    "wall_ts_ms": 1790295386976
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 24346,
+    "wall_ts_ms": 1790295387140
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 24380,
+    "wall_ts_ms": 1790295387173
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 24958,
+    "wall_ts_ms": 1790295387751
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 25008,
+    "wall_ts_ms": 1790295387802
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 25038,
+    "wall_ts_ms": 1790295387832
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 25084,
+    "wall_ts_ms": 1790295387877
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 25113,
+    "wall_ts_ms": 1790295387907
+   },
+   {
+    "effect": "gesture",
+    "target": "SPREAD / HOME / -9.5 / 1.83",
+    "bounds": [
+     301,
+     655,
+     344,
+     705
+    ],
+    "elapsed_ms": 25169
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 25169,
+    "wall_ts_ms": 1790295387963
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 25956,
+    "wall_ts_ms": 1790295388753
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 26106,
+    "wall_ts_ms": 1790295388899
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 26656,
+    "wall_ts_ms": 1790295389450
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     20,
+     1327,
+     214,
+     1371
+    ],
+    "elapsed_ms": 26698
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 26698,
+    "wall_ts_ms": 1790295389492
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 27433,
+    "wall_ts_ms": 1790295390227
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 27932,
+    "wall_ts_ms": 1790295390725
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 27999
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 28000,
+    "wall_ts_ms": 1790295390793
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     87,
+     1228,
+     147,
+     1272
+    ],
+    "elapsed_ms": 28286
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 28286,
+    "wall_ts_ms": 1790295391080
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     87,
+     974,
+     147,
+     1018
+    ],
+    "elapsed_ms": 28606
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 28606,
+    "wall_ts_ms": 1790295391399
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 28917
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 28917,
+    "wall_ts_ms": 1790295391711
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 29237,
+    "wall_ts_ms": 1790295392031
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 29780,
+    "wall_ts_ms": 1790295392574
+   },
+   {
+    "effect": "gesture",
+    "target": "Done",
+    "bounds": [
+     311,
+     1333,
+     587,
+     1367
+    ],
+    "elapsed_ms": 29897
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 29897,
+    "wall_ts_ms": 1790295392691
+   },
+   {
+    "phase": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 30192,
+    "wall_ts_ms": 1790295392987
+   },
+   {
+    "phase": "CAPTURE_final",
+    "elapsed_ms": 30245,
+    "wall_ts_ms": 1790295393038
+   },
+   {
+    "phase": "CAPTURED_final",
+    "elapsed_ms": 30745,
+    "wall_ts_ms": 1790295393539
+   },
+   {
+    "phase": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 30833,
+    "wall_ts_ms": 1790295393626
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 30910,
+    "wall_ts_ms": 1790295393703
+   }
+  ],
+  "screenshots": [
+   "s001_home.png",
+   "s002_home_ready.png",
+   "s003_session.png",
+   "s004_sports_context_pre.png",
+   "s005_search_button.png",
+   "s006_search_button_clear.png",
+   "s007_search_after_0_5s.png",
+   "s008_query_pre.png",
+   "s009_search_field_0.png",
+   "s010_query_ready.png",
+   "s011_query_results.png",
+   "s012_query_results_sports.png",
+   "s013_fixtures.png",
+   "s014_fixture_preflight.png",
+   "s015_event.png",
+   "s016_markets.png",
+   "s017_betslip_pre_stake.png",
+   "s018_stake_ui.png",
+   "s019_stake_typed.png",
+   "s020_final.png"
+  ],
+  "gesture_attempts": 9,
+  "stage_timings": [
+   {
+    "stage": "SPORTS_HOME",
+    "start_elapsed_ms": 12,
+    "start_ts_ms": 1790295362806,
+    "end_elapsed_ms": 20,
+    "end_ts_ms": 1790295362814,
+    "duration_ms": 8,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 20,
+    "start_ts_ms": 1790295362814,
+    "end_elapsed_ms": 5165,
+    "end_ts_ms": 1790295367959,
+    "duration_ms": 5145,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "start_elapsed_ms": 5165,
+    "start_ts_ms": 1790295367959,
+    "end_elapsed_ms": 5809,
+    "end_ts_ms": 1790295368603,
+    "duration_ms": 644,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 5809,
+    "start_ts_ms": 1790295368603,
+    "end_elapsed_ms": 5824,
+    "end_ts_ms": 1790295368618,
+    "duration_ms": 15,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "start_elapsed_ms": 5824,
+    "start_ts_ms": 1790295368618,
+    "end_elapsed_ms": 6441,
+    "end_ts_ms": 1790295369234,
+    "duration_ms": 617,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 6441,
+    "start_ts_ms": 1790295369234,
+    "end_elapsed_ms": 9948,
+    "end_ts_ms": 1790295372742,
+    "duration_ms": 3507,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 9948,
+    "start_ts_ms": 1790295372742,
+    "end_elapsed_ms": 10000,
+    "end_ts_ms": 1790295372794,
+    "duration_ms": 52,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FOCUS",
+    "start_elapsed_ms": 10000,
+    "start_ts_ms": 1790295372794,
+    "end_elapsed_ms": 10026,
+    "end_ts_ms": 1790295372819,
+    "duration_ms": 26,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 10026,
+    "start_ts_ms": 1790295372819,
+    "end_elapsed_ms": 18088,
+    "end_ts_ms": 1790295380881,
+    "duration_ms": 8062,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "start_elapsed_ms": 18088,
+    "start_ts_ms": 1790295380881,
+    "end_elapsed_ms": 19939,
+    "end_ts_ms": 1790295382734,
+    "duration_ms": 1851,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "start_elapsed_ms": 19939,
+    "start_ts_ms": 1790295382735,
+    "end_elapsed_ms": 20918,
+    "end_ts_ms": 1790295383711,
+    "duration_ms": 979,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "start_elapsed_ms": 20918,
+    "start_ts_ms": 1790295383712,
+    "end_elapsed_ms": 21319,
+    "end_ts_ms": 1790295384112,
+    "duration_ms": 401,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "start_elapsed_ms": 21319,
+    "start_ts_ms": 1790295384112,
+    "end_elapsed_ms": 22277,
+    "end_ts_ms": 1790295385071,
+    "duration_ms": 958,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "start_elapsed_ms": 22277,
+    "start_ts_ms": 1790295385071,
+    "end_elapsed_ms": 24346,
+    "end_ts_ms": 1790295387140,
+    "duration_ms": 2069,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 24346,
+    "start_ts_ms": 1790295387140,
+    "end_elapsed_ms": 25008,
+    "end_ts_ms": 1790295387802,
+    "duration_ms": 662,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 25008,
+    "start_ts_ms": 1790295387802,
+    "end_elapsed_ms": 25038,
+    "end_ts_ms": 1790295387831,
+    "duration_ms": 30,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 25038,
+    "start_ts_ms": 1790295387831,
+    "end_elapsed_ms": 25084,
+    "end_ts_ms": 1790295387877,
+    "duration_ms": 46,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 25084,
+    "start_ts_ms": 1790295387877,
+    "end_elapsed_ms": 25113,
+    "end_ts_ms": 1790295387907,
+    "duration_ms": 29,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 25113,
+    "start_ts_ms": 1790295387907,
+    "end_elapsed_ms": 25956,
+    "end_ts_ms": 1790295388751,
+    "duration_ms": 843,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 25956,
+    "start_ts_ms": 1790295388752,
+    "end_elapsed_ms": 30192,
+    "end_ts_ms": 1790295392986,
+    "duration_ms": 4236,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 30192,
+    "start_ts_ms": 1790295392986,
+    "end_elapsed_ms": 30833,
+    "end_ts_ms": 1790295393626,
+    "duration_ms": 641,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 30833,
+    "start_ts_ms": 1790295393626,
+    "end_elapsed_ms": 30910,
+    "end_ts_ms": 1790295393703,
+    "duration_ms": 77,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "route": "search",
+  "current_stage": "PREPARE_COMPLETE_EXECUTION",
+  "session": "AUTHENTICATED",
+  "sports_context_pre_elapsed_ms": 596,
+  "sports_context_foreground": "01:16 C al 100% | o bet365.com/#/HO/ + 51 | Search | -bet365 | ROULETTE | Football NFL Scores Horses | NFL Nations League Footbal| Casino MLB | Thursday Night Football View All | Fri 25 Sep Spread Total Money | Line | +4.5 0 43.5 | t ATL Falcons 3.05 | 1.95 2.00 | -4.5 U 43.5 | G GB Packers 1.40 | 1.86 1.83 | 01:15 Stats ilı | BET BUILDER Player Markets > | NFL Fri 01:15",
+  "sports_context": "already_sports_or_home",
+  "sports_context_elapsed_ms": 606,
+  "search_control_text": "Search",
+  "search_control_bounds": [
+   113,
+   279,
+   193,
+   298
+  ],
+  "search_tap_bounds": [
+   107,
+   273,
+   199,
+   304
+  ],
+  "search_tap_xy": [
+   153,
+   288
+  ],
+  "search_tap_attempt": 1,
+  "search_ui_open": true,
+  "search_open_via": "verify_0_5s",
+  "search_query": "Hapoel Jerusalem Bnei Herzliya",
+  "identity_home": "Hapoel Jerusalem",
+  "expected_away": "Bnei Herzliya",
+  "identity_away": "Bnei Herzliya",
+  "search_query_ladder": [
+   "Hapoel Jerusalem Bnei Herzliya",
+   "Hapoel Jerusalem",
+   "Bnei Herzliya"
+  ],
+  "search_ladder_index": 0,
+  "search_ladder_query": "Hapoel Jerusalem Bnei Herzliya",
+  "search_bar_checks": [
+   {
+    "attempt": 0,
+    "bar": true,
+    "candidates": 1,
+    "text": "Search bet365...",
+    "empty": true,
+    "clear": null
+   }
+  ],
+  "query_evidence": {
+   "run_id": "c_rgQwfAGEewRlXo9eIezU1p0j39VsSDxFmZmIPWOycvo",
+   "requested_text": "Hapoel Jerusalem Bnei Herzliya",
+   "field_hint": "bet365...",
+   "package": "com.android.chrome",
+   "mechanism": "AccessibilityInputConnection.commitText",
+   "started_at_ms": 1790295375208,
+   "started_elapsed_ms": 28212328,
+   "timeout_ms": 60000,
+   "status": "PASS",
+   "field_bounds": [
+    124,
+    153,
+    487,
+    227
+   ],
+   "pre_screenshot": "files/visual/c_rgQwfAGEewRlXo9eIezU1p0j39VsSDxFmZmIPWOycvo/before.png",
+   "post_screenshot": "files/visual/c_rgQwfAGEewRlXo9eIezU1p0j39VsSDxFmZmIPWOycvo/after.png",
+   "verification_result": "EXACT_INPUT_OCR_SOFT",
+   "input_attempts": 1,
+   "events": [
+    {
+     "phase": "STARTED",
+     "elapsed_ms": 0
+    },
+    {
+     "phase": "LOCATING",
+     "elapsed_ms": 28
+    },
+    {
+     "phase": "FOCUS_DISPATCHING",
+     "elapsed_ms": 429
+    },
+    {
+     "phase": "FOCUS_GESTURE_COMPLETED",
+     "elapsed_ms": 543
+    },
+    {
+     "phase": "FOCUS_CONFIRMED",
+     "elapsed_ms": 762
+    },
+    {
+     "phase": "INPUT_COMMITTING",
+     "elapsed_ms": 1103
+    },
+    {
+     "phase": "INPUT_SENT",
+     "elapsed_ms": 1111
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 1718
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 3061
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 4552
+    },
+    {
+     "phase": "FINISHED",
+     "elapsed_ms": 5597
+    }
+   ],
+   "phase": "FINISHED",
+   "focus_cycle": 0,
+   "focus_baseline_generation": 15,
+   "focus_tap_elapsed_ms": 28212757,
+   "focus_tap_xy": [
+    305,
+    190
+   ],
+   "editor_package": "com.android.chrome",
+   "editor_generation": 16,
+   "editor_start_elapsed_ms": 28212889,
+   "ime_window_visible": false,
+   "focus_signals": {
+    "fresh_generation": true,
+    "generation": 16,
+    "baseline_generation": 15,
+    "ime_window_visible": false,
+    "focus_cycle": 0
+   },
+   "focused_screenshot": "files/visual/c_rgQwfAGEewRlXo9eIezU1p0j39VsSDxFmZmIPWOycvo/focused.png",
+   "focused_field_bounds": [
+    130,
+    150,
+    497,
+    232
+   ],
+   "wrong_field": false,
+   "prior_text_length": 0,
+   "visible_field_text": ")el Jerusalem Bnei Herzliyd",
+   "ocr_verify_attempt": 2,
+   "post_field_bounds": [
+    130,
+    150,
+    497,
+    232
+   ],
+   "observed_text": "Hapoel Jerusalem Bnei Herzliya",
+   "exact_input_match": true,
+   "visual_text_match": false,
+   "bounds_unchanged": true,
+   "focus_session_fresh": true,
+   "ocr_gate": "SOFT_SUPPORTING",
+   "ocr_soft_pass": true,
+   "detail": "Exact editor value verified; OCR supporting evidence imperfect but field/focus gates held",
+   "ended_at_ms": 1790295380805,
+   "duration_ms": 5597
+  },
+  "search_result_fixtures": [
+   {
+    "code": "ba7ffeb9",
+    "home": "Hapoel Jerusalem",
+    "away": "Bnei Herzliya",
+    "fixture_name": "Hapoel Jerusalem v Bnei Herzliya",
+    "exact_fixture_text": "Home Hapoel Jerusalem\nAway Bnei Herzliya",
+    "competition": "Basketball Casino",
+    "bounds": [
+     21,
+     397,
+     480,
+     424
+    ]
+   }
+  ],
+  "search_ocr_readback": "01:16 Ca l 100% | 2o bet365.com/#/AX/K? + 51 | Q Hapoel Jerusalem Bnei Herzliya X Close | Basketball Casino | Hapoel Jerusalem vs Bnei Herzliya > | Hapoel Jerusalem vs Bnei 1 2 | Herzliya | -9.5 1.83 +9.5 1.83 | Fri 25 Sep 12:00 | (o) | Home All Sports In-Play My Bets Casino",
+  "verified_fixture": {
+   "code": "ba7ffeb9",
+   "home": "Hapoel Jerusalem",
+   "away": "Bnei Herzliya",
+   "fixture_name": "Hapoel Jerusalem v Bnei Herzliya",
+   "exact_fixture_text": "Home Hapoel Jerusalem\nAway Bnei Herzliya",
+   "competition": "Basketball Casino",
+   "bounds": [
+    21,
+    397,
+    480,
+    424
+   ]
+  },
+  "fixture_home": "Hapoel Jerusalem",
+  "fixture_away": "Bnei Herzliya",
+  "discovery_query": "Hapoel Jerusalem Bnei Herzliya",
+  "identity_verified_home": "Hapoel Jerusalem",
+  "identity_verified_away": "Bnei Herzliya",
+  "discovered_fixtures": [
+   {
+    "code": "ba7ffeb9",
+    "home": "Hapoel Jerusalem",
+    "away": "Bnei Herzliya",
+    "fixture_name": "Hapoel Jerusalem v Bnei Herzliya",
+    "exact_fixture_text": "Home Hapoel Jerusalem\nAway Bnei Herzliya",
+    "competition": "Basketball Casino",
+    "bounds": [
+     21,
+     397,
+     480,
+     424
+    ]
+   }
+  ],
+  "sport_observed": "basketball",
+  "fixture": {
+   "code": "ba7ffeb9",
+   "home": "Hapoel Jerusalem",
+   "away": "Bnei Herzliya",
+   "fixture_name": "Hapoel Jerusalem v Bnei Herzliya",
+   "exact_fixture_text": "Home Hapoel Jerusalem\nAway Bnei Herzliya",
+   "competition": "Basketball Casino",
+   "bounds": [
+    21,
+    397,
+    480,
+    424
+   ]
+  },
+  "event_verified": true,
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/-9.5@1.83",
+     "SPREAD/AWAY/+9.5@1.83",
+     "TOTAL/OVER/177.5@1.83",
+     "TOTAL/UNDER/177.5@1.83",
+     "MONEYLINE/HOME/NONE@1.20",
+     "MONEYLINE/AWAY/NONE@4.20"
+    ],
+    "notes": []
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/-9.5@1.83",
+    "SPREAD/AWAY/+9.5@1.83",
+    "TOTAL/OVER/177.5@1.83",
+    "TOTAL/UNDER/177.5@1.83",
+    "MONEYLINE/HOME/NONE@1.20",
+    "MONEYLINE/AWAY/NONE@4.20"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-9.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Hapoel Jerusalem",
+    "bounds": [
+     301,
+     655,
+     344,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "+9.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Bnei Herzliya",
+    "bounds": [
+     301,
+     740,
+     344,
+     790
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "177.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     436,
+     653,
+     511,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "177.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     452,
+     736,
+     512,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "1.20",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Hapoel Jerusalem",
+    "bounds": [
+     604,
+     672,
+     648,
+     689
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "4.20",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Bnei Herzliya",
+    "bounds": [
+     602,
+     757,
+     648,
+     774
+    ]
+   }
+  ],
+  "selection_role": "HOME",
+  "selection_name": "Hapoel Jerusalem",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-9.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Hapoel Jerusalem",
+   "bounds": [
+    301,
+    655,
+    344,
+    705
+   ]
+  },
+  "selection_preflight": "reused clean grid read",
+  "stake_keypad": {
+   "zero": [
+    360,
+    1250
+   ],
+   "dot": [
+    117,
+    1250
+   ]
+  },
+  "stake_field_state": "EMPTY",
+  "stake_check_typed": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "stake_entered": "0.10",
+  "stake_check_final": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "ready_state": {
+   "fixture_home": "Hapoel Jerusalem",
+   "fixture_away": "Bnei Herzliya",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Hapoel Jerusalem",
+   "line": "-9.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "final_state": {
+   "home": "Hapoel Jerusalem",
+   "away": "Bnei Herzliya",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-9.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "confirmation_gate": "NONE",
+  "prepare_frame": "reused verified final frame",
+  "stake_check_prepare": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Hapoel Jerusalem v Bnei Herzliya",
+   "fixture_home": "Hapoel Jerusalem",
+   "fixture_away": "Bnei Herzliya",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Hapoel Jerusalem",
+   "line": "-9.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "minimum_price": "1.50",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    20,
+    1293,
+    604,
+    1319
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     20,
+     1293,
+     604,
+     1319
+    ],
+    "center_x": 312,
+    "center_y": 1306,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790295393699,
+   "validation_hash": "a0b89746908e2ac4e12c5d38f18260e7"
+  },
+  "prepared_gesture": {
+   "type": "tap",
+   "target": "Place Bet",
+   "package": "com.android.chrome",
+   "bounds": [
+    20,
+    1293,
+    604,
+    1319
+   ],
+   "center_x": 312,
+   "center_y": 1306,
+   "duration_ms": 100,
+   "dispatched": false
+  },
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "held": true,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 30910
+ },
+ "wall": 31.324824810028076
+}

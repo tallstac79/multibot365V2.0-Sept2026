@@ -1,0 +1,486 @@
+{
+ "payload": {
+  "instruction_id": "sopron-011657",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Soproni KC||Debreceni EAC",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "-1.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21170159/D19/E26748278/F19/I0/",
+  "kickoff_utc": "2026-09-25T17:00"
+ },
+ "result": {
+  "instruction_id": "sopron-011657",
+  "status": "FAIL",
+  "stage": "TARGET_NOT_FOUND",
+  "detail": "No live selection for SPREAD/AWAY/-1.5",
+  "duration_ms": 6059,
+  "progress": {
+   "stage": "READ_SELECTION",
+   "elapsed_ms": 5945,
+   "last_progress_at_ms": 1790295424288,
+   "instruction_id": "sopron-011657",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790295418356
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 13,
+     "at_ms": 1790295418362
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 19,
+     "at_ms": 1790295418372,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 19,
+      "start_ts_ms": 1790295418364,
+      "end_elapsed_ms": 5377,
+      "end_ts_ms": 1790295423722,
+      "duration_ms": 5358,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3463,
+     "at_ms": 1790295418372
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3677,
+     "at_ms": 1790295418372
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4600,
+     "at_ms": 1790295418372
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5205,
+     "at_ms": 1790295418372
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5377,
+     "at_ms": 1790295423728,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 5377,
+      "start_ts_ms": 1790295423722,
+      "end_elapsed_ms": 5933,
+      "end_ts_ms": 1790295424278,
+      "duration_ms": 556,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5385,
+     "at_ms": 1790295423728
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5899,
+     "at_ms": 1790295423728
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 5933,
+     "at_ms": 1790295424288,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 5933,
+      "start_ts_ms": 1790295424278,
+      "end_elapsed_ms": 5944,
+      "end_ts_ms": 1790295424289,
+      "duration_ms": 11,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 5945,
+     "at_ms": 1790295424288
+    }
+   ]
+  },
+  "device_stage": "READ_SELECTION",
+  "execution_count": 1,
+  "run_id": "c_KTGSCDYhLzRPjj0-8v9cdCsQjnHHm3ADlGyfOxwEQOw",
+  "fixture_name": "Sopron KC v DEAC Debreceni",
+  "home": "Sopron KC",
+  "away": "DEAC Debreceni",
+  "competition": "Hungary NB 1.A • 25 Sep 18:00",
+  "verification_detail": "No live selection for SPREAD/AWAY/-1.5",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 19,
+    "start_ts_ms": 1790295418364,
+    "end_elapsed_ms": 5377,
+    "end_ts_ms": 1790295423722,
+    "duration_ms": 5358,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5377,
+    "start_ts_ms": 1790295423722,
+    "end_elapsed_ms": 5933,
+    "end_ts_ms": 1790295424278,
+    "duration_ms": 556,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5933,
+    "start_ts_ms": 1790295424278,
+    "end_elapsed_ms": 5944,
+    "end_ts_ms": 1790295424289,
+    "duration_ms": 11,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "identity": {
+   "verdict": "ALIAS_MATCH",
+   "reason": "both teams via aliases",
+   "home": {
+    "feed": "Soproni KC",
+    "bookmaker": "Sopron KC",
+    "level": "ALIAS",
+    "score": 1,
+    "note": "registry alias"
+   },
+   "away": {
+    "feed": "Debreceni EAC",
+    "bookmaker": "DEAC Debreceni",
+    "level": "ALIAS",
+    "score": 1,
+    "note": "registry alias"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "ALIAS_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21170159/D19/E26748278/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_KTGSCDYhLzRPjj0-8v9cdCsQjnHHm3ADlGyfOxwEQOw",
+  "adapter": "live_bet365",
+  "status": "TARGET_NOT_FOUND",
+  "phase": "FINISHED",
+  "started_at_ms": 1790295418345,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 1,
+    "wall_ts_ms": 1790295418345
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 13,
+    "wall_ts_ms": 1790295418357
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 19,
+    "wall_ts_ms": 1790295418364
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3463,
+    "wall_ts_ms": 1790295421808
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3677,
+    "wall_ts_ms": 1790295422022
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 4600,
+    "wall_ts_ms": 1790295422945
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5205,
+    "wall_ts_ms": 1790295423551
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 5377,
+    "wall_ts_ms": 1790295423722
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 5385,
+    "wall_ts_ms": 1790295423729
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 5899,
+    "wall_ts_ms": 1790295424243
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 5933,
+    "wall_ts_ms": 1790295424278
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 5945,
+    "wall_ts_ms": 1790295424289
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png",
+   "s003_markets.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 19,
+    "start_ts_ms": 1790295418364,
+    "end_elapsed_ms": 5377,
+    "end_ts_ms": 1790295423722,
+    "duration_ms": 5358,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5377,
+    "start_ts_ms": 1790295423722,
+    "end_elapsed_ms": 5933,
+    "end_ts_ms": 1790295424278,
+    "duration_ms": 556,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5933,
+    "start_ts_ms": 1790295424278,
+    "end_elapsed_ms": 5944,
+    "end_ts_ms": 1790295424289,
+    "duration_ms": 11,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Soproni KC",
+  "identity_home": "Soproni KC",
+  "expected_away": "Debreceni EAC",
+  "identity_away": "Debreceni EAC",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21170159/D19/E26748278/F19/I0/",
+  "current_stage": "READ_SELECTION",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Hungary NB 1.A • 25 Sep 18:00",
+   "Sopron KC vs DEAC Debreceni v",
+   "Popular Bet Builder Game Team Quarter H A"
+  ],
+  "identity": {
+   "verdict": "ALIAS_MATCH",
+   "reason": "both teams via aliases",
+   "home": {
+    "feed": "Soproni KC",
+    "bookmaker": "Sopron KC",
+    "level": "ALIAS",
+    "score": 1,
+    "note": "registry alias"
+   },
+   "away": {
+    "feed": "Debreceni EAC",
+    "bookmaker": "DEAC Debreceni",
+    "level": "ALIAS",
+    "score": 1,
+    "note": "registry alias"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "ALIAS_MATCH",
+  "route": "event_link",
+  "kickoff_verified": "25 Sep 18:00",
+  "verified_fixture": {
+   "code": "fb602795",
+   "home": "Sopron KC",
+   "away": "DEAC Debreceni",
+   "fixture_name": "Sopron KC v DEAC Debreceni",
+   "exact_fixture_text": "Home Sopron KC\nAway DEAC Debreceni",
+   "competition": "Hungary NB 1.A • 25 Sep 18:00",
+   "bounds": [
+    35,
+    268,
+    691,
+    436
+   ]
+  },
+  "fixture_home": "Sopron KC",
+  "fixture_away": "DEAC Debreceni",
+  "identity_verified_home": "Soproni KC",
+  "identity_verified_away": "Debreceni EAC",
+  "event_verified": true,
+  "fixture": {
+   "code": "fb602795",
+   "home": "Sopron KC",
+   "away": "DEAC Debreceni",
+   "fixture_name": "Sopron KC v DEAC Debreceni",
+   "exact_fixture_text": "Home Sopron KC\nAway DEAC Debreceni",
+   "competition": "Hungary NB 1.A • 25 Sep 18:00",
+   "bounds": [
+    35,
+    268,
+    691,
+    436
+   ]
+  },
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/+3.5@1.83",
+     "SPREAD/AWAY/-3.5@1.83",
+     "TOTAL/OVER/162.5@1.83",
+     "TOTAL/UNDER/162.5@1.83",
+     "MONEYLINE/HOME/NONE@2.22",
+     "MONEYLINE/AWAY/NONE@1.58"
+    ],
+    "notes": []
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/+3.5@1.83",
+    "SPREAD/AWAY/-3.5@1.83",
+    "TOTAL/OVER/162.5@1.83",
+    "TOTAL/UNDER/162.5@1.83",
+    "MONEYLINE/HOME/NONE@2.22",
+    "MONEYLINE/AWAY/NONE@1.58"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "+3.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sopron KC",
+    "bounds": [
+     301,
+     655,
+     344,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "-3.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "DEAC Debreceni",
+    "bounds": [
+     301,
+     740,
+     345,
+     790
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "162.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     436,
+     653,
+     510,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "162.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     452,
+     737,
+     512,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "2.22",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sopron KC",
+    "bounds": [
+     603,
+     672,
+     648,
+     689
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "1.58",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "DEAC Debreceni",
+    "bounds": [
+     604,
+     757,
+     648,
+     774
+    ]
+   }
+  ],
+  "detail": "No live selection for SPREAD/AWAY/-1.5",
+  "duration_ms": 5945
+ },
+ "wall": 6.0721681118011475
+}

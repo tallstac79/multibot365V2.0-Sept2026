@@ -1,0 +1,1166 @@
+{
+ "payload": {
+  "instruction_id": "kyoto-011521",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Kyoto Hannaryz||Shiga Lake Stars",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-4.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737823/F19/I0/",
+  "kickoff_utc": "2026-09-25T09:35"
+ },
+ "result": {
+  "instruction_id": "kyoto-011521",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 10508,
+  "progress": {
+   "stage": "PREPARE_COMPLETE_EXECUTION",
+   "elapsed_ms": 10346,
+   "last_progress_at_ms": 1790295333077,
+   "instruction_id": "kyoto-011521",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790295322799
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 13,
+     "at_ms": 1790295322806
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 21,
+     "at_ms": 1790295322816,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 21,
+      "start_ts_ms": 1790295322809,
+      "end_elapsed_ms": 4092,
+      "end_ts_ms": 1790295326879,
+      "duration_ms": 4071,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3449,
+     "at_ms": 1790295322816
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4019,
+     "at_ms": 1790295322816
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4092,
+     "at_ms": 1790295326887,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 4092,
+      "start_ts_ms": 1790295326879,
+      "end_elapsed_ms": 4723,
+      "end_ts_ms": 1790295327510,
+      "duration_ms": 631,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4102,
+     "at_ms": 1790295326887
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4684,
+     "at_ms": 1790295326887
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 4723,
+     "at_ms": 1790295327522,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 4723,
+      "start_ts_ms": 1790295327510,
+      "end_elapsed_ms": 4737,
+      "end_ts_ms": 1790295327524,
+      "duration_ms": 14,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 4737,
+     "at_ms": 1790295327537,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 4737,
+      "start_ts_ms": 1790295327524,
+      "end_elapsed_ms": 4751,
+      "end_ts_ms": 1790295327539,
+      "duration_ms": 14,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 4751,
+     "at_ms": 1790295327556,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 4751,
+      "start_ts_ms": 1790295327539,
+      "end_elapsed_ms": 4770,
+      "end_ts_ms": 1790295327557,
+      "duration_ms": 19,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 4770,
+     "at_ms": 1790295327570,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 4770,
+      "start_ts_ms": 1790295327557,
+      "end_elapsed_ms": 5554,
+      "end_ts_ms": 1790295328342,
+      "duration_ms": 784,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 4784,
+     "at_ms": 1790295327570
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 5554,
+     "at_ms": 1790295328377,
+     "timing": {
+      "stage": "ENTER_STAKE",
+      "start_elapsed_ms": 5554,
+      "start_ts_ms": 1790295328342,
+      "end_elapsed_ms": 9570,
+      "end_ts_ms": 1790295332358,
+      "duration_ms": 4016,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 5592,
+     "at_ms": 1790295328377
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 6124,
+     "at_ms": 1790295328377
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 6258,
+     "at_ms": 1790295328377
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 6984,
+     "at_ms": 1790295328377
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7496,
+     "at_ms": 1790295328377
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7554,
+     "at_ms": 1790295328377
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7827,
+     "at_ms": 1790295328377
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8112,
+     "at_ms": 1790295328377
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8405,
+     "at_ms": 1790295328377
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8704,
+     "at_ms": 1790295328377
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9211,
+     "at_ms": 1790295328377
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9295,
+     "at_ms": 1790295328377
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 9570,
+     "at_ms": 1790295332392,
+     "timing": {
+      "stage": "VERIFY_FINAL_STATE",
+      "start_elapsed_ms": 9570,
+      "start_ts_ms": 1790295332358,
+      "end_elapsed_ms": 10269,
+      "end_ts_ms": 1790295333056,
+      "duration_ms": 699,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 9605,
+     "at_ms": 1790295332392
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 10123,
+     "at_ms": 1790295332392
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 10269,
+     "at_ms": 1790295333077,
+     "timing": {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "start_elapsed_ms": 10269,
+      "start_ts_ms": 1790295333056,
+      "end_elapsed_ms": 10346,
+      "end_ts_ms": 1790295333133,
+      "duration_ms": 77,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 10346,
+     "at_ms": 1790295333077
+    }
+   ]
+  },
+  "device_stage": "PREPARE_COMPLETE_EXECUTION",
+  "execution_count": 1,
+  "run_id": "c_657We3FVyivxHHOI0hU6BetneHhhcu8SqRvFGLnT8Tk",
+  "fixture_name": "Kyoto Hannaryz v Shiga Lakes",
+  "home": "Kyoto Hannaryz",
+  "away": "Shiga Lakes",
+  "competition": "Japan B League 1 25 Sep 10:35",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-4.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Kyoto Hannaryz",
+   "bounds": [
+    301,
+    655,
+    345,
+    705
+   ]
+  },
+  "final_state": {
+   "home": "Kyoto Hannaryz",
+   "away": "Shiga Lakes",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-4.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "ready_state": {
+   "fixture_home": "Kyoto Hannaryz",
+   "fixture_away": "Shiga Lakes",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Kyoto Hannaryz",
+   "line": "-4.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Kyoto Hannaryz v Shiga Lakes",
+   "fixture_home": "Kyoto Hannaryz",
+   "fixture_away": "Shiga Lakes",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Kyoto Hannaryz",
+   "line": "-4.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "minimum_price": "1.50",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    20,
+    1160,
+    603,
+    1186
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     20,
+     1160,
+     603,
+     1186
+    ],
+    "center_x": 311.5,
+    "center_y": 1173,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790295333129,
+   "validation_hash": "daced8ece03bb2ff217daa773060b492"
+  },
+  "wager_submitted": false,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "route": "event_link",
+  "held": true,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 21,
+    "start_ts_ms": 1790295322809,
+    "end_elapsed_ms": 4092,
+    "end_ts_ms": 1790295326879,
+    "duration_ms": 4071,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4092,
+    "start_ts_ms": 1790295326879,
+    "end_elapsed_ms": 4723,
+    "end_ts_ms": 1790295327510,
+    "duration_ms": 631,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 4723,
+    "start_ts_ms": 1790295327510,
+    "end_elapsed_ms": 4737,
+    "end_ts_ms": 1790295327524,
+    "duration_ms": 14,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 4737,
+    "start_ts_ms": 1790295327524,
+    "end_elapsed_ms": 4751,
+    "end_ts_ms": 1790295327539,
+    "duration_ms": 14,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 4751,
+    "start_ts_ms": 1790295327539,
+    "end_elapsed_ms": 4770,
+    "end_ts_ms": 1790295327557,
+    "duration_ms": 19,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 4770,
+    "start_ts_ms": 1790295327557,
+    "end_elapsed_ms": 5554,
+    "end_ts_ms": 1790295328342,
+    "duration_ms": 784,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 5554,
+    "start_ts_ms": 1790295328342,
+    "end_elapsed_ms": 9570,
+    "end_ts_ms": 1790295332358,
+    "duration_ms": 4016,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 9570,
+    "start_ts_ms": 1790295332358,
+    "end_elapsed_ms": 10269,
+    "end_ts_ms": 1790295333056,
+    "duration_ms": 699,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 10269,
+    "start_ts_ms": 1790295333056,
+    "end_elapsed_ms": 10346,
+    "end_ts_ms": 1790295333133,
+    "duration_ms": 77,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "stake_field_state": "EMPTY",
+  "identity": {
+   "verdict": "ALIAS_MATCH",
+   "reason": "both teams via aliases",
+   "home": {
+    "feed": "Kyoto Hannaryz",
+    "bookmaker": "Kyoto Hannaryz",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "Shiga Lake Stars",
+    "bookmaker": "Shiga Lakes",
+    "level": "ALIAS",
+    "score": 1,
+    "note": "registry alias"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "ALIAS_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737823/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_657We3FVyivxHHOI0hU6BetneHhhcu8SqRvFGLnT8Tk",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790295322788,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 1,
+    "wall_ts_ms": 1790295322788
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 13,
+    "wall_ts_ms": 1790295322800
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 21,
+    "wall_ts_ms": 1790295322809
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3449,
+    "wall_ts_ms": 1790295326237
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 4019,
+    "wall_ts_ms": 1790295326807
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 4092,
+    "wall_ts_ms": 1790295326879
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 4102,
+    "wall_ts_ms": 1790295326890
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 4684,
+    "wall_ts_ms": 1790295327471
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 4723,
+    "wall_ts_ms": 1790295327510
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 4737,
+    "wall_ts_ms": 1790295327524
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 4751,
+    "wall_ts_ms": 1790295327539
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 4770,
+    "wall_ts_ms": 1790295327557
+   },
+   {
+    "effect": "gesture",
+    "target": "SPREAD / HOME / -4.5 / 1.83",
+    "bounds": [
+     301,
+     655,
+     345,
+     705
+    ],
+    "elapsed_ms": 4784
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 4784,
+    "wall_ts_ms": 1790295327571
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 5554,
+    "wall_ts_ms": 1790295328342
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 5592,
+    "wall_ts_ms": 1790295328380
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 6124,
+    "wall_ts_ms": 1790295328913
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     20,
+     1327,
+     214,
+     1371
+    ],
+    "elapsed_ms": 6258
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 6258,
+    "wall_ts_ms": 1790295329046
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 6984,
+    "wall_ts_ms": 1790295329772
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 7496,
+    "wall_ts_ms": 1790295330283
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 7554
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 7554,
+    "wall_ts_ms": 1790295330342
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     87,
+     1228,
+     147,
+     1272
+    ],
+    "elapsed_ms": 7827
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 7827,
+    "wall_ts_ms": 1790295330615
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     87,
+     974,
+     147,
+     1018
+    ],
+    "elapsed_ms": 8111
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8112,
+    "wall_ts_ms": 1790295330899
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 8405
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8405,
+    "wall_ts_ms": 1790295331192
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 8704,
+    "wall_ts_ms": 1790295331492
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 9211,
+    "wall_ts_ms": 1790295331998
+   },
+   {
+    "effect": "gesture",
+    "target": "Done",
+    "bounds": [
+     311,
+     1333,
+     587,
+     1367
+    ],
+    "elapsed_ms": 9295
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 9295,
+    "wall_ts_ms": 1790295332082
+   },
+   {
+    "phase": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 9570,
+    "wall_ts_ms": 1790295332358
+   },
+   {
+    "phase": "CAPTURE_final",
+    "elapsed_ms": 9605,
+    "wall_ts_ms": 1790295332393
+   },
+   {
+    "phase": "CAPTURED_final",
+    "elapsed_ms": 10123,
+    "wall_ts_ms": 1790295332911
+   },
+   {
+    "phase": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 10269,
+    "wall_ts_ms": 1790295333057
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 10346,
+    "wall_ts_ms": 1790295333133
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_markets.png",
+   "s003_betslip_pre_stake.png",
+   "s004_stake_ui.png",
+   "s005_stake_typed.png",
+   "s006_final.png"
+  ],
+  "gesture_attempts": 7,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 21,
+    "start_ts_ms": 1790295322809,
+    "end_elapsed_ms": 4092,
+    "end_ts_ms": 1790295326879,
+    "duration_ms": 4071,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4092,
+    "start_ts_ms": 1790295326879,
+    "end_elapsed_ms": 4723,
+    "end_ts_ms": 1790295327510,
+    "duration_ms": 631,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 4723,
+    "start_ts_ms": 1790295327510,
+    "end_elapsed_ms": 4737,
+    "end_ts_ms": 1790295327524,
+    "duration_ms": 14,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 4737,
+    "start_ts_ms": 1790295327524,
+    "end_elapsed_ms": 4751,
+    "end_ts_ms": 1790295327539,
+    "duration_ms": 14,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 4751,
+    "start_ts_ms": 1790295327539,
+    "end_elapsed_ms": 4770,
+    "end_ts_ms": 1790295327557,
+    "duration_ms": 19,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 4770,
+    "start_ts_ms": 1790295327557,
+    "end_elapsed_ms": 5554,
+    "end_ts_ms": 1790295328342,
+    "duration_ms": 784,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 5554,
+    "start_ts_ms": 1790295328342,
+    "end_elapsed_ms": 9570,
+    "end_ts_ms": 1790295332358,
+    "duration_ms": 4016,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 9570,
+    "start_ts_ms": 1790295332358,
+    "end_elapsed_ms": 10269,
+    "end_ts_ms": 1790295333056,
+    "duration_ms": 699,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 10269,
+    "start_ts_ms": 1790295333056,
+    "end_elapsed_ms": 10346,
+    "end_ts_ms": 1790295333133,
+    "duration_ms": 77,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "search_query": "Kyoto Hannaryz",
+  "identity_home": "Kyoto Hannaryz",
+  "expected_away": "Shiga Lake Stars",
+  "identity_away": "Shiga Lake Stars",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737823/F19/I0/",
+  "current_stage": "PREPARE_COMPLETE_EXECUTION",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Japan B League 1 25 Sep 10:35",
+   "Kyoto Hannaryz vs Shiga Lakes",
+   "Popular Bet Builder Game Team Quarter Half"
+  ],
+  "identity": {
+   "verdict": "ALIAS_MATCH",
+   "reason": "both teams via aliases",
+   "home": {
+    "feed": "Kyoto Hannaryz",
+    "bookmaker": "Kyoto Hannaryz",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "Shiga Lake Stars",
+    "bookmaker": "Shiga Lakes",
+    "level": "ALIAS",
+    "score": 1,
+    "note": "registry alias"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "ALIAS_MATCH",
+  "route": "event_link",
+  "kickoff_verified": "25 Sep 10:35",
+  "verified_fixture": {
+   "code": "d865b1e5",
+   "home": "Kyoto Hannaryz",
+   "away": "Shiga Lakes",
+   "fixture_name": "Kyoto Hannaryz v Shiga Lakes",
+   "exact_fixture_text": "Home Kyoto Hannaryz\nAway Shiga Lakes",
+   "competition": "Japan B League 1 25 Sep 10:35",
+   "bounds": [
+    35,
+    268,
+    657,
+    435
+   ]
+  },
+  "fixture_home": "Kyoto Hannaryz",
+  "fixture_away": "Shiga Lakes",
+  "identity_verified_home": "Kyoto Hannaryz",
+  "identity_verified_away": "Shiga Lake Stars",
+  "event_verified": true,
+  "fixture": {
+   "code": "d865b1e5",
+   "home": "Kyoto Hannaryz",
+   "away": "Shiga Lakes",
+   "fixture_name": "Kyoto Hannaryz v Shiga Lakes",
+   "exact_fixture_text": "Home Kyoto Hannaryz\nAway Shiga Lakes",
+   "competition": "Japan B League 1 25 Sep 10:35",
+   "bounds": [
+    35,
+    268,
+    657,
+    435
+   ]
+  },
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/-4.5@1.83",
+     "SPREAD/AWAY/+4.5@1.83",
+     "TOTAL/OVER/167.5@1.83",
+     "TOTAL/UNDER/167.5@1.83",
+     "MONEYLINE/HOME/NONE@1.47",
+     "MONEYLINE/AWAY/NONE@2.55"
+    ],
+    "notes": []
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/-4.5@1.83",
+    "SPREAD/AWAY/+4.5@1.83",
+    "TOTAL/OVER/167.5@1.83",
+    "TOTAL/UNDER/167.5@1.83",
+    "MONEYLINE/HOME/NONE@1.47",
+    "MONEYLINE/AWAY/NONE@2.55"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-4.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Kyoto Hannaryz",
+    "bounds": [
+     301,
+     655,
+     345,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "+4.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Shiga Lakes",
+    "bounds": [
+     301,
+     740,
+     344,
+     790
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "167.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     436,
+     653,
+     510,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "167.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     452,
+     736,
+     511,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "1.47",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Kyoto Hannaryz",
+    "bounds": [
+     604,
+     672,
+     648,
+     689
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "2.55",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Shiga Lakes",
+    "bounds": [
+     603,
+     757,
+     648,
+     774
+    ]
+   }
+  ],
+  "selection_role": "HOME",
+  "selection_name": "Kyoto Hannaryz",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-4.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Kyoto Hannaryz",
+   "bounds": [
+    301,
+    655,
+    345,
+    705
+   ]
+  },
+  "selection_preflight": "reused clean grid read",
+  "stake_keypad": {
+   "zero": [
+    360,
+    1250
+   ],
+   "dot": [
+    117,
+    1250
+   ]
+  },
+  "stake_field_state": "EMPTY",
+  "stake_check_typed": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "stake_entered": "0.10",
+  "stake_check_final": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "ready_state": {
+   "fixture_home": "Kyoto Hannaryz",
+   "fixture_away": "Shiga Lakes",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Kyoto Hannaryz",
+   "line": "-4.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "final_state": {
+   "home": "Kyoto Hannaryz",
+   "away": "Shiga Lakes",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-4.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "confirmation_gate": "NONE",
+  "prepare_frame": "reused verified final frame",
+  "stake_check_prepare": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Kyoto Hannaryz v Shiga Lakes",
+   "fixture_home": "Kyoto Hannaryz",
+   "fixture_away": "Shiga Lakes",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Kyoto Hannaryz",
+   "line": "-4.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "minimum_price": "1.50",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    20,
+    1160,
+    603,
+    1186
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     20,
+     1160,
+     603,
+     1186
+    ],
+    "center_x": 311.5,
+    "center_y": 1173,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790295333129,
+   "validation_hash": "daced8ece03bb2ff217daa773060b492"
+  },
+  "prepared_gesture": {
+   "type": "tap",
+   "target": "Place Bet",
+   "package": "com.android.chrome",
+   "bounds": [
+    20,
+    1160,
+    603,
+    1186
+   ],
+   "center_x": 311.5,
+   "center_y": 1173,
+   "duration_ms": 100,
+   "dispatched": false
+  },
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "held": true,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 10346
+ },
+ "wall": 10.795178890228271
+}

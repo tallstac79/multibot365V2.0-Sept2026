@@ -1,0 +1,149 @@
+{
+ "payload": {
+  "action": "PLACE_HELD",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-2.5",
+  "selection_name": "Saga Ballooners",
+  "price": "1.83",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "execution_mode": "prepare",
+  "confirmation_status": "APPROVED",
+  "timeout_ms": 60000,
+  "instruction_id": "ptsaga-005246"
+ },
+ "result": {
+  "instruction_id": "ptsaga-005246",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "PRETAP_READY",
+  "duration_ms": 688,
+  "progress": {
+   "stage": "PRETAP_CHECK",
+   "elapsed_ms": 598,
+   "last_progress_at_ms": 1790293980083,
+   "instruction_id": "ptsaga-005246",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790293980074
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 43,
+     "at_ms": 1790293980083
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 53,
+     "at_ms": 1790293980083
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 530,
+     "at_ms": 1790293980083
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 598,
+     "at_ms": 1790293980083
+    }
+   ]
+  },
+  "device_stage": "PRETAP_CHECK",
+  "execution_count": 1,
+  "run_id": "c_7Gpmlyg0kQ-nIFZ0PNEwuwPnTZdpFdUR2-04rb4adIo",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "pretap": {
+   "ok": true,
+   "selection": "Saga Ballooners",
+   "line": "-2.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "stage_timings": [],
+  "t_start_ms": 1790293980075,
+  "t_pretap_done_ms": 1790293980630
+ },
+ "run": {
+  "run_id": "c_7Gpmlyg0kQ-nIFZ0PNEwuwPnTZdpFdUR2-04rb4adIo",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790293980032,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790293980032
+   },
+   {
+    "phase": "PRETAP_CHECK",
+    "elapsed_ms": 43,
+    "wall_ts_ms": 1790293980076
+   },
+   {
+    "phase": "CAPTURE_pretap",
+    "elapsed_ms": 53,
+    "wall_ts_ms": 1790293980086
+   },
+   {
+    "phase": "CAPTURED_pretap",
+    "elapsed_ms": 530,
+    "wall_ts_ms": 1790293980563
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 598,
+    "wall_ts_ms": 1790293980630
+   }
+  ],
+  "screenshots": [
+   "s001_pretap.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [],
+  "t_start_ms": 1790293980075,
+  "stake_check_pretap": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "pretap": {
+   "ok": true,
+   "selection": "Saga Ballooners",
+   "line": "-2.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "t_pretap_done_ms": 1790293980630,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "detail": "PRETAP_READY",
+  "duration_ms": 598
+ },
+ "wall": 1.0339140892028809
+}

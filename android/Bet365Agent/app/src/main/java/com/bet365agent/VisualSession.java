@@ -129,6 +129,13 @@ final class VisualSession {
     CompletableFuture<VisualScreen> capture(String label) { return capture(label,false); }
     VisualControlRunner runner() { return runner; }
     CompletableFuture<VisualScreen> captureTable(String label) { return capture(label,true); }
+    /** Completes once every captured frame's evidence has been written (used before the single Place Bet tap). */
+    CompletableFuture<Void> flushEvidence() {
+        if(!live())return failed("TIMEOUT","Session expired");
+        CompletableFuture<Void> f=future();
+        runner.flush(()->{if(live())f.complete(null);});
+        return f;
+    }
     /** Re-read with Tesseract's enhanced pass (the second opinion after a failed readback), whatever the engine flag. */
     CompletableFuture<VisualScreen> captureEnhanced(String label) {
         if(!live())return failed("TIMEOUT","Session expired");

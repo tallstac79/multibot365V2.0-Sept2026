@@ -1,0 +1,1190 @@
+{
+ "payload": {
+  "instruction_id": "saga-011940",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Saga Ballooners||Hiroshima Dragonflies",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-2.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737826/F19/I0/",
+  "kickoff_utc": "2026-09-25T09:45"
+ },
+ "result": {
+  "instruction_id": "saga-011940",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 11176,
+  "progress": {
+   "stage": "PREPARE_COMPLETE_EXECUTION",
+   "elapsed_ms": 11030,
+   "last_progress_at_ms": 1790295592407,
+   "instruction_id": "saga-011940",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790295581434
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 18,
+     "at_ms": 1790295581442
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 26,
+     "at_ms": 1790295581451,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 26,
+      "start_ts_ms": 1790295581444,
+      "end_elapsed_ms": 5254,
+      "end_ts_ms": 1790295586672,
+      "duration_ms": 5228,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3494,
+     "at_ms": 1790295581451
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3718,
+     "at_ms": 1790295581451
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4636,
+     "at_ms": 1790295581451
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5190,
+     "at_ms": 1790295581451
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5254,
+     "at_ms": 1790295586676,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 5254,
+      "start_ts_ms": 1790295586672,
+      "end_elapsed_ms": 5867,
+      "end_ts_ms": 1790295587284,
+      "duration_ms": 613,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5259,
+     "at_ms": 1790295586676
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5833,
+     "at_ms": 1790295586676
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 5867,
+     "at_ms": 1790295587290,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 5867,
+      "start_ts_ms": 1790295587284,
+      "end_elapsed_ms": 5873,
+      "end_ts_ms": 1790295587291,
+      "duration_ms": 6,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 5873,
+     "at_ms": 1790295587297,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 5873,
+      "start_ts_ms": 1790295587291,
+      "end_elapsed_ms": 5880,
+      "end_ts_ms": 1790295587297,
+      "duration_ms": 7,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 5880,
+     "at_ms": 1790295587303,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 5880,
+      "start_ts_ms": 1790295587297,
+      "end_elapsed_ms": 5887,
+      "end_ts_ms": 1790295587304,
+      "duration_ms": 7,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 5887,
+     "at_ms": 1790295587310,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 5887,
+      "start_ts_ms": 1790295587304,
+      "end_elapsed_ms": 6656,
+      "end_ts_ms": 1790295588074,
+      "duration_ms": 769,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 5894,
+     "at_ms": 1790295587310
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 6656,
+     "at_ms": 1790295588095,
+     "timing": {
+      "stage": "ENTER_STAKE",
+      "start_elapsed_ms": 6656,
+      "start_ts_ms": 1790295588074,
+      "end_elapsed_ms": 10418,
+      "end_ts_ms": 1790295591836,
+      "duration_ms": 3762,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 6680,
+     "at_ms": 1790295588095
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7179,
+     "at_ms": 1790295588095
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7268,
+     "at_ms": 1790295588095
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7996,
+     "at_ms": 1790295588095
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8456,
+     "at_ms": 1790295588095
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8493,
+     "at_ms": 1790295588095
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8756,
+     "at_ms": 1790295588095
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9041,
+     "at_ms": 1790295588095
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9332,
+     "at_ms": 1790295588095
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9617,
+     "at_ms": 1790295588095
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 10081,
+     "at_ms": 1790295588095
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 10150,
+     "at_ms": 1790295588095
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 10418,
+     "at_ms": 1790295591859,
+     "timing": {
+      "stage": "VERIFY_FINAL_STATE",
+      "start_elapsed_ms": 10418,
+      "start_ts_ms": 1790295591836,
+      "end_elapsed_ms": 10980,
+      "end_ts_ms": 1790295592397,
+      "duration_ms": 562,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 10444,
+     "at_ms": 1790295591859
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 10919,
+     "at_ms": 1790295591859
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 10980,
+     "at_ms": 1790295592407,
+     "timing": {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "start_elapsed_ms": 10980,
+      "start_ts_ms": 1790295592397,
+      "end_elapsed_ms": 11029,
+      "end_ts_ms": 1790295592447,
+      "duration_ms": 49,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 11030,
+     "at_ms": 1790295592407
+    }
+   ]
+  },
+  "device_stage": "PREPARE_COMPLETE_EXECUTION",
+  "execution_count": 1,
+  "run_id": "c_VuHvJ4_55ZN7GqnYFV1AnywC-JvIvyb8ToODZhUfkPk",
+  "fixture_name": "Saga Ballooners v Hiroshima Dragonflies",
+  "home": "Saga Ballooners",
+  "away": "Hiroshima Dragonflies",
+  "competition": "Japan B League 125 Sep 10:45",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-2.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Saga Ballooners",
+   "bounds": [
+    301,
+    655,
+    344,
+    705
+   ]
+  },
+  "final_state": {
+   "home": "Saga Ballooners",
+   "away": "Hiroshima Dragonflies",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-2.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "ready_state": {
+   "fixture_home": "Saga Ballooners",
+   "fixture_away": "Hiroshima Dragonflies",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Saga Ballooners",
+   "line": "-2.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Saga Ballooners v Hiroshima Dragonflies",
+   "fixture_home": "Saga Ballooners",
+   "fixture_away": "Hiroshima Dragonflies",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Saga Ballooners",
+   "line": "-2.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "minimum_price": "1.50",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    20,
+    1122,
+    604,
+    1148
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     20,
+     1122,
+     604,
+     1148
+    ],
+    "center_x": 312,
+    "center_y": 1135,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790295592443,
+   "validation_hash": "87a98083ab7d24192c7bb5ae78870ff3"
+  },
+  "wager_submitted": false,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "route": "event_link",
+  "held": true,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 26,
+    "start_ts_ms": 1790295581444,
+    "end_elapsed_ms": 5254,
+    "end_ts_ms": 1790295586672,
+    "duration_ms": 5228,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5254,
+    "start_ts_ms": 1790295586672,
+    "end_elapsed_ms": 5867,
+    "end_ts_ms": 1790295587284,
+    "duration_ms": 613,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5867,
+    "start_ts_ms": 1790295587284,
+    "end_elapsed_ms": 5873,
+    "end_ts_ms": 1790295587291,
+    "duration_ms": 6,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 5873,
+    "start_ts_ms": 1790295587291,
+    "end_elapsed_ms": 5880,
+    "end_ts_ms": 1790295587297,
+    "duration_ms": 7,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 5880,
+    "start_ts_ms": 1790295587297,
+    "end_elapsed_ms": 5887,
+    "end_ts_ms": 1790295587304,
+    "duration_ms": 7,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 5887,
+    "start_ts_ms": 1790295587304,
+    "end_elapsed_ms": 6656,
+    "end_ts_ms": 1790295588074,
+    "duration_ms": 769,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 6656,
+    "start_ts_ms": 1790295588074,
+    "end_elapsed_ms": 10418,
+    "end_ts_ms": 1790295591836,
+    "duration_ms": 3762,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 10418,
+    "start_ts_ms": 1790295591836,
+    "end_elapsed_ms": 10980,
+    "end_ts_ms": 1790295592397,
+    "duration_ms": 562,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 10980,
+    "start_ts_ms": 1790295592397,
+    "end_elapsed_ms": 11029,
+    "end_ts_ms": 1790295592447,
+    "duration_ms": 49,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "stake_field_state": "EMPTY",
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "Saga Ballooners",
+    "bookmaker": "Saga Ballooners",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "Hiroshima Dragonflies",
+    "bookmaker": "Hiroshima Dragonflies",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": false,
+   "kickoff_agrees": false,
+   "reversed": false
+  },
+  "identity_verdict": "EXACT",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737826/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_VuHvJ4_55ZN7GqnYFV1AnywC-JvIvyb8ToODZhUfkPk",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790295581417,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790295581417
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 18,
+    "wall_ts_ms": 1790295581435
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 26,
+    "wall_ts_ms": 1790295581445
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3494,
+    "wall_ts_ms": 1790295584913
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3718,
+    "wall_ts_ms": 1790295585135
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 4636,
+    "wall_ts_ms": 1790295586055
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5190,
+    "wall_ts_ms": 1790295586609
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 5254,
+    "wall_ts_ms": 1790295586672
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 5259,
+    "wall_ts_ms": 1790295586676
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 5833,
+    "wall_ts_ms": 1790295587250
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 5867,
+    "wall_ts_ms": 1790295587284
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 5873,
+    "wall_ts_ms": 1790295587291
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 5880,
+    "wall_ts_ms": 1790295587297
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 5887,
+    "wall_ts_ms": 1790295587304
+   },
+   {
+    "effect": "gesture",
+    "target": "SPREAD / HOME / -2.5 / 1.83",
+    "bounds": [
+     301,
+     655,
+     344,
+     705
+    ],
+    "elapsed_ms": 5894
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 5894,
+    "wall_ts_ms": 1790295587311
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 6656,
+    "wall_ts_ms": 1790295588075
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 6680,
+    "wall_ts_ms": 1790295588097
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 7179,
+    "wall_ts_ms": 1790295588598
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     20,
+     1327,
+     214,
+     1371
+    ],
+    "elapsed_ms": 7268
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 7268,
+    "wall_ts_ms": 1790295588686
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 7996,
+    "wall_ts_ms": 1790295589414
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 8456,
+    "wall_ts_ms": 1790295589874
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 8493
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8493,
+    "wall_ts_ms": 1790295589910
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     87,
+     1228,
+     147,
+     1272
+    ],
+    "elapsed_ms": 8756
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8756,
+    "wall_ts_ms": 1790295590175
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     87,
+     974,
+     147,
+     1018
+    ],
+    "elapsed_ms": 9041
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 9041,
+    "wall_ts_ms": 1790295590459
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 9332
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 9332,
+    "wall_ts_ms": 1790295590750
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 9617,
+    "wall_ts_ms": 1790295591035
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 10081,
+    "wall_ts_ms": 1790295591499
+   },
+   {
+    "effect": "gesture",
+    "target": "Done",
+    "bounds": [
+     311,
+     1331,
+     587,
+     1368
+    ],
+    "elapsed_ms": 10150
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 10150,
+    "wall_ts_ms": 1790295591568
+   },
+   {
+    "phase": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 10418,
+    "wall_ts_ms": 1790295591836
+   },
+   {
+    "phase": "CAPTURE_final",
+    "elapsed_ms": 10444,
+    "wall_ts_ms": 1790295591861
+   },
+   {
+    "phase": "CAPTURED_final",
+    "elapsed_ms": 10919,
+    "wall_ts_ms": 1790295592336
+   },
+   {
+    "phase": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 10980,
+    "wall_ts_ms": 1790295592398
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 11030,
+    "wall_ts_ms": 1790295592447
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png",
+   "s003_markets.png",
+   "s004_betslip_pre_stake.png",
+   "s005_stake_ui.png",
+   "s006_stake_typed.png",
+   "s007_final.png"
+  ],
+  "gesture_attempts": 7,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 26,
+    "start_ts_ms": 1790295581444,
+    "end_elapsed_ms": 5254,
+    "end_ts_ms": 1790295586672,
+    "duration_ms": 5228,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5254,
+    "start_ts_ms": 1790295586672,
+    "end_elapsed_ms": 5867,
+    "end_ts_ms": 1790295587284,
+    "duration_ms": 613,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5867,
+    "start_ts_ms": 1790295587284,
+    "end_elapsed_ms": 5873,
+    "end_ts_ms": 1790295587291,
+    "duration_ms": 6,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 5873,
+    "start_ts_ms": 1790295587291,
+    "end_elapsed_ms": 5880,
+    "end_ts_ms": 1790295587297,
+    "duration_ms": 7,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 5880,
+    "start_ts_ms": 1790295587297,
+    "end_elapsed_ms": 5887,
+    "end_ts_ms": 1790295587304,
+    "duration_ms": 7,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 5887,
+    "start_ts_ms": 1790295587304,
+    "end_elapsed_ms": 6656,
+    "end_ts_ms": 1790295588074,
+    "duration_ms": 769,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 6656,
+    "start_ts_ms": 1790295588074,
+    "end_elapsed_ms": 10418,
+    "end_ts_ms": 1790295591836,
+    "duration_ms": 3762,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 10418,
+    "start_ts_ms": 1790295591836,
+    "end_elapsed_ms": 10980,
+    "end_ts_ms": 1790295592397,
+    "duration_ms": 562,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 10980,
+    "start_ts_ms": 1790295592397,
+    "end_elapsed_ms": 11029,
+    "end_ts_ms": 1790295592447,
+    "duration_ms": 49,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "search_query": "Saga Ballooners",
+  "identity_home": "Saga Ballooners",
+  "expected_away": "Hiroshima Dragonflies",
+  "identity_away": "Hiroshima Dragonflies",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737826/F19/I0/",
+  "current_stage": "PREPARE_COMPLETE_EXECUTION",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Japan B League 125 Sep 10:45",
+   "Saga Ballooners vs Hiroshima Dragonflies V",
+   "Popular Bet Builder Game Team Quarter"
+  ],
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "Saga Ballooners",
+    "bookmaker": "Saga Ballooners",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "Hiroshima Dragonflies",
+    "bookmaker": "Hiroshima Dragonflies",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": false,
+   "kickoff_agrees": false,
+   "reversed": false
+  },
+  "identity_verdict": "EXACT",
+  "route": "event_link",
+  "kickoff_verified": "not shown (in-play or unread)",
+  "verified_fixture": {
+   "code": "a127ae1b",
+   "home": "Saga Ballooners",
+   "away": "Hiroshima Dragonflies",
+   "fixture_name": "Saga Ballooners v Hiroshima Dragonflies",
+   "exact_fixture_text": "Home Saga Ballooners\nAway Hiroshima Dragonflies",
+   "competition": "Japan B League 125 Sep 10:45",
+   "bounds": [
+    35,
+    266,
+    660,
+    435
+   ]
+  },
+  "fixture_home": "Saga Ballooners",
+  "fixture_away": "Hiroshima Dragonflies",
+  "identity_verified_home": "Saga Ballooners",
+  "identity_verified_away": "Hiroshima Dragonflies",
+  "event_verified": true,
+  "fixture": {
+   "code": "a127ae1b",
+   "home": "Saga Ballooners",
+   "away": "Hiroshima Dragonflies",
+   "fixture_name": "Saga Ballooners v Hiroshima Dragonflies",
+   "exact_fixture_text": "Home Saga Ballooners\nAway Hiroshima Dragonflies",
+   "competition": "Japan B League 125 Sep 10:45",
+   "bounds": [
+    35,
+    266,
+    660,
+    435
+   ]
+  },
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/-2.5@1.83",
+     "SPREAD/AWAY/+2.5@1.83",
+     "TOTAL/OVER/164.5@1.83",
+     "TOTAL/UNDER/164.5@1.83",
+     "MONEYLINE/HOME/NONE@1.64",
+     "MONEYLINE/AWAY/NONE@2.12"
+    ],
+    "notes": [
+     "rows by position (grid labels truncated or unread)"
+    ]
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/-2.5@1.83",
+    "SPREAD/AWAY/+2.5@1.83",
+    "TOTAL/OVER/164.5@1.83",
+    "TOTAL/UNDER/164.5@1.83",
+    "MONEYLINE/HOME/NONE@1.64",
+    "MONEYLINE/AWAY/NONE@2.12"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-2.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Saga Ballooners",
+    "bounds": [
+     301,
+     655,
+     344,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "+2.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Hiroshima Dragonflies",
+    "bounds": [
+     301,
+     740,
+     344,
+     790
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "164.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     452,
+     655,
+     512,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "164.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     452,
+     736,
+     511,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "1.64",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Saga Ballooners",
+    "bounds": [
+     604,
+     672,
+     649,
+     689
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "2.12",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Hiroshima Dragonflies",
+    "bounds": [
+     603,
+     757,
+     648,
+     774
+    ]
+   }
+  ],
+  "selection_role": "HOME",
+  "selection_name": "Saga Ballooners",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-2.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Saga Ballooners",
+   "bounds": [
+    301,
+    655,
+    344,
+    705
+   ]
+  },
+  "selection_preflight": "reused clean grid read",
+  "stake_keypad": {
+   "zero": [
+    360,
+    1250
+   ],
+   "dot": [
+    117,
+    1250
+   ]
+  },
+  "stake_field_state": "EMPTY",
+  "stake_check_typed": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "stake_entered": "0.10",
+  "stake_check_final": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "ready_state": {
+   "fixture_home": "Saga Ballooners",
+   "fixture_away": "Hiroshima Dragonflies",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Saga Ballooners",
+   "line": "-2.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "final_state": {
+   "home": "Saga Ballooners",
+   "away": "Hiroshima Dragonflies",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-2.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "confirmation_gate": "NONE",
+  "prepare_frame": "reused verified final frame",
+  "stake_check_prepare": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Saga Ballooners v Hiroshima Dragonflies",
+   "fixture_home": "Saga Ballooners",
+   "fixture_away": "Hiroshima Dragonflies",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Saga Ballooners",
+   "line": "-2.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "minimum_price": "1.50",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    20,
+    1122,
+    604,
+    1148
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     20,
+     1122,
+     604,
+     1148
+    ],
+    "center_x": 312,
+    "center_y": 1135,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790295592443,
+   "validation_hash": "87a98083ab7d24192c7bb5ae78870ff3"
+  },
+  "prepared_gesture": {
+   "type": "tap",
+   "target": "Place Bet",
+   "package": "com.android.chrome",
+   "bounds": [
+    20,
+    1122,
+    604,
+    1148
+   ],
+   "center_x": 312,
+   "center_y": 1135,
+   "duration_ms": 100,
+   "dispatched": false
+  },
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "held": true,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 11030
+ },
+ "wall": 11.213025093078613
+}

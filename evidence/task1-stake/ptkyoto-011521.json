@@ -1,0 +1,149 @@
+{
+ "payload": {
+  "action": "PLACE_HELD",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-4.5",
+  "selection_name": "Kyoto Hannaryz",
+  "price": "1.83",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "execution_mode": "prepare",
+  "confirmation_status": "APPROVED",
+  "timeout_ms": 60000,
+  "instruction_id": "ptkyoto-011521"
+ },
+ "result": {
+  "instruction_id": "ptkyoto-011521",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "PRETAP_READY",
+  "duration_ms": 811,
+  "progress": {
+   "stage": "PRETAP_CHECK",
+   "elapsed_ms": 681,
+   "last_progress_at_ms": 1790295334128,
+   "instruction_id": "ptkyoto-011521",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790295334120
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 24,
+     "at_ms": 1790295334128
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 33,
+     "at_ms": 1790295334128
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 577,
+     "at_ms": 1790295334128
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 681,
+     "at_ms": 1790295334128
+    }
+   ]
+  },
+  "device_stage": "PRETAP_CHECK",
+  "execution_count": 1,
+  "run_id": "c_O02MmRn9ewGcRIcrbwTY0pXbnz1y1aUPEbxmbCRm0uU",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "pretap": {
+   "ok": true,
+   "selection": "Kyoto Hannaryz",
+   "line": "-4.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "stage_timings": [],
+  "t_start_ms": 1790295334121,
+  "t_pretap_done_ms": 1790295334778
+ },
+ "run": {
+  "run_id": "c_O02MmRn9ewGcRIcrbwTY0pXbnz1y1aUPEbxmbCRm0uU",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790295334098,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 1,
+    "wall_ts_ms": 1790295334098
+   },
+   {
+    "phase": "PRETAP_CHECK",
+    "elapsed_ms": 24,
+    "wall_ts_ms": 1790295334121
+   },
+   {
+    "phase": "CAPTURE_pretap",
+    "elapsed_ms": 33,
+    "wall_ts_ms": 1790295334131
+   },
+   {
+    "phase": "CAPTURED_pretap",
+    "elapsed_ms": 577,
+    "wall_ts_ms": 1790295334674
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 681,
+    "wall_ts_ms": 1790295334779
+   }
+  ],
+  "screenshots": [
+   "s001_pretap.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [],
+  "t_start_ms": 1790295334121,
+  "stake_check_pretap": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "pretap": {
+   "ok": true,
+   "selection": "Kyoto Hannaryz",
+   "line": "-4.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "t_pretap_done_ms": 1790295334778,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "detail": "PRETAP_READY",
+  "duration_ms": 681
+ },
+ "wall": 1.5349256992340088
+}

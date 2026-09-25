@@ -246,6 +246,12 @@ final class VisualControlRunner {
         capture(id, phase, 0, bitmap -> process(id, bitmap, phase, next));
     }
 
+    /** Runs `onMain` once every OCR/evidence job queued so far has finished: frames are on disk before a final gesture. */
+    void flush(Runnable onMain) {
+        if (closed || worker.isShutdown()) { main.post(onMain); return; }
+        worker.execute(() -> main.post(onMain));
+    }
+
     void tableFrame(String id, String phase, Consumer<Ocr> next) {
         capture(id, phase, 0, bitmap -> process(id, bitmap, phase, -1, next));
     }
@@ -286,20 +292,23 @@ final class VisualControlRunner {
             try {
                 File dir = new File(service.getFilesDir(), "visual/" + id);
                 if (!dir.isDirectory() && !dir.mkdirs()) throw new IllegalStateException("Cannot create evidence directory");
-                try (FileOutputStream out = new FileOutputStream(new File(dir, phase + ".png"))) {
-                    if (!bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)) throw new IllegalStateException("PNG encode failed");
-                }
                 Ocr result = recognizeLive(bitmap, segmentation);
                 if (flow != null) flow.analyze(bitmap, result, phase);
-                try (FileOutputStream out = new FileOutputStream(new File(dir, phase + ".txt"))) {
-                    out.write(result.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
-                }
                 log("OCR id=" + id + " phase=" + phase + " " + result);
                 main.post(() -> {
                     if (!withinDeadline(id)) return;
                     try { next.accept(result); }
                     catch (Exception e) { finish(id, "FAIL", "Visual action exception: " + e); }
                 });
+                // Task 1: the evidence PNG (~250 ms to encode) is written after the result is handed on. The worker is
+                // single-threaded, so the next capture's OCR queues behind it, flush() lets the one Place Bet tap wait
+                // for every pending write, and a write failure still fails the run.
+                try (FileOutputStream out = new FileOutputStream(new File(dir, phase + ".png"))) {
+                    if (!bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)) throw new IllegalStateException("PNG encode failed");
+                }
+                try (FileOutputStream out = new FileOutputStream(new File(dir, phase + ".txt"))) {
+                    out.write(result.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                }
             } catch (Exception e) { main.post(() -> finish(id, "FAIL", "OCR/evidence: " + e)); }
             finally { bitmap.recycle(); }
         });

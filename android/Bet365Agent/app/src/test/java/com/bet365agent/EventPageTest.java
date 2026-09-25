@@ -32,6 +32,16 @@ public class EventPageTest {
         assertNull(EventPage.teams(Arrays.asList("Game Lines", "Spread Total Money Li...")));
     }
 
+    @Test public void scrolledHeaderStillGivesTeamsAndKickoff() {
+        // Real run (2026-09-25 01:02): the page rendered with bet365's top bar scrolled off; the header lines the
+        // adapter now passes start right below Chrome's URL bar, with the logo/balance line skipped.
+        java.util.List<String> header = Arrays.asList("France Nationale 1 • 25 Sep 19:00", "Berck/Rang du Fliers vs Pays Salonais Basket", "13", "Popular Bet Builder", "Game Lines");
+        assertArrayEquals(new String[] {"Berck/Rang du Fliers", "Pays Salonais Basket"}, EventPage.teams(header));
+        assertEquals("25 Sep 19:00", EventPage.kickoffText(header));
+        // normal layout with the logo/balance line present would still read the same
+        assertEquals("25 Sep 19:00", EventPage.kickoffText(Arrays.asList("bet365 £3.50 (+)", "France Nationale 1 • 25 Sep 19:00", "Besancon AC vs Val de Seine")));
+    }
+
     @Test public void closedEventPageIsRecognised() throws Exception {
         java.util.List<String> words = new java.util.ArrayList<>();
         for (GameLinesParser.Word w : StakePadTest.load("event_closed_araraquara_20260924.txt")) words.add(w.text);

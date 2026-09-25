@@ -1,0 +1,1186 @@
+{
+ "payload": {
+  "instruction_id": "berck-005709",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Berck Fliers Range||Pays Salonais Basket 13",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+3.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747383/F19/I0/",
+  "kickoff_utc": "2026-09-25T18:00"
+ },
+ "result": {
+  "instruction_id": "berck-005709",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 10519,
+  "progress": {
+   "stage": "PREPARE_COMPLETE_EXECUTION",
+   "elapsed_ms": 10378,
+   "last_progress_at_ms": 1790294240467,
+   "instruction_id": "berck-005709",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790294230154
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 14,
+     "at_ms": 1790294230161
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 22,
+     "at_ms": 1790294230172,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 22,
+      "start_ts_ms": 1790294230163,
+      "end_elapsed_ms": 3954,
+      "end_ts_ms": 1790294234095,
+      "duration_ms": 3932,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3463,
+     "at_ms": 1790294230172
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3894,
+     "at_ms": 1790294230172
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 3954,
+     "at_ms": 1790294234103,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 3954,
+      "start_ts_ms": 1790294234095,
+      "end_elapsed_ms": 4445,
+      "end_ts_ms": 1790294234585,
+      "duration_ms": 491,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 3965,
+     "at_ms": 1790294234103
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4409,
+     "at_ms": 1790294234103
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 4445,
+     "at_ms": 1790294234596,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 4445,
+      "start_ts_ms": 1790294234585,
+      "end_elapsed_ms": 4457,
+      "end_ts_ms": 1790294234597,
+      "duration_ms": 12,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 4457,
+     "at_ms": 1790294234613,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 4457,
+      "start_ts_ms": 1790294234597,
+      "end_elapsed_ms": 4474,
+      "end_ts_ms": 1790294234615,
+      "duration_ms": 17,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 4474,
+     "at_ms": 1790294234641,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 4474,
+      "start_ts_ms": 1790294234615,
+      "end_elapsed_ms": 4501,
+      "end_ts_ms": 1790294234642,
+      "duration_ms": 27,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 4501,
+     "at_ms": 1790294234655,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 4501,
+      "start_ts_ms": 1790294234642,
+      "end_elapsed_ms": 5085,
+      "end_ts_ms": 1790294235226,
+      "duration_ms": 584,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 4515,
+     "at_ms": 1790294234655
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 5085,
+     "at_ms": 1790294235241,
+     "timing": {
+      "stage": "ENTER_STAKE",
+      "start_elapsed_ms": 5085,
+      "start_ts_ms": 1790294235226,
+      "end_elapsed_ms": 9723,
+      "end_ts_ms": 1790294239863,
+      "duration_ms": 4638,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 5102,
+     "at_ms": 1790294235241
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 5481,
+     "at_ms": 1790294235241
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 5775,
+     "at_ms": 1790294235241
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 6318,
+     "at_ms": 1790294235241
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 6372,
+     "at_ms": 1790294235241
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7094,
+     "at_ms": 1790294235241
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7606,
+     "at_ms": 1790294235241
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7703,
+     "at_ms": 1790294235241
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7973,
+     "at_ms": 1790294235241
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8247,
+     "at_ms": 1790294235241
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8558,
+     "at_ms": 1790294235241
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8841,
+     "at_ms": 1790294235241
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9356,
+     "at_ms": 1790294235241
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9450,
+     "at_ms": 1790294235241
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 9723,
+     "at_ms": 1790294239891,
+     "timing": {
+      "stage": "VERIFY_FINAL_STATE",
+      "start_elapsed_ms": 9723,
+      "start_ts_ms": 1790294239863,
+      "end_elapsed_ms": 10305,
+      "end_ts_ms": 1790294240446,
+      "duration_ms": 582,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 9752,
+     "at_ms": 1790294239891
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 10213,
+     "at_ms": 1790294239891
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 10305,
+     "at_ms": 1790294240467,
+     "timing": {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "start_elapsed_ms": 10305,
+      "start_ts_ms": 1790294240446,
+      "end_elapsed_ms": 10378,
+      "end_ts_ms": 1790294240518,
+      "duration_ms": 73,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 10378,
+     "at_ms": 1790294240467
+    }
+   ]
+  },
+  "device_stage": "PREPARE_COMPLETE_EXECUTION",
+  "execution_count": 1,
+  "run_id": "c_R8Lu7I0M8ppI7InKxko50SrGSTjMObpH3kpG4toDfyE",
+  "fixture_name": "Berck/Rang du Fliers v Pays Salonais Basket",
+  "home": "Berck/Rang du Fliers",
+  "away": "Pays Salonais Basket",
+  "competition": "France Nationale 1 25 Sep 19:00",
+  "selection": {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+3.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Pays Salonais Basket",
+   "bounds": [
+    301,
+    778,
+    344,
+    827
+   ]
+  },
+  "final_state": {
+   "home": "Berck/Rang du Fliers",
+   "away": "Pays Salonais Basket",
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "ready_state": {
+   "fixture_home": "Berck/Rang du Fliers",
+   "fixture_away": "Pays Salonais Basket",
+   "market": "SPREAD",
+   "selection_role": "AWAY",
+   "selection_name": "Pays Salonais Basket",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Berck/Rang du Fliers v Pays Salonais Basket",
+   "fixture_home": "Berck/Rang du Fliers",
+   "fixture_away": "Pays Salonais Basket",
+   "market": "SPREAD",
+   "selection_role": "AWAY",
+   "selection_name": "Pays Salonais Basket",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "minimum_price": "1.50",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    477,
+    1198,
+    604,
+    1220
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     477,
+     1198,
+     604,
+     1220
+    ],
+    "center_x": 540.5,
+    "center_y": 1209,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790294240515,
+   "validation_hash": "f6ee97e02ed8a67cf236d0fc75a9bcd0"
+  },
+  "wager_submitted": false,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "route": "event_link",
+  "held": true,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 22,
+    "start_ts_ms": 1790294230163,
+    "end_elapsed_ms": 3954,
+    "end_ts_ms": 1790294234095,
+    "duration_ms": 3932,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 3954,
+    "start_ts_ms": 1790294234095,
+    "end_elapsed_ms": 4445,
+    "end_ts_ms": 1790294234585,
+    "duration_ms": 491,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 4445,
+    "start_ts_ms": 1790294234585,
+    "end_elapsed_ms": 4457,
+    "end_ts_ms": 1790294234597,
+    "duration_ms": 12,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 4457,
+    "start_ts_ms": 1790294234597,
+    "end_elapsed_ms": 4474,
+    "end_ts_ms": 1790294234615,
+    "duration_ms": 17,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 4474,
+    "start_ts_ms": 1790294234615,
+    "end_elapsed_ms": 4501,
+    "end_ts_ms": 1790294234642,
+    "duration_ms": 27,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 4501,
+    "start_ts_ms": 1790294234642,
+    "end_elapsed_ms": 5085,
+    "end_ts_ms": 1790294235226,
+    "duration_ms": 584,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 5085,
+    "start_ts_ms": 1790294235226,
+    "end_elapsed_ms": 9723,
+    "end_ts_ms": 1790294239863,
+    "duration_ms": 4638,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 9723,
+    "start_ts_ms": 1790294239863,
+    "end_elapsed_ms": 10305,
+    "end_ts_ms": 1790294240446,
+    "duration_ms": 582,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 10305,
+    "start_ts_ms": 1790294240446,
+    "end_elapsed_ms": 10378,
+    "end_ts_ms": 1790294240518,
+    "duration_ms": 73,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "alias_candidate": {
+   "feed_home": "Berck Fliers Range",
+   "feed_away": "Pays Salonais Basket 13",
+   "bet365_home": "Berck/Rang du Fliers",
+   "bet365_away": "Pays Salonais Basket",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747383/F19/I0/",
+   "kickoff_shown": "25 Sep 19:00",
+   "kickoff_expected": "25 Sep 19:00",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "Pays Salonais Basket 13": "Pays Salonais Basket"
+   },
+   "sport": "basketball"
+  },
+  "stake_field_state": "EMPTY",
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 25 Sep 19:00 + 'Berck Fliers Range' exact; 'Pays Salonais Basket 13' is a naming variant of 'Pays Salonais Basket' (1.00)",
+   "home": {
+    "feed": "Berck Fliers Range",
+    "bookmaker": "Berck/Rang du Fliers",
+    "level": "ALIAS",
+    "score": 1,
+    "note": "registry alias"
+   },
+   "away": {
+    "feed": "Pays Salonais Basket 13",
+    "bookmaker": "Pays Salonais Basket",
+    "level": "VARIANT",
+    "score": 1,
+    "note": "naming variant 1.00"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747383/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_R8Lu7I0M8ppI7InKxko50SrGSTjMObpH3kpG4toDfyE",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790294230141,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 1,
+    "wall_ts_ms": 1790294230141
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 14,
+    "wall_ts_ms": 1790294230155
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 22,
+    "wall_ts_ms": 1790294230163
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3463,
+    "wall_ts_ms": 1790294233605
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3894,
+    "wall_ts_ms": 1790294234035
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 3954,
+    "wall_ts_ms": 1790294234095
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 3965,
+    "wall_ts_ms": 1790294234106
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 4409,
+    "wall_ts_ms": 1790294234549
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 4445,
+    "wall_ts_ms": 1790294234585
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 4457,
+    "wall_ts_ms": 1790294234598
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 4474,
+    "wall_ts_ms": 1790294234615
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 4501,
+    "wall_ts_ms": 1790294234642
+   },
+   {
+    "effect": "gesture",
+    "target": "SPREAD / AWAY / +3.5 / 1.83",
+    "bounds": [
+     301,
+     778,
+     344,
+     827
+    ],
+    "elapsed_ms": 4515
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 4515,
+    "wall_ts_ms": 1790294234656
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 5085,
+    "wall_ts_ms": 1790294235226
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 5102,
+    "wall_ts_ms": 1790294235242
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 5481,
+    "wall_ts_ms": 1790294235622
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 5775,
+    "wall_ts_ms": 1790294235916
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 6318,
+    "wall_ts_ms": 1790294236459
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     20,
+     1327,
+     214,
+     1371
+    ],
+    "elapsed_ms": 6372
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 6372,
+    "wall_ts_ms": 1790294236513
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 7094,
+    "wall_ts_ms": 1790294237235
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 7606,
+    "wall_ts_ms": 1790294237748
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 7703
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 7703,
+    "wall_ts_ms": 1790294237843
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     87,
+     1228,
+     147,
+     1272
+    ],
+    "elapsed_ms": 7973
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 7973,
+    "wall_ts_ms": 1790294238114
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     87,
+     974,
+     147,
+     1018
+    ],
+    "elapsed_ms": 8247
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8247,
+    "wall_ts_ms": 1790294238388
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 8558
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8558,
+    "wall_ts_ms": 1790294238699
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 8841,
+    "wall_ts_ms": 1790294238983
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 9356,
+    "wall_ts_ms": 1790294239497
+   },
+   {
+    "effect": "gesture",
+    "target": "Done",
+    "bounds": [
+     311,
+     1333,
+     587,
+     1367
+    ],
+    "elapsed_ms": 9450
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 9450,
+    "wall_ts_ms": 1790294239590
+   },
+   {
+    "phase": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 9723,
+    "wall_ts_ms": 1790294239864
+   },
+   {
+    "phase": "CAPTURE_final",
+    "elapsed_ms": 9752,
+    "wall_ts_ms": 1790294239893
+   },
+   {
+    "phase": "CAPTURED_final",
+    "elapsed_ms": 10213,
+    "wall_ts_ms": 1790294240354
+   },
+   {
+    "phase": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 10305,
+    "wall_ts_ms": 1790294240446
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 10378,
+    "wall_ts_ms": 1790294240519
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_markets.png",
+   "s003_betslip_pre_stake.png",
+   "s004_betslip_pre_stake.png",
+   "s005_stake_ui.png",
+   "s006_stake_typed.png",
+   "s007_final.png"
+  ],
+  "gesture_attempts": 7,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 22,
+    "start_ts_ms": 1790294230163,
+    "end_elapsed_ms": 3954,
+    "end_ts_ms": 1790294234095,
+    "duration_ms": 3932,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 3954,
+    "start_ts_ms": 1790294234095,
+    "end_elapsed_ms": 4445,
+    "end_ts_ms": 1790294234585,
+    "duration_ms": 491,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 4445,
+    "start_ts_ms": 1790294234585,
+    "end_elapsed_ms": 4457,
+    "end_ts_ms": 1790294234597,
+    "duration_ms": 12,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 4457,
+    "start_ts_ms": 1790294234597,
+    "end_elapsed_ms": 4474,
+    "end_ts_ms": 1790294234615,
+    "duration_ms": 17,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 4474,
+    "start_ts_ms": 1790294234615,
+    "end_elapsed_ms": 4501,
+    "end_ts_ms": 1790294234642,
+    "duration_ms": 27,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 4501,
+    "start_ts_ms": 1790294234642,
+    "end_elapsed_ms": 5085,
+    "end_ts_ms": 1790294235226,
+    "duration_ms": 584,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 5085,
+    "start_ts_ms": 1790294235226,
+    "end_elapsed_ms": 9723,
+    "end_ts_ms": 1790294239863,
+    "duration_ms": 4638,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 9723,
+    "start_ts_ms": 1790294239863,
+    "end_elapsed_ms": 10305,
+    "end_ts_ms": 1790294240446,
+    "duration_ms": 582,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 10305,
+    "start_ts_ms": 1790294240446,
+    "end_elapsed_ms": 10378,
+    "end_ts_ms": 1790294240518,
+    "duration_ms": 73,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "search_query": "Berck Fliers Range",
+  "identity_home": "Berck Fliers Range",
+  "expected_away": "Pays Salonais Basket 13",
+  "identity_away": "Pays Salonais Basket 13",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747383/F19/I0/",
+  "current_stage": "PREPARE_COMPLETE_EXECUTION",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "France Nationale 1 25 Sep 19:00",
+   "Berck/Rang du Fliers vs Pays Salonais Basket",
+   "13",
+   "Popular Bet Builder"
+  ],
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 25 Sep 19:00 + 'Berck Fliers Range' exact; 'Pays Salonais Basket 13' is a naming variant of 'Pays Salonais Basket' (1.00)",
+   "home": {
+    "feed": "Berck Fliers Range",
+    "bookmaker": "Berck/Rang du Fliers",
+    "level": "ALIAS",
+    "score": 1,
+    "note": "registry alias"
+   },
+   "away": {
+    "feed": "Pays Salonais Basket 13",
+    "bookmaker": "Pays Salonais Basket",
+    "level": "VARIANT",
+    "score": 1,
+    "note": "naming variant 1.00"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "route": "event_link",
+  "alias_candidate": {
+   "feed_home": "Berck Fliers Range",
+   "feed_away": "Pays Salonais Basket 13",
+   "bet365_home": "Berck/Rang du Fliers",
+   "bet365_away": "Pays Salonais Basket",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747383/F19/I0/",
+   "kickoff_shown": "25 Sep 19:00",
+   "kickoff_expected": "25 Sep 19:00",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "Pays Salonais Basket 13": "Pays Salonais Basket"
+   },
+   "sport": "basketball"
+  },
+  "kickoff_verified": "25 Sep 19:00",
+  "verified_fixture": {
+   "code": "3e69722d",
+   "home": "Berck/Rang du Fliers",
+   "away": "Pays Salonais Basket",
+   "fixture_name": "Berck/Rang du Fliers v Pays Salonais Basket",
+   "exact_fixture_text": "Home Berck/Rang du Fliers\nAway Pays Salonais Basket",
+   "competition": "France Nationale 1 25 Sep 19:00",
+   "bounds": [
+    21,
+    265,
+    634,
+    473
+   ]
+  },
+  "fixture_home": "Berck/Rang du Fliers",
+  "fixture_away": "Pays Salonais Basket",
+  "identity_verified_home": "Berck Fliers Range",
+  "identity_verified_away": "Pays Salonais Basket 13",
+  "event_verified": true,
+  "fixture": {
+   "code": "3e69722d",
+   "home": "Berck/Rang du Fliers",
+   "away": "Pays Salonais Basket",
+   "fixture_name": "Berck/Rang du Fliers v Pays Salonais Basket",
+   "exact_fixture_text": "Home Berck/Rang du Fliers\nAway Pays Salonais Basket",
+   "competition": "France Nationale 1 25 Sep 19:00",
+   "bounds": [
+    21,
+    265,
+    634,
+    473
+   ]
+  },
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/-3.5@1.83",
+     "SPREAD/AWAY/+3.5@1.83",
+     "TOTAL/OVER/156.5@1.83",
+     "TOTAL/UNDER/156.5@1.83"
+    ],
+    "notes": [
+     "rows by position (grid labels truncated or unread)"
+    ]
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/-3.5@1.83",
+    "SPREAD/AWAY/+3.5@1.83",
+    "TOTAL/OVER/156.5@1.83",
+    "TOTAL/UNDER/156.5@1.83"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-3.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Berck/Rang du Fliers",
+    "bounds": [
+     301,
+     693,
+     345,
+     743
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "+3.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Pays Salonais Basket",
+    "bounds": [
+     301,
+     778,
+     344,
+     827
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "156.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     436,
+     691,
+     510,
+     743
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "156.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     452,
+     775,
+     511,
+     827
+    ]
+   }
+  ],
+  "selection_role": "AWAY",
+  "selection_name": "Pays Salonais Basket",
+  "selection": {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+3.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Pays Salonais Basket",
+   "bounds": [
+    301,
+    778,
+    344,
+    827
+   ]
+  },
+  "selection_preflight": "reused clean grid read",
+  "stake_keypad": {
+   "zero": [
+    360,
+    1250
+   ],
+   "dot": [
+    117,
+    1250
+   ]
+  },
+  "stake_field_state": "EMPTY",
+  "stake_check_typed": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "stake_entered": "0.10",
+  "stake_check_final": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "ready_state": {
+   "fixture_home": "Berck/Rang du Fliers",
+   "fixture_away": "Pays Salonais Basket",
+   "market": "SPREAD",
+   "selection_role": "AWAY",
+   "selection_name": "Pays Salonais Basket",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "final_state": {
+   "home": "Berck/Rang du Fliers",
+   "away": "Pays Salonais Basket",
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "confirmation_gate": "NONE",
+  "prepare_frame": "reused verified final frame",
+  "stake_check_prepare": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Berck/Rang du Fliers v Pays Salonais Basket",
+   "fixture_home": "Berck/Rang du Fliers",
+   "fixture_away": "Pays Salonais Basket",
+   "market": "SPREAD",
+   "selection_role": "AWAY",
+   "selection_name": "Pays Salonais Basket",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "minimum_price": "1.50",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    477,
+    1198,
+    604,
+    1220
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     477,
+     1198,
+     604,
+     1220
+    ],
+    "center_x": 540.5,
+    "center_y": 1209,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790294240515,
+   "validation_hash": "f6ee97e02ed8a67cf236d0fc75a9bcd0"
+  },
+  "prepared_gesture": {
+   "type": "tap",
+   "target": "Place Bet",
+   "package": "com.android.chrome",
+   "bounds": [
+    477,
+    1198,
+    604,
+    1220
+   ],
+   "center_x": 540.5,
+   "center_y": 1209,
+   "duration_ms": 100,
+   "dispatched": false
+  },
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "held": true,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 10378
+ },
+ "wall": 10.798953533172607
+}

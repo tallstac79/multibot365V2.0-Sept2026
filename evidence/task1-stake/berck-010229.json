@@ -1,0 +1,306 @@
+{
+ "payload": {
+  "instruction_id": "berck-010229",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Berck Fliers Range||Pays Salonais Basket 13",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+3.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747383/F19/I0/",
+  "kickoff_utc": "2026-09-25T18:00"
+ },
+ "result": {
+  "instruction_id": "berck-010229",
+  "status": "FAIL",
+  "stage": "ALIAS_REQUIRED",
+  "detail": "Event link shows 'Berck/Rang du Fliers v Pays Salonais Basket'; alert says 'Berck Fliers Range v Pays Salonais Basket 13': 'Pays Salonais Basket 13' only resembles 'Pays Salonais Basket' (1.00) and there is no event anchor with an agreeing kick-off",
+  "duration_ms": 8454,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 8321,
+   "last_progress_at_ms": 1790294553999,
+   "instruction_id": "berck-010229",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790294549556
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 14,
+     "at_ms": 1790294549563
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 22,
+     "at_ms": 1790294549573,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 22,
+      "start_ts_ms": 1790294549565,
+      "end_elapsed_ms": 8321,
+      "end_ts_ms": 1790294557863,
+      "duration_ms": 8299,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3455,
+     "at_ms": 1790294549573
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3844,
+     "at_ms": 1790294549573
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3860,
+     "at_ms": 1790294549573
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4371,
+     "at_ms": 1790294549573
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4442,
+     "at_ms": 1790294553999,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 22,
+      "start_ts_ms": 1790294549565,
+      "end_elapsed_ms": 8321,
+      "end_ts_ms": 1790294557863,
+      "duration_ms": 8299,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 7892,
+     "at_ms": 1790294553999
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 8253,
+     "at_ms": 1790294553999
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 8321,
+     "at_ms": 1790294553999
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_ODJRncvAyxHpnDHdcp-VXJA84MkyYrqQ0z_utDH5rto",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'Berck/Rang du Fliers v Pays Salonais Basket'; alert says 'Berck Fliers Range v Pays Salonais Basket 13': 'Pays Salonais Basket 13' only resembles 'Pays Salonais Basket' (1.00) and there is no event anchor with an agreeing kick-off",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 22,
+    "start_ts_ms": 1790294549565,
+    "end_elapsed_ms": 8321,
+    "end_ts_ms": 1790294557863,
+    "duration_ms": 8299,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "alias_candidate": {
+   "feed_home": "Berck Fliers Range",
+   "feed_away": "Pays Salonais Basket 13",
+   "bet365_home": "Berck/Rang du Fliers",
+   "bet365_away": "Pays Salonais Basket",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747383/F19/I0/",
+   "kickoff_shown": null,
+   "kickoff_expected": "25 Sep 19:00",
+   "verdict": "AMBIGUOUS",
+   "confidence": "review",
+   "candidates": {
+    "Pays Salonais Basket 13": "Pays Salonais Basket"
+   },
+   "sport": "basketball"
+  },
+  "direct_event_rejected": "identity: 'Pays Salonais Basket 13' only resembles 'Pays Salonais Basket' (1.00) and there is no event anchor with an agreeing kick-off",
+  "identity": {
+   "verdict": "AMBIGUOUS",
+   "reason": "'Pays Salonais Basket 13' only resembles 'Pays Salonais Basket' (1.00) and there is no event anchor with an agreeing kick-off",
+   "home": {
+    "feed": "Berck Fliers Range",
+    "bookmaker": "Berck/Rang du Fliers",
+    "level": "ALIAS",
+    "score": 1,
+    "note": "registry alias"
+   },
+   "away": {
+    "feed": "Pays Salonais Basket 13",
+    "bookmaker": "Pays Salonais Basket",
+    "level": "VARIANT",
+    "score": 1,
+    "note": "naming variant 1.00"
+   },
+   "kickoff_known": false,
+   "kickoff_agrees": false,
+   "reversed": false
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747383/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_ODJRncvAyxHpnDHdcp-VXJA84MkyYrqQ0z_utDH5rto",
+  "adapter": "live_bet365",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790294549542,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790294549542
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 14,
+    "wall_ts_ms": 1790294549556
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 22,
+    "wall_ts_ms": 1790294549566
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3455,
+    "wall_ts_ms": 1790294552998
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3844,
+    "wall_ts_ms": 1790294553387
+   },
+   {
+    "phase": "CAPTURE_session",
+    "elapsed_ms": 3860,
+    "wall_ts_ms": 1790294553403
+   },
+   {
+    "phase": "CAPTURED_session",
+    "elapsed_ms": 4371,
+    "wall_ts_ms": 1790294553915
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 4442,
+    "wall_ts_ms": 1790294553984
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 7892,
+    "wall_ts_ms": 1790294557436
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 8253,
+    "wall_ts_ms": 1790294557796
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 8321,
+    "wall_ts_ms": 1790294557864
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_session.png",
+   "s003_event_direct.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 22,
+    "start_ts_ms": 1790294549565,
+    "end_elapsed_ms": 8321,
+    "end_ts_ms": 1790294557863,
+    "duration_ms": 8299,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Berck Fliers Range",
+  "identity_home": "Berck Fliers Range",
+  "expected_away": "Pays Salonais Basket 13",
+  "identity_away": "Pays Salonais Basket 13",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747383/F19/I0/",
+  "current_stage": "OPEN_HOME",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Berck/Rang du Fliers vs Pays Salonais Basket",
+   "13",
+   "Popular Bet Builder",
+   "Game Lines"
+  ],
+  "identity": {
+   "verdict": "AMBIGUOUS",
+   "reason": "'Pays Salonais Basket 13' only resembles 'Pays Salonais Basket' (1.00) and there is no event anchor with an agreeing kick-off",
+   "home": {
+    "feed": "Berck Fliers Range",
+    "bookmaker": "Berck/Rang du Fliers",
+    "level": "ALIAS",
+    "score": 1,
+    "note": "registry alias"
+   },
+   "away": {
+    "feed": "Pays Salonais Basket 13",
+    "bookmaker": "Pays Salonais Basket",
+    "level": "VARIANT",
+    "score": 1,
+    "note": "naming variant 1.00"
+   },
+   "kickoff_known": false,
+   "kickoff_agrees": false,
+   "reversed": false
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "alias_candidate": {
+   "feed_home": "Berck Fliers Range",
+   "feed_away": "Pays Salonais Basket 13",
+   "bet365_home": "Berck/Rang du Fliers",
+   "bet365_away": "Pays Salonais Basket",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747383/F19/I0/",
+   "kickoff_shown": null,
+   "kickoff_expected": "25 Sep 19:00",
+   "verdict": "AMBIGUOUS",
+   "confidence": "review",
+   "candidates": {
+    "Pays Salonais Basket 13": "Pays Salonais Basket"
+   },
+   "sport": "basketball"
+  },
+  "direct_event_rejected": "identity: 'Pays Salonais Basket 13' only resembles 'Pays Salonais Basket' (1.00) and there is no event anchor with an agreeing kick-off",
+  "detail": "Event link shows 'Berck/Rang du Fliers v Pays Salonais Basket'; alert says 'Berck Fliers Range v Pays Salonais Basket 13': 'Pays Salonais Basket 13' only resembles 'Pays Salonais Basket' (1.00) and there is no event anchor with an agreeing kick-off",
+  "duration_ms": 8321
+ },
+ "wall": 9.266653776168823
+}

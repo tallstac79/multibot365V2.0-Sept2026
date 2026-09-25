@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -372,15 +373,22 @@ final class TextEntryFlow {
 
     private static String normalizeWords(String value) { return value.trim().replaceAll("\\s+", " "); }
 
+    /** Words matching the field hint (placeholder ellipsis tolerant, see OcrText.placeholderMatches); must be unique. */
+    private List<Rect> hintBounds(VisualControlRunner.Ocr ocr) {
+        List<Rect> out = new ArrayList<>();
+        for (int i = 0; i < ocr.words.size(); i++) if (OcrText.placeholderMatches(ocr.words.get(i), instruction.fieldHint)) out.add(ocr.rects.get(i));
+        return out;
+    }
+
     /** Called only on the existing OCR worker; no UI interaction occurs here. */
     void analyze(Bitmap bitmap, VisualControlRunner.Ocr ocr, String phase) throws Exception {
-        List<Rect> hints = ocr.bounds(instruction.fieldHint);
+        List<Rect> hints = hintBounds(ocr);
         if (hints.isEmpty() && "before".equals(phase)) {
             Bitmap clean = withoutLongRules(bitmap);
             VisualControlRunner.Ocr sparse;
             try { sparse = runner.recognize(clean, TessBaseAPI.PageSegMode.PSM_SPARSE_TEXT); }
             finally { clean.recycle(); }
-            hints = sparse.bounds(instruction.fieldHint);
+            hints = hintBounds(sparse);
             if (!hints.isEmpty()) { ocr.words.clear(); ocr.rects.clear(); ocr.words.addAll(sparse.words); ocr.rects.addAll(sparse.rects); }
         }
         if (hints.size() == 1) {
