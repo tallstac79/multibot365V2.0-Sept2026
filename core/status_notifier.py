@@ -80,7 +80,7 @@ def format_instruction(row):
             lines.append(f"{label}: {' '.join(str(value).split())[:300]}")
     short = (row.get('instruction_id') or '')[:SHORT_ID]
     if row.get('state') == 'AWAITING_APPROVAL':
-        lines += ['', f'Reply /approve {short} to place this bet, or /reject {short}.',
+        lines += ['', f'Reply /approve to place this bet, or /reject. (Bet {short})',
                   'No reply = no bet (the approval window expires).']
     elif row.get('state') == 'PLACEMENT_UNKNOWN':
         lines += ['', 'Place Bet was tapped but the result was not clear. Checking My Bets now; nothing will be re-tapped.']

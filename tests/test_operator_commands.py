@@ -55,6 +55,29 @@ class CommandTests(unittest.TestCase):
         self.p.tick(self.gateway)
         self.assertEqual(self.gateway.submitted[-1]['execution_mode'], 'dispatch')
 
+    def test_bare_approve_places_the_only_awaiting_bet(self):
+        # 2026-09-25: the operator should not have to type the id; the phone holds one verified slip at a time
+        self.api.push('/approve', clock=self.clock)
+        self.assertEqual(self.handler.poll(), 1)
+        self.assertIn('Not done: nothing is awaiting approval', self.api.sent[-1][1])
+        iid = self.p.ingest(message(MELBOURNE))['instruction_id']
+        self.p.tick(self.gateway)
+        self.assertEqual(self.state(iid), 'AWAITING_APPROVAL')
+        self.api.push('/approve', clock=self.clock)
+        self.assertEqual(self.handler.poll(), 1)
+        self.assertEqual(self.state(iid), 'APPROVED')
+        self.assertIn(f'APPROVED {iid}', self.api.sent[-1][1])
+        self.p.tick(self.gateway)
+        self.assertEqual(self.gateway.submitted[-1]['execution_mode'], 'dispatch')
+
+    def test_bare_reject_declines_the_only_awaiting_bet(self):
+        iid = self.p.ingest(message(MELBOURNE))['instruction_id']
+        self.p.tick(self.gateway)
+        self.api.push('/reject', clock=self.clock)
+        self.assertEqual(self.handler.poll(), 1)
+        self.assertEqual(self.state(iid), 'REJECTED')
+        self.assertIn(f'REJECTED {iid}', self.api.sent[-1][1])
+
     def test_unauthorised_and_stale_commands_are_ignored(self):
         iid = self.p.ingest(message(MELBOURNE))['instruction_id']
         self.p.tick(self.gateway)
@@ -132,7 +155,8 @@ class NotificationTests(unittest.TestCase):
         self.p.tick(self.gateway)
         self.flush()
         self.assertIn('APPROVAL NEEDED', self.sent[0])
-        self.assertIn(f'/approve {iid[:10]}', self.sent[0])
+        self.assertIn('Reply /approve to place this bet', self.sent[0])
+        self.assertIn(f'(Bet {iid[:10]})', self.sent[0])
         self.p.final.approve(iid, 'operator')
         self.p.tick(self.gateway)
         self.gateway.results[iid + "-place"] = placement_result(iid)

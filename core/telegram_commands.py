@@ -13,7 +13,7 @@ import urllib.request
 
 OFFSET_KEY = 'telegram_update_offset'
 MAX_COMMAND_AGE_SECONDS = 300
-HELP = ('Commands:\n/approve <id> - place an awaiting bet\n/reject <id> - decline it\n'
+HELP = ('Commands:\n/approve - place the awaiting bet (/approve <id> when several wait)\n/reject - decline it\n'
         '/stop - kill switch: stop all dispatch now\n/resume - allow dispatch again\n/status - current state')
 
 
@@ -89,11 +89,11 @@ class CommandHandler:
         argument = parts[1] if len(parts) > 1 else ''
         try:
             if command == '/approve':
-                instruction_id = self.p.final.approve(argument, by) if argument else None
-                return f'APPROVED {instruction_id}. The phone will place it next.' if instruction_id else 'Usage: /approve <id>'
+                instruction_id = self.p.final.approve(argument or self.pending_reference(), by)
+                return f'APPROVED {instruction_id}. The phone will place it next.'
             if command == '/reject':
-                instruction_id = self.p.final.reject(argument, by) if argument else None
-                return f'REJECTED {instruction_id}. Nothing will be placed.' if instruction_id else 'Usage: /reject <id>'
+                instruction_id = self.p.final.reject(argument or self.pending_reference(), by)
+                return f'REJECTED {instruction_id}. Nothing will be placed.'
             if command == '/stop':
                 self.p.final.set_paused(True, by)
                 return 'STOPPED. Nothing will be dispatched until /resume. Pending approvals were cancelled.'
@@ -105,6 +105,18 @@ class CommandHandler:
             return HELP
         except (LookupError, PermissionError) as error:
             return f'Not done: {error}'
+
+    def pending_reference(self):
+        """The one bet awaiting approval, so a bare /approve or /reject needs no id (the phone holds at most one
+        verified slip at a time). With none, or with several, the operator must name the bet."""
+        with self.p.store.connection() as db:
+            waiting = [r['instruction_id'] for r in db.execute(
+                "SELECT instruction_id FROM instructions WHERE state='AWAITING_APPROVAL' ORDER BY approval_requested_at")]
+        if len(waiting) == 1:
+            return waiting[0]
+        if not waiting:
+            raise LookupError('nothing is awaiting approval')
+        raise LookupError('several bets are awaiting approval, say which: ' + ', '.join(w[:10] for w in waiting))
 
     def status(self):
         s = self.p.settings
