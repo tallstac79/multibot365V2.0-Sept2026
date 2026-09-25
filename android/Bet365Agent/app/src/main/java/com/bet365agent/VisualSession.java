@@ -263,47 +263,83 @@ final class VisualSession {
         });
     }
 
-    /** Commit into a password/secret field. Never OCR-verifies or stores the secret value. */
+    /** Commit into a password/secret field. Never OCR-verifies, logs or stores the secret value. */
     CompletableFuture<Void> typeSecret(String hint, String secret) {
         if(!live())return failed("TIMEOUT","Session expired");
         checkpoint("ENTER_SECRET");
         CompletableFuture<Void> f=future();
-        capture("secret_field").thenCompose(screen -> {
-            Rect box = null;
+        capture("secret_field").thenAccept(screen -> {
+            VisualScreen.Line placeholder = null;
+            String want = hint.toLowerCase(java.util.Locale.US);
             for (VisualScreen.Line line : screen.lines) {
                 String t = line.text.trim().toLowerCase(java.util.Locale.US);
-                if (t.contains(hint.toLowerCase(java.util.Locale.US)) || t.contains("password")) {
-                    box = new Rect(line.bounds.left, line.bounds.top, line.bounds.right, Math.min(line.bounds.bottom + 140, line.bounds.top + 200));
-                    break;
-                }
+                if (t.equals(want) || t.equals("password")) { placeholder = line; break; }
             }
-            if (box == null) {
-                f.completeExceptionally(new SiteAdapter.Failure("LOGIN_FAILED","Password field not visible"));
-                return CompletableFuture.<Void>completedFuture(null);
+            if (placeholder == null) for (VisualScreen.Line line : screen.lines) {
+                String t = line.text.trim().toLowerCase(java.util.Locale.US);
+                if (t.contains(want) || t.contains("password")) { placeholder = line; break; }
             }
-            return tap(box, "secret-field");
-        }).thenCompose(v -> delay(700)).thenAccept(v -> {
+            if (placeholder == null) { f.completeExceptionally(new SiteAdapter.Failure("LOGIN_FAILED","Password field not visible")); return; }
+            // The field box surrounds its placeholder, so the tap goes on the placeholder line itself. Real form
+            // 2026-09-25: the field spans y 390-478 around "Password" at y 422-443; a tap 140 px lower missed it.
+            Rect box = new Rect(Math.max(0, placeholder.bounds.left - 10), Math.max(0, placeholder.bounds.top - 24),
+                    Math.min(719, placeholder.bounds.right + 260), placeholder.bounds.bottom + 24);
+            put("secret_field_box", bounds(box));
+            secretFocus(box, hint, secret, 0, f);
+        }).exceptionally(e -> { f.completeExceptionally(e); return null; });
+        return f;
+    }
+
+    /** Tap the field, then wait (bounded) for the accessibility IME to start input THERE; one re-tap, then fail. */
+    private void secretFocus(Rect box, String hint, String secret, int attempt, CompletableFuture<Void> f) {
+        if (android.os.Build.VERSION.SDK_INT < 33 || !(service.getInputMethod() instanceof AgentInputMethod)) {
+            f.completeExceptionally(new SiteAdapter.Failure("LOGIN_FAILED","Accessibility IME unavailable for secret entry")); return;
+        }
+        AgentInputMethod method = (AgentInputMethod) service.getInputMethod();
+        if (method.getCurrentInputStarted() && method.getCurrentInputConnection() != null) {
+            // Another field already holds the editor session (real: Bet365 auto-focuses the pre-filled username after a
+            // reboot). Like TextEntryFlow: blur on a neutral spot just below the field, wait for the session to end,
+            // then focus the field so a NEW session is what receives the secret.
+            Rect blur = new Rect(box.left, box.bottom + 20, box.left + 40, box.bottom + 40);
+            put("secret_blur_xy", bounds(blur));
+            tap(blur, "secret-field blur", 150).thenAccept(v -> secretBlurWait(method, box, hint, secret, attempt, 0, f))
+                .exceptionally(e -> { f.completeExceptionally(e); return null; });
+            return;
+        }
+        long baseline = method.generation();
+        tap(box, "secret-field", 250).thenAccept(v -> secretAwait(method, baseline, box, hint, secret, attempt, 0, f))
+            .exceptionally(e -> { f.completeExceptionally(e); return null; });
+    }
+
+    private void secretBlurWait(AgentInputMethod method, Rect box, String hint, String secret, int attempt, int polls, CompletableFuture<Void> f) {
+        if(!live()) return;
+        boolean active = method.getCurrentInputStarted() && method.getCurrentInputConnection() != null;
+        if (!active || polls >= 12) {
+            long baseline = method.generation();
+            tap(box, "secret-field", 250).thenAccept(v -> secretAwait(method, baseline, box, hint, secret, attempt, 0, f))
+                .exceptionally(e -> { f.completeExceptionally(e); return null; });
+            return;
+        }
+        main.postDelayed(() -> secretBlurWait(method, box, hint, secret, attempt, polls + 1, f), 150);
+    }
+
+    private void secretAwait(AgentInputMethod method, long baseline, Rect box, String hint, String secret, int attempt, int polls, CompletableFuture<Void> f) {
+        if(!live()) return;
+        android.accessibilityservice.InputMethod.AccessibilityInputConnection ac = method.getCurrentInputStarted() ? method.getCurrentInputConnection() : null;
+        if (ac != null && method.generation() != baseline) {   // a NEW editor session, never the previous field's
             try {
-                if (android.os.Build.VERSION.SDK_INT < 33 || !(service.getInputMethod() instanceof AgentInputMethod)) {
-                    f.completeExceptionally(new SiteAdapter.Failure("LOGIN_FAILED","Accessibility IME unavailable for secret entry"));
-                    return;
-                }
-                AgentInputMethod method = (AgentInputMethod) service.getInputMethod();
-                android.accessibilityservice.InputMethod.AccessibilityInputConnection ac = method.getCurrentInputConnection();
-                if (ac == null) {
-                    f.completeExceptionally(new SiteAdapter.Failure("LOGIN_FAILED","No input connection for secret field"));
-                    return;
-                }
                 ac.commitText(secret, 1, null);
-                put("secret_field_hint", hint);
-                put("secret_entered", true);
+                put("secret_field_hint", hint); put("secret_entered", true); put("secret_focus_attempts", attempt + 1);
                 checkpoint("SECRET_SENT");
                 f.complete(null);
             } catch (Exception e) {
                 f.completeExceptionally(new SiteAdapter.Failure("LOGIN_FAILED","Secret entry failed: " + e.getClass().getSimpleName()));
             }
-        });
-        return f;
+            return;
+        }
+        if (polls < 20) { main.postDelayed(() -> secretAwait(method, baseline, box, hint, secret, attempt, polls + 1, f), 150); return; }
+        if (attempt < 1) { secretFocus(box, hint, secret, attempt + 1, f); return; }
+        f.completeExceptionally(new SiteAdapter.Failure("LOGIN_FAILED","No input connection for secret field"));
     }
 
     /** Vertical swipe (scroll) gesture. Never used for selection; only to reveal more lines. */

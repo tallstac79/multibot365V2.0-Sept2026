@@ -27,13 +27,11 @@ final class CoordinatorConfig {
         if (!java.util.Set.of("legacy", "fast", "hybrid").contains(engine)) return false;
         return prefs(context).edit().putString("ocr_engine", engine).commit();
     }
-    static String bet365Username(Context context) { return prefs(context).getString("bet365_username", ""); }
-    static String bet365Password(Context context) { return prefs(context).getString("bet365_password", ""); }
-    static boolean hasBet365Credentials(Context context) {
-        return !bet365Username(context).isEmpty() && !bet365Password(context).isEmpty();
-    }
+    // Credentials live in SecureCredentials (EncryptedSharedPreferences, Android Keystore master key); never in source.
+    static String bet365Username(Context context) { return SecureCredentials.username(context); }
+    static String bet365Password(Context context) { return SecureCredentials.password(context); }
+    static boolean hasBet365Credentials(Context context) { return SecureCredentials.has(context); }
     static boolean saveBet365Credentials(Context context, String username, String password) {
-        return prefs(context).edit().putString("bet365_username", username == null ? "" : username.trim())
-                .putString("bet365_password", password == null ? "" : password).commit();
+        return SecureCredentials.save(context, username, password);
     }
 }

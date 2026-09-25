@@ -1,0 +1,188 @@
+{
+ "instruction_id": "sm-after-reboot-1790319744",
+ "status": "FAIL",
+ "stage": "LOGIN_FAILED",
+ "detail": "No input connection for secret field",
+ "duration_ms": 17867,
+ "progress": {
+  "stage": "ENSURE_SESSION",
+  "elapsed_ms": 17567,
+  "last_progress_at_ms": 1790319761304,
+  "instruction_id": "sm-after-reboot-1790319744",
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790319755703
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 22,
+    "at_ms": 1790319755710,
+    "timing": {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 22,
+     "start_ts_ms": 1790319755703,
+     "end_elapsed_ms": 5615,
+     "end_ts_ms": 1790319761296,
+     "duration_ms": 5593,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 30,
+    "at_ms": 1790319755725,
+    "timing": {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 22,
+     "start_ts_ms": 1790319755703,
+     "end_elapsed_ms": 5615,
+     "end_ts_ms": 1790319761296,
+     "duration_ms": 5593,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 4073,
+    "at_ms": 1790319755725
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 4606,
+    "at_ms": 1790319755725
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 4648,
+    "at_ms": 1790319755725
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 5600,
+    "at_ms": 1790319755725
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 5615,
+    "at_ms": 1790319761304,
+    "timing": {
+     "stage": "ENSURE_SESSION",
+     "start_elapsed_ms": 5615,
+     "start_ts_ms": 1790319761296,
+     "end_elapsed_ms": 17566,
+     "end_ts_ms": 1790319773248,
+     "duration_ms": 11951,
+     "status": "fail",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 5625,
+    "at_ms": 1790319761304
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 6574,
+    "at_ms": 1790319761304
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 7098,
+    "at_ms": 1790319761304
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 8408,
+    "at_ms": 1790319761304
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 9013,
+    "at_ms": 1790319761304
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 9045,
+    "at_ms": 1790319761304
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 9617,
+    "at_ms": 1790319761304
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 10043,
+    "at_ms": 1790319761304
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 10082,
+    "at_ms": 1790319761304
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 10635,
+    "at_ms": 1790319761304
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 10667,
+    "at_ms": 1790319761304
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 14079,
+    "at_ms": 1790319761304
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 17567,
+    "at_ms": 1790319761304
+   }
+  ]
+ },
+ "device_stage": "ENSURE_SESSION",
+ "execution_count": 1,
+ "run_id": "c_pZNxoI9IWmdPvY4m3Lk_DTNjkv7bTUP-POZnm2D-ctw",
+ "fixture_name": null,
+ "home": null,
+ "away": null,
+ "competition": null,
+ "verification_detail": "No input connection for secret field",
+ "stage_timings": [
+  {
+   "stage": "OPEN_HOME",
+   "start_elapsed_ms": 22,
+   "start_ts_ms": 1790319755703,
+   "end_elapsed_ms": 5615,
+   "end_ts_ms": 1790319761296,
+   "duration_ms": 5593,
+   "status": "ok",
+   "retries": 0
+  },
+  {
+   "stage": "ENSURE_SESSION",
+   "start_elapsed_ms": 5615,
+   "start_ts_ms": 1790319761296,
+   "end_elapsed_ms": 17566,
+   "end_ts_ms": 1790319773248,
+   "duration_ms": 11951,
+   "status": "fail",
+   "retries": 0
+  }
+ ],
+ "session_path": [
+  {
+   "saw": "LOGGED_OUT",
+   "state": "LOGIN_IN_PROGRESS",
+   "attempts": 0
+  }
+ ],
+ "session_machine": "LOGIN_IN_PROGRESS"
+}

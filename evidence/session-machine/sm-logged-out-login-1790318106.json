@@ -1,0 +1,193 @@
+{
+ "instruction_id": "sm-logged-out-login-1790318106",
+ "status": "FAIL",
+ "stage": "TARGET_NOT_FOUND",
+ "detail": "No unique outlined field containing OCR hint Username",
+ "duration_ms": 16890,
+ "progress": {
+  "stage": "ENTER_QUERY",
+  "elapsed_ms": 13725,
+  "last_progress_at_ms": 1790318120955,
+  "instruction_id": "sm-logged-out-login-1790318106",
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790318109890
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 71,
+    "at_ms": 1790318109939,
+    "timing": {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 71,
+     "start_ts_ms": 1790318109933,
+     "end_elapsed_ms": 7350,
+     "end_ts_ms": 1790318117211,
+     "duration_ms": 7279,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 79,
+    "at_ms": 1790318109946,
+    "timing": {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 71,
+     "start_ts_ms": 1790318109933,
+     "end_elapsed_ms": 7350,
+     "end_ts_ms": 1790318117211,
+     "duration_ms": 7279,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 4118,
+    "at_ms": 1790318109946
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 4803,
+    "at_ms": 1790318109946
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 4904,
+    "at_ms": 1790318109946
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 6484,
+    "at_ms": 1790318109946
+   },
+   {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 7298,
+    "at_ms": 1790318109946
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 7350,
+    "at_ms": 1790318117222,
+    "timing": {
+     "stage": "ENSURE_SESSION",
+     "start_elapsed_ms": 7350,
+     "start_ts_ms": 1790318117211,
+     "end_elapsed_ms": 11080,
+     "end_ts_ms": 1790318120942,
+     "duration_ms": 3730,
+     "status": "ok",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 7363,
+    "at_ms": 1790318117222
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 8170,
+    "at_ms": 1790318117222
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 8515,
+    "at_ms": 1790318117222
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 9817,
+    "at_ms": 1790318117222
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 10341,
+    "at_ms": 1790318117222
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 10370,
+    "at_ms": 1790318117222
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 10997,
+    "at_ms": 1790318117222
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 11080,
+    "at_ms": 1790318120955,
+    "timing": {
+     "stage": "ENTER_QUERY",
+     "start_elapsed_ms": 11080,
+     "start_ts_ms": 1790318120942,
+     "end_elapsed_ms": 13725,
+     "end_ts_ms": 1790318123587,
+     "duration_ms": 2645,
+     "status": "fail",
+     "retries": 0
+    }
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "elapsed_ms": 13725,
+    "at_ms": 1790318120955
+   }
+  ]
+ },
+ "device_stage": "ENTER_QUERY",
+ "execution_count": 1,
+ "run_id": "c_SVFs-Dkda35OOy8-xoSkK9JCWX1Inyxy8bk85TU-Mq8",
+ "fixture_name": null,
+ "home": null,
+ "away": null,
+ "competition": null,
+ "verification_detail": "No unique outlined field containing OCR hint Username",
+ "stage_timings": [
+  {
+   "stage": "OPEN_HOME",
+   "start_elapsed_ms": 71,
+   "start_ts_ms": 1790318109933,
+   "end_elapsed_ms": 7350,
+   "end_ts_ms": 1790318117211,
+   "duration_ms": 7279,
+   "status": "ok",
+   "retries": 0
+  },
+  {
+   "stage": "ENSURE_SESSION",
+   "start_elapsed_ms": 7350,
+   "start_ts_ms": 1790318117211,
+   "end_elapsed_ms": 11080,
+   "end_ts_ms": 1790318120942,
+   "duration_ms": 3730,
+   "status": "ok",
+   "retries": 0
+  },
+  {
+   "stage": "ENTER_QUERY",
+   "start_elapsed_ms": 11080,
+   "start_ts_ms": 1790318120942,
+   "end_elapsed_ms": 13725,
+   "end_ts_ms": 1790318123587,
+   "duration_ms": 2645,
+   "status": "fail",
+   "retries": 0
+  }
+ ],
+ "session_path": [
+  {
+   "saw": "LOGGED_OUT",
+   "state": "LOGIN_IN_PROGRESS",
+   "attempts": 0
+  }
+ ],
+ "session_machine": "LOGIN_IN_PROGRESS"
+}

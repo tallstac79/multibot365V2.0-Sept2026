@@ -101,10 +101,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     public CompletableFuture<Void> open_home() {
-        return ui.open(HOME_URL).thenCompose(v -> ui.delay(2800)).thenCompose(v -> settle("home", 0)).thenCompose(s -> {
+        return ui.open(HOME_URL).thenCompose(v -> ui.delay(2800)).thenCompose(v -> settle("home", 0)).thenCompose(this::pastChromeFirstRun).thenCompose(s -> {
             require(!visible(s, "SIMULATOR", "SEARCHPAGE", "Fictional interface"),
                     "TARGET_NOT_FOUND", "Simulator page visible during live Bet365 run");
-            return dismissCookiesIfPresent(s).thenCompose(v -> ui.capture("home_ready")).thenAccept(ready -> {
+            return clearOverlays(s, 0).thenCompose(v -> ui.capture("home_ready")).thenAccept(ready -> {
                 // Login wall is a valid home arrival (intentional LOGGED_OUT / expiry recovery).
                 if (loginWall(ready) || (visible(ready, "Password") && visible(ready, "Log In", "Login"))) {
                     require(!visible(ready, "Accept All") && !cookieWall(ready),
@@ -124,10 +124,19 @@ final class Bet365LiveAdapter implements SiteAdapter {
      *  an interactive challenge, or one that does not clear by itself, fails closed as BOT_CHECK. */
     private CompletableFuture<VisualScreen> settle(String label, int attempt) {
         return ui.capture(label).thenCompose(s -> {
+            // Chrome's own prompts ("Chrome notifications make things easier", sign-in, save password) can sit over a
+            // page that is still loading; real run 2026-09-25 07:46 waited 24 s behind one and reported BOT_CHECK.
+            Control prompt = chromePromptControl(s);
+            if (prompt != null && attempt < 6) {
+                ui.put("chrome_prompt_dismissed", prompt.label);
+                return ui.tap(prompt.box, prompt.label).thenCompose(v -> ui.delay(900))
+                        .thenCompose(v -> settle(label + "_prompt", attempt + 1));
+            }
             if (!settling(s)) return CompletableFuture.completedFuture(s);
             boolean interactive = interactiveBotCheck(s);
             if (interactive || attempt >= 6) {
                 ui.put("bot_check", CoordinatorAgent.object("interactive", interactive, "waited_attempts", attempt));
+                ui.put("session", "RESTRICTED");   // the backend must not keep a stale AUTHENTICATED across a challenge
                 throw new Failure("BOT_CHECK", interactive
                         ? "Bet365 security check needs a human; the agent never interacts with it"
                         : "Bet365 security verification or splash did not clear automatically");
@@ -153,48 +162,94 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 && !visible(s, "Log In", "Login", "Search", "In-Play", "In-play", "Sports", "My Bets", "Football", "Password");
     }
 
+    private org.json.JSONArray sessionPath = new org.json.JSONArray();
+
+    /** Session step (0.9.0-session): observe -> SessionMachine -> act, until a terminal state. Never guesses. */
     public CompletableFuture<Void> ensure_session() {
-        return settle("session", 0).thenCompose(s -> {
-            if (sessionLoggedIn(s)) {
-                ui.put("session", "AUTHENTICATED");
-                return CompletableFuture.completedFuture(null);
+        sessionPath = new org.json.JSONArray();
+        ui.put("session_path", sessionPath);
+        return sessionStep(null, 0, 0, "session");
+    }
+
+    /** Word-level facts for SessionMachine (a merged header row would otherwise hide the right-hand balance pill). */
+    static List<SessionMachine.Line> machineLines(VisualScreen s) {
+        List<SessionMachine.Line> out = new ArrayList<>();
+        for (GameLinesParser.Word w : wordsOf(s)) out.add(new SessionMachine.Line(w.text, w.top, w.left));
+        return out;
+    }
+
+    private CompletableFuture<Void> sessionStep(SessionMachine.State state, int attempts, int relooks, String label) {
+        return settle(label, 0).thenCompose(s0 -> clearOverlays(s0, 0)).thenCompose(s -> {
+            SessionMachine.Observation seen = SessionMachine.observe(machineLines(s));
+            boolean credentials = CoordinatorConfig.hasBet365Credentials(ui.service);
+            SessionMachine.State next = SessionMachine.next(state, seen, credentials, attempts);
+            if (next == SessionMachine.State.LOGIN_REQUIRED) next = SessionMachine.next(next, seen, credentials, attempts);   // decide at once
+            sessionPath.put(CoordinatorAgent.object("saw", seen.name(), "state", next == null ? "UNOBSERVED" : next.name(), "attempts", attempts));
+            ui.put("session_machine", next == null ? "UNOBSERVED" : next.name());
+            if (seen == SessionMachine.Observation.UNKNOWN) {
+                // Nothing recognisable (mid-navigation, still loading): back to HOME once, then one more bounded look.
+                if (relooks >= 2) {
+                    ui.put("session", "UNKNOWN");
+                    throw new Failure("LOGIN_FAILED", "Bet365 session state unclear: no account, login or challenge markers on screen");
+                }
+                final SessionMachine.State keep = state;
+                CompletableFuture<Void> back = relooks == 0 ? ui.open(HOME_URL).thenCompose(v -> ui.delay(1500)) : ui.delay(1500);
+                return back.thenCompose(v -> sessionStep(keep, attempts, relooks + 1, label + "_relook"));
             }
-            // LOGGED_OUT / EXPIRED / login wall: restore with app-private credentials (no betting).
-            boolean needsLogin = loginWall(s) || sessionExpired(s)
-                    || visible(s, "Log In", "Login")
-                    || visible(s, "Password");
-            if (!needsLogin) {
-                // Ambiguous mid-navigation (common after Search reset): reopen home once, then reclassify.
-                return ui.open(HOME_URL).thenCompose(v -> ui.delay(900)).thenCompose(v -> settle("session_rehome", 0)).thenCompose(s2 -> {
-                    if (sessionLoggedIn(s2)) {
-                        ui.put("session", "AUTHENTICATED");
-                        return CompletableFuture.completedFuture(null);
-                    }
-                    boolean needs2 = loginWall(s2) || sessionExpired(s2) || visible(s2, "Log In", "Login") || visible(s2, "Password");
-                    if (!needs2) {
-                        throw new Failure("LOGIN_FAILED", "Bet365 session state unclear; login wall not confirmed");
-                    }
-                    if (!CoordinatorConfig.hasBet365Credentials(ui.service)) {
-                        boolean expired = sessionExpired(s2);
-                        ui.put("session", expired ? "EXPIRED" : "LOGGED_OUT");
-                        throw new Failure(expired ? "SESSION_EXPIRED" : "LOGIN_FAILED", "Bet365 logged out and no app-private credentials in Coordinator settings ? open Bet365Agent Settings or log in on Samsung Chrome");
-                    }
-                    ui.put("session", "AUTHENTICATING");
-                    return performLogin(s2);
-                });
+            ui.put("session", SessionMachine.wireState(next));
+            switch (next) {
+                case AUTHENTICATED:
+                    return CompletableFuture.<Void>completedFuture(null);
+                case AUTHENTICATED_RECOVERED:
+                    ui.put("session_recovered", true);
+                    return recoveredHome();
+                case LOGIN_IN_PROGRESS:
+                    return performLogin(s).thenCompose(v -> sessionStep(SessionMachine.State.LOGIN_IN_PROGRESS, attempts + 1, 0, "session_after_login"));
+                case TWO_FACTOR_REQUIRED:
+                    throw new Failure("TWO_FACTOR_REQUIRED", "Bet365 asks for a verification code: the operator must complete two-factor login; nothing was typed or guessed");
+                case BOT_CHECK_OR_CHALLENGE:
+                    throw new Failure("BOT_CHECK", "Bet365 security challenge on screen: needs a human; the agent never interacts with it");
+                default:
+                    throw new Failure("LOGIN_FAILED", credentials
+                            ? "Bet365 login did not reach an authenticated account after " + attempts + " submission(s)"
+                            : "Bet365 logged out and no credentials configured on the phone (Bet365Agent Settings)");
             }
-            if (!CoordinatorConfig.hasBet365Credentials(ui.service)) {
-                boolean expired = sessionExpired(s);
-                ui.put("session", expired ? "EXPIRED" : "LOGGED_OUT");
-                String stage = expired ? "SESSION_EXPIRED" : "LOGIN_FAILED";
-                throw new Failure(stage, "Bet365 logged out and no app-private credentials in Coordinator settings ? open Bet365Agent Settings or log in on Samsung Chrome");
-            }
-            ui.put("session", "AUTHENTICATING");
-            return performLogin(s);
         });
     }
 
-    private CompletableFuture<Void> performLogin(VisualScreen first) {
+    /** After a recovery: Bet365 HOME, re-verified from account evidence (never the URL), so the phone rests authenticated and idle. */
+    private CompletableFuture<Void> recoveredHome() {
+        return ui.open(HOME_URL).thenCompose(v -> ui.delay(2000)).thenCompose(v -> recoveredHomeLook(0));
+    }
+
+    /** HOME after a recovery: overlays cleared, then the account must be visible; up to three looks 1.5 s apart. */
+    private CompletableFuture<Void> recoveredHomeLook(int attempt) {
+        return settle("session_recovered_home" + (attempt == 0 ? "" : "_" + attempt), 0).thenCompose(s0 -> clearOverlays(s0, 0)).thenCompose(s -> {
+            SessionMachine.Observation seen = SessionMachine.observe(machineLines(s));
+            sessionPath.put(CoordinatorAgent.object("saw", seen.name(), "state", "HOME_VERIFY", "attempts", attempt));
+            if (seen == SessionMachine.Observation.ACCOUNT) { ui.put("home_verified", true); return CompletableFuture.<Void>completedFuture(null); }
+            require(seen != SessionMachine.Observation.CHALLENGE, "BOT_CHECK", "Bet365 security challenge after login");
+            require(seen != SessionMachine.Observation.TWO_FACTOR, "TWO_FACTOR_REQUIRED", "Bet365 asks for a verification code after login");
+            require(attempt < 2, "LOGIN_FAILED", "Recovered session does not show the account on Bet365 HOME (" + seen.name() + ")");
+            return ui.delay(1500).thenCompose(v -> recoveredHomeLook(attempt + 1));
+        });
+    }
+
+    /** First candidate word that occurs exactly once in the upper form area (a unique OCR hint for TextEntryFlow). */
+    private static String uniqueHint(VisualScreen s, String... candidates) {
+        for (String want : candidates) {
+            int n = 0;
+            for (GameLinesParser.Word w : wordsOf(s)) if (w.top < 700 && w.text.equals(want)) n++;
+            if (n == 1) return want;
+        }
+        return null;
+    }
+
+    private CompletableFuture<Void> performLogin(VisualScreen shown) {
+        return clearOverlays(shown, 0).thenCompose(this::performLoginOn);
+    }
+
+    private CompletableFuture<Void> performLoginOn(VisualScreen first) {
         CompletableFuture<Void> openForm = CompletableFuture.completedFuture(null);
         if (!loginWall(first)) {
             VisualScreen.Line loginBtn = null;
@@ -203,8 +258,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 if ((t.equalsIgnoreCase("Log In") || t.equalsIgnoreCase("Login")) && line.bounds.top < 350) { loginBtn = line; break; }
             }
             android.graphics.Rect loginRect = loginBtn != null ? loginBtn.bounds : first.phraseBounds("Log In", 0, 350);
+            if (loginRect == null) loginRect = first.phraseBounds("Log In", 0, 1600);   // "logged out" pages put the button lower
             if (loginRect == null) throw new Failure("LOGIN_FAILED", "Log In control not visible on live Bet365");
-            openForm = ui.tap(loginRect, "Log In").thenCompose(v -> ui.delay(900));
+            openForm = ui.tap(loginRect, "Log In").thenCompose(v -> ui.delay(600)).thenCompose(v -> captureUntil("login_form_wait", 5, 600,
+                    f -> loginWall(f) || visible(f, "Password"))).thenAccept(f -> {});
         }
         String user = CoordinatorConfig.bet365Username(ui.service);
         String pass = CoordinatorConfig.bet365Password(ui.service);
@@ -213,11 +270,25 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     "LOGIN_FAILED", "Bet365 login form not visible");
             String userHint = visible(form, "email") || visible(form, "Username") || visible(form, "username") ? (visible(form, "email") ? "email" : "Username") : "Username";
             if (visible(form, "Username or email") || visible(form, "username or email") || visible(form, "psername")) userHint = visible(form, "email") ? "email" : "Username";
-            // Prefer placeholder fragments TextEntryFlow can match
-            String hintUser = "email";
-            if (visible(form, "Username") || visible(form, "username")) hintUser = "Username";
-            if (visible(form, "bet365...")) { /* ignore */ }
-            return ui.type(hintUser, user).thenCompose(x -> ui.delay(400)).thenCompose(x -> ui.typeSecret("Password", pass)).thenCompose(x -> ui.delay(400)).thenCompose(x -> {
+            // The username field is found by a placeholder word that appears exactly once on the form. Real form
+            // (2026-09-25): placeholder "Username or email", and "Forgot Username Password?" below it, so "Username"
+            // is not unique but "email" is.
+            // After a reboot Bet365 pre-fills the remembered username (no placeholder, a clear "X" instead): if it is
+            // this account, only the password is typed; a different account is never typed over (fail closed).
+            String prefilled = null;
+            for (GameLinesParser.Word w : wordsOf(form)) if (w.top > 250 && w.top < 400 && w.text.contains("@")) prefilled = w.text.trim();
+            CompletableFuture<Void> userStep;
+            if (prefilled != null) {
+                require(prefilled.equalsIgnoreCase(user.trim()), "LOGIN_FAILED", "Login form is pre-filled with a different account; not typing over it");
+                ui.put("login_user_prefilled", true);
+                userStep = CompletableFuture.completedFuture(null);
+            } else {
+                String hintUser = uniqueHint(form, "email", "Email", "Username", "username");
+                require(hintUser != null, "LOGIN_FAILED", "No unique username placeholder on the Bet365 login form");
+                ui.put("login_user_hint", hintUser);
+                userStep = ui.type(hintUser, user);
+            }
+            return userStep.thenCompose(x -> ui.delay(400)).thenCompose(x -> ui.typeSecret("Password", pass)).thenCompose(x -> ui.delay(400)).thenCompose(x -> {
                 return ui.capture("login_filled").thenCompose(filled -> {
                     VisualScreen.Line submit = null;
                     for (VisualScreen.Line line : filled.lines) {
@@ -231,19 +302,80 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     }
                     android.graphics.Rect submitRect = submit != null ? submit.bounds : filled.phraseBounds("Log In", 400, 2000);
                     require(submitRect != null, "LOGIN_FAILED", "Login submit button not visible");
-                    return ui.tap(submitRect, "Log In submit").thenCompose(z -> ui.delay(2500)).thenCompose(z -> ui.capture("session_after_login")).thenAccept(after -> {
-                        if (loginWall(after) || visible(after, "Log In", "Login") || visible(after, "Password")) {
-                            throw new Failure("LOGIN_FAILED", "Bet365 login did not succeed: Log In still visible");
-                        }
-                        if (!sessionLoggedIn(after)) {
-                            throw new Failure("LOGIN_FAILED", "Bet365 authenticated account UI not visible after submit");
-                        }
-                        if (visible(after, "insufficient", "Insufficient")) throw new Failure("INSUFFICIENT_BALANCE", "Insufficient balance banner after login");
-                        ui.put("session", "AUTHENTICATED");
-                    });
+                    // What follows the submit (account, still a form, verification code, challenge) is judged by SessionMachine.
+                    return ui.tap(submitRect, "Log In submit").thenCompose(z -> ui.delay(2500)).thenAccept(z -> ui.put("login_submitted", true));
                 });
             });
         });
+    }
+
+    /** Chrome's own first-run / sign-in / notification prompts (seen after Chrome data is cleared): declined; never a Bet365 control. */
+    static boolean chromeFirstRun(VisualScreen s) {
+        // Real screen after `pm clear` (2026-09-25 07:29): "Make Chrome your own / Add account to device / Stay signed out".
+        return visible(s, "Save password?", "Save password", "Update password?", "Make Chrome your own", "Add account to device", "Stay signed out",
+                "Welcome to Chrome", "Sign in to Chrome", "Turn on sync", "Use without an account", "Turn on notifications",
+                "Set Chrome as default", "Chrome notifications", "Enhanced ad privacy", "Sign in to get your bookmarks");
+    }
+
+    /** Chrome prompts (first run, notifications) and the Bet365 cookie wall sit on top of the page: declined / accepted
+     *  before the session is judged or Log In is tapped. Real frame 2026-09-25 07:31: "Chrome notifications make things
+     *  easier" over the logged-out home, cookie banner below it. Bounded to three rounds. */
+    /** A control to tap on an overlay: its word-level bounds (survives OCR rows merged with neighbours) and label. */
+    static final class Control {
+        final android.graphics.Rect box; final String label;
+        Control(android.graphics.Rect box, String label) { this.box = box; this.label = label; }
+    }
+
+    private CompletableFuture<VisualScreen> clearOverlays(VisualScreen s, int attempt) {
+        if (attempt >= 3) return CompletableFuture.completedFuture(s);
+        Control control = cookieControl(s);
+        if (control == null) control = chromePromptControl(s);
+        if (control == null) return CompletableFuture.completedFuture(s);   // nothing actionable on top: no blind loops
+        ui.put("overlay_dismissed_" + attempt, control.label);
+        final Control c = control;
+        return ui.tap(c.box, c.label).thenCompose(v -> ui.delay(900))
+                .thenCompose(v -> ui.capture("overlays_" + attempt)).thenCompose(a -> clearOverlays(a, attempt + 1));
+    }
+
+    /** The Bet365 cookie banner's accept control ("Accept All"; OCR reads "Accept AI"), else "Essential Only"; null without the banner. */
+    static Control cookieControl(VisualScreen s) {
+        if (!(visible(s, "cookies", "Cookies", "Cookie") && (visible(s, "Accept") || visible(s, "Essential")))) return null;
+        for (String phrase : new String[] {"Accept All", "Accept AI", "Accept Al", "Accept A1", "Essential Only"}) {
+            android.graphics.Rect r = s.phraseBounds(phrase, 600, 1600);
+            if (r != null) return new Control(r, "Cookie banner: " + phrase);
+        }
+        for (VisualScreen.Line line : s.lines) if (line.bounds.top > 700 && line.text.trim().startsWith("Accept")) return new Control(line.bounds, "Cookie banner: " + line.text.trim());
+        return null;
+    }
+
+    /** A Chrome prompt's decline / continue control, or null when no Chrome prompt phrase is on screen. */
+    static Control chromePromptControl(VisualScreen s) {
+        // Chrome's in-product tip bubble after a reboot ("Review your inactive tabs and groups here") covers the
+        // account area of Bet365's header; a tap outside it (the bet365 logo, which only reloads home) dismisses it.
+        if (visible(s, "inactive tabs", "Review your inactive")) {
+            android.graphics.Rect logo = s.phraseBounds("bet365", 140, 240);
+            return new Control(logo != null ? logo : new android.graphics.Rect(40, 560, 120, 600), "Chrome tip bubble: tap outside");
+        }
+        if (!chromeFirstRun(s)) return null;
+        for (String phrase : new String[] {"Never", "Stay signed out", "Use without an account", "No thanks", "No, thanks", "Not now", "Skip", "Accept & continue", "Accept and continue", "Continue", "Got it", "Next"}) {
+            android.graphics.Rect r = s.phraseBounds(phrase, 0, 1600);
+            if (r != null) return new Control(r, "Chrome prompt: " + phrase);
+        }
+        return null;
+    }
+
+    private CompletableFuture<VisualScreen> pastChromeFirstRun(VisualScreen s) {
+        if (!chromeFirstRun(s)) return CompletableFuture.completedFuture(s);
+        return dismissChromeFirstRun(s, 0).thenCompose(v -> ui.open(HOME_URL)).thenCompose(v -> ui.delay(2800))
+                .thenCompose(v -> settle("home_after_chrome_fre", 0));
+    }
+
+    private CompletableFuture<Void> dismissChromeFirstRun(VisualScreen s, int attempt) {
+        Control button = attempt < 4 ? chromePromptControl(s) : null;
+        if (button == null) return CompletableFuture.completedFuture(null);
+        ui.put("chrome_first_run_dismissed", attempt + 1);
+        return ui.tap(button.box, button.label).thenCompose(v -> ui.delay(900))
+                .thenCompose(v -> ui.capture("chrome_fre_" + attempt)).thenCompose(after -> dismissChromeFirstRun(after, attempt + 1));
     }
 
         public CompletableFuture<Void> open_search() {
@@ -1414,12 +1546,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
 
+    /** Idle-probe classification from account evidence (balance / My Account / Deposit / Log Out in the header), never the URL. */
     static String classifySessionState(VisualScreen s) {
         if (s == null) return "UNKNOWN";
-        if (sessionExpired(s)) return "EXPIRED";
-        if (sessionLoggedIn(s)) return "AUTHENTICATED";
-        if (loginWall(s) || headerLogIn(s)) return "LOGGED_OUT";
-        return "UNKNOWN";
+        return SessionMachine.probeState(SessionMachine.observe(machineLines(s)));
     }
 
     /** Bet365 header offers "Log In" (possibly OCR-merged, e.g. "bet365 Rewards Log In"): logged out. */
@@ -2707,10 +2837,12 @@ final class Bet365LiveAdapter implements SiteAdapter {
         if (!cookieWall(s)) return CompletableFuture.completedFuture(null);
         VisualScreen.Line accept = firstOf(s, "Accept All");
         if (accept == null) {
+            // OCR variants of the button (real 2026-09-25: "Accept AI"); otherwise the essential-only option
             for (VisualScreen.Line line : s.lines) {
-                if (line.text.equals("Accept")) { accept = line; break; }
+                if (line.text.trim().matches("(?i)accept(\s+(all|al|ai|a1|aii))?")) { accept = line; break; }
             }
         }
+        if (accept == null) accept = firstOf(s, "Essential Only");
         require(accept != null, "TARGET_NOT_FOUND", "Cookie Accept control not found on live Bet365");
         return ui.tap(accept.bounds, "Accept cookies").thenCompose(v -> ui.delay(1000));
     }

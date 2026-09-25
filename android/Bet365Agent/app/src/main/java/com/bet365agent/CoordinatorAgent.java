@@ -362,7 +362,7 @@ final class CoordinatorAgent implements AutoCloseable {
             if(proof.has("observe"))put(result,"observe",proof.opt("observe"));
             if(proof.has("betslip_reset"))put(result,"betslip_reset",proof.opt("betslip_reset"));
             if(proof.has("betslip_clear"))put(result,"betslip_clear",proof.opt("betslip_clear"));
-            for(String key:new String[]{"route","held","returned_home","home_verified","pretap","stage_timings","t_start_ms","t_pretap_done_ms","t_tap_ms","t_receipt_ms","t_home_ms","alias_candidate","direct_event_rejected","stake_field_state","stake_clear","identity","identity_verdict","event_url","bench","ocr_engine","bet_reference_fast","bet_reference_legacy","bet_reference_disputed"})
+            for(String key:new String[]{"route","held","returned_home","home_verified","pretap","stage_timings","t_start_ms","t_pretap_done_ms","t_tap_ms","t_receipt_ms","t_home_ms","alias_candidate","direct_event_rejected","stake_field_state","stake_clear","identity","identity_verdict","event_url","bench","ocr_engine","bet_reference_fast","bet_reference_legacy","bet_reference_disputed","session_path","session_machine","session_recovered","chrome_first_run_dismissed","login_submitted"})
                 if(proof.has(key))put(result,key,proof.opt(key));
             JSONObject ready = proof.optJSONObject("ready_state");
             if (ready != null && ready.has("session")) noteSession(ready.optString("session"), "ready_state");
@@ -385,7 +385,7 @@ final class CoordinatorAgent implements AutoCloseable {
             "PRICE_CHANGED", "LINE_CHANGED", "SELECTION_CHANGED", "SUSPENDED", "UNAVAILABLE", "BELOW_MINIMUM",
             "INSUFFICIENT_BALANCE", "INSUFFICIENT_FUNDS", "STAKE_LIMITED", "STAKE_REJECTED", "MARKET_SUSPENDED",
             "SELECTION_UNAVAILABLE", "SPORTS_RESULTS_NOT_FOUND", "WRONG_SPORT", "CONFIRMATION_REQUIRED",
-            "BETSLIP_NOT_SINGLE", "PLACEMENT_UNKNOWN", "REJECTED", "INVALID_INSTRUCTION", "MY_BETS_UNAVAILABLE", "BOT_CHECK", "ALIAS_REQUIRED").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
+            "BETSLIP_NOT_SINGLE", "PLACEMENT_UNKNOWN", "REJECTED", "INVALID_INSTRUCTION", "MY_BETS_UNAVAILABLE", "BOT_CHECK", "ALIAS_REQUIRED", "TWO_FACTOR_REQUIRED").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
     }
     private JSONObject health() throws Exception {
         JSONObject active = store.active(), last = store.last();
@@ -406,7 +406,9 @@ final class CoordinatorAgent implements AutoCloseable {
             .put("last_result", last == null ? JSONObject.NULL : last.getJSONObject("result"))
             .put("app_version", pkg.versionName).put("version_code", pkg.versionCode)
             .put("endpoint", endpoint() == null ? JSONObject.NULL : endpoint()).put("pid", android.os.Process.myPid())
-            .put("device_id", DEVICE_ID).put("session", session).put("ocr_engine", CoordinatorConfig.ocrEngine(service)).put("fast_ocr_error", runner.fastEngineError() == null ? JSONObject.NULL : runner.fastEngineError());
+            .put("device_id", DEVICE_ID).put("session", session).put("ocr_engine", CoordinatorConfig.ocrEngine(service)).put("fast_ocr_error", runner.fastEngineError() == null ? JSONObject.NULL : runner.fastEngineError())
+            .put("credentials_configured", CoordinatorConfig.hasBet365Credentials(service)).put("credential_store", SecureCredentials.storeKind())
+            .put("session_recovery", selfHealStatus());
         if (active != null) {
             put(health, "progress", progressSnapshot());
             put(health, "device_stage", progressStage);
@@ -428,6 +430,40 @@ final class CoordinatorAgent implements AutoCloseable {
             sessionObservedAtMs = System.currentTimeMillis();
             sessionDetail = safeDetail;
         }
+    }
+
+    // ---- Session self-heal (0.9.0-session): a LOGGED_OUT / EXPIRED idle probe starts ONE bounded SESSION_CHECK
+    // (credentials configured, phone idle, >= 10 min since the last, <= 3 per hour). 2FA / challenges end it for the operator.
+    private static final long SELF_HEAL_COOLDOWN_MS = 600_000L;
+    private static final int SELF_HEAL_PER_HOUR = 3;
+    private long lastSelfHealAtMs;
+    private volatile int unknownProbes;
+    private final java.util.ArrayDeque<Long> selfHeals = new java.util.ArrayDeque<>();
+    private volatile String lastSelfHealOutcome = "none";
+
+    private void maybeSelfHeal(String state) {
+        if (closed || !("LOGGED_OUT".equals(state) || "EXPIRED".equals(state) || "UNKNOWN_PERSISTENT".equals(state))) return;
+        if (!CoordinatorConfig.hasBet365Credentials(service)) { lastSelfHealOutcome = "skipped: no credentials configured"; return; }
+        long now = System.currentTimeMillis();
+        synchronized (selfHeals) {
+            while (!selfHeals.isEmpty() && now - selfHeals.peekFirst() > 3_600_000L) selfHeals.pollFirst();
+            if (now - lastSelfHealAtMs < SELF_HEAL_COOLDOWN_MS || selfHeals.size() >= SELF_HEAL_PER_HOUR) { lastSelfHealOutcome = "deferred: cooldown or hourly limit"; return; }
+            lastSelfHealAtMs = now; selfHeals.addLast(now);
+        }
+        String id = "self-session-" + now;
+        main.post(() -> {
+            if (store.active() != null) { lastSelfHealOutcome = id + ": skipped, phone busy"; return; }
+            CoordinatorHttp.Reply reply = accept(object("instruction_id", id, "action", "SESSION_CHECK", "adapter", "live_bet365",
+                    "scenario", "live", "sport", "basketball", "timeout_ms", 120000).toString());
+            lastSelfHealOutcome = id + " -> HTTP " + reply.code;
+            Log.i("AgentCoordinator", "SELF_HEAL " + lastSelfHealOutcome);
+            if (reply.afterWrite != null) reply.afterWrite.run();
+        });
+    }
+
+    private JSONObject selfHealStatus() {
+        int n; synchronized (selfHeals) { n = selfHeals.size(); }
+        return object("last_attempt_at_ms", lastSelfHealAtMs, "attempts_last_hour", n, "last_outcome", lastSelfHealOutcome);
     }
 
     private void refreshSession() {
@@ -460,6 +496,9 @@ final class CoordinatorAgent implements AutoCloseable {
                         VisualScreen screen = new VisualScreen(ocr);
                         String state = Bet365LiveAdapter.classifySessionState(screen);
                         noteSession(state, "idle probe");
+                        // UNKNOWN three probes running (~3 min: Chrome's first-run screen, a non-Bet365 page) is worth one bounded check too
+                        unknownProbes = "UNKNOWN".equals(state) ? unknownProbes + 1 : 0;
+                        maybeSelfHeal(unknownProbes >= 3 ? "UNKNOWN_PERSISTENT" : state);
                     } catch (Exception e) {
                         noteSession("ERROR", "session probe failed: " + e.getClass().getSimpleName());
                     }

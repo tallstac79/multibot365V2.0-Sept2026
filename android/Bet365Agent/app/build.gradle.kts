@@ -10,8 +10,8 @@ android {
         applicationId = "com.bet365agent"
         minSdk = 26
         targetSdk = 34
-        versionCode = 82
-        versionName = "0.8.12-stake"
+        versionCode = 96
+        versionName = "0.9.13-session"
     }
 
     buildTypes {
@@ -39,6 +39,8 @@ dependencies {
     // Fast on-device OCR (Milestone C2): ML Kit text recognition with the Latin model BUNDLED in the APK
     // (no network, no model download); word-level bounding boxes.
     implementation("com.google.mlkit:text-recognition:16.0.1")
+    // Bet365 credentials in EncryptedSharedPreferences (Android Keystore master key)
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
     // Plain JVM unit tests for pure classifiers (no device needed)
     testImplementation("junit:junit:4.13.2")

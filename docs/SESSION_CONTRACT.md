@@ -94,3 +94,35 @@ as `session_state`.
 Bet365-specific login detection and UI interaction, OCR of the account header, and any
 final action. Until the phone reports a `session` object, every dispatch attempt safely
 ends as `SESSION_REQUIRED`.
+
+
+## Android login / session state machine (0.9.0-session)
+
+`SessionMachine` (pure, JVM-tested) drives every `ensure_session`: the adapter observes the screen (OCR
+lines + positions), the machine names the observation and the next state, the adapter acts.
+
+States: `AUTHENTICATED`, `LOGIN_REQUIRED`, `LOGIN_IN_PROGRESS`, `TWO_FACTOR_REQUIRED`,
+`BOT_CHECK_OR_CHALLENGE`, `LOGIN_FAILED`, `AUTHENTICATED_RECOVERED`.
+Observations, in precedence order: CHALLENGE, TWO_FACTOR, LOGIN_FORM, EXPIRED, ACCOUNT, LOGGED_OUT, UNKNOWN.
+
+* AUTHENTICATED is judged from account evidence in Bet365's header (balance pill, Deposit, My Account,
+  Log Out) and never from the URL; a header that also offers Log In is never authenticated.
+* LOGIN_REQUIRED -> LOGIN_IN_PROGRESS only with credentials configured, at most two submissions, then
+  LOGIN_FAILED. A verification-code prompt is TWO_FACTOR_REQUIRED and a security challenge is
+  BOT_CHECK_OR_CHALLENGE: terminal, reported, nothing typed or guessed.
+* AUTHENTICATED_RECOVERED ends on Bet365 HOME re-verified from account evidence (the idle state).
+* UNKNOWN screens decide nothing: one return to HOME and one more look, then LOGIN_FAILED.
+* Wire mapping to this contract: AUTHENTICATED/AUTHENTICATED_RECOVERED -> AUTHENTICATED,
+  LOGIN_IN_PROGRESS -> AUTHENTICATING, TWO_FACTOR_REQUIRED/BOT_CHECK_OR_CHALLENGE -> RESTRICTED,
+  LOGIN_REQUIRED/LOGIN_FAILED -> LOGGED_OUT. Workflow stages: LOGIN_FAILED, TWO_FACTOR_REQUIRED, BOT_CHECK
+  (all -> SESSION_REQUIRED on the backend; the instruction is never resent).
+* The run record carries `session_path` (every observation/state), `session_machine`, `session_recovered`.
+
+Credentials: `SecureCredentials` (EncryptedSharedPreferences under an Android Keystore master key),
+migrated once from the plain app-private prefs with a read-back check; never logged, never in evidence;
+the password goes through the accessibility IME into the masked field. `/health` reports
+`credentials_configured`, `credential_store` and `session_recovery`.
+
+Self-heal: a LOGGED_OUT / EXPIRED idle probe starts one bounded `SESSION_CHECK` (credentials present,
+phone idle, >= 10 min since the last, <= 3 per hour). Chrome's own first-run prompts (after cleared
+Chrome data) are declined before Bet365 is judged.
