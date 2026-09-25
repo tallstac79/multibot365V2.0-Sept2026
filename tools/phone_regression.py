@@ -74,6 +74,8 @@ for case in json.loads(sys.argv[1]):
         hold['kickoff_utc'] = case['kickoff_utc']
     if case.get('aliases'):
         hold['aliases'] = json.dumps(case['aliases'])
+    if case.get('competition_women'):
+        hold['competition_women'] = 'true'          # the backend's competition-aware women's marker flag
     r, rec, wall = run(hold, 280)
     sel = r.get('selection') or {}
     stages = stage_names(rec)

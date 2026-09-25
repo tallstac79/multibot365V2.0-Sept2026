@@ -33,3 +33,16 @@ during the proof.
 ## Event-link route re-verified on 0.9.15-search
 `verify-0.9.15/link-szolnoki-130334.json`: Szolnoki Olaj v OSE Lions opened by link, identity EXACT in 6.1 s; the
 requested -19.5 line was no longer offered (market moved) → `TARGET_NOT_FOUND` at READ_SELECTION, as designed.
+
+## 4. Women's-competition hold runs refused by the phone's wire schema (phone, FIXED in 0.9.16-wire)
+`on-42935974a0ed733e4a1dc161` (KSC Szekszard v NKA Universitas Pecs, "Nemzeti Bajnoksag I.A Women", 12:15:36 UTC,
+SPREAD HOME 3.5): REJECTED "Coordinator refused admission: Schema validation failed: Invalid schema extras".
+The backend sends `competition_women: "true"` for a women's competition (be13bca). `CoordinatorInstruction` had the
+field on its global whitelist but not in the ADAPTER_WORKFLOW extras, so every women's-competition hold run was
+refused at admission (fail-closed; the first such dispatch since be13bca was this one).
+Fix: `checkWorkflowExtras` (extracted, pure) admits `competition_women` with a strict "true"/"false" value.
+JVM tests on the exact refused payload: `CoordinatorInstructionTest` (admitted; absent/false admitted; bad values
+refused; other extras still refused; phone keeps the strict www event_url form).
+Verification on the phone (`../wire-defect/verify-0.9.16/women-szekszard-132234.json`): hold run admitted, event
+opened by link, identity HIGH_CONFIDENCE_EVENT_MATCH "Szekszard (W) v NKA Pecs (W)", HOME +3.5 @ 1.83, stake 0.10,
+pre-tap check PASS (return 0.18), no tap.

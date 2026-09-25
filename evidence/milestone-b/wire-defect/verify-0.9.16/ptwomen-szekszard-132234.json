@@ -1,0 +1,149 @@
+{
+ "payload": {
+  "action": "PLACE_HELD",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "+3.5",
+  "selection_name": "Szekszard (W)",
+  "price": "1.83",
+  "minimum_price": "1.83",
+  "stake": "0.10",
+  "execution_mode": "prepare",
+  "confirmation_status": "APPROVED",
+  "timeout_ms": 60000,
+  "instruction_id": "ptwomen-szekszard-132234"
+ },
+ "result": {
+  "instruction_id": "ptwomen-szekszard-132234",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "PRETAP_READY",
+  "duration_ms": 895,
+  "progress": {
+   "stage": "PRETAP_CHECK",
+   "elapsed_ms": 755,
+   "last_progress_at_ms": 1790338966726,
+   "instruction_id": "ptwomen-szekszard-132234",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790338966718
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 21,
+     "at_ms": 1790338966726
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 30,
+     "at_ms": 1790338966726
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 647,
+     "at_ms": 1790338966726
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 755,
+     "at_ms": 1790338966726
+    }
+   ]
+  },
+  "device_stage": "PRETAP_CHECK",
+  "execution_count": 1,
+  "run_id": "c_Wd3oFRChM7DlxiXDzKFpJFpJ3bEqxXXjKSeC9lpUyJg",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "pretap": {
+   "ok": true,
+   "selection": "Szekszard (W)",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "stage_timings": [],
+  "t_start_ms": 1790338966719,
+  "t_pretap_done_ms": 1790338967452
+ },
+ "run": {
+  "run_id": "c_Wd3oFRChM7DlxiXDzKFpJFpJ3bEqxXXjKSeC9lpUyJg",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790338966698,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790338966698
+   },
+   {
+    "phase": "PRETAP_CHECK",
+    "elapsed_ms": 21,
+    "wall_ts_ms": 1790338966719
+   },
+   {
+    "phase": "CAPTURE_pretap",
+    "elapsed_ms": 30,
+    "wall_ts_ms": 1790338966728
+   },
+   {
+    "phase": "CAPTURED_pretap",
+    "elapsed_ms": 647,
+    "wall_ts_ms": 1790338967346
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 755,
+    "wall_ts_ms": 1790338967453
+   }
+  ],
+  "screenshots": [
+   "s001_pretap.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [],
+  "t_start_ms": 1790338966719,
+  "stake_check_pretap": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "pretap": {
+   "ok": true,
+   "selection": "Szekszard (W)",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "t_pretap_done_ms": 1790338967452,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "detail": "PRETAP_READY",
+  "duration_ms": 755
+ },
+ "wall": 1.0035345554351807
+}

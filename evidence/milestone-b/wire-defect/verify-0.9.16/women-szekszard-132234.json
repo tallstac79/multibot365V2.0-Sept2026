@@ -1,0 +1,1199 @@
+{
+ "payload": {
+  "instruction_id": "women-szekszard-132234",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "KSC Szekszard||NKA Universitas Pecs",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "3.5",
+  "minimum_price": "1.83",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21170156/D19/E26748243/F19/",
+  "kickoff_utc": "2026-09-26T16:00",
+  "competition_women": "true"
+ },
+ "result": {
+  "instruction_id": "women-szekszard-132234",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 11207,
+  "progress": {
+   "stage": "PREPARE_COMPLETE_EXECUTION",
+   "elapsed_ms": 10958,
+   "last_progress_at_ms": 1790338965854,
+   "instruction_id": "women-szekszard-132234",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790338954973
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 25,
+     "at_ms": 1790338954987
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 35,
+     "at_ms": 1790338954998,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 35,
+      "start_ts_ms": 1790338954990,
+      "end_elapsed_ms": 4252,
+      "end_ts_ms": 1790338959206,
+      "duration_ms": 4217,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3470,
+     "at_ms": 1790338954998
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4187,
+     "at_ms": 1790338954998
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4252,
+     "at_ms": 1790338959213,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 4252,
+      "start_ts_ms": 1790338959206,
+      "end_elapsed_ms": 5007,
+      "end_ts_ms": 1790338959961,
+      "duration_ms": 755,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4260,
+     "at_ms": 1790338959213
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4960,
+     "at_ms": 1790338959213
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 5007,
+     "at_ms": 1790338959972,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 5007,
+      "start_ts_ms": 1790338959961,
+      "end_elapsed_ms": 5019,
+      "end_ts_ms": 1790338959973,
+      "duration_ms": 12,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 5019,
+     "at_ms": 1790338959985,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 5019,
+      "start_ts_ms": 1790338959973,
+      "end_elapsed_ms": 5032,
+      "end_ts_ms": 1790338959986,
+      "duration_ms": 13,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 5032,
+     "at_ms": 1790338959998,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 5032,
+      "start_ts_ms": 1790338959986,
+      "end_elapsed_ms": 5045,
+      "end_ts_ms": 1790338959999,
+      "duration_ms": 13,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 5045,
+     "at_ms": 1790338960012,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 5045,
+      "start_ts_ms": 1790338959999,
+      "end_elapsed_ms": 5838,
+      "end_ts_ms": 1790338960794,
+      "duration_ms": 793,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 5059,
+     "at_ms": 1790338960012
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 5838,
+     "at_ms": 1790338960865,
+     "timing": {
+      "stage": "ENTER_STAKE",
+      "start_elapsed_ms": 5838,
+      "start_ts_ms": 1790338960794,
+      "end_elapsed_ms": 10172,
+      "end_ts_ms": 1790338965126,
+      "duration_ms": 4334,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 5914,
+     "at_ms": 1790338960865
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 6567,
+     "at_ms": 1790338960865
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 6667,
+     "at_ms": 1790338960865
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7387,
+     "at_ms": 1790338960865
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7936,
+     "at_ms": 1790338960865
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7994,
+     "at_ms": 1790338960865
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8267,
+     "at_ms": 1790338960865
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8542,
+     "at_ms": 1790338960865
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8857,
+     "at_ms": 1790338960865
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9171,
+     "at_ms": 1790338960865
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9765,
+     "at_ms": 1790338960865
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9898,
+     "at_ms": 1790338960865
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 10172,
+     "at_ms": 1790338965157,
+     "timing": {
+      "stage": "VERIFY_FINAL_STATE",
+      "start_elapsed_ms": 10172,
+      "start_ts_ms": 1790338965127,
+      "end_elapsed_ms": 10882,
+      "end_ts_ms": 1790338965836,
+      "duration_ms": 710,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 10204,
+     "at_ms": 1790338965157
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 10773,
+     "at_ms": 1790338965157
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 10882,
+     "at_ms": 1790338965854,
+     "timing": {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "start_elapsed_ms": 10882,
+      "start_ts_ms": 1790338965836,
+      "end_elapsed_ms": 10958,
+      "end_ts_ms": 1790338965912,
+      "duration_ms": 76,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 10958,
+     "at_ms": 1790338965854
+    }
+   ]
+  },
+  "device_stage": "PREPARE_COMPLETE_EXECUTION",
+  "execution_count": 1,
+  "run_id": "c_k5IVt5WstEtAJEKTIBASDbuTP8-xXyJIQCLSsWm9Vfs",
+  "fixture_name": "Szekszard (W) v NKA Pecs (W)",
+  "home": "Szekszard (W)",
+  "away": "NKA Pecs (W)",
+  "competition": "Hungary A Div. Women 26 Sep 17:00",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "+3.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Szekszard (W)",
+   "bounds": [
+    301,
+    655,
+    344,
+    705
+   ]
+  },
+  "final_state": {
+   "home": "Szekszard (W)",
+   "away": "NKA Pecs (W)",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "ready_state": {
+   "fixture_home": "Szekszard (W)",
+   "fixture_away": "NKA Pecs (W)",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Szekszard (W)",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Szekszard (W) v NKA Pecs (W)",
+   "fixture_home": "Szekszard (W)",
+   "fixture_away": "NKA Pecs (W)",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Szekszard (W)",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "minimum_price": "1.83",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    20,
+    1195,
+    604,
+    1221
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     20,
+     1195,
+     604,
+     1221
+    ],
+    "center_x": 312,
+    "center_y": 1208,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790338965908,
+   "validation_hash": "9aa7f8076014661e8e7cbcd8a55d3bf1"
+  },
+  "wager_submitted": false,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "route": "event_link",
+  "held": true,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 35,
+    "start_ts_ms": 1790338954990,
+    "end_elapsed_ms": 4252,
+    "end_ts_ms": 1790338959206,
+    "duration_ms": 4217,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4252,
+    "start_ts_ms": 1790338959206,
+    "end_elapsed_ms": 5007,
+    "end_ts_ms": 1790338959961,
+    "duration_ms": 755,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5007,
+    "start_ts_ms": 1790338959961,
+    "end_elapsed_ms": 5019,
+    "end_ts_ms": 1790338959973,
+    "duration_ms": 12,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 5019,
+    "start_ts_ms": 1790338959973,
+    "end_elapsed_ms": 5032,
+    "end_ts_ms": 1790338959986,
+    "duration_ms": 13,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 5032,
+    "start_ts_ms": 1790338959986,
+    "end_elapsed_ms": 5045,
+    "end_ts_ms": 1790338959999,
+    "duration_ms": 13,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 5045,
+    "start_ts_ms": 1790338959999,
+    "end_elapsed_ms": 5838,
+    "end_ts_ms": 1790338960794,
+    "duration_ms": 793,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 5838,
+    "start_ts_ms": 1790338960794,
+    "end_elapsed_ms": 10172,
+    "end_ts_ms": 1790338965126,
+    "duration_ms": 4334,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 10172,
+    "start_ts_ms": 1790338965127,
+    "end_elapsed_ms": 10882,
+    "end_ts_ms": 1790338965836,
+    "duration_ms": 710,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 10882,
+    "start_ts_ms": 1790338965836,
+    "end_elapsed_ms": 10958,
+    "end_ts_ms": 1790338965912,
+    "duration_ms": 76,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "alias_candidate": {
+   "feed_home": "KSC Szekszard",
+   "feed_away": "NKA Universitas Pecs",
+   "bet365_home": "Szekszard (W)",
+   "bet365_away": "NKA Pecs (W)",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21170156/D19/E26748243/F19/",
+   "kickoff_shown": "26 Sep 17:00",
+   "kickoff_expected": "26 Sep 17:00",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "KSC Szekszard": "Szekszard (W)",
+    "NKA Universitas Pecs": "NKA Pecs (W)"
+   },
+   "sport": "basketball"
+  },
+  "stake_field_state": "EMPTY",
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 26 Sep 17:00 + women's competition: both names agree apart from Bet365's women's marker",
+   "home": {
+    "feed": "KSC Szekszard",
+    "bookmaker": "Szekszard (W)",
+    "level": "VARIANT",
+    "score": 1,
+    "note": "women's marker supplied by the competition; names agree 1.00"
+   },
+   "away": {
+    "feed": "NKA Universitas Pecs",
+    "bookmaker": "NKA Pecs (W)",
+    "level": "VARIANT",
+    "score": 1,
+    "note": "women's marker supplied by the competition; names agree 1.00"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21170156/D19/E26748243/F19/"
+ },
+ "run": {
+  "run_id": "c_k5IVt5WstEtAJEKTIBASDbuTP8-xXyJIQCLSsWm9Vfs",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790338954954,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790338954954
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 25,
+    "wall_ts_ms": 1790338954980
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 35,
+    "wall_ts_ms": 1790338954990
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3470,
+    "wall_ts_ms": 1790338958425
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 4187,
+    "wall_ts_ms": 1790338959142
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 4252,
+    "wall_ts_ms": 1790338959206
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 4260,
+    "wall_ts_ms": 1790338959214
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 4960,
+    "wall_ts_ms": 1790338959914
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 5007,
+    "wall_ts_ms": 1790338959961
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 5019,
+    "wall_ts_ms": 1790338959973
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 5032,
+    "wall_ts_ms": 1790338959986
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 5045,
+    "wall_ts_ms": 1790338959999
+   },
+   {
+    "effect": "gesture",
+    "target": "SPREAD / HOME / +3.5 / 1.83",
+    "bounds": [
+     301,
+     655,
+     344,
+     705
+    ],
+    "elapsed_ms": 5059
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 5059,
+    "wall_ts_ms": 1790338960013
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 5838,
+    "wall_ts_ms": 1790338960795
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 5914,
+    "wall_ts_ms": 1790338960868
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 6567,
+    "wall_ts_ms": 1790338961522
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     20,
+     1327,
+     214,
+     1371
+    ],
+    "elapsed_ms": 6667
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 6667,
+    "wall_ts_ms": 1790338961621
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 7387,
+    "wall_ts_ms": 1790338962341
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 7936,
+    "wall_ts_ms": 1790338962891
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 7993
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 7994,
+    "wall_ts_ms": 1790338962948
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     87,
+     1228,
+     147,
+     1272
+    ],
+    "elapsed_ms": 8267
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8267,
+    "wall_ts_ms": 1790338963221
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     87,
+     974,
+     147,
+     1018
+    ],
+    "elapsed_ms": 8541
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8542,
+    "wall_ts_ms": 1790338963497
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 8857
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8857,
+    "wall_ts_ms": 1790338963812
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 9171,
+    "wall_ts_ms": 1790338964126
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 9765,
+    "wall_ts_ms": 1790338964719
+   },
+   {
+    "effect": "gesture",
+    "target": "Done",
+    "bounds": [
+     311,
+     1331,
+     587,
+     1368
+    ],
+    "elapsed_ms": 9898
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 9898,
+    "wall_ts_ms": 1790338964852
+   },
+   {
+    "phase": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 10172,
+    "wall_ts_ms": 1790338965127
+   },
+   {
+    "phase": "CAPTURE_final",
+    "elapsed_ms": 10204,
+    "wall_ts_ms": 1790338965159
+   },
+   {
+    "phase": "CAPTURED_final",
+    "elapsed_ms": 10773,
+    "wall_ts_ms": 1790338965727
+   },
+   {
+    "phase": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 10882,
+    "wall_ts_ms": 1790338965836
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 10958,
+    "wall_ts_ms": 1790338965912
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_markets.png",
+   "s003_betslip_pre_stake.png",
+   "s004_stake_ui.png",
+   "s005_stake_typed.png",
+   "s006_final.png"
+  ],
+  "gesture_attempts": 7,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 35,
+    "start_ts_ms": 1790338954990,
+    "end_elapsed_ms": 4252,
+    "end_ts_ms": 1790338959206,
+    "duration_ms": 4217,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4252,
+    "start_ts_ms": 1790338959206,
+    "end_elapsed_ms": 5007,
+    "end_ts_ms": 1790338959961,
+    "duration_ms": 755,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5007,
+    "start_ts_ms": 1790338959961,
+    "end_elapsed_ms": 5019,
+    "end_ts_ms": 1790338959973,
+    "duration_ms": 12,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 5019,
+    "start_ts_ms": 1790338959973,
+    "end_elapsed_ms": 5032,
+    "end_ts_ms": 1790338959986,
+    "duration_ms": 13,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 5032,
+    "start_ts_ms": 1790338959986,
+    "end_elapsed_ms": 5045,
+    "end_ts_ms": 1790338959999,
+    "duration_ms": 13,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 5045,
+    "start_ts_ms": 1790338959999,
+    "end_elapsed_ms": 5838,
+    "end_ts_ms": 1790338960794,
+    "duration_ms": 793,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 5838,
+    "start_ts_ms": 1790338960794,
+    "end_elapsed_ms": 10172,
+    "end_ts_ms": 1790338965126,
+    "duration_ms": 4334,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 10172,
+    "start_ts_ms": 1790338965127,
+    "end_elapsed_ms": 10882,
+    "end_ts_ms": 1790338965836,
+    "duration_ms": 710,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 10882,
+    "start_ts_ms": 1790338965836,
+    "end_elapsed_ms": 10958,
+    "end_ts_ms": 1790338965912,
+    "duration_ms": 76,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "search_query": "KSC Szekszard",
+  "identity_home": "KSC Szekszard",
+  "expected_away": "NKA Universitas Pecs",
+  "identity_away": "NKA Universitas Pecs",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21170156/D19/E26748243/F19/",
+  "current_stage": "PREPARE_COMPLETE_EXECUTION",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Hungary A Div. Women 26 Sep 17:00",
+   "Szekszard (W) vs NKA Pecs (W)",
+   "Popular Bet Builder Game Team Quarter Half"
+  ],
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 26 Sep 17:00 + women's competition: both names agree apart from Bet365's women's marker",
+   "home": {
+    "feed": "KSC Szekszard",
+    "bookmaker": "Szekszard (W)",
+    "level": "VARIANT",
+    "score": 1,
+    "note": "women's marker supplied by the competition; names agree 1.00"
+   },
+   "away": {
+    "feed": "NKA Universitas Pecs",
+    "bookmaker": "NKA Pecs (W)",
+    "level": "VARIANT",
+    "score": 1,
+    "note": "women's marker supplied by the competition; names agree 1.00"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "route": "event_link",
+  "alias_candidate": {
+   "feed_home": "KSC Szekszard",
+   "feed_away": "NKA Universitas Pecs",
+   "bet365_home": "Szekszard (W)",
+   "bet365_away": "NKA Pecs (W)",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21170156/D19/E26748243/F19/",
+   "kickoff_shown": "26 Sep 17:00",
+   "kickoff_expected": "26 Sep 17:00",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "KSC Szekszard": "Szekszard (W)",
+    "NKA Universitas Pecs": "NKA Pecs (W)"
+   },
+   "sport": "basketball"
+  },
+  "kickoff_verified": "26 Sep 17:00",
+  "verified_fixture": {
+   "code": "451eaa3e",
+   "home": "Szekszard (W)",
+   "away": "NKA Pecs (W)",
+   "fixture_name": "Szekszard (W) v NKA Pecs (W)",
+   "exact_fixture_text": "Home Szekszard (W)\nAway NKA Pecs (W)",
+   "competition": "Hungary A Div. Women 26 Sep 17:00",
+   "bounds": [
+    35,
+    268,
+    657,
+    435
+   ]
+  },
+  "fixture_home": "Szekszard (W)",
+  "fixture_away": "NKA Pecs (W)",
+  "identity_verified_home": "KSC Szekszard",
+  "identity_verified_away": "NKA Universitas Pecs",
+  "event_verified": true,
+  "fixture": {
+   "code": "451eaa3e",
+   "home": "Szekszard (W)",
+   "away": "NKA Pecs (W)",
+   "fixture_name": "Szekszard (W) v NKA Pecs (W)",
+   "exact_fixture_text": "Home Szekszard (W)\nAway NKA Pecs (W)",
+   "competition": "Hungary A Div. Women 26 Sep 17:00",
+   "bounds": [
+    35,
+    268,
+    657,
+    435
+   ]
+  },
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/+3.5@1.83",
+     "SPREAD/AWAY/-3.5@1.83",
+     "TOTAL/OVER/146.5@1.83",
+     "TOTAL/UNDER/146.5@1.83",
+     "MONEYLINE/HOME/NONE@2.30",
+     "MONEYLINE/AWAY/NONE@1.55"
+    ],
+    "notes": []
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/+3.5@1.83",
+    "SPREAD/AWAY/-3.5@1.83",
+    "TOTAL/OVER/146.5@1.83",
+    "TOTAL/UNDER/146.5@1.83",
+    "MONEYLINE/HOME/NONE@2.30",
+    "MONEYLINE/AWAY/NONE@1.55"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "+3.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Szekszard (W)",
+    "bounds": [
+     301,
+     655,
+     344,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "-3.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "NKA Pecs (W)",
+    "bounds": [
+     301,
+     740,
+     345,
+     790
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "146.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     436,
+     655,
+     510,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "146.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     450,
+     736,
+     509,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "2.30",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Szekszard (W)",
+    "bounds": [
+     603,
+     672,
+     648,
+     689
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "1.55",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "NKA Pecs (W)",
+    "bounds": [
+     604,
+     757,
+     648,
+     774
+    ]
+   }
+  ],
+  "selection_role": "HOME",
+  "selection_name": "Szekszard (W)",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "+3.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Szekszard (W)",
+   "bounds": [
+    301,
+    655,
+    344,
+    705
+   ]
+  },
+  "selection_preflight": "reused clean grid read",
+  "stake_keypad": {
+   "zero": [
+    360,
+    1250
+   ],
+   "dot": [
+    117,
+    1250
+   ]
+  },
+  "stake_field_state": "EMPTY",
+  "stake_check_typed": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "stake_entered": "0.10",
+  "stake_check_final": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "ready_state": {
+   "fixture_home": "Szekszard (W)",
+   "fixture_away": "NKA Pecs (W)",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Szekszard (W)",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "final_state": {
+   "home": "Szekszard (W)",
+   "away": "NKA Pecs (W)",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "confirmation_gate": "NONE",
+  "prepare_frame": "reused verified final frame",
+  "stake_check_prepare": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Szekszard (W) v NKA Pecs (W)",
+   "fixture_home": "Szekszard (W)",
+   "fixture_away": "NKA Pecs (W)",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Szekszard (W)",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "minimum_price": "1.83",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    20,
+    1195,
+    604,
+    1221
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     20,
+     1195,
+     604,
+     1221
+    ],
+    "center_x": 312,
+    "center_y": 1208,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790338965908,
+   "validation_hash": "9aa7f8076014661e8e7cbcd8a55d3bf1"
+  },
+  "prepared_gesture": {
+   "type": "tap",
+   "target": "Place Bet",
+   "package": "com.android.chrome",
+   "bounds": [
+    20,
+    1195,
+    604,
+    1221
+   ],
+   "center_x": 312,
+   "center_y": 1208,
+   "duration_ms": 100,
+   "dispatched": false
+  },
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "held": true,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 10958
+ },
+ "wall": 11.362624168395996
+}

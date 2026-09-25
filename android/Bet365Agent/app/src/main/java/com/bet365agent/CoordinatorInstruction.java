@@ -38,6 +38,30 @@ final class CoordinatorInstruction {
         return out;
     }
 
+    static final Set<String> WORKFLOW_BASE = Set.of("instruction_id","action","adapter","scenario","query","market","side","sport","minimum_price","stake","timeout_ms");
+
+    /**
+     * ADAPTER_WORKFLOW schema: the base fields plus only these extras. Pure (JVM-tested: CoordinatorInstructionTest).
+     * competition_women (0.9.14-women) is the backend's competition-aware women's marker flag. Real failure
+     * 2026-09-25 12:15 UTC (on-42935974, KSC Szekszard v NKA Universitas Pecs, "Nemzeti Bajnoksag I.A Women"): the
+     * field was on the global whitelist but not here, so every women's-competition hold run was refused with
+     * "Invalid schema extras".
+     */
+    static void checkWorkflowExtras(Map<String, String> fields) {
+        java.util.HashSet<String> allowedExtra = new java.util.HashSet<>(java.util.Arrays.asList("place_bet","execution_mode","confirmation_status","line","event_url","kickoff_utc","aliases","competition_women"));
+        if(fields.containsKey("event_url") && !EventPage.validUrl(fields.get("event_url"))) throw new IllegalArgumentException("Invalid event_url");
+        if(fields.containsKey("kickoff_utc") && !fields.get("kickoff_utc").matches("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"))
+            throw new IllegalArgumentException("Invalid kickoff_utc");
+        if(fields.containsKey("competition_women") && !Set.of("true","false").contains(fields.get("competition_women")))
+            throw new IllegalArgumentException("Invalid competition_women");
+        java.util.HashSet<String> keys = new java.util.HashSet<>(fields.keySet());
+        keys.removeAll(WORKFLOW_BASE);
+        if(!allowedExtra.containsAll(keys)) throw new IllegalArgumentException("Invalid schema extras");
+        java.util.HashSet<String> base = new java.util.HashSet<>(fields.keySet());
+        base.removeAll(allowedExtra);
+        if(!base.equals(WORKFLOW_BASE)) throw new IllegalArgumentException("Invalid ADAPTER_WORKFLOW schema");
+    }
+
     CoordinatorInstruction(String json) throws Exception {
         Map<String, String> fields = new HashMap<>();
         try (JsonReader reader = new JsonReader(new StringReader(json))) {
@@ -125,17 +149,8 @@ final class CoordinatorInstruction {
             expected=Set.of("instruction_id","action","adapter","timeout_ms");
             if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid SESSION_PROBE schema");
         } else {
-            expected=Set.of("instruction_id","action","adapter","scenario","query","market","side","sport","minimum_price","stake","timeout_ms");
-            java.util.HashSet<String> allowedExtra = new java.util.HashSet<>(java.util.Arrays.asList("place_bet","execution_mode","confirmation_status","line","event_url","kickoff_utc","aliases"));
-            if(fields.containsKey("event_url") && !EventPage.validUrl(fields.get("event_url"))) throw new IllegalArgumentException("Invalid event_url");
-            if(fields.containsKey("kickoff_utc") && !fields.get("kickoff_utc").matches("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"))
-                throw new IllegalArgumentException("Invalid kickoff_utc");
-            java.util.HashSet<String> keys = new java.util.HashSet<>(fields.keySet());
-            keys.removeAll(expected);
-            if(!allowedExtra.containsAll(keys)) throw new IllegalArgumentException("Invalid schema extras");
-            java.util.HashSet<String> base = new java.util.HashSet<>(fields.keySet());
-            base.removeAll(allowedExtra);
-            if(!base.equals(expected)) throw new IllegalArgumentException("Invalid ADAPTER_WORKFLOW schema");
+            expected = WORKFLOW_BASE;
+            checkWorkflowExtras(fields);
         }
         boolean noText = Set.of("SESSION_CHECK","SESSION_PROBE","MY_BETS","OBSERVE","RESET_BETSLIP","PLACE_HELD","OCR_BENCH").contains(action);
         if(!Set.of("OPEN_AND_TYPE","ADAPTER_WORKFLOW","SESSION_CHECK","SESSION_PROBE","OPEN_SEARCH","MY_BETS","OBSERVE","RESET_BETSLIP","PLACE_HELD","OCR_BENCH").contains(action)
