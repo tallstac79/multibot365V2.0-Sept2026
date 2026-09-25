@@ -22,7 +22,9 @@ from core.rules_engine import evaluate
 from tests.pipeline_support import ROOT, MELBOURNE, T0, Clock, config, message, pipeline
 
 CORPUS = json.loads((ROOT / 'tests/fixtures/unequal_line_corpus_20260925.json').read_text(encoding='utf-8'))
-ALERTS = {m['id']: m['text'] for m in CORPUS['messages']}
+# the unequal-line ("EV: None") alerts of the shared corpus; the same fixture also holds a few contradictory / equal-line
+# alerts used by tests/test_market_audit.py, which these feed-fact tests do not cover
+ALERTS = {m['id']: m['text'] for m in CORPUS['messages'] if 'EV: None (not equal lines)' in m['text']}
 ANYANG_TOTALS = ALERTS[1160]      # Totals: Pinnacle 165, Bet365 160.5 -> OVER +4.5 favourable, UNDER -4.5
 ANYANG_SPREAD = ALERTS[1157]      # Spread: Pinnacle home +1, Bet365 home +4.5 -> HOME +3.5 favourable, AWAY -3.5
 WNBA_AMBIGUOUS = ALERTS[993]      # Bet365 spread equals Pinnacle as displayed but "not equal lines" reported
