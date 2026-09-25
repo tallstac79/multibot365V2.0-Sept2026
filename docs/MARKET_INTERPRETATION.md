@@ -42,8 +42,11 @@ line_quality, price_quality, bet_quality, interpretation_status, interpretation_
 
 Lines and prices are decimal strings with their source precision. Differences are exact
 decimals. The selection is the highlighted Bet365 target (two-sided layout) or the named
-side (side-labelled layout). Without a highlight, **no side is chosen**. Both sides are
-still reported.
+side (side-labelled layout). Without a highlight, the target is **implied from the lines**
+when exactly one side's Bet365 line is at least 1.0 point better than Pinnacle's current
+line and the other side's is worse by the same amount (`target_price_source =
+implied_favourable_line`, see "Implied target" below); otherwise no side is chosen. Both
+sides are still reported.
 
 ## Totals direction
 
@@ -83,9 +86,31 @@ Line quality is evaluated directionally per side, and `ev_status` =
 
 `EV: None (not equal lines)` therefore does **not** mean no value and is **not** INVALID.
 It means OddsNotifier's standard equal-line EV is unavailable, and each side still carries a
-directional result. With a highlighted verified target, the alert is `PARSED` and may be a
-`FAVOURABLE_LINE_SIGNAL` (see below). Without one it is `PARSED_PARTIAL`. In the live corpus,
-90 such alerts that were previously INVALID are now fully interpreted.
+directional result. With a highlighted verified target, or an implied one, the alert is
+`PARSED` and may be a `FAVOURABLE_LINE_SIGNAL` (see below). Otherwise it is `PARSED_PARTIAL`.
+
+## Implied target (unequal lines, nothing highlighted)
+
+OddsNotifier never highlights a Bet365 price on an unequal-line alert (0 of 625 stored ones),
+so from 2026-09-25 the target is implied from the lines alone, deterministically:
+Pinnacle's current line is the sharp reference; if Bet365 still offers a line that is at least
+1.0 point better for exactly one side (and worse by the same amount for the other), that side
+is the bet. Totals: a lower Bet365 total favours OVER, a higher one favours UNDER. Spreads:
+the higher signed handicap from each team's own perspective favours that team.
+
+* Pinnacle OVER/UNDER 168.5, Bet365 165.5 → OVER 165.5, +3.0 (`FAVOURABLE_LINE_SIGNAL`)
+* Pinnacle 159.5, Bet365 165.5 → UNDER 165.5, +6.0
+* Pinnacle home −5.5, Bet365 home −1.5 → HOME −1.5, +4.0 (the away side is −4.0: UNFAVOURABLE)
+* Pinnacle home −2.5, Bet365 home −5.5 → AWAY +5.5, +3.0
+
+Not implied (stays `PARSED_PARTIAL` / `AMBIGUOUS`): advantage below 1.0, equal lines, both
+sides favourable or neither, a missing price, an unverified quote mapping (football two-sided
+layouts), the spread whose sign reference cannot be normalised, or any highlight at all (a
+highlighted side is always the target, even a worse one, which is then UNFAVOURABLE).
+No EV is calculated; prices are never compared across lines. `implied_target` records the
+advantage and Pinnacle's own line movement (`pinnacle_movement_agrees`) as evidence only, and
+the instruction carries `target_source`. The rules engine still applies `min_line_advantage`
+and the price bounds.
 
 ## Movement
 
@@ -109,8 +134,8 @@ unconfirmed: arrows and parentheses disagree in some live messages.
 | bet_quality | When |
 |---|---|
 | CLEAR_VALUE_SIGNAL | Equal-line price/EV edge: verified ordering, the highlighted target, equal lines, Bet365 price above Pinnacle, and OddsNotifier-supplied equal-line EV above 100 % |
-| FAVOURABLE_LINE_SIGNAL | Verified ordering, the highlighted target, a quantified positive Bet365 line advantage for that exact side, and both prices present. The prices are not comparable across lines, so no EV is implied or calculated. |
-| POTENTIAL_VALUE | Non-actionable: a favourable line with no highlighted target, a missing price or an unquantifiable advantage, or an equal line with a better price but no supplied EV for this side |
+| FAVOURABLE_LINE_SIGNAL | Verified ordering, the target (highlighted, or implied from the lines), a quantified positive Bet365 line advantage for that exact side, and both prices present. The prices are not comparable across lines, so no EV is implied or calculated. |
+| POTENTIAL_VALUE | Non-actionable: a favourable line on a side that is not the target (advantage below 1.0, or the other side is the target), a missing price or an unquantifiable advantage, or an equal line with a better price but no supplied EV for this side |
 | NO_ADVANTAGE | Equal line and equal price |
 | UNFAVOURABLE | An unfavourable line, or an equal line with a worse price |
 | INSUFFICIENT_INFORMATION | Unverified ordering, no Bet365 offer, or unknown qualities |
@@ -133,8 +158,9 @@ components can tell the two signals apart.
 Examples: Pinnacle OVER 168.5 vs Bet365 OVER 165.5 with OVER highlighted gives +3.0,
 FAVOURABLE_LINE_SIGNAL. Pinnacle UNDER 168.5 vs Bet365 UNDER 171.5 with UNDER highlighted
 gives +3.0, FAVOURABLE_LINE_SIGNAL. A highlighted side whose line is *worse* is
-UNFAVOURABLE and is rejected. Kipina (166.5 vs 168.5, nothing highlighted) stays
-PARSED_PARTIAL: UNDER is POTENTIAL_VALUE and is never chosen automatically.
+UNFAVOURABLE and is rejected. Kipina (166.5 vs 168.5, nothing highlighted) now implies
+UNDER 168.5, +2.0, FAVOURABLE_LINE_SIGNAL; with a Bet365 line only 0.5 better it would stay
+PARSED_PARTIAL with UNDER as POTENTIAL_VALUE.
 
 ## Intake statuses and fail-closed cases
 

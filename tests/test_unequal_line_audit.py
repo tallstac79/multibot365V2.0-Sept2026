@@ -100,30 +100,42 @@ class RealFeedUnequalLineAlerts(unittest.TestCase):
                 self.assertIn('EV: None (not equal lines)', text)
                 self.assertNotIn('**', text)
 
-    def test_real_alerts_are_partial_directional_and_never_queued(self):
+    def test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side(self):
+        # 2026-09-25: the implied favourable-side rule. Every stored alert whose lines single out one side by >= 1.0
+        # is PARSED with that side as the target; the spread whose sign reference is ambiguous stays AMBIGUOUS.
+        parsed_ids = []
         for mid, text in ALERTS.items():
             v = alert_classifier.classify(text)
             with self.subTest(message=mid, status=v['status']):
-                self.assertIn(v['status'], ('PARSED_PARTIAL', 'AMBIGUOUS'))
                 p = v['parsed']
-                self.assertIsNone(p['selection_side'])
-                self.assertIsNone(p['displayed_ev_percent'])                       # no synthetic EV
+                self.assertIsNone(p['displayed_ev_percent'])                       # no synthetic EV, ever
                 self.assertEqual(p['comparison']['ev_status'], 'NOT_AVAILABLE_UNEQUAL_LINES')
-                if v['status'] == 'PARSED_PARTIAL':
-                    self.assertIn('No highlighted Bet365 target', v['reason'])
-                    fav = [s for s in p['sides'] if s['line_quality'] == FAVOURABLE]
-                    unf = [s for s in p['sides'] if s['line_quality'] == UNFAVOURABLE]
-                    self.assertEqual((len(fav), len(unf)), (1, 1))                   # exactly one side benefits
-                    self.assertEqual(fav[0]['bet_quality'], 'POTENTIAL_VALUE')      # not actionable without a target
-                    self.assertEqual(unf[0]['bet_quality'], 'UNFAVOURABLE')
-                    self.assertTrue(decide(p)['reason'].startswith('explicit_target'))
+                if v['status'] == 'AMBIGUOUS':
+                    self.assertIsNone(p['selection_side'])
+                    continue
+                self.assertEqual(v['status'], 'PARSED', v['reason'])
+                fav = [s for s in p['sides'] if s['line_quality'] == FAVOURABLE]
+                unf = [s for s in p['sides'] if s['line_quality'] == UNFAVOURABLE]
+                self.assertEqual((len(fav), len(unf)), (1, 1))                       # exactly one side benefits
+                self.assertEqual((p['selection_side'], p['target_price_source']), (fav[0]['side'], 'implied_favourable_line'))
+                self.assertEqual((fav[0]['bet_quality'], unf[0]['bet_quality']), ('FAVOURABLE_LINE_SIGNAL', 'UNFAVOURABLE'))
+                self.assertGreaterEqual(float(fav[0]['comparison']['line_advantage']), 1.0)
+                self.assertIn('target implied from the favourable Bet365 line', v['reason'])
+                parsed_ids.append(mid)
+        self.assertGreaterEqual(len(parsed_ids), 6)
         with tempfile.TemporaryDirectory() as tmp:
             p = pipeline(Path(tmp) / 'audit.sqlite3', Clock())
+            created = 0
             for n, (mid, text) in enumerate(ALERTS.items()):
                 result = p.ingest(message(MELBOURNE, message_id=str(910000 + n), text=text))
-                self.assertIsNone(result['instruction_id'], mid)
+                if mid in parsed_ids:
+                    self.assertIn(result['status'], ('PARSED', 'DUPLICATE'), mid)   # same selection twice = duplicate
+                    created += result['status'] == 'PARSED'
+                else:
+                    self.assertIsNone(result['instruction_id'], mid)
             with p.store.connection() as db:
-                self.assertEqual(db.execute('SELECT COUNT(*) FROM instructions').fetchone()[0], 0)
+                self.assertEqual(db.execute('SELECT COUNT(*) FROM instructions').fetchone()[0], created)
+            self.assertGreaterEqual(created, 4)
 
     def test_anyang_totals_direction(self):
         p = alert_classifier.classify(ANYANG_TOTALS)['parsed']

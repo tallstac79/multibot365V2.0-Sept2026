@@ -52,11 +52,12 @@ class TotalsTests(unittest.TestCase):
                 self.assertEqual((c['line_quality'], c['line_advantage']), (quality, advantage))
                 self.assertEqual(c['price_quality'], EQUAL if quality == EQUAL else NOT_COMPARABLE)
 
-    def test_kipina_unequal_lines_and_ev_none_is_partial_with_both_sides(self):
+    def test_kipina_unequal_lines_and_ev_none_implies_under_with_both_sides_reported(self):
+        # 2026-09-25: nothing highlighted, but Bet365's 168.5 is 2.0 better for UNDER than Pinnacle's 166.5 -> implied target
         r = parse(KIPINA)
-        self.assertEqual(r['status'], 'PARSED_PARTIAL')
+        self.assertEqual(r['status'], 'PARSED')
         p = r['parsed']
-        self.assertIsNone(p['selection_side'])
+        self.assertEqual((p['selection_side'], p['selection_line'], p['target_price_source']), ('UNDER', '168.5', 'implied_favourable_line'))
         self.assertEqual((p['comparison']['ev_status'], p['comparison']['equal_line'], p['comparison']['line_difference']),
                          ('NOT_AVAILABLE_UNEQUAL_LINES', False, '2.0'))
         over, under = side(p, 'OVER'), side(p, 'UNDER')
@@ -66,7 +67,8 @@ class TotalsTests(unittest.TestCase):
         self.assertEqual((over['line_quality'], over['comparison']['line_advantage'], over['price_quality'],
                           over['bet_quality']), (UNFAVOURABLE, '-2.0', NOT_COMPARABLE, 'UNFAVOURABLE'))
         self.assertEqual((under['line_quality'], under['comparison']['line_advantage'], under['price_quality'],
-                          under['bet_quality']), (FAVOURABLE, '2.0', NOT_COMPARABLE, 'POTENTIAL_VALUE'))
+                          under['bet_quality']), (FAVOURABLE, '2.0', NOT_COMPARABLE, 'FAVOURABLE_LINE_SIGNAL'))
+        self.assertIsNone(p['displayed_ev_percent'])
         self.assertNotEqual(r['status'], 'INVALID')
 
     def test_line_movement_up_and_down_separate_from_price(self):
@@ -264,15 +266,22 @@ class FavourableLineSignalTests(unittest.TestCase):
         self.assertEqual((p['bet_quality'], p['comparison']['line_advantage']), ('UNFAVOURABLE', '-3.0'))
         self.assertTrue(self.evaluate(p)['reason'].startswith('bet_quality'))
 
-    def test_kipina_without_highlight_never_picks_under(self):
+    def test_kipina_without_highlight_implies_under_and_queues(self):
+        # 2026-09-25: the implied favourable-side rule (Bet365 168.5 is 2.0 better for UNDER than Pinnacle 166.5)
         r = parse(KIPINA)
-        self.assertEqual(r['status'], 'PARSED_PARTIAL')
-        self.assertIsNone(r['parsed']['selection_side'])
-        self.assertEqual(side(r['parsed'], 'UNDER')['bet_quality'], 'POTENTIAL_VALUE')
-        self.assertTrue(self.evaluate(r['parsed'])['reason'].startswith('explicit_target'))
+        self.assertEqual((r['status'], r['parsed']['selection_side']), ('PARSED', 'UNDER'))
+        self.assertEqual(side(r['parsed'], 'UNDER')['bet_quality'], 'FAVOURABLE_LINE_SIGNAL')
+        decision = self.evaluate(r['parsed'])
+        self.assertEqual(decision['decision'], 'ACCEPT', decision['reason'])
+        self.assertEqual((decision['instruction']['side'], decision['instruction']['line'], decision['instruction']['target_source']),
+                         ('UNDER', '168.5', 'implied_favourable_line'))
         with tempfile.TemporaryDirectory() as tmp:
             result = pipeline(Path(tmp) / 'p.sqlite3', Clock()).ingest(message(MELBOURNE, message_id='900002', text=KIPINA))
-            self.assertEqual((result['status'], result['instruction_id']), ('PARSED_PARTIAL', None))
+            self.assertEqual((result['status'], result['state']), ('PARSED', 'QUEUED'))
+        # a Bet365 line only 0.5 better is not a target: PARSED_PARTIAL, UNDER stays POTENTIAL_VALUE
+        half = parse(KIPINA.replace('Bet365 (Totals 168.5)', 'Bet365 (Totals 167)'))
+        self.assertEqual((half['status'], half['parsed']['selection_side'], side(half['parsed'], 'UNDER')['bet_quality']),
+                         ('PARSED_PARTIAL', None, 'POTENTIAL_VALUE'))
 
     def test_line_signal_still_subject_to_price_and_materiality_rules(self):
         p = parse(unequal_totals('168.5', '171.5', 'UNDER'))['parsed']     # UNDER @ 1.83, +3.0
@@ -390,7 +399,7 @@ class ProductionRegressionTests(unittest.TestCase):
         self.assertNotIn('INVALID', statuses.values(), {k: v for k, v in statuses.items() if v == 'INVALID'})
         self.assertEqual(statuses['67962'], 'PARSED')          # early heavily-bolded Telegram render
         self.assertEqual(statuses['67961'], 'AMBIGUOUS')       # no market label and no fixture link
-        self.assertEqual(statuses['67998'], 'PARSED_PARTIAL')  # linked Kipina, EV None
+        self.assertEqual(statuses['67998'], 'PARSED')          # linked Kipina, EV None: UNDER implied from the lines (2026-09-25)
         counts = {s: list(statuses.values()).count(s) for s in set(statuses.values())}
         self.assertGreaterEqual(counts['PARSED_PARTIAL'], 80)
         self.assertGreaterEqual(counts['PARSED'], 26)

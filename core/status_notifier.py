@@ -28,6 +28,28 @@ def _money(value):
         return None
 
 
+def _signal(row):
+    """One line naming a line-advantage signal (no EV) so the operator sees why an unequal-line bet qualified."""
+    alert = row.get('normalized_alert')
+    try:
+        alert = json.loads(alert) if isinstance(alert, str) else (alert or {})
+    except (TypeError, ValueError):
+        return None
+    if alert.get('bet_quality') != 'FAVOURABLE_LINE_SIGNAL':
+        return None
+    cmp = alert.get('comparison') or {}
+    text = (f"Bet365 line {cmp.get('line_advantage')} pts better than Pinnacle "
+            f"({cmp.get('reference_line_displayed')} -> {cmp.get('bet365_line_displayed')}), no EV")
+    implied = alert.get('implied_target') or {}
+    if implied:
+        text += '; target implied from the lines (nothing highlighted)'
+        if implied.get('pinnacle_movement_agrees') is True:
+            text += ', Pinnacle moved this way'
+        elif implied.get('pinnacle_movement_agrees') is False:
+            text += ', Pinnacle moved the other way'
+    return text
+
+
 def format_instruction(row):
     """Plain-text message from a stored instructions row (dict or sqlite3.Row)."""
     row = dict(row)
@@ -36,7 +58,7 @@ def format_instruction(row):
         selection = f"{selection} {row['line']}"
     fields = [('Event', row.get('fixture') or (f"{row['home']} v {row['away']}" if row.get('home') else None)),
               ('Sport', (row.get('sport') or '').title() or None), ('Market', row.get('market')),
-              ('Selection', selection), ('Odds', row.get('observed_price') or row.get('alert_price')),
+              ('Selection', selection), ('Signal', _signal(row)), ('Odds', row.get('observed_price') or row.get('alert_price')),
               ('Alert odds', row.get('alert_price') if row.get('observed_price') not in (None, row.get('alert_price'))
                else None),
               ('Minimum', row.get('minimum_price')), ('Stake', _money(row.get('stake'))),

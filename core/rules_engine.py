@@ -68,9 +68,11 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
     check('verified_mapping', mapping.get('production_verified') is True,
           'production-verified quote mapping' if mapping.get('production_verified') else
           'quote ordering is not production-verified; no selection is guessed')
+    implied = alert.get('target_price_source') == 'implied_favourable_line'
     check('explicit_target', bool(alert.get('target_side') and alert.get('alert_price')),
-          f"target {alert.get('target_side')} @ {alert.get('alert_price')}" if alert.get('target_side')
-          else 'no explicit Bet365 target in source message')
+          (f"target {alert.get('target_side')} @ {alert.get('alert_price')} "
+           + ('(implied from the favourable Bet365 line)' if implied else '(highlighted by OddsNotifier)')) if alert.get('target_side')
+          else 'no Bet365 target: nothing highlighted and the lines do not single out a side')
     # Market interpretation (core.market_interpretation): only an actionable signal on the
     # highlighted, verified target proceeds. CLEAR_VALUE_SIGNAL = equal-line price/EV edge;
     # FAVOURABLE_LINE_SIGNAL = materially favourable Bet365 line at an acceptable price (no EV).
@@ -159,6 +161,7 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
         alert_price=str(alert.get('alert_price')), minimum_price=str(minimum), stake=f'{stake:.2f}',
         displayed_ev_percent=alert.get('displayed_ev_percent'), bet_quality=quality,
         signal_reason=quality, line_advantage=comparison.get('line_advantage'),
+        target_source=alert.get('target_price_source'), implied_target=alert.get('implied_target'),
         ev_status=comparison.get('ev_status'),
         line_quality=alert.get('line_quality'), price_quality=alert.get('price_quality'),
         reference_odds=(alert.get('reference') or {}).get('odds'))
