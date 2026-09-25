@@ -17,10 +17,6 @@ from statistics import mean, median
 from core import bet_matching
 from tools.coordinator_client import Client
 
-sys.stdout.reconfigure(encoding='utf-8')
-ENGINE, OUT = sys.argv[1], Path(sys.argv[2])
-MAX = int(sys.argv[3]) if len(sys.argv) > 3 else 14
-c = Client(json.loads(Path('.local/coordinator.json').read_text(encoding='utf-8-sig')))
 
 # Hand-labelled full grids from screenshots inspected during the proofs (fixture key -> expected cells).
 GRIDS = {
@@ -53,9 +49,6 @@ def phone_frames():
     out = subprocess.run([ADB, 'shell', 'run-as', 'com.bet365agent', 'find', 'files/visual', '-name', '*.png'],
                          capture_output=True, timeout=120).stdout.decode('utf-8', 'replace')
     return {line.strip().replace('files/visual/', '') for line in out.splitlines() if line.strip()}
-
-
-PHONE_FRAMES = phone_frames()
 
 
 def run_id(device_id):
@@ -206,7 +199,27 @@ def score_mybets_runs(frames, results):
     return rows
 
 
+def align_batch(frames, response):
+    """Preserve every requested frame; a failed/truncated batch cannot shrink the denominator."""
+    response = response or {}
+    outputs = (response.get('bench') or {}).get('frames') or []
+    if response.get('status') != 'PASS':
+        return [dict(error='batch_failed:' + str(response.get('detail', response.get('status')))) for _ in frames]
+    expected = {fr['p'] for fr in frames}
+    if len(outputs) != len(frames) or {out.get('p') for out in outputs} != expected:
+        return [dict(error='batch_frame_set_mismatch') for _ in frames]
+    by_path = {out['p']: out for out in outputs}
+    return [by_path[fr['p']] if by_path[fr['p']].get('c') == fr['c']
+            else dict(error='batch_frame_class_mismatch') for fr in frames]
+
+
 def main():
+    global ENGINE, OUT, MAX, c, PHONE_FRAMES
+    sys.stdout.reconfigure(encoding='utf-8')
+    ENGINE, OUT = sys.argv[1], Path(sys.argv[2])
+    MAX = int(sys.argv[3]) if len(sys.argv) > 3 else 14
+    c = Client(json.loads(Path('.local/coordinator.json').read_text(encoding='utf-8-sig')))
+    PHONE_FRAMES = phone_frames()
     frames = corpus()
     print(f'corpus: {len(frames)} frames', dict((k, sum(1 for f in frames if f["c"] == k)) for k in ('grid', 'header', 'slip', 'keypad', 'receipt', 'mybets')), flush=True)
     results = []
@@ -232,9 +245,7 @@ def main():
                 r = c.result(iid, seconds=260); break
             except ValueError:
                 time.sleep(1)
-        outs = ((r or {}).get('bench') or {}).get('frames') or []
-        if len(outs) != len(b):
-            print(f'batch {n}: {(r or {}).get("status")} {(r or {}).get("detail")}', flush=True)
+        outs = align_batch(b, r)
         for fr, out in zip(b, outs):
             ok, errs, note = score(fr, out)
             results.append(dict(frame=fr['p'], cls=fr['c'], ok=ok, errors=errs, latency_ms=out.get('latency_ms'), words=out.get('word_count'), note=note, parsed=out.get('parsed'), text=out.get('text')))
@@ -253,6 +264,8 @@ def main():
             for e in x['errors']: crit[cls][e] += 1
         print(f"{cls:10s} {len(rows):3d} {sum(1 for x in rows if x['ok']):4d} {100 * sum(1 for x in rows if x['ok']) / len(rows):5.0f}% {mean(lat) if lat else 0:8.0f}ms {median(lat) if lat else 0:7.0f}ms  {dict(crit[cls])}")
     print('BENCH DONE', flush=True)
+    return 0 if frames and len(results) >= len(frames) and all(row['ok'] for row in results) else 1
 
 
-main()
+if __name__ == '__main__':
+    raise SystemExit(main())
