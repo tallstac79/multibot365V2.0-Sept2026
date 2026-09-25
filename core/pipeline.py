@@ -94,13 +94,28 @@ SELECTION_NAME = re.compile(r"^[A-Za-z0-9 ./'&()-]{2,64}$")
 HELD_KEY = 'held_slip'
 
 
+BARE_HOST = 'https://bet365.com/#/'
+
+
 def event_link(row):
-    """The alert's Bet365 event link if it is a well-formed #/AC/ link; else None (the phone searches)."""
+    """The alert's Bet365 event link if it is a well-formed #/AC/ link; else None (the phone searches).
+
+    OddsNotifier writes the link with either host ("https://www.bet365.com/#/AC/..." or, since 23 Sep 2026, sometimes
+    "https://bet365.com/#/AC/..."; 27 of 212 links on 24-25 Sep). The path is what identifies the event, so the bare
+    host is normalised to the www form the phone validates (EventPage.validUrl) instead of losing the primary route.
+    Real failure (Milestone B, on-8f79281a, Norrkoping v Umea): a bare-host link was dropped, the run fell back to
+    Search and failed closed there.
+    """
     try:
         url = (json.loads(row['normalized_alert'] or '{}') or {}).get('comparison_url')
     except (ValueError, TypeError):
         return None
-    return url if isinstance(url, str) and EVENT_URL.match(url) else None
+    if not isinstance(url, str):
+        return None
+    url = url.strip()
+    if url.startswith(BARE_HOST):
+        url = 'https://www.' + url[len('https://'):]
+    return url if EVENT_URL.match(url) else None
 
 
 def device_instruction_id(instruction_id, execution_mode):

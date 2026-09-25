@@ -594,6 +594,25 @@ class HeldSlipTests(Base):
         good = dict(normalized_alert=json.dumps({'comparison_url': 'https://www.bet365.com/#/AC/B18/C1/D19/E2/F19/I0/'}))
         self.assertTrue(event_link(good).startswith('https://www.bet365.com/#/AC/B18/'))
 
+    def test_bare_host_event_link_is_normalised_to_the_www_form(self):
+        # Real link from on-8f79281a (Norrkoping Dolphins v Umea Basket, 2026-09-25 11:36 UTC): OddsNotifier wrote the
+        # host without "www." and the run lost the event-link route (fell back to Search, failed closed there).
+        from core.pipeline import event_link
+        bare = dict(normalized_alert=json.dumps({'comparison_url': 'https://bet365.com/#/AC/B18/C21169978/D19/E26741034/F19/'}))
+        self.assertEqual(event_link(bare), 'https://www.bet365.com/#/AC/B18/C21169978/D19/E26741034/F19/')
+        # only the exact bare host is rewritten; anything else stays subject to the strict pattern
+        self.assertIsNone(event_link(dict(normalized_alert=json.dumps({'comparison_url': 'https://bet365.com/#/AX/K9'}))))
+        self.assertIsNone(event_link(dict(normalized_alert=json.dumps({'comparison_url': 'https://bet365.com.evil/#/AC/B18/C1/D19/E2/F19/'}))))
+        self.assertIsNone(event_link(dict(normalized_alert=json.dumps({'comparison_url': 'http://bet365.com/#/AC/B18/C1/D19/E2/F19/'}))))
+        # end to end: the hold run carries the www link, not a Search query only
+        text = MELBOURNE['raw_text'].replace('https://www.bet365.com/#/AC/', 'https://bet365.com/#/AC/')
+        self.assertIn('https://bet365.com/#/AC/', text)
+        iid = self.p.ingest(message(text=text))['instruction_id']
+        self.p.tick(self.gateway)
+        payload = self.gateway.submitted[-1]
+        self.assertEqual(payload['instruction_id'], iid)
+        self.assertEqual(payload['event_url'], 'https://www.bet365.com/#/AC/B18/C21167989/D19/E26735656/F19/I0/')
+
     def test_held_slip_owns_the_phone(self):
         iid = self.held()
         other = self.p.ingest(message(RYTAS))['instruction_id']

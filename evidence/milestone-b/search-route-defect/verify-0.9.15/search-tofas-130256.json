@@ -1,0 +1,1295 @@
+{
+ "payload": {
+  "instruction_id": "search-tofas-130256",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Tofas SK||Bordo Sportif",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-6",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "kickoff_utc": "2026-09-25T16:00"
+ },
+ "result": {
+  "instruction_id": "search-tofas-130256",
+  "status": "FAIL",
+  "stage": "TARGET_NOT_FOUND",
+  "detail": "Search control not visible on live Bet365",
+  "duration_ms": 35132,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 34848,
+   "last_progress_at_ms": 1790337798555,
+   "instruction_id": "search-tofas-130256",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790337776677
+    },
+    {
+     "stage": "SPORTS_HOME",
+     "elapsed_ms": 19,
+     "at_ms": 1790337776692,
+     "timing": {
+      "stage": "SPORTS_HOME",
+      "start_elapsed_ms": 19,
+      "start_ts_ms": 1790337776684,
+      "end_elapsed_ms": 29,
+      "end_ts_ms": 1790337776693,
+      "duration_ms": 10,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 29,
+     "at_ms": 1790337776701,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 29,
+      "start_ts_ms": 1790337776693,
+      "end_elapsed_ms": 5191,
+      "end_ts_ms": 1790337781855,
+      "duration_ms": 5162,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4069,
+     "at_ms": 1790337776701
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4583,
+     "at_ms": 1790337776701
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4621,
+     "at_ms": 1790337776701
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5175,
+     "at_ms": 1790337776701
+    },
+    {
+     "stage": "SESSION_CHECK",
+     "elapsed_ms": 5191,
+     "at_ms": 1790337781860,
+     "timing": {
+      "stage": "SESSION_CHECK",
+      "start_elapsed_ms": 5191,
+      "start_ts_ms": 1790337781855,
+      "end_elapsed_ms": 6250,
+      "end_ts_ms": 1790337782914,
+      "duration_ms": 1059,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SESSION_CHECK",
+     "elapsed_ms": 5197,
+     "at_ms": 1790337781860
+    },
+    {
+     "stage": "SESSION_CHECK",
+     "elapsed_ms": 5897,
+     "at_ms": 1790337781860
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 6250,
+     "at_ms": 1790337782921,
+     "timing": {
+      "stage": "OPEN_SEARCH",
+      "start_elapsed_ms": 6250,
+      "start_ts_ms": 1790337782914,
+      "end_elapsed_ms": 6257,
+      "end_ts_ms": 1790337782921,
+      "duration_ms": 7,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SPORTS_CONTEXT",
+     "elapsed_ms": 6257,
+     "at_ms": 1790337782928,
+     "timing": {
+      "stage": "SPORTS_CONTEXT",
+      "start_elapsed_ms": 6257,
+      "start_ts_ms": 1790337782921,
+      "end_elapsed_ms": 6930,
+      "end_ts_ms": 1790337783595,
+      "duration_ms": 673,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SPORTS_CONTEXT",
+     "elapsed_ms": 6265,
+     "at_ms": 1790337782928
+    },
+    {
+     "stage": "SPORTS_CONTEXT",
+     "elapsed_ms": 6872,
+     "at_ms": 1790337782928
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 6930,
+     "at_ms": 1790337783610,
+     "timing": {
+      "stage": "OPEN_SEARCH",
+      "start_elapsed_ms": 6930,
+      "start_ts_ms": 1790337783595,
+      "end_elapsed_ms": 9724,
+      "end_ts_ms": 1790337786389,
+      "duration_ms": 2794,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 6948,
+     "at_ms": 1790337783610
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 7602,
+     "at_ms": 1790337783610
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 7624,
+     "at_ms": 1790337783610
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 8258,
+     "at_ms": 1790337783610
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 8285,
+     "at_ms": 1790337783610
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 9352,
+     "at_ms": 1790337783610
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 9635,
+     "at_ms": 1790337783610
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 9724,
+     "at_ms": 1790337786421,
+     "timing": {
+      "stage": "ENTER_QUERY",
+      "start_elapsed_ms": 9724,
+      "start_ts_ms": 1790337786389,
+      "end_elapsed_ms": 9759,
+      "end_ts_ms": 1790337786424,
+      "duration_ms": 35,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "FOCUS",
+     "elapsed_ms": 9759,
+     "at_ms": 1790337786433,
+     "timing": {
+      "stage": "FOCUS",
+      "start_elapsed_ms": 9759,
+      "start_ts_ms": 1790337786424,
+      "end_elapsed_ms": 9771,
+      "end_ts_ms": 1790337786435,
+      "duration_ms": 12,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 9771,
+     "at_ms": 1790337786445,
+     "timing": {
+      "stage": "ENTER_QUERY",
+      "start_elapsed_ms": 9771,
+      "start_ts_ms": 1790337786435,
+      "end_elapsed_ms": 16777,
+      "end_ts_ms": 1790337793441,
+      "duration_ms": 7006,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 9782,
+     "at_ms": 1790337786445
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 10116,
+     "at_ms": 1790337786445
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 10134,
+     "at_ms": 1790337786445
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 10541,
+     "at_ms": 1790337786445
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 10559,
+     "at_ms": 1790337786445
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 10929,
+     "at_ms": 1790337786445
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 10945,
+     "at_ms": 1790337787620,
+     "timing": {
+      "stage": "ENTER_QUERY",
+      "start_elapsed_ms": 9771,
+      "start_ts_ms": 1790337786435,
+      "end_elapsed_ms": 16777,
+      "end_ts_ms": 1790337793441,
+      "duration_ms": 7006,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 16742,
+     "at_ms": 1790337787620
+    },
+    {
+     "stage": "QUERY_VERIFY",
+     "elapsed_ms": 16777,
+     "at_ms": 1790337793456,
+     "timing": {
+      "stage": "QUERY_VERIFY",
+      "start_elapsed_ms": 16777,
+      "start_ts_ms": 1790337793441,
+      "end_elapsed_ms": 18613,
+      "end_ts_ms": 1790337795277,
+      "duration_ms": 1836,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "QUERY_VERIFY",
+     "elapsed_ms": 16793,
+     "at_ms": 1790337793456
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 18613,
+     "at_ms": 1790337795347,
+     "timing": {
+      "stage": "RESULTS_WAIT",
+      "start_elapsed_ms": 18613,
+      "start_ts_ms": 1790337795278,
+      "end_elapsed_ms": 21872,
+      "end_ts_ms": 1790337798537,
+      "duration_ms": 3259,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 18685,
+     "at_ms": 1790337795347
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 19096,
+     "at_ms": 1790337795347
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 19132,
+     "at_ms": 1790337795347
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 19963,
+     "at_ms": 1790337795347
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 20013,
+     "at_ms": 1790337795347
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 21287,
+     "at_ms": 1790337795347
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 21795,
+     "at_ms": 1790337795347
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 21872,
+     "at_ms": 1790337798555,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 21872,
+      "start_ts_ms": 1790337798537,
+      "end_elapsed_ms": 34848,
+      "end_ts_ms": 1790337811512,
+      "duration_ms": 12976,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 24733,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 25236,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 25300,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 25781,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 25853,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 26336,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 26386,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 27467,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 28052,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 29100,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 29738,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 31380,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 31965,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 32110,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 33781,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 34245,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 34276,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 34818,
+     "at_ms": 1790337798555
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 34848,
+     "at_ms": 1790337798555
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_SeWb_vmRGA_jJNb8mpZQohk7kSEL1kmPV2cW2xWu-5E",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Search control not visible on live Bet365",
+  "route": "search",
+  "stage_timings": [
+   {
+    "stage": "SPORTS_HOME",
+    "start_elapsed_ms": 19,
+    "start_ts_ms": 1790337776684,
+    "end_elapsed_ms": 29,
+    "end_ts_ms": 1790337776693,
+    "duration_ms": 10,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 29,
+    "start_ts_ms": 1790337776693,
+    "end_elapsed_ms": 5191,
+    "end_ts_ms": 1790337781855,
+    "duration_ms": 5162,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "start_elapsed_ms": 5191,
+    "start_ts_ms": 1790337781855,
+    "end_elapsed_ms": 6250,
+    "end_ts_ms": 1790337782914,
+    "duration_ms": 1059,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 6250,
+    "start_ts_ms": 1790337782914,
+    "end_elapsed_ms": 6257,
+    "end_ts_ms": 1790337782921,
+    "duration_ms": 7,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "start_elapsed_ms": 6257,
+    "start_ts_ms": 1790337782921,
+    "end_elapsed_ms": 6930,
+    "end_ts_ms": 1790337783595,
+    "duration_ms": 673,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 6930,
+    "start_ts_ms": 1790337783595,
+    "end_elapsed_ms": 9724,
+    "end_ts_ms": 1790337786389,
+    "duration_ms": 2794,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 9724,
+    "start_ts_ms": 1790337786389,
+    "end_elapsed_ms": 9759,
+    "end_ts_ms": 1790337786424,
+    "duration_ms": 35,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FOCUS",
+    "start_elapsed_ms": 9759,
+    "start_ts_ms": 1790337786424,
+    "end_elapsed_ms": 9771,
+    "end_ts_ms": 1790337786435,
+    "duration_ms": 12,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 9771,
+    "start_ts_ms": 1790337786435,
+    "end_elapsed_ms": 16777,
+    "end_ts_ms": 1790337793441,
+    "duration_ms": 7006,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "start_elapsed_ms": 16777,
+    "start_ts_ms": 1790337793441,
+    "end_elapsed_ms": 18613,
+    "end_ts_ms": 1790337795277,
+    "duration_ms": 1836,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "start_elapsed_ms": 18613,
+    "start_ts_ms": 1790337795278,
+    "end_elapsed_ms": 21872,
+    "end_ts_ms": 1790337798537,
+    "duration_ms": 3259,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 21872,
+    "start_ts_ms": 1790337798537,
+    "end_elapsed_ms": 34848,
+    "end_ts_ms": 1790337811512,
+    "duration_ms": 12976,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "session_path": [
+   {
+    "saw": "ACCOUNT",
+    "state": "AUTHENTICATED",
+    "attempts": 0
+   }
+  ],
+  "session_machine": "AUTHENTICATED"
+ },
+ "run": {
+  "run_id": "c_SeWb_vmRGA_jJNb8mpZQohk7kSEL1kmPV2cW2xWu-5E",
+  "adapter": "live_bet365",
+  "status": "TARGET_NOT_FOUND",
+  "phase": "FINISHED",
+  "started_at_ms": 1790337776664,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790337776664
+   },
+   {
+    "phase": "SPORTS_HOME",
+    "elapsed_ms": 19,
+    "wall_ts_ms": 1790337776684
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 29,
+    "wall_ts_ms": 1790337776694
+   },
+   {
+    "phase": "CAPTURE_home",
+    "elapsed_ms": 4069,
+    "wall_ts_ms": 1790337780735
+   },
+   {
+    "phase": "CAPTURED_home",
+    "elapsed_ms": 4583,
+    "wall_ts_ms": 1790337781248
+   },
+   {
+    "phase": "CAPTURE_home_ready",
+    "elapsed_ms": 4621,
+    "wall_ts_ms": 1790337781285
+   },
+   {
+    "phase": "CAPTURED_home_ready",
+    "elapsed_ms": 5175,
+    "wall_ts_ms": 1790337781839
+   },
+   {
+    "phase": "SESSION_CHECK",
+    "elapsed_ms": 5191,
+    "wall_ts_ms": 1790337781855
+   },
+   {
+    "phase": "CAPTURE_session",
+    "elapsed_ms": 5197,
+    "wall_ts_ms": 1790337781862
+   },
+   {
+    "phase": "CAPTURED_session",
+    "elapsed_ms": 5897,
+    "wall_ts_ms": 1790337782562
+   },
+   {
+    "phase": "OPEN_SEARCH",
+    "elapsed_ms": 6250,
+    "wall_ts_ms": 1790337782914
+   },
+   {
+    "phase": "SPORTS_CONTEXT",
+    "elapsed_ms": 6257,
+    "wall_ts_ms": 1790337782921
+   },
+   {
+    "phase": "CAPTURE_sports_context_pre",
+    "elapsed_ms": 6265,
+    "wall_ts_ms": 1790337782929
+   },
+   {
+    "phase": "CAPTURED_sports_context_pre",
+    "elapsed_ms": 6872,
+    "wall_ts_ms": 1790337783536
+   },
+   {
+    "phase": "OPEN_SEARCH",
+    "elapsed_ms": 6930,
+    "wall_ts_ms": 1790337783595
+   },
+   {
+    "phase": "CAPTURE_search_button",
+    "elapsed_ms": 6948,
+    "wall_ts_ms": 1790337783613
+   },
+   {
+    "phase": "CAPTURED_search_button",
+    "elapsed_ms": 7602,
+    "wall_ts_ms": 1790337784266
+   },
+   {
+    "phase": "CAPTURE_search_button_clear",
+    "elapsed_ms": 7624,
+    "wall_ts_ms": 1790337784288
+   },
+   {
+    "phase": "CAPTURED_search_button_clear",
+    "elapsed_ms": 8258,
+    "wall_ts_ms": 1790337784922
+   },
+   {
+    "effect": "gesture",
+    "target": "Search",
+    "bounds": [
+     107,
+     273,
+     199,
+     304
+    ],
+    "elapsed_ms": 8284
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8285,
+    "wall_ts_ms": 1790337784949
+   },
+   {
+    "phase": "CAPTURE_search_after_0_5s",
+    "elapsed_ms": 9352,
+    "wall_ts_ms": 1790337786016
+   },
+   {
+    "phase": "CAPTURED_search_after_0_5s",
+    "elapsed_ms": 9635,
+    "wall_ts_ms": 1790337786301
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 9724,
+    "wall_ts_ms": 1790337786390
+   },
+   {
+    "phase": "FOCUS",
+    "elapsed_ms": 9759,
+    "wall_ts_ms": 1790337786424
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 9771,
+    "wall_ts_ms": 1790337786435
+   },
+   {
+    "phase": "CAPTURE_query_pre",
+    "elapsed_ms": 9782,
+    "wall_ts_ms": 1790337786446
+   },
+   {
+    "phase": "CAPTURED_query_pre",
+    "elapsed_ms": 10116,
+    "wall_ts_ms": 1790337786780
+   },
+   {
+    "phase": "CAPTURE_search_field_0",
+    "elapsed_ms": 10134,
+    "wall_ts_ms": 1790337786798
+   },
+   {
+    "phase": "CAPTURED_search_field_0",
+    "elapsed_ms": 10541,
+    "wall_ts_ms": 1790337787205
+   },
+   {
+    "phase": "CAPTURE_query_ready",
+    "elapsed_ms": 10559,
+    "wall_ts_ms": 1790337787223
+   },
+   {
+    "phase": "CAPTURED_query_ready",
+    "elapsed_ms": 10929,
+    "wall_ts_ms": 1790337787593
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 10945,
+    "wall_ts_ms": 1790337787608
+   },
+   {
+    "phase": "QUERY_VERIFIED",
+    "elapsed_ms": 16742,
+    "wall_ts_ms": 1790337793407
+   },
+   {
+    "phase": "QUERY_VERIFY",
+    "elapsed_ms": 16777,
+    "wall_ts_ms": 1790337793442
+   },
+   {
+    "phase": "DISMISS_KEYBOARD",
+    "elapsed_ms": 16793,
+    "wall_ts_ms": 1790337793457
+   },
+   {
+    "phase": "RESULTS_WAIT",
+    "elapsed_ms": 18613,
+    "wall_ts_ms": 1790337795278
+   },
+   {
+    "phase": "CAPTURE_query_results",
+    "elapsed_ms": 18685,
+    "wall_ts_ms": 1790337795350
+   },
+   {
+    "phase": "CAPTURED_query_results",
+    "elapsed_ms": 19096,
+    "wall_ts_ms": 1790337795760
+   },
+   {
+    "phase": "CAPTURE_casino_recover_pre",
+    "elapsed_ms": 19132,
+    "wall_ts_ms": 1790337795796
+   },
+   {
+    "phase": "CAPTURED_casino_recover_pre",
+    "elapsed_ms": 19963,
+    "wall_ts_ms": 1790337796628
+   },
+   {
+    "effect": "gesture",
+    "target": "Close casino search",
+    "bounds": [
+     38,
+     175,
+     682,
+     206
+    ],
+    "elapsed_ms": 20013
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 20013,
+    "wall_ts_ms": 1790337796677
+   },
+   {
+    "phase": "CAPTURE_sports_context_pre",
+    "elapsed_ms": 21287,
+    "wall_ts_ms": 1790337797952
+   },
+   {
+    "phase": "CAPTURED_sports_context_pre",
+    "elapsed_ms": 21795,
+    "wall_ts_ms": 1790337798460
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 21872,
+    "wall_ts_ms": 1790337798537
+   },
+   {
+    "phase": "CAPTURE_sports_context_after_home",
+    "elapsed_ms": 24733,
+    "wall_ts_ms": 1790337801399
+   },
+   {
+    "phase": "CAPTURED_sports_context_after_home",
+    "elapsed_ms": 25236,
+    "wall_ts_ms": 1790337801900
+   },
+   {
+    "phase": "CAPTURE_search_button",
+    "elapsed_ms": 25300,
+    "wall_ts_ms": 1790337801964
+   },
+   {
+    "phase": "CAPTURED_search_button",
+    "elapsed_ms": 25781,
+    "wall_ts_ms": 1790337802446
+   },
+   {
+    "phase": "CAPTURE_search_button_clear",
+    "elapsed_ms": 25853,
+    "wall_ts_ms": 1790337802518
+   },
+   {
+    "phase": "CAPTURED_search_button_clear",
+    "elapsed_ms": 26336,
+    "wall_ts_ms": 1790337803000
+   },
+   {
+    "effect": "gesture",
+    "target": "Search",
+    "bounds": [
+     107,
+     186,
+     199,
+     220
+    ],
+    "elapsed_ms": 26386
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 26386,
+    "wall_ts_ms": 1790337803050
+   },
+   {
+    "phase": "CAPTURE_search_after_0_5s",
+    "elapsed_ms": 27467,
+    "wall_ts_ms": 1790337804132
+   },
+   {
+    "phase": "CAPTURED_search_after_0_5s",
+    "elapsed_ms": 28052,
+    "wall_ts_ms": 1790337804716
+   },
+   {
+    "phase": "CAPTURE_search_after_1_5s",
+    "elapsed_ms": 29100,
+    "wall_ts_ms": 1790337805766
+   },
+   {
+    "phase": "CAPTURED_search_after_1_5s",
+    "elapsed_ms": 29738,
+    "wall_ts_ms": 1790337806403
+   },
+   {
+    "phase": "CAPTURE_search_after_3s",
+    "elapsed_ms": 31380,
+    "wall_ts_ms": 1790337808046
+   },
+   {
+    "phase": "CAPTURED_search_after_3s",
+    "elapsed_ms": 31965,
+    "wall_ts_ms": 1790337808630
+   },
+   {
+    "phase": "DISMISS_KEYBOARD",
+    "elapsed_ms": 32110,
+    "wall_ts_ms": 1790337808774
+   },
+   {
+    "phase": "CAPTURE_search_button_retry",
+    "elapsed_ms": 33781,
+    "wall_ts_ms": 1790337810445
+   },
+   {
+    "phase": "CAPTURED_search_button_retry",
+    "elapsed_ms": 34245,
+    "wall_ts_ms": 1790337810909
+   },
+   {
+    "phase": "CAPTURE_search_button_clear_retry",
+    "elapsed_ms": 34276,
+    "wall_ts_ms": 1790337810940
+   },
+   {
+    "phase": "CAPTURED_search_button_clear_retry",
+    "elapsed_ms": 34818,
+    "wall_ts_ms": 1790337811482
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 34848,
+    "wall_ts_ms": 1790337811512
+   }
+  ],
+  "screenshots": [
+   "s001_home.png",
+   "s002_home_ready.png",
+   "s003_session.png",
+   "s004_sports_context_pre.png",
+   "s005_search_button.png",
+   "s006_search_button_clear.png",
+   "s007_search_after_0_5s.png",
+   "s008_query_pre.png",
+   "s009_search_field_0.png",
+   "s010_query_ready.png",
+   "s011_query_results.png",
+   "s012_casino_recover_pre.png",
+   "s013_sports_context_pre.png",
+   "s014_sports_context_after_home.png",
+   "s015_search_button.png",
+   "s016_search_button_clear.png",
+   "s017_search_after_0_5s.png",
+   "s018_search_after_1_5s.png",
+   "s019_search_after_3s.png",
+   "s020_search_button_retry.png",
+   "s021_search_button_clear_retry.png"
+  ],
+  "gesture_attempts": 3,
+  "stage_timings": [
+   {
+    "stage": "SPORTS_HOME",
+    "start_elapsed_ms": 19,
+    "start_ts_ms": 1790337776684,
+    "end_elapsed_ms": 29,
+    "end_ts_ms": 1790337776693,
+    "duration_ms": 10,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 29,
+    "start_ts_ms": 1790337776693,
+    "end_elapsed_ms": 5191,
+    "end_ts_ms": 1790337781855,
+    "duration_ms": 5162,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "start_elapsed_ms": 5191,
+    "start_ts_ms": 1790337781855,
+    "end_elapsed_ms": 6250,
+    "end_ts_ms": 1790337782914,
+    "duration_ms": 1059,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 6250,
+    "start_ts_ms": 1790337782914,
+    "end_elapsed_ms": 6257,
+    "end_ts_ms": 1790337782921,
+    "duration_ms": 7,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "start_elapsed_ms": 6257,
+    "start_ts_ms": 1790337782921,
+    "end_elapsed_ms": 6930,
+    "end_ts_ms": 1790337783595,
+    "duration_ms": 673,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 6930,
+    "start_ts_ms": 1790337783595,
+    "end_elapsed_ms": 9724,
+    "end_ts_ms": 1790337786389,
+    "duration_ms": 2794,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 9724,
+    "start_ts_ms": 1790337786389,
+    "end_elapsed_ms": 9759,
+    "end_ts_ms": 1790337786424,
+    "duration_ms": 35,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FOCUS",
+    "start_elapsed_ms": 9759,
+    "start_ts_ms": 1790337786424,
+    "end_elapsed_ms": 9771,
+    "end_ts_ms": 1790337786435,
+    "duration_ms": 12,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 9771,
+    "start_ts_ms": 1790337786435,
+    "end_elapsed_ms": 16777,
+    "end_ts_ms": 1790337793441,
+    "duration_ms": 7006,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "start_elapsed_ms": 16777,
+    "start_ts_ms": 1790337793441,
+    "end_elapsed_ms": 18613,
+    "end_ts_ms": 1790337795277,
+    "duration_ms": 1836,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "start_elapsed_ms": 18613,
+    "start_ts_ms": 1790337795278,
+    "end_elapsed_ms": 21872,
+    "end_ts_ms": 1790337798537,
+    "duration_ms": 3259,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 21872,
+    "start_ts_ms": 1790337798537,
+    "end_elapsed_ms": 34848,
+    "end_ts_ms": 1790337811512,
+    "duration_ms": 12976,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "route": "search",
+  "current_stage": "OPEN_HOME",
+  "session_path": [
+   {
+    "saw": "ACCOUNT",
+    "state": "AUTHENTICATED",
+    "attempts": 0
+   }
+  ],
+  "session_machine": "AUTHENTICATED",
+  "session": "AUTHENTICATED",
+  "sports_context_pre_elapsed_ms": 586,
+  "sports_context_foreground": "13:03 Co R.ll 100% | o bet365.com/#/AX/K9 + 4 | Q Tofas SK Bordo Sportif X Close | Casino | ACKPOT | BONANa | SKY BOUNTY SKELETSN | KRAKEN'S | BEMRS | : | 1 2 3 4 5 7 9 | W t | S d f g h k | N Z X C b m | I#1 English (UK) Go",
+  "sports_context": "open_home_url",
+  "sports_context_elapsed_ms": 4014,
+  "search_control_text": "Search",
+  "search_control_bounds": [
+   113,
+   192,
+   193,
+   214
+  ],
+  "search_tap_bounds": [
+   107,
+   186,
+   199,
+   220
+  ],
+  "search_tap_xy": [
+   153,
+   203
+  ],
+  "search_tap_attempt": 1,
+  "search_ui_open": true,
+  "search_open_via": "verify_0_5s",
+  "search_query": "Tofas SK Bordo Sportif",
+  "identity_home": "Tofas SK",
+  "expected_away": "Bordo Sportif",
+  "identity_away": "Bordo Sportif",
+  "search_query_ladder": [
+   "Tofas SK Bordo Sportif",
+   "Tofas SK",
+   "Bordo Sportif"
+  ],
+  "search_ladder_index": 0,
+  "search_ladder_query": "Tofas SK Bordo Sportif",
+  "search_bar_checks": [
+   {
+    "attempt": 0,
+    "bar": true,
+    "candidates": 1,
+    "text": "Search bet365...",
+    "empty": true,
+    "clear": null
+   }
+  ],
+  "query_evidence": {
+   "run_id": "c_SeWb_vmRGA_jJNb8mpZQohk7kSEL1kmPV2cW2xWu-5E",
+   "requested_text": "Tofas SK Bordo Sportif",
+   "field_hint": "bet365...",
+   "package": "com.android.chrome",
+   "mechanism": "AccessibilityInputConnection.commitText",
+   "started_at_ms": 1790337787622,
+   "started_elapsed_ms": 18451220,
+   "timeout_ms": 60000,
+   "status": "PASS",
+   "field_bounds": [
+    124,
+    153,
+    488,
+    226
+   ],
+   "pre_screenshot": "files/visual/c_SeWb_vmRGA_jJNb8mpZQohk7kSEL1kmPV2cW2xWu-5E/before.png",
+   "post_screenshot": "files/visual/c_SeWb_vmRGA_jJNb8mpZQohk7kSEL1kmPV2cW2xWu-5E/after.png",
+   "verification_result": "EXACT_INPUT_OCR_SOFT",
+   "input_attempts": 1,
+   "events": [
+    {
+     "phase": "STARTED",
+     "elapsed_ms": 0
+    },
+    {
+     "phase": "LOCATING",
+     "elapsed_ms": 19
+    },
+    {
+     "phase": "FOCUS_DISPATCHING",
+     "elapsed_ms": 373
+    },
+    {
+     "phase": "FOCUS_GESTURE_COMPLETED",
+     "elapsed_ms": 484
+    },
+    {
+     "phase": "FOCUS_CONFIRMED",
+     "elapsed_ms": 692
+    },
+    {
+     "phase": "INPUT_COMMITTING",
+     "elapsed_ms": 1021
+    },
+    {
+     "phase": "INPUT_SENT",
+     "elapsed_ms": 1042
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 1661
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 3273
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 4718
+    },
+    {
+     "phase": "FINISHED",
+     "elapsed_ms": 5715
+    }
+   ],
+   "phase": "FINISHED",
+   "focus_cycle": 0,
+   "focus_baseline_generation": 8,
+   "focus_tap_elapsed_ms": 18451593,
+   "focus_tap_xy": [
+    306,
+    189
+   ],
+   "editor_package": "com.android.chrome",
+   "editor_generation": 9,
+   "editor_start_elapsed_ms": 18451738,
+   "ime_window_visible": false,
+   "focus_signals": {
+    "fresh_generation": true,
+    "generation": 9,
+    "baseline_generation": 8,
+    "ime_window_visible": false,
+    "focus_cycle": 0
+   },
+   "focused_screenshot": "files/visual/c_SeWb_vmRGA_jJNb8mpZQohk7kSEL1kmPV2cW2xWu-5E/focused.png",
+   "focused_field_bounds": [
+    128,
+    149,
+    474,
+    229
+   ],
+   "wrong_field": false,
+   "prior_text_length": 0,
+   "visible_field_text": "5 SK Bordo Sportif",
+   "ocr_verify_attempt": 2,
+   "post_field_bounds": [
+    128,
+    149,
+    474,
+    229
+   ],
+   "observed_text": "Tofas SK Bordo Sportif",
+   "exact_input_match": true,
+   "visual_text_match": false,
+   "bounds_unchanged": true,
+   "focus_session_fresh": true,
+   "ocr_gate": "SOFT_SUPPORTING",
+   "ocr_soft_pass": true,
+   "detail": "Exact editor value verified; OCR supporting evidence imperfect but field/focus gates held",
+   "ended_at_ms": 1790337793337,
+   "duration_ms": 5715
+  },
+  "casino_only_rejected": true,
+  "casino_only_query": "Tofas SK Bordo Sportif",
+  "sports_context_after": "13:03 Ca ll 100%0 | G o bet365.com/#/HO/ + 5 | Search | Football Horses Greyhounds Scores | Racing Nations League Football Casino Rugby L | Racing | ITVRacing | 1.15 Newmarket 1.5| | 11m 46m | Alobayyah | 4.00 | Tom Marquand | Arisaig | 4.50 | JP Spencer | Estissa | 5.50 | Oisin Murphy",
+  "detail": "Search control not visible on live Bet365",
+  "duration_ms": 34848
+ },
+ "wall": 36.02426528930664
+}

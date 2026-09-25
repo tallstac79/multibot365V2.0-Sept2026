@@ -41,8 +41,10 @@ final class SearchBar {
         for (GameLinesParser.Word w : words) {
             if (w == mag || w == close || Math.abs(w.cy() - close.cy()) > 20 || w.left <= mag.right || w.right >= close.left) continue;
             if (clearGlyph(w.text) && w.left > 420) { if (clear == null || w.left > clear.left) clear = w; continue; }
-            // Icons at the right end (real empty bar: the voice icon OCRs as "Q,") are not field text.
-            if (w.left > 540 && w.text.replaceAll("[^A-Za-z0-9]", "").length() <= 1) continue;
+            // Icons at the right end are not field text: the voice icon OCRs as "Q," (2026-09-24) or as the
+            // icon-sized token "HO" (2026-09-25, Norrkoping v Umea: "Search bet365... HO" refused an empty bar).
+            // Typed text starts at the field's left edge, so an icon-sized token alone past x=540 is never a query.
+            if (w.left > 540 && (w.text.replaceAll("[^A-Za-z0-9]", "").length() <= 1 || w.right - w.left <= 40)) continue;
             content.add(w);
         }
         content.sort((a, b) -> Integer.compare(a.left, b.left));

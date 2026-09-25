@@ -1,0 +1,469 @@
+{
+ "payload": {
+  "instruction_id": "link-szolnoki-130334",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Szolnoki Olaj||OSE Lions",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-19.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21170159/D19/E26748276/F19/I0/",
+  "kickoff_utc": "2026-09-25T16:00"
+ },
+ "result": {
+  "instruction_id": "link-szolnoki-130334",
+  "status": "FAIL",
+  "stage": "TARGET_NOT_FOUND",
+  "detail": "No live selection for SPREAD/HOME/-19.5",
+  "duration_ms": 6069,
+  "progress": {
+   "stage": "READ_SELECTION",
+   "elapsed_ms": 5944,
+   "last_progress_at_ms": 1790337820532,
+   "instruction_id": "link-szolnoki-130334",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790337814600
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 12,
+     "at_ms": 1790337814606
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 19,
+     "at_ms": 1790337814614,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 19,
+      "start_ts_ms": 1790337814608,
+      "end_elapsed_ms": 5337,
+      "end_ts_ms": 1790337819926,
+      "duration_ms": 5318,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3449,
+     "at_ms": 1790337814614
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3695,
+     "at_ms": 1790337814614
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4620,
+     "at_ms": 1790337814614
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5184,
+     "at_ms": 1790337814614
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5337,
+     "at_ms": 1790337819934,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 5337,
+      "start_ts_ms": 1790337819926,
+      "end_elapsed_ms": 5931,
+      "end_ts_ms": 1790337820520,
+      "duration_ms": 594,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5346,
+     "at_ms": 1790337819934
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5886,
+     "at_ms": 1790337819934
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 5931,
+     "at_ms": 1790337820532,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 5931,
+      "start_ts_ms": 1790337820520,
+      "end_elapsed_ms": 5944,
+      "end_ts_ms": 1790337820533,
+      "duration_ms": 13,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 5944,
+     "at_ms": 1790337820532
+    }
+   ]
+  },
+  "device_stage": "READ_SELECTION",
+  "execution_count": 1,
+  "run_id": "c_RaXJJrhpUJvRM9_uIA59WNEneKLrTJdkFxUpDEEmi6E",
+  "fixture_name": "Szolnoki Olaj v OSE Lions",
+  "home": "Szolnoki Olaj",
+  "away": "OSE Lions",
+  "competition": "Hungary NB 1.A • 25 Sep 17:00",
+  "verification_detail": "No live selection for SPREAD/HOME/-19.5",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 19,
+    "start_ts_ms": 1790337814608,
+    "end_elapsed_ms": 5337,
+    "end_ts_ms": 1790337819926,
+    "duration_ms": 5318,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5337,
+    "start_ts_ms": 1790337819926,
+    "end_elapsed_ms": 5931,
+    "end_ts_ms": 1790337820520,
+    "duration_ms": 594,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5931,
+    "start_ts_ms": 1790337820520,
+    "end_elapsed_ms": 5944,
+    "end_ts_ms": 1790337820533,
+    "duration_ms": 13,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "Szolnoki Olaj",
+    "bookmaker": "Szolnoki Olaj",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "OSE Lions",
+    "bookmaker": "OSE Lions",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "EXACT",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21170159/D19/E26748276/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_RaXJJrhpUJvRM9_uIA59WNEneKLrTJdkFxUpDEEmi6E",
+  "adapter": "live_bet365",
+  "status": "TARGET_NOT_FOUND",
+  "phase": "FINISHED",
+  "started_at_ms": 1790337814589,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790337814589
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 12,
+    "wall_ts_ms": 1790337814601
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 19,
+    "wall_ts_ms": 1790337814609
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3449,
+    "wall_ts_ms": 1790337818039
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3695,
+    "wall_ts_ms": 1790337818284
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 4620,
+    "wall_ts_ms": 1790337819211
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5184,
+    "wall_ts_ms": 1790337819775
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 5337,
+    "wall_ts_ms": 1790337819926
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 5346,
+    "wall_ts_ms": 1790337819935
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 5886,
+    "wall_ts_ms": 1790337820475
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 5931,
+    "wall_ts_ms": 1790337820520
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 5944,
+    "wall_ts_ms": 1790337820533
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png",
+   "s003_markets.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 19,
+    "start_ts_ms": 1790337814608,
+    "end_elapsed_ms": 5337,
+    "end_ts_ms": 1790337819926,
+    "duration_ms": 5318,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5337,
+    "start_ts_ms": 1790337819926,
+    "end_elapsed_ms": 5931,
+    "end_ts_ms": 1790337820520,
+    "duration_ms": 594,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5931,
+    "start_ts_ms": 1790337820520,
+    "end_elapsed_ms": 5944,
+    "end_ts_ms": 1790337820533,
+    "duration_ms": 13,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Szolnoki Olaj",
+  "identity_home": "Szolnoki Olaj",
+  "expected_away": "OSE Lions",
+  "identity_away": "OSE Lions",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21170159/D19/E26748276/F19/I0/",
+  "current_stage": "READ_SELECTION",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Hungary NB 1.A • 25 Sep 17:00",
+   "Szolnoki Olaj vs OSE Lions v",
+   "Popular Bet Builder Game Team Quarter H A"
+  ],
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "Szolnoki Olaj",
+    "bookmaker": "Szolnoki Olaj",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "OSE Lions",
+    "bookmaker": "OSE Lions",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "EXACT",
+  "route": "event_link",
+  "kickoff_verified": "25 Sep 17:00",
+  "verified_fixture": {
+   "code": "32c07e9f",
+   "home": "Szolnoki Olaj",
+   "away": "OSE Lions",
+   "fixture_name": "Szolnoki Olaj v OSE Lions",
+   "exact_fixture_text": "Home Szolnoki Olaj\nAway OSE Lions",
+   "competition": "Hungary NB 1.A • 25 Sep 17:00",
+   "bounds": [
+    35,
+    268,
+    691,
+    436
+   ]
+  },
+  "fixture_home": "Szolnoki Olaj",
+  "fixture_away": "OSE Lions",
+  "identity_verified_home": "Szolnoki Olaj",
+  "identity_verified_away": "OSE Lions",
+  "event_verified": true,
+  "fixture": {
+   "code": "32c07e9f",
+   "home": "Szolnoki Olaj",
+   "away": "OSE Lions",
+   "fixture_name": "Szolnoki Olaj v OSE Lions",
+   "exact_fixture_text": "Home Szolnoki Olaj\nAway OSE Lions",
+   "competition": "Hungary NB 1.A • 25 Sep 17:00",
+   "bounds": [
+    35,
+    268,
+    691,
+    436
+   ]
+  },
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/-20.5@1.74",
+     "SPREAD/AWAY/+20.5@1.95",
+     "TOTAL/OVER/169.5@1.83",
+     "TOTAL/UNDER/169.5@1.83",
+     "MONEYLINE/AWAY/NONE@13.00"
+    ],
+    "notes": []
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/-20.5@1.74",
+    "SPREAD/AWAY/+20.5@1.95",
+    "TOTAL/OVER/169.5@1.83",
+    "TOTAL/UNDER/169.5@1.83",
+    "MONEYLINE/AWAY/NONE@13.00"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-20.5",
+    "price": "1.74",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Szolnoki Olaj",
+    "bounds": [
+     298,
+     655,
+     346,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "+20.5",
+    "price": "1.95",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "OSE Lions",
+    "bounds": [
+     295,
+     740,
+     350,
+     790
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "169.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     437,
+     655,
+     512,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "169.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     452,
+     737,
+     511,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "13.00",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "OSE Lions",
+    "bounds": [
+     597,
+     757,
+     655,
+     774
+    ]
+   }
+  ],
+  "detail": "No live selection for SPREAD/HOME/-19.5",
+  "duration_ms": 5944
+ },
+ "wall": 6.145487546920776
+}

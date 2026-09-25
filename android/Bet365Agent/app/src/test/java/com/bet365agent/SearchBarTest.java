@@ -38,6 +38,28 @@ public class SearchBarTest {
         assertNull(bar.clear);
     }
 
+    /** Real frame, Milestone B 2026-09-25 (on-8f79281a, Norrkoping v Umea): the empty bar's voice icon OCRs as "HO". */
+    @Test public void emptyBarWithVoiceIconReadAsHoIsStillEmpty() throws Exception {
+        SearchBar.Bar bar = SearchBar.locate(StakePadTest.load("search_empty_voice_icon_20260925.txt"));
+        assertNotNull(bar);
+        assertEquals(1, bar.candidates);
+        assertEquals("Search bet365...", bar.text);
+        assertTrue(bar.empty);
+        assertNull(bar.clear);
+    }
+
+    @Test public void typedQueryReachingTheIconZoneIsStillNotEmpty() {
+        List<GameLinesParser.Word> words = new ArrayList<>(Arrays.asList(
+                w("Q", 68, 177, 75, 203), w("Hapoel", 87, 177, 170, 203), w("Jerusalem", 178, 177, 300, 203),
+                w("Bnei", 308, 177, 360, 203), w("Herzliya", 368, 177, 470, 203), w("Utd", 478, 177, 545, 203),
+                w("X", 567, 178, 590, 202), w("Close", 632, 183, 682, 198)));
+        SearchBar.Bar bar = SearchBar.locate(words);
+        assertNotNull(bar);
+        assertFalse(bar.empty);
+        assertEquals("Hapoel Jerusalem Bnei Herzliya Utd", bar.text);
+        assertNotNull(bar.clear);
+    }
+
     @Test public void closedSearchOnSportsHomeIsNotAnOpenBar() throws Exception {
         assertNull(SearchBar.locate(StakePadTest.load("search_home_closed_20260924.txt")));
     }
