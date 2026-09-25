@@ -150,14 +150,19 @@ final class PlacementClassifier {
     }
 
     /** Remove icon at the start of ANY betslip selection line ("><  Bayern Munich +8.0 1.83"): used by the
-     *  generic reset, which does not know the selection. Needs at least two named words after the icon. */
+     *  generic reset, which does not know the selection. Needs either two named words after the icon, or one
+     *  named word plus a line/price number: real slip row "X Szekszard (W) +3.5" (2026-09-25, single-word women's
+     *  team) was not recognised and the held selection stayed on the slip. */
     static int removeAnySelectionWord(List<String> words) {
         if (words.size() < 3 || !closeGlyph(words.get(0))) return -1;
-        int named = 0;
-        for (String w : words.subList(1, words.size())) if (w.matches(".*[A-Za-z]{2,}.*")) named++;
+        int named = 0, numeric = 0;
+        for (String w : words.subList(1, words.size())) {
+            if (w.matches(".*[A-Za-z]{2,}.*")) named++;
+            else if (w.matches("[+-]?[0-9]+(\\.[0-9]+)?")) numeric++;
+        }
         String rest = String.join(" ", words.subList(1, words.size())).toLowerCase(Locale.US);
         if (rest.contains("share") || rest.contains("reuse") || rest.contains("place")) return -1;
-        return named >= 2 ? 0 : -1;
+        return named >= 2 || (named >= 1 && numeric >= 1) ? 0 : -1;
     }
 
     /** Betslip selection line whose remove icon OCR missed (real collapsed slip): the name line is indented

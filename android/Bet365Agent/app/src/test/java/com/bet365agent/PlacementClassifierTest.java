@@ -76,6 +76,11 @@ public class PlacementClassifierTest {
 
     @Test public void genericResetRemovesOnlyASelectionLine() {
         assertEquals(0, PlacementClassifier.removeAnySelectionWord(Arrays.asList("><", "Bayern", "Munich", "+8.0", "1.83")));
+        // real slip row 2026-09-25 (Szekszard (W) v NKA Pecs (W) hold, RESET_BETSLIP left the selection on the slip)
+        assertEquals(0, PlacementClassifier.removeAnySelectionWord(Arrays.asList("X", "Szekszard", "(W)", "+3.5")));
+        assertEquals(0, PlacementClassifier.removeAnySelectionWord(Arrays.asList("X", "Rytas", "+8.0", "1.83")));      // single-word team
+        assertEquals(-1, PlacementClassifier.removeAnySelectionWord(Arrays.asList("X", "Close")));                   // banner close, no selection
+        assertEquals(-1, PlacementClassifier.removeAnySelectionWord(Arrays.asList("X", "1.83", "2.10")));            // numbers only
         assertEquals(-1, PlacementClassifier.removeAnySelectionWord(Arrays.asList("m", "Share", "x")));
         assertEquals(-1, PlacementClassifier.removeAnySelectionWord(Arrays.asList("x", "Reuse", "Selections")));
         assertEquals(-1, PlacementClassifier.removeAnySelectionWord(Arrays.asList("><", "Place", "Bet")));

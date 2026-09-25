@@ -46,3 +46,14 @@ refused; other extras still refused; phone keeps the strict www event_url form).
 Verification on the phone (`../wire-defect/verify-0.9.16/women-szekszard-132234.json`): hold run admitted, event
 opened by link, identity HIGH_CONFIDENCE_EVENT_MATCH "Szekszard (W) v NKA Pecs (W)", HOME +3.5 @ 1.83, stake 0.10,
 pre-tap check PASS (return 0.18), no tap.
+
+## 5. Generic slip reset did not recognise a single-name selection row (phone, FIXED in 0.9.17-reset)
+After the Szekszard verification hold (`../wire-defect/verify-0.9.16/`), RESET_BETSLIP reported "No safe reset
+control visible" three times although the expanded slip showed `X [21,1179][42,1206] Szekszard (W) +3.5` with
+"Point Spread" beneath and "Place Bet To Return £0.18" (never tapped). `PlacementClassifier.removeAnySelectionWord`
+required two named words after the X ("Bayern Munich"); "Szekszard (W) +3.5" has one, so the generic reset left the
+held selection on the slip. Fix: one named word plus a line/price number also qualifies. JVM test on the real row
+(`PlacementClassifierTest.genericResetRemovesOnlyASelectionLine`). Not re-verified on the phone: by the time
+0.9.17-reset was installed the selection had already gone (the agent restart's session probe re-opened Bet365 in a
+new Chrome tab; the event page then showed no slip and an unselected +3.5 cell, `rs-b-clean-5-133209.json`).
+Observation for the soak: each `open()`/VIEW intent adds a Chrome tab (4 → 6 today).
