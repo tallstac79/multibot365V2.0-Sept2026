@@ -79,13 +79,14 @@ class ClassificationTests(unittest.TestCase):
         decision = evaluate(p, config(), instruction_id='x', received_at=T0.isoformat(), now=T0)
         self.assertEqual(decision['instruction']['alternate_line'], {'current': True, 'opening': False, 'comparison': False})
 
-    def test_pasted_fixtures_without_bold_are_partial_not_guessed(self):
+    def test_pasted_fixtures_without_bold_have_net_target_but_no_bound_ev(self):
         for name in ('melbourne_real', 'melbourne_190_5_real', 'prague_real', 'rytas_real'):
             verdict = alert_classifier.classify((FIXTURES / f'oddsnotifier_basketball_{name}.txt').read_text(encoding='utf-8'))
-            self.assertEqual(verdict['status'], 'PARSED_PARTIAL', name)
-            self.assertIn('No highlighted Bet365 target', verdict['reason'])
-            self.assertIsNone(verdict['parsed']['target_side'])
-            self.assertEqual(len(verdict['parsed']['sides']), 2)
+            p = verdict['parsed']
+            self.assertEqual(verdict['status'], 'PARSED', name)
+            self.assertEqual(p['target_side'], 'HOME' if name=='rytas_real' else 'OVER')
+            self.assertIsNone(p['displayed_ev_percent'])
+            self.assertEqual(evaluate(p, config(), instruction_id='x', received_at=T0.isoformat(), now=T0)['decision'], 'REJECT')
 
     def test_unverified_football_formats_are_ambiguous_with_reason(self):
         for name in ('oddsnotifier_spread.txt', 'oddsnotifier_football_ml_linked.txt'):

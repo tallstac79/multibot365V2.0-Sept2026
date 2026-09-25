@@ -57,7 +57,7 @@ class TotalsTests(unittest.TestCase):
         r = parse(KIPINA)
         self.assertEqual(r['status'], 'PARSED')
         p = r['parsed']
-        self.assertEqual((p['selection_side'], p['selection_line'], p['target_price_source']), ('UNDER', '168.5', 'implied_favourable_line'))
+        self.assertEqual((p['selection_side'], p['selection_line'], p['target_price_source']), ('UNDER', '168.5', 'pinnacle_opening_to_current'))
         self.assertEqual((p['comparison']['ev_status'], p['comparison']['equal_line'], p['comparison']['line_difference']),
                          ('NOT_AVAILABLE_UNEQUAL_LINES', False, '2.0'))
         over, under = side(p, 'OVER'), side(p, 'UNDER')
@@ -107,14 +107,13 @@ class SpreadTests(unittest.TestCase):
         self.assertEqual(p['alternate_line'], {'current': True, 'opening': False, 'comparison': False})
         self.assertEqual(side(p, 'AWAY')['comparison']['reference_line'], '+18.5')
 
-    def test_away_selection_inverts_displayed_home_line(self):
-        r = parse(CORPUS['68000'])                     # Spread (12), bold second price
-        p = r['parsed']
-        self.assertEqual(r['status'], 'PARSED')
-        self.assertEqual((p['selection_side'], p['selection_name'], p['selection_line']),
-                         ('AWAY', 'NBA G League United', '-12'))
-        self.assertEqual((p['reference']['line'], p['reference']['odds'], p['comparison']['bet365_odds']), ('-12', '1.558', '1.83'))
-        self.assertEqual(p['bet_quality'], 'CLEAR_VALUE_SIGNAL')
+    def test_opposite_highlight_preserves_home_target_and_away_signed_quote(self):
+        p = parse(CORPUS['68000'])['parsed'] # opening +13 -> current +12 points HOME
+        self.assertEqual((p['selection_side'], p['selection_name'], p['selection_line']), ('HOME', 'Atletico Boca Juniors', '12'))
+        away = side(p, 'AWAY')
+        self.assertEqual((away['reference']['line'], away['reference']['odds'], away['comparison']['bet365_odds'] if 'bet365_odds' in away['comparison'] else away['comparison']['bet365_price']), ('-12', '1.558', '1.83'))
+        self.assertEqual(p['highlighted_side'], 'AWAY')
+        self.assertIsNone(p['displayed_ev_percent'])
 
     def test_inverse_sign_normalisation_for_unequal_lines(self):
         p = parse(CORPUS['68014'])['parsed']           # Spread (9.5 -> 10), Bet365 4.5
@@ -246,10 +245,10 @@ class FavourableLineSignalTests(unittest.TestCase):
     def test_user_examples_over_and_under(self):
         for pinnacle, bet365, target, advantage in (('168.5', '165.5', 'OVER', '3.0'), ('168.5', '171.5', 'UNDER', '3.0')):
             with self.subTest(target=target):
-                r = parse(unequal_totals(pinnacle, bet365, target))
+                r = parse(unequal_totals(pinnacle, bet365, target).replace('Opening (170.5)', 'Opening (165.5)' if target == 'OVER' else 'Opening (170.5)'))
                 p = r['parsed']
                 self.assertEqual(r['status'], 'PARSED')
-                self.assertIn('unequal lines evaluated directionally', r['reason'])
+                self.assertIn('Pinnacle opening', r['reason'])
                 self.assertEqual((p['selection_side'], p['selection_line'], p['line_quality'], p['price_quality']),
                                  (target, bet365, FAVOURABLE, NOT_COMPARABLE))
                 self.assertEqual((p['bet_quality'], p['comparison']['line_advantage'], p['comparison']['ev_status'],
@@ -261,10 +260,10 @@ class FavourableLineSignalTests(unittest.TestCase):
                                   decision['instruction']['side'], decision['instruction']['line']),
                                  ('FAVOURABLE_LINE_SIGNAL', advantage, target, bet365))
 
-    def test_highlighted_side_with_worse_line_is_unfavourable(self):
+    def test_misleading_highlight_does_not_override_net_under(self):
         p = parse(unequal_totals('168.5', '171.5', 'OVER'))['parsed']
-        self.assertEqual((p['bet_quality'], p['comparison']['line_advantage']), ('UNFAVOURABLE', '-3.0'))
-        self.assertTrue(self.evaluate(p)['reason'].startswith('bet_quality'))
+        self.assertEqual((p['target_side'], p['highlighted_side']), ('UNDER', 'OVER'))
+        self.assertEqual((p['bet_quality'], p['comparison']['line_advantage']), ('FAVOURABLE_LINE_SIGNAL', '3.0'))
 
     def test_kipina_without_highlight_implies_under_and_queues(self):
         # 2026-09-25: the implied favourable-side rule (Bet365 168.5 is 2.0 better for UNDER than Pinnacle 166.5)
@@ -274,14 +273,14 @@ class FavourableLineSignalTests(unittest.TestCase):
         decision = self.evaluate(r['parsed'])
         self.assertEqual(decision['decision'], 'ACCEPT', decision['reason'])
         self.assertEqual((decision['instruction']['side'], decision['instruction']['line'], decision['instruction']['target_source']),
-                         ('UNDER', '168.5', 'implied_favourable_line'))
+                         ('UNDER', '168.5', 'pinnacle_opening_to_current'))
         with tempfile.TemporaryDirectory() as tmp:
             result = pipeline(Path(tmp) / 'p.sqlite3', Clock()).ingest(message(MELBOURNE, message_id='900002', text=KIPINA))
             self.assertEqual((result['status'], result['state']), ('PARSED', 'QUEUED'))
         # a Bet365 line only 0.5 better is not a target: PARSED_PARTIAL, UNDER stays POTENTIAL_VALUE
         half = parse(KIPINA.replace('Bet365 (Totals 168.5)', 'Bet365 (Totals 167)'))
         self.assertEqual((half['status'], half['parsed']['selection_side'], side(half['parsed'], 'UNDER')['bet_quality']),
-                         ('PARSED_PARTIAL', None, 'POTENTIAL_VALUE'))
+                         ('PARSED', 'UNDER', 'FAVOURABLE_LINE_SIGNAL'))
 
     def test_line_signal_still_subject_to_price_and_materiality_rules(self):
         p = parse(unequal_totals('168.5', '171.5', 'UNDER'))['parsed']     # UNDER @ 1.83, +3.0
@@ -327,11 +326,11 @@ class FavourableLineSignalTests(unittest.TestCase):
                 row = db.execute('SELECT selection, line, alert_price FROM instructions').fetchone()
             self.assertEqual(tuple(row), ('UNDER', '171.5', '1.83'))
 
-    def test_spread_line_signal_uses_selected_team_line(self):
-        text = CORPUS['68014'].replace('1.83 - 1.83', '1.83 - **1.83**')   # AWAY: -10 -> -4.5 (+5.5)
+    def test_spread_line_signal_uses_sharp_team_line(self):
+        text = CORPUS['68014'].replace('1.83 - 1.83', '1.83 - **1.83**')
         p = parse(text)['parsed']
         self.assertEqual((p['selection_side'], p['selection_line'], p['bet_quality'], p['comparison']['line_advantage']),
-                         ('AWAY', '-4.5', 'FAVOURABLE_LINE_SIGNAL', '5.5'))
+                         ('HOME', '4.5', 'UNFAVOURABLE', '-5.5'))
 
 
 class SafetyTests(unittest.TestCase):
@@ -392,36 +391,28 @@ class ProductionRegressionTests(unittest.TestCase):
                 self.assertEqual([(q['side'], q['price'], q['line']) for q in new[group]['quotes']],
                                  [(q['side'], q['price'], q['line']) for q in old[group]['quotes']])
 
-    def test_live_corpus_nothing_valid_is_invalid(self):
-        statuses = {}
-        for message_id, text in CORPUS.items():
-            statuses[message_id] = alert_classifier.classify(text)['status']
-        self.assertNotIn('INVALID', statuses.values(), {k: v for k, v in statuses.items() if v == 'INVALID'})
-        self.assertEqual(statuses['67962'], 'PARSED')          # early heavily-bolded Telegram render
-        self.assertEqual(statuses['67961'], 'AMBIGUOUS')       # no market label and no fixture link
-        self.assertEqual(statuses['67998'], 'PARSED')          # linked Kipina, EV None: UNDER implied from the lines (2026-09-25)
-        counts = {s: list(statuses.values()).count(s) for s in set(statuses.values())}
-        # 2026-09-25: unequal-line alerts with a Bet365 line now get an implied target, so the corpus' 80+ formerly
-        # PARSED_PARTIAL alerts are PARSED; only alerts without a Bet365 section could remain partial.
-        self.assertLessEqual(counts.get('PARSED_PARTIAL', 0), 5)
-        self.assertGreaterEqual(counts['PARSED'], 100)
+    def test_live_corpus_keeps_malformed_separate_from_ambiguous(self):
+        statuses = {mid: alert_classifier.classify(text)['status'] for mid,text in CORPUS.items()}
+        self.assertNotIn('INVALID', statuses.values())
+        self.assertEqual(statuses['67962'], 'AMBIGUOUS') # unchanged opening/current, price-only
+        self.assertEqual(statuses['67961'], 'AMBIGUOUS') # missing market
+        self.assertEqual(statuses['67998'], 'AMBIGUOUS') # opening/current both 170.5 despite recent rise
+        self.assertEqual(len(statuses), 140) # no minimum acceptance target
 
     def test_every_live_parsed_alert_has_consistent_interpretation(self):
+        from decimal import Decimal
         for message_id, text in CORPUS.items():
-            verdict = alert_classifier.classify(text)
-            p = verdict['parsed']
-            if verdict['status'] == 'PARSED':
-                self.assertIsNotNone(p['selection_side'], message_id)
-                if p['comparison']['equal_line']:
-                    self.assertEqual(p['comparison']['ev_status'], 'SUPPLIED_EQUAL_LINE', message_id)
-                    self.assertIn(p['bet_quality'], ('CLEAR_VALUE_SIGNAL', 'NO_ADVANTAGE', 'UNFAVOURABLE', 'POTENTIAL_VALUE'))
-                else:
-                    self.assertIn(p['bet_quality'], ('FAVOURABLE_LINE_SIGNAL', 'UNFAVOURABLE'), message_id)
-            if verdict['status'] == 'PARSED_PARTIAL' and p['comparison']['ev_status'] == 'NOT_AVAILABLE_UNEQUAL_LINES':
-                qualities = {s['side']: s['line_quality'] for s in p['sides']}
-                self.assertEqual(sorted(qualities.values()), [FAVOURABLE, UNFAVOURABLE], message_id)
-                advantages = [Decimal(s['comparison']['line_advantage']) for s in p['sides']]
-                self.assertEqual(sum(advantages), 0, message_id)
+            verdict = alert_classifier.classify(text); p = verdict['parsed']
+            if verdict['status'] != 'PARSED': continue
+            delta = Decimal(p['pinnacle']['line']) - Decimal(p['opening']['line'])
+            expected = ('HOME' if delta < 0 else 'AWAY') if p['market']=='SPREAD' else ('OVER' if delta>0 else 'UNDER')
+            self.assertEqual(p['target_side'], expected, message_id)
+            if p['displayed_ev_percent'] is not None:
+                self.assertTrue(p['comparison']['equal_line'])
+                self.assertEqual(p['highlighted_side'], p['target_side'])
+            if not p['comparison']['equal_line']:
+                self.assertIsNone(p['displayed_ev_percent'])
+                self.assertEqual(p['price_quality'], 'NOT_COMPARABLE')
 
 
 class MigrationTests(unittest.TestCase):

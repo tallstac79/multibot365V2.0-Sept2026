@@ -13,9 +13,9 @@ import hashlib
 import json
 
 from core.decision_support import validate
-from core.market_interpretation import ACTIONABLE_SIGNALS
+from core.market_interpretation import ACTIONABLE_SIGNALS, SHARP_SOURCE, VERSION, sharp_signal, dec
 
-ENGINE_VERSION = 'rules-3'
+ENGINE_VERSION = 'rules-4-sharp'
 ACCEPT, REJECT, STALE = 'ACCEPT', 'REJECT', 'STALE'
 
 
@@ -68,13 +68,21 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
     check('verified_mapping', mapping.get('production_verified') is True,
           'production-verified quote mapping' if mapping.get('production_verified') else
           'quote ordering is not production-verified; no selection is guessed')
-    implied = alert.get('target_price_source') == 'implied_favourable_line'
+    signal = sharp_signal(alert.get('market'), (alert.get('opening') or {}).get('line'),
+                          (alert.get('pinnacle') or {}).get('line'),
+                          verified=mapping.get('production_verified') is True,
+                          perspective=(alert.get('market_movement') or {}).get('line_perspective'))
+    check('sharp_target', alert.get('interpretation_version') == VERSION
+          and alert.get('interpretation_status') == 'PARSED'
+          and alert.get('target_price_source') == SHARP_SOURCE
+          and signal['side'] is not None and signal['side'] == alert.get('target_side'),
+          signal['reason'] if signal['side'] == alert.get('target_side') and signal['side']
+          else 'No verified opening-to-current sharp target; obsolete or ambiguous interpretation fails closed')
     check('explicit_target', bool(alert.get('target_side') and alert.get('alert_price')),
-          (f"target {alert.get('target_side')} @ {alert.get('alert_price')} "
-           + ('(implied from the favourable Bet365 line)' if implied else '(highlighted by OddsNotifier)')) if alert.get('target_side')
-          else 'no Bet365 target: nothing highlighted and the lines do not single out a side')
+          f"target {alert.get('target_side')} @ {alert.get('alert_price')} (Pinnacle opening-to-current movement)"
+          if alert.get('target_side') else 'no verified sharp side and Bet365 offer')
     # Market interpretation (core.market_interpretation): only an actionable signal on the
-    # highlighted, verified target proceeds. CLEAR_VALUE_SIGNAL = equal-line price/EV edge;
+    # verified Pinnacle opening-to-current target proceeds. CLEAR_VALUE_SIGNAL = equal-line price/EV edge;
     # FAVOURABLE_LINE_SIGNAL = materially favourable Bet365 line at an acceptable price (no EV).
     quality = alert.get('bet_quality')
     comparison = alert.get('comparison') or {}
@@ -90,6 +98,12 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
             advantage_value = None
         check('line_advantage', advantage_value is not None and advantage_value >= Decimal(str(g['min_line_advantage'])),
               f"Bet365 line advantage {advantage} points vs minimum {g['min_line_advantage']}")
+    minimum_move = g['min_sharp_movement']
+    magnitude = dec(signal.get('magnitude'))
+    check('sharp_movement', minimum_move is not None and magnitude is not None and magnitude > 0
+          and magnitude >= Decimal(str(minimum_move)),
+          'Minimum Pinnacle movement policy is not configured; no threshold invented' if minimum_move is None
+          else f'Pinnacle net movement {magnitude} points vs minimum {minimum_move}')
     sport, market = alert.get('sport'), alert.get('market')
     rule = config['sports'].get(sport, {}).get('markets', {}).get(market)
     check('known_market', rule is not None, f'{sport} {market}' if rule else f'unsupported sport/market {sport} {market}')
@@ -162,6 +176,7 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
         displayed_ev_percent=alert.get('displayed_ev_percent'), bet_quality=quality,
         signal_reason=quality, line_advantage=comparison.get('line_advantage'),
         target_source=alert.get('target_price_source'), implied_target=alert.get('implied_target'),
+        sharp_signal=signal, highlighted_side=alert.get('highlighted_side'),
         ev_status=comparison.get('ev_status'),
         line_quality=alert.get('line_quality'), price_quality=alert.get('price_quality'),
         reference_odds=(alert.get('reference') or {}).get('odds'))

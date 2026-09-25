@@ -35,6 +35,12 @@ def _signal(row):
         alert = json.loads(alert) if isinstance(alert, str) else (alert or {})
     except (TypeError, ValueError):
         return None
+    sharp = alert.get('sharp_signal') or {}
+    if sharp.get('side'):
+        cmp = alert.get('comparison') or {}
+        return (f"Pinnacle opening {sharp.get('opening_line')} -> current {sharp.get('current_line')}: "
+                f"{sharp['side']}; same-side Bet365 advantage {cmp.get('line_advantage')} pts; "
+                f"EV {cmp.get('ev_status')}")
     if alert.get('bet_quality') != 'FAVOURABLE_LINE_SIGNAL':
         return None
     cmp = alert.get('comparison') or {}

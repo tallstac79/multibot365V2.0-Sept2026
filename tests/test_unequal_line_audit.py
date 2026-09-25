@@ -6,8 +6,8 @@ Properties asserted against the production code path (alert_classifier -> market
     selected-team spread higher signed handicap is better
   * a favourable unequal line qualifies (FAVOURABLE_LINE_SIGNAL -> ACCEPT) with EV unavailable, no synthetic EV
   * an unfavourable unequal line never qualifies; an ambiguous target fails closed
-  * FACT of the live feed: unequal-line alerts carry no highlighted Bet365 price, so no side is chosen and no
-    instruction is created (PARSED_PARTIAL) - the signal path is only reachable with a highlighted target.
+  * Missing highlighting does not prevent a verified net Pinnacle movement from selecting the candidate.
+    Bet365 value is assessed only after that candidate is established.
 Pure parsing; no device, no bookmaker, nothing dispatched.
 """
 import json
@@ -102,42 +102,20 @@ class RealFeedUnequalLineAlerts(unittest.TestCase):
                 self.assertIn('EV: None (not equal lines)', text)
                 self.assertNotIn('**', text)
 
-    def test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side(self):
-        # 2026-09-25: the implied favourable-side rule. Every stored alert whose lines single out one side by >= 1.0
-        # is PARSED with that side as the target; the spread whose sign reference is ambiguous stays AMBIGUOUS.
-        parsed_ids = []
+    def test_real_alerts_select_from_pinnacle_opening_not_book_advantage(self):
+        from decimal import Decimal
+        parsed_count = 0
         for mid, text in ALERTS.items():
-            v = alert_classifier.classify(text)
-            with self.subTest(message=mid, status=v['status']):
-                p = v['parsed']
-                self.assertIsNone(p['displayed_ev_percent'])                       # no synthetic EV, ever
-                self.assertEqual(p['comparison']['ev_status'], 'NOT_AVAILABLE_UNEQUAL_LINES')
+            with self.subTest(message=mid):
+                v = alert_classifier.classify(text); p = v['parsed']
+                self.assertIsNone(p['displayed_ev_percent'])
                 if v['status'] == 'AMBIGUOUS':
-                    self.assertIsNone(p['selection_side'])
-                    continue
-                self.assertEqual(v['status'], 'PARSED', v['reason'])
-                fav = [s for s in p['sides'] if s['line_quality'] == FAVOURABLE]
-                unf = [s for s in p['sides'] if s['line_quality'] == UNFAVOURABLE]
-                self.assertEqual((len(fav), len(unf)), (1, 1))                       # exactly one side benefits
-                self.assertEqual((p['selection_side'], p['target_price_source']), (fav[0]['side'], 'implied_favourable_line'))
-                self.assertEqual((fav[0]['bet_quality'], unf[0]['bet_quality']), ('FAVOURABLE_LINE_SIGNAL', 'UNFAVOURABLE'))
-                self.assertGreaterEqual(float(fav[0]['comparison']['line_advantage']), 1.0)
-                self.assertIn('target implied from the favourable Bet365 line', v['reason'])
-                parsed_ids.append(mid)
-        self.assertGreaterEqual(len(parsed_ids), 6)
-        with tempfile.TemporaryDirectory() as tmp:
-            p = pipeline(Path(tmp) / 'audit.sqlite3', Clock())
-            created = 0
-            for n, (mid, text) in enumerate(ALERTS.items()):
-                result = p.ingest(message(MELBOURNE, message_id=str(910000 + n), text=text))
-                if mid in parsed_ids:
-                    self.assertIn(result['status'], ('PARSED', 'DUPLICATE'), mid)   # same selection twice = duplicate
-                    created += result['status'] == 'PARSED'
-                else:
-                    self.assertIsNone(result['instruction_id'], mid)
-            with p.store.connection() as db:
-                self.assertEqual(db.execute('SELECT COUNT(*) FROM instructions').fetchone()[0], created)
-            self.assertGreaterEqual(created, 4)
+                    self.assertIsNone(p['target_side']); continue
+                delta = Decimal(p['pinnacle']['line']) - Decimal(p['opening']['line'])
+                expected = ('HOME' if delta < 0 else 'AWAY') if p['market'] == 'SPREAD' else ('OVER' if delta > 0 else 'UNDER')
+                self.assertEqual((p['target_side'], p['target_price_source']), (expected, 'pinnacle_opening_to_current'))
+                parsed_count += 1
+        self.assertGreater(parsed_count, 0)
 
     def test_anyang_totals_direction(self):
         p = alert_classifier.classify(ANYANG_TOTALS)['parsed']
@@ -153,33 +131,19 @@ class RealFeedUnequalLineAlerts(unittest.TestCase):
         self.assertEqual((away['reference']['line'], away['comparison']['bet365_line'], away['line_quality'], away['comparison']['line_advantage']),
                          ('-1', '-4.5', UNFAVOURABLE, '-3.5'))
 
-    def test_counterfactual_highlighted_favourable_side_qualifies_without_ev(self):
-        for text, pos, want in ((ANYANG_TOTALS, 0, ('OVER', '160.5', '4.5', '1.83')), (ANYANG_SPREAD, 0, ('HOME', '4.5', '3.5', '1.83'))):
-            with self.subTest(side=want[0]):
-                v = alert_classifier.classify(highlight(text, pos))
-                self.assertEqual(v['status'], 'PARSED')
-                p = v['parsed']
-                self.assertEqual((p['selection_side'], p['selection_line'], p['comparison']['line_advantage'], p['alert_price']), want)
-                self.assertEqual((p['bet_quality'], p['comparison']['ev_status'], p['displayed_ev_percent']),
-                                 ('FAVOURABLE_LINE_SIGNAL', 'NOT_AVAILABLE_UNEQUAL_LINES', None))
-                received = datetime(2026, 9, 25, 5, 0, tzinfo=timezone.utc)   # before the 07:30 tip-off
-                decision = decide(p, now=received)
-                self.assertEqual(decision['decision'], 'ACCEPT', decision['reason'])
-                self.assertIsNone(decision['instruction']['displayed_ev_percent'])
-                self.assertEqual(decision['instruction']['ev_status'], 'NOT_AVAILABLE_UNEQUAL_LINES')
-                # even with a minimum EV configured for the market, a line signal is not judged on an EV it does not have
-                cfg = config()
-                cfg['sports']['basketball']['markets'][p['market']]['minimum_ev'] = 105
-                with_ev_rule = decide(p, cfg=cfg, now=received)
-                self.assertEqual(with_ev_rule['decision'], 'ACCEPT', with_ev_rule['reason'])
-                self.assertIn('not applicable', next(c['detail'] for c in with_ev_rule['checks'] if c['name'] == 'minimum_ev'))
+    def test_counterfactual_highlight_preserves_sharp_candidate(self):
+        for text in (ANYANG_TOTALS, ANYANG_SPREAD):
+            original = alert_classifier.classify(text)['parsed']
+            for prices in ('**1.83** - 1.83', '1.83 - **1.83**'):
+                p = alert_classifier.classify(text.replace('1.83 - 1.83', prices))['parsed']
+                self.assertEqual(p['target_side'], original['target_side'])
+                self.assertIsNone(p['displayed_ev_percent'])
 
-    def test_counterfactual_highlighted_unfavourable_side_never_qualifies(self):
-        for text, pos in ((ANYANG_TOTALS, 1), (ANYANG_SPREAD, 1)):
-            v = alert_classifier.classify(highlight(text, pos))
-            self.assertEqual(v['status'], 'PARSED')
-            self.assertEqual(v['parsed']['bet_quality'], 'UNFAVOURABLE')
-            self.assertTrue(decide(v['parsed'])['reason'].startswith('bet_quality'))
+    def test_counterfactual_highlight_does_not_reverse_a_known_target(self):
+        for text in (ANYANG_TOTALS, ANYANG_SPREAD):
+            p = alert_classifier.classify(text)['parsed']
+            changed = alert_classifier.classify(text.replace('1.83 - 1.83', '1.83 - **1.83**'))['parsed']
+            self.assertEqual(changed['target_side'], p['target_side'])
 
     def test_immaterial_advantage_is_rejected_by_the_rules_not_the_parser(self):
         half = ANYANG_TOTALS.replace('Bet365 (Totals 160.5)', 'Bet365 (Totals 164.5)')   # OVER +0.5

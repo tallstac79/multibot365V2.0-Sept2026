@@ -24,12 +24,14 @@ class CompetitionGenderTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             p = pipeline(Path(tmp) / 'w.sqlite3', Clock())
             women = p.ingest(message(MELBOURNE, message_id='930001', text=WOMEN_ALERT))
-            self.assertEqual((women['status'], women['state']), ('PARSED', 'QUEUED'))
+            self.assertEqual((women['status'], women['state']), ('PARSED', 'REJECTED'))
             men = p.ingest(message(MELBOURNE, message_id='930002'))
             self.assertEqual(men['state'], 'QUEUED')
             with p.store.connection() as db:
                 w_row = p.store.get_instruction(db, women['instruction_id'])
                 m_row = p.store.get_instruction(db, men['instruction_id'])
+            # The real alert highlights HOME against the net AWAY move; it is rejected.
+            self.assertEqual(w_row['selection'], 'AWAY')
             self.assertEqual(w_row['competition'], 'Superior Nacional Women')
             self.assertEqual(p.build_payload(w_row).get('competition_women'), 'true')
             self.assertNotIn('competition_women', p.build_payload(m_row))

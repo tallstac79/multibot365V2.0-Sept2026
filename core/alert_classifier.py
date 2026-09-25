@@ -18,7 +18,7 @@ import re
 from core.market_interpretation import interpret, strip_non_price_bold
 from core.oddsnotifier_parser import AlertFormatError, HEADER, parse_oddsnotifier
 
-PARSER_VERSION = 'classifier-2'
+PARSER_VERSION = 'classifier-3-sharp'
 PARSED, PARSED_PARTIAL, AMBIGUOUS, INVALID, DUPLICATE, IGNORED = (
     'PARSED', 'PARSED_PARTIAL', 'AMBIGUOUS', 'INVALID', 'DUPLICATE', 'IGNORED')
 INTAKE_STATUSES = (PARSED, PARSED_PARTIAL, AMBIGUOUS, INVALID, DUPLICATE, IGNORED)

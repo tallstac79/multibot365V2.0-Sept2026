@@ -1,78 +1,50 @@
 # Rules engine
 
-Code: `core/rules_engine.py` (evaluation) and `core/decision_support.py` (configuration,
-validation, persistence). Both run outside the frontend. The configuration is the same one
-the dashboard's **Rules & configuration** screen edits: `.local/dashboard.sqlite3`, with
-atomic saves and a change audit. The service re-reads it every cycle, so edits apply
-without a restart.
+The pure `core/rules_engine.py` evaluator is **rules-4-sharp**. Its configuration is
+validated in `core/decision_support.py` and stored in `.local/dashboard.sqlite3` with
+an audit trail. The service reads it each cycle; code changes require a service restart.
 
-`evaluate(alert, config, instruction_id=, received_at=, now=)` is pure. It returns:
+`evaluate(alert, config, instruction_id=..., received_at=..., now=...)` returns ACCEPT,
+REJECT or STALE, all check results, the first failure as `reason`, and an instruction
+only on ACCEPT. Intake AMBIGUOUS and INVALID do not enter this evaluator.
 
-```json
-{"engine": "rules-1", "evaluated_at": "...", "config_hash": "156d8a05cb270139",
- "decision": "ACCEPT | REJECT | STALE", "reason": "first failing check: detail",
- "checks": [{"name": "verified_mapping", "passed": true, "detail": "..."}, "..."],
- "instruction": {"instruction_id": "...", "sport": "...", "competition": "...", "fixture": "...",
-                 "home": "...", "away": "...", "event_time_local": "...", "event_timezone": "...",
-                 "event_start_utc": "...", "market": "...", "side": "...", "selection_name": "...",
-                 "line": "...", "alternate_line": {"current": true, "opening": false, "comparison": false},
-                 "alert_price": "1.83", "minimum_price": "1.83", "stake": "1.00",
-                 "displayed_ev_percent": "108.47"}}
-```
+## Decision order
 
-`instruction` is present only on ACCEPT. The full result is stored as
-`instructions.rules_result`, and the dashboard shows every check.
+1. Require a verified quote mapping and current `sharp-money-1` PARSED interpretation.
+2. Independently recompute the candidate from Pinnacle opening/current lines. Require
+   agreement with stored target and `pinnacle_opening_to_current` source. Old queued
+   favourable-side/highlight-only targets fail closed.
+3. Require that candidate's Bet365 price and actionable quality: equal-line same-side
+   supplied EV/price edge, or favourable unequal line. NO BET persists as REJECT.
+4. For a favourable unequal line, require `min_line_advantage` (inherited 1.0 points;
+   configurable 0.5 to 50). This is an existing policy, not a proven value model.
+5. Require configured `min_sharp_movement`, a strictly nonzero net move and magnitude
+   at least that floor. The new default is null: **missing policy rejects**. Zero
+   explicitly permits any nonzero move; it never permits an unchanged line.
+6. Check supported/enabled sport and market, alert age and event time.
+7. Check decimal odds, applicable EV floor, price bounds and capped stake.
+
+All check results are retained even after the first failure. Thus missing movement
+policy can be the top-level REJECT while a later timing check also fails. Read all
+checks when distinguishing policy exclusion from staleness.
 
 ## Configuration
 
-GLOBAL
+Global defaults: enabled=true; stake=1; max_stake=10; slippage=0; stale window=300s;
+event_timezone=null; min_line_advantage=1.0; min_sharp_movement=null. Market overrides
+include enabled, stake, minimum_ev, slippage, min_price and max_price. Existing configs
+acquire the nullable movement key on validation without silently selecting a threshold.
+The audit did not change the saved movement, price or EV policy.
 
-| Key | Default | Meaning |
-|---|---|---|
-| enabled | true | Master switch |
-| default_stake | 1.0 | Suggested stake when a market has none |
-| max_stake | 10.0 | Upper bound; every stake must be ≤ this |
-| allowed_slippage | 0.0 | minimum_price = max(1.01, alert price − slippage), in decimal-price points |
-| stale_alert_seconds | 300 | Maximum age since the Telegram post (or receipt if earlier) |
-| event_timezone | null | IANA zone for OddsNotifier fixture times. Null fails closed (see below). |
-| min_line_advantage | 1.0 | Minimum Bet365 line advantage, in points, for a FAVOURABLE_LINE_SIGNAL (configurable 0.5 to 50). The default is 1.0 because the compared Pinnacle and Bet365 lines in this feed differ in minimum 1-point steps, even when the lines themselves are half-points. |
+`minimum_price = max(1.01, alert_price - allowed_slippage)`. Alert price bounds apply
+at eligibility; the worker separately checks available price and the approved slip.
+`minimum_ev` is inapplicable to favourable unequal-line signals because there is no
+supplied EV at comparable lines. No synthetic EV is calculated.
 
-FOOTBALL (`1X2`, `SPREAD`, `TOTALS`) and BASKETBALL (`MONEYLINE`, `SPREAD`, `TOTALS`), per
-market:
+The earlier of receipt/source time anchors alert age. Event times require a configured
+IANA timezone; unknown timezone rejects, started events are STALE. The audit identifies
+future timestamp and daylight-saving ambiguity checks as remaining improvements.
 
-| Key | Meaning |
-|---|---|
-| enabled | Market switch |
-| stake | Suggested stake for this market (blank inherits default) |
-| minimum_ev | Minimum displayed EV % (blank means no threshold) |
-| allowed_slippage | Market override of the global slippage |
-| min_price / max_price | Allowed alert-price range (blank means no bound) |
-
-Configurations saved before these keys existed are upgraded with the defaults on read.
-Unknown keys are still rejected.
-
-## Check order (the first failure decides)
-
-1. `verified_mapping`: production-verified quote mapping (otherwise REJECT; nothing is guessed)
-2. `explicit_target`: explicit Bet365 target side and price
-   - `bet_quality`: must be `CLEAR_VALUE_SIGNAL` (equal-line price/EV edge) or `FAVOURABLE_LINE_SIGNAL`
-     (verified target with a favourable Bet365 line; see
-     [MARKET_INTERPRETATION.md](MARKET_INTERPRETATION.md))
-   - `line_advantage` (favourable-line signals only): at least `min_line_advantage` points
-3. `known_market`, `global_enabled`, `market_enabled`
-4. `alert_age`: older than `stale_alert_seconds` → **STALE**
-5. `event_not_started`: an event already started → **STALE**. An unconfigured timezone or
-   unreadable time → **REJECT** ("cannot prove the event has not started").
-6. `valid_price`, `minimum_ev` (not applicable to favourable-line signals, which have no EV),
-   `min_price`, `max_price`
-7. `stake`, then ACCEPT
-
-The engine runs at ingest and again immediately before dispatch, using the current
-configuration and clock. It has no live-site interaction and never dispatches anything.
-
-## Operator action required
-
-OddsNotifier fixture times carry no timezone, so `event_timezone` defaults to null. Until
-the operator confirms the feed's timezone and sets it (for example `Europe/London`) in the
-Rules & configuration screen, every parsed alert is rejected at `event_not_started`. This
-is intentional fail-closed behaviour, not a bug.
+The pipeline evaluates at ingest and before dispatch. ACCEPT is eligibility only:
+pause/kill switch, dispatch/final-action flags, identity, session, approval and durable
+idempotency remain separate controls. Execution stayed disarmed throughout the audit.

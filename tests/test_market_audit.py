@@ -1,11 +1,7 @@
-"""Milestone A (2026-09-25) market audit regressions, on real stored alerts (tests/fixtures/unequal_line_corpus_20260925.json).
+"""Real-alert policy rejection and conservative cross-book orientation regressions.
 
-* the production rules engine CAN reject an implied target: materiality, price bounds, market/global switches, a
-  highlighted worse side (the replay's REJECT = 0 was the live configuration, not an inability to reject)
-* orientation guard: Pinnacle and Bet365 favouring different teams by 10+ points is AMBIGUOUS (no side implied)
-* NO mirror guard: an opposite-sign spread of equal magnitude WITHOUT supplied EV is a coincidence inside a genuine
-  lag run and stays eligible; WITH supplied EV it is a contradictory alert and stays INVALID
-* favourite flips below 10 points stay eligible
+Target direction is determined by Pinnacle opening-to-current movement.
+These replace the former favourable-side and arbitrary 10-point perspective assumptions.
 """
 import json
 import unittest
@@ -31,12 +27,12 @@ def decide(parsed, cfg, now):
     return evaluate(parsed, cfg, instruction_id='audit', received_at=now.isoformat(), now=now)
 
 
-class RulesCanRejectImpliedTargets(unittest.TestCase):
+class RulesCanRejectSharpTargets(unittest.TestCase):
     def setUp(self):
-        self.p = alert_classifier.classify(alert(341))['parsed']     # CD Castro HOME -1.5, +3.0, implied
+        self.p = alert_classifier.classify(alert(341))['parsed']     # CD Castro HOME -1.5, +3.0, sharp HOME
         self.now = received(341)
         self.assertEqual((self.p['selection_side'], self.p['comparison']['line_advantage'], self.p['target_price_source']),
-                         ('HOME', '3.0', 'implied_favourable_line'))
+                         ('HOME', '3.0', 'pinnacle_opening_to_current'))
         self.assertEqual(decide(self.p, config(), self.now)['decision'], 'ACCEPT')
 
     def test_materiality(self):
@@ -55,16 +51,14 @@ class RulesCanRejectImpliedTargets(unittest.TestCase):
         self.assertEqual(decide(self.p, cfg, self.now)['reason'].split(':')[0], 'market_enabled')
         self.assertEqual(decide(self.p, config(enabled=False), self.now)['reason'].split(':')[0], 'global_enabled')
 
-    def test_highlighted_worse_side_is_rejected_on_quality(self):
-        worse = alert(341).replace('1.83 - 1.83', '1.83 - **1.83**')   # AWAY highlighted where HOME has the better line
+    def test_highlight_never_changes_net_target(self):
+        worse = alert(341).replace('1.83 - 1.83', '1.83 - **1.83**')
         p = alert_classifier.classify(worse)['parsed']
-        self.assertEqual((p['selection_side'], p['bet_quality']), ('AWAY', 'UNFAVOURABLE'))
-        d = decide(p, config(), self.now)
-        self.assertEqual((d['decision'], d['reason'].split(':')[0]), ('REJECT', 'bet_quality'))
+        self.assertEqual((p['selection_side'], p['highlighted_side']), ('HOME', 'AWAY'))
+        self.assertEqual(decide(p, config(), self.now)['decision'], 'ACCEPT')
 
-    def test_live_configuration_explains_reject_zero(self):
-        # with no price bounds, no minimum EV for line signals and an inference threshold equal to min_line_advantage,
-        # the only rule outcomes for an implied target are ACCEPT or STALE (timing)
+    def test_explicit_test_policy_allows_favourable_sharp_offer(self):
+        # Explicit test movement policy and inherited line floor pass; later replay is stale.
         d = decide(self.p, config(), self.now)
         self.assertEqual({c['name'] for c in d['checks'] if not c['passed']}, set())
         late = decide(self.p, config(), self.now.replace(year=self.now.year + 1))
@@ -72,30 +66,27 @@ class RulesCanRejectImpliedTargets(unittest.TestCase):
 
 
 class OrientationAndMirrorEvidence(unittest.TestCase):
-    def test_reversed_listing_by_ten_or_more_is_ambiguous(self):
+    def test_large_cross_book_disagreement_is_ambiguous(self):
         for mid in (681, 364):
             v = alert_classifier.classify(alert(mid))
             self.assertEqual((v['status'], v['parsed']['selection_side']), ('AMBIGUOUS', None), mid)
 
-    def test_mirror_without_ev_is_a_lag_coincidence_and_stays_eligible(self):
-        # Orchies v Lyon 2026-09-25 00:06: Pinnacle home +3.5, Bet365 home -3.5. Bet365 sat at -3.5 while Pinnacle moved
-        # 1 -> 4.5 across ten alerts; the phone later opened the same Bet365 event. AWAY +3.5 is 7.0 better than -3.5.
+    def test_mirror_without_ev_requires_orientation(self):
         v = alert_classifier.classify(alert(1034))
-        self.assertEqual(v['status'], 'PARSED', v['reason'])
-        p = v['parsed']
-        self.assertEqual((p['selection_side'], p['selection_line'], p['comparison']['line_advantage']), ('AWAY', '+3.5', '7.0'))
-        self.assertEqual(decide(p, config(), received(1034))['decision'], 'ACCEPT')
+        self.assertEqual(v['status'], 'AMBIGUOUS')
+        self.assertIsNone(v['parsed']['target_side'])
 
     def test_mirror_with_supplied_ev_is_contradictory_and_invalid(self):
         # Asian Games women: Pinnacle -26.5, Bet365 "26.5", EV supplied -> OddsNotifier compared magnitudes; the signed
-        # comparison contradicts it (the Bet365 pairing is listed reversed) -> INVALID, nothing implied
+        # comparison contradicts it (the Bet365 pairing may be reversed) -> INVALID, no executable target
         v = alert_classifier.classify(alert(863))
         self.assertEqual(v['status'], 'INVALID')
         self.assertIn('EV supplied', v['reason'])
 
-    def test_favourite_flip_below_ten_stays_eligible(self):
-        v = alert_classifier.classify(alert(1131))   # Arellano: Pinnacle -3 vs Bet365 1.5 -> HOME 1.5, +4.5
-        self.assertEqual((v['status'], v['parsed']['selection_side'], v['parsed']['comparison']['line_advantage']), ('PARSED', 'HOME', '4.5'))
+    def test_small_cross_book_flip_requires_orientation(self):
+        v = alert_classifier.classify(alert(1131))
+        self.assertEqual(v['status'], 'AMBIGUOUS')
+        self.assertIsNone(v['parsed']['target_side'])
 
 
 if __name__ == '__main__':

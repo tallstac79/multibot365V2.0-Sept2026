@@ -77,7 +77,8 @@ def fail_result(instruction_id, stage, detail='x'):
 
 def config(**global_changes):
     value = defaults()
-    value['global'].update(event_timezone='UTC', stale_alert_seconds=300)
+    # Explicit TEST policy; the live configuration remains unset and fails closed.
+    value['global'].update(event_timezone='UTC', stale_alert_seconds=300, min_sharp_movement=0.5)
     value['global'].update(global_changes)
     return value
 

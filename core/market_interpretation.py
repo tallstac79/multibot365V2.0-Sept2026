@@ -31,7 +31,7 @@ from urllib.parse import parse_qs, urlsplit
 
 from core.oddsnotifier_parser import HEADER, AlertFormatError, _source
 
-VERSION = 'market-interp-1'
+VERSION = 'sharp-money-1'
 NUMBER = r'[0-9]+(?:\.[0-9]+)?'
 LINE = r'[+-]?[0-9]+(?:\.[0-9]+)?'
 ARROW = r'[⬇⬆↓↑]️?'
@@ -116,7 +116,7 @@ def strip_non_price_bold(text):
     """Remove **bold** wrappers that do not enclose a single decimal price.
 
     Telegram bolds headings, fixtures and EV rows; only a bolded Bet365 price carries
-    meaning (the highlighted target). Price bold is kept untouched.
+    meaning (the feed-highlighted price and supplied EV owner). Price bold is kept untouched.
     """
     return re.sub(r'\*\*(.+?)\*\*', lambda m: m[0] if re.fullmatch(NUMBER, m[1]) else m[1], text, flags=re.DOTALL)
 
@@ -191,65 +191,51 @@ def bet_quality(comparison, *, verified, bet365_present, is_target, ev_status, s
     return INSUFFICIENT_INFORMATION
 
 
-IMPLIED_SOURCE = 'implied_favourable_line'
-IMPLIED_TARGET_MIN_ADVANTAGE = Decimal('1.0')
+SHARP_SOURCE = 'pinnacle_opening_to_current'
 
 
-def implied_target(entries, market, market_move):
-    """The target OddsNotifier did not highlight, when the lines alone decide it.
+def sharp_signal(market, opening_line, current_line, *, verified=False, perspective=None):
+    """Select a candidate using ONLY Pinnacle lines on a verified fixed perspective.
 
-    Pinnacle's current line is the sharp reference. If Bet365 still offers a line that is at least
-    IMPLIED_TARGET_MIN_ADVANTAGE points better for exactly ONE side (and worse by the same amount for the
-    other), that side is the bet: totals - a lower Bet365 total favours OVER, a higher one favours UNDER;
-    spreads - the higher signed handicap from each team's own perspective favours that team (Pinnacle
-    home -5.5 vs Bet365 home -1.5 = HOME +4.0). Both prices must be present; they are never compared
-    across different lines and no EV is calculated. Anything else (equal lines, unquantified advantage,
-    a missing price, an unverified mapping) returns None and the alert stays PARSED_PARTIAL / AMBIGUOUS.
-    Pinnacle's own line movement is recorded as evidence only.
+    Bet365 offers, highlighted odds and latest price arrows cannot affect this result.
+    Nonzero movement establishes direction, not profitability or sufficient magnitude.
     """
-    favourable = [i for i, e in enumerate(entries) if e['line_quality'] == FAVOURABLE]
-    worse = [i for i, e in enumerate(entries) if e['line_quality'] == UNFAVOURABLE]
-    if len(entries) != 2 or len(favourable) != 1 or len(worse) != 1:
-        return None
-    entry = entries[favourable[0]]
-    cmp = entry['comparison']
-    advantage = dec(cmp.get('line_advantage'))
-    if advantage is None or advantage < IMPLIED_TARGET_MIN_ADVANTAGE:
-        return None
-    if dec(cmp.get('bet365_price')) is None or dec(cmp.get('reference_price')) is None or cmp.get('price_quality') != NOT_COMPARABLE:
-        return None
-    direction = (market_move or {}).get('line_direction')   # Pinnacle's displayed line, previous -> current
-    if direction is None:
-        agrees = None
-    elif market == 'TOTALS':
-        agrees = (direction == 'UP') == (entry['side'] == 'OVER')
-    else:   # the displayed spread is HOME's handicap: DOWN = money on HOME, UP = money on AWAY
-        agrees = (direction == 'DOWN') == (entry['side'] == 'HOME')
-    return dict(index=favourable[0], side=entry['side'], line_advantage=str(advantage), bet365_line=cmp['bet365_line'],
-                reference_line=cmp['reference_line'], pinnacle_line_direction=direction, pinnacle_movement_agrees=agrees,
-                reason=f"{entry['side']} {cmp['bet365_line']} at Bet365 is {advantage} better than Pinnacle {cmp['reference_line']} "
-                       f"(no highlight; target implied from the lines)")
-
-
-SPREAD_PERSPECTIVE_CONFLICT_POINTS = Decimal('10')
+    opening, current = dec(opening_line), dec(current_line)
+    out = dict(source=SHARP_SOURCE, side=None, opening_line=opening_line, current_line=current_line,
+               change=None, magnitude=None, direction=None, status=AMBIGUOUS, reason=None)
+    expected = {'SPREAD': 'HOME', 'TOTALS': 'TOTAL'}.get(market)
+    if not verified or expected is None or perspective != expected:
+        out['reason'] = 'Opening/current market or line perspective is unverified'
+    elif opening is None or current is None:
+        out['reason'] = 'Opening and current Pinnacle lines are required'
+    else:
+        change = current - opening
+        out.update(change=str(change), magnitude=str(abs(change)), direction=_direction(change))
+        if change == 0:
+            out['reason'] = 'No opening-to-current line movement; price-only target policy is unproven'
+        else:
+            side = ('HOME' if change < 0 else 'AWAY') if market == 'SPREAD' else ('OVER' if change > 0 else 'UNDER')
+            out.update(side=side, status='IDENTIFIED',
+                       reason=f'Pinnacle opening {opening_line} -> current {current_line} ({expected}) selects {side}')
+    return out
 
 
 def spread_perspective_conflict(entries):
-    """Pinnacle and Bet365 favouring DIFFERENT teams by 10+ points is not a lagging line, it is the Bet365
-    spread quoted from the other team's perspective (real: Japan -23 vs Bet365 "17.5", Seattle Storm +7.5 vs
-    -9.5). The sign reference is then ambiguous and no side is implied. Smaller favourite flips can be genuine
-    market moves and are left to the rules (and flagged for review by tools/replay_alerts.py)."""
+    """Cross-book favourite disagreement is an orientation warning, not proof of reversal.
+
+    The feed contains sign contradictions. Neither a 10-point cutoff nor a smaller
+    gap proves which book's perspective is correct. Keep the candidate as evidence,
+    but withhold an executable target until the named-team mapping can be verified.
+    """
     if not entries:
         return None
     home = entries[0]['comparison']
     ref, book = dec(home.get('reference_line')), dec(home.get('bet365_line'))
-    if ref is None or book is None or (ref < 0) == (book < 0):
+    if ref is None or book is None or ref * book >= 0:
         return None
     gap = abs(ref - book)
-    if gap < SPREAD_PERSPECTIVE_CONFLICT_POINTS:
-        return None
     return (f'Pinnacle ({ref}) and Bet365 ({book}) favour different teams by {gap} points: the Bet365 spread appears '
-            f'quoted from the other perspective; sign reference ambiguous, no side implied')
+            f'to have an unresolved sign reference; do not assume a perspective correction')
 
 
 def side_movement(*, opening_line, previous_line, current_line, opening_price, current_price,
@@ -478,7 +464,10 @@ def _two_sided(rows, head, opening_marker):
             return None
         return line if market == 'TOTALS' or index == 0 else invert(line)
 
-    target_index = highlighted[0] if len(highlighted) == 1 and sides else None
+    highlighted_index = highlighted[0] if len(highlighted) == 1 and sides else None
+    signal = sharp_signal(market, opening_line, current, verified=bool(sides),
+                          perspective='TOTAL' if market == 'TOTALS' else 'HOME')
+    target_index = sides.index(signal['side']) if sides and signal['side'] else None
     side_entries = []
     if sides:
         for groups in (pinnacle, opening or [], bet365):
@@ -492,16 +481,16 @@ def _two_sided(rows, head, opening_marker):
             cmp = compare_side(market, side, side_line(current, index), ref['price'],
                                side_line(bet365_line, index), bq.get('price'))
             is_target = index == target_index
-            ev = supplied_ev if is_target else None
+            ev = supplied_ev if index == highlighted_index else None
+            side_ev_status = ev_status if ev_status != EV_SUPPLIED or index == highlighted_index else 'SUPPLIED_FOR_OTHER_SIDE'
             quality = bet_quality(cmp, verified=True, bet365_present=bet365_present, is_target=is_target,
-                                  ev_status=ev_status, supplied_ev=supplied_ev)
+                                  ev_status=side_ev_status, supplied_ev=ev)
             side_entries.append(dict(
                 side=side, selection_name=names[side], selection_line=side_line(bet365_line if bet365_present
                                                                                  else current, index),
                 is_target=is_target,
                 reference=dict(bookmaker='Pinnacle', line=cmp['reference_line'], odds=ref['price'], fair_odds=None),
-                comparison=dict(cmp, bookmaker='Bet365', ev_status=ev_status if is_target or ev_status != EV_SUPPLIED
-                                else 'SUPPLIED_FOR_OTHER_SIDE', supplied_ev=ev),
+                comparison=dict(cmp, bookmaker='Bet365', ev_status=side_ev_status, supplied_ev=ev),
                 movement=side_movement(opening_line=side_line(opening_line, index),
                                        previous_line=side_line(previous, index), current_line=side_line(current, index),
                                        opening_price=(opening or [{}] * 2)[index].get('price'),
@@ -515,21 +504,19 @@ def _two_sided(rows, head, opening_marker):
     market_move = side_movement(opening_line=opening_line, previous_line=previous, current_line=current,
                                 opening_price=None, current_price=None)
     market_move.update(line_perspective='TOTAL' if market == 'TOTALS' else 'HOME' if sides else 'AS_DISPLAYED')
-    target = side_entries[target_index] if target_index is not None else None
-    implied = None
-    if sides and target is None and bet365_present and ev_status == EV_UNEQUAL and not highlighted and not ambiguities:
-        conflict = spread_perspective_conflict(side_entries) if market == 'SPREAD' else None
-        if conflict:
-            ambiguities.append(conflict)      # the sign reference is not safe: no side is implied
-        else:
-            implied = implied_target(side_entries, market, market_move)
-        if implied is not None:
-            target_index = implied['index']
-            target = side_entries[target_index]
-            target['is_target'] = True
-            target['target_source'] = IMPLIED_SOURCE
-            target['bet_quality'] = bet_quality(target['comparison'], verified=True, bet365_present=True, is_target=True,
-                                                ev_status=ev_status, supplied_ev=None)
+    if sides and signal['side'] is None:
+        ambiguities.append(signal['reason'])
+    conflict = spread_perspective_conflict(side_entries) if market == 'SPREAD' and bet365_present else None
+    if conflict:
+        ambiguities.append(conflict)
+    target = side_entries[target_index] if target_index is not None and not ambiguities else None
+    if target is None:
+        for entry in side_entries:
+            entry['is_target'] = False
+    highlighted_side = sides[highlighted_index] if highlighted_index is not None else None
+    signal['highlight_agrees'] = highlighted_side == signal['side'] if highlighted_side and signal['side'] else None
+    signal['recent_line_reversal'] = (dec(current) - dec(previous)) * dec(signal['change']) < 0 if previous and signal['change'] else False
+    selected_ev = target['comparison']['supplied_ev'] if target else None
     raw_difference = str(dec(bet365_line) - dec(current)) if bet365_present else None
     comparison = dict(site='Bet365', line=bet365_line, quotes=bet365, bookmaker='Bet365', bet365_present=bet365_present,
                       bet365_line_displayed=bet365_line, reference_line_displayed=current,
@@ -539,7 +526,7 @@ def _two_sided(rows, head, opening_marker):
                       line_advantage=target['comparison']['line_advantage'] if target else None,
                       line_quality=target['line_quality'] if target else None,
                       price_quality=target['price_quality'] if target else None,
-                      ev_status=ev_status, supplied_ev=supplied_ev)
+                      ev_status=target['comparison']['ev_status'] if target else ev_status, supplied_ev=selected_ev)
     alert = dict(
         head, format_variant='two_sided', market=market, market_label=m['label'], displayed_line=current,
         comparison_url=comparison_url, opening_marker=opening_marker,
@@ -552,11 +539,13 @@ def _two_sided(rows, head, opening_marker):
                            group_sides_by_position={k: list(sides) if sides else None
                                                     for k in ('pinnacle', 'opening', 'comparison')},
                            confirmation_source=TWO_SIDED_CONFIRMATION if sides else None),
-        displayed_ev_percent=supplied_ev, sides=side_entries, market_movement=market_move, limit=None,
+        displayed_ev_percent=selected_ev, feed_displayed_ev_percent=supplied_ev,
+        highlighted_side=highlighted_side, sharp_signal=signal,
+        sides=side_entries, market_movement=market_move, limit=None,
         target_side=target['side'] if target else None, target_line=target['selection_line'] if target else None,
         alert_price=target['comparison']['bet365_price'] if target else None,
-        target_price_source=(IMPLIED_SOURCE if implied is not None else 'bold_bet365_quote') if target else None,
-        implied_target=None if implied is None else {k: v for k, v in implied.items() if k != 'index'},
+        target_price_source=SHARP_SOURCE if target else None,
+        implied_target=None,
         selection_side=target['side'] if target else None, selection_name=target['selection_name'] if target else None,
         selection_line=target['selection_line'] if target else None,
         reference=target['reference'] if target else dict(bookmaker='Pinnacle', line=current, odds=None, fair_odds=None,
@@ -569,7 +558,7 @@ def _two_sided(rows, head, opening_marker):
     if not bet365_present:
         partial.append('Bet365 section absent; no comparable offer captured')
     if sides and target is None and len(highlighted) <= 1:
-        partial.append('No highlighted Bet365 target; side-level comparisons only, no side chosen')
+        partial.append('No executable sharp target; side-level comparisons retained')
     if bet365_present and ev_status == EV_UNEQUAL and target is None:
         partial.append('EV not available: unequal lines (evaluated directionally)')
     elif ev_status == EV_MISSING:
@@ -735,7 +724,7 @@ def interpret(text, *, channel_id=None, message_id=None, source_timestamp=None):
     unresolved = ['event_timezone_unspecified']
     if any('parenthetical_price' in q for q in alert['pinnacle']['quotes']):
         unresolved.append('parenthetical_price_meaning_unspecified')
-    alert.update(schema_version=5, interpretation_version=VERSION, source='OddsNotifier', observation_id=observation_id,
+    alert.update(schema_version=6, interpretation_version=VERSION, source='OddsNotifier', observation_id=observation_id,
                  telegram_channel_id=channel_id if source_timestamp else None,
                  telegram_message_id=message_id if source_timestamp else None, source_timestamp=source_time,
                  raw_text=text, sample_provenance='unspecified', market_label_source='label_and_fixture_url'
@@ -745,9 +734,8 @@ def interpret(text, *, channel_id=None, message_id=None, source_timestamp=None):
         status, reason = AMBIGUOUS, '; '.join(ambiguities)
     elif partial:
         status, reason = PARSED_PARTIAL, '; '.join(partial)
-    elif alert.get('target_price_source') == IMPLIED_SOURCE:
-        status, reason = PARSED, ('Production-verified mapping, target implied from the favourable Bet365 line '
-                                  f"(no highlight): {alert['implied_target']['reason']}; no EV calculated")
+    elif alert.get('target_price_source') == SHARP_SOURCE:
+        status, reason = PARSED, alert['sharp_signal']['reason'] + '; Bet365 evaluated for that same side only'
     else:
         status, reason = PARSED, ('Production-verified mapping, explicit Bet365 target, equal-line EV supplied'
                                   if alert['comparison']['ev_status'] == EV_SUPPLIED else
