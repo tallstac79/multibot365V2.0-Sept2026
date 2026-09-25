@@ -1,0 +1,115 @@
+{
+  "at": "2026-09-25T20:25:50.490222+00:00",
+  "backend_pid": 23108,
+  "safety": {
+    "dispatch_enabled": false,
+    "final_action_enabled": false,
+    "final_action_one_shot": false,
+    "auto_approve": false
+  },
+  "controls": [
+    {
+      "key": "held_slip",
+      "value": "{\"instruction_id\": \"on-b3c290e65122c4aef06dcb29\", \"since\": \"2026-09-25T12:52:53.907+00:00\", \"released\": \"reset sent\", \"reset\": \"rs-4d258e915760f23a428c82dc\"}",
+      "updated_at": "2026-09-25T12:54:59.123+00:00",
+      "updated_by": "dispatcher"
+    },
+    {
+      "key": "paused",
+      "value": "true",
+      "updated_at": "2026-09-25T13:10:09.224+00:00",
+      "updated_by": "cli"
+    }
+  ],
+  "intake": {
+    "n": 1526,
+    "last_id": 1529,
+    "last_at": "2026-09-25T20:24:12.146+00:00"
+  },
+  "queue": {
+    "COMPLETED": 2,
+    "PRICE_CHANGED": 1,
+    "REJECTED": 16,
+    "SESSION_REQUIRED": 8,
+    "STALE": 387,
+    "TARGET_NOT_FOUND": 15,
+    "TIMEOUT": 2,
+    "UNKNOWN": 4
+  },
+  "active_instructions": [],
+  "bets": [
+    {
+      "instruction_id": "on-ca8c7974821c387ff822222b",
+      "status": "OPEN",
+      "market": "SPREAD",
+      "selection": "AWAY",
+      "line": "+3.5",
+      "stake": "0.10",
+      "odds": "1.83",
+      "bet_reference": "HT5515901931W",
+      "potential_return": "0.10"
+    },
+    {
+      "instruction_id": "on-d875519f85135352c96d2b1e",
+      "status": "OPEN",
+      "market": "SPREAD",
+      "selection": "AWAY",
+      "line": "+1.5",
+      "stake": "0.10",
+      "odds": "1.83",
+      "bet_reference": "YT6334352221W",
+      "potential_return": "0.18"
+    }
+  ],
+  "phone": {
+    "healthy": true,
+    "app_version": "0.9.17-reset",
+    "version_code": 100,
+    "pid": 4214,
+    "state": "IDLE",
+    "current_instruction": null,
+    "session": {
+      "state": "AUTHENTICATING",
+      "observed_at_ms": 1790367936996,
+      "detail": "workflow",
+      "refresh_count": 24,
+      "last_refresh_at_ms": 1790367927679,
+      "last_refresh_outcome": "probe started"
+    },
+    "credential_store": "encrypted",
+    "credentials_configured": true,
+    "ocr_engine": "hybrid",
+    "fast_ocr_error": null
+  },
+  "last_phone_result": {
+    "instruction_id": "self-session-1790367928190",
+    "status": "FAIL",
+    "stage": "LOGIN_FAILED",
+    "detail": "No unique username placeholder on the Bet365 login form",
+    "execution_count": 1
+  },
+  "heartbeat": {
+    "heartbeat_at": "2026-09-25T20:25:48.480+00:00",
+    "dispatch_enabled": false,
+    "final_action_enabled": false,
+    "auto_approve": false,
+    "paused": true,
+    "intake": {
+      "state": "LISTENING",
+      "connected": true,
+      "last_event_at": "2026-09-25T20:24:12.158+00:00",
+      "last_error": null,
+      "reconnects": 0
+    },
+    "notifications": "ENABLED",
+    "commands": "ENABLED",
+    "last_error": null
+  },
+  "final_action_dispatched_by_audit": false,
+  "live_code_proof": {
+    "intake_id": 1526,
+    "classifier": "classifier-3-sharp",
+    "interpretation": "sharp-money-1",
+    "target_source": "pinnacle_opening_to_current"
+  }
+}

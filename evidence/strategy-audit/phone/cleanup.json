@@ -1,0 +1,14 @@
+{
+  "tag": "cleanup",
+  "expected": "PASS",
+  "ok": false,
+  "payload": {
+    "action": "RESET_BETSLIP",
+    "instruction_id": "forensic-1790366014-cleanup",
+    "adapter": "live_bet365",
+    "scenario": "live",
+    "timeout_ms": 120000
+  },
+  "error": "{'instruction_id': 'forensic-1790366014-cleanup', 'status': 'FAIL', 'stage': 'INTERNAL_ERROR', 'detail': 'BUSY: one instruction at a time; ID not consumed', 'duration_ms': 0}",
+  "wall_seconds": 0.5
+}

@@ -1,0 +1,203 @@
+{
+  "tag": "search-hold",
+  "payload": {
+    "action": "ADAPTER_WORKFLOW",
+    "sport": "basketball",
+    "query": "Kirchheim||SBB Baskets Wolmirstedt",
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "",
+    "minimum_price": "1.01",
+    "stake": "0.10",
+    "execution_mode": "hold",
+    "kickoff_utc": "2026-09-26T16:00",
+    "instruction_id": "forensic-search-search-hold-1790366839",
+    "adapter": "live_bet365",
+    "scenario": "live",
+    "timeout_ms": 120000
+  },
+  "ack": {
+    "instruction_id": "forensic-search-search-hold-1790366839",
+    "acknowledged": true,
+    "state": "ACCEPTED",
+    "received_at_ms": 1790366839567,
+    "result_url": "/instructions/forensic-search-search-hold-1790366839",
+    "execution_count": 0
+  },
+  "result": {
+    "instruction_id": "forensic-search-search-hold-1790366839",
+    "status": "FAIL",
+    "stage": "LOGIN_FAILED",
+    "detail": "No unique username placeholder on the Bet365 login form",
+    "duration_ms": 9258,
+    "progress": {
+      "stage": "SESSION_CHECK",
+      "elapsed_ms": 9119,
+      "last_progress_at_ms": 1790366845122,
+      "instruction_id": "forensic-search-search-hold-1790366839",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790366839678
+        },
+        {
+          "stage": "SPORTS_HOME",
+          "elapsed_ms": 17,
+          "at_ms": 1790366839692,
+          "timing": {
+            "stage": "SPORTS_HOME",
+            "start_elapsed_ms": 17,
+            "start_ts_ms": 1790366839679,
+            "end_elapsed_ms": 31,
+            "end_ts_ms": 1790366839693,
+            "duration_ms": 14,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 31,
+          "at_ms": 1790366839705,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 31,
+            "start_ts_ms": 1790366839693,
+            "end_elapsed_ms": 5451,
+            "end_ts_ms": 1790366845114,
+            "duration_ms": 5420,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4077,
+          "at_ms": 1790366839705
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4531,
+          "at_ms": 1790366839705
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4633,
+          "at_ms": 1790366839705
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 5437,
+          "at_ms": 1790366839705
+        },
+        {
+          "stage": "SESSION_CHECK",
+          "elapsed_ms": 5451,
+          "at_ms": 1790366845122,
+          "timing": {
+            "stage": "SESSION_CHECK",
+            "start_elapsed_ms": 5451,
+            "start_ts_ms": 1790366845114,
+            "end_elapsed_ms": 9119,
+            "end_ts_ms": 1790366848781,
+            "duration_ms": 3668,
+            "status": "fail",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "SESSION_CHECK",
+          "elapsed_ms": 5462,
+          "at_ms": 1790366845122
+        },
+        {
+          "stage": "SESSION_CHECK",
+          "elapsed_ms": 6374,
+          "at_ms": 1790366845122
+        },
+        {
+          "stage": "SESSION_CHECK",
+          "elapsed_ms": 6645,
+          "at_ms": 1790366845122
+        },
+        {
+          "stage": "SESSION_CHECK",
+          "elapsed_ms": 7974,
+          "at_ms": 1790366845122
+        },
+        {
+          "stage": "SESSION_CHECK",
+          "elapsed_ms": 8517,
+          "at_ms": 1790366845122
+        },
+        {
+          "stage": "SESSION_CHECK",
+          "elapsed_ms": 8629,
+          "at_ms": 1790366845122
+        },
+        {
+          "stage": "SESSION_CHECK",
+          "elapsed_ms": 9093,
+          "at_ms": 1790366845122
+        },
+        {
+          "stage": "SESSION_CHECK",
+          "elapsed_ms": 9119,
+          "at_ms": 1790366845122
+        }
+      ]
+    },
+    "device_stage": "SESSION_CHECK",
+    "execution_count": 1,
+    "run_id": "c_SdsfEJpUaF8k_oMUQNMgGZJtsuJYjHVZO5ITguUpjdM",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "No unique username placeholder on the Bet365 login form",
+    "route": "search",
+    "stage_timings": [
+      {
+        "stage": "SPORTS_HOME",
+        "start_elapsed_ms": 17,
+        "start_ts_ms": 1790366839679,
+        "end_elapsed_ms": 31,
+        "end_ts_ms": 1790366839693,
+        "duration_ms": 14,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 31,
+        "start_ts_ms": 1790366839693,
+        "end_elapsed_ms": 5451,
+        "end_ts_ms": 1790366845114,
+        "duration_ms": 5420,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "SESSION_CHECK",
+        "start_elapsed_ms": 5451,
+        "start_ts_ms": 1790366845114,
+        "end_elapsed_ms": 9119,
+        "end_ts_ms": 1790366848781,
+        "duration_ms": 3668,
+        "status": "fail",
+        "retries": 0
+      }
+    ],
+    "session_path": [
+      {
+        "saw": "LOGGED_OUT",
+        "state": "LOGIN_IN_PROGRESS",
+        "attempts": 0
+      }
+    ],
+    "session_machine": "LOGIN_IN_PROGRESS"
+  },
+  "wall_seconds": 9.922,
+  "poll_errors": []
+}

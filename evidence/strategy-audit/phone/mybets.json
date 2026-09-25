@@ -1,0 +1,15 @@
+{
+  "tag": "mybets",
+  "expected": "PASS",
+  "ok": false,
+  "payload": {
+    "action": "MY_BETS",
+    "view": "OPEN",
+    "instruction_id": "forensic-1790366014-mybets",
+    "adapter": "live_bet365",
+    "scenario": "live",
+    "timeout_ms": 120000
+  },
+  "error": "{'instruction_id': 'forensic-1790366014-mybets', 'status': 'FAIL', 'stage': 'INTERNAL_ERROR', 'detail': 'BUSY: one instruction at a time; ID not consumed', 'duration_ms': 0}",
+  "wall_seconds": 1.015
+}

@@ -1,0 +1,95 @@
+{
+  "tag": "pretap-prepare",
+  "expected": "PASS",
+  "ok": true,
+  "payload": {
+    "action": "PLACE_HELD",
+    "sport": "basketball",
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "selection_name": "Kirchheim",
+    "price": "1.57",
+    "minimum_price": "1.01",
+    "stake": "0.10",
+    "execution_mode": "prepare",
+    "confirmation_status": "APPROVED",
+    "instruction_id": "forensic-1790366148-pretap-prepare",
+    "adapter": "live_bet365",
+    "scenario": "live",
+    "timeout_ms": 120000
+  },
+  "ack": {
+    "instruction_id": "forensic-1790366148-pretap-prepare",
+    "acknowledged": true,
+    "state": "ACCEPTED",
+    "received_at_ms": 1790366175942,
+    "result_url": "/instructions/forensic-1790366148-pretap-prepare",
+    "execution_count": 0
+  },
+  "result": {
+    "instruction_id": "forensic-1790366148-pretap-prepare",
+    "status": "PASS",
+    "stage": "PASS",
+    "detail": "PRETAP_READY",
+    "duration_ms": 571,
+    "progress": {
+      "stage": "PRETAP_CHECK",
+      "elapsed_ms": 502,
+      "last_progress_at_ms": 1790366176024,
+      "instruction_id": "forensic-1790366148-pretap-prepare",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790366176019
+        },
+        {
+          "stage": "PRETAP_CHECK",
+          "elapsed_ms": 26,
+          "at_ms": 1790366176024
+        },
+        {
+          "stage": "PRETAP_CHECK",
+          "elapsed_ms": 31,
+          "at_ms": 1790366176024
+        },
+        {
+          "stage": "PRETAP_CHECK",
+          "elapsed_ms": 462,
+          "at_ms": 1790366176024
+        },
+        {
+          "stage": "PRETAP_CHECK",
+          "elapsed_ms": 502,
+          "at_ms": 1790366176024
+        }
+      ]
+    },
+    "device_stage": "PRETAP_CHECK",
+    "execution_count": 1,
+    "run_id": "c_jzzOk_3Z6-6FASO6bO8sXO5LCdfdgsex9h8VuOQjP-0",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+    "pretap": {
+      "ok": true,
+      "selection": "Kirchheim",
+      "line": "",
+      "price": "1.57",
+      "stake": "0.10",
+      "place_bet_bounds": [
+        20,
+        1320,
+        604,
+        1346
+      ]
+    },
+    "stage_timings": [],
+    "t_start_ms": 1790366176021,
+    "t_pretap_done_ms": 1790366176497
+  },
+  "wall_seconds": 1.563
+}

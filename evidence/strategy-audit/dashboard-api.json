@@ -1,0 +1,494 @@
+{
+  "status_code": 200,
+  "config_code": 200,
+  "pipeline": {
+    "service": {
+      "heartbeat_at": "2026-09-25T20:17:32.294+00:00",
+      "dispatch_enabled": false,
+      "final_action_enabled": false,
+      "auto_approve": false,
+      "paused": true,
+      "intake": {
+        "state": "LISTENING",
+        "connected": true,
+        "last_event_at": "2026-09-25T20:17:08.638+00:00",
+        "last_error": null,
+        "reconnects": 0
+      },
+      "notifications": "ENABLED",
+      "commands": "ENABLED",
+      "last_error": null
+    },
+    "devices": [
+      {
+        "device_id": "galaxy-a13-5g",
+        "status": "ONLINE",
+        "checked_at": "2026-09-25T20:17:32.398+00:00",
+        "last_online_at": "2026-09-25T20:17:32.398+00:00",
+        "error": null,
+        "health": {
+          "app_version": "0.9.17-reset",
+          "credential_store": "encrypted",
+          "credentials_configured": true,
+          "current_instruction": null,
+          "device_id": "galaxy-a13-5g",
+          "endpoint": "http://100.114.45.68:8767",
+          "fast_ocr_error": null,
+          "healthy": true,
+          "heartbeat_ms": 1790367452645,
+          "last_result": {
+            "away": null,
+            "competition": null,
+            "detail": "No unique username placeholder on the Bet365 login form",
+            "device_stage": "ENSURE_SESSION",
+            "duration_ms": 8922,
+            "execution_count": 1,
+            "fixture_name": null,
+            "home": null,
+            "instruction_id": "self-session-1790367327624",
+            "progress": {
+              "elapsed_ms": 8828,
+              "instruction_id": "self-session-1790367327624",
+              "last_progress_at_ms": 1790367333108,
+              "stage": "ENSURE_SESSION",
+              "stages": [
+                {
+                  "at_ms": 1790367327687,
+                  "elapsed_ms": 0,
+                  "stage": "STARTED"
+                },
+                {
+                  "at_ms": 1790367327692,
+                  "elapsed_ms": 15,
+                  "stage": "OPEN_HOME",
+                  "timing": {
+                    "duration_ms": 5403,
+                    "end_elapsed_ms": 5418,
+                    "end_ts_ms": 1790367333092,
+                    "retries": 0,
+                    "stage": "OPEN_HOME",
+                    "start_elapsed_ms": 15,
+                    "start_ts_ms": 1790367327688,
+                    "status": "ok"
+                  }
+                },
+                {
+                  "at_ms": 1790367327699,
+                  "elapsed_ms": 20,
+                  "stage": "OPEN_HOME",
+                  "timing": {
+                    "duration_ms": 5403,
+                    "end_elapsed_ms": 5418,
+                    "end_ts_ms": 1790367333092,
+                    "retries": 0,
+                    "stage": "OPEN_HOME",
+                    "start_elapsed_ms": 15,
+                    "start_ts_ms": 1790367327688,
+                    "status": "ok"
+                  }
+                },
+                {
+                  "at_ms": 1790367327699,
+                  "elapsed_ms": 4057,
+                  "stage": "OPEN_HOME"
+                },
+                {
+                  "at_ms": 1790367327699,
+                  "elapsed_ms": 4448,
+                  "stage": "OPEN_HOME"
+                },
+                {
+                  "at_ms": 1790367327699,
+                  "elapsed_ms": 4494,
+                  "stage": "OPEN_HOME"
+                },
+                {
+                  "at_ms": 1790367327699,
+                  "elapsed_ms": 5393,
+                  "stage": "OPEN_HOME"
+                },
+                {
+                  "at_ms": 1790367333108,
+                  "elapsed_ms": 5418,
+                  "stage": "ENSURE_SESSION",
+                  "timing": {
+                    "duration_ms": 3409,
+                    "end_elapsed_ms": 8827,
+                    "end_ts_ms": 1790367336501,
+                    "retries": 0,
+                    "stage": "ENSURE_SESSION",
+                    "start_elapsed_ms": 5418,
+                    "start_ts_ms": 1790367333092,
+                    "status": "fail"
+                  }
+                },
+                {
+                  "at_ms": 1790367333108,
+                  "elapsed_ms": 5437,
+                  "stage": "ENSURE_SESSION"
+                },
+                {
+                  "at_ms": 1790367333108,
+                  "elapsed_ms": 6290,
+                  "stage": "ENSURE_SESSION"
+                },
+                {
+                  "at_ms": 1790367333108,
+                  "elapsed_ms": 6509,
+                  "stage": "ENSURE_SESSION"
+                },
+                {
+                  "at_ms": 1790367333108,
+                  "elapsed_ms": 7718,
+                  "stage": "ENSURE_SESSION"
+                },
+                {
+                  "at_ms": 1790367333108,
+                  "elapsed_ms": 8224,
+                  "stage": "ENSURE_SESSION"
+                },
+                {
+                  "at_ms": 1790367333108,
+                  "elapsed_ms": 8285,
+                  "stage": "ENSURE_SESSION"
+                },
+                {
+                  "at_ms": 1790367333108,
+                  "elapsed_ms": 8777,
+                  "stage": "ENSURE_SESSION"
+                },
+                {
+                  "at_ms": 1790367333108,
+                  "elapsed_ms": 8828,
+                  "stage": "ENSURE_SESSION"
+                }
+              ]
+            },
+            "run_id": "c_hk9Z6-7hgR0HDP0P7lBeT0a42Q95ZJe1kLY5Hnm0uDU",
+            "session_machine": "LOGIN_IN_PROGRESS",
+            "session_path": [
+              {
+                "attempts": 0,
+                "saw": "LOGGED_OUT",
+                "state": "LOGIN_IN_PROGRESS"
+              }
+            ],
+            "stage": "LOGIN_FAILED",
+            "stage_timings": [
+              {
+                "duration_ms": 5403,
+                "end_elapsed_ms": 5418,
+                "end_ts_ms": 1790367333092,
+                "retries": 0,
+                "stage": "OPEN_HOME",
+                "start_elapsed_ms": 15,
+                "start_ts_ms": 1790367327688,
+                "status": "ok"
+              },
+              {
+                "duration_ms": 3409,
+                "end_elapsed_ms": 8827,
+                "end_ts_ms": 1790367336501,
+                "retries": 0,
+                "stage": "ENSURE_SESSION",
+                "start_elapsed_ms": 5418,
+                "start_ts_ms": 1790367333092,
+                "status": "fail"
+              }
+            ],
+            "status": "FAIL",
+            "verification_detail": "No unique username placeholder on the Bet365 login form"
+          },
+          "ocr_engine": "hybrid",
+          "pid": 4214,
+          "session": {
+            "detail": "idle probe",
+            "last_refresh_at_ms": 1790367447069,
+            "last_refresh_outcome": "probe started",
+            "observed_at_ms": 1790367447523,
+            "refresh_count": 16,
+            "state": "LOGGED_OUT"
+          },
+          "session_recovery": {
+            "attempts_last_hour": 2,
+            "last_attempt_at_ms": 1790367327624,
+            "last_outcome": "deferred: cooldown or hourly limit"
+          },
+          "state": "IDLE",
+          "uptime_ms": 799570,
+          "version_code": 100
+        }
+      }
+    ],
+    "sessions": [
+      {
+        "device_id": "galaxy-a13-5g",
+        "state": "LOGGED_OUT",
+        "observed_at": "2026-09-25T20:17:27.523000+00:00",
+        "reported_at": "2026-09-25T20:17:32.398+00:00",
+        "source": "health",
+        "detail": "idle probe"
+      }
+    ],
+    "lifecycle": {
+      "COMPLETED": 2,
+      "PRICE_CHANGED": 1,
+      "REJECTED": 11,
+      "SESSION_REQUIRED": 8,
+      "STALE": 387,
+      "TARGET_NOT_FOUND": 15,
+      "TIMEOUT": 2,
+      "UNKNOWN": 4
+    },
+    "intake": {
+      "AMBIGUOUS": 263,
+      "DUPLICATE": 182,
+      "IGNORED": 6,
+      "INVALID": 107,
+      "PARSED": 430,
+      "PARSED_PARTIAL": 527
+    },
+    "notifications": [
+      {
+        "instruction_id": "on-0d5e1ef972d82943e8726fc4",
+        "state": "TARGET_NOT_FOUND",
+        "created_at": "2026-09-25T13:01:24.355+00:00",
+        "sent_at": "2026-09-25T13:01:24.531+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-628da5f5c4b471eb1ef7f49c",
+        "state": "TARGET_NOT_FOUND",
+        "created_at": "2026-09-25T13:01:17.140+00:00",
+        "sent_at": "2026-09-25T13:01:17.339+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-205de8454e182f2de4fd9052",
+        "state": "TARGET_NOT_FOUND",
+        "created_at": "2026-09-25T13:01:09.503+00:00",
+        "sent_at": "2026-09-25T13:01:09.694+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-f040d59c9a28fe9427b3e32c",
+        "state": "TIMEOUT",
+        "created_at": "2026-09-25T13:01:01.859+00:00",
+        "sent_at": "2026-09-25T13:01:02.058+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-b3c290e65122c4aef06dcb29",
+        "state": "STALE",
+        "created_at": "2026-09-25T12:54:54.194+00:00",
+        "sent_at": "2026-09-25T12:54:54.353+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-b3c290e65122c4aef06dcb29",
+        "state": "AWAITING_APPROVAL",
+        "created_at": "2026-09-25T12:52:53.939+00:00",
+        "sent_at": "2026-09-25T12:52:54.111+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-d0c9a4033e16c9ee01fb4d41",
+        "state": "TARGET_NOT_FOUND",
+        "created_at": "2026-09-25T12:44:36.060+00:00",
+        "sent_at": "2026-09-25T12:44:36.244+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-2c8f54db639fd1099e88bbb7",
+        "state": "REJECTED",
+        "created_at": "2026-09-25T12:37:16.069+00:00",
+        "sent_at": "2026-09-25T12:37:16.227+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-42935974a0ed733e4a1dc161",
+        "state": "REJECTED",
+        "created_at": "2026-09-25T12:15:37.359+00:00",
+        "sent_at": "2026-09-25T12:15:37.542+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-f6c235162caf57aea4e8925d",
+        "state": "PRICE_CHANGED",
+        "created_at": "2026-09-25T12:07:29.876+00:00",
+        "sent_at": "2026-09-25T12:07:30.061+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-3df5c41a1856a1ab0a12fc25",
+        "state": "TARGET_NOT_FOUND",
+        "created_at": "2026-09-25T12:07:15.492+00:00",
+        "sent_at": "2026-09-25T12:07:15.680+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-8f79281a7041821a63d6ed18",
+        "state": "TARGET_NOT_FOUND",
+        "created_at": "2026-09-25T11:37:03.342+00:00",
+        "sent_at": "2026-09-25T11:37:03.478+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-c7e5d94c9f015affa329186c",
+        "state": "TARGET_NOT_FOUND",
+        "created_at": "2026-09-25T01:49:41.399+00:00",
+        "sent_at": "2026-09-25T01:49:41.608+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-7e7371a77917caeec0115220",
+        "state": "TARGET_NOT_FOUND",
+        "created_at": "2026-09-25T01:17:59.077+00:00",
+        "sent_at": "2026-09-25T01:17:59.284+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-16d6f1f1a238bdefc6fd71f2",
+        "state": "STALE",
+        "created_at": "2026-09-25T00:48:13.396+00:00",
+        "sent_at": "2026-09-25T00:48:13.563+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-16d6f1f1a238bdefc6fd71f2",
+        "state": "AWAITING_APPROVAL",
+        "created_at": "2026-09-25T00:46:10.850+00:00",
+        "sent_at": "2026-09-25T00:46:11.003+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-f60790912f832e069a602cfc",
+        "state": "TARGET_NOT_FOUND",
+        "created_at": "2026-09-25T00:35:06.162+00:00",
+        "sent_at": "2026-09-25T00:35:06.336+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-d875519f85135352c96d2b1e",
+        "state": "COMPLETED",
+        "created_at": "2026-09-24T21:55:18.916+00:00",
+        "sent_at": "2026-09-24T21:55:19.125+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-d875519f85135352c96d2b1e",
+        "state": "AWAITING_APPROVAL",
+        "created_at": "2026-09-24T21:54:34.040+00:00",
+        "sent_at": "2026-09-24T21:54:34.266+00:00",
+        "attempts": 1,
+        "last_error": null
+      },
+      {
+        "instruction_id": "on-baaa1c7fe15d239c2cd5593c",
+        "state": "TARGET_NOT_FOUND",
+        "created_at": "2026-09-24T21:53:58.175+00:00",
+        "sent_at": "2026-09-24T21:53:58.337+00:00",
+        "attempts": 1,
+        "last_error": null
+      }
+    ],
+    "available": true,
+    "active": [],
+    "paused": true,
+    "awaiting_approval": [],
+    "bets": {
+      "OPEN": 2
+    }
+  },
+  "config": {
+    "config": {
+      "global": {
+        "enabled": true,
+        "default_stake": 0.1,
+        "allowed_slippage": 0,
+        "max_stake": 10,
+        "stale_alert_seconds": 300,
+        "event_timezone": "UTC",
+        "min_line_advantage": 1.0,
+        "min_sharp_movement": null
+      },
+      "sports": {
+        "football": {
+          "markets": {
+            "1X2": {
+              "enabled": true,
+              "stake": null,
+              "minimum_ev": null,
+              "allowed_slippage": null,
+              "min_price": null,
+              "max_price": null
+            },
+            "SPREAD": {
+              "enabled": true,
+              "stake": null,
+              "minimum_ev": null,
+              "allowed_slippage": null,
+              "min_price": null,
+              "max_price": null
+            },
+            "TOTALS": {
+              "enabled": true,
+              "stake": null,
+              "minimum_ev": null,
+              "allowed_slippage": null,
+              "min_price": null,
+              "max_price": null
+            }
+          }
+        },
+        "basketball": {
+          "markets": {
+            "MONEYLINE": {
+              "enabled": true,
+              "stake": null,
+              "minimum_ev": null,
+              "allowed_slippage": null,
+              "min_price": null,
+              "max_price": null
+            },
+            "SPREAD": {
+              "enabled": true,
+              "stake": null,
+              "minimum_ev": null,
+              "allowed_slippage": null,
+              "min_price": null,
+              "max_price": null
+            },
+            "TOTALS": {
+              "enabled": true,
+              "stake": null,
+              "minimum_ev": null,
+              "allowed_slippage": null,
+              "min_price": null,
+              "max_price": null
+            }
+          }
+        }
+      }
+    },
+    "updated_at": "2026-09-24T10:31:56+00:00"
+  }
+}

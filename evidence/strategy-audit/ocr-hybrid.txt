@@ -1,0 +1,19 @@
+corpus: 68 frames {'grid': 14, 'header': 14, 'slip': 14, 'keypad': 14, 'receipt': 4, 'mybets': 8}
+batch 1/7 done (10/10 ok)
+batch 2/7 done (20/20 ok)
+batch 3/7 done (30/30 ok)
+batch 4/7 done (40/40 ok)
+batch 5/7 done (50/50 ok)
+batch 6/7 done (60/60 ok)
+batch 7/7 done (68/68 ok)
+
+ENGINE hybrid
+class        n   ok    acc  lat_mean  lat_med  critical errors
+grid        14   14   100%      396ms     380ms  {}
+header      14   14   100%      284ms     291ms  {}
+slip        14   14   100%      351ms     344ms  {}
+keypad      14   14   100%      338ms     340ms  {}
+receipt      4    4   100%      330ms     327ms  {}
+mybets       8    8   100%      360ms     356ms  {}
+mybets_run   2    2   100%     1440ms    1440ms  {}
+BENCH DONE

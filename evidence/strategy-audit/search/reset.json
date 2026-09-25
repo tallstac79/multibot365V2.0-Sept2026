@@ -1,0 +1,94 @@
+{
+  "tag": "reset",
+  "payload": {
+    "action": "RESET_BETSLIP",
+    "instruction_id": "forensic-search-reset-1790366848",
+    "adapter": "live_bet365",
+    "scenario": "live",
+    "timeout_ms": 120000
+  },
+  "ack": {
+    "instruction_id": "forensic-search-reset-1790366848",
+    "acknowledged": true,
+    "state": "ACCEPTED",
+    "received_at_ms": 1790366849468,
+    "result_url": "/instructions/forensic-search-reset-1790366848",
+    "execution_count": 0
+  },
+  "result": {
+    "instruction_id": "forensic-search-reset-1790366848",
+    "status": "PASS",
+    "stage": "PASS",
+    "detail": "RESET_BETSLIP",
+    "duration_ms": 655,
+    "progress": {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 516,
+      "last_progress_at_ms": 1790366849595,
+      "instruction_id": "forensic-search-reset-1790366848",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790366849586
+        },
+        {
+          "stage": "RESET_BETSLIP",
+          "elapsed_ms": 20,
+          "at_ms": 1790366849595,
+          "timing": {
+            "stage": "RESET_BETSLIP",
+            "start_elapsed_ms": 20,
+            "start_ts_ms": 1790366849588,
+            "end_elapsed_ms": 516,
+            "end_ts_ms": 1790366850083,
+            "duration_ms": 496,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "RESET_BETSLIP",
+          "elapsed_ms": 30,
+          "at_ms": 1790366849595
+        },
+        {
+          "stage": "RESET_BETSLIP",
+          "elapsed_ms": 480,
+          "at_ms": 1790366849595
+        },
+        {
+          "stage": "RESET_BETSLIP",
+          "elapsed_ms": 516,
+          "at_ms": 1790366849595
+        }
+      ]
+    },
+    "device_stage": "RESET_BETSLIP",
+    "execution_count": 1,
+    "run_id": "c_q7vk6OdKN0G9oaV9E0hAdnoKaxaIU2xl_1cfHi75RVs",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+    "betslip_reset": {
+      "tapped": false,
+      "detail": "No safe reset control visible"
+    },
+    "stage_timings": [
+      {
+        "stage": "RESET_BETSLIP",
+        "start_elapsed_ms": 20,
+        "start_ts_ms": 1790366849588,
+        "end_elapsed_ms": 516,
+        "end_ts_ms": 1790366850083,
+        "duration_ms": 496,
+        "status": "ok",
+        "retries": 0
+      }
+    ]
+  },
+  "wall_seconds": 2.046,
+  "poll_errors": []
+}

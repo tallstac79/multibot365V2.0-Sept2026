@@ -1,0 +1,141 @@
+{
+  "tag": "hold",
+  "expected": "PASS",
+  "ok": false,
+  "payload": {
+    "action": "ADAPTER_WORKFLOW",
+    "sport": "basketball",
+    "query": "VFL Kirchheim Knights||Wolmirstedt",
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "",
+    "minimum_price": "1.01",
+    "stake": "0.10",
+    "execution_mode": "hold",
+    "event_url": "https://www.bet365.com/#/AC/B18/C21170155/D19/E26748183/F19/I0/",
+    "kickoff_utc": "2026-09-26T16:00",
+    "instruction_id": "forensic-1790366014-hold",
+    "adapter": "live_bet365",
+    "scenario": "live",
+    "timeout_ms": 120000
+  },
+  "ack": {
+    "instruction_id": "forensic-1790366014-hold",
+    "acknowledged": true,
+    "state": "ACCEPTED",
+    "received_at_ms": 1790366044001,
+    "result_url": "/instructions/forensic-1790366014-hold",
+    "execution_count": 0
+  },
+  "result": {
+    "instruction_id": "forensic-1790366014-hold",
+    "status": "FAIL",
+    "stage": "ALIAS_REQUIRED",
+    "detail": "Event link shows 'Kirchheim v SBB Baskets Wolmirstedt'; alert says 'VFL Kirchheim Knights v Wolmirstedt': both teams only resemble the page's names; no exact team to anchor on",
+    "duration_ms": 5298,
+    "progress": {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 5256,
+      "last_progress_at_ms": 1790366044068,
+      "instruction_id": "forensic-1790366014-hold",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790366044054
+        },
+        {
+          "stage": "OPEN_EVENT",
+          "elapsed_ms": 26,
+          "at_ms": 1790366044063
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 36,
+          "at_ms": 1790366044068,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 36,
+            "start_ts_ms": 1790366044064,
+            "end_elapsed_ms": 5255,
+            "end_ts_ms": 1790366049283,
+            "duration_ms": 5219,
+            "status": "fail",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 3457,
+          "at_ms": 1790366044068
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 3665,
+          "at_ms": 1790366044068
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4576,
+          "at_ms": 1790366044068
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 5121,
+          "at_ms": 1790366044068
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 5256,
+          "at_ms": 1790366044068
+        }
+      ]
+    },
+    "device_stage": "OPEN_HOME",
+    "execution_count": 1,
+    "run_id": "c_du8ZTG-1f9N7iwrA6ArBRbfrjJLIxZFS64fvXL5Vq5M",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "Event link shows 'Kirchheim v SBB Baskets Wolmirstedt'; alert says 'VFL Kirchheim Knights v Wolmirstedt': both teams only resemble the page's names; no exact team to anchor on",
+    "route": "event_link",
+    "stage_timings": [
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 36,
+        "start_ts_ms": 1790366044064,
+        "end_elapsed_ms": 5255,
+        "end_ts_ms": 1790366049283,
+        "duration_ms": 5219,
+        "status": "fail",
+        "retries": 0
+      }
+    ],
+    "direct_event_rejected": "identity: both teams only resemble the page's names; no exact team to anchor on",
+    "identity": {
+      "verdict": "AMBIGUOUS",
+      "reason": "both teams only resemble the page's names; no exact team to anchor on",
+      "home": {
+        "feed": "VFL Kirchheim Knights",
+        "bookmaker": "Kirchheim",
+        "level": "VARIANT",
+        "score": 1,
+        "note": "naming variant 1.00"
+      },
+      "away": {
+        "feed": "Wolmirstedt",
+        "bookmaker": "SBB Baskets Wolmirstedt",
+        "level": "VARIANT",
+        "score": 1,
+        "note": "naming variant 1.00"
+      },
+      "kickoff_known": true,
+      "kickoff_agrees": true,
+      "reversed": false
+    },
+    "identity_verdict": "AMBIGUOUS",
+    "event_url": "https://www.bet365.com/#/AC/B18/C21170155/D19/E26748183/F19/I0/"
+  },
+  "wall_seconds": 6.125
+}

@@ -1,0 +1,15 @@
+Reboot requested
+Boot complete; non-secure keyguard dismissed
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tools\strategy_reboot_audit.py", line 50, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tools\strategy_reboot_audit.py", line 37, in main
+    session=c.result(iid,seconds=145)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tools\coordinator_client.py", line 44, in result
+    if code != 202: raise ValueError(value)
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: {'instruction_id': '', 'status': 'FAIL', 'stage': 'INVALID_INSTRUCTION', 'detail': 'Malformed or incomplete HTTP/JSON request', 'duration_ms': 0}

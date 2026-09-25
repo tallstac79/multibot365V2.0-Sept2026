@@ -1,0 +1,512 @@
+{
+  "tag": "hold",
+  "expected": "PASS",
+  "ok": true,
+  "payload": {
+    "action": "ADAPTER_WORKFLOW",
+    "sport": "basketball",
+    "query": "Kirchheim||SBB Baskets Wolmirstedt",
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "",
+    "minimum_price": "1.01",
+    "stake": "0.10",
+    "execution_mode": "hold",
+    "event_url": "https://www.bet365.com/#/AC/B18/C21170155/D19/E26748183/F19/I0/",
+    "kickoff_utc": "2026-09-26T16:00",
+    "instruction_id": "forensic-1790366148-hold",
+    "adapter": "live_bet365",
+    "scenario": "live",
+    "timeout_ms": 120000
+  },
+  "ack": {
+    "instruction_id": "forensic-1790366148-hold",
+    "acknowledged": true,
+    "state": "ACCEPTED",
+    "received_at_ms": 1790366164181,
+    "result_url": "/instructions/forensic-1790366148-hold",
+    "execution_count": 0
+  },
+  "result": {
+    "instruction_id": "forensic-1790366148-hold",
+    "status": "PASS",
+    "stage": "PASS",
+    "detail": "COMPLETE_EXECUTION_READY",
+    "duration_ms": 10520,
+    "progress": {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "elapsed_ms": 10389,
+      "last_progress_at_ms": 1790366174653,
+      "instruction_id": "forensic-1790366148-hold",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790366164316
+        },
+        {
+          "stage": "OPEN_EVENT",
+          "elapsed_ms": 26,
+          "at_ms": 1790366164322
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 33,
+          "at_ms": 1790366164329,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 33,
+            "start_ts_ms": 1790366164323,
+            "end_elapsed_ms": 4053,
+            "end_ts_ms": 1790366168343,
+            "duration_ms": 4020,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 3477,
+          "at_ms": 1790366164329
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4002,
+          "at_ms": 1790366164329
+        },
+        {
+          "stage": "MARKET_NAV",
+          "elapsed_ms": 4053,
+          "at_ms": 1790366168345,
+          "timing": {
+            "stage": "MARKET_NAV",
+            "start_elapsed_ms": 4053,
+            "start_ts_ms": 1790366168343,
+            "end_elapsed_ms": 4618,
+            "end_ts_ms": 1790366168908,
+            "duration_ms": 565,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "MARKET_NAV",
+          "elapsed_ms": 4056,
+          "at_ms": 1790366168345
+        },
+        {
+          "stage": "MARKET_NAV",
+          "elapsed_ms": 4591,
+          "at_ms": 1790366168345
+        },
+        {
+          "stage": "READ_SELECTION",
+          "elapsed_ms": 4618,
+          "at_ms": 1790366168910,
+          "timing": {
+            "stage": "READ_SELECTION",
+            "start_elapsed_ms": 4618,
+            "start_ts_ms": 1790366168908,
+            "end_elapsed_ms": 4621,
+            "end_ts_ms": 1790366168911,
+            "duration_ms": 3,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "READ_LINE",
+          "elapsed_ms": 4621,
+          "at_ms": 1790366168914,
+          "timing": {
+            "stage": "READ_LINE",
+            "start_elapsed_ms": 4621,
+            "start_ts_ms": 1790366168911,
+            "end_elapsed_ms": 4624,
+            "end_ts_ms": 1790366168914,
+            "duration_ms": 3,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "READ_PRICE",
+          "elapsed_ms": 4624,
+          "at_ms": 1790366168916,
+          "timing": {
+            "stage": "READ_PRICE",
+            "start_elapsed_ms": 4624,
+            "start_ts_ms": 1790366168914,
+            "end_elapsed_ms": 4627,
+            "end_ts_ms": 1790366168917,
+            "duration_ms": 3,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_SELECTION",
+          "elapsed_ms": 4627,
+          "at_ms": 1790366168919,
+          "timing": {
+            "stage": "OPEN_SELECTION",
+            "start_elapsed_ms": 4627,
+            "start_ts_ms": 1790366168917,
+            "end_elapsed_ms": 5387,
+            "end_ts_ms": 1790366169677,
+            "duration_ms": 760,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_SELECTION",
+          "elapsed_ms": 4630,
+          "at_ms": 1790366168919
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 5387,
+          "at_ms": 1790366169689,
+          "timing": {
+            "stage": "ENTER_STAKE",
+            "start_elapsed_ms": 5387,
+            "start_ts_ms": 1790366169677,
+            "end_elapsed_ms": 9686,
+            "end_ts_ms": 1790366173976,
+            "duration_ms": 4299,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 5403,
+          "at_ms": 1790366169689
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 5876,
+          "at_ms": 1790366169689
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 6174,
+          "at_ms": 1790366169689
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 6676,
+          "at_ms": 1790366169689
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 6725,
+          "at_ms": 1790366169689
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 7444,
+          "at_ms": 1790366169689
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 7827,
+          "at_ms": 1790366169689
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 7904,
+          "at_ms": 1790366169689
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 8166,
+          "at_ms": 1790366169689
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 8434,
+          "at_ms": 1790366169689
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 8699,
+          "at_ms": 1790366169689
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 8968,
+          "at_ms": 1790366169689
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 9379,
+          "at_ms": 1790366169689
+        },
+        {
+          "stage": "ENTER_STAKE",
+          "elapsed_ms": 9428,
+          "at_ms": 1790366169689
+        },
+        {
+          "stage": "VERIFY_FINAL_STATE",
+          "elapsed_ms": 9686,
+          "at_ms": 1790366173980,
+          "timing": {
+            "stage": "VERIFY_FINAL_STATE",
+            "start_elapsed_ms": 9686,
+            "start_ts_ms": 1790366173976,
+            "end_elapsed_ms": 10357,
+            "end_ts_ms": 1790366174647,
+            "duration_ms": 671,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "VERIFY_FINAL_STATE",
+          "elapsed_ms": 9693,
+          "at_ms": 1790366173980
+        },
+        {
+          "stage": "VERIFY_FINAL_STATE",
+          "elapsed_ms": 10220,
+          "at_ms": 1790366173980
+        },
+        {
+          "stage": "PREPARE_COMPLETE_EXECUTION",
+          "elapsed_ms": 10357,
+          "at_ms": 1790366174653,
+          "timing": {
+            "stage": "PREPARE_COMPLETE_EXECUTION",
+            "start_elapsed_ms": 10357,
+            "start_ts_ms": 1790366174647,
+            "end_elapsed_ms": 10389,
+            "end_ts_ms": 1790366174679,
+            "duration_ms": 32,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "PREPARE_COMPLETE_EXECUTION",
+          "elapsed_ms": 10389,
+          "at_ms": 1790366174653
+        }
+      ]
+    },
+    "device_stage": "PREPARE_COMPLETE_EXECUTION",
+    "execution_count": 1,
+    "run_id": "c_sO7HLbALqJ1ab70dOoYCeaDzcBBTZ6c2MG66RLn2FI4",
+    "fixture_name": "Kirchheim v SBB Baskets Wolmirstedt",
+    "home": "Kirchheim",
+    "away": "SBB Baskets Wolmirstedt",
+    "competition": "Germany Pro A 26 Sep 17:00",
+    "selection": {
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "1.57",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Kirchheim",
+      "bounds": [
+        604,
+        672,
+        648,
+        689
+      ]
+    },
+    "final_state": {
+      "home": "Kirchheim",
+      "away": "SBB Baskets Wolmirstedt",
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "1.57",
+      "stake": "0.10",
+      "state": "READY",
+      "place_bet_visible": true,
+      "wager_submitted": false
+    },
+    "ready_state": {
+      "fixture_home": "Kirchheim",
+      "fixture_away": "SBB Baskets Wolmirstedt",
+      "market": "MONEYLINE",
+      "selection_role": "HOME",
+      "selection_name": "Kirchheim",
+      "line": "NONE",
+      "price": "1.57",
+      "stake": "0.10",
+      "session": "LOGGED_IN",
+      "state": "READY",
+      "minimum_price_ok": true,
+      "place_bet_visible": true,
+      "wager_submitted": false,
+      "stop_before_wager": true
+    },
+    "complete_execution_ready": {
+      "state": "COMPLETE_EXECUTION_READY",
+      "fixture": "Kirchheim v SBB Baskets Wolmirstedt",
+      "fixture_home": "Kirchheim",
+      "fixture_away": "SBB Baskets Wolmirstedt",
+      "market": "MONEYLINE",
+      "selection_role": "HOME",
+      "selection_name": "Kirchheim",
+      "line": "NONE",
+      "price": "1.57",
+      "stake": "0.10",
+      "minimum_price": "1.01",
+      "final_control": "Place Bet",
+      "final_control_bounds": [
+        20,
+        1000,
+        604,
+        1026
+      ],
+      "final_control_enabled": true,
+      "final_control_actionable": true,
+      "prepared_gesture": {
+        "type": "tap",
+        "target": "Place Bet",
+        "package": "com.android.chrome",
+        "bounds": [
+          20,
+          1000,
+          604,
+          1026
+        ],
+        "center_x": 312,
+        "center_y": 1013,
+        "duration_ms": 100,
+        "dispatched": false
+      },
+      "gesture_dispatched": false,
+      "wager_submitted": false,
+      "timestamp_ms": 1790366174676,
+      "validation_hash": "58fa180bbf4cd74da880a0be49f6daa9"
+    },
+    "wager_submitted": false,
+    "verification_detail": "HELD: verified bet on the slip, \u00a3 stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+    "route": "event_link",
+    "held": true,
+    "stage_timings": [
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 33,
+        "start_ts_ms": 1790366164323,
+        "end_elapsed_ms": 4053,
+        "end_ts_ms": 1790366168343,
+        "duration_ms": 4020,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "MARKET_NAV",
+        "start_elapsed_ms": 4053,
+        "start_ts_ms": 1790366168343,
+        "end_elapsed_ms": 4618,
+        "end_ts_ms": 1790366168908,
+        "duration_ms": 565,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "READ_SELECTION",
+        "start_elapsed_ms": 4618,
+        "start_ts_ms": 1790366168908,
+        "end_elapsed_ms": 4621,
+        "end_ts_ms": 1790366168911,
+        "duration_ms": 3,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "READ_LINE",
+        "start_elapsed_ms": 4621,
+        "start_ts_ms": 1790366168911,
+        "end_elapsed_ms": 4624,
+        "end_ts_ms": 1790366168914,
+        "duration_ms": 3,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "READ_PRICE",
+        "start_elapsed_ms": 4624,
+        "start_ts_ms": 1790366168914,
+        "end_elapsed_ms": 4627,
+        "end_ts_ms": 1790366168917,
+        "duration_ms": 3,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "OPEN_SELECTION",
+        "start_elapsed_ms": 4627,
+        "start_ts_ms": 1790366168917,
+        "end_elapsed_ms": 5387,
+        "end_ts_ms": 1790366169677,
+        "duration_ms": 760,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "ENTER_STAKE",
+        "start_elapsed_ms": 5387,
+        "start_ts_ms": 1790366169677,
+        "end_elapsed_ms": 9686,
+        "end_ts_ms": 1790366173976,
+        "duration_ms": 4299,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "VERIFY_FINAL_STATE",
+        "start_elapsed_ms": 9686,
+        "start_ts_ms": 1790366173976,
+        "end_elapsed_ms": 10357,
+        "end_ts_ms": 1790366174647,
+        "duration_ms": 671,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "PREPARE_COMPLETE_EXECUTION",
+        "start_elapsed_ms": 10357,
+        "start_ts_ms": 1790366174647,
+        "end_elapsed_ms": 10389,
+        "end_ts_ms": 1790366174679,
+        "duration_ms": 32,
+        "status": "ok",
+        "retries": 0
+      }
+    ],
+    "stake_field_state": "EMPTY",
+    "identity": {
+      "verdict": "EXACT",
+      "reason": "both teams exact",
+      "home": {
+        "feed": "Kirchheim",
+        "bookmaker": "Kirchheim",
+        "level": "EXACT",
+        "score": 1,
+        "note": "exact"
+      },
+      "away": {
+        "feed": "SBB Baskets Wolmirstedt",
+        "bookmaker": "SBB Baskets Wolmirstedt",
+        "level": "EXACT",
+        "score": 1,
+        "note": "exact"
+      },
+      "kickoff_known": true,
+      "kickoff_agrees": true,
+      "reversed": false
+    },
+    "identity_verdict": "EXACT",
+    "event_url": "https://www.bet365.com/#/AC/B18/C21170155/D19/E26748183/F19/I0/"
+  },
+  "wall_seconds": 11.203
+}

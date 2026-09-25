@@ -1,0 +1,52 @@
+{
+  "captured_at": "2026-09-25T19:28:23.528515+00:00",
+  "baseline_commit": "e1adaa2f865ae3123fd6680d16fbd2256404c947",
+  "deliveries": 1507,
+  "analyzed": 1506,
+  "duplicates": 182,
+  "counts": {
+    "insufficient_data": 249,
+    "offer_insufficient_data": 318,
+    "no_movement": 69,
+    "clear_sharp_side_signal": 1188,
+    "offer_equal_line_supplied_edge": 307,
+    "equal_line": 441,
+    "offer_no_proven_same_side_value": 134,
+    "offer_moved_too_far": 72,
+    "unequal_line": 747,
+    "old_side_contradicts_opening_movement": 210,
+    "highlight_contradicts_opening_movement": 128,
+    "offer_favourable_line_unpriced": 579,
+    "recent_reversal": 105,
+    "offer_ambiguous": 96
+  },
+  "old": {
+    "AMBIGUOUS": 271,
+    "ACCEPT": 1203,
+    "STALE": 22,
+    "INVALID": 10
+  },
+  "new": {
+    "AMBIGUOUS": 416,
+    "REJECT": 1080,
+    "INVALID": 10
+  },
+  "selected_side_changed": 339,
+  "strategy_outcomes": {
+    "AMBIGUOUS": 416,
+    "REJECT": 886,
+    "NO BET": 194,
+    "INVALID": 10
+  },
+  "diagnostic_min_movement_zero": {
+    "AMBIGUOUS": 416,
+    "ACCEPT": 868,
+    "REJECT": 194,
+    "STALE": 18,
+    "INVALID": 10
+  },
+  "final_capture_at": "2026-09-25T20:12:37.340267+00:00",
+  "later_arrivals": 28,
+  "diagnostic_warning": "Counterfactual, unapproved policy: any nonzero net move, inherited 1-point advantage, no price bounds. No live configuration changed.",
+  "duplicates_note": "182 stored content-suppressed alerts are included because they have distinct Telegram message IDs."
+}

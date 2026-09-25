@@ -1,0 +1,861 @@
+{
+  "healthy": true,
+  "heartbeat_ms": 1790366149371,
+  "uptime_ms": 26809124,
+  "state": "IDLE",
+  "current_instruction": null,
+  "last_result": {
+    "instruction_id": "st-f2eb69196870f6a3-48",
+    "status": "PASS",
+    "stage": "PASS",
+    "detail": "MY_BETS",
+    "duration_ms": 22270,
+    "progress": {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 22172,
+      "last_progress_at_ms": 1790366071821,
+      "instruction_id": "st-f2eb69196870f6a3-48",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790366052799
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 13,
+          "at_ms": 1790366052803,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 13,
+            "start_ts_ms": 1790366052800,
+            "end_elapsed_ms": 5038,
+            "end_ts_ms": 1790366057825,
+            "duration_ms": 5025,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 17,
+          "at_ms": 1790366052809,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 13,
+            "start_ts_ms": 1790366052800,
+            "end_elapsed_ms": 5038,
+            "end_ts_ms": 1790366057825,
+            "duration_ms": 5025,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4054,
+          "at_ms": 1790366052809
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4488,
+          "at_ms": 1790366052809
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4493,
+          "at_ms": 1790366052809
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 5024,
+          "at_ms": 1790366052809
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 5038,
+          "at_ms": 1790366057832,
+          "timing": {
+            "stage": "ENSURE_SESSION",
+            "start_elapsed_ms": 5038,
+            "start_ts_ms": 1790366057826,
+            "end_elapsed_ms": 5797,
+            "end_ts_ms": 1790366058584,
+            "duration_ms": 759,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 5046,
+          "at_ms": 1790366057832
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 5597,
+          "at_ms": 1790366057832
+        },
+        {
+          "stage": "MY_BETS",
+          "elapsed_ms": 5797,
+          "at_ms": 1790366058586,
+          "timing": {
+            "stage": "MY_BETS",
+            "start_elapsed_ms": 5797,
+            "start_ts_ms": 1790366058584,
+            "end_elapsed_ms": 5800,
+            "end_ts_ms": 1790366058587,
+            "duration_ms": 3,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 5800,
+          "at_ms": 1790366058588,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 5800,
+            "start_ts_ms": 1790366058587,
+            "end_elapsed_ms": 10028,
+            "end_ts_ms": 1790366062815,
+            "duration_ms": 4228,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 9529,
+          "at_ms": 1790366058588
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 10005,
+          "at_ms": 1790366058588
+        },
+        {
+          "stage": "MY_BETS_SCROLL",
+          "elapsed_ms": 10028,
+          "at_ms": 1790366062818,
+          "timing": {
+            "stage": "MY_BETS_SCROLL",
+            "start_elapsed_ms": 10028,
+            "start_ts_ms": 1790366062815,
+            "end_elapsed_ms": 19026,
+            "end_ts_ms": 1790366071813,
+            "duration_ms": 8998,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "MY_BETS_SCROLL",
+          "elapsed_ms": 10033,
+          "at_ms": 1790366062818
+        },
+        {
+          "stage": "MY_BETS_SCROLL",
+          "elapsed_ms": 10637,
+          "at_ms": 1790366062818
+        },
+        {
+          "stage": "MY_BETS_SCROLL",
+          "elapsed_ms": 12949,
+          "at_ms": 1790366065747,
+          "timing": {
+            "stage": "MY_BETS_SCROLL",
+            "start_elapsed_ms": 10028,
+            "start_ts_ms": 1790366062815,
+            "end_elapsed_ms": 19026,
+            "end_ts_ms": 1790366071813,
+            "duration_ms": 8998,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "MY_BETS_SCROLL",
+          "elapsed_ms": 12961,
+          "at_ms": 1790366065747
+        },
+        {
+          "stage": "MY_BETS_SCROLL",
+          "elapsed_ms": 13407,
+          "at_ms": 1790366065747
+        },
+        {
+          "stage": "MY_BETS_SCROLL",
+          "elapsed_ms": 15712,
+          "at_ms": 1790366068511,
+          "timing": {
+            "stage": "MY_BETS_SCROLL",
+            "start_elapsed_ms": 10028,
+            "start_ts_ms": 1790366062815,
+            "end_elapsed_ms": 19026,
+            "end_ts_ms": 1790366071813,
+            "duration_ms": 8998,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "MY_BETS_SCROLL",
+          "elapsed_ms": 15726,
+          "at_ms": 1790366068511
+        },
+        {
+          "stage": "MY_BETS_SCROLL",
+          "elapsed_ms": 16141,
+          "at_ms": 1790366068511
+        },
+        {
+          "stage": "MY_BETS_SCROLL",
+          "elapsed_ms": 18451,
+          "at_ms": 1790366071248,
+          "timing": {
+            "stage": "MY_BETS_SCROLL",
+            "start_elapsed_ms": 10028,
+            "start_ts_ms": 1790366062815,
+            "end_elapsed_ms": 19026,
+            "end_ts_ms": 1790366071813,
+            "duration_ms": 8998,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "MY_BETS_SCROLL",
+          "elapsed_ms": 18463,
+          "at_ms": 1790366071248
+        },
+        {
+          "stage": "MY_BETS_SCROLL",
+          "elapsed_ms": 18982,
+          "at_ms": 1790366071248
+        },
+        {
+          "stage": "RETURN_HOME",
+          "elapsed_ms": 19014,
+          "at_ms": 1790366071812
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 19026,
+          "at_ms": 1790366071821,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 19026,
+            "start_ts_ms": 1790366071813,
+            "end_elapsed_ms": 22172,
+            "end_ts_ms": 1790366074959,
+            "duration_ms": 3146,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 21774,
+          "at_ms": 1790366071821
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 22160,
+          "at_ms": 1790366071821
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 22172,
+          "at_ms": 1790366071821
+        }
+      ]
+    },
+    "device_stage": "OPEN_HOME",
+    "execution_count": 1,
+    "run_id": "c_lU7vMUAPJ_Dd6oRcPdolXJhWxmEAUAVJ9crs9qPFpx0",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "My Bets SETTLED read: 78 lines over 4 frames; no bet controls touched; HOME verified",
+    "my_bets": {
+      "view": "SETTLED",
+      "tab": "Settled",
+      "empty": false,
+      "frames": [
+        "s005_my_bets_1.png",
+        "s006_my_bets_2.png",
+        "s007_my_bets_3.png",
+        "s008_my_bets_4.png"
+      ],
+      "lines": [
+        {
+          "text": "20:54 D Co .l 100%",
+          "top": 14,
+          "left": 56,
+          "frame": 0
+        },
+        {
+          "text": "G o bet365.com/#/MB/U + 8",
+          "top": 82,
+          "left": 30,
+          "frame": 0
+        },
+        {
+          "text": "bet365 \u00a33.69 (\u00a2",
+          "top": 176,
+          "left": 19,
+          "frame": 0
+        },
+        {
+          "text": "Open Live Settled",
+          "top": 272,
+          "left": 36,
+          "frame": 0
+        },
+        {
+          "text": "\u00a30.10 Single",
+          "top": 366,
+          "left": 50,
+          "frame": 0
+        },
+        {
+          "text": "3Reuse Selections Share",
+          "top": 450,
+          "left": 113,
+          "frame": 0
+        },
+        {
+          "text": "\u2022 Val de Seine +1.5 1.83",
+          "top": 526,
+          "left": 57,
+          "frame": 0
+        },
+        {
+          "text": "Point Spread",
+          "top": 564,
+          "left": 92,
+          "frame": 0
+        },
+        {
+          "text": "Besancon AC 80",
+          "top": 613,
+          "left": 90,
+          "frame": 0
+        },
+        {
+          "text": "|| Val de Seine 82",
+          "top": 657,
+          "left": 60,
+          "frame": 0
+        },
+        {
+          "text": "Stake To Return",
+          "top": 759,
+          "left": 51,
+          "frame": 0
+        },
+        {
+          "text": "\u00a30.10 \u00a30.18",
+          "top": 791,
+          "left": 51,
+          "frame": 0
+        },
+        {
+          "text": "\u00a30.10 Single",
+          "top": 912,
+          "left": 50,
+          "frame": 0
+        },
+        {
+          "text": "Reuse Selections Share",
+          "top": 1000,
+          "left": 135,
+          "frame": 0
+        },
+        {
+          "text": "\u2022 Val de Seine +3.5 1.83",
+          "top": 1072,
+          "left": 57,
+          "frame": 0
+        },
+        {
+          "text": "Point Spread",
+          "top": 1111,
+          "left": 92,
+          "frame": 0
+        },
+        {
+          "text": "|L Besancon AC 80",
+          "top": 1156,
+          "left": 60,
+          "frame": 0
+        },
+        {
+          "text": "Val de Seine 82",
+          "top": 1208,
+          "left": 90,
+          "frame": 0
+        },
+        {
+          "text": "Q4 1 2 Half 3 4 T",
+          "top": 1271,
+          "left": 70,
+          "frame": 0
+        },
+        {
+          "text": "| Besancon AC",
+          "top": 1308,
+          "left": 80,
+          "frame": 0
+        },
+        {
+          "text": "L Val de Seine",
+          "top": 1348,
+          "left": 82,
+          "frame": 0
+        },
+        {
+          "text": "(o)",
+          "top": 1419,
+          "left": 345,
+          "frame": 0
+        },
+        {
+          "text": "Home All Sports In-Play My Bets Casino",
+          "top": 1470,
+          "left": 44,
+          "frame": 0
+        },
+        {
+          "text": "20:54 D Co .l 100%",
+          "top": 14,
+          "left": 56,
+          "frame": 1
+        },
+        {
+          "text": "G o bet365.com/#/MB/U + 8",
+          "top": 81,
+          "left": 30,
+          "frame": 1
+        },
+        {
+          "text": "bet365 \u00a33.69",
+          "top": 176,
+          "left": 19,
+          "frame": 1
+        },
+        {
+          "text": "04 00:00 1 2 Half 3 4 T",
+          "top": 287,
+          "left": 69,
+          "frame": 1
+        },
+        {
+          "text": "LL Besancon AC 26 17 43 18 19 80 D",
+          "top": 325,
+          "left": 80,
+          "frame": 1
+        },
+        {
+          "text": "L Val de Seine 16 17 33 26 23 82",
+          "top": 364,
+          "left": 99,
+          "frame": 1
+        },
+        {
+          "text": "Stake To Return",
+          "top": 471,
+          "left": 51,
+          "frame": 1
+        },
+        {
+          "text": "\u00a30.10 \u00a30.18",
+          "top": 504,
+          "left": 51,
+          "frame": 1
+        },
+        {
+          "text": "\u00a31.00 Single",
+          "top": 629,
+          "left": 51,
+          "frame": 1
+        },
+        {
+          "text": "Reuse Selections Share",
+          "top": 714,
+          "left": 135,
+          "frame": 1
+        },
+        {
+          "text": "O Arsenal 1.33",
+          "top": 780,
+          "left": 71,
+          "frame": 1
+        },
+        {
+          "text": "Full Time Result",
+          "top": 826,
+          "left": 93,
+          "frame": 1
+        },
+        {
+          "text": "Arsenal Sat 10 Oct",
+          "top": 876,
+          "left": 89,
+          "frame": 1
+        },
+        {
+          "text": "Leeds 12:30",
+          "top": 923,
+          "left": 91,
+          "frame": 1
+        },
+        {
+          "text": "Stake To Return",
+          "top": 1017,
+          "left": 51,
+          "frame": 1
+        },
+        {
+          "text": "\u00a31.00 \u00a31.33",
+          "top": 1053,
+          "left": 51,
+          "frame": 1
+        },
+        {
+          "text": "Information and transmission delays v",
+          "top": 1185,
+          "left": 182,
+          "frame": 1
+        },
+        {
+          "text": "Settings",
+          "top": 1318,
+          "left": 20,
+          "frame": 1
+        },
+        {
+          "text": "(o)",
+          "top": 1419,
+          "left": 345,
+          "frame": 1
+        },
+        {
+          "text": "Home All Sports In-Play My Bets Casino",
+          "top": 1470,
+          "left": 44,
+          "frame": 1
+        },
+        {
+          "text": "20:54 D Co .l 100%",
+          "top": 14,
+          "left": 56,
+          "frame": 2
+        },
+        {
+          "text": "G o bet365.com/#/MB/U + 8",
+          "top": 82,
+          "left": 30,
+          "frame": 2
+        },
+        {
+          "text": "bet365 \u00a33.69 )",
+          "top": 176,
+          "left": 19,
+          "frame": 2
+        },
+        {
+          "text": "Information and transmission delays v",
+          "top": 237,
+          "left": 182,
+          "frame": 2
+        },
+        {
+          "text": "Settings",
+          "top": 366,
+          "left": 19,
+          "frame": 2
+        },
+        {
+          "text": "Language v Odds Display v",
+          "top": 464,
+          "left": 21,
+          "frame": 2
+        },
+        {
+          "text": "Audio",
+          "top": 565,
+          "left": 19,
+          "frame": 2
+        },
+        {
+          "text": "Horse Racing Greyhounds",
+          "top": 661,
+          "left": 20,
+          "frame": 2
+        },
+        {
+          "text": "Football Cricket",
+          "top": 736,
+          "left": 21,
+          "frame": 2
+        },
+        {
+          "text": "Form & Stats",
+          "top": 839,
+          "left": 20,
+          "frame": 2
+        },
+        {
+          "text": "Football Stats Sports Stats",
+          "top": 933,
+          "left": 20,
+          "frame": 2
+        },
+        {
+          "text": "Horse Racing Archive Australian Horse Form",
+          "top": 1010,
+          "left": 21,
+          "frame": 2
+        },
+        {
+          "text": "Scores & Results",
+          "top": 1111,
+          "left": 20,
+          "frame": 2
+        },
+        {
+          "text": "Live Scores Results",
+          "top": 1207,
+          "left": 20,
+          "frame": 2
+        },
+        {
+          "text": "Help",
+          "top": 1326,
+          "left": 20,
+          "frame": 2
+        },
+        {
+          "text": "(o)",
+          "top": 1419,
+          "left": 345,
+          "frame": 2
+        },
+        {
+          "text": "Home All Sports In-Play My Bets Casino",
+          "top": 1470,
+          "left": 44,
+          "frame": 2
+        },
+        {
+          "text": "20:54 D Co .l 100%",
+          "top": 14,
+          "left": 56,
+          "frame": 3
+        },
+        {
+          "text": "G o bet365.com/#/MB/U + 8",
+          "top": 81,
+          "left": 30,
+          "frame": 3
+        },
+        {
+          "text": "bet365 \u00a33.69",
+          "top": 176,
+          "left": 19,
+          "frame": 3
+        },
+        {
+          "text": "Live Scores Results",
+          "top": 259,
+          "left": 20,
+          "frame": 3
+        },
+        {
+          "text": "Help",
+          "top": 378,
+          "left": 20,
+          "frame": 3
+        },
+        {
+          "text": "Deposits Withdrawals",
+          "top": 471,
+          "left": 21,
+          "frame": 3
+        },
+        {
+          "text": "Contact Us bet365 FAQ",
+          "top": 549,
+          "left": 20,
+          "frame": 3
+        },
+        {
+          "text": "Terms and Conditions Safer Gambling",
+          "top": 624,
+          "left": 19,
+          "frame": 3
+        },
+        {
+          "text": "Technical lssues Privacy Policy",
+          "top": 699,
+          "left": 19,
+          "frame": 3
+        },
+        {
+          "text": "Cookie Policy Fair Payouts",
+          "top": 771,
+          "left": 19,
+          "frame": 3
+        },
+        {
+          "text": "Complaints Procedure Rules",
+          "top": 849,
+          "left": 20,
+          "frame": 3
+        },
+        {
+          "text": "Deposit Limits",
+          "top": 921,
+          "left": 20,
+          "frame": 3
+        },
+        {
+          "text": "Sites",
+          "top": 1025,
+          "left": 20,
+          "frame": 3
+        },
+        {
+          "text": "Careers Partners",
+          "top": 1121,
+          "left": 19,
+          "frame": 3
+        },
+        {
+          "text": "Sports & Betting News",
+          "top": 1197,
+          "left": 20,
+          "frame": 3
+        },
+        {
+          "text": "bet365",
+          "top": 1361,
+          "left": 238,
+          "frame": 3
+        },
+        {
+          "text": "(o)",
+          "top": 1419,
+          "left": 345,
+          "frame": 3
+        },
+        {
+          "text": "Home All Sports In-Play My Bets Casino",
+          "top": 1470,
+          "left": 44,
+          "frame": 3
+        }
+      ]
+    },
+    "returned_home": true,
+    "home_verified": true,
+    "stage_timings": [
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 13,
+        "start_ts_ms": 1790366052800,
+        "end_elapsed_ms": 5038,
+        "end_ts_ms": 1790366057825,
+        "duration_ms": 5025,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "ENSURE_SESSION",
+        "start_elapsed_ms": 5038,
+        "start_ts_ms": 1790366057826,
+        "end_elapsed_ms": 5797,
+        "end_ts_ms": 1790366058584,
+        "duration_ms": 759,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "MY_BETS",
+        "start_elapsed_ms": 5797,
+        "start_ts_ms": 1790366058584,
+        "end_elapsed_ms": 5800,
+        "end_ts_ms": 1790366058587,
+        "duration_ms": 3,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 5800,
+        "start_ts_ms": 1790366058587,
+        "end_elapsed_ms": 10028,
+        "end_ts_ms": 1790366062815,
+        "duration_ms": 4228,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "MY_BETS_SCROLL",
+        "start_elapsed_ms": 10028,
+        "start_ts_ms": 1790366062815,
+        "end_elapsed_ms": 19026,
+        "end_ts_ms": 1790366071813,
+        "duration_ms": 8998,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 19026,
+        "start_ts_ms": 1790366071813,
+        "end_elapsed_ms": 22172,
+        "end_ts_ms": 1790366074959,
+        "duration_ms": 3146,
+        "status": "ok",
+        "retries": 0
+      }
+    ],
+    "t_home_ms": 1790366074958,
+    "session_path": [
+      {
+        "saw": "ACCOUNT",
+        "state": "AUTHENTICATED",
+        "attempts": 0
+      }
+    ],
+    "session_machine": "AUTHENTICATED"
+  },
+  "app_version": "0.9.17-reset",
+  "version_code": 100,
+  "endpoint": "http://100.114.45.68:8767",
+  "pid": 27681,
+  "device_id": "galaxy-a13-5g",
+  "session": {
+    "state": "AUTHENTICATED",
+    "observed_at_ms": 1790366100565,
+    "detail": "idle probe",
+    "refresh_count": 454,
+    "last_refresh_at_ms": 1790366100034,
+    "last_refresh_outcome": "probe started"
+  },
+  "ocr_engine": "hybrid",
+  "fast_ocr_error": null,
+  "credentials_configured": true,
+  "credential_store": "encrypted",
+  "session_recovery": {
+    "last_attempt_at_ms": 1790365407247,
+    "attempts_last_hour": 1,
+    "last_outcome": "deferred: cooldown or hourly limit"
+  }
+}

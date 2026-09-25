@@ -1,0 +1,4789 @@
+[
+  {
+    "file": "tests\\fixtures\\oddsnotifier_basketball_kipina_unequal_real.txt",
+    "old": {
+      "status": "PARSED",
+      "reason": "Production-verified mapping, target implied from the favourable Bet365 line (no highlight): UNDER 168.5 at Bet365 is 2.0 better than Pinnacle 166.5 (no highlight; target implied from the lines); no EV calculated",
+      "parsed": {
+        "sport": "basketball",
+        "country": "Finland",
+        "competition": "Suomen Cup",
+        "competition_full": "Finland - Suomen Cup",
+        "fixture": "Kipina Basket vs Kauhajoki Karhu Basket",
+        "home": "Kipina Basket",
+        "away": "Kauhajoki Karhu Basket",
+        "fixture_url": null,
+        "scheduled_at_local": "2026-09-23T15:30",
+        "scheduled_timezone": null,
+        "format_variant": "two_sided",
+        "market": "TOTALS",
+        "market_label": "Totals",
+        "displayed_line": "166.5",
+        "comparison_url": null,
+        "opening_marker": "🟢",
+        "pinnacle": {
+          "line": "166.5",
+          "previous_line": "165.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.751",
+              "movement": "DOWN",
+              "movement_marker": "⬇️",
+              "parenthetical_price": "1.769",
+              "side": "OVER",
+              "line": "166.5"
+            },
+            {
+              "position": 2,
+              "price": "1.917",
+              "movement": "UP",
+              "movement_marker": "⬆️",
+              "parenthetical_price": "1.900",
+              "side": "UNDER",
+              "line": "166.5"
+            }
+          ]
+        },
+        "opening": {
+          "line": "170.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.806",
+              "side": "OVER",
+              "line": "170.5"
+            },
+            {
+              "position": 2,
+              "price": "1.793",
+              "side": "UNDER",
+              "line": "170.5"
+            }
+          ],
+          "outcome_count_matches_market": true
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": "168.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.83",
+              "side": "OVER",
+              "line": "168.5"
+            },
+            {
+              "position": 2,
+              "price": "1.83",
+              "side": "UNDER",
+              "line": "168.5"
+            }
+          ],
+          "bookmaker": "Bet365",
+          "bet365_present": true,
+          "bet365_line_displayed": "168.5",
+          "reference_line_displayed": "166.5",
+          "bet365_line": "168.5",
+          "bet365_odds": "1.83",
+          "equal_line": false,
+          "line_difference": "2.0",
+          "line_advantage": "2.0",
+          "line_quality": "FAVOURABLE",
+          "price_quality": "NOT_COMPARABLE",
+          "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+          "supplied_ev": null
+        },
+        "alternate_line": {
+          "current": false,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": "oddsnotifier_basketball_v1",
+          "production_verified": true,
+          "sides_by_position": [
+            "OVER",
+            "UNDER"
+          ],
+          "group_sides_by_position": {
+            "pinnacle": [
+              "OVER",
+              "UNDER"
+            ],
+            "opening": [
+              "OVER",
+              "UNDER"
+            ],
+            "comparison": [
+              "OVER",
+              "UNDER"
+            ]
+          },
+          "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+        },
+        "displayed_ev_percent": null,
+        "sides": [
+          {
+            "side": "OVER",
+            "selection_name": "Over",
+            "selection_line": "168.5",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "166.5",
+              "odds": "1.751",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "166.5",
+              "bet365_line": "168.5",
+              "reference_price": "1.751",
+              "bet365_price": "1.83",
+              "line_applicable": true,
+              "equal_line": false,
+              "line_difference": "2.0",
+              "line_advantage": "-2.0",
+              "line_quality": "UNFAVOURABLE",
+              "price_difference": null,
+              "price_quality": "NOT_COMPARABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "170.5",
+              "previous_line": "165.5",
+              "current_line": "166.5",
+              "line_change": "1.0",
+              "line_direction": "UP",
+              "opening_line_change": "-4.0",
+              "opening_line_direction": "DOWN",
+              "opening_line_equal": false,
+              "opening_price": "1.806",
+              "current_price": "1.751",
+              "previous_price_displayed": "1.769",
+              "price_direction": "SHORTENED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": -3.05
+            },
+            "line_quality": "UNFAVOURABLE",
+            "price_quality": "NOT_COMPARABLE",
+            "bet_quality": "UNFAVOURABLE"
+          },
+          {
+            "side": "UNDER",
+            "selection_name": "Under",
+            "selection_line": "168.5",
+            "is_target": true,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "166.5",
+              "odds": "1.917",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "166.5",
+              "bet365_line": "168.5",
+              "reference_price": "1.917",
+              "bet365_price": "1.83",
+              "line_applicable": true,
+              "equal_line": false,
+              "line_difference": "2.0",
+              "line_advantage": "2.0",
+              "line_quality": "FAVOURABLE",
+              "price_difference": null,
+              "price_quality": "NOT_COMPARABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "170.5",
+              "previous_line": "165.5",
+              "current_line": "166.5",
+              "line_change": "1.0",
+              "line_direction": "UP",
+              "opening_line_change": "-4.0",
+              "opening_line_direction": "DOWN",
+              "opening_line_equal": false,
+              "opening_price": "1.793",
+              "current_price": "1.917",
+              "previous_price_displayed": "1.900",
+              "price_direction": "DRIFTED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": 6.92
+            },
+            "line_quality": "FAVOURABLE",
+            "price_quality": "NOT_COMPARABLE",
+            "bet_quality": "FAVOURABLE_LINE_SIGNAL",
+            "target_source": "implied_favourable_line"
+          }
+        ],
+        "market_movement": {
+          "opening_line": "170.5",
+          "previous_line": "165.5",
+          "current_line": "166.5",
+          "line_change": "1.0",
+          "line_direction": "UP",
+          "opening_line_change": "-4.0",
+          "opening_line_direction": "DOWN",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "TOTAL"
+        },
+        "limit": null,
+        "target_side": "UNDER",
+        "target_line": "168.5",
+        "alert_price": "1.83",
+        "target_price_source": "implied_favourable_line",
+        "implied_target": {
+          "side": "UNDER",
+          "line_advantage": "2.0",
+          "bet365_line": "168.5",
+          "reference_line": "166.5",
+          "pinnacle_line_direction": "UP",
+          "pinnacle_movement_agrees": false,
+          "reason": "UNDER 168.5 at Bet365 is 2.0 better than Pinnacle 166.5 (no highlight; target implied from the lines)"
+        },
+        "selection_side": "UNDER",
+        "selection_name": "Under",
+        "selection_line": "168.5",
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "166.5",
+          "odds": "1.917",
+          "fair_odds": null
+        },
+        "movement": {
+          "opening_line": "170.5",
+          "previous_line": "165.5",
+          "current_line": "166.5",
+          "line_change": "1.0",
+          "line_direction": "UP",
+          "opening_line_change": "-4.0",
+          "opening_line_direction": "DOWN",
+          "opening_line_equal": false,
+          "opening_price": "1.793",
+          "current_price": "1.917",
+          "previous_price_displayed": "1.900",
+          "price_direction": "DRIFTED",
+          "price_direction_source": "arrow",
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": 6.92
+        },
+        "line_quality": "FAVOURABLE",
+        "price_quality": "NOT_COMPARABLE",
+        "bet_quality": "FAVOURABLE_LINE_SIGNAL",
+        "schema_version": 5,
+        "interpretation_version": "market-interp-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle\n\nBasketball - Finland - Suomen Cup\n\nKipina Basket vs Kauhajoki Karhu Basket\n\n23.09.2026 15:30\n\nTotals (165.5 -> 166.5)\n\n1.751⬇️ (1.769) - 1.917⬆️ (1.900)\n\n🟢 Opening (170.5)\n\n1.806 - 1.793\n\nBet365 (Totals 168.5)\n\n1.83 - 1.83\n\n🎯 EV: None (not equal lines)\n",
+        "sample_provenance": "unspecified",
+        "market_label_source": "standalone_label",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "parenthetical_price_meaning_unspecified"
+        ],
+        "interpretation_notes": [],
+        "interpretation_status": "PARSED"
+      },
+      "profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-2",
+      "sport": "basketball",
+      "market": "TOTALS"
+    },
+    "new": {
+      "status": "PARSED",
+      "reason": "Pinnacle opening 170.5 -> current 166.5 (TOTAL) selects UNDER; Bet365 evaluated for that same side only",
+      "parsed": {
+        "sport": "basketball",
+        "country": "Finland",
+        "competition": "Suomen Cup",
+        "competition_full": "Finland - Suomen Cup",
+        "fixture": "Kipina Basket vs Kauhajoki Karhu Basket",
+        "home": "Kipina Basket",
+        "away": "Kauhajoki Karhu Basket",
+        "fixture_url": null,
+        "scheduled_at_local": "2026-09-23T15:30",
+        "scheduled_timezone": null,
+        "format_variant": "two_sided",
+        "market": "TOTALS",
+        "market_label": "Totals",
+        "displayed_line": "166.5",
+        "comparison_url": null,
+        "opening_marker": "🟢",
+        "pinnacle": {
+          "line": "166.5",
+          "previous_line": "165.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.751",
+              "movement": "DOWN",
+              "movement_marker": "⬇️",
+              "parenthetical_price": "1.769",
+              "side": "OVER",
+              "line": "166.5"
+            },
+            {
+              "position": 2,
+              "price": "1.917",
+              "movement": "UP",
+              "movement_marker": "⬆️",
+              "parenthetical_price": "1.900",
+              "side": "UNDER",
+              "line": "166.5"
+            }
+          ]
+        },
+        "opening": {
+          "line": "170.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.806",
+              "side": "OVER",
+              "line": "170.5"
+            },
+            {
+              "position": 2,
+              "price": "1.793",
+              "side": "UNDER",
+              "line": "170.5"
+            }
+          ],
+          "outcome_count_matches_market": true
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": "168.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.83",
+              "side": "OVER",
+              "line": "168.5"
+            },
+            {
+              "position": 2,
+              "price": "1.83",
+              "side": "UNDER",
+              "line": "168.5"
+            }
+          ],
+          "bookmaker": "Bet365",
+          "bet365_present": true,
+          "bet365_line_displayed": "168.5",
+          "reference_line_displayed": "166.5",
+          "bet365_line": "168.5",
+          "bet365_odds": "1.83",
+          "equal_line": false,
+          "line_difference": "2.0",
+          "line_advantage": "2.0",
+          "line_quality": "FAVOURABLE",
+          "price_quality": "NOT_COMPARABLE",
+          "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+          "supplied_ev": null
+        },
+        "alternate_line": {
+          "current": false,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": "oddsnotifier_basketball_v1",
+          "production_verified": true,
+          "sides_by_position": [
+            "OVER",
+            "UNDER"
+          ],
+          "group_sides_by_position": {
+            "pinnacle": [
+              "OVER",
+              "UNDER"
+            ],
+            "opening": [
+              "OVER",
+              "UNDER"
+            ],
+            "comparison": [
+              "OVER",
+              "UNDER"
+            ]
+          },
+          "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+        },
+        "displayed_ev_percent": null,
+        "feed_displayed_ev_percent": null,
+        "highlighted_side": null,
+        "sharp_signal": {
+          "source": "pinnacle_opening_to_current",
+          "side": "UNDER",
+          "opening_line": "170.5",
+          "current_line": "166.5",
+          "change": "-4.0",
+          "magnitude": "4.0",
+          "direction": "DOWN",
+          "status": "IDENTIFIED",
+          "reason": "Pinnacle opening 170.5 -> current 166.5 (TOTAL) selects UNDER",
+          "highlight_agrees": null,
+          "recent_line_reversal": true
+        },
+        "sides": [
+          {
+            "side": "OVER",
+            "selection_name": "Over",
+            "selection_line": "168.5",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "166.5",
+              "odds": "1.751",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "166.5",
+              "bet365_line": "168.5",
+              "reference_price": "1.751",
+              "bet365_price": "1.83",
+              "line_applicable": true,
+              "equal_line": false,
+              "line_difference": "2.0",
+              "line_advantage": "-2.0",
+              "line_quality": "UNFAVOURABLE",
+              "price_difference": null,
+              "price_quality": "NOT_COMPARABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "170.5",
+              "previous_line": "165.5",
+              "current_line": "166.5",
+              "line_change": "1.0",
+              "line_direction": "UP",
+              "opening_line_change": "-4.0",
+              "opening_line_direction": "DOWN",
+              "opening_line_equal": false,
+              "opening_price": "1.806",
+              "current_price": "1.751",
+              "previous_price_displayed": "1.769",
+              "price_direction": "SHORTENED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": -3.05
+            },
+            "line_quality": "UNFAVOURABLE",
+            "price_quality": "NOT_COMPARABLE",
+            "bet_quality": "UNFAVOURABLE"
+          },
+          {
+            "side": "UNDER",
+            "selection_name": "Under",
+            "selection_line": "168.5",
+            "is_target": true,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "166.5",
+              "odds": "1.917",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "166.5",
+              "bet365_line": "168.5",
+              "reference_price": "1.917",
+              "bet365_price": "1.83",
+              "line_applicable": true,
+              "equal_line": false,
+              "line_difference": "2.0",
+              "line_advantage": "2.0",
+              "line_quality": "FAVOURABLE",
+              "price_difference": null,
+              "price_quality": "NOT_COMPARABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "170.5",
+              "previous_line": "165.5",
+              "current_line": "166.5",
+              "line_change": "1.0",
+              "line_direction": "UP",
+              "opening_line_change": "-4.0",
+              "opening_line_direction": "DOWN",
+              "opening_line_equal": false,
+              "opening_price": "1.793",
+              "current_price": "1.917",
+              "previous_price_displayed": "1.900",
+              "price_direction": "DRIFTED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": 6.92
+            },
+            "line_quality": "FAVOURABLE",
+            "price_quality": "NOT_COMPARABLE",
+            "bet_quality": "FAVOURABLE_LINE_SIGNAL"
+          }
+        ],
+        "market_movement": {
+          "opening_line": "170.5",
+          "previous_line": "165.5",
+          "current_line": "166.5",
+          "line_change": "1.0",
+          "line_direction": "UP",
+          "opening_line_change": "-4.0",
+          "opening_line_direction": "DOWN",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "TOTAL"
+        },
+        "limit": null,
+        "target_side": "UNDER",
+        "target_line": "168.5",
+        "alert_price": "1.83",
+        "target_price_source": "pinnacle_opening_to_current",
+        "implied_target": null,
+        "selection_side": "UNDER",
+        "selection_name": "Under",
+        "selection_line": "168.5",
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "166.5",
+          "odds": "1.917",
+          "fair_odds": null
+        },
+        "movement": {
+          "opening_line": "170.5",
+          "previous_line": "165.5",
+          "current_line": "166.5",
+          "line_change": "1.0",
+          "line_direction": "UP",
+          "opening_line_change": "-4.0",
+          "opening_line_direction": "DOWN",
+          "opening_line_equal": false,
+          "opening_price": "1.793",
+          "current_price": "1.917",
+          "previous_price_displayed": "1.900",
+          "price_direction": "DRIFTED",
+          "price_direction_source": "arrow",
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": 6.92
+        },
+        "line_quality": "FAVOURABLE",
+        "price_quality": "NOT_COMPARABLE",
+        "bet_quality": "FAVOURABLE_LINE_SIGNAL",
+        "schema_version": 6,
+        "interpretation_version": "sharp-money-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle\n\nBasketball - Finland - Suomen Cup\n\nKipina Basket vs Kauhajoki Karhu Basket\n\n23.09.2026 15:30\n\nTotals (165.5 -> 166.5)\n\n1.751⬇️ (1.769) - 1.917⬆️ (1.900)\n\n🟢 Opening (170.5)\n\n1.806 - 1.793\n\nBet365 (Totals 168.5)\n\n1.83 - 1.83\n\n🎯 EV: None (not equal lines)\n",
+        "sample_provenance": "unspecified",
+        "market_label_source": "standalone_label",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "parenthetical_price_meaning_unspecified"
+        ],
+        "interpretation_notes": [],
+        "interpretation_status": "PARSED"
+      },
+      "profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-3-sharp",
+      "sport": "basketball",
+      "market": "TOTALS"
+    },
+    "timestamp_unavailable": true,
+    "rules_replay": "NOT_EVALUATED: no historical receipt time"
+  },
+  {
+    "file": "tests\\fixtures\\oddsnotifier_basketball_melbourne_190_5_real.txt",
+    "old": {
+      "status": "PARSED_PARTIAL",
+      "reason": "No highlighted Bet365 target; side-level comparisons only, no side chosen",
+      "parsed": {
+        "sport": "basketball",
+        "country": "Australia",
+        "competition": "NBL",
+        "competition_full": "Australia - NBL",
+        "fixture": "SE Melbourne Phoenix vs Melbourne United",
+        "home": "SE Melbourne Phoenix",
+        "away": "Melbourne United",
+        "fixture_url": "https://oddshub.io/basketball/australia-nbl/72016774?market=Totals",
+        "scheduled_at_local": "2026-09-24T09:30",
+        "scheduled_timezone": null,
+        "format_variant": "two_sided",
+        "market": "TOTALS",
+        "market_label": "Totals",
+        "displayed_line": "190.5",
+        "comparison_url": "https://www.bet365.com/#/AC/B18/C21167989/D19/E26735656/F19/I0/",
+        "opening_marker": "🟢",
+        "pinnacle": {
+          "line": "190.5",
+          "previous_line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.840",
+              "movement": "DOWN",
+              "movement_marker": "⬇️",
+              "parenthetical_price": "1.892",
+              "side": "OVER",
+              "line": "190.5"
+            },
+            {
+              "position": 2,
+              "price": "1.952",
+              "movement": "UP",
+              "movement_marker": "⬆️",
+              "parenthetical_price": "1.892",
+              "side": "UNDER",
+              "line": "190.5"
+            }
+          ]
+        },
+        "opening": {
+          "line": "187.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.892",
+              "side": "OVER",
+              "line": "187.5"
+            },
+            {
+              "position": 2,
+              "price": "1.892",
+              "side": "UNDER",
+              "line": "187.5"
+            }
+          ],
+          "outcome_count_matches_market": true
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": "190.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "2.20",
+              "side": "OVER",
+              "line": "190.5"
+            },
+            {
+              "position": 2,
+              "price": "1.65",
+              "side": "UNDER",
+              "line": "190.5"
+            }
+          ],
+          "bookmaker": "Bet365",
+          "bet365_present": true,
+          "bet365_line_displayed": "190.5",
+          "reference_line_displayed": "190.5",
+          "bet365_line": "190.5",
+          "bet365_odds": null,
+          "equal_line": true,
+          "line_difference": "0.0",
+          "line_advantage": null,
+          "line_quality": null,
+          "price_quality": null,
+          "ev_status": "SUPPLIED_EQUAL_LINE",
+          "supplied_ev": "113.52"
+        },
+        "alternate_line": {
+          "current": false,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": "oddsnotifier_basketball_v1",
+          "production_verified": true,
+          "sides_by_position": [
+            "OVER",
+            "UNDER"
+          ],
+          "group_sides_by_position": {
+            "pinnacle": [
+              "OVER",
+              "UNDER"
+            ],
+            "opening": [
+              "OVER",
+              "UNDER"
+            ],
+            "comparison": [
+              "OVER",
+              "UNDER"
+            ]
+          },
+          "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+        },
+        "displayed_ev_percent": "113.52",
+        "sides": [
+          {
+            "side": "OVER",
+            "selection_name": "Over",
+            "selection_line": "190.5",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "190.5",
+              "odds": "1.840",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "190.5",
+              "bet365_line": "190.5",
+              "reference_price": "1.840",
+              "bet365_price": "2.20",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0.0",
+              "line_advantage": "0.0",
+              "line_quality": "EQUAL",
+              "price_difference": "0.360",
+              "price_quality": "FAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "187.5",
+              "previous_line": null,
+              "current_line": "190.5",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "3.0",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.892",
+              "current_price": "1.840",
+              "previous_price_displayed": "1.892",
+              "price_direction": "SHORTENED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": -2.75
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "FAVOURABLE",
+            "bet_quality": "POTENTIAL_VALUE"
+          },
+          {
+            "side": "UNDER",
+            "selection_name": "Under",
+            "selection_line": "190.5",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "190.5",
+              "odds": "1.952",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "190.5",
+              "bet365_line": "190.5",
+              "reference_price": "1.952",
+              "bet365_price": "1.65",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0.0",
+              "line_advantage": "0.0",
+              "line_quality": "EQUAL",
+              "price_difference": "-0.302",
+              "price_quality": "UNFAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "187.5",
+              "previous_line": null,
+              "current_line": "190.5",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "3.0",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.892",
+              "current_price": "1.952",
+              "previous_price_displayed": "1.892",
+              "price_direction": "DRIFTED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": 3.17
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "UNFAVOURABLE",
+            "bet_quality": "UNFAVOURABLE"
+          }
+        ],
+        "market_movement": {
+          "opening_line": "187.5",
+          "previous_line": null,
+          "current_line": "190.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "3.0",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "TOTAL"
+        },
+        "limit": null,
+        "target_side": null,
+        "target_line": null,
+        "alert_price": null,
+        "target_price_source": null,
+        "implied_target": null,
+        "selection_side": null,
+        "selection_name": null,
+        "selection_line": null,
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "190.5",
+          "odds": null,
+          "fair_odds": null,
+          "line_perspective": "TOTAL"
+        },
+        "movement": {
+          "opening_line": "187.5",
+          "previous_line": null,
+          "current_line": "190.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "3.0",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "TOTAL"
+        },
+        "line_quality": null,
+        "price_quality": null,
+        "bet_quality": null,
+        "schema_version": 5,
+        "interpretation_version": "market-interp-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle\n\nBasketball - Australia - NBL\n[SE Melbourne Phoenix vs Melbourne United](https://oddshub.io/basketball/australia-nbl/72016774?market=Totals)\n24.09.2026 09:30\n\nTotals (190.5)\n1.840⬇️ (1.892) - 1.952⬆️ (1.892)\n\n🟢 Opening (187.5)\n1.892 - 1.892\n\n[Bet365 (Totals 190.5)](https://www.bet365.com/#/AC/B18/C21167989/D19/E26735656/F19/I0/)\n2.20 - 1.65\n\n🎯 EV: 113.52%\n",
+        "sample_provenance": "unspecified",
+        "market_label_source": "label_and_fixture_url",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "parenthetical_price_meaning_unspecified",
+          "No highlighted Bet365 target; side-level comparisons only, no side chosen"
+        ],
+        "interpretation_notes": [
+          "No highlighted Bet365 target; side-level comparisons only, no side chosen"
+        ],
+        "interpretation_status": "PARSED_PARTIAL"
+      },
+      "profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-2",
+      "sport": "basketball",
+      "market": "TOTALS"
+    },
+    "new": {
+      "status": "PARSED",
+      "reason": "Pinnacle opening 187.5 -> current 190.5 (TOTAL) selects OVER; Bet365 evaluated for that same side only",
+      "parsed": {
+        "sport": "basketball",
+        "country": "Australia",
+        "competition": "NBL",
+        "competition_full": "Australia - NBL",
+        "fixture": "SE Melbourne Phoenix vs Melbourne United",
+        "home": "SE Melbourne Phoenix",
+        "away": "Melbourne United",
+        "fixture_url": "https://oddshub.io/basketball/australia-nbl/72016774?market=Totals",
+        "scheduled_at_local": "2026-09-24T09:30",
+        "scheduled_timezone": null,
+        "format_variant": "two_sided",
+        "market": "TOTALS",
+        "market_label": "Totals",
+        "displayed_line": "190.5",
+        "comparison_url": "https://www.bet365.com/#/AC/B18/C21167989/D19/E26735656/F19/I0/",
+        "opening_marker": "🟢",
+        "pinnacle": {
+          "line": "190.5",
+          "previous_line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.840",
+              "movement": "DOWN",
+              "movement_marker": "⬇️",
+              "parenthetical_price": "1.892",
+              "side": "OVER",
+              "line": "190.5"
+            },
+            {
+              "position": 2,
+              "price": "1.952",
+              "movement": "UP",
+              "movement_marker": "⬆️",
+              "parenthetical_price": "1.892",
+              "side": "UNDER",
+              "line": "190.5"
+            }
+          ]
+        },
+        "opening": {
+          "line": "187.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.892",
+              "side": "OVER",
+              "line": "187.5"
+            },
+            {
+              "position": 2,
+              "price": "1.892",
+              "side": "UNDER",
+              "line": "187.5"
+            }
+          ],
+          "outcome_count_matches_market": true
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": "190.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "2.20",
+              "side": "OVER",
+              "line": "190.5"
+            },
+            {
+              "position": 2,
+              "price": "1.65",
+              "side": "UNDER",
+              "line": "190.5"
+            }
+          ],
+          "bookmaker": "Bet365",
+          "bet365_present": true,
+          "bet365_line_displayed": "190.5",
+          "reference_line_displayed": "190.5",
+          "bet365_line": "190.5",
+          "bet365_odds": "2.20",
+          "equal_line": true,
+          "line_difference": "0.0",
+          "line_advantage": "0.0",
+          "line_quality": "EQUAL",
+          "price_quality": "FAVOURABLE",
+          "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+          "supplied_ev": null
+        },
+        "alternate_line": {
+          "current": false,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": "oddsnotifier_basketball_v1",
+          "production_verified": true,
+          "sides_by_position": [
+            "OVER",
+            "UNDER"
+          ],
+          "group_sides_by_position": {
+            "pinnacle": [
+              "OVER",
+              "UNDER"
+            ],
+            "opening": [
+              "OVER",
+              "UNDER"
+            ],
+            "comparison": [
+              "OVER",
+              "UNDER"
+            ]
+          },
+          "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+        },
+        "displayed_ev_percent": null,
+        "feed_displayed_ev_percent": "113.52",
+        "highlighted_side": null,
+        "sharp_signal": {
+          "source": "pinnacle_opening_to_current",
+          "side": "OVER",
+          "opening_line": "187.5",
+          "current_line": "190.5",
+          "change": "3.0",
+          "magnitude": "3.0",
+          "direction": "UP",
+          "status": "IDENTIFIED",
+          "reason": "Pinnacle opening 187.5 -> current 190.5 (TOTAL) selects OVER",
+          "highlight_agrees": null,
+          "recent_line_reversal": false
+        },
+        "sides": [
+          {
+            "side": "OVER",
+            "selection_name": "Over",
+            "selection_line": "190.5",
+            "is_target": true,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "190.5",
+              "odds": "1.840",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "190.5",
+              "bet365_line": "190.5",
+              "reference_price": "1.840",
+              "bet365_price": "2.20",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0.0",
+              "line_advantage": "0.0",
+              "line_quality": "EQUAL",
+              "price_difference": "0.360",
+              "price_quality": "FAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "187.5",
+              "previous_line": null,
+              "current_line": "190.5",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "3.0",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.892",
+              "current_price": "1.840",
+              "previous_price_displayed": "1.892",
+              "price_direction": "SHORTENED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": -2.75
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "FAVOURABLE",
+            "bet_quality": "POTENTIAL_VALUE"
+          },
+          {
+            "side": "UNDER",
+            "selection_name": "Under",
+            "selection_line": "190.5",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "190.5",
+              "odds": "1.952",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "190.5",
+              "bet365_line": "190.5",
+              "reference_price": "1.952",
+              "bet365_price": "1.65",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0.0",
+              "line_advantage": "0.0",
+              "line_quality": "EQUAL",
+              "price_difference": "-0.302",
+              "price_quality": "UNFAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "187.5",
+              "previous_line": null,
+              "current_line": "190.5",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "3.0",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.892",
+              "current_price": "1.952",
+              "previous_price_displayed": "1.892",
+              "price_direction": "DRIFTED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": 3.17
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "UNFAVOURABLE",
+            "bet_quality": "UNFAVOURABLE"
+          }
+        ],
+        "market_movement": {
+          "opening_line": "187.5",
+          "previous_line": null,
+          "current_line": "190.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "3.0",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "TOTAL"
+        },
+        "limit": null,
+        "target_side": "OVER",
+        "target_line": "190.5",
+        "alert_price": "2.20",
+        "target_price_source": "pinnacle_opening_to_current",
+        "implied_target": null,
+        "selection_side": "OVER",
+        "selection_name": "Over",
+        "selection_line": "190.5",
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "190.5",
+          "odds": "1.840",
+          "fair_odds": null
+        },
+        "movement": {
+          "opening_line": "187.5",
+          "previous_line": null,
+          "current_line": "190.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "3.0",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": "1.892",
+          "current_price": "1.840",
+          "previous_price_displayed": "1.892",
+          "price_direction": "SHORTENED",
+          "price_direction_source": "arrow",
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": -2.75
+        },
+        "line_quality": "EQUAL",
+        "price_quality": "FAVOURABLE",
+        "bet_quality": "POTENTIAL_VALUE",
+        "schema_version": 6,
+        "interpretation_version": "sharp-money-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle\n\nBasketball - Australia - NBL\n[SE Melbourne Phoenix vs Melbourne United](https://oddshub.io/basketball/australia-nbl/72016774?market=Totals)\n24.09.2026 09:30\n\nTotals (190.5)\n1.840⬇️ (1.892) - 1.952⬆️ (1.892)\n\n🟢 Opening (187.5)\n1.892 - 1.892\n\n[Bet365 (Totals 190.5)](https://www.bet365.com/#/AC/B18/C21167989/D19/E26735656/F19/I0/)\n2.20 - 1.65\n\n🎯 EV: 113.52%\n",
+        "sample_provenance": "unspecified",
+        "market_label_source": "label_and_fixture_url",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "parenthetical_price_meaning_unspecified"
+        ],
+        "interpretation_notes": [],
+        "interpretation_status": "PARSED"
+      },
+      "profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-3-sharp",
+      "sport": "basketball",
+      "market": "TOTALS"
+    },
+    "timestamp_unavailable": true,
+    "rules_replay": "NOT_EVALUATED: no historical receipt time"
+  },
+  {
+    "file": "tests\\fixtures\\oddsnotifier_basketball_melbourne_real.txt",
+    "old": {
+      "status": "PARSED_PARTIAL",
+      "reason": "No highlighted Bet365 target; side-level comparisons only, no side chosen",
+      "parsed": {
+        "sport": "basketball",
+        "country": "Australia",
+        "competition": "NBL",
+        "competition_full": "Australia - NBL",
+        "fixture": "SE Melbourne Phoenix vs Melbourne United",
+        "home": "SE Melbourne Phoenix",
+        "away": "Melbourne United",
+        "fixture_url": "https://oddshub.io/basketball/australia-nbl/72016774?market=Totals",
+        "scheduled_at_local": "2026-09-24T09:30",
+        "scheduled_timezone": null,
+        "format_variant": "two_sided",
+        "market": "TOTALS",
+        "market_label": "Totals",
+        "displayed_line": "190",
+        "comparison_url": "https://www.bet365.com/#/AC/B18/C21167989/D19/E26735656/F19/I0/",
+        "opening_marker": "🟢",
+        "pinnacle": {
+          "line": "190",
+          "previous_line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.840",
+              "movement": "DOWN",
+              "movement_marker": "⬇️",
+              "parenthetical_price": "1.892",
+              "side": "OVER",
+              "line": "190"
+            },
+            {
+              "position": 2,
+              "price": "1.943",
+              "movement": "UP",
+              "movement_marker": "⬆️",
+              "parenthetical_price": "1.892",
+              "side": "UNDER",
+              "line": "190"
+            }
+          ]
+        },
+        "opening": {
+          "line": "187.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.892",
+              "side": "OVER",
+              "line": "187.5"
+            },
+            {
+              "position": 2,
+              "price": "1.892",
+              "side": "UNDER",
+              "line": "187.5"
+            }
+          ],
+          "outcome_count_matches_market": true
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": "190",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "2.15",
+              "side": "OVER",
+              "line": "190"
+            },
+            {
+              "position": 2,
+              "price": "1.70",
+              "side": "UNDER",
+              "line": "190"
+            }
+          ],
+          "bookmaker": "Bet365",
+          "bet365_present": true,
+          "bet365_line_displayed": "190",
+          "reference_line_displayed": "190",
+          "bet365_line": "190",
+          "bet365_odds": null,
+          "equal_line": true,
+          "line_difference": "0",
+          "line_advantage": null,
+          "line_quality": null,
+          "price_quality": null,
+          "ev_status": "SUPPLIED_EQUAL_LINE",
+          "supplied_ev": "110.69"
+        },
+        "alternate_line": {
+          "current": false,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": "oddsnotifier_basketball_v1",
+          "production_verified": true,
+          "sides_by_position": [
+            "OVER",
+            "UNDER"
+          ],
+          "group_sides_by_position": {
+            "pinnacle": [
+              "OVER",
+              "UNDER"
+            ],
+            "opening": [
+              "OVER",
+              "UNDER"
+            ],
+            "comparison": [
+              "OVER",
+              "UNDER"
+            ]
+          },
+          "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+        },
+        "displayed_ev_percent": "110.69",
+        "sides": [
+          {
+            "side": "OVER",
+            "selection_name": "Over",
+            "selection_line": "190",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "190",
+              "odds": "1.840",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "190",
+              "bet365_line": "190",
+              "reference_price": "1.840",
+              "bet365_price": "2.15",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0",
+              "line_advantage": "0",
+              "line_quality": "EQUAL",
+              "price_difference": "0.310",
+              "price_quality": "FAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "187.5",
+              "previous_line": null,
+              "current_line": "190",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "2.5",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.892",
+              "current_price": "1.840",
+              "previous_price_displayed": "1.892",
+              "price_direction": "SHORTENED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": -2.75
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "FAVOURABLE",
+            "bet_quality": "POTENTIAL_VALUE"
+          },
+          {
+            "side": "UNDER",
+            "selection_name": "Under",
+            "selection_line": "190",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "190",
+              "odds": "1.943",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "190",
+              "bet365_line": "190",
+              "reference_price": "1.943",
+              "bet365_price": "1.70",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0",
+              "line_advantage": "0",
+              "line_quality": "EQUAL",
+              "price_difference": "-0.243",
+              "price_quality": "UNFAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "187.5",
+              "previous_line": null,
+              "current_line": "190",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "2.5",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.892",
+              "current_price": "1.943",
+              "previous_price_displayed": "1.892",
+              "price_direction": "DRIFTED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": 2.7
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "UNFAVOURABLE",
+            "bet_quality": "UNFAVOURABLE"
+          }
+        ],
+        "market_movement": {
+          "opening_line": "187.5",
+          "previous_line": null,
+          "current_line": "190",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "2.5",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "TOTAL"
+        },
+        "limit": null,
+        "target_side": null,
+        "target_line": null,
+        "alert_price": null,
+        "target_price_source": null,
+        "implied_target": null,
+        "selection_side": null,
+        "selection_name": null,
+        "selection_line": null,
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "190",
+          "odds": null,
+          "fair_odds": null,
+          "line_perspective": "TOTAL"
+        },
+        "movement": {
+          "opening_line": "187.5",
+          "previous_line": null,
+          "current_line": "190",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "2.5",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "TOTAL"
+        },
+        "line_quality": null,
+        "price_quality": null,
+        "bet_quality": null,
+        "schema_version": 5,
+        "interpretation_version": "market-interp-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle  Basketball - Australia - NBL [SE Melbourne Phoenix vs Melbourne United](https://oddshub.io/basketball/australia-nbl/72016774?market=Totals) 24.09.2026 09:30  Totals (190) 1.840⬇️ (1.892) - 1.943⬆️ (1.892)  🟢 Opening (187.5) 1.892 - 1.892  [Bet365 (Totals 190)](https://www.bet365.com/#/AC/B18/C21167989/D19/E26735656/F19/I0/) 2.15 - 1.70  🎯 EV: 110.69%",
+        "sample_provenance": "unspecified",
+        "market_label_source": "label_and_fixture_url",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "parenthetical_price_meaning_unspecified",
+          "No highlighted Bet365 target; side-level comparisons only, no side chosen"
+        ],
+        "interpretation_notes": [
+          "No highlighted Bet365 target; side-level comparisons only, no side chosen"
+        ],
+        "interpretation_status": "PARSED_PARTIAL"
+      },
+      "profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-2",
+      "sport": "basketball",
+      "market": "TOTALS"
+    },
+    "new": {
+      "status": "PARSED",
+      "reason": "Pinnacle opening 187.5 -> current 190 (TOTAL) selects OVER; Bet365 evaluated for that same side only",
+      "parsed": {
+        "sport": "basketball",
+        "country": "Australia",
+        "competition": "NBL",
+        "competition_full": "Australia - NBL",
+        "fixture": "SE Melbourne Phoenix vs Melbourne United",
+        "home": "SE Melbourne Phoenix",
+        "away": "Melbourne United",
+        "fixture_url": "https://oddshub.io/basketball/australia-nbl/72016774?market=Totals",
+        "scheduled_at_local": "2026-09-24T09:30",
+        "scheduled_timezone": null,
+        "format_variant": "two_sided",
+        "market": "TOTALS",
+        "market_label": "Totals",
+        "displayed_line": "190",
+        "comparison_url": "https://www.bet365.com/#/AC/B18/C21167989/D19/E26735656/F19/I0/",
+        "opening_marker": "🟢",
+        "pinnacle": {
+          "line": "190",
+          "previous_line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.840",
+              "movement": "DOWN",
+              "movement_marker": "⬇️",
+              "parenthetical_price": "1.892",
+              "side": "OVER",
+              "line": "190"
+            },
+            {
+              "position": 2,
+              "price": "1.943",
+              "movement": "UP",
+              "movement_marker": "⬆️",
+              "parenthetical_price": "1.892",
+              "side": "UNDER",
+              "line": "190"
+            }
+          ]
+        },
+        "opening": {
+          "line": "187.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.892",
+              "side": "OVER",
+              "line": "187.5"
+            },
+            {
+              "position": 2,
+              "price": "1.892",
+              "side": "UNDER",
+              "line": "187.5"
+            }
+          ],
+          "outcome_count_matches_market": true
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": "190",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "2.15",
+              "side": "OVER",
+              "line": "190"
+            },
+            {
+              "position": 2,
+              "price": "1.70",
+              "side": "UNDER",
+              "line": "190"
+            }
+          ],
+          "bookmaker": "Bet365",
+          "bet365_present": true,
+          "bet365_line_displayed": "190",
+          "reference_line_displayed": "190",
+          "bet365_line": "190",
+          "bet365_odds": "2.15",
+          "equal_line": true,
+          "line_difference": "0",
+          "line_advantage": "0",
+          "line_quality": "EQUAL",
+          "price_quality": "FAVOURABLE",
+          "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+          "supplied_ev": null
+        },
+        "alternate_line": {
+          "current": false,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": "oddsnotifier_basketball_v1",
+          "production_verified": true,
+          "sides_by_position": [
+            "OVER",
+            "UNDER"
+          ],
+          "group_sides_by_position": {
+            "pinnacle": [
+              "OVER",
+              "UNDER"
+            ],
+            "opening": [
+              "OVER",
+              "UNDER"
+            ],
+            "comparison": [
+              "OVER",
+              "UNDER"
+            ]
+          },
+          "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+        },
+        "displayed_ev_percent": null,
+        "feed_displayed_ev_percent": "110.69",
+        "highlighted_side": null,
+        "sharp_signal": {
+          "source": "pinnacle_opening_to_current",
+          "side": "OVER",
+          "opening_line": "187.5",
+          "current_line": "190",
+          "change": "2.5",
+          "magnitude": "2.5",
+          "direction": "UP",
+          "status": "IDENTIFIED",
+          "reason": "Pinnacle opening 187.5 -> current 190 (TOTAL) selects OVER",
+          "highlight_agrees": null,
+          "recent_line_reversal": false
+        },
+        "sides": [
+          {
+            "side": "OVER",
+            "selection_name": "Over",
+            "selection_line": "190",
+            "is_target": true,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "190",
+              "odds": "1.840",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "190",
+              "bet365_line": "190",
+              "reference_price": "1.840",
+              "bet365_price": "2.15",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0",
+              "line_advantage": "0",
+              "line_quality": "EQUAL",
+              "price_difference": "0.310",
+              "price_quality": "FAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "187.5",
+              "previous_line": null,
+              "current_line": "190",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "2.5",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.892",
+              "current_price": "1.840",
+              "previous_price_displayed": "1.892",
+              "price_direction": "SHORTENED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": -2.75
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "FAVOURABLE",
+            "bet_quality": "POTENTIAL_VALUE"
+          },
+          {
+            "side": "UNDER",
+            "selection_name": "Under",
+            "selection_line": "190",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "190",
+              "odds": "1.943",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "190",
+              "bet365_line": "190",
+              "reference_price": "1.943",
+              "bet365_price": "1.70",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0",
+              "line_advantage": "0",
+              "line_quality": "EQUAL",
+              "price_difference": "-0.243",
+              "price_quality": "UNFAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "187.5",
+              "previous_line": null,
+              "current_line": "190",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "2.5",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.892",
+              "current_price": "1.943",
+              "previous_price_displayed": "1.892",
+              "price_direction": "DRIFTED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": 2.7
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "UNFAVOURABLE",
+            "bet_quality": "UNFAVOURABLE"
+          }
+        ],
+        "market_movement": {
+          "opening_line": "187.5",
+          "previous_line": null,
+          "current_line": "190",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "2.5",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "TOTAL"
+        },
+        "limit": null,
+        "target_side": "OVER",
+        "target_line": "190",
+        "alert_price": "2.15",
+        "target_price_source": "pinnacle_opening_to_current",
+        "implied_target": null,
+        "selection_side": "OVER",
+        "selection_name": "Over",
+        "selection_line": "190",
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "190",
+          "odds": "1.840",
+          "fair_odds": null
+        },
+        "movement": {
+          "opening_line": "187.5",
+          "previous_line": null,
+          "current_line": "190",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "2.5",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": "1.892",
+          "current_price": "1.840",
+          "previous_price_displayed": "1.892",
+          "price_direction": "SHORTENED",
+          "price_direction_source": "arrow",
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": -2.75
+        },
+        "line_quality": "EQUAL",
+        "price_quality": "FAVOURABLE",
+        "bet_quality": "POTENTIAL_VALUE",
+        "schema_version": 6,
+        "interpretation_version": "sharp-money-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle  Basketball - Australia - NBL [SE Melbourne Phoenix vs Melbourne United](https://oddshub.io/basketball/australia-nbl/72016774?market=Totals) 24.09.2026 09:30  Totals (190) 1.840⬇️ (1.892) - 1.943⬆️ (1.892)  🟢 Opening (187.5) 1.892 - 1.892  [Bet365 (Totals 190)](https://www.bet365.com/#/AC/B18/C21167989/D19/E26735656/F19/I0/) 2.15 - 1.70  🎯 EV: 110.69%",
+        "sample_provenance": "unspecified",
+        "market_label_source": "label_and_fixture_url",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "parenthetical_price_meaning_unspecified"
+        ],
+        "interpretation_notes": [],
+        "interpretation_status": "PARSED"
+      },
+      "profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-3-sharp",
+      "sport": "basketball",
+      "market": "TOTALS"
+    },
+    "timestamp_unavailable": true,
+    "rules_replay": "NOT_EVALUATED: no historical receipt time"
+  },
+  {
+    "file": "tests\\fixtures\\oddsnotifier_basketball_prague_real.txt",
+    "old": {
+      "status": "PARSED_PARTIAL",
+      "reason": "No highlighted Bet365 target; side-level comparisons only, no side chosen",
+      "parsed": {
+        "sport": "basketball",
+        "country": "Czech Republic",
+        "competition": "NBL",
+        "competition_full": "Czech Republic - NBL",
+        "fixture": "SK Slavia Prague ERA NBK vs BK Opava",
+        "home": "SK Slavia Prague ERA NBK",
+        "away": "BK Opava",
+        "fixture_url": "https://oddshub.io/basketball/czech-republic-nbl/72626976?market=Totals",
+        "scheduled_at_local": "2026-09-23T16:00",
+        "scheduled_timezone": null,
+        "format_variant": "two_sided",
+        "market": "TOTALS",
+        "market_label": "Totals",
+        "displayed_line": "176",
+        "comparison_url": "https://www.bet365.com/#/AC/B18/C21168141/D19/E26797239/F19/I0/",
+        "opening_marker": "🟢",
+        "pinnacle": {
+          "line": "176",
+          "previous_line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.775",
+              "movement": "DOWN",
+              "movement_marker": "⬇️",
+              "parenthetical_price": "1.869",
+              "side": "OVER",
+              "line": "176"
+            },
+            {
+              "position": 2,
+              "price": "1.980",
+              "movement": "UP",
+              "movement_marker": "⬆️",
+              "parenthetical_price": "1.869",
+              "side": "UNDER",
+              "line": "176"
+            }
+          ]
+        },
+        "opening": {
+          "line": "172.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.869",
+              "side": "OVER",
+              "line": "172.5"
+            },
+            {
+              "position": 2,
+              "price": "1.869",
+              "side": "UNDER",
+              "line": "172.5"
+            }
+          ],
+          "outcome_count_matches_market": true
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": "176",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "2.20",
+              "side": "OVER",
+              "line": "176"
+            },
+            {
+              "position": 2,
+              "price": "1.60",
+              "side": "UNDER",
+              "line": "176"
+            }
+          ],
+          "bookmaker": "Bet365",
+          "bet365_present": true,
+          "bet365_line_displayed": "176",
+          "reference_line_displayed": "176",
+          "bet365_line": "176",
+          "bet365_odds": null,
+          "equal_line": true,
+          "line_difference": "0",
+          "line_advantage": null,
+          "line_quality": null,
+          "price_quality": null,
+          "ev_status": "SUPPLIED_EQUAL_LINE",
+          "supplied_ev": "116.64"
+        },
+        "alternate_line": {
+          "current": false,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": "oddsnotifier_basketball_v1",
+          "production_verified": true,
+          "sides_by_position": [
+            "OVER",
+            "UNDER"
+          ],
+          "group_sides_by_position": {
+            "pinnacle": [
+              "OVER",
+              "UNDER"
+            ],
+            "opening": [
+              "OVER",
+              "UNDER"
+            ],
+            "comparison": [
+              "OVER",
+              "UNDER"
+            ]
+          },
+          "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+        },
+        "displayed_ev_percent": "116.64",
+        "sides": [
+          {
+            "side": "OVER",
+            "selection_name": "Over",
+            "selection_line": "176",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "176",
+              "odds": "1.775",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "176",
+              "bet365_line": "176",
+              "reference_price": "1.775",
+              "bet365_price": "2.20",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0",
+              "line_advantage": "0",
+              "line_quality": "EQUAL",
+              "price_difference": "0.425",
+              "price_quality": "FAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "172.5",
+              "previous_line": null,
+              "current_line": "176",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "3.5",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.869",
+              "current_price": "1.775",
+              "previous_price_displayed": "1.869",
+              "price_direction": "SHORTENED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": -5.03
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "FAVOURABLE",
+            "bet_quality": "POTENTIAL_VALUE"
+          },
+          {
+            "side": "UNDER",
+            "selection_name": "Under",
+            "selection_line": "176",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "176",
+              "odds": "1.980",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "176",
+              "bet365_line": "176",
+              "reference_price": "1.980",
+              "bet365_price": "1.60",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0",
+              "line_advantage": "0",
+              "line_quality": "EQUAL",
+              "price_difference": "-0.380",
+              "price_quality": "UNFAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "172.5",
+              "previous_line": null,
+              "current_line": "176",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "3.5",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.869",
+              "current_price": "1.980",
+              "previous_price_displayed": "1.869",
+              "price_direction": "DRIFTED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": 5.94
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "UNFAVOURABLE",
+            "bet_quality": "UNFAVOURABLE"
+          }
+        ],
+        "market_movement": {
+          "opening_line": "172.5",
+          "previous_line": null,
+          "current_line": "176",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "3.5",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "TOTAL"
+        },
+        "limit": null,
+        "target_side": null,
+        "target_line": null,
+        "alert_price": null,
+        "target_price_source": null,
+        "implied_target": null,
+        "selection_side": null,
+        "selection_name": null,
+        "selection_line": null,
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "176",
+          "odds": null,
+          "fair_odds": null,
+          "line_perspective": "TOTAL"
+        },
+        "movement": {
+          "opening_line": "172.5",
+          "previous_line": null,
+          "current_line": "176",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "3.5",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "TOTAL"
+        },
+        "line_quality": null,
+        "price_quality": null,
+        "bet_quality": null,
+        "schema_version": 5,
+        "interpretation_version": "market-interp-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle  Basketball - Czech Republic - NBL [SK Slavia Prague ERA NBK vs BK Opava](https://oddshub.io/basketball/czech-republic-nbl/72626976?market=Totals) 23.09.2026 16:00  Totals (176) 1.775⬇️ (1.869) - 1.980⬆️ (1.869)  🟢 Opening (172.5) 1.869 - 1.869  [Bet365 (Totals 176)](https://www.bet365.com/#/AC/B18/C21168141/D19/E26797239/F19/I0/) 2.20 - 1.60  🎯 EV: 116.64%",
+        "sample_provenance": "unspecified",
+        "market_label_source": "label_and_fixture_url",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "parenthetical_price_meaning_unspecified",
+          "No highlighted Bet365 target; side-level comparisons only, no side chosen"
+        ],
+        "interpretation_notes": [
+          "No highlighted Bet365 target; side-level comparisons only, no side chosen"
+        ],
+        "interpretation_status": "PARSED_PARTIAL"
+      },
+      "profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-2",
+      "sport": "basketball",
+      "market": "TOTALS"
+    },
+    "new": {
+      "status": "PARSED",
+      "reason": "Pinnacle opening 172.5 -> current 176 (TOTAL) selects OVER; Bet365 evaluated for that same side only",
+      "parsed": {
+        "sport": "basketball",
+        "country": "Czech Republic",
+        "competition": "NBL",
+        "competition_full": "Czech Republic - NBL",
+        "fixture": "SK Slavia Prague ERA NBK vs BK Opava",
+        "home": "SK Slavia Prague ERA NBK",
+        "away": "BK Opava",
+        "fixture_url": "https://oddshub.io/basketball/czech-republic-nbl/72626976?market=Totals",
+        "scheduled_at_local": "2026-09-23T16:00",
+        "scheduled_timezone": null,
+        "format_variant": "two_sided",
+        "market": "TOTALS",
+        "market_label": "Totals",
+        "displayed_line": "176",
+        "comparison_url": "https://www.bet365.com/#/AC/B18/C21168141/D19/E26797239/F19/I0/",
+        "opening_marker": "🟢",
+        "pinnacle": {
+          "line": "176",
+          "previous_line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.775",
+              "movement": "DOWN",
+              "movement_marker": "⬇️",
+              "parenthetical_price": "1.869",
+              "side": "OVER",
+              "line": "176"
+            },
+            {
+              "position": 2,
+              "price": "1.980",
+              "movement": "UP",
+              "movement_marker": "⬆️",
+              "parenthetical_price": "1.869",
+              "side": "UNDER",
+              "line": "176"
+            }
+          ]
+        },
+        "opening": {
+          "line": "172.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.869",
+              "side": "OVER",
+              "line": "172.5"
+            },
+            {
+              "position": 2,
+              "price": "1.869",
+              "side": "UNDER",
+              "line": "172.5"
+            }
+          ],
+          "outcome_count_matches_market": true
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": "176",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "2.20",
+              "side": "OVER",
+              "line": "176"
+            },
+            {
+              "position": 2,
+              "price": "1.60",
+              "side": "UNDER",
+              "line": "176"
+            }
+          ],
+          "bookmaker": "Bet365",
+          "bet365_present": true,
+          "bet365_line_displayed": "176",
+          "reference_line_displayed": "176",
+          "bet365_line": "176",
+          "bet365_odds": "2.20",
+          "equal_line": true,
+          "line_difference": "0",
+          "line_advantage": "0",
+          "line_quality": "EQUAL",
+          "price_quality": "FAVOURABLE",
+          "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+          "supplied_ev": null
+        },
+        "alternate_line": {
+          "current": false,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": "oddsnotifier_basketball_v1",
+          "production_verified": true,
+          "sides_by_position": [
+            "OVER",
+            "UNDER"
+          ],
+          "group_sides_by_position": {
+            "pinnacle": [
+              "OVER",
+              "UNDER"
+            ],
+            "opening": [
+              "OVER",
+              "UNDER"
+            ],
+            "comparison": [
+              "OVER",
+              "UNDER"
+            ]
+          },
+          "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+        },
+        "displayed_ev_percent": null,
+        "feed_displayed_ev_percent": "116.64",
+        "highlighted_side": null,
+        "sharp_signal": {
+          "source": "pinnacle_opening_to_current",
+          "side": "OVER",
+          "opening_line": "172.5",
+          "current_line": "176",
+          "change": "3.5",
+          "magnitude": "3.5",
+          "direction": "UP",
+          "status": "IDENTIFIED",
+          "reason": "Pinnacle opening 172.5 -> current 176 (TOTAL) selects OVER",
+          "highlight_agrees": null,
+          "recent_line_reversal": false
+        },
+        "sides": [
+          {
+            "side": "OVER",
+            "selection_name": "Over",
+            "selection_line": "176",
+            "is_target": true,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "176",
+              "odds": "1.775",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "176",
+              "bet365_line": "176",
+              "reference_price": "1.775",
+              "bet365_price": "2.20",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0",
+              "line_advantage": "0",
+              "line_quality": "EQUAL",
+              "price_difference": "0.425",
+              "price_quality": "FAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "172.5",
+              "previous_line": null,
+              "current_line": "176",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "3.5",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.869",
+              "current_price": "1.775",
+              "previous_price_displayed": "1.869",
+              "price_direction": "SHORTENED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": -5.03
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "FAVOURABLE",
+            "bet_quality": "POTENTIAL_VALUE"
+          },
+          {
+            "side": "UNDER",
+            "selection_name": "Under",
+            "selection_line": "176",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "176",
+              "odds": "1.980",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "176",
+              "bet365_line": "176",
+              "reference_price": "1.980",
+              "bet365_price": "1.60",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0",
+              "line_advantage": "0",
+              "line_quality": "EQUAL",
+              "price_difference": "-0.380",
+              "price_quality": "UNFAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "172.5",
+              "previous_line": null,
+              "current_line": "176",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "3.5",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.869",
+              "current_price": "1.980",
+              "previous_price_displayed": "1.869",
+              "price_direction": "DRIFTED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": 5.94
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "UNFAVOURABLE",
+            "bet_quality": "UNFAVOURABLE"
+          }
+        ],
+        "market_movement": {
+          "opening_line": "172.5",
+          "previous_line": null,
+          "current_line": "176",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "3.5",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "TOTAL"
+        },
+        "limit": null,
+        "target_side": "OVER",
+        "target_line": "176",
+        "alert_price": "2.20",
+        "target_price_source": "pinnacle_opening_to_current",
+        "implied_target": null,
+        "selection_side": "OVER",
+        "selection_name": "Over",
+        "selection_line": "176",
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "176",
+          "odds": "1.775",
+          "fair_odds": null
+        },
+        "movement": {
+          "opening_line": "172.5",
+          "previous_line": null,
+          "current_line": "176",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "3.5",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": "1.869",
+          "current_price": "1.775",
+          "previous_price_displayed": "1.869",
+          "price_direction": "SHORTENED",
+          "price_direction_source": "arrow",
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": -5.03
+        },
+        "line_quality": "EQUAL",
+        "price_quality": "FAVOURABLE",
+        "bet_quality": "POTENTIAL_VALUE",
+        "schema_version": 6,
+        "interpretation_version": "sharp-money-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle  Basketball - Czech Republic - NBL [SK Slavia Prague ERA NBK vs BK Opava](https://oddshub.io/basketball/czech-republic-nbl/72626976?market=Totals) 23.09.2026 16:00  Totals (176) 1.775⬇️ (1.869) - 1.980⬆️ (1.869)  🟢 Opening (172.5) 1.869 - 1.869  [Bet365 (Totals 176)](https://www.bet365.com/#/AC/B18/C21168141/D19/E26797239/F19/I0/) 2.20 - 1.60  🎯 EV: 116.64%",
+        "sample_provenance": "unspecified",
+        "market_label_source": "label_and_fixture_url",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "parenthetical_price_meaning_unspecified"
+        ],
+        "interpretation_notes": [],
+        "interpretation_status": "PARSED"
+      },
+      "profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-3-sharp",
+      "sport": "basketball",
+      "market": "TOTALS"
+    },
+    "timestamp_unavailable": true,
+    "rules_replay": "NOT_EVALUATED: no historical receipt time"
+  },
+  {
+    "file": "tests\\fixtures\\oddsnotifier_basketball_rytas_real.txt",
+    "old": {
+      "status": "PARSED_PARTIAL",
+      "reason": "No highlighted Bet365 target; side-level comparisons only, no side chosen",
+      "parsed": {
+        "sport": "basketball",
+        "country": "World",
+        "competition": "Intercontinental Cup",
+        "competition_full": "World - Intercontinental Cup",
+        "fixture": "Rytas Vilnius vs Shanghai Sharks",
+        "home": "Rytas Vilnius",
+        "away": "Shanghai Sharks",
+        "fixture_url": "https://oddshub.io/basketball/international-fiba-intercontinental-cup-group-a/73609466?market=Spread",
+        "scheduled_at_local": "2026-09-24T07:30",
+        "scheduled_timezone": null,
+        "format_variant": "two_sided",
+        "market": "SPREAD",
+        "market_label": "Spread",
+        "displayed_line": "-18.5",
+        "comparison_url": "https://www.bet365.com/#/AC/B18/C21171234/D19/E26791944/F19/I0/",
+        "opening_marker": "🟢",
+        "pinnacle": {
+          "line": "-18.5",
+          "previous_line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.591",
+              "movement": "DOWN",
+              "movement_marker": "⬇️",
+              "parenthetical_price": "1.649",
+              "side": "HOME",
+              "line": "-18.5"
+            },
+            {
+              "position": 2,
+              "price": "2.220",
+              "movement": "UP",
+              "movement_marker": "⬆️",
+              "parenthetical_price": "2.120",
+              "side": "AWAY",
+              "line": "+18.5"
+            }
+          ]
+        },
+        "opening": {
+          "line": "-17.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.869",
+              "side": "HOME",
+              "line": "-17.5"
+            },
+            {
+              "position": 2,
+              "price": "1.869",
+              "side": "AWAY",
+              "line": "+17.5"
+            }
+          ],
+          "outcome_count_matches_market": true
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": "-18.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.83",
+              "side": "HOME",
+              "line": "-18.5"
+            },
+            {
+              "position": 2,
+              "price": "1.83",
+              "side": "AWAY",
+              "line": "+18.5"
+            }
+          ],
+          "bookmaker": "Bet365",
+          "bet365_present": true,
+          "bet365_line_displayed": "-18.5",
+          "reference_line_displayed": "-18.5",
+          "bet365_line": "-18.5",
+          "bet365_odds": null,
+          "equal_line": true,
+          "line_difference": "0.0",
+          "line_advantage": null,
+          "line_quality": null,
+          "price_quality": null,
+          "ev_status": "SUPPLIED_EQUAL_LINE",
+          "supplied_ev": "108.47"
+        },
+        "alternate_line": {
+          "current": true,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": "oddsnotifier_basketball_v1",
+          "production_verified": true,
+          "sides_by_position": [
+            "HOME",
+            "AWAY"
+          ],
+          "group_sides_by_position": {
+            "pinnacle": [
+              "HOME",
+              "AWAY"
+            ],
+            "opening": [
+              "HOME",
+              "AWAY"
+            ],
+            "comparison": [
+              "HOME",
+              "AWAY"
+            ]
+          },
+          "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+        },
+        "displayed_ev_percent": "108.47",
+        "sides": [
+          {
+            "side": "HOME",
+            "selection_name": "Rytas Vilnius",
+            "selection_line": "-18.5",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "-18.5",
+              "odds": "1.591",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "-18.5",
+              "bet365_line": "-18.5",
+              "reference_price": "1.591",
+              "bet365_price": "1.83",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0.0",
+              "line_advantage": "0.0",
+              "line_quality": "EQUAL",
+              "price_difference": "0.239",
+              "price_quality": "FAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "-17.5",
+              "previous_line": null,
+              "current_line": "-18.5",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "-1.0",
+              "opening_line_direction": "DOWN",
+              "opening_line_equal": false,
+              "opening_price": "1.869",
+              "current_price": "1.591",
+              "previous_price_displayed": "1.649",
+              "price_direction": "SHORTENED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": -14.87
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "FAVOURABLE",
+            "bet_quality": "POTENTIAL_VALUE"
+          },
+          {
+            "side": "AWAY",
+            "selection_name": "Shanghai Sharks",
+            "selection_line": "+18.5",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "+18.5",
+              "odds": "2.220",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "+18.5",
+              "bet365_line": "+18.5",
+              "reference_price": "2.220",
+              "bet365_price": "1.83",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0.0",
+              "line_advantage": "0.0",
+              "line_quality": "EQUAL",
+              "price_difference": "-0.390",
+              "price_quality": "UNFAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "+17.5",
+              "previous_line": null,
+              "current_line": "+18.5",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "1.0",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.869",
+              "current_price": "2.220",
+              "previous_price_displayed": "2.120",
+              "price_direction": "DRIFTED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": 18.78
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "UNFAVOURABLE",
+            "bet_quality": "UNFAVOURABLE"
+          }
+        ],
+        "market_movement": {
+          "opening_line": "-17.5",
+          "previous_line": null,
+          "current_line": "-18.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "-1.0",
+          "opening_line_direction": "DOWN",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "HOME"
+        },
+        "limit": null,
+        "target_side": null,
+        "target_line": null,
+        "alert_price": null,
+        "target_price_source": null,
+        "implied_target": null,
+        "selection_side": null,
+        "selection_name": null,
+        "selection_line": null,
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "-18.5",
+          "odds": null,
+          "fair_odds": null,
+          "line_perspective": "HOME"
+        },
+        "movement": {
+          "opening_line": "-17.5",
+          "previous_line": null,
+          "current_line": "-18.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "-1.0",
+          "opening_line_direction": "DOWN",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "HOME"
+        },
+        "line_quality": null,
+        "price_quality": null,
+        "bet_quality": null,
+        "schema_version": 5,
+        "interpretation_version": "market-interp-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle\n\nBasketball - World - Intercontinental Cup\n[Rytas Vilnius vs Shanghai Sharks](https://oddshub.io/basketball/international-fiba-intercontinental-cup-group-a/73609466?market=Spread)\n24.09.2026 07:30\n\nSpread (-18.5) (alt. line)\n1.591⬇️ (1.649) - 2.220⬆️ (2.120)\n\n🟢 Opening (-17.5)\n1.869 - 1.869\n\n[Bet365 (Spread -18.5)](https://www.bet365.com/#/AC/B18/C21171234/D19/E26791944/F19/I0/)\n1.83 - 1.83\n\n🎯 EV: 108.47%\n",
+        "sample_provenance": "unspecified",
+        "market_label_source": "label_and_fixture_url",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "parenthetical_price_meaning_unspecified",
+          "No highlighted Bet365 target; side-level comparisons only, no side chosen"
+        ],
+        "interpretation_notes": [
+          "No highlighted Bet365 target; side-level comparisons only, no side chosen"
+        ],
+        "interpretation_status": "PARSED_PARTIAL"
+      },
+      "profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-2",
+      "sport": "basketball",
+      "market": "SPREAD"
+    },
+    "new": {
+      "status": "PARSED",
+      "reason": "Pinnacle opening -17.5 -> current -18.5 (HOME) selects HOME; Bet365 evaluated for that same side only",
+      "parsed": {
+        "sport": "basketball",
+        "country": "World",
+        "competition": "Intercontinental Cup",
+        "competition_full": "World - Intercontinental Cup",
+        "fixture": "Rytas Vilnius vs Shanghai Sharks",
+        "home": "Rytas Vilnius",
+        "away": "Shanghai Sharks",
+        "fixture_url": "https://oddshub.io/basketball/international-fiba-intercontinental-cup-group-a/73609466?market=Spread",
+        "scheduled_at_local": "2026-09-24T07:30",
+        "scheduled_timezone": null,
+        "format_variant": "two_sided",
+        "market": "SPREAD",
+        "market_label": "Spread",
+        "displayed_line": "-18.5",
+        "comparison_url": "https://www.bet365.com/#/AC/B18/C21171234/D19/E26791944/F19/I0/",
+        "opening_marker": "🟢",
+        "pinnacle": {
+          "line": "-18.5",
+          "previous_line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.591",
+              "movement": "DOWN",
+              "movement_marker": "⬇️",
+              "parenthetical_price": "1.649",
+              "side": "HOME",
+              "line": "-18.5"
+            },
+            {
+              "position": 2,
+              "price": "2.220",
+              "movement": "UP",
+              "movement_marker": "⬆️",
+              "parenthetical_price": "2.120",
+              "side": "AWAY",
+              "line": "+18.5"
+            }
+          ]
+        },
+        "opening": {
+          "line": "-17.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.869",
+              "side": "HOME",
+              "line": "-17.5"
+            },
+            {
+              "position": 2,
+              "price": "1.869",
+              "side": "AWAY",
+              "line": "+17.5"
+            }
+          ],
+          "outcome_count_matches_market": true
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": "-18.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.83",
+              "side": "HOME",
+              "line": "-18.5"
+            },
+            {
+              "position": 2,
+              "price": "1.83",
+              "side": "AWAY",
+              "line": "+18.5"
+            }
+          ],
+          "bookmaker": "Bet365",
+          "bet365_present": true,
+          "bet365_line_displayed": "-18.5",
+          "reference_line_displayed": "-18.5",
+          "bet365_line": "-18.5",
+          "bet365_odds": "1.83",
+          "equal_line": true,
+          "line_difference": "0.0",
+          "line_advantage": "0.0",
+          "line_quality": "EQUAL",
+          "price_quality": "FAVOURABLE",
+          "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+          "supplied_ev": null
+        },
+        "alternate_line": {
+          "current": true,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": "oddsnotifier_basketball_v1",
+          "production_verified": true,
+          "sides_by_position": [
+            "HOME",
+            "AWAY"
+          ],
+          "group_sides_by_position": {
+            "pinnacle": [
+              "HOME",
+              "AWAY"
+            ],
+            "opening": [
+              "HOME",
+              "AWAY"
+            ],
+            "comparison": [
+              "HOME",
+              "AWAY"
+            ]
+          },
+          "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+        },
+        "displayed_ev_percent": null,
+        "feed_displayed_ev_percent": "108.47",
+        "highlighted_side": null,
+        "sharp_signal": {
+          "source": "pinnacle_opening_to_current",
+          "side": "HOME",
+          "opening_line": "-17.5",
+          "current_line": "-18.5",
+          "change": "-1.0",
+          "magnitude": "1.0",
+          "direction": "DOWN",
+          "status": "IDENTIFIED",
+          "reason": "Pinnacle opening -17.5 -> current -18.5 (HOME) selects HOME",
+          "highlight_agrees": null,
+          "recent_line_reversal": false
+        },
+        "sides": [
+          {
+            "side": "HOME",
+            "selection_name": "Rytas Vilnius",
+            "selection_line": "-18.5",
+            "is_target": true,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "-18.5",
+              "odds": "1.591",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "-18.5",
+              "bet365_line": "-18.5",
+              "reference_price": "1.591",
+              "bet365_price": "1.83",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0.0",
+              "line_advantage": "0.0",
+              "line_quality": "EQUAL",
+              "price_difference": "0.239",
+              "price_quality": "FAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "-17.5",
+              "previous_line": null,
+              "current_line": "-18.5",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "-1.0",
+              "opening_line_direction": "DOWN",
+              "opening_line_equal": false,
+              "opening_price": "1.869",
+              "current_price": "1.591",
+              "previous_price_displayed": "1.649",
+              "price_direction": "SHORTENED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": -14.87
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "FAVOURABLE",
+            "bet_quality": "POTENTIAL_VALUE"
+          },
+          {
+            "side": "AWAY",
+            "selection_name": "Shanghai Sharks",
+            "selection_line": "+18.5",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "+18.5",
+              "odds": "2.220",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "+18.5",
+              "bet365_line": "+18.5",
+              "reference_price": "2.220",
+              "bet365_price": "1.83",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0.0",
+              "line_advantage": "0.0",
+              "line_quality": "EQUAL",
+              "price_difference": "-0.390",
+              "price_quality": "UNFAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "+17.5",
+              "previous_line": null,
+              "current_line": "+18.5",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "1.0",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.869",
+              "current_price": "2.220",
+              "previous_price_displayed": "2.120",
+              "price_direction": "DRIFTED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": 18.78
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "UNFAVOURABLE",
+            "bet_quality": "UNFAVOURABLE"
+          }
+        ],
+        "market_movement": {
+          "opening_line": "-17.5",
+          "previous_line": null,
+          "current_line": "-18.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "-1.0",
+          "opening_line_direction": "DOWN",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "HOME"
+        },
+        "limit": null,
+        "target_side": "HOME",
+        "target_line": "-18.5",
+        "alert_price": "1.83",
+        "target_price_source": "pinnacle_opening_to_current",
+        "implied_target": null,
+        "selection_side": "HOME",
+        "selection_name": "Rytas Vilnius",
+        "selection_line": "-18.5",
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "-18.5",
+          "odds": "1.591",
+          "fair_odds": null
+        },
+        "movement": {
+          "opening_line": "-17.5",
+          "previous_line": null,
+          "current_line": "-18.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "-1.0",
+          "opening_line_direction": "DOWN",
+          "opening_line_equal": false,
+          "opening_price": "1.869",
+          "current_price": "1.591",
+          "previous_price_displayed": "1.649",
+          "price_direction": "SHORTENED",
+          "price_direction_source": "arrow",
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": -14.87
+        },
+        "line_quality": "EQUAL",
+        "price_quality": "FAVOURABLE",
+        "bet_quality": "POTENTIAL_VALUE",
+        "schema_version": 6,
+        "interpretation_version": "sharp-money-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle\n\nBasketball - World - Intercontinental Cup\n[Rytas Vilnius vs Shanghai Sharks](https://oddshub.io/basketball/international-fiba-intercontinental-cup-group-a/73609466?market=Spread)\n24.09.2026 07:30\n\nSpread (-18.5) (alt. line)\n1.591⬇️ (1.649) - 2.220⬆️ (2.120)\n\n🟢 Opening (-17.5)\n1.869 - 1.869\n\n[Bet365 (Spread -18.5)](https://www.bet365.com/#/AC/B18/C21171234/D19/E26791944/F19/I0/)\n1.83 - 1.83\n\n🎯 EV: 108.47%\n",
+        "sample_provenance": "unspecified",
+        "market_label_source": "label_and_fixture_url",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "parenthetical_price_meaning_unspecified"
+        ],
+        "interpretation_notes": [],
+        "interpretation_status": "PARSED"
+      },
+      "profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-3-sharp",
+      "sport": "basketball",
+      "market": "SPREAD"
+    },
+    "timestamp_unavailable": true,
+    "rules_replay": "NOT_EVALUATED: no historical receipt time"
+  },
+  {
+    "file": "tests\\fixtures\\oddsnotifier_basketball_women_real.txt",
+    "old": {
+      "status": "PARSED",
+      "reason": "Production-verified mapping, explicit Bet365 target, equal-line EV supplied",
+      "parsed": {
+        "sport": "basketball",
+        "country": "Puerto Rico",
+        "competition": "Superior Nacional Women",
+        "competition_full": "Puerto Rico - Superior Nacional Women",
+        "fixture": "Explosivas de Moca vs Leonas De Ponce",
+        "home": "Explosivas de Moca",
+        "away": "Leonas De Ponce",
+        "fixture_url": "https://oddshub.io/basketball/puerto-rico-bsnf-women/74318436?market=Spread",
+        "scheduled_at_local": "2026-09-26T00:00",
+        "scheduled_timezone": null,
+        "format_variant": "two_sided",
+        "market": "SPREAD",
+        "market_label": "Spread",
+        "displayed_line": "-1.5",
+        "comparison_url": "https://www.bet365.com/#/AC/B18/C21171164/D19/E26809995/F19/I0/",
+        "opening_marker": "🟢",
+        "pinnacle": {
+          "line": "-1.5",
+          "previous_line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.568",
+              "movement": "DOWN",
+              "movement_marker": "⬇️",
+              "parenthetical_price": "1.595",
+              "side": "HOME",
+              "line": "-1.5"
+            },
+            {
+              "position": 2,
+              "price": "2.160",
+              "movement": "UP",
+              "movement_marker": "⬆️",
+              "parenthetical_price": "2.110",
+              "side": "AWAY",
+              "line": "+1.5"
+            }
+          ]
+        },
+        "opening": {
+          "line": "-9",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.847",
+              "side": "HOME",
+              "line": "-9"
+            },
+            {
+              "position": 2,
+              "price": "1.819",
+              "side": "AWAY",
+              "line": "+9"
+            }
+          ],
+          "outcome_count_matches_market": true
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": "-1.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.83",
+              "side": "HOME",
+              "line": "-1.5"
+            },
+            {
+              "position": 2,
+              "price": "1.83",
+              "side": "AWAY",
+              "line": "+1.5"
+            }
+          ],
+          "bookmaker": "Bet365",
+          "bet365_present": true,
+          "bet365_line_displayed": "-1.5",
+          "reference_line_displayed": "-1.5",
+          "bet365_line": "-1.5",
+          "bet365_odds": "1.83",
+          "equal_line": true,
+          "line_difference": "0.0",
+          "line_advantage": "0.0",
+          "line_quality": "EQUAL",
+          "price_quality": "FAVOURABLE",
+          "ev_status": "SUPPLIED_EQUAL_LINE",
+          "supplied_ev": "108.37"
+        },
+        "alternate_line": {
+          "current": true,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": "oddsnotifier_basketball_v1",
+          "production_verified": true,
+          "sides_by_position": [
+            "HOME",
+            "AWAY"
+          ],
+          "group_sides_by_position": {
+            "pinnacle": [
+              "HOME",
+              "AWAY"
+            ],
+            "opening": [
+              "HOME",
+              "AWAY"
+            ],
+            "comparison": [
+              "HOME",
+              "AWAY"
+            ]
+          },
+          "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+        },
+        "displayed_ev_percent": "108.37",
+        "sides": [
+          {
+            "side": "HOME",
+            "selection_name": "Explosivas de Moca",
+            "selection_line": "-1.5",
+            "is_target": true,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "-1.5",
+              "odds": "1.568",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "-1.5",
+              "bet365_line": "-1.5",
+              "reference_price": "1.568",
+              "bet365_price": "1.83",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0.0",
+              "line_advantage": "0.0",
+              "line_quality": "EQUAL",
+              "price_difference": "0.262",
+              "price_quality": "FAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_EQUAL_LINE",
+              "supplied_ev": "108.37"
+            },
+            "movement": {
+              "opening_line": "-9",
+              "previous_line": null,
+              "current_line": "-1.5",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "7.5",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.847",
+              "current_price": "1.568",
+              "previous_price_displayed": "1.595",
+              "price_direction": "SHORTENED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": -15.11
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "FAVOURABLE",
+            "bet_quality": "CLEAR_VALUE_SIGNAL"
+          },
+          {
+            "side": "AWAY",
+            "selection_name": "Leonas De Ponce",
+            "selection_line": "+1.5",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "+1.5",
+              "odds": "2.160",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "+1.5",
+              "bet365_line": "+1.5",
+              "reference_price": "2.160",
+              "bet365_price": "1.83",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0.0",
+              "line_advantage": "0.0",
+              "line_quality": "EQUAL",
+              "price_difference": "-0.330",
+              "price_quality": "UNFAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "+9",
+              "previous_line": null,
+              "current_line": "+1.5",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "-7.5",
+              "opening_line_direction": "DOWN",
+              "opening_line_equal": false,
+              "opening_price": "1.819",
+              "current_price": "2.160",
+              "previous_price_displayed": "2.110",
+              "price_direction": "DRIFTED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": 18.75
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "UNFAVOURABLE",
+            "bet_quality": "UNFAVOURABLE"
+          }
+        ],
+        "market_movement": {
+          "opening_line": "-9",
+          "previous_line": null,
+          "current_line": "-1.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "7.5",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "HOME"
+        },
+        "limit": null,
+        "target_side": "HOME",
+        "target_line": "-1.5",
+        "alert_price": "1.83",
+        "target_price_source": "bold_bet365_quote",
+        "implied_target": null,
+        "selection_side": "HOME",
+        "selection_name": "Explosivas de Moca",
+        "selection_line": "-1.5",
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "-1.5",
+          "odds": "1.568",
+          "fair_odds": null
+        },
+        "movement": {
+          "opening_line": "-9",
+          "previous_line": null,
+          "current_line": "-1.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "7.5",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": "1.847",
+          "current_price": "1.568",
+          "previous_price_displayed": "1.595",
+          "price_direction": "SHORTENED",
+          "price_direction_source": "arrow",
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": -15.11
+        },
+        "line_quality": "EQUAL",
+        "price_quality": "FAVOURABLE",
+        "bet_quality": "CLEAR_VALUE_SIGNAL",
+        "schema_version": 5,
+        "interpretation_version": "market-interp-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle\n\nBasketball - Puerto Rico - Superior Nacional Women\n[Explosivas de Moca vs Leonas De Ponce](https://oddshub.io/basketball/puerto-rico-bsnf-women/74318436?market=Spread)\n26.09.2026 00:00\n\nSpread (-1.5) (alt. line)\n1.568⬇️ (1.595) - 2.160⬆️ (2.110)\n\n🟢 Opening (-9)\n1.847 - 1.819\n\n[Bet365 (Spread -1.5)](https://www.bet365.com/#/AC/B18/C21171164/D19/E26809995/F19/I0/)\n**1.83** - 1.83\n\n🎯 EV: 108.37%",
+        "sample_provenance": "unspecified",
+        "market_label_source": "label_and_fixture_url",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "parenthetical_price_meaning_unspecified"
+        ],
+        "interpretation_notes": [],
+        "interpretation_status": "PARSED"
+      },
+      "profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-2",
+      "sport": "basketball",
+      "market": "SPREAD"
+    },
+    "new": {
+      "status": "PARSED",
+      "reason": "Pinnacle opening -9 -> current -1.5 (HOME) selects AWAY; Bet365 evaluated for that same side only",
+      "parsed": {
+        "sport": "basketball",
+        "country": "Puerto Rico",
+        "competition": "Superior Nacional Women",
+        "competition_full": "Puerto Rico - Superior Nacional Women",
+        "fixture": "Explosivas de Moca vs Leonas De Ponce",
+        "home": "Explosivas de Moca",
+        "away": "Leonas De Ponce",
+        "fixture_url": "https://oddshub.io/basketball/puerto-rico-bsnf-women/74318436?market=Spread",
+        "scheduled_at_local": "2026-09-26T00:00",
+        "scheduled_timezone": null,
+        "format_variant": "two_sided",
+        "market": "SPREAD",
+        "market_label": "Spread",
+        "displayed_line": "-1.5",
+        "comparison_url": "https://www.bet365.com/#/AC/B18/C21171164/D19/E26809995/F19/I0/",
+        "opening_marker": "🟢",
+        "pinnacle": {
+          "line": "-1.5",
+          "previous_line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.568",
+              "movement": "DOWN",
+              "movement_marker": "⬇️",
+              "parenthetical_price": "1.595",
+              "side": "HOME",
+              "line": "-1.5"
+            },
+            {
+              "position": 2,
+              "price": "2.160",
+              "movement": "UP",
+              "movement_marker": "⬆️",
+              "parenthetical_price": "2.110",
+              "side": "AWAY",
+              "line": "+1.5"
+            }
+          ]
+        },
+        "opening": {
+          "line": "-9",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.847",
+              "side": "HOME",
+              "line": "-9"
+            },
+            {
+              "position": 2,
+              "price": "1.819",
+              "side": "AWAY",
+              "line": "+9"
+            }
+          ],
+          "outcome_count_matches_market": true
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": "-1.5",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.83",
+              "side": "HOME",
+              "line": "-1.5"
+            },
+            {
+              "position": 2,
+              "price": "1.83",
+              "side": "AWAY",
+              "line": "+1.5"
+            }
+          ],
+          "bookmaker": "Bet365",
+          "bet365_present": true,
+          "bet365_line_displayed": "-1.5",
+          "reference_line_displayed": "-1.5",
+          "bet365_line": "+1.5",
+          "bet365_odds": "1.83",
+          "equal_line": true,
+          "line_difference": "0.0",
+          "line_advantage": "0.0",
+          "line_quality": "EQUAL",
+          "price_quality": "UNFAVOURABLE",
+          "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+          "supplied_ev": null
+        },
+        "alternate_line": {
+          "current": true,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": "oddsnotifier_basketball_v1",
+          "production_verified": true,
+          "sides_by_position": [
+            "HOME",
+            "AWAY"
+          ],
+          "group_sides_by_position": {
+            "pinnacle": [
+              "HOME",
+              "AWAY"
+            ],
+            "opening": [
+              "HOME",
+              "AWAY"
+            ],
+            "comparison": [
+              "HOME",
+              "AWAY"
+            ]
+          },
+          "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+        },
+        "displayed_ev_percent": null,
+        "feed_displayed_ev_percent": "108.37",
+        "highlighted_side": "HOME",
+        "sharp_signal": {
+          "source": "pinnacle_opening_to_current",
+          "side": "AWAY",
+          "opening_line": "-9",
+          "current_line": "-1.5",
+          "change": "7.5",
+          "magnitude": "7.5",
+          "direction": "UP",
+          "status": "IDENTIFIED",
+          "reason": "Pinnacle opening -9 -> current -1.5 (HOME) selects AWAY",
+          "highlight_agrees": false,
+          "recent_line_reversal": false
+        },
+        "sides": [
+          {
+            "side": "HOME",
+            "selection_name": "Explosivas de Moca",
+            "selection_line": "-1.5",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "-1.5",
+              "odds": "1.568",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "-1.5",
+              "bet365_line": "-1.5",
+              "reference_price": "1.568",
+              "bet365_price": "1.83",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0.0",
+              "line_advantage": "0.0",
+              "line_quality": "EQUAL",
+              "price_difference": "0.262",
+              "price_quality": "FAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_EQUAL_LINE",
+              "supplied_ev": "108.37"
+            },
+            "movement": {
+              "opening_line": "-9",
+              "previous_line": null,
+              "current_line": "-1.5",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "7.5",
+              "opening_line_direction": "UP",
+              "opening_line_equal": false,
+              "opening_price": "1.847",
+              "current_price": "1.568",
+              "previous_price_displayed": "1.595",
+              "price_direction": "SHORTENED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": -15.11
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "FAVOURABLE",
+            "bet_quality": "POTENTIAL_VALUE"
+          },
+          {
+            "side": "AWAY",
+            "selection_name": "Leonas De Ponce",
+            "selection_line": "+1.5",
+            "is_target": true,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "+1.5",
+              "odds": "2.160",
+              "fair_odds": null
+            },
+            "comparison": {
+              "reference_line": "+1.5",
+              "bet365_line": "+1.5",
+              "reference_price": "2.160",
+              "bet365_price": "1.83",
+              "line_applicable": true,
+              "equal_line": true,
+              "line_difference": "0.0",
+              "line_advantage": "0.0",
+              "line_quality": "EQUAL",
+              "price_difference": "-0.330",
+              "price_quality": "UNFAVOURABLE",
+              "bookmaker": "Bet365",
+              "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": "+9",
+              "previous_line": null,
+              "current_line": "+1.5",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": "-7.5",
+              "opening_line_direction": "DOWN",
+              "opening_line_equal": false,
+              "opening_price": "1.819",
+              "current_price": "2.160",
+              "previous_price_displayed": "2.110",
+              "price_direction": "DRIFTED",
+              "price_direction_source": "arrow",
+              "price_change_percent": null,
+              "price_change_basis": null,
+              "opening_to_current_price_change_percent": 18.75
+            },
+            "line_quality": "EQUAL",
+            "price_quality": "UNFAVOURABLE",
+            "bet_quality": "UNFAVOURABLE"
+          }
+        ],
+        "market_movement": {
+          "opening_line": "-9",
+          "previous_line": null,
+          "current_line": "-1.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "7.5",
+          "opening_line_direction": "UP",
+          "opening_line_equal": false,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "HOME"
+        },
+        "limit": null,
+        "target_side": "AWAY",
+        "target_line": "+1.5",
+        "alert_price": "1.83",
+        "target_price_source": "pinnacle_opening_to_current",
+        "implied_target": null,
+        "selection_side": "AWAY",
+        "selection_name": "Leonas De Ponce",
+        "selection_line": "+1.5",
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "+1.5",
+          "odds": "2.160",
+          "fair_odds": null
+        },
+        "movement": {
+          "opening_line": "+9",
+          "previous_line": null,
+          "current_line": "+1.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "-7.5",
+          "opening_line_direction": "DOWN",
+          "opening_line_equal": false,
+          "opening_price": "1.819",
+          "current_price": "2.160",
+          "previous_price_displayed": "2.110",
+          "price_direction": "DRIFTED",
+          "price_direction_source": "arrow",
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": 18.75
+        },
+        "line_quality": "EQUAL",
+        "price_quality": "UNFAVOURABLE",
+        "bet_quality": "UNFAVOURABLE",
+        "schema_version": 6,
+        "interpretation_version": "sharp-money-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle\n\nBasketball - Puerto Rico - Superior Nacional Women\n[Explosivas de Moca vs Leonas De Ponce](https://oddshub.io/basketball/puerto-rico-bsnf-women/74318436?market=Spread)\n26.09.2026 00:00\n\nSpread (-1.5) (alt. line)\n1.568⬇️ (1.595) - 2.160⬆️ (2.110)\n\n🟢 Opening (-9)\n1.847 - 1.819\n\n[Bet365 (Spread -1.5)](https://www.bet365.com/#/AC/B18/C21171164/D19/E26809995/F19/I0/)\n**1.83** - 1.83\n\n🎯 EV: 108.37%",
+        "sample_provenance": "unspecified",
+        "market_label_source": "label_and_fixture_url",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "parenthetical_price_meaning_unspecified"
+        ],
+        "interpretation_notes": [],
+        "interpretation_status": "PARSED"
+      },
+      "profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-3-sharp",
+      "sport": "basketball",
+      "market": "SPREAD"
+    },
+    "timestamp_unavailable": true,
+    "rules_replay": "NOT_EVALUATED: no historical receipt time"
+  },
+  {
+    "file": "tests\\fixtures\\oddsnotifier_football_hjk_brann_real.txt",
+    "old": {
+      "status": "PARSED_PARTIAL",
+      "reason": "Bet365 section absent; no comparable offer captured",
+      "parsed": {
+        "sport": "football",
+        "country": "UEFA",
+        "competition": "Europa Cup Women",
+        "competition_full": "UEFA - Europa Cup Women",
+        "fixture": "HJK Helsinki vs Brann",
+        "home": "HJK Helsinki",
+        "away": "Brann",
+        "fixture_url": null,
+        "scheduled_at_local": "2026-09-23T15:30",
+        "scheduled_timezone": null,
+        "format_variant": "side_labelled",
+        "market": "SPREAD",
+        "market_label": "Spread",
+        "displayed_line": "-1.5",
+        "comparison_url": null,
+        "opening_marker": null,
+        "pinnacle": {
+          "line": "-1.5",
+          "previous_line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "side": "AWAY",
+              "price": "1.724",
+              "line": "-1.5",
+              "movement": "DOWN",
+              "movement_marker": "↓"
+            }
+          ]
+        },
+        "opening": {
+          "line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "side": "AWAY",
+              "price": "2.030",
+              "line": null
+            }
+          ],
+          "outcome_count_matches_market": null
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": null,
+          "quotes": [],
+          "bookmaker": "Bet365",
+          "bet365_present": false,
+          "bet365_line_displayed": null,
+          "reference_line_displayed": "-1.5",
+          "bet365_line": null,
+          "bet365_odds": null,
+          "equal_line": null,
+          "line_difference": null,
+          "line_advantage": null,
+          "line_quality": "UNKNOWN",
+          "price_quality": "UNKNOWN",
+          "ev_status": "MISSING",
+          "supplied_ev": null
+        },
+        "alternate_line": {
+          "current": false,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": "oddsnotifier_side_labelled_v1",
+          "production_verified": true,
+          "labelled_sides": true,
+          "sides_by_position": [
+            "AWAY"
+          ],
+          "group_sides_by_position": {
+            "pinnacle": [
+              "AWAY"
+            ],
+            "opening": [
+              "AWAY"
+            ],
+            "comparison": null
+          },
+          "confirmation_source": "Side named in message text. Spread line attributed to the named side per the user's expected interpretation of HJK Helsinki vs Brann (2026-09-23)"
+        },
+        "displayed_ev_percent": null,
+        "sides": [
+          {
+            "side": "AWAY",
+            "selection_name": "Brann",
+            "selection_line": "-1.5",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "-1.5",
+              "odds": "1.724",
+              "fair_odds": "1.850"
+            },
+            "comparison": {
+              "reference_line": "-1.5",
+              "bet365_line": null,
+              "reference_price": "1.724",
+              "bet365_price": null,
+              "line_applicable": true,
+              "equal_line": null,
+              "line_difference": null,
+              "line_advantage": null,
+              "line_quality": "UNKNOWN",
+              "price_difference": null,
+              "price_quality": "UNKNOWN",
+              "bookmaker": "Bet365",
+              "ev_status": "MISSING",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": null,
+              "previous_line": null,
+              "current_line": "-1.5",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": null,
+              "opening_line_direction": null,
+              "opening_line_equal": null,
+              "opening_price": "2.030",
+              "current_price": "1.724",
+              "previous_price_displayed": null,
+              "price_direction": "SHORTENED",
+              "price_direction_source": "arrow",
+              "price_change_percent": -11.7,
+              "price_change_basis": "SUPPLIED_BY_ODDSNOTIFIER_BASE_UNSPECIFIED",
+              "opening_to_current_price_change_percent": -15.07
+            },
+            "line_quality": "UNKNOWN",
+            "price_quality": "UNKNOWN",
+            "bet_quality": "INSUFFICIENT_INFORMATION"
+          }
+        ],
+        "limit": {
+          "previous": "200",
+          "current": "400",
+          "currency": "EUR",
+          "changed_at_text": "just now"
+        },
+        "market_movement": {
+          "opening_line": null,
+          "previous_line": null,
+          "current_line": "-1.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": null,
+          "opening_line_direction": null,
+          "opening_line_equal": null,
+          "opening_price": "2.030",
+          "current_price": "1.724",
+          "previous_price_displayed": null,
+          "price_direction": "SHORTENED",
+          "price_direction_source": "arrow",
+          "price_change_percent": -11.7,
+          "price_change_basis": "SUPPLIED_BY_ODDSNOTIFIER_BASE_UNSPECIFIED",
+          "opening_to_current_price_change_percent": -15.07,
+          "line_perspective": "SELECTED_SIDE"
+        },
+        "target_side": null,
+        "target_line": null,
+        "alert_price": null,
+        "target_price_source": null,
+        "selection_side": "AWAY",
+        "selection_name": "Brann",
+        "selection_line": "-1.5",
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "-1.5",
+          "odds": "1.724",
+          "fair_odds": "1.850"
+        },
+        "movement": {
+          "opening_line": null,
+          "previous_line": null,
+          "current_line": "-1.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": null,
+          "opening_line_direction": null,
+          "opening_line_equal": null,
+          "opening_price": "2.030",
+          "current_price": "1.724",
+          "previous_price_displayed": null,
+          "price_direction": "SHORTENED",
+          "price_direction_source": "arrow",
+          "price_change_percent": -11.7,
+          "price_change_basis": "SUPPLIED_BY_ODDSNOTIFIER_BASE_UNSPECIFIED",
+          "opening_to_current_price_change_percent": -15.07
+        },
+        "line_quality": "UNKNOWN",
+        "price_quality": "UNKNOWN",
+        "bet_quality": "INSUFFICIENT_INFORMATION",
+        "fair_odds": "1.850",
+        "schema_version": 5,
+        "interpretation_version": "market-interp-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle\n\nFootball - UEFA - Europa Cup Women\nHJK Helsinki vs Brann\n23.09.2026 15:30\n\n💰 Limit: €200 → €400 (just now)\n\n🟢 Opening: Away 2.030\n\n🟡 Spread (-1.5): Away 1.724 ↓ [-11.7%]\n\n🎯 Fair Odds: 1.850\n\nBet365\n",
+        "sample_provenance": "unspecified",
+        "market_label_source": "standalone_label",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "Bet365 section absent; no comparable offer captured"
+        ],
+        "interpretation_notes": [
+          "Bet365 section absent; no comparable offer captured"
+        ],
+        "interpretation_status": "PARSED_PARTIAL"
+      },
+      "profile": "oddsnotifier_side_labelled_v1",
+      "parser_version": "classifier-2",
+      "sport": "football",
+      "market": null
+    },
+    "new": {
+      "status": "PARSED_PARTIAL",
+      "reason": "Bet365 section absent; no comparable offer captured",
+      "parsed": {
+        "sport": "football",
+        "country": "UEFA",
+        "competition": "Europa Cup Women",
+        "competition_full": "UEFA - Europa Cup Women",
+        "fixture": "HJK Helsinki vs Brann",
+        "home": "HJK Helsinki",
+        "away": "Brann",
+        "fixture_url": null,
+        "scheduled_at_local": "2026-09-23T15:30",
+        "scheduled_timezone": null,
+        "format_variant": "side_labelled",
+        "market": "SPREAD",
+        "market_label": "Spread",
+        "displayed_line": "-1.5",
+        "comparison_url": null,
+        "opening_marker": null,
+        "pinnacle": {
+          "line": "-1.5",
+          "previous_line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "side": "AWAY",
+              "price": "1.724",
+              "line": "-1.5",
+              "movement": "DOWN",
+              "movement_marker": "↓"
+            }
+          ]
+        },
+        "opening": {
+          "line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "side": "AWAY",
+              "price": "2.030",
+              "line": null
+            }
+          ],
+          "outcome_count_matches_market": null
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": null,
+          "quotes": [],
+          "bookmaker": "Bet365",
+          "bet365_present": false,
+          "bet365_line_displayed": null,
+          "reference_line_displayed": "-1.5",
+          "bet365_line": null,
+          "bet365_odds": null,
+          "equal_line": null,
+          "line_difference": null,
+          "line_advantage": null,
+          "line_quality": "UNKNOWN",
+          "price_quality": "UNKNOWN",
+          "ev_status": "MISSING",
+          "supplied_ev": null
+        },
+        "alternate_line": {
+          "current": false,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": "oddsnotifier_side_labelled_v1",
+          "production_verified": true,
+          "labelled_sides": true,
+          "sides_by_position": [
+            "AWAY"
+          ],
+          "group_sides_by_position": {
+            "pinnacle": [
+              "AWAY"
+            ],
+            "opening": [
+              "AWAY"
+            ],
+            "comparison": null
+          },
+          "confirmation_source": "Side named in message text. Spread line attributed to the named side per the user's expected interpretation of HJK Helsinki vs Brann (2026-09-23)"
+        },
+        "displayed_ev_percent": null,
+        "sides": [
+          {
+            "side": "AWAY",
+            "selection_name": "Brann",
+            "selection_line": "-1.5",
+            "is_target": false,
+            "reference": {
+              "bookmaker": "Pinnacle",
+              "line": "-1.5",
+              "odds": "1.724",
+              "fair_odds": "1.850"
+            },
+            "comparison": {
+              "reference_line": "-1.5",
+              "bet365_line": null,
+              "reference_price": "1.724",
+              "bet365_price": null,
+              "line_applicable": true,
+              "equal_line": null,
+              "line_difference": null,
+              "line_advantage": null,
+              "line_quality": "UNKNOWN",
+              "price_difference": null,
+              "price_quality": "UNKNOWN",
+              "bookmaker": "Bet365",
+              "ev_status": "MISSING",
+              "supplied_ev": null
+            },
+            "movement": {
+              "opening_line": null,
+              "previous_line": null,
+              "current_line": "-1.5",
+              "line_change": null,
+              "line_direction": null,
+              "opening_line_change": null,
+              "opening_line_direction": null,
+              "opening_line_equal": null,
+              "opening_price": "2.030",
+              "current_price": "1.724",
+              "previous_price_displayed": null,
+              "price_direction": "SHORTENED",
+              "price_direction_source": "arrow",
+              "price_change_percent": -11.7,
+              "price_change_basis": "SUPPLIED_BY_ODDSNOTIFIER_BASE_UNSPECIFIED",
+              "opening_to_current_price_change_percent": -15.07
+            },
+            "line_quality": "UNKNOWN",
+            "price_quality": "UNKNOWN",
+            "bet_quality": "INSUFFICIENT_INFORMATION"
+          }
+        ],
+        "limit": {
+          "previous": "200",
+          "current": "400",
+          "currency": "EUR",
+          "changed_at_text": "just now"
+        },
+        "market_movement": {
+          "opening_line": null,
+          "previous_line": null,
+          "current_line": "-1.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": null,
+          "opening_line_direction": null,
+          "opening_line_equal": null,
+          "opening_price": "2.030",
+          "current_price": "1.724",
+          "previous_price_displayed": null,
+          "price_direction": "SHORTENED",
+          "price_direction_source": "arrow",
+          "price_change_percent": -11.7,
+          "price_change_basis": "SUPPLIED_BY_ODDSNOTIFIER_BASE_UNSPECIFIED",
+          "opening_to_current_price_change_percent": -15.07,
+          "line_perspective": "SELECTED_SIDE"
+        },
+        "target_side": null,
+        "target_line": null,
+        "alert_price": null,
+        "target_price_source": null,
+        "selection_side": "AWAY",
+        "selection_name": "Brann",
+        "selection_line": "-1.5",
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "-1.5",
+          "odds": "1.724",
+          "fair_odds": "1.850"
+        },
+        "movement": {
+          "opening_line": null,
+          "previous_line": null,
+          "current_line": "-1.5",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": null,
+          "opening_line_direction": null,
+          "opening_line_equal": null,
+          "opening_price": "2.030",
+          "current_price": "1.724",
+          "previous_price_displayed": null,
+          "price_direction": "SHORTENED",
+          "price_direction_source": "arrow",
+          "price_change_percent": -11.7,
+          "price_change_basis": "SUPPLIED_BY_ODDSNOTIFIER_BASE_UNSPECIFIED",
+          "opening_to_current_price_change_percent": -15.07
+        },
+        "line_quality": "UNKNOWN",
+        "price_quality": "UNKNOWN",
+        "bet_quality": "INSUFFICIENT_INFORMATION",
+        "fair_odds": "1.850",
+        "schema_version": 6,
+        "interpretation_version": "sharp-money-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle\n\nFootball - UEFA - Europa Cup Women\nHJK Helsinki vs Brann\n23.09.2026 15:30\n\n💰 Limit: €200 → €400 (just now)\n\n🟢 Opening: Away 2.030\n\n🟡 Spread (-1.5): Away 1.724 ↓ [-11.7%]\n\n🎯 Fair Odds: 1.850\n\nBet365\n",
+        "sample_provenance": "unspecified",
+        "market_label_source": "standalone_label",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "Bet365 section absent; no comparable offer captured"
+        ],
+        "interpretation_notes": [
+          "Bet365 section absent; no comparable offer captured"
+        ],
+        "interpretation_status": "PARSED_PARTIAL"
+      },
+      "profile": "oddsnotifier_side_labelled_v1",
+      "parser_version": "classifier-3-sharp",
+      "sport": "football",
+      "market": null
+    },
+    "timestamp_unavailable": true,
+    "rules_replay": "NOT_EVALUATED: no historical receipt time"
+  },
+  {
+    "file": "tests\\fixtures\\oddsnotifier_football_ml_linked.txt",
+    "old": {
+      "status": "AMBIGUOUS",
+      "reason": "UNSUPPORTED_MAPPING: football 1X2 quote ordering is not production-verified; no selection guessed",
+      "parsed": {
+        "schema_version": 3,
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "format_variant": "linked_football_ml",
+        "fixture_url": "https://oddshub.io/football/scotland-challenge-cup/72965130?market=ML",
+        "comparison_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201525428/F3/I1/",
+        "market_label_source": "fixture_url_query",
+        "sample_provenance": "unspecified",
+        "quote_mapping": {
+          "profile": null,
+          "production_verified": false,
+          "sides_by_position": null,
+          "group_sides_by_position": {
+            "pinnacle": null,
+            "opening": null,
+            "comparison": null
+          }
+        },
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle\nFootball - Scotland - Challenge Cup\nBanks O´Dee vs Aberdeen B ([https://oddshub.io/football/scotland-challenge-cup/72965130?market=ML](https://oddshub.io/football/scotland-challenge-cup/72965130?market=ML))\n22.09.2026 18:45\n3.900⬇️ (4.050) - 4.970 (5.040) - 1.574⬆️ (1.546)\n🟢 Opening\n4.020 - 1.598\nBet365 ([https://www.bet365.com/#/AC/B1/C1/D8/E201525428/F3/I1/](https://www.bet365.com/#/AC/B1/C1/D8/E201525428/F3/I1/))\n5.00 - 4.20 - 1.48\n🎯 EV: 111.48%\n",
+        "sport": "football",
+        "country": "Scotland",
+        "competition": "Challenge Cup",
+        "fixture": "Banks O´Dee vs Aberdeen B",
+        "home": "Banks O´Dee",
+        "away": "Aberdeen B",
+        "scheduled_at_local": "2026-09-22T18:45",
+        "scheduled_timezone": null,
+        "market": "1X2",
+        "market_label": "ML",
+        "displayed_line": null,
+        "pinnacle": {
+          "line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "3.900",
+              "movement": "DOWN",
+              "movement_marker": "⬇️",
+              "parenthetical_price": "4.050"
+            },
+            {
+              "position": 2,
+              "price": "4.970",
+              "parenthetical_price": "5.040"
+            },
+            {
+              "position": 3,
+              "price": "1.574",
+              "movement": "UP",
+              "movement_marker": "⬆️",
+              "parenthetical_price": "1.546"
+            }
+          ]
+        },
+        "opening": {
+          "line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "4.020"
+            },
+            {
+              "position": 2,
+              "price": "1.598"
+            }
+          ],
+          "outcome_count_matches_market": false
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "5.00"
+            },
+            {
+              "position": 2,
+              "price": "4.20"
+            },
+            {
+              "position": 3,
+              "price": "1.48"
+            }
+          ]
+        },
+        "displayed_ev_percent": "111.48",
+        "target_side": null,
+        "target_line": null,
+        "alert_price": null,
+        "unresolved": [
+          "target_selection_not_explicit",
+          "event_timezone_unspecified",
+          "quote_sides_not_labeled",
+          "parenthetical_price_meaning_unspecified",
+          "opening_outcome_count_mismatch_unmapped"
+        ]
+      },
+      "profile": null,
+      "parser_version": "classifier-2",
+      "sport": "football",
+      "market": "1X2"
+    },
+    "new": {
+      "status": "AMBIGUOUS",
+      "reason": "UNSUPPORTED_MAPPING: football 1X2 quote ordering is not production-verified; no selection guessed",
+      "parsed": {
+        "schema_version": 3,
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "format_variant": "linked_football_ml",
+        "fixture_url": "https://oddshub.io/football/scotland-challenge-cup/72965130?market=ML",
+        "comparison_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201525428/F3/I1/",
+        "market_label_source": "fixture_url_query",
+        "sample_provenance": "unspecified",
+        "quote_mapping": {
+          "profile": null,
+          "production_verified": false,
+          "sides_by_position": null,
+          "group_sides_by_position": {
+            "pinnacle": null,
+            "opening": null,
+            "comparison": null
+          }
+        },
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle\nFootball - Scotland - Challenge Cup\nBanks O´Dee vs Aberdeen B ([https://oddshub.io/football/scotland-challenge-cup/72965130?market=ML](https://oddshub.io/football/scotland-challenge-cup/72965130?market=ML))\n22.09.2026 18:45\n3.900⬇️ (4.050) - 4.970 (5.040) - 1.574⬆️ (1.546)\n🟢 Opening\n4.020 - 1.598\nBet365 ([https://www.bet365.com/#/AC/B1/C1/D8/E201525428/F3/I1/](https://www.bet365.com/#/AC/B1/C1/D8/E201525428/F3/I1/))\n5.00 - 4.20 - 1.48\n🎯 EV: 111.48%\n",
+        "sport": "football",
+        "country": "Scotland",
+        "competition": "Challenge Cup",
+        "fixture": "Banks O´Dee vs Aberdeen B",
+        "home": "Banks O´Dee",
+        "away": "Aberdeen B",
+        "scheduled_at_local": "2026-09-22T18:45",
+        "scheduled_timezone": null,
+        "market": "1X2",
+        "market_label": "ML",
+        "displayed_line": null,
+        "pinnacle": {
+          "line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "3.900",
+              "movement": "DOWN",
+              "movement_marker": "⬇️",
+              "parenthetical_price": "4.050"
+            },
+            {
+              "position": 2,
+              "price": "4.970",
+              "parenthetical_price": "5.040"
+            },
+            {
+              "position": 3,
+              "price": "1.574",
+              "movement": "UP",
+              "movement_marker": "⬆️",
+              "parenthetical_price": "1.546"
+            }
+          ]
+        },
+        "opening": {
+          "line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "4.020"
+            },
+            {
+              "position": 2,
+              "price": "1.598"
+            }
+          ],
+          "outcome_count_matches_market": false
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "5.00"
+            },
+            {
+              "position": 2,
+              "price": "4.20"
+            },
+            {
+              "position": 3,
+              "price": "1.48"
+            }
+          ]
+        },
+        "displayed_ev_percent": "111.48",
+        "target_side": null,
+        "target_line": null,
+        "alert_price": null,
+        "unresolved": [
+          "target_selection_not_explicit",
+          "event_timezone_unspecified",
+          "quote_sides_not_labeled",
+          "parenthetical_price_meaning_unspecified",
+          "opening_outcome_count_mismatch_unmapped"
+        ]
+      },
+      "profile": null,
+      "parser_version": "classifier-3-sharp",
+      "sport": "football",
+      "market": "1X2"
+    },
+    "timestamp_unavailable": true,
+    "rules_replay": "NOT_EVALUATED: no historical receipt time"
+  },
+  {
+    "file": "tests\\fixtures\\oddsnotifier_spread.txt",
+    "old": {
+      "status": "AMBIGUOUS",
+      "reason": "UNSUPPORTED_MAPPING: football SPREAD two-sided quote ordering is not production-verified; no side assigned",
+      "parsed": {
+        "sport": "football",
+        "country": "England",
+        "competition": "Isthmian Premier League",
+        "competition_full": "England - Isthmian Premier League",
+        "fixture": "Welling United vs Cheshunt",
+        "home": "Welling United",
+        "away": "Cheshunt",
+        "fixture_url": null,
+        "scheduled_at_local": "2026-09-15T18:45",
+        "scheduled_timezone": null,
+        "format_variant": "two_sided",
+        "market": "SPREAD",
+        "market_label": "Spread",
+        "displayed_line": "-0.75",
+        "comparison_url": null,
+        "opening_marker": null,
+        "pinnacle": {
+          "line": "-0.75",
+          "previous_line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "2.160",
+              "parenthetical_price": "1.900"
+            },
+            {
+              "position": 2,
+              "price": "1.662",
+              "parenthetical_price": "1.884"
+            }
+          ]
+        },
+        "opening": {
+          "line": "-0.75",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "2.000"
+            },
+            {
+              "position": 2,
+              "price": "1.714"
+            }
+          ],
+          "outcome_count_matches_market": true
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": "-0.75",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.85"
+            },
+            {
+              "position": 2,
+              "price": "1.95"
+            }
+          ],
+          "bookmaker": "Bet365",
+          "bet365_present": true,
+          "bet365_line_displayed": "-0.75",
+          "reference_line_displayed": "-0.75",
+          "bet365_line": "-0.75",
+          "bet365_odds": null,
+          "equal_line": true,
+          "line_difference": "0.00",
+          "line_advantage": null,
+          "line_quality": null,
+          "price_quality": null,
+          "ev_status": "SUPPLIED_EQUAL_LINE",
+          "supplied_ev": "111.47"
+        },
+        "alternate_line": {
+          "current": false,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": null,
+          "production_verified": false,
+          "sides_by_position": null,
+          "group_sides_by_position": {
+            "pinnacle": null,
+            "opening": null,
+            "comparison": null
+          },
+          "confirmation_source": null
+        },
+        "displayed_ev_percent": "111.47",
+        "sides": [],
+        "market_movement": {
+          "opening_line": "-0.75",
+          "previous_line": null,
+          "current_line": "-0.75",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "0.00",
+          "opening_line_direction": "UNCHANGED",
+          "opening_line_equal": true,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "AS_DISPLAYED"
+        },
+        "limit": null,
+        "target_side": null,
+        "target_line": null,
+        "alert_price": null,
+        "target_price_source": null,
+        "implied_target": null,
+        "selection_side": null,
+        "selection_name": null,
+        "selection_line": null,
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "-0.75",
+          "odds": null,
+          "fair_odds": null,
+          "line_perspective": "AS_DISPLAYED"
+        },
+        "movement": {
+          "opening_line": "-0.75",
+          "previous_line": null,
+          "current_line": "-0.75",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "0.00",
+          "opening_line_direction": "UNCHANGED",
+          "opening_line_equal": true,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "AS_DISPLAYED"
+        },
+        "line_quality": null,
+        "price_quality": null,
+        "bet_quality": null,
+        "schema_version": 5,
+        "interpretation_version": "market-interp-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle\n\nFootball - England - Isthmian Premier League\nWelling United vs Cheshunt\n15.09.2026 18:45\n\nSpread (-0.75)\n2.160 (1.900) - 1.662 (1.884)\n\nOpening (-0.75)\n2.000 - 1.714\n\nBet365 (Spread -0.75)\n1.85 - 1.95\n\nEV: 111.47%\n",
+        "sample_provenance": "unspecified",
+        "market_label_source": "standalone_label",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "parenthetical_price_meaning_unspecified",
+          "UNSUPPORTED_MAPPING: football SPREAD two-sided quote ordering is not production-verified; no side assigned"
+        ],
+        "interpretation_notes": [
+          "UNSUPPORTED_MAPPING: football SPREAD two-sided quote ordering is not production-verified; no side assigned"
+        ],
+        "interpretation_status": "AMBIGUOUS"
+      },
+      "profile": null,
+      "parser_version": "classifier-2",
+      "sport": "football",
+      "market": "SPREAD"
+    },
+    "new": {
+      "status": "AMBIGUOUS",
+      "reason": "UNSUPPORTED_MAPPING: football SPREAD two-sided quote ordering is not production-verified; no side assigned",
+      "parsed": {
+        "sport": "football",
+        "country": "England",
+        "competition": "Isthmian Premier League",
+        "competition_full": "England - Isthmian Premier League",
+        "fixture": "Welling United vs Cheshunt",
+        "home": "Welling United",
+        "away": "Cheshunt",
+        "fixture_url": null,
+        "scheduled_at_local": "2026-09-15T18:45",
+        "scheduled_timezone": null,
+        "format_variant": "two_sided",
+        "market": "SPREAD",
+        "market_label": "Spread",
+        "displayed_line": "-0.75",
+        "comparison_url": null,
+        "opening_marker": null,
+        "pinnacle": {
+          "line": "-0.75",
+          "previous_line": null,
+          "quotes": [
+            {
+              "position": 1,
+              "price": "2.160",
+              "parenthetical_price": "1.900"
+            },
+            {
+              "position": 2,
+              "price": "1.662",
+              "parenthetical_price": "1.884"
+            }
+          ]
+        },
+        "opening": {
+          "line": "-0.75",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "2.000"
+            },
+            {
+              "position": 2,
+              "price": "1.714"
+            }
+          ],
+          "outcome_count_matches_market": true
+        },
+        "comparison": {
+          "site": "Bet365",
+          "line": "-0.75",
+          "quotes": [
+            {
+              "position": 1,
+              "price": "1.85"
+            },
+            {
+              "position": 2,
+              "price": "1.95"
+            }
+          ],
+          "bookmaker": "Bet365",
+          "bet365_present": true,
+          "bet365_line_displayed": "-0.75",
+          "reference_line_displayed": "-0.75",
+          "bet365_line": "-0.75",
+          "bet365_odds": null,
+          "equal_line": true,
+          "line_difference": "0.00",
+          "line_advantage": null,
+          "line_quality": null,
+          "price_quality": null,
+          "ev_status": "SUPPLIED_EQUAL_LINE",
+          "supplied_ev": null
+        },
+        "alternate_line": {
+          "current": false,
+          "opening": false,
+          "comparison": false
+        },
+        "quote_mapping": {
+          "profile": null,
+          "production_verified": false,
+          "sides_by_position": null,
+          "group_sides_by_position": {
+            "pinnacle": null,
+            "opening": null,
+            "comparison": null
+          },
+          "confirmation_source": null
+        },
+        "displayed_ev_percent": null,
+        "feed_displayed_ev_percent": "111.47",
+        "highlighted_side": null,
+        "sharp_signal": {
+          "source": "pinnacle_opening_to_current",
+          "side": null,
+          "opening_line": "-0.75",
+          "current_line": "-0.75",
+          "change": null,
+          "magnitude": null,
+          "direction": null,
+          "status": "AMBIGUOUS",
+          "reason": "Opening/current market or line perspective is unverified",
+          "highlight_agrees": null,
+          "recent_line_reversal": false
+        },
+        "sides": [],
+        "market_movement": {
+          "opening_line": "-0.75",
+          "previous_line": null,
+          "current_line": "-0.75",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "0.00",
+          "opening_line_direction": "UNCHANGED",
+          "opening_line_equal": true,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "AS_DISPLAYED"
+        },
+        "limit": null,
+        "target_side": null,
+        "target_line": null,
+        "alert_price": null,
+        "target_price_source": null,
+        "implied_target": null,
+        "selection_side": null,
+        "selection_name": null,
+        "selection_line": null,
+        "reference": {
+          "bookmaker": "Pinnacle",
+          "line": "-0.75",
+          "odds": null,
+          "fair_odds": null,
+          "line_perspective": "AS_DISPLAYED"
+        },
+        "movement": {
+          "opening_line": "-0.75",
+          "previous_line": null,
+          "current_line": "-0.75",
+          "line_change": null,
+          "line_direction": null,
+          "opening_line_change": "0.00",
+          "opening_line_direction": "UNCHANGED",
+          "opening_line_equal": true,
+          "opening_price": null,
+          "current_price": null,
+          "previous_price_displayed": null,
+          "price_direction": null,
+          "price_direction_source": null,
+          "price_change_percent": null,
+          "price_change_basis": null,
+          "opening_to_current_price_change_percent": null,
+          "line_perspective": "AS_DISPLAYED"
+        },
+        "line_quality": null,
+        "price_quality": null,
+        "bet_quality": null,
+        "schema_version": 6,
+        "interpretation_version": "sharp-money-1",
+        "source": "OddsNotifier",
+        "observation_id": null,
+        "telegram_channel_id": null,
+        "telegram_message_id": null,
+        "source_timestamp": null,
+        "raw_text": "New odds update on Pinnacle\n\nFootball - England - Isthmian Premier League\nWelling United vs Cheshunt\n15.09.2026 18:45\n\nSpread (-0.75)\n2.160 (1.900) - 1.662 (1.884)\n\nOpening (-0.75)\n2.000 - 1.714\n\nBet365 (Spread -0.75)\n1.85 - 1.95\n\nEV: 111.47%\n",
+        "sample_provenance": "unspecified",
+        "market_label_source": "standalone_label",
+        "unresolved": [
+          "event_timezone_unspecified",
+          "parenthetical_price_meaning_unspecified",
+          "UNSUPPORTED_MAPPING: football SPREAD two-sided quote ordering is not production-verified; no side assigned"
+        ],
+        "interpretation_notes": [
+          "UNSUPPORTED_MAPPING: football SPREAD two-sided quote ordering is not production-verified; no side assigned"
+        ],
+        "interpretation_status": "AMBIGUOUS"
+      },
+      "profile": null,
+      "parser_version": "classifier-3-sharp",
+      "sport": "football",
+      "market": "SPREAD"
+    },
+    "timestamp_unavailable": true,
+    "rules_replay": "NOT_EVALUATED: no historical receipt time"
+  }
+]

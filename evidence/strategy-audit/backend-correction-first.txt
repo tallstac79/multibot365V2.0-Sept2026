@@ -1,0 +1,484 @@
+Telegram intake error; reconnecting in 0.01s: network down
+Telegram intake error; reconnecting in 0.02s: network down
+======================================================================
+ERROR: test_implied_target (unittest.loader._FailedTest.test_implied_target)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_implied_target
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\WINDOWS11\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_implied_target.py", line 20, in <module>
+    from core.market_interpretation import IMPLIED_SOURCE, IMPLIED_TARGET_MIN_ADVANTAGE, interpret
+ImportError: cannot import name 'IMPLIED_SOURCE' from 'core.market_interpretation' (C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\core\market_interpretation.py)
+
+
+======================================================================
+FAIL: test_payload_carries_the_flag_only_for_a_womens_competition (test_competition_gender.CompetitionGenderTests.test_payload_carries_the_flag_only_for_a_womens_competition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_competition_gender.py", line 27, in test_payload_carries_the_flag_only_for_a_womens_competition
+    self.assertEqual((women['status'], women['state']), ('PARSED', 'QUEUED'))
+AssertionError: Tuples differ: ('PARSED', 'REJECTED') != ('PARSED', 'QUEUED')
+
+First differing element 1:
+'REJECTED'
+'QUEUED'
+
+- ('PARSED', 'REJECTED')
+?             ^ ^^^^
+
++ ('PARSED', 'QUEUED')
+?             ^^ ^
+
+
+======================================================================
+FAIL: test_favourite_flip_below_ten_stays_eligible (test_market_audit.OrientationAndMirrorEvidence.test_favourite_flip_below_ten_stays_eligible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_audit.py", line 98, in test_favourite_flip_below_ten_stays_eligible
+    self.assertEqual((v['status'], v['parsed']['selection_side'], v['parsed']['comparison']['line_advantage']), ('PARSED', 'HOME', '4.5'))
+AssertionError: Tuples differ: ('AMBIGUOUS', None, None) != ('PARSED', 'HOME', '4.5')
+
+First differing element 0:
+'AMBIGUOUS'
+'PARSED'
+
+- ('AMBIGUOUS', None, None)
++ ('PARSED', 'HOME', '4.5')
+
+======================================================================
+FAIL: test_mirror_without_ev_is_a_lag_coincidence_and_stays_eligible (test_market_audit.OrientationAndMirrorEvidence.test_mirror_without_ev_is_a_lag_coincidence_and_stays_eligible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_audit.py", line 84, in test_mirror_without_ev_is_a_lag_coincidence_and_stays_eligible
+    self.assertEqual(v['status'], 'PARSED', v['reason'])
+AssertionError: 'AMBIGUOUS' != 'PARSED'
+- AMBIGUOUS
++ PARSED
+ : Pinnacle (3.5) and Bet365 (-3.5) favour different teams by 7.0 points: the Bet365 spread appears to have an unresolved sign reference; do not assume a perspective correction
+
+======================================================================
+FAIL: test_highlighted_worse_side_is_rejected_on_quality (test_market_audit.RulesCanRejectImpliedTargets.test_highlighted_worse_side_is_rejected_on_quality)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_audit.py", line 38, in setUp
+    self.assertEqual((self.p['selection_side'], self.p['comparison']['line_advantage'], self.p['target_price_source']),
+AssertionError: Tuples differ: ('HOME', '3.0', 'pinnacle_opening_to_current') != ('HOME', '3.0', 'implied_favourable_line')
+
+First differing element 2:
+'pinnacle_opening_to_current'
+'implied_favourable_line'
+
+- ('HOME', '3.0', 'pinnacle_opening_to_current')
++ ('HOME', '3.0', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_live_configuration_explains_reject_zero (test_market_audit.RulesCanRejectImpliedTargets.test_live_configuration_explains_reject_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_audit.py", line 38, in setUp
+    self.assertEqual((self.p['selection_side'], self.p['comparison']['line_advantage'], self.p['target_price_source']),
+AssertionError: Tuples differ: ('HOME', '3.0', 'pinnacle_opening_to_current') != ('HOME', '3.0', 'implied_favourable_line')
+
+First differing element 2:
+'pinnacle_opening_to_current'
+'implied_favourable_line'
+
+- ('HOME', '3.0', 'pinnacle_opening_to_current')
++ ('HOME', '3.0', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_materiality (test_market_audit.RulesCanRejectImpliedTargets.test_materiality)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_audit.py", line 38, in setUp
+    self.assertEqual((self.p['selection_side'], self.p['comparison']['line_advantage'], self.p['target_price_source']),
+AssertionError: Tuples differ: ('HOME', '3.0', 'pinnacle_opening_to_current') != ('HOME', '3.0', 'implied_favourable_line')
+
+First differing element 2:
+'pinnacle_opening_to_current'
+'implied_favourable_line'
+
+- ('HOME', '3.0', 'pinnacle_opening_to_current')
++ ('HOME', '3.0', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_price_bounds (test_market_audit.RulesCanRejectImpliedTargets.test_price_bounds)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_audit.py", line 38, in setUp
+    self.assertEqual((self.p['selection_side'], self.p['comparison']['line_advantage'], self.p['target_price_source']),
+AssertionError: Tuples differ: ('HOME', '3.0', 'pinnacle_opening_to_current') != ('HOME', '3.0', 'implied_favourable_line')
+
+First differing element 2:
+'pinnacle_opening_to_current'
+'implied_favourable_line'
+
+- ('HOME', '3.0', 'pinnacle_opening_to_current')
++ ('HOME', '3.0', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_switches (test_market_audit.RulesCanRejectImpliedTargets.test_switches)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_audit.py", line 38, in setUp
+    self.assertEqual((self.p['selection_side'], self.p['comparison']['line_advantage'], self.p['target_price_source']),
+AssertionError: Tuples differ: ('HOME', '3.0', 'pinnacle_opening_to_current') != ('HOME', '3.0', 'implied_favourable_line')
+
+First differing element 2:
+'pinnacle_opening_to_current'
+'implied_favourable_line'
+
+- ('HOME', '3.0', 'pinnacle_opening_to_current')
++ ('HOME', '3.0', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_highlighted_side_with_worse_line_is_unfavourable (test_market_interpretation.FavourableLineSignalTests.test_highlighted_side_with_worse_line_is_unfavourable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_interpretation.py", line 266, in test_highlighted_side_with_worse_line_is_unfavourable
+    self.assertEqual((p['bet_quality'], p['comparison']['line_advantage']), ('UNFAVOURABLE', '-3.0'))
+AssertionError: Tuples differ: ('FAVOURABLE_LINE_SIGNAL', '3.0') != ('UNFAVOURABLE', '-3.0')
+
+First differing element 0:
+'FAVOURABLE_LINE_SIGNAL'
+'UNFAVOURABLE'
+
+- ('FAVOURABLE_LINE_SIGNAL', '3.0')
++ ('UNFAVOURABLE', '-3.0')
+
+======================================================================
+FAIL: test_kipina_without_highlight_implies_under_and_queues (test_market_interpretation.FavourableLineSignalTests.test_kipina_without_highlight_implies_under_and_queues)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_interpretation.py", line 276, in test_kipina_without_highlight_implies_under_and_queues
+    self.assertEqual((decision['instruction']['side'], decision['instruction']['line'], decision['instruction']['target_source']),
+AssertionError: Tuples differ: ('UNDER', '168.5', 'pinnacle_opening_to_current') != ('UNDER', '168.5', 'implied_favourable_line')
+
+First differing element 2:
+'pinnacle_opening_to_current'
+'implied_favourable_line'
+
+- ('UNDER', '168.5', 'pinnacle_opening_to_current')
++ ('UNDER', '168.5', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_spread_line_signal_uses_selected_team_line (test_market_interpretation.FavourableLineSignalTests.test_spread_line_signal_uses_selected_team_line)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_interpretation.py", line 333, in test_spread_line_signal_uses_selected_team_line
+    self.assertEqual((p['selection_side'], p['selection_line'], p['bet_quality'], p['comparison']['line_advantage']),
+AssertionError: Tuples differ: ('HOME', '4.5', 'UNFAVOURABLE', '-5.5') != ('AWAY', '-4.5', 'FAVOURABLE_LINE_SIGNAL', '5.5')
+
+First differing element 0:
+'HOME'
+'AWAY'
+
+- ('HOME', '4.5', 'UNFAVOURABLE', '-5.5')
++ ('AWAY', '-4.5', 'FAVOURABLE_LINE_SIGNAL', '5.5')
+
+======================================================================
+FAIL: test_user_examples_over_and_under (test_market_interpretation.FavourableLineSignalTests.test_user_examples_over_and_under) (target='OVER')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_interpretation.py", line 252, in test_user_examples_over_and_under
+    self.assertIn('unequal lines evaluated directionally', r['reason'])
+AssertionError: 'unequal lines evaluated directionally' not found in 'Pinnacle opening 170.5 -> current 168.5 (TOTAL) selects UNDER; Bet365 evaluated for that same side only'
+
+======================================================================
+FAIL: test_user_examples_over_and_under (test_market_interpretation.FavourableLineSignalTests.test_user_examples_over_and_under) (target='UNDER')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_interpretation.py", line 252, in test_user_examples_over_and_under
+    self.assertIn('unequal lines evaluated directionally', r['reason'])
+AssertionError: 'unequal lines evaluated directionally' not found in 'Pinnacle opening 170.5 -> current 168.5 (TOTAL) selects UNDER; Bet365 evaluated for that same side only'
+
+======================================================================
+FAIL: test_every_live_parsed_alert_has_consistent_interpretation (test_market_interpretation.ProductionRegressionTests.test_every_live_parsed_alert_has_consistent_interpretation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_interpretation.py", line 416, in test_every_live_parsed_alert_has_consistent_interpretation
+    self.assertEqual(p['comparison']['ev_status'], 'SUPPLIED_EQUAL_LINE', message_id)
+AssertionError: 'SUPPLIED_FOR_OTHER_SIDE' != 'SUPPLIED_EQUAL_LINE'
+- SUPPLIED_FOR_OTHER_SIDE
++ SUPPLIED_EQUAL_LINE
+ : 67960
+
+======================================================================
+FAIL: test_live_corpus_nothing_valid_is_invalid (test_market_interpretation.ProductionRegressionTests.test_live_corpus_nothing_valid_is_invalid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_interpretation.py", line 400, in test_live_corpus_nothing_valid_is_invalid
+    self.assertEqual(statuses['67962'], 'PARSED')          # early heavily-bolded Telegram render
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'AMBIGUOUS' != 'PARSED'
+- AMBIGUOUS
++ PARSED
+
+
+======================================================================
+FAIL: test_away_selection_inverts_displayed_home_line (test_market_interpretation.SpreadTests.test_away_selection_inverts_displayed_home_line)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_interpretation.py", line 114, in test_away_selection_inverts_displayed_home_line
+    self.assertEqual((p['selection_side'], p['selection_name'], p['selection_line']),
+AssertionError: Tuples differ: ('HOME', 'Atletico Boca Juniors', '12') != ('AWAY', 'NBA G League United', '-12')
+
+First differing element 0:
+'HOME'
+'AWAY'
+
+- ('HOME', 'Atletico Boca Juniors', '12')
++ ('AWAY', 'NBA G League United', '-12')
+
+======================================================================
+FAIL: test_kipina_unequal_lines_and_ev_none_implies_under_with_both_sides_reported (test_market_interpretation.TotalsTests.test_kipina_unequal_lines_and_ev_none_implies_under_with_both_sides_reported)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_interpretation.py", line 60, in test_kipina_unequal_lines_and_ev_none_implies_under_with_both_sides_reported
+    self.assertEqual((p['selection_side'], p['selection_line'], p['target_price_source']), ('UNDER', '168.5', 'implied_favourable_line'))
+AssertionError: Tuples differ: ('UNDER', '168.5', 'pinnacle_opening_to_current') != ('UNDER', '168.5', 'implied_favourable_line')
+
+First differing element 2:
+'pinnacle_opening_to_current'
+'implied_favourable_line'
+
+- ('UNDER', '168.5', 'pinnacle_opening_to_current')
++ ('UNDER', '168.5', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_pasted_fixtures_without_bold_are_partial_not_guessed (test_pipeline.ClassificationTests.test_pasted_fixtures_without_bold_are_partial_not_guessed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_pipeline.py", line 85, in test_pasted_fixtures_without_bold_are_partial_not_guessed
+    self.assertEqual(verdict['status'], 'PARSED_PARTIAL', name)
+AssertionError: 'PARSED' != 'PARSED_PARTIAL'
+- PARSED
++ PARSED_PARTIAL
+ : melbourne_real
+
+======================================================================
+FAIL: test_counterfactual_highlighted_favourable_side_qualifies_without_ev (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_counterfactual_highlighted_favourable_side_qualifies_without_ev) (side='HOME')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 162, in test_counterfactual_highlighted_favourable_side_qualifies_without_ev
+    self.assertEqual((p['selection_side'], p['selection_line'], p['comparison']['line_advantage'], p['alert_price']), want)
+AssertionError: Tuples differ: ('AWAY', '-4.5', '-3.5', '1.83') != ('HOME', '4.5', '3.5', '1.83')
+
+First differing element 0:
+'AWAY'
+'HOME'
+
+- ('AWAY', '-4.5', '-3.5', '1.83')
+?   ^^^^    -       -
+
++ ('HOME', '4.5', '3.5', '1.83')
+?   ^^^^
+
+
+======================================================================
+FAIL: test_counterfactual_highlighted_unfavourable_side_never_qualifies (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_counterfactual_highlighted_unfavourable_side_never_qualifies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 181, in test_counterfactual_highlighted_unfavourable_side_never_qualifies
+    self.assertEqual(v['parsed']['bet_quality'], 'UNFAVOURABLE')
+AssertionError: 'FAVOURABLE_LINE_SIGNAL' != 'UNFAVOURABLE'
+- FAVOURABLE_LINE_SIGNAL
++ UNFAVOURABLE
+
+
+======================================================================
+FAIL: test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side) (message=1157, status='PARSED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 122, in test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side
+    self.assertEqual((p['selection_side'], p['target_price_source']), (fav[0]['side'], 'implied_favourable_line'))
+AssertionError: Tuples differ: ('AWAY', 'pinnacle_opening_to_current') != ('HOME', 'implied_favourable_line')
+
+First differing element 0:
+'AWAY'
+'HOME'
+
+- ('AWAY', 'pinnacle_opening_to_current')
++ ('HOME', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side) (message=1160, status='PARSED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 122, in test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side
+    self.assertEqual((p['selection_side'], p['target_price_source']), (fav[0]['side'], 'implied_favourable_line'))
+AssertionError: Tuples differ: ('OVER', 'pinnacle_opening_to_current') != ('OVER', 'implied_favourable_line')
+
+First differing element 1:
+'pinnacle_opening_to_current'
+'implied_favourable_line'
+
+- ('OVER', 'pinnacle_opening_to_current')
++ ('OVER', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side) (message=1154, status='PARSED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 122, in test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side
+    self.assertEqual((p['selection_side'], p['target_price_source']), (fav[0]['side'], 'implied_favourable_line'))
+AssertionError: Tuples differ: ('AWAY', 'pinnacle_opening_to_current') != ('HOME', 'implied_favourable_line')
+
+First differing element 0:
+'AWAY'
+'HOME'
+
+- ('AWAY', 'pinnacle_opening_to_current')
++ ('HOME', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side) (message=1151, status='PARSED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 122, in test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side
+    self.assertEqual((p['selection_side'], p['target_price_source']), (fav[0]['side'], 'implied_favourable_line'))
+AssertionError: Tuples differ: ('OVER', 'pinnacle_opening_to_current') != ('OVER', 'implied_favourable_line')
+
+First differing element 1:
+'pinnacle_opening_to_current'
+'implied_favourable_line'
+
+- ('OVER', 'pinnacle_opening_to_current')
++ ('OVER', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side) (message=1149, status='PARSED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 122, in test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side
+    self.assertEqual((p['selection_side'], p['target_price_source']), (fav[0]['side'], 'implied_favourable_line'))
+AssertionError: Tuples differ: ('UNDER', 'pinnacle_opening_to_current') != ('OVER', 'implied_favourable_line')
+
+First differing element 0:
+'UNDER'
+'OVER'
+
+- ('UNDER', 'pinnacle_opening_to_current')
++ ('OVER', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side) (message=25, status='PARSED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 122, in test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side
+    self.assertEqual((p['selection_side'], p['target_price_source']), (fav[0]['side'], 'implied_favourable_line'))
+AssertionError: Tuples differ: ('OVER', 'pinnacle_opening_to_current') != ('OVER', 'implied_favourable_line')
+
+First differing element 1:
+'pinnacle_opening_to_current'
+'implied_favourable_line'
+
+- ('OVER', 'pinnacle_opening_to_current')
++ ('OVER', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side) (message=275, status='PARSED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 122, in test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side
+    self.assertEqual((p['selection_side'], p['target_price_source']), (fav[0]['side'], 'implied_favourable_line'))
+AssertionError: Tuples differ: ('OVER', 'pinnacle_opening_to_current') != ('OVER', 'implied_favourable_line')
+
+First differing element 1:
+'pinnacle_opening_to_current'
+'implied_favourable_line'
+
+- ('OVER', 'pinnacle_opening_to_current')
++ ('OVER', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side) (message=67, status='PARSED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 122, in test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side
+    self.assertEqual((p['selection_side'], p['target_price_source']), (fav[0]['side'], 'implied_favourable_line'))
+AssertionError: Tuples differ: ('UNDER', 'pinnacle_opening_to_current') != ('UNDER', 'implied_favourable_line')
+
+First differing element 1:
+'pinnacle_opening_to_current'
+'implied_favourable_line'
+
+- ('UNDER', 'pinnacle_opening_to_current')
++ ('UNDER', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side) (message=37, status='PARSED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 122, in test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side
+    self.assertEqual((p['selection_side'], p['target_price_source']), (fav[0]['side'], 'implied_favourable_line'))
+AssertionError: Tuples differ: ('UNDER', 'pinnacle_opening_to_current') != ('UNDER', 'implied_favourable_line')
+
+First differing element 1:
+'pinnacle_opening_to_current'
+'implied_favourable_line'
+
+- ('UNDER', 'pinnacle_opening_to_current')
++ ('UNDER', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side) (message=341, status='PARSED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 122, in test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side
+    self.assertEqual((p['selection_side'], p['target_price_source']), (fav[0]['side'], 'implied_favourable_line'))
+AssertionError: Tuples differ: ('HOME', 'pinnacle_opening_to_current') != ('HOME', 'implied_favourable_line')
+
+First differing element 1:
+'pinnacle_opening_to_current'
+'implied_favourable_line'
+
+- ('HOME', 'pinnacle_opening_to_current')
++ ('HOME', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side) (message=601, status='PARSED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 122, in test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side
+    self.assertEqual((p['selection_side'], p['target_price_source']), (fav[0]['side'], 'implied_favourable_line'))
+AssertionError: Tuples differ: ('AWAY', 'pinnacle_opening_to_current') != ('HOME', 'implied_favourable_line')
+
+First differing element 0:
+'AWAY'
+'HOME'
+
+- ('AWAY', 'pinnacle_opening_to_current')
++ ('HOME', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side) (message=21, status='PARSED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 122, in test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side
+    self.assertEqual((p['selection_side'], p['target_price_source']), (fav[0]['side'], 'implied_favourable_line'))
+AssertionError: Tuples differ: ('HOME', 'pinnacle_opening_to_current') != ('AWAY', 'implied_favourable_line')
+
+First differing element 0:
+'HOME'
+'AWAY'
+
+- ('HOME', 'pinnacle_opening_to_current')
++ ('AWAY', 'implied_favourable_line')
+
+======================================================================
+FAIL: test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side (test_unequal_line_audit.RealFeedUnequalLineAlerts.test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_unequal_line_audit.py", line 127, in test_real_alerts_get_an_implied_target_only_when_the_lines_single_out_a_side
+    self.assertGreaterEqual(len(parsed_ids), 6)
+AssertionError: 0 not greater than or equal to 6
+
+----------------------------------------------------------------------
+Ran 261 tests in 65.440s
+
+FAILED (failures=33, errors=1)

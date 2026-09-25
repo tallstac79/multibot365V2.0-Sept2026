@@ -1,0 +1,154 @@
+{
+  "healthy": true,
+  "heartbeat_ms": 1790366056278,
+  "uptime_ms": 26716030,
+  "state": "EXECUTING",
+  "current_instruction": {
+    "view": "SETTLED",
+    "adapter": "live_bet365",
+    "scenario": "live",
+    "action": "MY_BETS",
+    "timeout_ms": 120000,
+    "instruction_id": "st-f2eb69196870f6a3-48"
+  },
+  "last_result": {
+    "instruction_id": "forensic-1790366014-reset",
+    "status": "PASS",
+    "stage": "PASS",
+    "detail": "RESET_BETSLIP",
+    "duration_ms": 601,
+    "progress": {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 516,
+      "last_progress_at_ms": 1790366050742,
+      "instruction_id": "forensic-1790366014-reset",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790366050738
+        },
+        {
+          "stage": "RESET_BETSLIP",
+          "elapsed_ms": 13,
+          "at_ms": 1790366050742,
+          "timing": {
+            "stage": "RESET_BETSLIP",
+            "start_elapsed_ms": 13,
+            "start_ts_ms": 1790366050739,
+            "end_elapsed_ms": 516,
+            "end_ts_ms": 1790366051242,
+            "duration_ms": 503,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "RESET_BETSLIP",
+          "elapsed_ms": 17,
+          "at_ms": 1790366050742
+        },
+        {
+          "stage": "RESET_BETSLIP",
+          "elapsed_ms": 470,
+          "at_ms": 1790366050742
+        },
+        {
+          "stage": "RESET_BETSLIP",
+          "elapsed_ms": 516,
+          "at_ms": 1790366050742
+        }
+      ]
+    },
+    "device_stage": "RESET_BETSLIP",
+    "execution_count": 1,
+    "run_id": "c_1n0H9jvStWJvK0i7ZQRlr4eq43EyvqDrSMD3EwZHO2o",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+    "betslip_reset": {
+      "tapped": false,
+      "detail": "No safe reset control visible"
+    },
+    "stage_timings": [
+      {
+        "stage": "RESET_BETSLIP",
+        "start_elapsed_ms": 13,
+        "start_ts_ms": 1790366050739,
+        "end_elapsed_ms": 516,
+        "end_ts_ms": 1790366051242,
+        "duration_ms": 503,
+        "status": "ok",
+        "retries": 0
+      }
+    ]
+  },
+  "app_version": "0.9.17-reset",
+  "version_code": 100,
+  "endpoint": "http://100.114.45.68:8767",
+  "pid": 27681,
+  "device_id": "galaxy-a13-5g",
+  "session": {
+    "state": "AUTHENTICATED",
+    "observed_at_ms": 1790366052809,
+    "detail": "job-active progress keepalive @OPEN_HOME",
+    "refresh_count": 453,
+    "last_refresh_at_ms": 1790366039966,
+    "last_refresh_outcome": "job active"
+  },
+  "ocr_engine": "hybrid",
+  "fast_ocr_error": null,
+  "credentials_configured": true,
+  "credential_store": "encrypted",
+  "session_recovery": {
+    "last_attempt_at_ms": 1790365407247,
+    "attempts_last_hour": 1,
+    "last_outcome": "deferred: cooldown or hourly limit"
+  },
+  "progress": {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 17,
+    "last_progress_at_ms": 1790366052809,
+    "instruction_id": "st-f2eb69196870f6a3-48",
+    "stages": [
+      {
+        "stage": "STARTED",
+        "elapsed_ms": 0,
+        "at_ms": 1790366052799
+      },
+      {
+        "stage": "OPEN_HOME",
+        "elapsed_ms": 13,
+        "at_ms": 1790366052803,
+        "timing": {
+          "stage": "OPEN_HOME",
+          "start_elapsed_ms": 13,
+          "start_ts_ms": 1790366052800,
+          "end_elapsed_ms": null,
+          "end_ts_ms": null,
+          "duration_ms": null,
+          "status": "running",
+          "retries": 0
+        }
+      },
+      {
+        "stage": "OPEN_HOME",
+        "elapsed_ms": 17,
+        "at_ms": 1790366052809,
+        "timing": {
+          "stage": "OPEN_HOME",
+          "start_elapsed_ms": 13,
+          "start_ts_ms": 1790366052800,
+          "end_elapsed_ms": null,
+          "end_ts_ms": null,
+          "duration_ms": null,
+          "status": "running",
+          "retries": 0
+        }
+      }
+    ]
+  },
+  "device_stage": "OPEN_HOME"
+}

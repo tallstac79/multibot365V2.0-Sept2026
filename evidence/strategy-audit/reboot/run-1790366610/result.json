@@ -1,0 +1,547 @@
+{
+  "boot_id_changed": true,
+  "boot_before": "d5f47536-2dc0-4864-9f02-1eefb8c5e58a",
+  "boot_after": "338ccff0-ad67-4a0d-b7e1-9065a9fadd51",
+  "coordinator_recovered": true,
+  "session": {
+    "instruction_id": "forensic-reboot-session-1790366660",
+    "status": "FAIL",
+    "stage": "LOGIN_FAILED",
+    "detail": "Bet365 session state unclear: no account, login or challenge markers on screen",
+    "duration_ms": 29834,
+    "progress": {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 29394,
+      "last_progress_at_ms": 1790366680417,
+      "instruction_id": "forensic-reboot-session-1790366660",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790366661195
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 75,
+          "at_ms": 1790366661214,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 75,
+            "start_ts_ms": 1790366661200,
+            "end_elapsed_ms": 12780,
+            "end_ts_ms": 1790366673910,
+            "duration_ms": 12705,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 91,
+          "at_ms": 1790366661242,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 75,
+            "start_ts_ms": 1790366661200,
+            "end_elapsed_ms": 12780,
+            "end_ts_ms": 1790366673910,
+            "duration_ms": 12705,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4210,
+          "at_ms": 1790366661242
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 5426,
+          "at_ms": 1790366661242
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 5481,
+          "at_ms": 1790366666620,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 75,
+            "start_ts_ms": 1790366661200,
+            "end_elapsed_ms": 12780,
+            "end_ts_ms": 1790366673910,
+            "duration_ms": 12705,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 9500,
+          "at_ms": 1790366666620
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 11222,
+          "at_ms": 1790366666620
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 11340,
+          "at_ms": 1790366666620
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 12686,
+          "at_ms": 1790366666620
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 12780,
+          "at_ms": 1790366674018,
+          "timing": {
+            "stage": "ENSURE_SESSION",
+            "start_elapsed_ms": 12780,
+            "start_ts_ms": 1790366673911,
+            "end_elapsed_ms": 15661,
+            "end_ts_ms": 1790366676786,
+            "duration_ms": 2881,
+            "status": "ok",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 12898,
+          "at_ms": 1790366674018
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "elapsed_ms": 14397,
+          "at_ms": 1790366674018
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 15661,
+          "at_ms": 1790366676810,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 15661,
+            "start_ts_ms": 1790366676786,
+            "end_elapsed_ms": 29394,
+            "end_ts_ms": 1790366690518,
+            "duration_ms": 13733,
+            "status": "fail",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 18449,
+          "at_ms": 1790366676810
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 19169,
+          "at_ms": 1790366676810
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 19227,
+          "at_ms": 1790366680417,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 15661,
+            "start_ts_ms": 1790366676786,
+            "end_elapsed_ms": 29394,
+            "end_ts_ms": 1790366690518,
+            "duration_ms": 13733,
+            "status": "fail",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 23296,
+          "at_ms": 1790366680417
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 24825,
+          "at_ms": 1790366680417
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 27057,
+          "at_ms": 1790366680417
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 28493,
+          "at_ms": 1790366680417
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 29394,
+          "at_ms": 1790366680417
+        }
+      ]
+    },
+    "device_stage": "OPEN_HOME",
+    "execution_count": 1,
+    "run_id": "c_leoBY8c7jZ1lO5n9zmU8Q9q7l21vZ4klrqWOwjmv4CM",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "Bet365 session state unclear: no account, login or challenge markers on screen",
+    "stage_timings": [
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 75,
+        "start_ts_ms": 1790366661200,
+        "end_elapsed_ms": 12780,
+        "end_ts_ms": 1790366673910,
+        "duration_ms": 12705,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "ENSURE_SESSION",
+        "start_elapsed_ms": 12780,
+        "start_ts_ms": 1790366673911,
+        "end_elapsed_ms": 15661,
+        "end_ts_ms": 1790366676786,
+        "duration_ms": 2881,
+        "status": "ok",
+        "retries": 0
+      },
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 15661,
+        "start_ts_ms": 1790366676786,
+        "end_elapsed_ms": 29394,
+        "end_ts_ms": 1790366690518,
+        "duration_ms": 13733,
+        "status": "fail",
+        "retries": 0
+      }
+    ],
+    "session_path": [
+      {
+        "saw": "UNKNOWN",
+        "state": "UNOBSERVED",
+        "attempts": 0
+      },
+      {
+        "saw": "UNKNOWN",
+        "state": "UNOBSERVED",
+        "attempts": 0
+      },
+      {
+        "saw": "UNKNOWN",
+        "state": "UNOBSERVED",
+        "attempts": 0
+      }
+    ],
+    "session_machine": "UNOBSERVED"
+  },
+  "duplicate_code": 409,
+  "duplicate": {
+    "instruction_id": "forensic-1790366148-hold",
+    "status": "FAIL",
+    "stage": "DUPLICATE",
+    "detail": "Instruction ID has already been accepted; no action repeated",
+    "duration_ms": 0,
+    "result_url": "/instructions/forensic-1790366148-hold",
+    "execution_count": 1
+  },
+  "wall_seconds": 81.328,
+  "health": {
+    "healthy": true,
+    "heartbeat_ms": 1790366692671,
+    "uptime_ms": 39596,
+    "state": "IDLE",
+    "current_instruction": null,
+    "last_result": {
+      "instruction_id": "forensic-reboot-session-1790366660",
+      "status": "FAIL",
+      "stage": "LOGIN_FAILED",
+      "detail": "Bet365 session state unclear: no account, login or challenge markers on screen",
+      "duration_ms": 29834,
+      "progress": {
+        "stage": "OPEN_HOME",
+        "elapsed_ms": 29394,
+        "last_progress_at_ms": 1790366680417,
+        "instruction_id": "forensic-reboot-session-1790366660",
+        "stages": [
+          {
+            "stage": "STARTED",
+            "elapsed_ms": 0,
+            "at_ms": 1790366661195
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 75,
+            "at_ms": 1790366661214,
+            "timing": {
+              "stage": "OPEN_HOME",
+              "start_elapsed_ms": 75,
+              "start_ts_ms": 1790366661200,
+              "end_elapsed_ms": 12780,
+              "end_ts_ms": 1790366673910,
+              "duration_ms": 12705,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 91,
+            "at_ms": 1790366661242,
+            "timing": {
+              "stage": "OPEN_HOME",
+              "start_elapsed_ms": 75,
+              "start_ts_ms": 1790366661200,
+              "end_elapsed_ms": 12780,
+              "end_ts_ms": 1790366673910,
+              "duration_ms": 12705,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 4210,
+            "at_ms": 1790366661242
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 5426,
+            "at_ms": 1790366661242
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 5481,
+            "at_ms": 1790366666620,
+            "timing": {
+              "stage": "OPEN_HOME",
+              "start_elapsed_ms": 75,
+              "start_ts_ms": 1790366661200,
+              "end_elapsed_ms": 12780,
+              "end_ts_ms": 1790366673910,
+              "duration_ms": 12705,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 9500,
+            "at_ms": 1790366666620
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 11222,
+            "at_ms": 1790366666620
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 11340,
+            "at_ms": 1790366666620
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 12686,
+            "at_ms": 1790366666620
+          },
+          {
+            "stage": "ENSURE_SESSION",
+            "elapsed_ms": 12780,
+            "at_ms": 1790366674018,
+            "timing": {
+              "stage": "ENSURE_SESSION",
+              "start_elapsed_ms": 12780,
+              "start_ts_ms": 1790366673911,
+              "end_elapsed_ms": 15661,
+              "end_ts_ms": 1790366676786,
+              "duration_ms": 2881,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "ENSURE_SESSION",
+            "elapsed_ms": 12898,
+            "at_ms": 1790366674018
+          },
+          {
+            "stage": "ENSURE_SESSION",
+            "elapsed_ms": 14397,
+            "at_ms": 1790366674018
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 15661,
+            "at_ms": 1790366676810,
+            "timing": {
+              "stage": "OPEN_HOME",
+              "start_elapsed_ms": 15661,
+              "start_ts_ms": 1790366676786,
+              "end_elapsed_ms": 29394,
+              "end_ts_ms": 1790366690518,
+              "duration_ms": 13733,
+              "status": "fail",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 18449,
+            "at_ms": 1790366676810
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 19169,
+            "at_ms": 1790366676810
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 19227,
+            "at_ms": 1790366680417,
+            "timing": {
+              "stage": "OPEN_HOME",
+              "start_elapsed_ms": 15661,
+              "start_ts_ms": 1790366676786,
+              "end_elapsed_ms": 29394,
+              "end_ts_ms": 1790366690518,
+              "duration_ms": 13733,
+              "status": "fail",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 23296,
+            "at_ms": 1790366680417
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 24825,
+            "at_ms": 1790366680417
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 27057,
+            "at_ms": 1790366680417
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 28493,
+            "at_ms": 1790366680417
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 29394,
+            "at_ms": 1790366680417
+          }
+        ]
+      },
+      "device_stage": "OPEN_HOME",
+      "execution_count": 1,
+      "run_id": "c_leoBY8c7jZ1lO5n9zmU8Q9q7l21vZ4klrqWOwjmv4CM",
+      "fixture_name": null,
+      "home": null,
+      "away": null,
+      "competition": null,
+      "verification_detail": "Bet365 session state unclear: no account, login or challenge markers on screen",
+      "stage_timings": [
+        {
+          "stage": "OPEN_HOME",
+          "start_elapsed_ms": 75,
+          "start_ts_ms": 1790366661200,
+          "end_elapsed_ms": 12780,
+          "end_ts_ms": 1790366673910,
+          "duration_ms": 12705,
+          "status": "ok",
+          "retries": 0
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "start_elapsed_ms": 12780,
+          "start_ts_ms": 1790366673911,
+          "end_elapsed_ms": 15661,
+          "end_ts_ms": 1790366676786,
+          "duration_ms": 2881,
+          "status": "ok",
+          "retries": 0
+        },
+        {
+          "stage": "OPEN_HOME",
+          "start_elapsed_ms": 15661,
+          "start_ts_ms": 1790366676786,
+          "end_elapsed_ms": 29394,
+          "end_ts_ms": 1790366690518,
+          "duration_ms": 13733,
+          "status": "fail",
+          "retries": 0
+        }
+      ],
+      "session_path": [
+        {
+          "saw": "UNKNOWN",
+          "state": "UNOBSERVED",
+          "attempts": 0
+        },
+        {
+          "saw": "UNKNOWN",
+          "state": "UNOBSERVED",
+          "attempts": 0
+        },
+        {
+          "saw": "UNKNOWN",
+          "state": "UNOBSERVED",
+          "attempts": 0
+        }
+      ],
+      "session_machine": "UNOBSERVED"
+    },
+    "app_version": "0.9.17-reset",
+    "version_code": 100,
+    "endpoint": "http://100.114.45.68:8767",
+    "pid": 4214,
+    "device_id": "galaxy-a13-5g",
+    "session": {
+      "state": "UNKNOWN",
+      "observed_at_ms": 1790366690720,
+      "detail": "workflow",
+      "refresh_count": 1,
+      "last_refresh_at_ms": 1790366653468,
+      "last_refresh_outcome": "screen locked or off"
+    },
+    "ocr_engine": "hybrid",
+    "fast_ocr_error": null,
+    "credentials_configured": true,
+    "credential_store": "encrypted",
+    "session_recovery": {
+      "last_attempt_at_ms": 0,
+      "attempts_last_hour": 0,
+      "last_outcome": "none"
+    }
+  },
+  "ack": {
+    "instruction_id": "forensic-reboot-session-1790366660",
+    "acknowledged": true,
+    "state": "ACCEPTED",
+    "received_at_ms": 1790366660874,
+    "result_url": "/instructions/forensic-reboot-session-1790366660",
+    "execution_count": 0
+  },
+  "poll_errors": [
+    "Result unavailable; retry the same ID, never a replacement ID",
+    "Result unavailable; retry the same ID, never a replacement ID",
+    "{'instruction_id': '', 'status': 'FAIL', 'stage': 'INVALID_INSTRUCTION', 'detail': 'Malformed or incomplete HTTP/JSON request', 'duration_ms': 0}",
+    "{'instruction_id': '', 'status': 'FAIL', 'stage': 'INVALID_INSTRUCTION', 'detail': 'Malformed or incomplete HTTP/JSON request', 'duration_ms': 0}"
+  ],
+  "final_action_dispatched": false
+}

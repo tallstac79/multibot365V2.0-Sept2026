@@ -1,0 +1,28 @@
+JUnit version 4.13.2
+.....IDENTITY_CORPUS 19 cases
+  Kyoto Hannaryz v Shiga Lake Stars (live  prior=WRONG_EVENT              now=ALIAS_MATCH                  both teams via aliases
+  Berck Fliers Range v Pays Salonais Baske prior=WRONG_EVENT              now=ALIAS_MATCH                  both teams via aliases
+  Soproni KC v Debreceni EAC (live on-baaa prior=WRONG_EVENT              now=ALIAS_MATCH                  both teams via aliases
+  Soproni without any registry alias (reso prior=WRONG_EVENT              now=HIGH_CONFIDENCE_EVENT_MATCH  event link + kick-off 25 Sep 18:00 + 'DEAC Debreceni' exact; 'Soproni' is a naming variant of 'Sopron KC' (0.86)
+  Saga Ballooners v Hiroshima Dragonflies  prior=WRONG_EVENT              now=EXACT                        both teams exact
+  Araraquara v Mogi Das Cruzes (live on-9c prior=WRONG_EVENT              now=MISMATCH                     'Araraquara' is not 'Corinthians' (different name 0.18)
+  Hapoel Tel Aviv v Bayern Munich (Eurolea prior=PASS                     now=EXACT                        both teams exact
+  Crvena Zvezda v Zalgiris (Euroleague pro prior=PASS                     now=EXACT                        both teams exact
+  Hapoel Jerusalem v Bnei Herzliya (PREPAR prior=PASS                     now=EXACT                        both teams exact
+  Besancon v Val De Seine (two live placem prior=PASS                     now=CANONICAL_MATCH              both teams canonical
+  Besancon v Val De Seine, page OCR 'Besan prior=PASS                     now=CANONICAL_MATCH              both teams canonical
+  Fulham v Crystal Palace (football search prior=PASS                     now=EXACT                        both teams exact
+  BC Beroe v Ferrol vs search 'Beroe (W) v prior=accepted by legacy conta now=MISMATCH                     'BC Beroe' vs 'Beroe (W)': protected markers differ [] vs [women]
+  Chartres v Levharti Chomutov vs search ' prior=not found                now=MISMATCH                     'Chartres' vs 'Chartres (W)': protected markers differ [] vs [women]
+  Kyoto Hannaryz v Bayern Munich against t prior=WRONG_EVENT              now=MISMATCH                     'Bayern Munich' is not 'Shiga Lakes' (different name 0.17)
+  Kyoto/Shiga names against the Besancon p prior=WRONG_EVENT              now=MISMATCH                     kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)
+  Besancon v Valdeseine synthetic variant  prior=ALIAS_REQUIRED           now=HIGH_CONFIDENCE_EVENT_MATCH  event link + kick-off 25 Sep 19:00 + 'Besancon' exact; 'Valdeseine' is a naming variant of 'Val de Seine' (0.80)
+  Gunma Crane Thunders vs garbage search r prior=not found                now=MISMATCH                     'Gunma Crane Thunders' is not '(F1 Serbia & Yes (v Greece)' (different name 0.22)
+  Hapoel Tel Aviv search row OCR 'Bayern 1 prior=WRONG_EVENT (fixed 0.6.3 now=AMBIGUOUS                    'Bayern Munich' only resembles 'Bayern 1 2' (1.00) and there is no event anchor with an agreeing kick-off
+COUNTS {EXACT=5, CANONICAL_MATCH=2, ALIAS_MATCH=3, HIGH_CONFIDENCE_EVENT_MATCH=2, AMBIGUOUS=1, MISMATCH=6}
+PRIOR_FAILURES 12 NOW_ACCEPTED 6
+...................................................................................
+Time: 1.267
+
+OK (88 tests)
+

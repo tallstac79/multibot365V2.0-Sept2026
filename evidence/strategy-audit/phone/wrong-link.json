@@ -1,0 +1,24 @@
+{
+  "tag": "wrong-link",
+  "expected": "WRONG_EVENT",
+  "ok": false,
+  "payload": {
+    "action": "ADAPTER_WORKFLOW",
+    "sport": "basketball",
+    "query": "Kyoto Hannaryz||Shiga Lake Stars",
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "",
+    "minimum_price": "1.01",
+    "stake": "0.10",
+    "execution_mode": "hold",
+    "event_url": "https://www.bet365.com/#/AC/B18/C21170155/D19/E26748183/F19/I0/",
+    "kickoff_utc": "2026-09-26T16:00",
+    "instruction_id": "forensic-1790366014-wrong-link",
+    "adapter": "live_bet365",
+    "scenario": "live",
+    "timeout_ms": 120000
+  },
+  "error": "{'instruction_id': 'forensic-1790366014-wrong-link', 'status': 'FAIL', 'stage': 'INTERNAL_ERROR', 'detail': 'BUSY: one instruction at a time; ID not consumed', 'duration_ms': 0}",
+  "wall_seconds": 0.969
+}

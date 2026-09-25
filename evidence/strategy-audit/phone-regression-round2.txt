@@ -1,0 +1,9 @@
+session True PASS PASS SESSION_AUTHENTICATED 14.125
+hold True PASS PASS COMPLETE_EXECUTION_READY 11.203
+pretap-prepare True PASS PASS PRETAP_READY 1.563
+changed-price-prepare True FAIL PRICE_CHANGED Approved price 999.00 not on the slip 8.703
+reset True PASS PASS RESET_BETSLIP 3.563
+wrong-link True FAIL WRONG_EVENT Event link shows 'Kirchheim v SBB Baskets Wolmirstedt'; alert says 'Kyoto Hannaryz v Shiga Lake Stars': 'Kyoto Hannaryz' is not 'Kirchheim' (different name 0.15) 9.687
+moved-line True FAIL TARGET_NOT_FOUND No live selection for SPREAD/HOME/-999.5 8.718
+cleanup True PASS PASS RESET_BETSLIP 1.532
+mybets True PASS PASS MY_BETS 31.078

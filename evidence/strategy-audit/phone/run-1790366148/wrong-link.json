@@ -1,0 +1,174 @@
+{
+  "tag": "wrong-link",
+  "expected": "WRONG_EVENT",
+  "ok": true,
+  "payload": {
+    "action": "ADAPTER_WORKFLOW",
+    "sport": "basketball",
+    "query": "Kyoto Hannaryz||Shiga Lake Stars",
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "",
+    "minimum_price": "1.01",
+    "stake": "0.10",
+    "execution_mode": "hold",
+    "event_url": "https://www.bet365.com/#/AC/B18/C21170155/D19/E26748183/F19/I0/",
+    "kickoff_utc": "2026-09-26T16:00",
+    "instruction_id": "forensic-1790366148-wrong-link",
+    "adapter": "live_bet365",
+    "scenario": "live",
+    "timeout_ms": 120000
+  },
+  "ack": {
+    "instruction_id": "forensic-1790366148-wrong-link",
+    "acknowledged": true,
+    "state": "ACCEPTED",
+    "received_at_ms": 1790366189756,
+    "result_url": "/instructions/forensic-1790366148-wrong-link",
+    "execution_count": 0
+  },
+  "result": {
+    "instruction_id": "forensic-1790366148-wrong-link",
+    "status": "FAIL",
+    "stage": "WRONG_EVENT",
+    "detail": "Event link shows 'Kirchheim v SBB Baskets Wolmirstedt'; alert says 'Kyoto Hannaryz v Shiga Lake Stars': 'Kyoto Hannaryz' is not 'Kirchheim' (different name 0.15)",
+    "duration_ms": 9001,
+    "progress": {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 8897,
+      "last_progress_at_ms": 1790366194701,
+      "instruction_id": "forensic-1790366148-wrong-link",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790366189859
+        },
+        {
+          "stage": "OPEN_EVENT",
+          "elapsed_ms": 15,
+          "at_ms": 1790366189862
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 18,
+          "at_ms": 1790366189868,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 18,
+            "start_ts_ms": 1790366189863,
+            "end_elapsed_ms": 8897,
+            "end_ts_ms": 1790366198742,
+            "duration_ms": 8879,
+            "status": "fail",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 3457,
+          "at_ms": 1790366189868
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4022,
+          "at_ms": 1790366189868
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4040,
+          "at_ms": 1790366189868
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4744,
+          "at_ms": 1790366189868
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 4854,
+          "at_ms": 1790366194701,
+          "timing": {
+            "stage": "OPEN_HOME",
+            "start_elapsed_ms": 18,
+            "start_ts_ms": 1790366189863,
+            "end_elapsed_ms": 8897,
+            "end_ts_ms": 1790366198742,
+            "duration_ms": 8879,
+            "status": "fail",
+            "retries": 0
+          }
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 8279,
+          "at_ms": 1790366194701
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 8835,
+          "at_ms": 1790366194701
+        },
+        {
+          "stage": "OPEN_HOME",
+          "elapsed_ms": 8897,
+          "at_ms": 1790366194701
+        }
+      ]
+    },
+    "device_stage": "OPEN_HOME",
+    "execution_count": 1,
+    "run_id": "c_xtEuOuqDLm1I_1lEkt_tXKaOFdfFg988OtfqmP1_lBU",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "Event link shows 'Kirchheim v SBB Baskets Wolmirstedt'; alert says 'Kyoto Hannaryz v Shiga Lake Stars': 'Kyoto Hannaryz' is not 'Kirchheim' (different name 0.15)",
+    "route": "event_link",
+    "stage_timings": [
+      {
+        "stage": "OPEN_HOME",
+        "start_elapsed_ms": 18,
+        "start_ts_ms": 1790366189863,
+        "end_elapsed_ms": 8897,
+        "end_ts_ms": 1790366198742,
+        "duration_ms": 8879,
+        "status": "fail",
+        "retries": 0
+      }
+    ],
+    "direct_event_rejected": "identity: 'Kyoto Hannaryz' is not 'Kirchheim' (different name 0.15)",
+    "identity": {
+      "verdict": "MISMATCH",
+      "reason": "'Kyoto Hannaryz' is not 'Kirchheim' (different name 0.15)",
+      "home": {
+        "feed": "Kyoto Hannaryz",
+        "bookmaker": "Kirchheim",
+        "level": "NONE",
+        "score": 0.15,
+        "note": "different name 0.15"
+      },
+      "away": {
+        "feed": "Shiga Lake Stars",
+        "bookmaker": "SBB Baskets Wolmirstedt",
+        "level": "NONE",
+        "score": 0.33,
+        "note": "different name 0.33"
+      },
+      "kickoff_known": true,
+      "kickoff_agrees": true,
+      "reversed": false
+    },
+    "identity_verdict": "MISMATCH",
+    "event_url": "https://www.bet365.com/#/AC/B18/C21170155/D19/E26748183/F19/I0/",
+    "session_path": [
+      {
+        "saw": "ACCOUNT",
+        "state": "AUTHENTICATED",
+        "attempts": 0
+      }
+    ],
+    "session_machine": "AUTHENTICATED"
+  },
+  "wall_seconds": 9.687
+}

@@ -1,0 +1,16 @@
+======================================================================
+FAIL: test_live_corpus_keeps_malformed_separate_from_ambiguous (tests.test_market_interpretation.ProductionRegressionTests.test_live_corpus_keeps_malformed_separate_from_ambiguous)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\WINDOWS11\Desktop\MultiBotV2.0\MultiBot365\tests\test_market_interpretation.py", line 399, in test_live_corpus_keeps_malformed_separate_from_ambiguous
+    self.assertEqual(statuses['67998'], 'PARSED') # net UNDER despite recent rise
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'AMBIGUOUS' != 'PARSED'
+- AMBIGUOUS
++ PARSED
+
+
+----------------------------------------------------------------------
+Ran 88 tests in 0.935s
+
+FAILED (failures=1)

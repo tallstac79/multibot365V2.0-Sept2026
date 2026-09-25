@@ -1,0 +1,101 @@
+{
+  "tag": "changed-price-prepare",
+  "expected": "PRICE_CHANGED",
+  "ok": true,
+  "payload": {
+    "action": "PLACE_HELD",
+    "sport": "basketball",
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "selection_name": "Kirchheim",
+    "price": "999.00",
+    "minimum_price": "1.01",
+    "stake": "0.10",
+    "execution_mode": "prepare",
+    "confirmation_status": "APPROVED",
+    "instruction_id": "forensic-1790366148-changed-price-prepare",
+    "adapter": "live_bet365",
+    "scenario": "live",
+    "timeout_ms": 120000
+  },
+  "ack": {
+    "instruction_id": "forensic-1790366148-changed-price-prepare",
+    "acknowledged": true,
+    "state": "ACCEPTED",
+    "received_at_ms": 1790366177442,
+    "result_url": "/instructions/forensic-1790366148-changed-price-prepare",
+    "execution_count": 0
+  },
+  "result": {
+    "instruction_id": "forensic-1790366148-changed-price-prepare",
+    "status": "FAIL",
+    "stage": "PRICE_CHANGED",
+    "detail": "Approved price 999.00 not on the slip",
+    "duration_ms": 7992,
+    "progress": {
+      "stage": "PRETAP_CHECK",
+      "elapsed_ms": 7924,
+      "last_progress_at_ms": 1790366177510,
+      "instruction_id": "forensic-1790366148-changed-price-prepare",
+      "stages": [
+        {
+          "stage": "STARTED",
+          "elapsed_ms": 0,
+          "at_ms": 1790366177506
+        },
+        {
+          "stage": "PRETAP_CHECK",
+          "elapsed_ms": 11,
+          "at_ms": 1790366177510
+        },
+        {
+          "stage": "PRETAP_CHECK",
+          "elapsed_ms": 16,
+          "at_ms": 1790366177510
+        },
+        {
+          "stage": "PRETAP_CHECK",
+          "elapsed_ms": 504,
+          "at_ms": 1790366177510
+        },
+        {
+          "stage": "PRETAP_CHECK",
+          "elapsed_ms": 908,
+          "at_ms": 1790366177510
+        },
+        {
+          "stage": "PRETAP_CHECK",
+          "elapsed_ms": 1382,
+          "at_ms": 1790366177510
+        },
+        {
+          "stage": "PRETAP_CHECK",
+          "elapsed_ms": 1808,
+          "at_ms": 1790366177510
+        },
+        {
+          "stage": "PRETAP_CHECK",
+          "elapsed_ms": 7816,
+          "at_ms": 1790366177510
+        },
+        {
+          "stage": "PRETAP_CHECK",
+          "elapsed_ms": 7924,
+          "at_ms": 1790366177510
+        }
+      ]
+    },
+    "device_stage": "PRETAP_CHECK",
+    "execution_count": 1,
+    "run_id": "c_tNHuG9pxjhqxlievu3bNpL-rtXrTaM6mtg6SsxunAiw",
+    "fixture_name": null,
+    "home": null,
+    "away": null,
+    "competition": null,
+    "verification_detail": "Approved price 999.00 not on the slip",
+    "stage_timings": [],
+    "t_start_ms": 1790366177506
+  },
+  "wall_seconds": 8.703
+}
