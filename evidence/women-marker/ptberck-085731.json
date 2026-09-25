@@ -1,0 +1,149 @@
+{
+ "payload": {
+  "action": "PLACE_HELD",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+3.5",
+  "selection_name": "Pays Salonais Basket",
+  "price": "1.83",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "execution_mode": "prepare",
+  "confirmation_status": "APPROVED",
+  "timeout_ms": 60000,
+  "instruction_id": "ptberck-085731"
+ },
+ "result": {
+  "instruction_id": "ptberck-085731",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "PRETAP_READY",
+  "duration_ms": 901,
+  "progress": {
+   "stage": "PRETAP_CHECK",
+   "elapsed_ms": 784,
+   "last_progress_at_ms": 1790323065455,
+   "instruction_id": "ptberck-085731",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790323065449
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 18,
+     "at_ms": 1790323065455
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 27,
+     "at_ms": 1790323065455
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 657,
+     "at_ms": 1790323065455
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 784,
+     "at_ms": 1790323065455
+    }
+   ]
+  },
+  "device_stage": "PRETAP_CHECK",
+  "execution_count": 1,
+  "run_id": "c_0BED_07FVtlWZAhvwcn76NbgtRP9qLEcecdMXjvzicY",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "pretap": {
+   "ok": true,
+   "selection": "Pays Salonais Basket",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "stage_timings": [],
+  "t_start_ms": 1790323065449,
+  "t_pretap_done_ms": 1790323066214
+ },
+ "run": {
+  "run_id": "c_0BED_07FVtlWZAhvwcn76NbgtRP9qLEcecdMXjvzicY",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790323065431,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790323065431
+   },
+   {
+    "phase": "PRETAP_CHECK",
+    "elapsed_ms": 18,
+    "wall_ts_ms": 1790323065450
+   },
+   {
+    "phase": "CAPTURE_pretap",
+    "elapsed_ms": 27,
+    "wall_ts_ms": 1790323065458
+   },
+   {
+    "phase": "CAPTURED_pretap",
+    "elapsed_ms": 657,
+    "wall_ts_ms": 1790323066089
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 784,
+    "wall_ts_ms": 1790323066215
+   }
+  ],
+  "screenshots": [
+   "s001_pretap.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [],
+  "t_start_ms": 1790323065449,
+  "stake_check_pretap": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "pretap": {
+   "ok": true,
+   "selection": "Pays Salonais Basket",
+   "line": "+3.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "t_pretap_done_ms": 1790323066214,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "detail": "PRETAP_READY",
+  "duration_ms": 784
+ },
+ "wall": 0.9705238342285156
+}

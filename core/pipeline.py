@@ -21,6 +21,7 @@ import re
 
 from core import alert_classifier
 from core.final_action import FinalAction
+from core.competition_gender import womens_competition
 from core.identity_registry import IdentityRegistry
 from core.lifecycle import State, TERMINAL, DEVICE_OWNED, interpret_device_result, CONFIRMATION_MAP
 from core.pipeline_store import Store, iso, utcnow, instruction_id_for, selection_key
@@ -306,6 +307,9 @@ class Pipeline:
             aliases = self.identity.aliases_for(db, row['sport'], row['home'], row['away'], payload.get('kickoff_utc'))
         if aliases:
             payload['aliases'] = json.dumps(aliases)
+        # Competition-aware women's marker: the phone may supply a missing "(W)" only for a women's competition.
+        if womens_competition(row['competition']):
+            payload['competition_women'] = 'true'
         assert 'confirmation_status' not in payload
         return payload
 

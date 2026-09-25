@@ -32,6 +32,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
      *  coordinator runs one instruction at a time and every run sets it before use. */
     private static volatile java.util.Map<String, String> instructionAliases = java.util.Collections.emptyMap();
 
+    private static volatile boolean womensCompetition;
+    @Override
+    public void set_competition_women(boolean women) { womensCompetition = women; }
+
     @Override
     public void set_aliases(java.util.Map<String, String> aliases) {
         instructionAliases = aliases == null ? java.util.Collections.emptyMap() : aliases;
@@ -649,7 +653,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
         String feedAway = expectedAway.isEmpty() ? teams[1] : expectedAway;
         EventIdentity.Result id = EventIdentity.resolve(
                 new EventIdentity.Event(sport, identityHome, feedAway, want, null, false),
-                new EventIdentity.Event(sport, teams[0], teams[1], shown, header.isEmpty() ? null : header.get(0), true), instructionAliases);
+                new EventIdentity.Event(sport, teams[0], teams[1], shown, header.isEmpty() ? null : header.get(0), true), instructionAliases, womensCompetition);
         ui.put("identity", CoordinatorAgent.object("verdict", id.verdict.name(), "reason", id.reason, "home", sideJson(id.home),
                 "away", sideJson(id.away), "kickoff_known", id.kickoffKnown, "kickoff_agrees", id.kickoffAgrees, "reversed", id.reversed));
         ui.put("identity_verdict", id.verdict.name());
@@ -2745,7 +2749,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
         if (teamName == null || requested == null) return false;
         // Milestone B: exact / canonical / alias (registry or instruction) through the resolver; protected
         // markers (women, reserves, age groups) that differ never match, whatever the text below says.
-        EventIdentity.Side side = EventIdentity.matchSide(requested, teamName, instructionAliases);
+        EventIdentity.Side side = EventIdentity.matchSide(requested, teamName, instructionAliases, womensCompetition);
         if (side.atLeast(EventIdentity.Level.ALIAS)) return true;
         if (!side.markersAgree) return false;
         String t = normalizeTeamIdentity(teamName);

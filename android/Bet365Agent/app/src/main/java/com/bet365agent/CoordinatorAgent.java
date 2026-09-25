@@ -210,6 +210,7 @@ final class CoordinatorAgent implements AutoCloseable {
                 }
                 SiteAdapter adapter=SiteAdapters.create(instruction.adapter,session,endpoint(),instruction.scenario,instruction.id,instruction.sport,instruction.stake);
                 adapter.set_aliases(instruction.aliases);
+                adapter.set_competition_women(instruction.competitionWomen);
                 if(instruction.action.equals("SESSION_CHECK")) new SessionCheckWorkflow(session,adapter).start();
                 else if(instruction.action.equals("OPEN_SEARCH")) new SearchOpenWorkflow(session,adapter,instruction.text).start();
                 else new AdapterWorkflow(session,adapter).start(instruction.text,instruction.market,instruction.side,instruction.line,instruction.minimumPrice,instruction.stake,instruction.executionMode,instruction.confirmationStatus,instruction.eventUrl,instruction.kickoffUtc);

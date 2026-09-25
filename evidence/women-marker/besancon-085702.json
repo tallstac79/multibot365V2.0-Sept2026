@@ -1,0 +1,486 @@
+{
+ "payload": {
+  "instruction_id": "besancon-085702",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Besancon||Val De Seine",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+1.5",
+  "minimum_price": "1.50",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+  "kickoff_utc": "2026-09-25T18:00"
+ },
+ "result": {
+  "instruction_id": "besancon-085702",
+  "status": "FAIL",
+  "stage": "TARGET_NOT_FOUND",
+  "detail": "No live selection for SPREAD/AWAY/+1.5",
+  "duration_ms": 6779,
+  "progress": {
+   "stage": "READ_SELECTION",
+   "elapsed_ms": 6437,
+   "last_progress_at_ms": 1790323029700,
+   "instruction_id": "besancon-085702",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790323023281
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 21,
+     "at_ms": 1790323023291
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 29,
+     "at_ms": 1790323023301,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 29,
+      "start_ts_ms": 1790323023293,
+      "end_elapsed_ms": 5626,
+      "end_ts_ms": 1790323028890,
+      "duration_ms": 5597,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3461,
+     "at_ms": 1790323023301
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3733,
+     "at_ms": 1790323023301
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4672,
+     "at_ms": 1790323023301
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5440,
+     "at_ms": 1790323023301
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5626,
+     "at_ms": 1790323028905,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 5626,
+      "start_ts_ms": 1790323028890,
+      "end_elapsed_ms": 6412,
+      "end_ts_ms": 1790323029676,
+      "duration_ms": 786,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5642,
+     "at_ms": 1790323028905
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 6355,
+     "at_ms": 1790323028905
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 6412,
+     "at_ms": 1790323029700,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 6412,
+      "start_ts_ms": 1790323029676,
+      "end_elapsed_ms": 6437,
+      "end_ts_ms": 1790323029701,
+      "duration_ms": 25,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 6437,
+     "at_ms": 1790323029700
+    }
+   ]
+  },
+  "device_stage": "READ_SELECTION",
+  "execution_count": 1,
+  "run_id": "c_ElHinN0Y4hcAJu9ImwMErxMlYmbEssSEXc1-EtyHkak",
+  "fixture_name": "Besancon AC v Val de Seine",
+  "home": "Besancon AC",
+  "away": "Val de Seine",
+  "competition": "France Nationale 1 25 Sep 19:00",
+  "verification_detail": "No live selection for SPREAD/AWAY/+1.5",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 29,
+    "start_ts_ms": 1790323023293,
+    "end_elapsed_ms": 5626,
+    "end_ts_ms": 1790323028890,
+    "duration_ms": 5597,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5626,
+    "start_ts_ms": 1790323028890,
+    "end_elapsed_ms": 6412,
+    "end_ts_ms": 1790323029676,
+    "duration_ms": 786,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 6412,
+    "start_ts_ms": 1790323029676,
+    "end_elapsed_ms": 6437,
+    "end_ts_ms": 1790323029701,
+    "duration_ms": 25,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "identity": {
+   "verdict": "CANONICAL_MATCH",
+   "reason": "both teams canonical",
+   "home": {
+    "feed": "Besancon",
+    "bookmaker": "Besancon AC",
+    "level": "CANONICAL",
+    "score": 1,
+    "note": "canonical tokens equal"
+   },
+   "away": {
+    "feed": "Val De Seine",
+    "bookmaker": "Val de Seine",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "CANONICAL_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_ElHinN0Y4hcAJu9ImwMErxMlYmbEssSEXc1-EtyHkak",
+  "adapter": "live_bet365",
+  "status": "TARGET_NOT_FOUND",
+  "phase": "FINISHED",
+  "started_at_ms": 1790323023264,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 1,
+    "wall_ts_ms": 1790323023264
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 21,
+    "wall_ts_ms": 1790323023285
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 29,
+    "wall_ts_ms": 1790323023293
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3461,
+    "wall_ts_ms": 1790323026727
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3733,
+    "wall_ts_ms": 1790323026998
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 4672,
+    "wall_ts_ms": 1790323027938
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5440,
+    "wall_ts_ms": 1790323028707
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 5626,
+    "wall_ts_ms": 1790323028890
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 5642,
+    "wall_ts_ms": 1790323028906
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 6355,
+    "wall_ts_ms": 1790323029620
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 6412,
+    "wall_ts_ms": 1790323029676
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 6437,
+    "wall_ts_ms": 1790323029701
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png",
+   "s003_markets.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 29,
+    "start_ts_ms": 1790323023293,
+    "end_elapsed_ms": 5626,
+    "end_ts_ms": 1790323028890,
+    "duration_ms": 5597,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5626,
+    "start_ts_ms": 1790323028890,
+    "end_elapsed_ms": 6412,
+    "end_ts_ms": 1790323029676,
+    "duration_ms": 786,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 6412,
+    "start_ts_ms": 1790323029676,
+    "end_elapsed_ms": 6437,
+    "end_ts_ms": 1790323029701,
+    "duration_ms": 25,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Besancon",
+  "identity_home": "Besancon",
+  "expected_away": "Val De Seine",
+  "identity_away": "Val De Seine",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+  "current_stage": "READ_SELECTION",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "France Nationale 1 25 Sep 19:00",
+   "Besancon AC vs Val de Seine v",
+   "Popular Bet Builder Game Team Quarter"
+  ],
+  "identity": {
+   "verdict": "CANONICAL_MATCH",
+   "reason": "both teams canonical",
+   "home": {
+    "feed": "Besancon",
+    "bookmaker": "Besancon AC",
+    "level": "CANONICAL",
+    "score": 1,
+    "note": "canonical tokens equal"
+   },
+   "away": {
+    "feed": "Val De Seine",
+    "bookmaker": "Val de Seine",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "CANONICAL_MATCH",
+  "route": "event_link",
+  "kickoff_verified": "25 Sep 19:00",
+  "verified_fixture": {
+   "code": "4377152d",
+   "home": "Besancon AC",
+   "away": "Val de Seine",
+   "fixture_name": "Besancon AC v Val de Seine",
+   "exact_fixture_text": "Home Besancon AC\nAway Val de Seine",
+   "competition": "France Nationale 1 25 Sep 19:00",
+   "bounds": [
+    35,
+    265,
+    574,
+    435
+   ]
+  },
+  "fixture_home": "Besancon AC",
+  "fixture_away": "Val de Seine",
+  "identity_verified_home": "Besancon",
+  "identity_verified_away": "Val De Seine",
+  "event_verified": true,
+  "fixture": {
+   "code": "4377152d",
+   "home": "Besancon AC",
+   "away": "Val de Seine",
+   "fixture_name": "Besancon AC v Val de Seine",
+   "exact_fixture_text": "Home Besancon AC\nAway Val de Seine",
+   "competition": "France Nationale 1 25 Sep 19:00",
+   "bounds": [
+    35,
+    265,
+    574,
+    435
+   ]
+  },
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/+2.0@1.83",
+     "SPREAD/AWAY/-2.0@1.83",
+     "TOTAL/OVER/159.5@1.83",
+     "TOTAL/UNDER/159.5@1.83",
+     "MONEYLINE/HOME/NONE@2.05",
+     "MONEYLINE/AWAY/NONE@1.68"
+    ],
+    "notes": []
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/+2.0@1.83",
+    "SPREAD/AWAY/-2.0@1.83",
+    "TOTAL/OVER/159.5@1.83",
+    "TOTAL/UNDER/159.5@1.83",
+    "MONEYLINE/HOME/NONE@2.05",
+    "MONEYLINE/AWAY/NONE@1.68"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "+2.0",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Besancon AC",
+    "bounds": [
+     301,
+     655,
+     345,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "-2.0",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Val de Seine",
+    "bounds": [
+     301,
+     740,
+     344,
+     790
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "159.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     451,
+     649,
+     510,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "159.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     452,
+     737,
+     511,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "2.05",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Besancon AC",
+    "bounds": [
+     603,
+     672,
+     648,
+     689
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "1.68",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Val de Seine",
+    "bounds": [
+     604,
+     757,
+     648,
+     774
+    ]
+   }
+  ],
+  "detail": "No live selection for SPREAD/AWAY/+1.5",
+  "duration_ms": 6437
+ },
+ "wall": 7.172290802001953
+}

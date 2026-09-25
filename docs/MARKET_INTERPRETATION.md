@@ -103,6 +103,10 @@ the higher signed handicap from each team's own perspective favours that team.
 * Pinnacle home −5.5, Bet365 home −1.5 → HOME −1.5, +4.0 (the away side is −4.0: UNFAVOURABLE)
 * Pinnacle home −2.5, Bet365 home −5.5 → AWAY +5.5, +3.0
 
+A spread on which Pinnacle and Bet365 favour *different* teams by 10 or more points is the Bet365
+line quoted from the other perspective, not a lag (Japan −23 vs "17.5"): the sign reference is
+ambiguous and the alert is `AMBIGUOUS`. Smaller favourite flips are genuine moves and stay eligible.
+
 Not implied (stays `PARSED_PARTIAL` / `AMBIGUOUS`): advantage below 1.0, equal lines, both
 sides favourable or neither, a missing price, an unverified quote mapping (football two-sided
 layouts), the spread whose sign reference cannot be normalised, or any highlight at all (a

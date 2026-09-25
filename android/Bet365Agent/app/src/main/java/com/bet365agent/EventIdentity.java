@@ -55,8 +55,14 @@ final class EventIdentity {
 
     static final class Side {
         final String feed, bookmaker; final Level level; final double score; final boolean markersAgree; final String note;
+        /** The bookmaker's women's marker was supplied by the competition (feed name had none): never above VARIANT. */
+        final boolean markerFromCompetition;
         Side(String feed, String bookmaker, Level level, double score, boolean markersAgree, String note) {
+            this(feed, bookmaker, level, score, markersAgree, note, false);
+        }
+        Side(String feed, String bookmaker, Level level, double score, boolean markersAgree, String note, boolean markerFromCompetition) {
             this.feed = feed; this.bookmaker = bookmaker; this.level = level; this.score = score; this.markersAgree = markersAgree; this.note = note;
+            this.markerFromCompetition = markerFromCompetition;
         }
         boolean atLeast(Level l) { return level.ordinal() >= l.ordinal(); }
     }
@@ -151,10 +157,28 @@ final class EventIdentity {
 
     // ------------------------------------------------------------------ team level (B2, B3, B5)
     static Side matchSide(String feed, String bookmaker, Map<String, String> extraAliases) {
+        return matchSide(feed, bookmaker, extraAliases, false);
+    }
+
+    /**
+     * womensCompetition: the backend established the competition as women's. Then, and only then, a bookmaker
+     * name carrying exactly the women's marker the feed name lacks is compared without it, capped at VARIANT
+     * (the event still needs corroboration in resolve()). Any other marker difference is a MISMATCH.
+     */
+    static Side matchSide(String feed, String bookmaker, Map<String, String> extraAliases, boolean womensCompetition) {
         String nf = normalise(feed), nb = normalise(bookmaker);
         if (nf.isEmpty() || nb.isEmpty()) return new Side(feed, bookmaker, Level.NONE, 0, true, "empty name");
         Set<String> mf = markers(nf), mb = markers(nb);
-        if (!mf.equals(mb)) return new Side(feed, bookmaker, Level.NONE, 0, false, "protected markers differ " + mf + " vs " + mb);
+        if (!mf.equals(mb)) {
+            Set<String> mbLessWomen = new TreeSet<>(mb);
+            boolean onlyWomenOnBookmaker = mbLessWomen.remove("women") && !mf.contains("women") && mbLessWomen.equals(mf);
+            if (!(womensCompetition && onlyWomenOnBookmaker))
+                return new Side(feed, bookmaker, Level.NONE, 0, false, "protected markers differ " + mf + " vs " + mb);
+            String cf = canonicalTokens(nf), cb = canonicalTokens(nb);
+            double score = !cf.isEmpty() && cf.equals(cb) ? 1.0 : variantScore(nf, nb);
+            if (score < STRONG) return new Side(feed, bookmaker, Level.NONE, score, true, String.format(Locale.US, "different name %.2f (women's marker from competition)", score), true);
+            return new Side(feed, bookmaker, Level.VARIANT, score, true, String.format(Locale.US, "women's marker supplied by the competition; names agree %.2f", score), true);
+        }
         if (nf.equals(nb)) return new Side(feed, bookmaker, Level.EXACT, 1, true, "exact");
         String cf = canonicalTokens(nf), cb = canonicalTokens(nb);
         if (!cf.isEmpty() && cf.equals(cb)) return new Side(feed, bookmaker, Level.CANONICAL, 1, true, "canonical tokens equal");
@@ -173,11 +197,15 @@ final class EventIdentity {
 
     // ------------------------------------------------------------------ event level (B4, B8)
     static Result resolve(Event feed, Event page, Map<String, String> extraAliases) {
+        return resolve(feed, page, extraAliases, false);
+    }
+
+    static Result resolve(Event feed, Event page, Map<String, String> extraAliases, boolean womensCompetition) {
         boolean koKnown = feed.kickoffUk != null && page.kickoffUk != null;
         boolean koAgrees = koKnown && feed.kickoffUk.equals(page.kickoffUk);
         if (feed.sport != null && page.sport != null && !feed.sport.equalsIgnoreCase(page.sport))
             return new Result(Verdict.MISMATCH, "sport differs: " + feed.sport + " vs " + page.sport, null, null, koKnown, koAgrees, false, Collections.emptyMap(), null);
-        Side h = matchSide(feed.home, page.home, extraAliases), a = matchSide(feed.away, page.away, extraAliases);
+        Side h = matchSide(feed.home, page.home, extraAliases, womensCompetition), a = matchSide(feed.away, page.away, extraAliases, womensCompetition);
         Map<String, String> none = Collections.emptyMap();
         if (!h.markersAgree || !a.markersAgree) {
             Side bad = !h.markersAgree ? h : a;
@@ -185,7 +213,7 @@ final class EventIdentity {
         }
         // Reversed pairing is never accepted: a HOME/AWAY selection would land on the other team.
         if (h.level == Level.NONE && a.level == Level.NONE) {
-            Side hs = matchSide(feed.home, page.away, extraAliases), as = matchSide(feed.away, page.home, extraAliases);
+            Side hs = matchSide(feed.home, page.away, extraAliases, womensCompetition), as = matchSide(feed.away, page.home, extraAliases, womensCompetition);
             if (hs.atLeast(Level.ALIAS) && as.atLeast(Level.ALIAS))
                 return new Result(Verdict.MISMATCH, "teams reversed (home/away): '" + feed.home + " v " + feed.away + "' is listed as '"
                         + page.home + " v " + page.away + "'", h, a, koKnown, koAgrees, true, none, null);
@@ -209,6 +237,15 @@ final class EventIdentity {
             }
             return new Result(Verdict.AMBIGUOUS, "'" + v.feed + "' only resembles '" + v.bookmaker + "' (" + String.format(Locale.US, "%.2f", v.score)
                     + ") and there is no event anchor with an agreeing kick-off", h, a, koKnown, koAgrees, false, cand, "review");
+        }
+        if (lo == Level.VARIANT && h.markerFromCompetition && a.markerFromCompetition && h.score >= DETERMINISTIC && a.score >= DETERMINISTIC
+                && page.anchored && koAgrees) {
+            // Both Bet365 names carry the women's marker the feed omits, the competition is women's, the names are otherwise
+            // canonical, and the alert's own link + kick-off corroborate the event.
+            Map<String, String> cand = new LinkedHashMap<>();
+            cand.put(h.feed, h.bookmaker); cand.put(a.feed, a.bookmaker);
+            return new Result(Verdict.HIGH_CONFIDENCE_EVENT_MATCH, "event link + kick-off " + page.kickoffUk + " + women's competition: both names "
+                    + "agree apart from Bet365's women's marker", h, a, koKnown, koAgrees, false, cand, "deterministic");
         }
         if (lo == Level.VARIANT)
             return new Result(Verdict.AMBIGUOUS, "both teams only resemble the page's names; no exact team to anchor on", h, a, koKnown, koAgrees, false, none, "review");

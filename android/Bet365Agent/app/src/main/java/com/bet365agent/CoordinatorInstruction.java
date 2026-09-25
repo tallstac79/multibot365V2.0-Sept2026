@@ -16,6 +16,7 @@ final class CoordinatorInstruction {
     final String id, target, text, runId, action, adapter, scenario, market, side, sport, line, minimumPrice, stake, executionMode, confirmationStatus, view;
     final String eventUrl, kickoffUtc, selectionName, price;
     final java.util.Map<String, String> aliases;
+    final boolean competitionWomen;
     final String frames, engine;
     final boolean placeBet; // true iff execution_mode=dispatch
     final int timeout;
@@ -46,7 +47,7 @@ final class CoordinatorInstruction {
                 String name = reader.nextName();
                 if (fields.containsKey(name)) throw new IllegalArgumentException("Duplicate field: " + name);
                 boolean number = "timeout_ms".equals(name);
-                Set<String> allowed = Set.of("instruction_id","action","target_text","input_text","adapter","scenario","query","market","side","sport","line","minimum_price","stake","timeout_ms","place_bet","execution_mode","confirmation_status","view","event_url","kickoff_utc","selection_name","price","aliases","frames","engine");
+                Set<String> allowed = Set.of("instruction_id","action","target_text","input_text","adapter","scenario","query","market","side","sport","line","minimum_price","stake","timeout_ms","place_bet","execution_mode","confirmation_status","view","event_url","kickoff_utc","selection_name","price","aliases","frames","engine","competition_women");
                 if (!number && !allowed.contains(name)) throw new IllegalArgumentException("Unknown field: " + name);
                 if ("line".equals(name) && reader.peek() == JsonToken.NULL) { reader.nextNull(); fields.put(name, ""); continue; }
                 if (reader.peek() != (number ? JsonToken.NUMBER : JsonToken.STRING)) throw new IllegalArgumentException("Wrong field type: " + name);
@@ -178,6 +179,7 @@ final class CoordinatorInstruction {
         selectionName = fields.getOrDefault("selection_name", "");
         price = fields.getOrDefault("price", "");
         aliases = parseAliases(fields.getOrDefault("aliases", ""));
+        competitionWomen = "true".equals(fields.getOrDefault("competition_women", "false"));
         frames = fields.getOrDefault("frames", "");
         engine = fields.getOrDefault("engine", "");
         timeout = Integer.parseInt(fields.get("timeout_ms"));

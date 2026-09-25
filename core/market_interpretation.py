@@ -231,6 +231,27 @@ def implied_target(entries, market, market_move):
                        f"(no highlight; target implied from the lines)")
 
 
+SPREAD_PERSPECTIVE_CONFLICT_POINTS = Decimal('10')
+
+
+def spread_perspective_conflict(entries):
+    """Pinnacle and Bet365 favouring DIFFERENT teams by 10+ points is not a lagging line, it is the Bet365
+    spread quoted from the other team's perspective (real: Japan -23 vs Bet365 "17.5", Seattle Storm +7.5 vs
+    -9.5). The sign reference is then ambiguous and no side is implied. Smaller favourite flips can be genuine
+    market moves and are left to the rules (and flagged for review by tools/replay_alerts.py)."""
+    if not entries:
+        return None
+    home = entries[0]['comparison']
+    ref, book = dec(home.get('reference_line')), dec(home.get('bet365_line'))
+    if ref is None or book is None or (ref < 0) == (book < 0):
+        return None
+    gap = abs(ref - book)
+    if gap < SPREAD_PERSPECTIVE_CONFLICT_POINTS:
+        return None
+    return (f'Pinnacle ({ref}) and Bet365 ({book}) favour different teams by {gap} points: the Bet365 spread appears '
+            f'quoted from the other perspective; sign reference ambiguous, no side implied')
+
+
 def side_movement(*, opening_line, previous_line, current_line, opening_price, current_price,
                   marker=None, previous_price=None, supplied_percent=None):
     """Line and price movement kept as separate facts; causes are never inferred."""
@@ -497,7 +518,11 @@ def _two_sided(rows, head, opening_marker):
     target = side_entries[target_index] if target_index is not None else None
     implied = None
     if sides and target is None and bet365_present and ev_status == EV_UNEQUAL and not highlighted and not ambiguities:
-        implied = implied_target(side_entries, market, market_move)
+        conflict = spread_perspective_conflict(side_entries) if market == 'SPREAD' else None
+        if conflict:
+            ambiguities.append(conflict)      # the sign reference is not safe: no side is implied
+        else:
+            implied = implied_target(side_entries, market, market_move)
         if implied is not None:
             target_index = implied['index']
             target = side_entries[target_index]

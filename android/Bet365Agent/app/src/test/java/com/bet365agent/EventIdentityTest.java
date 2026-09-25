@@ -18,6 +18,38 @@ public class EventIdentityTest {
                 new EventIdentity.Event("basketball", ph, pa, pko, null, anchored), NO_ALIASES);
     }
 
+    private static EventIdentity.Result women(String fh, String fa, String ph, String pa, String pko, boolean anchored, boolean womensCompetition) {
+        return EventIdentity.resolve(new EventIdentity.Event("basketball", fh, fa, "25 Sep 02:00", "Superior Nacional Women", false),
+                new EventIdentity.Event("basketball", ph, pa, pko, null, anchored), NO_ALIASES, womensCompetition);
+    }
+
+    @Test public void womensMarkerOnlyFromAWomensCompetitionWithCorroboration() {
+        // Real refusal 2026-09-25 01:49: feed "Explosivas de Moca v Leonas De Ponce", page "Explosivas de Moca (W) v Leonas de Ponce"
+        EventIdentity.Result r = women("Explosivas de Moca", "Leonas De Ponce", "Explosivas de Moca (W)", "Leonas de Ponce", "25 Sep 02:00", true, true);
+        assertEquals(EventIdentity.Verdict.HIGH_CONFIDENCE_EVENT_MATCH, r.verdict);
+        assertEquals(EventIdentity.Level.VARIANT, r.home.level);
+        assertTrue(r.home.markerFromCompetition);
+        assertEquals("Explosivas de Moca (W)", r.aliasCandidates.get("Explosivas de Moca"));
+        // not a women's competition: the marker difference is a MISMATCH exactly as before
+        assertEquals(EventIdentity.Verdict.MISMATCH, women("Explosivas de Moca", "Leonas De Ponce", "Explosivas de Moca (W)", "Leonas de Ponce", "25 Sep 02:00", true, false).verdict);
+        // women's competition but no event anchor (Search route): AMBIGUOUS -> ALIAS_REQUIRED, never accepted on the names alone
+        assertEquals(EventIdentity.Verdict.AMBIGUOUS, women("Explosivas de Moca", "Leonas De Ponce", "Explosivas de Moca (W)", "Leonas de Ponce", "25 Sep 02:00", false, true).verdict);
+        // kick-off disagrees: MISMATCH
+        assertEquals(EventIdentity.Verdict.MISMATCH, women("Explosivas de Moca", "Leonas De Ponce", "Explosivas de Moca (W)", "Leonas de Ponce", "25 Sep 04:00", true, true).verdict);
+        // the other team must agree too
+        assertEquals(EventIdentity.Verdict.MISMATCH, women("Explosivas de Moca", "Leonas De Ponce", "Explosivas de Moca (W)", "Gigantes de Carolina", "25 Sep 02:00", true, true).verdict);
+        // both Bet365 names marked (W), feed neither: accepted only with link + kick-off, both names canonical
+        assertEquals(EventIdentity.Verdict.HIGH_CONFIDENCE_EVENT_MATCH, women("Explosivas de Moca", "Leonas De Ponce", "Explosivas de Moca (W)", "Leonas de Ponce (W)", "25 Sep 02:00", true, true).verdict);
+        assertEquals(EventIdentity.Verdict.AMBIGUOUS, women("Explosivas de Moca", "Leonas De Ponce", "Explosivas de Moca (W)", "Leonas de Ponce (W)", "25 Sep 02:00", false, true).verdict);
+        // the marker is never supplied the other way round (feed says women, page does not) nor for other markers
+        assertEquals(EventIdentity.Verdict.MISMATCH, women("Explosivas de Moca (W)", "Leonas De Ponce", "Explosivas de Moca", "Leonas de Ponce", "25 Sep 02:00", true, true).verdict);
+        assertEquals(EventIdentity.Verdict.MISMATCH, women("Explosivas de Moca", "Leonas De Ponce", "Explosivas de Moca U21", "Leonas de Ponce", "25 Sep 02:00", true, true).verdict);
+        // a different women's team is still a different team
+        assertEquals(EventIdentity.Verdict.MISMATCH, women("Explosivas de Moca", "Leonas De Ponce", "Gigantes de Carolina (W)", "Leonas de Ponce", "25 Sep 02:00", true, true).verdict);
+        // the 3-argument entry points are unchanged (no competition context = no supplied marker)
+        assertFalse(EventIdentity.matchSide("Explosivas de Moca", "Explosivas de Moca (W)", NO_ALIASES).markersAgree);
+    }
+
     @Test public void normalisationLayers() {
         assertEquals("hiroshima dragonflies", EventIdentity.normalise("Hiroshima Dragonﬂies"));
         assertEquals("besancon", EventIdentity.canonicalTokens(EventIdentity.normalise("Besançon AC")));

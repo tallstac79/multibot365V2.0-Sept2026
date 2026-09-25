@@ -143,6 +143,18 @@ class RealFeedAlerts(unittest.TestCase):
             self.assertNotEqual(v['status'], 'PARSED', name)
             self.assertIsNone(v['parsed']['selection_side'], name)
 
+    def test_spread_quoted_from_the_other_perspective_is_ambiguous(self):
+        # Japan v Chinese Taipei: Pinnacle home -23, Bet365 "Spread 17.5" -> a 40.5-point "advantage" is the Bet365 line
+        # quoted from the other side; likewise Seattle Storm +7.5 vs -9.5. No side is implied (AMBIGUOUS).
+        for mid in (681, 364):
+            v = alert_classifier.classify(alert(mid))
+            self.assertEqual((v['status'], v['parsed']['selection_side']), ('AMBIGUOUS', None), mid)
+            self.assertIn('favour different teams', v['reason'])
+        # a favourite flip below 10 points is a genuine market move: Tartu v Kalev, Pinnacle +3 vs Bet365 -1.5 -> AWAY +1.5, +4.5
+        v = alert_classifier.classify(alert(349))
+        self.assertEqual((v['status'], v['parsed']['selection_side'], v['parsed']['selection_line'], v['parsed']['comparison']['line_advantage']),
+                         ('PARSED', 'AWAY', '+1.5', '4.5'))
+
     def test_no_synthetic_ev_even_with_a_minimum_ev_rule(self):
         p = alert_classifier.classify(alert(67))['parsed']
         cfg = config()

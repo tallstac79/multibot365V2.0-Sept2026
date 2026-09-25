@@ -47,7 +47,12 @@ READY -> APPROVED (auto_approve, within limits)
   teams, their pairing and the kick-off, anchored on the alert's own Bet365 link. Team layers: EXACT (NFKC,
   case, whitespace) > CANONICAL (diacritics, punctuation, slash/hyphen, safe affixes FC/BC/KC/AC ...) >
   ALIAS (explicit registry `TeamAliases`, or aliases supplied with the instruction) > VARIANT (controlled
-  fuzzy score, one signal only). Protected markers (women, reserves/II/B, U21 ...) must agree or the team is
+  fuzzy score, one signal only). Protected markers (women, reserves/II/B, U21 ...) must agree — with one
+  competition-aware exception (2026-09-25): when the backend has established the competition as women's
+  (`competition_women` on the wire, from `core/competition_gender.py`), a Bet365 name carrying only the
+  women's marker the feed name lacks ("Explosivas de Moca (W)") is compared without it, capped at VARIANT, so
+  the event still needs its own link, an agreeing kick-off and the other team at ALIAS or better; markers are
+  never stripped globally and the reverse case (feed has (W), page has not) stays a mismatch — or the team is
   a MISMATCH. Verdicts: EXACT / CANONICAL_MATCH / ALIAS_MATCH / HIGH_CONFIDENCE_EVENT_MATCH (own link +
   agreeing kick-off + one team ALIAS-or-better + the other a strong variant: accepted, and the variant is
   reported as an alias candidate) / AMBIGUOUS (variant without that corroboration -> ALIAS_REQUIRED) /

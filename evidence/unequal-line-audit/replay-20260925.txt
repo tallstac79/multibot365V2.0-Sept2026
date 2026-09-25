@@ -1,0 +1,64 @@
+alerts evaluated since 2026-09-24T00:00: 789 (duplicate deliveries excluded); rules min_line_advantage=1.0
+outcome: {'ACCEPT': 615, 'AMBIGUOUS': 164, 'INVALID': 10}
+by target source (highlighted = OddsNotifier bold, implied = lines) x decision: {('implied', 'ACCEPT'): 424, ('highlighted', 'ACCEPT'): 191}
+
+implied HOME examples:
+  #334 00:40 basketball SPREAD CD Castro vs CSD Colo Colo | Pinnacle -4 (opening 4.5, moved DOWN), Bet365 -1.5 -> HOME -1.5 @ 1.83 (+2.5) ACCEPT
+  #338 00:43 basketball SPREAD CD Castro vs CSD Colo Colo | Pinnacle -5 (opening 4.5, moved DOWN), Bet365 -1.5 -> HOME -1.5 @ 1.83 (+3.5) ACCEPT
+  #341 00:46 basketball SPREAD CD Castro vs CSD Colo Colo | Pinnacle -4.5 (opening 4.5, moved UP), Bet365 -1.5 -> HOME -1.5 @ 1.83 (+3.0) ACCEPT
+implied AWAY examples:
+  #349 00:48 basketball SPREAD BC Tartu vs BC Kalev/Cramo | Pinnacle 3 (opening -3, moved no), Bet365 -1.5 -> AWAY +1.5 @ 1.83 (+4.5) ACCEPT
+  #353 00:55 basketball SPREAD BC Tartu vs BC Kalev/Cramo | Pinnacle 3.5 (opening -3, moved no), Bet365 1 -> AWAY -1 @ 1.83 (+2.5) ACCEPT
+  #359 00:56 basketball SPREAD BC Tartu vs BC Kalev/Cramo | Pinnacle 4.5 (opening -3, moved no), Bet365 1 -> AWAY -1 @ 1.83 (+3.5) ACCEPT
+implied OVER examples:
+  #328 00:09 basketball TOTALS CD Universidad De Concepcion vs CD Atl | Pinnacle 162.5 (opening 164.5, moved UP), Bet365 160.5 -> OVER 160.5 @ 1.83 (+2.0) ACCEPT
+  #331 00:21 basketball TOTALS CD Universidad De Concepcion vs CD Atl | Pinnacle 162.5 (opening 164.5, moved no), Bet365 160.5 -> OVER 160.5 @ 1.83 (+2.0) ACCEPT
+  #389 02:26 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 159.5 (opening 154.5, moved UP), Bet365 153.5 -> OVER 153.5 @ 1.83 (+6.0) ACCEPT
+implied UNDER examples:
+  #350 00:50 basketball TOTALS Salvadorenos vs Cojute | Pinnacle 154.5 (opening 160.5, moved DOWN), Bet365 157.5 -> UNDER 157.5 @ 1.83 (+3.0) ACCEPT
+  #612 11:15 basketball TOTALS Falcon vs SISU | Pinnacle 125.5 (opening 127, moved DOWN), Bet365 127.5 -> UNDER 127.5 @ 1.83 (+2.0) ACCEPT
+  #620 11:53 basketball TOTALS TBB Trier vs Baskets Bonn | Pinnacle 176.5 (opening 176.5, moved no), Bet365 179.5 -> UNDER 179.5 @ 1.86 (+3.0) ACCEPT
+
+questionable ACCEPTs for manual review (94):
+  #349 00:48 basketball SPREAD BC Tartu vs BC Kalev/Cramo | Pinnacle 3 (opening -3, moved no), Bet365 -1.5 -> AWAY +1.5 @ 1.83 (+4.5) ACCEPT  ?? Pinnacle (3) and Bet365 (-1.5) favour different teams
+  #389 02:26 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 159.5 (opening 154.5, moved UP), Bet365 153.5 -> OVER 153.5 @ 1.83 (+6.0) ACCEPT  ?? advantage 6.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #402 02:55 basketball SPREAD Gigantes de Carolina vs Atenienses de  | Pinnacle -2.5 (opening 2, moved no), Bet365 1.5 -> HOME 1.5 @ 1.83 (+4.0) ACCEPT  ?? Pinnacle (-2.5) and Bet365 (1.5) favour different teams
+  #407 03:06 basketball SPREAD Gigantes de Carolina vs Atenienses de  | Pinnacle -2.5 (opening 2, moved no), Bet365 1.5 -> HOME 1.5 @ 1.83 (+4.0) ACCEPT  ?? Pinnacle (-2.5) and Bet365 (1.5) favour different teams
+  #409 03:06 basketball SPREAD Gigantes de Carolina vs Atenienses de  | Pinnacle -3 (opening 2, moved no), Bet365 1.5 -> HOME 1.5 @ 1.83 (+4.5) ACCEPT  ?? Pinnacle (-3) and Bet365 (1.5) favour different teams
+  #411 03:06 basketball SPREAD Gigantes de Carolina vs Atenienses de  | Pinnacle -3 (opening 2, moved no), Bet365 1.5 -> HOME 1.5 @ 1.83 (+4.5) ACCEPT  ?? Pinnacle (-3) and Bet365 (1.5) favour different teams
+  #412 03:07 basketball SPREAD Gigantes de Carolina vs Atenienses de  | Pinnacle -3.5 (opening 2, moved no), Bet365 1.5 -> HOME 1.5 @ 1.83 (+5.0) ACCEPT  ?? Pinnacle (-3.5) and Bet365 (1.5) favour different teams
+  #414 03:09 basketball SPREAD Gigantes de Carolina vs Atenienses de  | Pinnacle -3.5 (opening 2, moved no), Bet365 1.5 -> HOME 1.5 @ 1.83 (+5.0) ACCEPT  ?? Pinnacle (-3.5) and Bet365 (1.5) favour different teams
+  #415 03:09 basketball SPREAD Gigantes de Carolina vs Atenienses de  | Pinnacle -4 (opening 2, moved no), Bet365 1.5 -> HOME 1.5 @ 1.83 (+5.5) ACCEPT  ?? Pinnacle (-4) and Bet365 (1.5) favour different teams
+  #416 03:09 basketball SPREAD Gigantes de Carolina vs Atenienses de  | Pinnacle -4 (opening 2, moved no), Bet365 1.5 -> HOME 1.5 @ 1.83 (+5.5) ACCEPT  ?? Pinnacle (-4) and Bet365 (1.5) favour different teams
+  #417 03:10 basketball SPREAD Gigantes de Carolina vs Atenienses de  | Pinnacle -4.5 (opening 2, moved no), Bet365 1.5 -> HOME 1.5 @ 1.83 (+6.0) ACCEPT  ?? advantage 6.0 is unusually large: Bet365 may be quoting a different line/market or a stale one; Pinnacle (-4.5) and Bet365 (1.5) favour different teams
+  #418 03:10 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 162.5 (opening 154.5, moved UP), Bet365 153.5 -> OVER 153.5 @ 1.83 (+9.0) ACCEPT  ?? advantage 9.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #419 03:11 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 162.5 (opening 154.5, moved no), Bet365 153.5 -> OVER 153.5 @ 1.83 (+9.0) ACCEPT  ?? advantage 9.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #420 03:11 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 163.5 (opening 154.5, moved UP), Bet365 153.5 -> OVER 153.5 @ 1.83 (+10.0) ACCEPT  ?? advantage 10.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #425 03:13 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 163.5 (opening 154.5, moved no), Bet365 153.5 -> OVER 153.5 @ 1.83 (+10.0) ACCEPT  ?? advantage 10.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #480 06:00 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 163.5 (opening 154.5, moved no), Bet365 153.5 -> OVER 153.5 @ 1.83 (+10.0) ACCEPT  ?? advantage 10.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #481 06:00 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 163.5 (opening 154.5, moved no), Bet365 153.5 -> OVER 153.5 @ 1.83 (+10.0) ACCEPT  ?? advantage 10.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #482 06:01 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 163.5 (opening 154.5, moved no), Bet365 153.5 -> OVER 153.5 @ 1.83 (+10.0) ACCEPT  ?? advantage 10.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #520 06:50 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 162.5 (opening 154.5, moved DOWN), Bet365 153.5 -> OVER 153.5 @ 1.83 (+9.0) ACCEPT  ?? advantage 9.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #521 06:50 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 161.5 (opening 154.5, moved DOWN), Bet365 153.5 -> OVER 153.5 @ 1.83 (+8.0) ACCEPT  ?? advantage 8.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #522 06:52 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 160.5 (opening 154.5, moved DOWN), Bet365 153.5 -> OVER 153.5 @ 1.83 (+7.0) ACCEPT  ?? advantage 7.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #524 06:56 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 159.5 (opening 154.5, moved UP), Bet365 153.5 -> OVER 153.5 @ 1.83 (+6.0) ACCEPT  ?? advantage 6.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #525 06:57 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 161 (opening 154.5, moved UP), Bet365 153.5 -> OVER 153.5 @ 1.83 (+7.5) ACCEPT  ?? advantage 7.5 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #526 06:57 basketball TOTALS LPU Pirates vs SBU Red Lions | Pinnacle 162.5 (opening 154.5, moved UP), Bet365 153.5 -> OVER 153.5 @ 1.83 (+9.0) ACCEPT  ?? advantage 9.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #601 10:50 basketball SPREAD BK Loko Trutnov vs Slovanka MB | Pinnacle -24 (opening -26, moved UP), Bet365 -11.5 -> HOME -11.5 @ 1.83 (+12.5) ACCEPT  ?? advantage 12.5 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #602 10:50 basketball TOTALS BK Loko Trutnov vs Slovanka MB | Pinnacle 153.5 (opening 155, moved DOWN), Bet365 147.5 -> OVER 147.5 @ 1.83 (+6.0) ACCEPT  ?? advantage 6.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #603 10:51 basketball SPREAD BK Loko Trutnov vs Slovanka MB | Pinnacle -23.5 (opening -26, moved UP), Bet365 -11.5 -> HOME -11.5 @ 1.83 (+12.0) ACCEPT  ?? advantage 12.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #605 10:56 basketball SPREAD BK Loko Trutnov vs Slovanka MB | Pinnacle -20.5 (opening -26, moved UP), Bet365 -11.5 -> HOME -11.5 @ 1.83 (+9.0) ACCEPT  ?? advantage 9.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #606 11:00 basketball SPREAD BK Loko Trutnov vs Slovanka MB | Pinnacle -22.5 (opening -26, moved DOWN), Bet365 -11.5 -> HOME -11.5 @ 1.83 (+11.0) ACCEPT  ?? advantage 11.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #631 12:23 basketball SPREAD BC Beroe vs Ferrol | Pinnacle 19.5 (opening 6.5, moved no), Bet365 13.5 -> AWAY -13.5 @ 1.83 (+6.0) ACCEPT  ?? advantage 6.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #665 14:48 basketball SPREAD Anyang Jungkwanjang Red Boosters vs Su | Pinnacle 3 (opening -2.5, moved no), Bet365 -1.5 -> AWAY +1.5 @ 1.83 (+4.5) ACCEPT  ?? Pinnacle (3) and Bet365 (-1.5) favour different teams
+  #667 14:49 basketball SPREAD Anyang Jungkwanjang Red Boosters vs Su | Pinnacle 3.5 (opening -2.5, moved no), Bet365 -1.5 -> AWAY +1.5 @ 1.83 (+5.0) ACCEPT  ?? Pinnacle (3.5) and Bet365 (-1.5) favour different teams
+  #769 18:01 basketball TOTALS CD Castro vs CSD Colo Colo | Pinnacle 162 (opening 154.5, moved no), Bet365 154.5 -> OVER 154.5 @ 1.83 (+7.5) ACCEPT  ?? advantage 7.5 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #771 18:01 basketball TOTALS CD Castro vs CSD Colo Colo | Pinnacle 164 (opening 154.5, moved UP), Bet365 154.5 -> OVER 154.5 @ 1.83 (+9.5) ACCEPT  ?? advantage 9.5 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #772 18:02 basketball TOTALS CD Castro vs CSD Colo Colo | Pinnacle 162.5 (opening 154.5, moved DOWN), Bet365 154.5 -> OVER 154.5 @ 1.83 (+8.0) ACCEPT  ?? advantage 8.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #773 18:02 basketball TOTALS CD Castro vs CSD Colo Colo | Pinnacle 161 (opening 154.5, moved DOWN), Bet365 154.5 -> OVER 154.5 @ 1.83 (+6.5) ACCEPT  ?? advantage 6.5 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #774 18:02 basketball TOTALS CD Castro vs CSD Colo Colo | Pinnacle 161 (opening 154.5, moved no), Bet365 154.5 -> OVER 154.5 @ 1.83 (+6.5) ACCEPT  ?? advantage 6.5 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #777 18:03 basketball TOTALS CD Castro vs CSD Colo Colo | Pinnacle 161 (opening 154.5, moved UP), Bet365 154.5 -> OVER 154.5 @ 1.83 (+6.5) ACCEPT  ?? advantage 6.5 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #780 18:04 basketball TOTALS CD Castro vs CSD Colo Colo | Pinnacle 161.5 (opening 154.5, moved UP), Bet365 154.5 -> OVER 154.5 @ 1.83 (+7.0) ACCEPT  ?? advantage 7.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+  #822 18:47 basketball TOTALS CD Castro vs CSD Colo Colo | Pinnacle 154.5 (opening 154.5, moved DOWN), Bet365 161.5 -> UNDER 161.5 @ 1.83 (+7.0) ACCEPT  ?? advantage 7.0 is unusually large: Bet365 may be quoting a different line/market or a stale one
+
+non-parsed reasons: {('AMBIGUOUS', 'UNSUPPORTED_MAPPING: basketball MONEYLINE has no production-verified l'): 129, ('AMBIGUOUS', 'MARKET_UNRESOLVED: basketball alert without a market label or fixture '): 20, ('INVALID', 'Malformed or contradictory alert: EV supplied although Bet365 line is '): 10, ('AMBIGUOUS', 'Bet365 spread line equals Pinnacle as displayed but OddsNotifier repor'): 6, ('AMBIGUOUS', 'Pinnacle (-23.5) and Bet365 (17.5) favour different teams by 41.0 poin'): 3, ('AMBIGUOUS', 'Pinnacle (-24) and Bet365 (17.5) favour different teams by 41.5 points'): 2, ('AMBIGUOUS', 'Pinnacle (7.5) and Bet365 (-9.5) favour different teams by 17.0 points'): 1, ('AMBIGUOUS', 'Pinnacle (-23) and Bet365 (18.5) favour different teams by 41.5 points'): 1, ('AMBIGUOUS', 'Pinnacle (13.5) and Bet365 (-15.5) favour different teams by 29.0 poin'): 1, ('AMBIGUOUS', 'Pinnacle (12.5) and Bet365 (-15.5) favour different teams by 28.0 poin'): 1}
