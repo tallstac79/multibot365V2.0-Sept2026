@@ -490,6 +490,8 @@ class Pipeline:
         return bool(self.store.instructions_in([State.QUEUED, State.APPROVED]))
 
     ONE_SHOT_KEY = 'final_action_one_shot'
+    # controls key: ISO timestamp set by the operator when arming; instructions received before it are never dispatched
+    ACTIVATION_KEY = 'activation_at'
 
     def _one_shot(self):
         """Disarm after the first Place Bet run result since arming (see Settings.final_action_one_shot)."""
@@ -565,10 +567,18 @@ class Pipeline:
         candidates.sort(key=lambda r: 0 if r['state'] == State.APPROVED.value else 1)
         warmup_for = None
         held = self.held_instruction()
+        activation = self.store.control(self.ACTIVATION_KEY)
         for row in candidates:
             if held and row['instruction_id'] != held:
                 continue  # the phone holds another verified bet on its slip; wait (may age out as STALE)
             now = self.clock()
+            if activation and (row['received_at'] or '') < activation:
+                # Clean cut-off (2026-09-27): only alerts received after the operator's activation timestamp may
+                # execute; anything earlier (queued while disarmed, historical, replayed) ends here, never on the phone.
+                with self.store.tx() as db:
+                    self.store.transition(db, row['instruction_id'], State.STALE, actor='activation',
+                                          reason=f"received {row['received_at']} before activation {activation}; not executed")
+                continue
             config = self.config_provider()
             alert = json.loads(row['normalized_alert'])
             received = row['received_at']

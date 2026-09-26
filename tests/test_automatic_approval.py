@@ -484,6 +484,23 @@ class TransientHistoryBaseline(Base):
         self.assertIn('APPROVED', states)
 
 
+class ActivationCutOff(Base):
+    instant = False
+
+    def test_alerts_received_before_activation_never_reach_the_phone(self):
+        old = self.p.ingest(message(MELBOURNE))['instruction_id']                    # queued while disarmed
+        self.assertEqual(self.row(old)['state'], 'QUEUED')
+        self.clock.advance(30)
+        self.p.store.set_control(self.p.ACTIVATION_KEY, self.clock().isoformat(timespec='milliseconds'), by='operator-activation')
+        self.clock.advance(30)
+        new = self.p.ingest(message(RYTAS, received=self.clock()))['instruction_id']  # genuinely new after activation
+        self.p.tick(self.gateway)
+        self.assertEqual(self.row(old)['state'], 'STALE')
+        self.assertIn('before activation', self.row(old)['failure_reason'])
+        self.assertIn(self.row(new)['state'], ('DISPATCHED', 'DEVICE_ACTIVE'))
+        self.assertEqual([x['instruction_id'] for x in self.gateway.submitted], [new])
+
+
 class Messages(unittest.TestCase):
     def test_headlines_are_concise_and_name_the_decision_source(self):
         base = dict(instruction_id='on-abcdef1234567890', fixture='A v B', market='TOTALS', selection='OVER', selection_name='Over',
