@@ -1,0 +1,545 @@
+{
+ "config": {
+  "device_id": "galaxy-a13-5g",
+  "dispatch_enabled": false,
+  "final_action_enabled": false,
+  "final_action_one_shot": false,
+  "auto_approve": false,
+  "disarmed": {
+   "instruction_id": "on-d875519f85135352c96d2b1e",
+   "state": "COMPLETED",
+   "at": "2026-09-24T21:55:18.858+00:00"
+  },
+  "approval_mode": "automatic",
+  "expected_worker_id": "w-d131ef8769de",
+  "expected_account_fingerprint": "1457f6e497f3"
+ },
+ "health": {
+  "healthy": true,
+  "heartbeat_ms": 1790446365387,
+  "uptime_ms": 81797,
+  "state": "IDLE",
+  "current_instruction": null,
+  "last_result": {
+   "instruction_id": "forensic-reboot-session-1790446301-1",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "SESSION_AUTHENTICATED",
+   "duration_ms": 60420,
+   "progress": {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 59681,
+    "last_progress_at_ms": 1790446356077,
+    "instruction_id": "forensic-reboot-session-1790446301-1",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790446302695
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 172,
+      "at_ms": 1790446302775,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 172,
+       "start_ts_ms": 1790446302769,
+       "end_elapsed_ms": 13706,
+       "end_ts_ms": 1790446316304,
+       "duration_ms": 13534,
+       "status": "ok",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 180,
+      "at_ms": 1790446302794,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 172,
+       "start_ts_ms": 1790446302769,
+       "end_elapsed_ms": 13706,
+       "end_ts_ms": 1790446316304,
+       "duration_ms": 13534,
+       "status": "ok",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3066,
+      "at_ms": 1790446302794
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4524,
+      "at_ms": 1790446302794
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4623,
+      "at_ms": 1790446302794
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 5315,
+      "at_ms": 1790446302794
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 5412,
+      "at_ms": 1790446308086,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 172,
+       "start_ts_ms": 1790446302769,
+       "end_elapsed_ms": 13706,
+       "end_ts_ms": 1790446316304,
+       "duration_ms": 13534,
+       "status": "ok",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 9492,
+      "at_ms": 1790446308086
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 11054,
+      "at_ms": 1790446308086
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 11295,
+      "at_ms": 1790446308086
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 13385,
+      "at_ms": 1790446308086
+     },
+     {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 13706,
+      "at_ms": 1790446316401,
+      "timing": {
+       "stage": "ENSURE_SESSION",
+       "start_elapsed_ms": 13706,
+       "start_ts_ms": 1790446316304,
+       "end_elapsed_ms": 17068,
+       "end_ts_ms": 1790446319664,
+       "duration_ms": 3362,
+       "status": "ok",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 13811,
+      "at_ms": 1790446316401
+     },
+     {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 15849,
+      "at_ms": 1790446316401
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 17068,
+      "at_ms": 1790446319699,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 17068,
+       "start_ts_ms": 1790446319664,
+       "end_elapsed_ms": 31482,
+       "end_ts_ms": 1790446334078,
+       "duration_ms": 14414,
+       "status": "ok",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 19855,
+      "at_ms": 1790446319699
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 20407,
+      "at_ms": 1790446319699
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 20437,
+      "at_ms": 1790446323064,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 17068,
+       "start_ts_ms": 1790446319664,
+       "end_elapsed_ms": 31482,
+       "end_ts_ms": 1790446334078,
+       "duration_ms": 14414,
+       "status": "ok",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 24470,
+      "at_ms": 1790446323064
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 25518,
+      "at_ms": 1790446323064
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 26659,
+      "at_ms": 1790446323064
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 28390,
+      "at_ms": 1790446323064
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 29262,
+      "at_ms": 1790446323064
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 29332,
+      "at_ms": 1790446323064
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 29899,
+      "at_ms": 1790446323064
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 29932,
+      "at_ms": 1790446323064
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 30913,
+      "at_ms": 1790446323064
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 31425,
+      "at_ms": 1790446323064
+     },
+     {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 31482,
+      "at_ms": 1790446334120,
+      "timing": {
+       "stage": "ENTER_QUERY",
+       "start_elapsed_ms": 31482,
+       "start_ts_ms": 1790446334078,
+       "end_elapsed_ms": 42607,
+       "end_ts_ms": 1790446345203,
+       "duration_ms": 11125,
+       "status": "ok",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 35515,
+      "at_ms": 1790446334120
+     },
+     {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 35949,
+      "at_ms": 1790446334120
+     },
+     {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 35998,
+      "at_ms": 1790446334120
+     },
+     {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 36556,
+      "at_ms": 1790446334120
+     },
+     {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 36595,
+      "at_ms": 1790446334120
+     },
+     {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 36877,
+      "at_ms": 1790446334120
+     },
+     {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 37282,
+      "at_ms": 1790446334120
+     },
+     {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 37726,
+      "at_ms": 1790446334120
+     },
+     {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 38396,
+      "at_ms": 1790446334120
+     },
+     {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 38461,
+      "at_ms": 1790446334120
+     },
+     {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 41555,
+      "at_ms": 1790446334120
+     },
+     {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 41922,
+      "at_ms": 1790446334120
+     },
+     {
+      "stage": "ENTER_QUERY",
+      "elapsed_ms": 42051,
+      "at_ms": 1790446334120
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 42607,
+      "at_ms": 1790446345244,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 42607,
+       "start_ts_ms": 1790446345203,
+       "end_elapsed_ms": 59681,
+       "end_ts_ms": 1790446362276,
+       "duration_ms": 17074,
+       "status": "ok",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 45396,
+      "at_ms": 1790446345244
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 45888,
+      "at_ms": 1790446345244
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 48849,
+      "at_ms": 1790446345244
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 49623,
+      "at_ms": 1790446345244
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 52627,
+      "at_ms": 1790446345244
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 53178,
+      "at_ms": 1790446345244
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 53459,
+      "at_ms": 1790446356077,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 42607,
+       "start_ts_ms": 1790446345203,
+       "end_elapsed_ms": 59681,
+       "end_ts_ms": 1790446362276,
+       "duration_ms": 17074,
+       "status": "ok",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 56704,
+      "at_ms": 1790446356077
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 57267,
+      "at_ms": 1790446356077
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 58880,
+      "at_ms": 1790446356077
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 59559,
+      "at_ms": 1790446356077
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 59681,
+      "at_ms": 1790446356077
+     }
+    ]
+   },
+   "device_stage": "OPEN_HOME",
+   "execution_count": 1,
+   "run_id": "c_7e_ZxuRioEUIR0X2_KnIa-Ik7OQXYMuAqc3YWNIb1Io",
+   "fixture_name": null,
+   "home": null,
+   "away": null,
+   "competition": null,
+   "verification_detail": "Session authenticated independently; no betting instruction executed",
+   "home_verified": true,
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 172,
+     "start_ts_ms": 1790446302769,
+     "end_elapsed_ms": 13706,
+     "end_ts_ms": 1790446316304,
+     "duration_ms": 13534,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "ENSURE_SESSION",
+     "start_elapsed_ms": 13706,
+     "start_ts_ms": 1790446316304,
+     "end_elapsed_ms": 17068,
+     "end_ts_ms": 1790446319664,
+     "duration_ms": 3362,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 17068,
+     "start_ts_ms": 1790446319664,
+     "end_elapsed_ms": 31482,
+     "end_ts_ms": 1790446334078,
+     "duration_ms": 14414,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "start_elapsed_ms": 31482,
+     "start_ts_ms": 1790446334078,
+     "end_elapsed_ms": 42607,
+     "end_ts_ms": 1790446345203,
+     "duration_ms": 11125,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 42607,
+     "start_ts_ms": 1790446345203,
+     "end_elapsed_ms": 59681,
+     "end_ts_ms": 1790446362276,
+     "duration_ms": 17074,
+     "status": "ok",
+     "retries": 0
+    }
+   ],
+   "session_path": [
+    {
+     "saw": "UNKNOWN",
+     "state": "UNOBSERVED",
+     "attempts": 0
+    },
+    {
+     "saw": "LOGGED_OUT",
+     "state": "LOGIN_IN_PROGRESS",
+     "attempts": 0
+    },
+    {
+     "saw": "UNKNOWN",
+     "state": "LOGIN_IN_PROGRESS",
+     "attempts": 1
+    },
+    {
+     "saw": "UNKNOWN",
+     "state": "LOGIN_IN_PROGRESS",
+     "attempts": 1
+    },
+    {
+     "saw": "ACCOUNT",
+     "state": "AUTHENTICATED_RECOVERED",
+     "attempts": 1
+    },
+    {
+     "saw": "UNKNOWN",
+     "state": "HOME_VERIFY",
+     "attempts": 0
+    },
+    {
+     "saw": "ACCOUNT",
+     "state": "HOME_VERIFY",
+     "attempts": 1
+    }
+   ],
+   "session_machine": "AUTHENTICATED_RECOVERED",
+   "session_recovered": true,
+   "login_submitted": true
+  },
+  "app_version": "0.9.24-ops",
+  "version_code": 107,
+  "phone_final_action_armed": true,
+  "diagnostics_active": false,
+  "endpoint": "http://100.114.45.68:8767",
+  "pid": 4236,
+  "device_id": "galaxy-a13-5g",
+  "session": {
+   "state": "AUTHENTICATED",
+   "observed_at_ms": 1790446362528,
+   "detail": "workflow",
+   "refresh_count": 6,
+   "last_refresh_at_ms": 1790446362018,
+   "last_refresh_outcome": "job active"
+  },
+  "ocr_engine": "hybrid",
+  "fast_ocr_error": null,
+  "credentials_configured": true,
+  "credential_store": "encrypted",
+  "worker_id": "w-d131ef8769de",
+  "account_fingerprint": "1457f6e497f3",
+  "local_execution": {
+   "enabled": true,
+   "enabled_at_ms": 1790445273789,
+   "disabled_at_ms": 0,
+   "worker_id": "w-d131ef8769de",
+   "authorised_account_fingerprint": "1457f6e497f3",
+   "last_reason": "enabled on the phone"
+  },
+  "session_recovery": {
+   "last_attempt_at_ms": 0,
+   "attempts_last_hour": 0,
+   "last_outcome": "none"
+  }
+ },
+ "reboot_run": "evidence/strategy-audit/reboot\\run-1790446239"
+}

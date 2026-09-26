@@ -1,0 +1,875 @@
+{
+  "boot_before": "a025a4b8-f26e-4b8d-9383-b4a6e3ab062d",
+  "boot_after": "f081d0e5-030e-4c04-8474-919074aa4cb3",
+  "health": {
+    "healthy": true,
+    "heartbeat_ms": 1790446298167,
+    "uptime_ms": 14577,
+    "state": "IDLE",
+    "current_instruction": null,
+    "last_result": {
+      "instruction_id": "st-f2eb69196870f6a3-91",
+      "status": "PASS",
+      "stage": "PASS",
+      "detail": "MY_BETS",
+      "duration_ms": 30229,
+      "progress": {
+        "stage": "OPEN_HOME",
+        "elapsed_ms": 29994,
+        "last_progress_at_ms": 1790446203189,
+        "instruction_id": "st-f2eb69196870f6a3-91",
+        "stages": [
+          {
+            "stage": "STARTED",
+            "elapsed_ms": 0,
+            "at_ms": 1790446176398
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 22,
+            "at_ms": 1790446176407,
+            "timing": {
+              "stage": "OPEN_HOME",
+              "start_elapsed_ms": 22,
+              "start_ts_ms": 1790446176400,
+              "end_elapsed_ms": 4550,
+              "end_ts_ms": 1790446180928,
+              "duration_ms": 4528,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 30,
+            "at_ms": 1790446176417,
+            "timing": {
+              "stage": "OPEN_HOME",
+              "start_elapsed_ms": 22,
+              "start_ts_ms": 1790446176400,
+              "end_elapsed_ms": 4550,
+              "end_ts_ms": 1790446180928,
+              "duration_ms": 4528,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 2864,
+            "at_ms": 1790446176417
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 3314,
+            "at_ms": 1790446176417
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 3339,
+            "at_ms": 1790446176417
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 3887,
+            "at_ms": 1790446176417
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 3916,
+            "at_ms": 1790446176417
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 4521,
+            "at_ms": 1790446176417
+          },
+          {
+            "stage": "ENSURE_SESSION",
+            "elapsed_ms": 4550,
+            "at_ms": 1790446180942,
+            "timing": {
+              "stage": "ENSURE_SESSION",
+              "start_elapsed_ms": 4550,
+              "start_ts_ms": 1790446180928,
+              "end_elapsed_ms": 5731,
+              "end_ts_ms": 1790446182109,
+              "duration_ms": 1181,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "ENSURE_SESSION",
+            "elapsed_ms": 4566,
+            "at_ms": 1790446180942
+          },
+          {
+            "stage": "ENSURE_SESSION",
+            "elapsed_ms": 5231,
+            "at_ms": 1790446180942
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 5731,
+            "at_ms": 1790446182127,
+            "timing": {
+              "stage": "OPEN_HOME",
+              "start_elapsed_ms": 5731,
+              "start_ts_ms": 1790446182109,
+              "end_elapsed_ms": 13779,
+              "end_ts_ms": 1790446190156,
+              "duration_ms": 8048,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 8490,
+            "at_ms": 1790446182127
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 8800,
+            "at_ms": 1790446182127
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 8813,
+            "at_ms": 1790446185213,
+            "timing": {
+              "stage": "OPEN_HOME",
+              "start_elapsed_ms": 5731,
+              "start_ts_ms": 1790446182109,
+              "end_elapsed_ms": 13779,
+              "end_ts_ms": 1790446190156,
+              "duration_ms": 8048,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 12838,
+            "at_ms": 1790446185213
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 13471,
+            "at_ms": 1790446185213
+          },
+          {
+            "stage": "MY_BETS",
+            "elapsed_ms": 13779,
+            "at_ms": 1790446190165,
+            "timing": {
+              "stage": "MY_BETS",
+              "start_elapsed_ms": 13779,
+              "start_ts_ms": 1790446190156,
+              "end_elapsed_ms": 13788,
+              "end_ts_ms": 1790446190166,
+              "duration_ms": 9,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 13788,
+            "at_ms": 1790446190176,
+            "timing": {
+              "stage": "OPEN_HOME",
+              "start_elapsed_ms": 13788,
+              "start_ts_ms": 1790446190166,
+              "end_elapsed_ms": 17956,
+              "end_ts_ms": 1790446194333,
+              "duration_ms": 4168,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 17528,
+            "at_ms": 1790446190176
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 17917,
+            "at_ms": 1790446190176
+          },
+          {
+            "stage": "MY_BETS_SCROLL",
+            "elapsed_ms": 17956,
+            "at_ms": 1790446194343,
+            "timing": {
+              "stage": "MY_BETS_SCROLL",
+              "start_elapsed_ms": 17956,
+              "start_ts_ms": 1790446194333,
+              "end_elapsed_ms": 26788,
+              "end_ts_ms": 1790446203166,
+              "duration_ms": 8832,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "MY_BETS_SCROLL",
+            "elapsed_ms": 17967,
+            "at_ms": 1790446194343
+          },
+          {
+            "stage": "MY_BETS_SCROLL",
+            "elapsed_ms": 18422,
+            "at_ms": 1790446194343
+          },
+          {
+            "stage": "MY_BETS_SCROLL",
+            "elapsed_ms": 20710,
+            "at_ms": 1790446197106,
+            "timing": {
+              "stage": "MY_BETS_SCROLL",
+              "start_elapsed_ms": 17956,
+              "start_ts_ms": 1790446194333,
+              "end_elapsed_ms": 26788,
+              "end_ts_ms": 1790446203166,
+              "duration_ms": 8832,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "MY_BETS_SCROLL",
+            "elapsed_ms": 20730,
+            "at_ms": 1790446197106
+          },
+          {
+            "stage": "MY_BETS_SCROLL",
+            "elapsed_ms": 21015,
+            "at_ms": 1790446197106
+          },
+          {
+            "stage": "MY_BETS_SCROLL",
+            "elapsed_ms": 23297,
+            "at_ms": 1790446199757,
+            "timing": {
+              "stage": "MY_BETS_SCROLL",
+              "start_elapsed_ms": 17956,
+              "start_ts_ms": 1790446194333,
+              "end_elapsed_ms": 26788,
+              "end_ts_ms": 1790446203166,
+              "duration_ms": 8832,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "MY_BETS_SCROLL",
+            "elapsed_ms": 23383,
+            "at_ms": 1790446199757
+          },
+          {
+            "stage": "MY_BETS_SCROLL",
+            "elapsed_ms": 23864,
+            "at_ms": 1790446199757
+          },
+          {
+            "stage": "MY_BETS_SCROLL",
+            "elapsed_ms": 26161,
+            "at_ms": 1790446202616,
+            "timing": {
+              "stage": "MY_BETS_SCROLL",
+              "start_elapsed_ms": 17956,
+              "start_ts_ms": 1790446194333,
+              "end_elapsed_ms": 26788,
+              "end_ts_ms": 1790446203166,
+              "duration_ms": 8832,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "MY_BETS_SCROLL",
+            "elapsed_ms": 26240,
+            "at_ms": 1790446202616
+          },
+          {
+            "stage": "MY_BETS_SCROLL",
+            "elapsed_ms": 26743,
+            "at_ms": 1790446202616
+          },
+          {
+            "stage": "RETURN_HOME",
+            "elapsed_ms": 26775,
+            "at_ms": 1790446203165
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 26788,
+            "at_ms": 1790446203189,
+            "timing": {
+              "stage": "OPEN_HOME",
+              "start_elapsed_ms": 26788,
+              "start_ts_ms": 1790446203166,
+              "end_elapsed_ms": 29994,
+              "end_ts_ms": 1790446206372,
+              "duration_ms": 3206,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 29534,
+            "at_ms": 1790446203189
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 29946,
+            "at_ms": 1790446203189
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 29994,
+            "at_ms": 1790446203189
+          }
+        ]
+      },
+      "device_stage": "OPEN_HOME",
+      "execution_count": 1,
+      "run_id": "c_JuNpxnRdK1hJtLXB8A7Un8MbreS0UZfN97RP62RAw2g",
+      "fixture_name": null,
+      "home": null,
+      "away": null,
+      "competition": null,
+      "verification_detail": "My Bets SETTLED read: 65 lines over 4 frames; no bet controls touched; HOME verified",
+      "my_bets": {
+        "view": "SETTLED",
+        "tab": "Settled",
+        "empty": false,
+        "frames": [
+          "s008_my_bets_1.png",
+          "s009_my_bets_2.png",
+          "s010_my_bets_3.png",
+          "s011_my_bets_4.png"
+        ],
+        "lines": [
+          {
+            "text": "19:09 O Ca ll 100%0",
+            "top": 15,
+            "left": 56,
+            "frame": 0
+          },
+          {
+            "text": "G o bet365.com/#/MB/U + 13",
+            "top": 82,
+            "left": 30,
+            "frame": 0
+          },
+          {
+            "text": "bet365 \u00a34.07 ()",
+            "top": 176,
+            "left": 19,
+            "frame": 0
+          },
+          {
+            "text": "Open Live Settled",
+            "top": 272,
+            "left": 36,
+            "frame": 0
+          },
+          {
+            "text": "\u00a31.00 Single",
+            "top": 366,
+            "left": 50,
+            "frame": 0
+          },
+          {
+            "text": "3 Reuse Selections Share",
+            "top": 451,
+            "left": 100,
+            "frame": 0
+          },
+          {
+            "text": "O Arsenal 1.33",
+            "top": 525,
+            "left": 70,
+            "frame": 0
+          },
+          {
+            "text": "Full Time Result",
+            "top": 567,
+            "left": 93,
+            "frame": 0
+          },
+          {
+            "text": "( Arsenal Sat 10 Oct",
+            "top": 612,
+            "left": 51,
+            "frame": 0
+          },
+          {
+            "text": "Leeds 12:30",
+            "top": 663,
+            "left": 91,
+            "frame": 0
+          },
+          {
+            "text": "Stake To Return",
+            "top": 759,
+            "left": 50,
+            "frame": 0
+          },
+          {
+            "text": "\u00a31.00 \u00a31.33",
+            "top": 791,
+            "left": 51,
+            "frame": 0
+          },
+          {
+            "text": "(o)",
+            "top": 1419,
+            "left": 345,
+            "frame": 0
+          },
+          {
+            "text": "Home All Sports In-Play My Bets Casino",
+            "top": 1470,
+            "left": 44,
+            "frame": 0
+          },
+          {
+            "text": "19:09 O Ca ll 100%0",
+            "top": 15,
+            "left": 56,
+            "frame": 1
+          },
+          {
+            "text": "G o bet365.com/#/MB/U + 13",
+            "top": 82,
+            "left": 30,
+            "frame": 1
+          },
+          {
+            "text": "bet365 \u00a34.07 ()",
+            "top": 176,
+            "left": 19,
+            "frame": 1
+          },
+          {
+            "text": "Information and transmission delays v",
+            "top": 804,
+            "left": 182,
+            "frame": 1
+          },
+          {
+            "text": "Settings",
+            "top": 935,
+            "left": 19,
+            "frame": 1
+          },
+          {
+            "text": "Language Odds Display",
+            "top": 1031,
+            "left": 20,
+            "frame": 1
+          },
+          {
+            "text": "Audio",
+            "top": 1135,
+            "left": 19,
+            "frame": 1
+          },
+          {
+            "text": "Horse Racing Greyhounds",
+            "top": 1227,
+            "left": 20,
+            "frame": 1
+          },
+          {
+            "text": "Football Cricket",
+            "top": 1306,
+            "left": 21,
+            "frame": 1
+          },
+          {
+            "text": "(o)",
+            "top": 1419,
+            "left": 345,
+            "frame": 1
+          },
+          {
+            "text": "Home All Sports In-Play My Bets Casino",
+            "top": 1472,
+            "left": 44,
+            "frame": 1
+          },
+          {
+            "text": "19:09 O Ca ll 100%0",
+            "top": 15,
+            "left": 56,
+            "frame": 2
+          },
+          {
+            "text": "G o bet365.com/#/MB/U + 13",
+            "top": 82,
+            "left": 30,
+            "frame": 2
+          },
+          {
+            "text": "bet365 \u00a34.07 ()",
+            "top": 174,
+            "left": 14,
+            "frame": 2
+          },
+          {
+            "text": "Horse Racing Greyhounds",
+            "top": 289,
+            "left": 20,
+            "frame": 2
+          },
+          {
+            "text": "FootbalI Cricket",
+            "top": 366,
+            "left": 21,
+            "frame": 2
+          },
+          {
+            "text": "Form & Stats",
+            "top": 465,
+            "left": 19,
+            "frame": 2
+          },
+          {
+            "text": "Football Stats Sports Stats",
+            "top": 559,
+            "left": 20,
+            "frame": 2
+          },
+          {
+            "text": "Horse Racing Archive Australian Horse Form",
+            "top": 637,
+            "left": 21,
+            "frame": 2
+          },
+          {
+            "text": "Scores & Results",
+            "top": 739,
+            "left": 20,
+            "frame": 2
+          },
+          {
+            "text": "Live Scores Results",
+            "top": 832,
+            "left": 20,
+            "frame": 2
+          },
+          {
+            "text": "Help",
+            "top": 954,
+            "left": 20,
+            "frame": 2
+          },
+          {
+            "text": "Deposits Withdrawals",
+            "top": 1047,
+            "left": 21,
+            "frame": 2
+          },
+          {
+            "text": "Contact Us bet365 FAQ",
+            "top": 1125,
+            "left": 20,
+            "frame": 2
+          },
+          {
+            "text": "Terms and Conditions Safer Gambling",
+            "top": 1200,
+            "left": 19,
+            "frame": 2
+          },
+          {
+            "text": "Technical lssues Privacy Policy",
+            "top": 1275,
+            "left": 19,
+            "frame": 2
+          },
+          {
+            "text": "Cookie Policy Fair Payouts",
+            "top": 1347,
+            "left": 19,
+            "frame": 2
+          },
+          {
+            "text": "(o)",
+            "top": 1419,
+            "left": 345,
+            "frame": 2
+          },
+          {
+            "text": "Home All Sports In-Play My Bets Casino",
+            "top": 1472,
+            "left": 44,
+            "frame": 2
+          },
+          {
+            "text": "19:10 Ca ll 100%0",
+            "top": 15,
+            "left": 56,
+            "frame": 3
+          },
+          {
+            "text": "G o bet365.com/#/MB/U + 13",
+            "top": 82,
+            "left": 30,
+            "frame": 3
+          },
+          {
+            "text": "bet365 \u00a34.07 (+)",
+            "top": 176,
+            "left": 19,
+            "frame": 3
+          },
+          {
+            "text": "Terms and Conditions Safer Gambling",
+            "top": 244,
+            "left": 19,
+            "frame": 3
+          },
+          {
+            "text": "Technical Issues Privacy Policy",
+            "top": 320,
+            "left": 18,
+            "frame": 3
+          },
+          {
+            "text": "Cookie Policy Fair Payouts",
+            "top": 395,
+            "left": 19,
+            "frame": 3
+          },
+          {
+            "text": "Complaints Procedure Rules",
+            "top": 469,
+            "left": 20,
+            "frame": 3
+          },
+          {
+            "text": "Deposit Limits",
+            "top": 548,
+            "left": 21,
+            "frame": 3
+          },
+          {
+            "text": "Sites",
+            "top": 646,
+            "left": 20,
+            "frame": 3
+          },
+          {
+            "text": "Careers Partners",
+            "top": 744,
+            "left": 19,
+            "frame": 3
+          },
+          {
+            "text": "Sports & Betting News",
+            "top": 820,
+            "left": 20,
+            "frame": 3
+          },
+          {
+            "text": "bet365",
+            "top": 986,
+            "left": 239,
+            "frame": 3
+          },
+          {
+            "text": "CHAMPIONS",
+            "top": 1013,
+            "left": 394,
+            "frame": 3
+          },
+          {
+            "text": "LEAGUE",
+            "top": 1026,
+            "left": 410,
+            "frame": 3
+          },
+          {
+            "text": "OFFICIAL GLOBAL PARTNER",
+            "top": 1056,
+            "left": 257,
+            "frame": 3
+          },
+          {
+            "text": "GambleAware THERAPY GAMBLING FOR ADDICTION OBIA",
+            "top": 1167,
+            "left": 19,
+            "frame": 3
+          },
+          {
+            "text": "INTERNATIONAL BETTING",
+            "top": 1200,
+            "left": 507,
+            "frame": 3
+          },
+          {
+            "text": "GORDON MOODY",
+            "top": 1208,
+            "left": 304,
+            "frame": 3
+          },
+          {
+            "text": "GAMBLING GAM STOP",
+            "top": 1280,
+            "left": 19,
+            "frame": 3
+          },
+          {
+            "text": "COMMISSION ONLINE IBAS",
+            "top": 1304,
+            "left": 19,
+            "frame": 3
+          },
+          {
+            "text": "(o)",
+            "top": 1419,
+            "left": 345,
+            "frame": 3
+          },
+          {
+            "text": "Home All Sports In-Play My Bets Casino",
+            "top": 1470,
+            "left": 44,
+            "frame": 3
+          }
+        ]
+      },
+      "returned_home": true,
+      "home_verified": true,
+      "stage_timings": [
+        {
+          "stage": "OPEN_HOME",
+          "start_elapsed_ms": 22,
+          "start_ts_ms": 1790446176400,
+          "end_elapsed_ms": 4550,
+          "end_ts_ms": 1790446180928,
+          "duration_ms": 4528,
+          "status": "ok",
+          "retries": 0
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "start_elapsed_ms": 4550,
+          "start_ts_ms": 1790446180928,
+          "end_elapsed_ms": 5731,
+          "end_ts_ms": 1790446182109,
+          "duration_ms": 1181,
+          "status": "ok",
+          "retries": 0
+        },
+        {
+          "stage": "OPEN_HOME",
+          "start_elapsed_ms": 5731,
+          "start_ts_ms": 1790446182109,
+          "end_elapsed_ms": 13779,
+          "end_ts_ms": 1790446190156,
+          "duration_ms": 8048,
+          "status": "ok",
+          "retries": 0
+        },
+        {
+          "stage": "MY_BETS",
+          "start_elapsed_ms": 13779,
+          "start_ts_ms": 1790446190156,
+          "end_elapsed_ms": 13788,
+          "end_ts_ms": 1790446190166,
+          "duration_ms": 9,
+          "status": "ok",
+          "retries": 0
+        },
+        {
+          "stage": "OPEN_HOME",
+          "start_elapsed_ms": 13788,
+          "start_ts_ms": 1790446190166,
+          "end_elapsed_ms": 17956,
+          "end_ts_ms": 1790446194333,
+          "duration_ms": 4168,
+          "status": "ok",
+          "retries": 0
+        },
+        {
+          "stage": "MY_BETS_SCROLL",
+          "start_elapsed_ms": 17956,
+          "start_ts_ms": 1790446194333,
+          "end_elapsed_ms": 26788,
+          "end_ts_ms": 1790446203166,
+          "duration_ms": 8832,
+          "status": "ok",
+          "retries": 0
+        },
+        {
+          "stage": "OPEN_HOME",
+          "start_elapsed_ms": 26788,
+          "start_ts_ms": 1790446203166,
+          "end_elapsed_ms": 29994,
+          "end_ts_ms": 1790446206372,
+          "duration_ms": 3206,
+          "status": "ok",
+          "retries": 0
+        }
+      ],
+      "t_home_ms": 1790446206371,
+      "session_path": [
+        {
+          "saw": "UNKNOWN",
+          "state": "UNOBSERVED",
+          "attempts": 0
+        },
+        {
+          "saw": "ACCOUNT",
+          "state": "AUTHENTICATED",
+          "attempts": 0
+        }
+      ],
+      "session_machine": "AUTHENTICATED"
+    },
+    "app_version": "0.9.24-ops",
+    "version_code": 107,
+    "phone_final_action_armed": true,
+    "diagnostics_active": false,
+    "endpoint": "http://100.114.45.68:8767",
+    "pid": 4236,
+    "device_id": "galaxy-a13-5g",
+    "session": {
+      "state": "UNKNOWN",
+      "observed_at_ms": 1790446283915,
+      "detail": "screen locked or off",
+      "refresh_count": 1,
+      "last_refresh_at_ms": 1790446283898,
+      "last_refresh_outcome": "screen locked or off"
+    },
+    "ocr_engine": "hybrid",
+    "fast_ocr_error": null,
+    "credentials_configured": true,
+    "credential_store": "encrypted",
+    "worker_id": "w-d131ef8769de",
+    "account_fingerprint": "1457f6e497f3",
+    "local_execution": {
+      "enabled": true,
+      "enabled_at_ms": 1790445273789,
+      "disabled_at_ms": 0,
+      "worker_id": "w-d131ef8769de",
+      "authorised_account_fingerprint": "1457f6e497f3",
+      "last_reason": "enabled on the phone"
+    },
+    "session_recovery": {
+      "last_attempt_at_ms": 0,
+      "attempts_last_hour": 0,
+      "last_outcome": "none"
+    }
+  },
+  "coordinator_up_s": 61.2
+}
