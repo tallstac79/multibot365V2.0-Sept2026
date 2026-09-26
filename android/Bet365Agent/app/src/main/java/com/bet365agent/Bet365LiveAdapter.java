@@ -391,6 +391,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 // they name the same account: clear only the observed username control,
                 // require its empty placeholder, then enter the configured account anew.
                 GameLinesParser.Word clear = LoginAccount.clearControl(wordsOf(form));
+                ui.put("login_clear_control_source", clear != null ? "ocr" : "geometry");
+                if (clear == null) clear = LoginAccount.clearControlByGeometry(wordsOf(form));   // glyph unread: the field row's right end
                 require(clear != null, "LOGIN_FAILED", "No unique clear control on remembered account field");
                 userStep = ui.tap(new android.graphics.Rect(clear.left, clear.top, clear.right, clear.bottom), "Clear remembered login account")
                     .thenCompose(x -> ui.delay(400)).thenCompose(x -> ui.capture("login_account_cleared"))
@@ -403,9 +405,26 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     });
             } else {
                 String hintUser = uniqueHint(form, "email", "Email", "Username", "username");
-                require(hintUser != null, "LOGIN_FAILED", "No unique username placeholder on the Bet365 login form");
-                ui.put("login_user_hint", hintUser);
-                userStep = ui.type(hintUser, user);
+                GameLinesParser.Word byRow = hintUser == null ? LoginAccount.clearControlByGeometry(wordsOf(form)) : null;
+                if (byRow != null) {
+                    // No placeholder and a remembered value whose clear glyph the OCR did not read (real: 2026-09-26 19:02
+                    // after a reboot, icon on screen at x 575-600). Clear by the field row's geometry, then require the
+                    // empty placeholder before the configured account is typed; a miss fails closed as before.
+                    ui.put("login_clear_control_source", "geometry");
+                    userStep = ui.tap(new android.graphics.Rect(byRow.left, byRow.top, byRow.right, byRow.bottom), "Clear remembered login account (row geometry)")
+                        .thenCompose(x -> ui.delay(400)).thenCompose(x -> ui.capture("login_account_cleared"))
+                        .thenCompose(empty -> {
+                            require(LoginAccount.inspect(wordsOf(empty), user) == LoginAccount.State.EMPTY,
+                                    "LOGIN_FAILED", "Remembered account field did not clear to its placeholder");
+                            String hint = uniqueHint(empty, "email", "Email", "Username", "username");
+                            require(hint != null, "LOGIN_FAILED", "Empty account field has no unique placeholder");
+                            return ui.type(hint, user);
+                        });
+                } else {
+                    require(hintUser != null, "LOGIN_FAILED", "No unique username placeholder on the Bet365 login form");
+                    ui.put("login_user_hint", hintUser);
+                    userStep = ui.type(hintUser, user);
+                }
             }
             return userStep.thenCompose(x -> ui.delay(400)).thenCompose(x -> ui.typeSecret("Password", pass)).thenCompose(x -> ui.delay(400)).thenCompose(x -> {
                 return ui.capture("login_filled").thenCompose(filled -> {

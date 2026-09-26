@@ -1,0 +1,409 @@
+{
+ "result": {
+  "instruction_id": "post-reboot-session-2-190242",
+  "status": "FAIL",
+  "stage": "LOGIN_FAILED",
+  "detail": "No unique username placeholder on the Bet365 login form",
+  "duration_ms": 9767,
+  "progress": {
+   "stage": "ENSURE_SESSION",
+   "elapsed_ms": 9620,
+   "last_progress_at_ms": 1790445767847,
+   "instruction_id": "post-reboot-session-2-190242",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790445763102
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 15,
+     "at_ms": 1790445763108,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 15,
+      "start_ts_ms": 1790445763102,
+      "end_elapsed_ms": 4750,
+      "end_ts_ms": 1790445767838,
+      "duration_ms": 4735,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 21,
+     "at_ms": 1790445763116,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 15,
+      "start_ts_ms": 1790445763102,
+      "end_elapsed_ms": 4750,
+      "end_ts_ms": 1790445767838,
+      "duration_ms": 4735,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 2857,
+     "at_ms": 1790445763116
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3345,
+     "at_ms": 1790445763116
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3382,
+     "at_ms": 1790445763116
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3982,
+     "at_ms": 1790445763116
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4041,
+     "at_ms": 1790445763116
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4732,
+     "at_ms": 1790445763116
+    },
+    {
+     "stage": "ENSURE_SESSION",
+     "elapsed_ms": 4750,
+     "at_ms": 1790445767847,
+     "timing": {
+      "stage": "ENSURE_SESSION",
+      "start_elapsed_ms": 4750,
+      "start_ts_ms": 1790445767838,
+      "end_elapsed_ms": 9620,
+      "end_ts_ms": 1790445772707,
+      "duration_ms": 4870,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENSURE_SESSION",
+     "elapsed_ms": 4761,
+     "at_ms": 1790445767847
+    },
+    {
+     "stage": "ENSURE_SESSION",
+     "elapsed_ms": 5572,
+     "at_ms": 1790445767847
+    },
+    {
+     "stage": "ENSURE_SESSION",
+     "elapsed_ms": 5879,
+     "at_ms": 1790445767847
+    },
+    {
+     "stage": "ENSURE_SESSION",
+     "elapsed_ms": 7125,
+     "at_ms": 1790445767847
+    },
+    {
+     "stage": "ENSURE_SESSION",
+     "elapsed_ms": 7754,
+     "at_ms": 1790445767847
+    },
+    {
+     "stage": "ENSURE_SESSION",
+     "elapsed_ms": 8423,
+     "at_ms": 1790445767847
+    },
+    {
+     "stage": "ENSURE_SESSION",
+     "elapsed_ms": 9022,
+     "at_ms": 1790445767847
+    },
+    {
+     "stage": "ENSURE_SESSION",
+     "elapsed_ms": 9066,
+     "at_ms": 1790445767847
+    },
+    {
+     "stage": "ENSURE_SESSION",
+     "elapsed_ms": 9591,
+     "at_ms": 1790445767847
+    },
+    {
+     "stage": "ENSURE_SESSION",
+     "elapsed_ms": 9620,
+     "at_ms": 1790445767847
+    }
+   ]
+  },
+  "device_stage": "ENSURE_SESSION",
+  "execution_count": 1,
+  "run_id": "c_-HnFKFc50nQNMaYX6NvRE31e3PJ-aa_Qz9vwQ89d6NA",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "No unique username placeholder on the Bet365 login form",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 15,
+    "start_ts_ms": 1790445763102,
+    "end_elapsed_ms": 4750,
+    "end_ts_ms": 1790445767838,
+    "duration_ms": 4735,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENSURE_SESSION",
+    "start_elapsed_ms": 4750,
+    "start_ts_ms": 1790445767838,
+    "end_elapsed_ms": 9620,
+    "end_ts_ms": 1790445772707,
+    "duration_ms": 4870,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "session_path": [
+   {
+    "saw": "LOGGED_OUT",
+    "state": "LOGIN_IN_PROGRESS",
+    "attempts": 0
+   }
+  ],
+  "session_machine": "LOGIN_IN_PROGRESS"
+ },
+ "health": {
+  "healthy": true,
+  "heartbeat_ms": 1790445774288,
+  "uptime_ms": 274639,
+  "state": "IDLE",
+  "current_instruction": null,
+  "last_result": {
+   "instruction_id": "post-reboot-session-2-190242",
+   "status": "FAIL",
+   "stage": "LOGIN_FAILED",
+   "detail": "No unique username placeholder on the Bet365 login form",
+   "duration_ms": 9767,
+   "progress": {
+    "stage": "ENSURE_SESSION",
+    "elapsed_ms": 9620,
+    "last_progress_at_ms": 1790445767847,
+    "instruction_id": "post-reboot-session-2-190242",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790445763102
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 15,
+      "at_ms": 1790445763108,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 15,
+       "start_ts_ms": 1790445763102,
+       "end_elapsed_ms": 4750,
+       "end_ts_ms": 1790445767838,
+       "duration_ms": 4735,
+       "status": "ok",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 21,
+      "at_ms": 1790445763116,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 15,
+       "start_ts_ms": 1790445763102,
+       "end_elapsed_ms": 4750,
+       "end_ts_ms": 1790445767838,
+       "duration_ms": 4735,
+       "status": "ok",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2857,
+      "at_ms": 1790445763116
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3345,
+      "at_ms": 1790445763116
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3382,
+      "at_ms": 1790445763116
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3982,
+      "at_ms": 1790445763116
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4041,
+      "at_ms": 1790445763116
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4732,
+      "at_ms": 1790445763116
+     },
+     {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 4750,
+      "at_ms": 1790445767847,
+      "timing": {
+       "stage": "ENSURE_SESSION",
+       "start_elapsed_ms": 4750,
+       "start_ts_ms": 1790445767838,
+       "end_elapsed_ms": 9620,
+       "end_ts_ms": 1790445772707,
+       "duration_ms": 4870,
+       "status": "fail",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 4761,
+      "at_ms": 1790445767847
+     },
+     {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 5572,
+      "at_ms": 1790445767847
+     },
+     {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 5879,
+      "at_ms": 1790445767847
+     },
+     {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 7125,
+      "at_ms": 1790445767847
+     },
+     {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 7754,
+      "at_ms": 1790445767847
+     },
+     {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 8423,
+      "at_ms": 1790445767847
+     },
+     {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 9022,
+      "at_ms": 1790445767847
+     },
+     {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 9066,
+      "at_ms": 1790445767847
+     },
+     {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 9591,
+      "at_ms": 1790445767847
+     },
+     {
+      "stage": "ENSURE_SESSION",
+      "elapsed_ms": 9620,
+      "at_ms": 1790445767847
+     }
+    ]
+   },
+   "device_stage": "ENSURE_SESSION",
+   "execution_count": 1,
+   "run_id": "c_-HnFKFc50nQNMaYX6NvRE31e3PJ-aa_Qz9vwQ89d6NA",
+   "fixture_name": null,
+   "home": null,
+   "away": null,
+   "competition": null,
+   "verification_detail": "No unique username placeholder on the Bet365 login form",
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 15,
+     "start_ts_ms": 1790445763102,
+     "end_elapsed_ms": 4750,
+     "end_ts_ms": 1790445767838,
+     "duration_ms": 4735,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "ENSURE_SESSION",
+     "start_elapsed_ms": 4750,
+     "start_ts_ms": 1790445767838,
+     "end_elapsed_ms": 9620,
+     "end_ts_ms": 1790445772707,
+     "duration_ms": 4870,
+     "status": "fail",
+     "retries": 0
+    }
+   ],
+   "session_path": [
+    {
+     "saw": "LOGGED_OUT",
+     "state": "LOGIN_IN_PROGRESS",
+     "attempts": 0
+    }
+   ],
+   "session_machine": "LOGIN_IN_PROGRESS"
+  },
+  "app_version": "0.9.23-ops",
+  "version_code": 106,
+  "phone_final_action_armed": true,
+  "diagnostics_active": false,
+  "endpoint": "http://100.114.45.68:8767",
+  "pid": 4366,
+  "device_id": "galaxy-a13-5g",
+  "session": {
+   "state": "LOGGED_OUT",
+   "observed_at_ms": 1790445772760,
+   "detail": "LOGIN_FAILED; automatic recovery did not authenticate",
+   "refresh_count": 5,
+   "last_refresh_at_ms": 1790445740633,
+   "last_refresh_outcome": "probe started"
+  },
+  "ocr_engine": "hybrid",
+  "fast_ocr_error": null,
+  "credentials_configured": true,
+  "credential_store": "encrypted",
+  "worker_id": "w-d131ef8769de",
+  "account_fingerprint": "1457f6e497f3",
+  "local_execution": {
+   "enabled": true,
+   "enabled_at_ms": 1790445273789,
+   "disabled_at_ms": 0,
+   "worker_id": "w-d131ef8769de",
+   "authorised_account_fingerprint": "1457f6e497f3",
+   "last_reason": "enabled on the phone"
+  },
+  "session_recovery": {
+   "last_attempt_at_ms": 1790445561552,
+   "attempts_last_hour": 1,
+   "last_outcome": "deferred: cooldown or hourly limit"
+  }
+ }
+}

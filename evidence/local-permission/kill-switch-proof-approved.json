@@ -1,0 +1,36 @@
+{
+ "state": "REJECTED",
+ "reason": "KILL_SWITCH: final action paused by operator",
+ "submitted": [
+  [
+   "ADAPTER_WORKFLOW",
+   "hold"
+  ],
+  [
+   "RESET_BETSLIP",
+   null
+  ]
+ ],
+ "checks_before": {
+  "phone_final_action_permission": {
+   "check": "phone_final_action_permission",
+   "ok": true,
+   "detail": "phone_final_action_armed=True"
+  },
+  "worker_identity": {
+   "check": "worker_identity",
+   "ok": true,
+   "detail": "phone worker_id=w-d131ef8769de expected=w-d131ef8769de"
+  },
+  "account_identity": {
+   "check": "account_identity",
+   "ok": true,
+   "detail": "phone account=1457f6e497f3 expected=1457f6e497f3"
+  },
+  "kill_switch_off": {
+   "check": "kill_switch_off",
+   "ok": true,
+   "detail": "running"
+  }
+ }
+}
