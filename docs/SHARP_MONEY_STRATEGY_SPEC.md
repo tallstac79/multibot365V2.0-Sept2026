@@ -62,7 +62,7 @@ Local evidence and interpretation:
 
 1. Validate source, complete grammar, finite decimal odds > 1, market and fixture.
    Malformed/contradictory data is INVALID. Unverified mappings are AMBIGUOUS.
-2. Require opening and current Pinnacle line on the same market, period and team
+2. For line markets, require opening and current Pinnacle line on the same market, period and team
    perspective. A perspective change, missing opening, or unresolved alternate-line
    equivalence fails closed. Preserve the raw facts; do not guess a sign.
 3. Compute `delta = current_home_line - opening_home_line` for spreads.
@@ -75,9 +75,11 @@ Local evidence and interpretation:
    Price-only selection is AMBIGUOUS pending a separately specified threshold,
    margin treatment and movement window. No movement in line or prices is conceptually
    NO BET; the current parser conservatively returns AMBIGUOUS for all zero-line moves.
-6. Moneyline/1X2 remains AMBIGUOUS. Public three-way ordering does not prove the
-   captured two-way basketball layouts, omitted opening outcomes, or a price-only
-   selection policy. Do not unlock football or moneyline merely from this audit.
+6. Basketball MONEYLINE is supported by the separate [ML audit and contract](MONEYLINE_AUDIT.md):
+   a unique Pinnacle opening-to-current price shortener selects HOME or AWAY;
+   only its Bet365 offer and its own EV can qualify it. That audit supersedes
+   the initial ML exclusion. Football 1X2 remains AMBIGUOUS; the basketball
+   profile does not establish missing three-way opening outcomes or ordering.
 7. Evaluate Bet365 for the selected side only. Spread advantage = Bet365 signed
    handicap − current Pinnacle signed handicap. OVER advantage = Pinnacle total
    − Bet365 total. UNDER advantage = Bet365 total − Pinnacle total.
@@ -94,7 +96,7 @@ Local evidence and interpretation:
 11. OddsNotifier's configured source supplies upstream movement qualification.
     Require genuine nonzero opening-to-current movement; nullable
     `min_sharp_movement` is optional and unset does not reject. An explicitly
-    configured floor is additional operator policy. Preserve existing value
+    configured floor is additional operator policy for line markets, not ML prices. Preserve existing value
     checks without inventing global price bounds. Alert-to-live odds and line
     deterioration limits are market-specific: approved basketball odds loss is
     10% of net payout and spreads require both 1-point and 10%-of-handicap caps.
@@ -108,18 +110,21 @@ Local evidence and interpretation:
 facts = parse_and_validate(raw)
 if malformed: INVALID
 if mapping/perspective unknown: AMBIGUOUS
-signal = net_pinnacle_line_movement(facts.opening, facts.current)
-if unsupported price-only/moneyline or missing baseline: AMBIGUOUS
-if no line movement: AMBIGUOUS         # no target; no-price-move also cannot qualify
+if basketball MONEYLINE:
+    signal = unique_net_price_shortener(verified_opening_pair, verified_current_pair)
+elif supported spread/totals:
+    signal = net_pinnacle_line_movement(facts.opening, facts.current)
+else: AMBIGUOUS
+if missing baseline or no unique signal: AMBIGUOUS
 candidate = signal.side                 # never derived from Bet365/highlight
 offer = compare_same_side(candidate, facts.pinnacle, facts.bet365)
 if spread orientation uncertain: AMBIGUOUS
 if offer.worse_line: NO BET
-if equal_line and no EV bound to candidate: NO BET
+if (equal_line or MONEYLINE) and no EV bound to candidate: NO BET
 if unequal_line: EV = unavailable       # never fabricated
-if configured extra movement floor fails: REJECT  # unset adds no floor
+if line_market and configured extra movement floor fails: REJECT  # unset adds no floor
 if feed_timezone_verified is false: REJECT  # execution timing only
-if execution tolerances unset: REJECT  # pending operator choice
+if odds tolerance unset or (line_market and line tolerance unset): REJECT
 if any configured threshold fails: REJECT
 if timestamps expired or event started: STALE
 otherwise: ACCEPT for eligibility only # dispatch and final action remain OFF

@@ -1,6 +1,6 @@
 # Rules engine
 
-The pure `core/rules_engine.py` evaluator is **rules-6-scaled-execution**. Its configuration is
+The pure `core/rules_engine.py` evaluator is **rules-7-moneyline**. Its configuration is
 validated in `core/decision_support.py` and stored in `.local/dashboard.sqlite3` with
 an audit trail. The service reads it each cycle; code changes require a service restart.
 
@@ -10,9 +10,12 @@ only on ACCEPT. Intake AMBIGUOUS and INVALID do not enter this evaluator.
 
 ## Decision order
 
-1. Require a verified quote mapping and current `sharp-money-1` PARSED interpretation.
+1. Require a verified quote mapping and current PARSED interpretation:
+   `sharp-money-1` for Spread/Totals, `sharp-money-ml-1` for basketball MONEYLINE.
 2. Independently recompute the candidate from Pinnacle opening/current lines. Require
-   agreement with stored target and `pinnacle_opening_to_current` source. Old queued
+   agreement with stored target and `pinnacle_opening_to_current` source. Basketball
+   MONEYLINE instead independently checks its verified HOME/AWAY opening/current
+   price pairs for exactly one shortener; the same-side Bet365 quote is bound again. Old queued
    favourable-side/highlight-only targets fail closed.
 3. Require that candidate's Bet365 price and actionable quality: equal-line same-side
    supplied EV/price edge, or favourable unequal line. NO BET persists as REJECT.
@@ -66,3 +69,5 @@ not a mathematically optimal allowance. Other strategy checks and all arming con
 The legacy `allowed_slippage` controls sample recommendations only. Improvements
 are allowed; excess deterioration is NO BET. Requested and observed rejected
 quotes remain in the result/audit records. See [policy and evidence](FEED_TIME_AND_EXECUTION_POLICY.md).
+
+Basketball MONEYLINE remains enabled and uses the existing 10% net-payout odds allowance. It has no handicap and needs no line-tolerance setting; its null line configuration is not a blocker. The separate `sharp-money-ml-1` profile leaves Spread/Totals interpretation unchanged. See [real ML evidence and minimum requirements](MONEYLINE_AUDIT.md).

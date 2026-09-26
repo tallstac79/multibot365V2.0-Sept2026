@@ -1895,10 +1895,16 @@ final class Bet365LiveAdapter implements SiteAdapter {
                         org.json.JSONObject facts = new org.json.JSONObject();
                         if ("PLACED".equals(outcome)) {
                             CoordinatorAgent.put(facts, "stake", r.stake == null ? org.json.JSONObject.NULL : r.stake);
+                            if ("MONEYLINE".equals(selection.market)) {
+                                String odds = MoneylineTerms.receiptPrice(PlacementClassifier.receiptLines(lines), selection.name);
+                                CoordinatorAgent.put(facts, "line", org.json.JSONObject.NULL);
+                                CoordinatorAgent.put(facts, "odds", odds == null ? org.json.JSONObject.NULL : odds);
+                            } else {
                             Pattern term = Pattern.compile("(?i)^" + Pattern.quote(selection.name) + "\\s+([+-]?\\d+(?:\\.\\d+)?)\\s+(\\d+\\.\\d{2})$");
                             for (String receiptLine : PlacementClassifier.receiptLines(lines)) {
                                 Matcher m = term.matcher(OcrText.normalize(receiptLine));
                                 if (m.matches()) { CoordinatorAgent.put(facts, "line", m.group(1)); CoordinatorAgent.put(facts, "odds", m.group(2)); }
+                            }
                             }
                         }
                         CoordinatorAgent.put(ui.record.optJSONObject("placement"), "actual_terms", facts);

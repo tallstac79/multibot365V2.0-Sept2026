@@ -1,9 +1,8 @@
 """Production classification of one source message into exactly one intake status.
 
-PARSED          production-verified ordering, one explicit (bold) Bet365 target, equal lines
-                and an OddsNotifier-supplied EV: complete and comparable
-PARSED_PARTIAL  a valid alert that is interpreted as far as safely possible, but has no
-                highlighted target, no Bet365 offer, or no EV because the lines differ
+PARSED          verified ordering and a Pinnacle opening-to-current target; rules still
+                decide whether the same-side Bet365 offer has sufficient value
+PARSED_PARTIAL  retained legacy status for incompletely interpreted formats
 AMBIGUOUS       recognised, but ordering/side/sign cannot be resolved without guessing
 INVALID         recognised alert header with malformed or self-contradictory data
 IGNORED         not an OddsNotifier odds alert (service notices, empty/media-only messages)
@@ -18,7 +17,7 @@ import re
 from core.market_interpretation import interpret, strip_non_price_bold
 from core.oddsnotifier_parser import AlertFormatError, HEADER, parse_oddsnotifier
 
-PARSER_VERSION = 'classifier-3-sharp'
+PARSER_VERSION = 'classifier-4-moneyline'
 PARSED, PARSED_PARTIAL, AMBIGUOUS, INVALID, DUPLICATE, IGNORED = (
     'PARSED', 'PARSED_PARTIAL', 'AMBIGUOUS', 'INVALID', 'DUPLICATE', 'IGNORED')
 INTAKE_STATUSES = (PARSED, PARSED_PARTIAL, AMBIGUOUS, INVALID, DUPLICATE, IGNORED)

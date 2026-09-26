@@ -1,0 +1,37 @@
+{
+  "instruction_id": "ml-readiness-session-1790412350",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "SESSION_AUTHENTICATED",
+  "duration_ms": 6493,
+  "session_machine": "AUTHENTICATED",
+  "session_path": [
+    {
+      "saw": "ACCOUNT",
+      "state": "AUTHENTICATED",
+      "attempts": 0
+    }
+  ],
+  "stage_timings": [
+    {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 21,
+      "start_ts_ms": 1790412351327,
+      "end_elapsed_ms": 5228,
+      "end_ts_ms": 1790412356532,
+      "duration_ms": 5207,
+      "status": "ok",
+      "retries": 0
+    },
+    {
+      "stage": "ENSURE_SESSION",
+      "start_elapsed_ms": 5228,
+      "start_ts_ms": 1790412356532,
+      "end_elapsed_ms": 6220,
+      "end_ts_ms": 1790412357525,
+      "duration_ms": 992,
+      "status": "ok",
+      "retries": 0
+    }
+  ]
+}

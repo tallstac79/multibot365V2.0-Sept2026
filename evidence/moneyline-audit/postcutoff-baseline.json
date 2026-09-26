@@ -1,0 +1,1723 @@
+{
+  "captured_at": "2026-09-26T08:43:52.045841+00:00",
+  "baseline_commit": "8b39fed",
+  "rows": [
+    {
+      "id": 1877,
+      "origin": "production",
+      "source": "telegram",
+      "chat_id": "1475314653",
+      "message_id": "69986",
+      "edit_key": "",
+      "delivery": "event",
+      "duplicate_of": null,
+      "instruction_id": "on-467f927c0491aa6bdcaa024f",
+      "raw_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\nBambitious Nara vs Fukushima Fire Bonds\n26.09.2026 09:30\n\nSpread (8.5)\n1.833\u2b07\ufe0f (1.884) - 1.900\u2b06\ufe0f (1.847)\n\n\ud83d\udd35 Opening (10.5)\n1.819 - 1.840\n\nBet365 (Spread 11.5)\n1.80 - 1.86\n\n\ud83c\udfaf EV: None (not equal lines)",
+      "formatted_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\n26.09.2026 09:30\n\nSpread (8.5)\n1.833\u2b07\ufe0f (1.884) - 1.900\u2b06\ufe0f (1.847)\n\n\ud83d\udd35 Opening (10.5)\n1.819 - 1.840\n\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\n1.80 - 1.86\n\n\ud83c\udfaf EV: None (not equal lines)",
+      "entities": "[{\"length\": 8, \"offset\": 19, \"type\": \"bold\"}, {\"length\": 30, \"offset\": 29, \"type\": \"bold\"}, {\"length\": 39, \"offset\": 60, \"type\": \"text_url\", \"url\": \"https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread\"}, {\"length\": 39, \"offset\": 60, \"type\": \"bold\"}, {\"length\": 17, \"offset\": 99, \"type\": \"bold\"}, {\"length\": 12, \"offset\": 118, \"type\": \"bold\"}, {\"length\": 14, \"offset\": 169, \"type\": \"bold\"}, {\"length\": 20, \"offset\": 199, \"type\": \"text_url\", \"url\": \"https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/\"}, {\"length\": 20, \"offset\": 199, \"type\": \"bold\"}, {\"length\": 11, \"offset\": 233, \"type\": \"bold\"}]",
+      "source_timestamp": "2026-09-26T08:19:03+00:00",
+      "received_at": "2026-09-26T08:19:03.919+00:00",
+      "processed_at": "2026-09-26T08:19:03.919+00:00",
+      "status": "PARSED",
+      "reason": "Pinnacle opening 10.5 -> current 8.5 (HOME) selects HOME; Bet365 evaluated for that same side only",
+      "parser_profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-3-sharp",
+      "normalized": "{\"alert_price\": \"1.80\", \"alternate_line\": {\"comparison\": false, \"current\": false, \"opening\": false}, \"away\": \"Fukushima Fire Bonds\", \"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"comparison\": {\"bet365_line\": \"11.5\", \"bet365_line_displayed\": \"11.5\", \"bet365_odds\": \"1.80\", \"bet365_present\": true, \"bookmaker\": \"Bet365\", \"equal_line\": false, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"line\": \"11.5\", \"line_advantage\": \"3.0\", \"line_difference\": \"3.0\", \"line_quality\": \"FAVOURABLE\", \"price_quality\": \"NOT_COMPARABLE\", \"quotes\": [{\"line\": \"11.5\", \"position\": 1, \"price\": \"1.80\", \"side\": \"HOME\"}, {\"line\": \"-11.5\", \"position\": 2, \"price\": \"1.86\", \"side\": \"AWAY\"}], \"reference_line_displayed\": \"8.5\", \"site\": \"Bet365\", \"supplied_ev\": null}, \"comparison_url\": \"https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/\", \"competition\": \"B2 League\", \"competition_full\": \"Japan - B2 League\", \"country\": \"Japan\", \"displayed_ev_percent\": null, \"displayed_line\": \"8.5\", \"feed_displayed_ev_percent\": null, \"fixture\": \"Bambitious Nara vs Fukushima Fire Bonds\", \"fixture_url\": \"https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread\", \"format_variant\": \"two_sided\", \"highlighted_side\": null, \"home\": \"Bambitious Nara\", \"implied_target\": null, \"interpretation_notes\": [], \"interpretation_status\": \"PARSED\", \"interpretation_version\": \"sharp-money-1\", \"limit\": null, \"line_quality\": \"FAVOURABLE\", \"market\": \"SPREAD\", \"market_label\": \"Spread\", \"market_label_source\": \"label_and_fixture_url\", \"market_movement\": {\"current_line\": \"8.5\", \"current_price\": null, \"line_change\": null, \"line_direction\": null, \"line_perspective\": \"HOME\", \"opening_line\": \"10.5\", \"opening_line_change\": \"-2.0\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": null, \"opening_to_current_price_change_percent\": null, \"previous_line\": null, \"previous_price_displayed\": null, \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": null, \"price_direction_source\": null}, \"movement\": {\"current_line\": \"8.5\", \"current_price\": \"1.833\", \"line_change\": null, \"line_direction\": null, \"opening_line\": \"10.5\", \"opening_line_change\": \"-2.0\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": \"1.819\", \"opening_to_current_price_change_percent\": 0.77, \"previous_line\": null, \"previous_price_displayed\": \"1.884\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"SHORTENED\", \"price_direction_source\": \"arrow\"}, \"observation_id\": \"oddsnotifier:50b1d55a053a779c6034bf909ac12e66e956093e44ca97e61bee82986efb67d6\", \"opening\": {\"line\": \"10.5\", \"outcome_count_matches_market\": true, \"quotes\": [{\"line\": \"10.5\", \"position\": 1, \"price\": \"1.819\", \"side\": \"HOME\"}, {\"line\": \"-10.5\", \"position\": 2, \"price\": \"1.840\", \"side\": \"AWAY\"}]}, \"opening_marker\": \"\\ud83d\\udd35\", \"pinnacle\": {\"line\": \"8.5\", \"previous_line\": null, \"quotes\": [{\"line\": \"8.5\", \"movement\": \"DOWN\", \"movement_marker\": \"\\u2b07\\ufe0f\", \"parenthetical_price\": \"1.884\", \"position\": 1, \"price\": \"1.833\", \"side\": \"HOME\"}, {\"line\": \"-8.5\", \"movement\": \"UP\", \"movement_marker\": \"\\u2b06\\ufe0f\", \"parenthetical_price\": \"1.847\", \"position\": 2, \"price\": \"1.900\", \"side\": \"AWAY\"}]}, \"price_quality\": \"NOT_COMPARABLE\", \"quote_mapping\": {\"confirmation_source\": \"User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)\", \"group_sides_by_position\": {\"comparison\": [\"HOME\", \"AWAY\"], \"opening\": [\"HOME\", \"AWAY\"], \"pinnacle\": [\"HOME\", \"AWAY\"]}, \"production_verified\": true, \"profile\": \"oddsnotifier_basketball_v1\", \"sides_by_position\": [\"HOME\", \"AWAY\"]}, \"raw_text\": \"New odds update on Pinnacle\\n\\nBasketball - Japan - B2 League\\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\\n26.09.2026 09:30\\n\\nSpread (8.5)\\n1.833\\u2b07\\ufe0f (1.884) - 1.900\\u2b06\\ufe0f (1.847)\\n\\n\\ud83d\\udd35 Opening (10.5)\\n1.819 - 1.840\\n\\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\\n1.80 - 1.86\\n\\n\\ud83c\\udfaf EV: None (not equal lines)\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"8.5\", \"odds\": \"1.833\"}, \"sample_provenance\": \"unspecified\", \"scheduled_at_local\": \"2026-09-26T09:30\", \"scheduled_timezone\": null, \"schema_version\": 6, \"selection_line\": \"11.5\", \"selection_name\": \"Bambitious Nara\", \"selection_side\": \"HOME\", \"sharp_signal\": {\"change\": \"-2.0\", \"current_line\": \"8.5\", \"direction\": \"DOWN\", \"highlight_agrees\": null, \"magnitude\": \"2.0\", \"opening_line\": \"10.5\", \"reason\": \"Pinnacle opening 10.5 -> current 8.5 (HOME) selects HOME\", \"recent_line_reversal\": false, \"side\": \"HOME\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"sides\": [{\"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"comparison\": {\"bet365_line\": \"11.5\", \"bet365_price\": \"1.80\", \"bookmaker\": \"Bet365\", \"equal_line\": false, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"line_advantage\": \"3.0\", \"line_applicable\": true, \"line_difference\": \"3.0\", \"line_quality\": \"FAVOURABLE\", \"price_difference\": null, \"price_quality\": \"NOT_COMPARABLE\", \"reference_line\": \"8.5\", \"reference_price\": \"1.833\", \"supplied_ev\": null}, \"is_target\": true, \"line_quality\": \"FAVOURABLE\", \"movement\": {\"current_line\": \"8.5\", \"current_price\": \"1.833\", \"line_change\": null, \"line_direction\": null, \"opening_line\": \"10.5\", \"opening_line_change\": \"-2.0\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": \"1.819\", \"opening_to_current_price_change_percent\": 0.77, \"previous_line\": null, \"previous_price_displayed\": \"1.884\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"SHORTENED\", \"price_direction_source\": \"arrow\"}, \"price_quality\": \"NOT_COMPARABLE\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"8.5\", \"odds\": \"1.833\"}, \"selection_line\": \"11.5\", \"selection_name\": \"Bambitious Nara\", \"side\": \"HOME\"}, {\"bet_quality\": \"UNFAVOURABLE\", \"comparison\": {\"bet365_line\": \"-11.5\", \"bet365_price\": \"1.86\", \"bookmaker\": \"Bet365\", \"equal_line\": false, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"line_advantage\": \"-3.0\", \"line_applicable\": true, \"line_difference\": \"-3.0\", \"line_quality\": \"UNFAVOURABLE\", \"price_difference\": null, \"price_quality\": \"NOT_COMPARABLE\", \"reference_line\": \"-8.5\", \"reference_price\": \"1.900\", \"supplied_ev\": null}, \"is_target\": false, \"line_quality\": \"UNFAVOURABLE\", \"movement\": {\"current_line\": \"-8.5\", \"current_price\": \"1.900\", \"line_change\": null, \"line_direction\": null, \"opening_line\": \"-10.5\", \"opening_line_change\": \"2.0\", \"opening_line_direction\": \"UP\", \"opening_line_equal\": false, \"opening_price\": \"1.840\", \"opening_to_current_price_change_percent\": 3.26, \"previous_line\": null, \"previous_price_displayed\": \"1.847\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"DRIFTED\", \"price_direction_source\": \"arrow\"}, \"price_quality\": \"NOT_COMPARABLE\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"-8.5\", \"odds\": \"1.900\"}, \"selection_line\": \"-11.5\", \"selection_name\": \"Fukushima Fire Bonds\", \"side\": \"AWAY\"}], \"source\": \"OddsNotifier\", \"source_timestamp\": \"2026-09-26T08:19:03+00:00\", \"sport\": \"basketball\", \"target_line\": \"11.5\", \"target_price_source\": \"pinnacle_opening_to_current\", \"target_side\": \"HOME\", \"telegram_channel_id\": \"1475314653\", \"telegram_message_id\": \"69986\", \"unresolved\": [\"event_timezone_unspecified\", \"parenthetical_price_meaning_unspecified\"]}",
+      "provenance": "{\"has_media\": false, \"post_author\": null, \"producer\": \"core.telegram_intake\"}",
+      "baseline_classification": {
+        "status": "PARSED",
+        "reason": "Pinnacle opening 10.5 -> current 8.5 (HOME) selects HOME; Bet365 evaluated for that same side only",
+        "parsed": {
+          "sport": "basketball",
+          "country": "Japan",
+          "competition": "B2 League",
+          "competition_full": "Japan - B2 League",
+          "fixture": "Bambitious Nara vs Fukushima Fire Bonds",
+          "home": "Bambitious Nara",
+          "away": "Fukushima Fire Bonds",
+          "fixture_url": "https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread",
+          "scheduled_at_local": "2026-09-26T09:30",
+          "scheduled_timezone": null,
+          "format_variant": "two_sided",
+          "market": "SPREAD",
+          "market_label": "Spread",
+          "displayed_line": "8.5",
+          "comparison_url": "https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/",
+          "opening_marker": "\ud83d\udd35",
+          "pinnacle": {
+            "line": "8.5",
+            "previous_line": null,
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.833",
+                "movement": "DOWN",
+                "movement_marker": "\u2b07\ufe0f",
+                "parenthetical_price": "1.884",
+                "side": "HOME",
+                "line": "8.5"
+              },
+              {
+                "position": 2,
+                "price": "1.900",
+                "movement": "UP",
+                "movement_marker": "\u2b06\ufe0f",
+                "parenthetical_price": "1.847",
+                "side": "AWAY",
+                "line": "-8.5"
+              }
+            ]
+          },
+          "opening": {
+            "line": "10.5",
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.819",
+                "side": "HOME",
+                "line": "10.5"
+              },
+              {
+                "position": 2,
+                "price": "1.840",
+                "side": "AWAY",
+                "line": "-10.5"
+              }
+            ],
+            "outcome_count_matches_market": true
+          },
+          "comparison": {
+            "site": "Bet365",
+            "line": "11.5",
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.80",
+                "side": "HOME",
+                "line": "11.5"
+              },
+              {
+                "position": 2,
+                "price": "1.86",
+                "side": "AWAY",
+                "line": "-11.5"
+              }
+            ],
+            "bookmaker": "Bet365",
+            "bet365_present": true,
+            "bet365_line_displayed": "11.5",
+            "reference_line_displayed": "8.5",
+            "bet365_line": "11.5",
+            "bet365_odds": "1.80",
+            "equal_line": false,
+            "line_difference": "3.0",
+            "line_advantage": "3.0",
+            "line_quality": "FAVOURABLE",
+            "price_quality": "NOT_COMPARABLE",
+            "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+            "supplied_ev": null
+          },
+          "alternate_line": {
+            "current": false,
+            "opening": false,
+            "comparison": false
+          },
+          "quote_mapping": {
+            "profile": "oddsnotifier_basketball_v1",
+            "production_verified": true,
+            "sides_by_position": [
+              "HOME",
+              "AWAY"
+            ],
+            "group_sides_by_position": {
+              "pinnacle": [
+                "HOME",
+                "AWAY"
+              ],
+              "opening": [
+                "HOME",
+                "AWAY"
+              ],
+              "comparison": [
+                "HOME",
+                "AWAY"
+              ]
+            },
+            "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+          },
+          "displayed_ev_percent": null,
+          "feed_displayed_ev_percent": null,
+          "highlighted_side": null,
+          "sharp_signal": {
+            "source": "pinnacle_opening_to_current",
+            "side": "HOME",
+            "opening_line": "10.5",
+            "current_line": "8.5",
+            "change": "-2.0",
+            "magnitude": "2.0",
+            "direction": "DOWN",
+            "status": "IDENTIFIED",
+            "reason": "Pinnacle opening 10.5 -> current 8.5 (HOME) selects HOME",
+            "highlight_agrees": null,
+            "recent_line_reversal": false
+          },
+          "sides": [
+            {
+              "side": "HOME",
+              "selection_name": "Bambitious Nara",
+              "selection_line": "11.5",
+              "is_target": true,
+              "reference": {
+                "bookmaker": "Pinnacle",
+                "line": "8.5",
+                "odds": "1.833",
+                "fair_odds": null
+              },
+              "comparison": {
+                "reference_line": "8.5",
+                "bet365_line": "11.5",
+                "reference_price": "1.833",
+                "bet365_price": "1.80",
+                "line_applicable": true,
+                "equal_line": false,
+                "line_difference": "3.0",
+                "line_advantage": "3.0",
+                "line_quality": "FAVOURABLE",
+                "price_difference": null,
+                "price_quality": "NOT_COMPARABLE",
+                "bookmaker": "Bet365",
+                "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+                "supplied_ev": null
+              },
+              "movement": {
+                "opening_line": "10.5",
+                "previous_line": null,
+                "current_line": "8.5",
+                "line_change": null,
+                "line_direction": null,
+                "opening_line_change": "-2.0",
+                "opening_line_direction": "DOWN",
+                "opening_line_equal": false,
+                "opening_price": "1.819",
+                "current_price": "1.833",
+                "previous_price_displayed": "1.884",
+                "price_direction": "SHORTENED",
+                "price_direction_source": "arrow",
+                "price_change_percent": null,
+                "price_change_basis": null,
+                "opening_to_current_price_change_percent": 0.77
+              },
+              "line_quality": "FAVOURABLE",
+              "price_quality": "NOT_COMPARABLE",
+              "bet_quality": "FAVOURABLE_LINE_SIGNAL"
+            },
+            {
+              "side": "AWAY",
+              "selection_name": "Fukushima Fire Bonds",
+              "selection_line": "-11.5",
+              "is_target": false,
+              "reference": {
+                "bookmaker": "Pinnacle",
+                "line": "-8.5",
+                "odds": "1.900",
+                "fair_odds": null
+              },
+              "comparison": {
+                "reference_line": "-8.5",
+                "bet365_line": "-11.5",
+                "reference_price": "1.900",
+                "bet365_price": "1.86",
+                "line_applicable": true,
+                "equal_line": false,
+                "line_difference": "-3.0",
+                "line_advantage": "-3.0",
+                "line_quality": "UNFAVOURABLE",
+                "price_difference": null,
+                "price_quality": "NOT_COMPARABLE",
+                "bookmaker": "Bet365",
+                "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+                "supplied_ev": null
+              },
+              "movement": {
+                "opening_line": "-10.5",
+                "previous_line": null,
+                "current_line": "-8.5",
+                "line_change": null,
+                "line_direction": null,
+                "opening_line_change": "2.0",
+                "opening_line_direction": "UP",
+                "opening_line_equal": false,
+                "opening_price": "1.840",
+                "current_price": "1.900",
+                "previous_price_displayed": "1.847",
+                "price_direction": "DRIFTED",
+                "price_direction_source": "arrow",
+                "price_change_percent": null,
+                "price_change_basis": null,
+                "opening_to_current_price_change_percent": 3.26
+              },
+              "line_quality": "UNFAVOURABLE",
+              "price_quality": "NOT_COMPARABLE",
+              "bet_quality": "UNFAVOURABLE"
+            }
+          ],
+          "market_movement": {
+            "opening_line": "10.5",
+            "previous_line": null,
+            "current_line": "8.5",
+            "line_change": null,
+            "line_direction": null,
+            "opening_line_change": "-2.0",
+            "opening_line_direction": "DOWN",
+            "opening_line_equal": false,
+            "opening_price": null,
+            "current_price": null,
+            "previous_price_displayed": null,
+            "price_direction": null,
+            "price_direction_source": null,
+            "price_change_percent": null,
+            "price_change_basis": null,
+            "opening_to_current_price_change_percent": null,
+            "line_perspective": "HOME"
+          },
+          "limit": null,
+          "target_side": "HOME",
+          "target_line": "11.5",
+          "alert_price": "1.80",
+          "target_price_source": "pinnacle_opening_to_current",
+          "implied_target": null,
+          "selection_side": "HOME",
+          "selection_name": "Bambitious Nara",
+          "selection_line": "11.5",
+          "reference": {
+            "bookmaker": "Pinnacle",
+            "line": "8.5",
+            "odds": "1.833",
+            "fair_odds": null
+          },
+          "movement": {
+            "opening_line": "10.5",
+            "previous_line": null,
+            "current_line": "8.5",
+            "line_change": null,
+            "line_direction": null,
+            "opening_line_change": "-2.0",
+            "opening_line_direction": "DOWN",
+            "opening_line_equal": false,
+            "opening_price": "1.819",
+            "current_price": "1.833",
+            "previous_price_displayed": "1.884",
+            "price_direction": "SHORTENED",
+            "price_direction_source": "arrow",
+            "price_change_percent": null,
+            "price_change_basis": null,
+            "opening_to_current_price_change_percent": 0.77
+          },
+          "line_quality": "FAVOURABLE",
+          "price_quality": "NOT_COMPARABLE",
+          "bet_quality": "FAVOURABLE_LINE_SIGNAL",
+          "schema_version": 6,
+          "interpretation_version": "sharp-money-1",
+          "source": "OddsNotifier",
+          "observation_id": "oddsnotifier:50b1d55a053a779c6034bf909ac12e66e956093e44ca97e61bee82986efb67d6",
+          "telegram_channel_id": "1475314653",
+          "telegram_message_id": "69986",
+          "source_timestamp": "2026-09-26T08:19:03+00:00",
+          "raw_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\n26.09.2026 09:30\n\nSpread (8.5)\n1.833\u2b07\ufe0f (1.884) - 1.900\u2b06\ufe0f (1.847)\n\n\ud83d\udd35 Opening (10.5)\n1.819 - 1.840\n\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\n1.80 - 1.86\n\n\ud83c\udfaf EV: None (not equal lines)",
+          "sample_provenance": "unspecified",
+          "market_label_source": "label_and_fixture_url",
+          "unresolved": [
+            "event_timezone_unspecified",
+            "parenthetical_price_meaning_unspecified"
+          ],
+          "interpretation_notes": [],
+          "interpretation_status": "PARSED"
+        },
+        "profile": "oddsnotifier_basketball_v1",
+        "parser_version": "classifier-3-sharp",
+        "sport": "basketball",
+        "market": "SPREAD"
+      }
+    },
+    {
+      "id": 1878,
+      "origin": "production",
+      "source": "telegram",
+      "chat_id": "1475314653",
+      "message_id": "69987",
+      "edit_key": "",
+      "delivery": "event",
+      "duplicate_of": null,
+      "instruction_id": "on-ecb22d485da623556c5f1b7a",
+      "raw_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\nBambitious Nara vs Fukushima Fire Bonds\n26.09.2026 09:30\n\nSpread (8.5 -> 11.5) (alt. line)\n1.561\u2b07\ufe0f (1.869) - 2.270\u2b06\ufe0f (1.862)\n\n\ud83d\udfe2 Opening (10.5)\n1.819 - 1.840\n\nBet365 (Spread 11.5)\n1.80 - 1.86\n\n\ud83c\udfaf EV: 108.78%",
+      "formatted_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\n26.09.2026 09:30\n\nSpread (8.5 -> 11.5) (alt. line)\n1.561\u2b07\ufe0f (1.869) - 2.270\u2b06\ufe0f (1.862)\n\n\ud83d\udfe2 Opening (10.5)\n1.819 - 1.840\n\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\n**1.80** - 1.86\n\n\ud83c\udfaf EV: 108.78%",
+      "entities": "[{\"length\": 8, \"offset\": 19, \"type\": \"bold\"}, {\"length\": 30, \"offset\": 29, \"type\": \"bold\"}, {\"length\": 39, \"offset\": 60, \"type\": \"text_url\", \"url\": \"https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread\"}, {\"length\": 39, \"offset\": 60, \"type\": \"bold\"}, {\"length\": 17, \"offset\": 99, \"type\": \"bold\"}, {\"length\": 32, \"offset\": 118, \"type\": \"bold\"}, {\"length\": 14, \"offset\": 189, \"type\": \"bold\"}, {\"length\": 20, \"offset\": 219, \"type\": \"text_url\", \"url\": \"https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/\"}, {\"length\": 20, \"offset\": 219, \"type\": \"bold\"}, {\"length\": 4, \"offset\": 240, \"type\": \"bold\"}, {\"length\": 4, \"offset\": 240, \"type\": \"underline\"}, {\"length\": 14, \"offset\": 253, \"type\": \"bold\"}]",
+      "source_timestamp": "2026-09-26T08:20:14+00:00",
+      "received_at": "2026-09-26T08:20:14.773+00:00",
+      "processed_at": "2026-09-26T08:20:14.773+00:00",
+      "status": "PARSED",
+      "reason": "Pinnacle opening 10.5 -> current 11.5 (HOME) selects AWAY; Bet365 evaluated for that same side only",
+      "parser_profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-3-sharp",
+      "normalized": "{\"alert_price\": \"1.86\", \"alternate_line\": {\"comparison\": false, \"current\": true, \"opening\": false}, \"away\": \"Fukushima Fire Bonds\", \"bet_quality\": \"UNFAVOURABLE\", \"comparison\": {\"bet365_line\": \"-11.5\", \"bet365_line_displayed\": \"11.5\", \"bet365_odds\": \"1.86\", \"bet365_present\": true, \"bookmaker\": \"Bet365\", \"equal_line\": true, \"ev_status\": \"SUPPLIED_FOR_OTHER_SIDE\", \"line\": \"11.5\", \"line_advantage\": \"0.0\", \"line_difference\": \"0.0\", \"line_quality\": \"EQUAL\", \"price_quality\": \"UNFAVOURABLE\", \"quotes\": [{\"line\": \"11.5\", \"position\": 1, \"price\": \"1.80\", \"side\": \"HOME\"}, {\"line\": \"-11.5\", \"position\": 2, \"price\": \"1.86\", \"side\": \"AWAY\"}], \"reference_line_displayed\": \"11.5\", \"site\": \"Bet365\", \"supplied_ev\": null}, \"comparison_url\": \"https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/\", \"competition\": \"B2 League\", \"competition_full\": \"Japan - B2 League\", \"country\": \"Japan\", \"displayed_ev_percent\": null, \"displayed_line\": \"11.5\", \"feed_displayed_ev_percent\": \"108.78\", \"fixture\": \"Bambitious Nara vs Fukushima Fire Bonds\", \"fixture_url\": \"https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread\", \"format_variant\": \"two_sided\", \"highlighted_side\": \"HOME\", \"home\": \"Bambitious Nara\", \"implied_target\": null, \"interpretation_notes\": [], \"interpretation_status\": \"PARSED\", \"interpretation_version\": \"sharp-money-1\", \"limit\": null, \"line_quality\": \"EQUAL\", \"market\": \"SPREAD\", \"market_label\": \"Spread\", \"market_label_source\": \"label_and_fixture_url\", \"market_movement\": {\"current_line\": \"11.5\", \"current_price\": null, \"line_change\": \"3.0\", \"line_direction\": \"UP\", \"line_perspective\": \"HOME\", \"opening_line\": \"10.5\", \"opening_line_change\": \"1.0\", \"opening_line_direction\": \"UP\", \"opening_line_equal\": false, \"opening_price\": null, \"opening_to_current_price_change_percent\": null, \"previous_line\": \"8.5\", \"previous_price_displayed\": null, \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": null, \"price_direction_source\": null}, \"movement\": {\"current_line\": \"-11.5\", \"current_price\": \"2.270\", \"line_change\": \"-3.0\", \"line_direction\": \"DOWN\", \"opening_line\": \"-10.5\", \"opening_line_change\": \"-1.0\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": \"1.840\", \"opening_to_current_price_change_percent\": 23.37, \"previous_line\": \"-8.5\", \"previous_price_displayed\": \"1.862\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"DRIFTED\", \"price_direction_source\": \"arrow\"}, \"observation_id\": \"oddsnotifier:be5c2abc3ad0546381b99a57edcef767301259bec41eaeaa00e82b61cb57a6e1\", \"opening\": {\"line\": \"10.5\", \"outcome_count_matches_market\": true, \"quotes\": [{\"line\": \"10.5\", \"position\": 1, \"price\": \"1.819\", \"side\": \"HOME\"}, {\"line\": \"-10.5\", \"position\": 2, \"price\": \"1.840\", \"side\": \"AWAY\"}]}, \"opening_marker\": \"\\ud83d\\udfe2\", \"pinnacle\": {\"line\": \"11.5\", \"previous_line\": \"8.5\", \"quotes\": [{\"line\": \"11.5\", \"movement\": \"DOWN\", \"movement_marker\": \"\\u2b07\\ufe0f\", \"parenthetical_price\": \"1.869\", \"position\": 1, \"price\": \"1.561\", \"side\": \"HOME\"}, {\"line\": \"-11.5\", \"movement\": \"UP\", \"movement_marker\": \"\\u2b06\\ufe0f\", \"parenthetical_price\": \"1.862\", \"position\": 2, \"price\": \"2.270\", \"side\": \"AWAY\"}]}, \"price_quality\": \"UNFAVOURABLE\", \"quote_mapping\": {\"confirmation_source\": \"User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)\", \"group_sides_by_position\": {\"comparison\": [\"HOME\", \"AWAY\"], \"opening\": [\"HOME\", \"AWAY\"], \"pinnacle\": [\"HOME\", \"AWAY\"]}, \"production_verified\": true, \"profile\": \"oddsnotifier_basketball_v1\", \"sides_by_position\": [\"HOME\", \"AWAY\"]}, \"raw_text\": \"New odds update on Pinnacle\\n\\nBasketball - Japan - B2 League\\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\\n26.09.2026 09:30\\n\\nSpread (8.5 -> 11.5) (alt. line)\\n1.561\\u2b07\\ufe0f (1.869) - 2.270\\u2b06\\ufe0f (1.862)\\n\\n\\ud83d\\udfe2 Opening (10.5)\\n1.819 - 1.840\\n\\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\\n**1.80** - 1.86\\n\\n\\ud83c\\udfaf EV: 108.78%\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"-11.5\", \"odds\": \"2.270\"}, \"sample_provenance\": \"unspecified\", \"scheduled_at_local\": \"2026-09-26T09:30\", \"scheduled_timezone\": null, \"schema_version\": 6, \"selection_line\": \"-11.5\", \"selection_name\": \"Fukushima Fire Bonds\", \"selection_side\": \"AWAY\", \"sharp_signal\": {\"change\": \"1.0\", \"current_line\": \"11.5\", \"direction\": \"UP\", \"highlight_agrees\": false, \"magnitude\": \"1.0\", \"opening_line\": \"10.5\", \"reason\": \"Pinnacle opening 10.5 -> current 11.5 (HOME) selects AWAY\", \"recent_line_reversal\": false, \"side\": \"AWAY\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"sides\": [{\"bet_quality\": \"POTENTIAL_VALUE\", \"comparison\": {\"bet365_line\": \"11.5\", \"bet365_price\": \"1.80\", \"bookmaker\": \"Bet365\", \"equal_line\": true, \"ev_status\": \"SUPPLIED_EQUAL_LINE\", \"line_advantage\": \"0.0\", \"line_applicable\": true, \"line_difference\": \"0.0\", \"line_quality\": \"EQUAL\", \"price_difference\": \"0.239\", \"price_quality\": \"FAVOURABLE\", \"reference_line\": \"11.5\", \"reference_price\": \"1.561\", \"supplied_ev\": \"108.78\"}, \"is_target\": false, \"line_quality\": \"EQUAL\", \"movement\": {\"current_line\": \"11.5\", \"current_price\": \"1.561\", \"line_change\": \"3.0\", \"line_direction\": \"UP\", \"opening_line\": \"10.5\", \"opening_line_change\": \"1.0\", \"opening_line_direction\": \"UP\", \"opening_line_equal\": false, \"opening_price\": \"1.819\", \"opening_to_current_price_change_percent\": -14.18, \"previous_line\": \"8.5\", \"previous_price_displayed\": \"1.869\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"SHORTENED\", \"price_direction_source\": \"arrow\"}, \"price_quality\": \"FAVOURABLE\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"11.5\", \"odds\": \"1.561\"}, \"selection_line\": \"11.5\", \"selection_name\": \"Bambitious Nara\", \"side\": \"HOME\"}, {\"bet_quality\": \"UNFAVOURABLE\", \"comparison\": {\"bet365_line\": \"-11.5\", \"bet365_price\": \"1.86\", \"bookmaker\": \"Bet365\", \"equal_line\": true, \"ev_status\": \"SUPPLIED_FOR_OTHER_SIDE\", \"line_advantage\": \"0.0\", \"line_applicable\": true, \"line_difference\": \"0.0\", \"line_quality\": \"EQUAL\", \"price_difference\": \"-0.410\", \"price_quality\": \"UNFAVOURABLE\", \"reference_line\": \"-11.5\", \"reference_price\": \"2.270\", \"supplied_ev\": null}, \"is_target\": true, \"line_quality\": \"EQUAL\", \"movement\": {\"current_line\": \"-11.5\", \"current_price\": \"2.270\", \"line_change\": \"-3.0\", \"line_direction\": \"DOWN\", \"opening_line\": \"-10.5\", \"opening_line_change\": \"-1.0\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": \"1.840\", \"opening_to_current_price_change_percent\": 23.37, \"previous_line\": \"-8.5\", \"previous_price_displayed\": \"1.862\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"DRIFTED\", \"price_direction_source\": \"arrow\"}, \"price_quality\": \"UNFAVOURABLE\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"-11.5\", \"odds\": \"2.270\"}, \"selection_line\": \"-11.5\", \"selection_name\": \"Fukushima Fire Bonds\", \"side\": \"AWAY\"}], \"source\": \"OddsNotifier\", \"source_timestamp\": \"2026-09-26T08:20:14+00:00\", \"sport\": \"basketball\", \"target_line\": \"-11.5\", \"target_price_source\": \"pinnacle_opening_to_current\", \"target_side\": \"AWAY\", \"telegram_channel_id\": \"1475314653\", \"telegram_message_id\": \"69987\", \"unresolved\": [\"event_timezone_unspecified\", \"parenthetical_price_meaning_unspecified\"]}",
+      "provenance": "{\"has_media\": false, \"post_author\": null, \"producer\": \"core.telegram_intake\"}",
+      "baseline_classification": {
+        "status": "PARSED",
+        "reason": "Pinnacle opening 10.5 -> current 11.5 (HOME) selects AWAY; Bet365 evaluated for that same side only",
+        "parsed": {
+          "sport": "basketball",
+          "country": "Japan",
+          "competition": "B2 League",
+          "competition_full": "Japan - B2 League",
+          "fixture": "Bambitious Nara vs Fukushima Fire Bonds",
+          "home": "Bambitious Nara",
+          "away": "Fukushima Fire Bonds",
+          "fixture_url": "https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread",
+          "scheduled_at_local": "2026-09-26T09:30",
+          "scheduled_timezone": null,
+          "format_variant": "two_sided",
+          "market": "SPREAD",
+          "market_label": "Spread",
+          "displayed_line": "11.5",
+          "comparison_url": "https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/",
+          "opening_marker": "\ud83d\udfe2",
+          "pinnacle": {
+            "line": "11.5",
+            "previous_line": "8.5",
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.561",
+                "movement": "DOWN",
+                "movement_marker": "\u2b07\ufe0f",
+                "parenthetical_price": "1.869",
+                "side": "HOME",
+                "line": "11.5"
+              },
+              {
+                "position": 2,
+                "price": "2.270",
+                "movement": "UP",
+                "movement_marker": "\u2b06\ufe0f",
+                "parenthetical_price": "1.862",
+                "side": "AWAY",
+                "line": "-11.5"
+              }
+            ]
+          },
+          "opening": {
+            "line": "10.5",
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.819",
+                "side": "HOME",
+                "line": "10.5"
+              },
+              {
+                "position": 2,
+                "price": "1.840",
+                "side": "AWAY",
+                "line": "-10.5"
+              }
+            ],
+            "outcome_count_matches_market": true
+          },
+          "comparison": {
+            "site": "Bet365",
+            "line": "11.5",
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.80",
+                "side": "HOME",
+                "line": "11.5"
+              },
+              {
+                "position": 2,
+                "price": "1.86",
+                "side": "AWAY",
+                "line": "-11.5"
+              }
+            ],
+            "bookmaker": "Bet365",
+            "bet365_present": true,
+            "bet365_line_displayed": "11.5",
+            "reference_line_displayed": "11.5",
+            "bet365_line": "-11.5",
+            "bet365_odds": "1.86",
+            "equal_line": true,
+            "line_difference": "0.0",
+            "line_advantage": "0.0",
+            "line_quality": "EQUAL",
+            "price_quality": "UNFAVOURABLE",
+            "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+            "supplied_ev": null
+          },
+          "alternate_line": {
+            "current": true,
+            "opening": false,
+            "comparison": false
+          },
+          "quote_mapping": {
+            "profile": "oddsnotifier_basketball_v1",
+            "production_verified": true,
+            "sides_by_position": [
+              "HOME",
+              "AWAY"
+            ],
+            "group_sides_by_position": {
+              "pinnacle": [
+                "HOME",
+                "AWAY"
+              ],
+              "opening": [
+                "HOME",
+                "AWAY"
+              ],
+              "comparison": [
+                "HOME",
+                "AWAY"
+              ]
+            },
+            "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+          },
+          "displayed_ev_percent": null,
+          "feed_displayed_ev_percent": "108.78",
+          "highlighted_side": "HOME",
+          "sharp_signal": {
+            "source": "pinnacle_opening_to_current",
+            "side": "AWAY",
+            "opening_line": "10.5",
+            "current_line": "11.5",
+            "change": "1.0",
+            "magnitude": "1.0",
+            "direction": "UP",
+            "status": "IDENTIFIED",
+            "reason": "Pinnacle opening 10.5 -> current 11.5 (HOME) selects AWAY",
+            "highlight_agrees": false,
+            "recent_line_reversal": false
+          },
+          "sides": [
+            {
+              "side": "HOME",
+              "selection_name": "Bambitious Nara",
+              "selection_line": "11.5",
+              "is_target": false,
+              "reference": {
+                "bookmaker": "Pinnacle",
+                "line": "11.5",
+                "odds": "1.561",
+                "fair_odds": null
+              },
+              "comparison": {
+                "reference_line": "11.5",
+                "bet365_line": "11.5",
+                "reference_price": "1.561",
+                "bet365_price": "1.80",
+                "line_applicable": true,
+                "equal_line": true,
+                "line_difference": "0.0",
+                "line_advantage": "0.0",
+                "line_quality": "EQUAL",
+                "price_difference": "0.239",
+                "price_quality": "FAVOURABLE",
+                "bookmaker": "Bet365",
+                "ev_status": "SUPPLIED_EQUAL_LINE",
+                "supplied_ev": "108.78"
+              },
+              "movement": {
+                "opening_line": "10.5",
+                "previous_line": "8.5",
+                "current_line": "11.5",
+                "line_change": "3.0",
+                "line_direction": "UP",
+                "opening_line_change": "1.0",
+                "opening_line_direction": "UP",
+                "opening_line_equal": false,
+                "opening_price": "1.819",
+                "current_price": "1.561",
+                "previous_price_displayed": "1.869",
+                "price_direction": "SHORTENED",
+                "price_direction_source": "arrow",
+                "price_change_percent": null,
+                "price_change_basis": null,
+                "opening_to_current_price_change_percent": -14.18
+              },
+              "line_quality": "EQUAL",
+              "price_quality": "FAVOURABLE",
+              "bet_quality": "POTENTIAL_VALUE"
+            },
+            {
+              "side": "AWAY",
+              "selection_name": "Fukushima Fire Bonds",
+              "selection_line": "-11.5",
+              "is_target": true,
+              "reference": {
+                "bookmaker": "Pinnacle",
+                "line": "-11.5",
+                "odds": "2.270",
+                "fair_odds": null
+              },
+              "comparison": {
+                "reference_line": "-11.5",
+                "bet365_line": "-11.5",
+                "reference_price": "2.270",
+                "bet365_price": "1.86",
+                "line_applicable": true,
+                "equal_line": true,
+                "line_difference": "0.0",
+                "line_advantage": "0.0",
+                "line_quality": "EQUAL",
+                "price_difference": "-0.410",
+                "price_quality": "UNFAVOURABLE",
+                "bookmaker": "Bet365",
+                "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+                "supplied_ev": null
+              },
+              "movement": {
+                "opening_line": "-10.5",
+                "previous_line": "-8.5",
+                "current_line": "-11.5",
+                "line_change": "-3.0",
+                "line_direction": "DOWN",
+                "opening_line_change": "-1.0",
+                "opening_line_direction": "DOWN",
+                "opening_line_equal": false,
+                "opening_price": "1.840",
+                "current_price": "2.270",
+                "previous_price_displayed": "1.862",
+                "price_direction": "DRIFTED",
+                "price_direction_source": "arrow",
+                "price_change_percent": null,
+                "price_change_basis": null,
+                "opening_to_current_price_change_percent": 23.37
+              },
+              "line_quality": "EQUAL",
+              "price_quality": "UNFAVOURABLE",
+              "bet_quality": "UNFAVOURABLE"
+            }
+          ],
+          "market_movement": {
+            "opening_line": "10.5",
+            "previous_line": "8.5",
+            "current_line": "11.5",
+            "line_change": "3.0",
+            "line_direction": "UP",
+            "opening_line_change": "1.0",
+            "opening_line_direction": "UP",
+            "opening_line_equal": false,
+            "opening_price": null,
+            "current_price": null,
+            "previous_price_displayed": null,
+            "price_direction": null,
+            "price_direction_source": null,
+            "price_change_percent": null,
+            "price_change_basis": null,
+            "opening_to_current_price_change_percent": null,
+            "line_perspective": "HOME"
+          },
+          "limit": null,
+          "target_side": "AWAY",
+          "target_line": "-11.5",
+          "alert_price": "1.86",
+          "target_price_source": "pinnacle_opening_to_current",
+          "implied_target": null,
+          "selection_side": "AWAY",
+          "selection_name": "Fukushima Fire Bonds",
+          "selection_line": "-11.5",
+          "reference": {
+            "bookmaker": "Pinnacle",
+            "line": "-11.5",
+            "odds": "2.270",
+            "fair_odds": null
+          },
+          "movement": {
+            "opening_line": "-10.5",
+            "previous_line": "-8.5",
+            "current_line": "-11.5",
+            "line_change": "-3.0",
+            "line_direction": "DOWN",
+            "opening_line_change": "-1.0",
+            "opening_line_direction": "DOWN",
+            "opening_line_equal": false,
+            "opening_price": "1.840",
+            "current_price": "2.270",
+            "previous_price_displayed": "1.862",
+            "price_direction": "DRIFTED",
+            "price_direction_source": "arrow",
+            "price_change_percent": null,
+            "price_change_basis": null,
+            "opening_to_current_price_change_percent": 23.37
+          },
+          "line_quality": "EQUAL",
+          "price_quality": "UNFAVOURABLE",
+          "bet_quality": "UNFAVOURABLE",
+          "schema_version": 6,
+          "interpretation_version": "sharp-money-1",
+          "source": "OddsNotifier",
+          "observation_id": "oddsnotifier:be5c2abc3ad0546381b99a57edcef767301259bec41eaeaa00e82b61cb57a6e1",
+          "telegram_channel_id": "1475314653",
+          "telegram_message_id": "69987",
+          "source_timestamp": "2026-09-26T08:20:14+00:00",
+          "raw_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\n26.09.2026 09:30\n\nSpread (8.5 -> 11.5) (alt. line)\n1.561\u2b07\ufe0f (1.869) - 2.270\u2b06\ufe0f (1.862)\n\n\ud83d\udfe2 Opening (10.5)\n1.819 - 1.840\n\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\n**1.80** - 1.86\n\n\ud83c\udfaf EV: 108.78%",
+          "sample_provenance": "unspecified",
+          "market_label_source": "label_and_fixture_url",
+          "unresolved": [
+            "event_timezone_unspecified",
+            "parenthetical_price_meaning_unspecified"
+          ],
+          "interpretation_notes": [],
+          "interpretation_status": "PARSED"
+        },
+        "profile": "oddsnotifier_basketball_v1",
+        "parser_version": "classifier-3-sharp",
+        "sport": "basketball",
+        "market": "SPREAD"
+      }
+    },
+    {
+      "id": 1879,
+      "origin": "production",
+      "source": "telegram",
+      "chat_id": "1475314653",
+      "message_id": "69989",
+      "edit_key": "",
+      "delivery": "event",
+      "duplicate_of": null,
+      "instruction_id": "on-588d6f7471b8378456c18f57",
+      "raw_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\nBambitious Nara vs Fukushima Fire Bonds\n26.09.2026 09:30\n\nSpread (11.5) (alt. line)\n1.480\u2b07\ufe0f (1.543) - 2.480\u2b06\ufe0f (2.320)\n\n\ud83d\udfe2 Opening (10.5)\n1.819 - 1.840\n\nBet365 (Spread 11.5)\n1.80 - 1.86\n\n\ud83c\udfaf EV: 115.55%",
+      "formatted_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\n26.09.2026 09:30\n\nSpread (11.5) (alt. line)\n1.480\u2b07\ufe0f (1.543) - 2.480\u2b06\ufe0f (2.320)\n\n\ud83d\udfe2 Opening (10.5)\n1.819 - 1.840\n\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\n**1.80** - 1.86\n\n\ud83c\udfaf EV: 115.55%",
+      "entities": "[{\"length\": 8, \"offset\": 19, \"type\": \"bold\"}, {\"length\": 30, \"offset\": 29, \"type\": \"bold\"}, {\"length\": 39, \"offset\": 60, \"type\": \"text_url\", \"url\": \"https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread\"}, {\"length\": 39, \"offset\": 60, \"type\": \"bold\"}, {\"length\": 17, \"offset\": 99, \"type\": \"bold\"}, {\"length\": 25, \"offset\": 118, \"type\": \"bold\"}, {\"length\": 14, \"offset\": 182, \"type\": \"bold\"}, {\"length\": 20, \"offset\": 212, \"type\": \"text_url\", \"url\": \"https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/\"}, {\"length\": 20, \"offset\": 212, \"type\": \"bold\"}, {\"length\": 4, \"offset\": 233, \"type\": \"bold\"}, {\"length\": 4, \"offset\": 233, \"type\": \"underline\"}, {\"length\": 14, \"offset\": 246, \"type\": \"bold\"}]",
+      "source_timestamp": "2026-09-26T08:21:09+00:00",
+      "received_at": "2026-09-26T08:21:09.545+00:00",
+      "processed_at": "2026-09-26T08:21:09.545+00:00",
+      "status": "PARSED",
+      "reason": "Pinnacle opening 10.5 -> current 11.5 (HOME) selects AWAY; Bet365 evaluated for that same side only",
+      "parser_profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-3-sharp",
+      "normalized": "{\"alert_price\": \"1.86\", \"alternate_line\": {\"comparison\": false, \"current\": true, \"opening\": false}, \"away\": \"Fukushima Fire Bonds\", \"bet_quality\": \"UNFAVOURABLE\", \"comparison\": {\"bet365_line\": \"-11.5\", \"bet365_line_displayed\": \"11.5\", \"bet365_odds\": \"1.86\", \"bet365_present\": true, \"bookmaker\": \"Bet365\", \"equal_line\": true, \"ev_status\": \"SUPPLIED_FOR_OTHER_SIDE\", \"line\": \"11.5\", \"line_advantage\": \"0.0\", \"line_difference\": \"0.0\", \"line_quality\": \"EQUAL\", \"price_quality\": \"UNFAVOURABLE\", \"quotes\": [{\"line\": \"11.5\", \"position\": 1, \"price\": \"1.80\", \"side\": \"HOME\"}, {\"line\": \"-11.5\", \"position\": 2, \"price\": \"1.86\", \"side\": \"AWAY\"}], \"reference_line_displayed\": \"11.5\", \"site\": \"Bet365\", \"supplied_ev\": null}, \"comparison_url\": \"https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/\", \"competition\": \"B2 League\", \"competition_full\": \"Japan - B2 League\", \"country\": \"Japan\", \"displayed_ev_percent\": null, \"displayed_line\": \"11.5\", \"feed_displayed_ev_percent\": \"115.55\", \"fixture\": \"Bambitious Nara vs Fukushima Fire Bonds\", \"fixture_url\": \"https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread\", \"format_variant\": \"two_sided\", \"highlighted_side\": \"HOME\", \"home\": \"Bambitious Nara\", \"implied_target\": null, \"interpretation_notes\": [], \"interpretation_status\": \"PARSED\", \"interpretation_version\": \"sharp-money-1\", \"limit\": null, \"line_quality\": \"EQUAL\", \"market\": \"SPREAD\", \"market_label\": \"Spread\", \"market_label_source\": \"label_and_fixture_url\", \"market_movement\": {\"current_line\": \"11.5\", \"current_price\": null, \"line_change\": null, \"line_direction\": null, \"line_perspective\": \"HOME\", \"opening_line\": \"10.5\", \"opening_line_change\": \"1.0\", \"opening_line_direction\": \"UP\", \"opening_line_equal\": false, \"opening_price\": null, \"opening_to_current_price_change_percent\": null, \"previous_line\": null, \"previous_price_displayed\": null, \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": null, \"price_direction_source\": null}, \"movement\": {\"current_line\": \"-11.5\", \"current_price\": \"2.480\", \"line_change\": null, \"line_direction\": null, \"opening_line\": \"-10.5\", \"opening_line_change\": \"-1.0\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": \"1.840\", \"opening_to_current_price_change_percent\": 34.78, \"previous_line\": null, \"previous_price_displayed\": \"2.320\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"DRIFTED\", \"price_direction_source\": \"arrow\"}, \"observation_id\": \"oddsnotifier:d04cf8a70abd9f5088bc79af4dd25df4383df3655b588569b55dfb2bdc00d02c\", \"opening\": {\"line\": \"10.5\", \"outcome_count_matches_market\": true, \"quotes\": [{\"line\": \"10.5\", \"position\": 1, \"price\": \"1.819\", \"side\": \"HOME\"}, {\"line\": \"-10.5\", \"position\": 2, \"price\": \"1.840\", \"side\": \"AWAY\"}]}, \"opening_marker\": \"\\ud83d\\udfe2\", \"pinnacle\": {\"line\": \"11.5\", \"previous_line\": null, \"quotes\": [{\"line\": \"11.5\", \"movement\": \"DOWN\", \"movement_marker\": \"\\u2b07\\ufe0f\", \"parenthetical_price\": \"1.543\", \"position\": 1, \"price\": \"1.480\", \"side\": \"HOME\"}, {\"line\": \"-11.5\", \"movement\": \"UP\", \"movement_marker\": \"\\u2b06\\ufe0f\", \"parenthetical_price\": \"2.320\", \"position\": 2, \"price\": \"2.480\", \"side\": \"AWAY\"}]}, \"price_quality\": \"UNFAVOURABLE\", \"quote_mapping\": {\"confirmation_source\": \"User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)\", \"group_sides_by_position\": {\"comparison\": [\"HOME\", \"AWAY\"], \"opening\": [\"HOME\", \"AWAY\"], \"pinnacle\": [\"HOME\", \"AWAY\"]}, \"production_verified\": true, \"profile\": \"oddsnotifier_basketball_v1\", \"sides_by_position\": [\"HOME\", \"AWAY\"]}, \"raw_text\": \"New odds update on Pinnacle\\n\\nBasketball - Japan - B2 League\\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\\n26.09.2026 09:30\\n\\nSpread (11.5) (alt. line)\\n1.480\\u2b07\\ufe0f (1.543) - 2.480\\u2b06\\ufe0f (2.320)\\n\\n\\ud83d\\udfe2 Opening (10.5)\\n1.819 - 1.840\\n\\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\\n**1.80** - 1.86\\n\\n\\ud83c\\udfaf EV: 115.55%\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"-11.5\", \"odds\": \"2.480\"}, \"sample_provenance\": \"unspecified\", \"scheduled_at_local\": \"2026-09-26T09:30\", \"scheduled_timezone\": null, \"schema_version\": 6, \"selection_line\": \"-11.5\", \"selection_name\": \"Fukushima Fire Bonds\", \"selection_side\": \"AWAY\", \"sharp_signal\": {\"change\": \"1.0\", \"current_line\": \"11.5\", \"direction\": \"UP\", \"highlight_agrees\": false, \"magnitude\": \"1.0\", \"opening_line\": \"10.5\", \"reason\": \"Pinnacle opening 10.5 -> current 11.5 (HOME) selects AWAY\", \"recent_line_reversal\": false, \"side\": \"AWAY\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"sides\": [{\"bet_quality\": \"POTENTIAL_VALUE\", \"comparison\": {\"bet365_line\": \"11.5\", \"bet365_price\": \"1.80\", \"bookmaker\": \"Bet365\", \"equal_line\": true, \"ev_status\": \"SUPPLIED_EQUAL_LINE\", \"line_advantage\": \"0.0\", \"line_applicable\": true, \"line_difference\": \"0.0\", \"line_quality\": \"EQUAL\", \"price_difference\": \"0.320\", \"price_quality\": \"FAVOURABLE\", \"reference_line\": \"11.5\", \"reference_price\": \"1.480\", \"supplied_ev\": \"115.55\"}, \"is_target\": false, \"line_quality\": \"EQUAL\", \"movement\": {\"current_line\": \"11.5\", \"current_price\": \"1.480\", \"line_change\": null, \"line_direction\": null, \"opening_line\": \"10.5\", \"opening_line_change\": \"1.0\", \"opening_line_direction\": \"UP\", \"opening_line_equal\": false, \"opening_price\": \"1.819\", \"opening_to_current_price_change_percent\": -18.64, \"previous_line\": null, \"previous_price_displayed\": \"1.543\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"SHORTENED\", \"price_direction_source\": \"arrow\"}, \"price_quality\": \"FAVOURABLE\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"11.5\", \"odds\": \"1.480\"}, \"selection_line\": \"11.5\", \"selection_name\": \"Bambitious Nara\", \"side\": \"HOME\"}, {\"bet_quality\": \"UNFAVOURABLE\", \"comparison\": {\"bet365_line\": \"-11.5\", \"bet365_price\": \"1.86\", \"bookmaker\": \"Bet365\", \"equal_line\": true, \"ev_status\": \"SUPPLIED_FOR_OTHER_SIDE\", \"line_advantage\": \"0.0\", \"line_applicable\": true, \"line_difference\": \"0.0\", \"line_quality\": \"EQUAL\", \"price_difference\": \"-0.620\", \"price_quality\": \"UNFAVOURABLE\", \"reference_line\": \"-11.5\", \"reference_price\": \"2.480\", \"supplied_ev\": null}, \"is_target\": true, \"line_quality\": \"EQUAL\", \"movement\": {\"current_line\": \"-11.5\", \"current_price\": \"2.480\", \"line_change\": null, \"line_direction\": null, \"opening_line\": \"-10.5\", \"opening_line_change\": \"-1.0\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": \"1.840\", \"opening_to_current_price_change_percent\": 34.78, \"previous_line\": null, \"previous_price_displayed\": \"2.320\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"DRIFTED\", \"price_direction_source\": \"arrow\"}, \"price_quality\": \"UNFAVOURABLE\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"-11.5\", \"odds\": \"2.480\"}, \"selection_line\": \"-11.5\", \"selection_name\": \"Fukushima Fire Bonds\", \"side\": \"AWAY\"}], \"source\": \"OddsNotifier\", \"source_timestamp\": \"2026-09-26T08:21:09+00:00\", \"sport\": \"basketball\", \"target_line\": \"-11.5\", \"target_price_source\": \"pinnacle_opening_to_current\", \"target_side\": \"AWAY\", \"telegram_channel_id\": \"1475314653\", \"telegram_message_id\": \"69989\", \"unresolved\": [\"event_timezone_unspecified\", \"parenthetical_price_meaning_unspecified\"]}",
+      "provenance": "{\"has_media\": false, \"post_author\": null, \"producer\": \"core.telegram_intake\"}",
+      "baseline_classification": {
+        "status": "PARSED",
+        "reason": "Pinnacle opening 10.5 -> current 11.5 (HOME) selects AWAY; Bet365 evaluated for that same side only",
+        "parsed": {
+          "sport": "basketball",
+          "country": "Japan",
+          "competition": "B2 League",
+          "competition_full": "Japan - B2 League",
+          "fixture": "Bambitious Nara vs Fukushima Fire Bonds",
+          "home": "Bambitious Nara",
+          "away": "Fukushima Fire Bonds",
+          "fixture_url": "https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread",
+          "scheduled_at_local": "2026-09-26T09:30",
+          "scheduled_timezone": null,
+          "format_variant": "two_sided",
+          "market": "SPREAD",
+          "market_label": "Spread",
+          "displayed_line": "11.5",
+          "comparison_url": "https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/",
+          "opening_marker": "\ud83d\udfe2",
+          "pinnacle": {
+            "line": "11.5",
+            "previous_line": null,
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.480",
+                "movement": "DOWN",
+                "movement_marker": "\u2b07\ufe0f",
+                "parenthetical_price": "1.543",
+                "side": "HOME",
+                "line": "11.5"
+              },
+              {
+                "position": 2,
+                "price": "2.480",
+                "movement": "UP",
+                "movement_marker": "\u2b06\ufe0f",
+                "parenthetical_price": "2.320",
+                "side": "AWAY",
+                "line": "-11.5"
+              }
+            ]
+          },
+          "opening": {
+            "line": "10.5",
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.819",
+                "side": "HOME",
+                "line": "10.5"
+              },
+              {
+                "position": 2,
+                "price": "1.840",
+                "side": "AWAY",
+                "line": "-10.5"
+              }
+            ],
+            "outcome_count_matches_market": true
+          },
+          "comparison": {
+            "site": "Bet365",
+            "line": "11.5",
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.80",
+                "side": "HOME",
+                "line": "11.5"
+              },
+              {
+                "position": 2,
+                "price": "1.86",
+                "side": "AWAY",
+                "line": "-11.5"
+              }
+            ],
+            "bookmaker": "Bet365",
+            "bet365_present": true,
+            "bet365_line_displayed": "11.5",
+            "reference_line_displayed": "11.5",
+            "bet365_line": "-11.5",
+            "bet365_odds": "1.86",
+            "equal_line": true,
+            "line_difference": "0.0",
+            "line_advantage": "0.0",
+            "line_quality": "EQUAL",
+            "price_quality": "UNFAVOURABLE",
+            "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+            "supplied_ev": null
+          },
+          "alternate_line": {
+            "current": true,
+            "opening": false,
+            "comparison": false
+          },
+          "quote_mapping": {
+            "profile": "oddsnotifier_basketball_v1",
+            "production_verified": true,
+            "sides_by_position": [
+              "HOME",
+              "AWAY"
+            ],
+            "group_sides_by_position": {
+              "pinnacle": [
+                "HOME",
+                "AWAY"
+              ],
+              "opening": [
+                "HOME",
+                "AWAY"
+              ],
+              "comparison": [
+                "HOME",
+                "AWAY"
+              ]
+            },
+            "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+          },
+          "displayed_ev_percent": null,
+          "feed_displayed_ev_percent": "115.55",
+          "highlighted_side": "HOME",
+          "sharp_signal": {
+            "source": "pinnacle_opening_to_current",
+            "side": "AWAY",
+            "opening_line": "10.5",
+            "current_line": "11.5",
+            "change": "1.0",
+            "magnitude": "1.0",
+            "direction": "UP",
+            "status": "IDENTIFIED",
+            "reason": "Pinnacle opening 10.5 -> current 11.5 (HOME) selects AWAY",
+            "highlight_agrees": false,
+            "recent_line_reversal": false
+          },
+          "sides": [
+            {
+              "side": "HOME",
+              "selection_name": "Bambitious Nara",
+              "selection_line": "11.5",
+              "is_target": false,
+              "reference": {
+                "bookmaker": "Pinnacle",
+                "line": "11.5",
+                "odds": "1.480",
+                "fair_odds": null
+              },
+              "comparison": {
+                "reference_line": "11.5",
+                "bet365_line": "11.5",
+                "reference_price": "1.480",
+                "bet365_price": "1.80",
+                "line_applicable": true,
+                "equal_line": true,
+                "line_difference": "0.0",
+                "line_advantage": "0.0",
+                "line_quality": "EQUAL",
+                "price_difference": "0.320",
+                "price_quality": "FAVOURABLE",
+                "bookmaker": "Bet365",
+                "ev_status": "SUPPLIED_EQUAL_LINE",
+                "supplied_ev": "115.55"
+              },
+              "movement": {
+                "opening_line": "10.5",
+                "previous_line": null,
+                "current_line": "11.5",
+                "line_change": null,
+                "line_direction": null,
+                "opening_line_change": "1.0",
+                "opening_line_direction": "UP",
+                "opening_line_equal": false,
+                "opening_price": "1.819",
+                "current_price": "1.480",
+                "previous_price_displayed": "1.543",
+                "price_direction": "SHORTENED",
+                "price_direction_source": "arrow",
+                "price_change_percent": null,
+                "price_change_basis": null,
+                "opening_to_current_price_change_percent": -18.64
+              },
+              "line_quality": "EQUAL",
+              "price_quality": "FAVOURABLE",
+              "bet_quality": "POTENTIAL_VALUE"
+            },
+            {
+              "side": "AWAY",
+              "selection_name": "Fukushima Fire Bonds",
+              "selection_line": "-11.5",
+              "is_target": true,
+              "reference": {
+                "bookmaker": "Pinnacle",
+                "line": "-11.5",
+                "odds": "2.480",
+                "fair_odds": null
+              },
+              "comparison": {
+                "reference_line": "-11.5",
+                "bet365_line": "-11.5",
+                "reference_price": "2.480",
+                "bet365_price": "1.86",
+                "line_applicable": true,
+                "equal_line": true,
+                "line_difference": "0.0",
+                "line_advantage": "0.0",
+                "line_quality": "EQUAL",
+                "price_difference": "-0.620",
+                "price_quality": "UNFAVOURABLE",
+                "bookmaker": "Bet365",
+                "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+                "supplied_ev": null
+              },
+              "movement": {
+                "opening_line": "-10.5",
+                "previous_line": null,
+                "current_line": "-11.5",
+                "line_change": null,
+                "line_direction": null,
+                "opening_line_change": "-1.0",
+                "opening_line_direction": "DOWN",
+                "opening_line_equal": false,
+                "opening_price": "1.840",
+                "current_price": "2.480",
+                "previous_price_displayed": "2.320",
+                "price_direction": "DRIFTED",
+                "price_direction_source": "arrow",
+                "price_change_percent": null,
+                "price_change_basis": null,
+                "opening_to_current_price_change_percent": 34.78
+              },
+              "line_quality": "EQUAL",
+              "price_quality": "UNFAVOURABLE",
+              "bet_quality": "UNFAVOURABLE"
+            }
+          ],
+          "market_movement": {
+            "opening_line": "10.5",
+            "previous_line": null,
+            "current_line": "11.5",
+            "line_change": null,
+            "line_direction": null,
+            "opening_line_change": "1.0",
+            "opening_line_direction": "UP",
+            "opening_line_equal": false,
+            "opening_price": null,
+            "current_price": null,
+            "previous_price_displayed": null,
+            "price_direction": null,
+            "price_direction_source": null,
+            "price_change_percent": null,
+            "price_change_basis": null,
+            "opening_to_current_price_change_percent": null,
+            "line_perspective": "HOME"
+          },
+          "limit": null,
+          "target_side": "AWAY",
+          "target_line": "-11.5",
+          "alert_price": "1.86",
+          "target_price_source": "pinnacle_opening_to_current",
+          "implied_target": null,
+          "selection_side": "AWAY",
+          "selection_name": "Fukushima Fire Bonds",
+          "selection_line": "-11.5",
+          "reference": {
+            "bookmaker": "Pinnacle",
+            "line": "-11.5",
+            "odds": "2.480",
+            "fair_odds": null
+          },
+          "movement": {
+            "opening_line": "-10.5",
+            "previous_line": null,
+            "current_line": "-11.5",
+            "line_change": null,
+            "line_direction": null,
+            "opening_line_change": "-1.0",
+            "opening_line_direction": "DOWN",
+            "opening_line_equal": false,
+            "opening_price": "1.840",
+            "current_price": "2.480",
+            "previous_price_displayed": "2.320",
+            "price_direction": "DRIFTED",
+            "price_direction_source": "arrow",
+            "price_change_percent": null,
+            "price_change_basis": null,
+            "opening_to_current_price_change_percent": 34.78
+          },
+          "line_quality": "EQUAL",
+          "price_quality": "UNFAVOURABLE",
+          "bet_quality": "UNFAVOURABLE",
+          "schema_version": 6,
+          "interpretation_version": "sharp-money-1",
+          "source": "OddsNotifier",
+          "observation_id": "oddsnotifier:d04cf8a70abd9f5088bc79af4dd25df4383df3655b588569b55dfb2bdc00d02c",
+          "telegram_channel_id": "1475314653",
+          "telegram_message_id": "69989",
+          "source_timestamp": "2026-09-26T08:21:09+00:00",
+          "raw_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\n26.09.2026 09:30\n\nSpread (11.5) (alt. line)\n1.480\u2b07\ufe0f (1.543) - 2.480\u2b06\ufe0f (2.320)\n\n\ud83d\udfe2 Opening (10.5)\n1.819 - 1.840\n\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\n**1.80** - 1.86\n\n\ud83c\udfaf EV: 115.55%",
+          "sample_provenance": "unspecified",
+          "market_label_source": "label_and_fixture_url",
+          "unresolved": [
+            "event_timezone_unspecified",
+            "parenthetical_price_meaning_unspecified"
+          ],
+          "interpretation_notes": [],
+          "interpretation_status": "PARSED"
+        },
+        "profile": "oddsnotifier_basketball_v1",
+        "parser_version": "classifier-3-sharp",
+        "sport": "basketball",
+        "market": "SPREAD"
+      }
+    },
+    {
+      "id": 1880,
+      "origin": "production",
+      "source": "telegram",
+      "chat_id": "1475314653",
+      "message_id": "69990",
+      "edit_key": "",
+      "delivery": "event",
+      "duplicate_of": null,
+      "instruction_id": "on-fd0e26cc4bcfc4ec828662ce",
+      "raw_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\nBambitious Nara vs Fukushima Fire Bonds\n26.09.2026 09:30\n\nSpread (8)\n1.781\u2b07\ufe0f (1.884) - 1.961\u2b06\ufe0f (1.833)\n\n\ud83d\udfe2 Opening (10.5)\n1.819 - 1.840\n\nBet365 (Spread 11.5)\n1.80 - 1.86\n\n\ud83c\udfaf EV: None (not equal lines)",
+      "formatted_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\n26.09.2026 09:30\n\nSpread (8)\n1.781\u2b07\ufe0f (1.884) - 1.961\u2b06\ufe0f (1.833)\n\n\ud83d\udfe2 Opening (10.5)\n1.819 - 1.840\n\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\n1.80 - 1.86\n\n\ud83c\udfaf EV: None (not equal lines)",
+      "entities": "[{\"length\": 8, \"offset\": 19, \"type\": \"bold\"}, {\"length\": 30, \"offset\": 29, \"type\": \"bold\"}, {\"length\": 39, \"offset\": 60, \"type\": \"text_url\", \"url\": \"https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread\"}, {\"length\": 39, \"offset\": 60, \"type\": \"bold\"}, {\"length\": 17, \"offset\": 99, \"type\": \"bold\"}, {\"length\": 10, \"offset\": 118, \"type\": \"bold\"}, {\"length\": 14, \"offset\": 167, \"type\": \"bold\"}, {\"length\": 20, \"offset\": 197, \"type\": \"text_url\", \"url\": \"https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/\"}, {\"length\": 20, \"offset\": 197, \"type\": \"bold\"}, {\"length\": 11, \"offset\": 231, \"type\": \"bold\"}]",
+      "source_timestamp": "2026-09-26T08:21:16+00:00",
+      "received_at": "2026-09-26T08:21:16.335+00:00",
+      "processed_at": "2026-09-26T08:21:16.335+00:00",
+      "status": "PARSED",
+      "reason": "Pinnacle opening 10.5 -> current 8 (HOME) selects HOME; Bet365 evaluated for that same side only",
+      "parser_profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-3-sharp",
+      "normalized": "{\"alert_price\": \"1.80\", \"alternate_line\": {\"comparison\": false, \"current\": false, \"opening\": false}, \"away\": \"Fukushima Fire Bonds\", \"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"comparison\": {\"bet365_line\": \"11.5\", \"bet365_line_displayed\": \"11.5\", \"bet365_odds\": \"1.80\", \"bet365_present\": true, \"bookmaker\": \"Bet365\", \"equal_line\": false, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"line\": \"11.5\", \"line_advantage\": \"3.5\", \"line_difference\": \"3.5\", \"line_quality\": \"FAVOURABLE\", \"price_quality\": \"NOT_COMPARABLE\", \"quotes\": [{\"line\": \"11.5\", \"position\": 1, \"price\": \"1.80\", \"side\": \"HOME\"}, {\"line\": \"-11.5\", \"position\": 2, \"price\": \"1.86\", \"side\": \"AWAY\"}], \"reference_line_displayed\": \"8\", \"site\": \"Bet365\", \"supplied_ev\": null}, \"comparison_url\": \"https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/\", \"competition\": \"B2 League\", \"competition_full\": \"Japan - B2 League\", \"country\": \"Japan\", \"displayed_ev_percent\": null, \"displayed_line\": \"8\", \"feed_displayed_ev_percent\": null, \"fixture\": \"Bambitious Nara vs Fukushima Fire Bonds\", \"fixture_url\": \"https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread\", \"format_variant\": \"two_sided\", \"highlighted_side\": null, \"home\": \"Bambitious Nara\", \"implied_target\": null, \"interpretation_notes\": [], \"interpretation_status\": \"PARSED\", \"interpretation_version\": \"sharp-money-1\", \"limit\": null, \"line_quality\": \"FAVOURABLE\", \"market\": \"SPREAD\", \"market_label\": \"Spread\", \"market_label_source\": \"label_and_fixture_url\", \"market_movement\": {\"current_line\": \"8\", \"current_price\": null, \"line_change\": null, \"line_direction\": null, \"line_perspective\": \"HOME\", \"opening_line\": \"10.5\", \"opening_line_change\": \"-2.5\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": null, \"opening_to_current_price_change_percent\": null, \"previous_line\": null, \"previous_price_displayed\": null, \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": null, \"price_direction_source\": null}, \"movement\": {\"current_line\": \"8\", \"current_price\": \"1.781\", \"line_change\": null, \"line_direction\": null, \"opening_line\": \"10.5\", \"opening_line_change\": \"-2.5\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": \"1.819\", \"opening_to_current_price_change_percent\": -2.09, \"previous_line\": null, \"previous_price_displayed\": \"1.884\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"SHORTENED\", \"price_direction_source\": \"arrow\"}, \"observation_id\": \"oddsnotifier:522c99378195861a1f3495fe9eb183a4e89d4c7ae828ccb0cc2335bbf72f455d\", \"opening\": {\"line\": \"10.5\", \"outcome_count_matches_market\": true, \"quotes\": [{\"line\": \"10.5\", \"position\": 1, \"price\": \"1.819\", \"side\": \"HOME\"}, {\"line\": \"-10.5\", \"position\": 2, \"price\": \"1.840\", \"side\": \"AWAY\"}]}, \"opening_marker\": \"\\ud83d\\udfe2\", \"pinnacle\": {\"line\": \"8\", \"previous_line\": null, \"quotes\": [{\"line\": \"8\", \"movement\": \"DOWN\", \"movement_marker\": \"\\u2b07\\ufe0f\", \"parenthetical_price\": \"1.884\", \"position\": 1, \"price\": \"1.781\", \"side\": \"HOME\"}, {\"line\": \"-8\", \"movement\": \"UP\", \"movement_marker\": \"\\u2b06\\ufe0f\", \"parenthetical_price\": \"1.833\", \"position\": 2, \"price\": \"1.961\", \"side\": \"AWAY\"}]}, \"price_quality\": \"NOT_COMPARABLE\", \"quote_mapping\": {\"confirmation_source\": \"User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)\", \"group_sides_by_position\": {\"comparison\": [\"HOME\", \"AWAY\"], \"opening\": [\"HOME\", \"AWAY\"], \"pinnacle\": [\"HOME\", \"AWAY\"]}, \"production_verified\": true, \"profile\": \"oddsnotifier_basketball_v1\", \"sides_by_position\": [\"HOME\", \"AWAY\"]}, \"raw_text\": \"New odds update on Pinnacle\\n\\nBasketball - Japan - B2 League\\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\\n26.09.2026 09:30\\n\\nSpread (8)\\n1.781\\u2b07\\ufe0f (1.884) - 1.961\\u2b06\\ufe0f (1.833)\\n\\n\\ud83d\\udfe2 Opening (10.5)\\n1.819 - 1.840\\n\\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\\n1.80 - 1.86\\n\\n\\ud83c\\udfaf EV: None (not equal lines)\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"8\", \"odds\": \"1.781\"}, \"sample_provenance\": \"unspecified\", \"scheduled_at_local\": \"2026-09-26T09:30\", \"scheduled_timezone\": null, \"schema_version\": 6, \"selection_line\": \"11.5\", \"selection_name\": \"Bambitious Nara\", \"selection_side\": \"HOME\", \"sharp_signal\": {\"change\": \"-2.5\", \"current_line\": \"8\", \"direction\": \"DOWN\", \"highlight_agrees\": null, \"magnitude\": \"2.5\", \"opening_line\": \"10.5\", \"reason\": \"Pinnacle opening 10.5 -> current 8 (HOME) selects HOME\", \"recent_line_reversal\": false, \"side\": \"HOME\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"sides\": [{\"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"comparison\": {\"bet365_line\": \"11.5\", \"bet365_price\": \"1.80\", \"bookmaker\": \"Bet365\", \"equal_line\": false, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"line_advantage\": \"3.5\", \"line_applicable\": true, \"line_difference\": \"3.5\", \"line_quality\": \"FAVOURABLE\", \"price_difference\": null, \"price_quality\": \"NOT_COMPARABLE\", \"reference_line\": \"8\", \"reference_price\": \"1.781\", \"supplied_ev\": null}, \"is_target\": true, \"line_quality\": \"FAVOURABLE\", \"movement\": {\"current_line\": \"8\", \"current_price\": \"1.781\", \"line_change\": null, \"line_direction\": null, \"opening_line\": \"10.5\", \"opening_line_change\": \"-2.5\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": \"1.819\", \"opening_to_current_price_change_percent\": -2.09, \"previous_line\": null, \"previous_price_displayed\": \"1.884\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"SHORTENED\", \"price_direction_source\": \"arrow\"}, \"price_quality\": \"NOT_COMPARABLE\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"8\", \"odds\": \"1.781\"}, \"selection_line\": \"11.5\", \"selection_name\": \"Bambitious Nara\", \"side\": \"HOME\"}, {\"bet_quality\": \"UNFAVOURABLE\", \"comparison\": {\"bet365_line\": \"-11.5\", \"bet365_price\": \"1.86\", \"bookmaker\": \"Bet365\", \"equal_line\": false, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"line_advantage\": \"-3.5\", \"line_applicable\": true, \"line_difference\": \"-3.5\", \"line_quality\": \"UNFAVOURABLE\", \"price_difference\": null, \"price_quality\": \"NOT_COMPARABLE\", \"reference_line\": \"-8\", \"reference_price\": \"1.961\", \"supplied_ev\": null}, \"is_target\": false, \"line_quality\": \"UNFAVOURABLE\", \"movement\": {\"current_line\": \"-8\", \"current_price\": \"1.961\", \"line_change\": null, \"line_direction\": null, \"opening_line\": \"-10.5\", \"opening_line_change\": \"2.5\", \"opening_line_direction\": \"UP\", \"opening_line_equal\": false, \"opening_price\": \"1.840\", \"opening_to_current_price_change_percent\": 6.58, \"previous_line\": null, \"previous_price_displayed\": \"1.833\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"DRIFTED\", \"price_direction_source\": \"arrow\"}, \"price_quality\": \"NOT_COMPARABLE\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"-8\", \"odds\": \"1.961\"}, \"selection_line\": \"-11.5\", \"selection_name\": \"Fukushima Fire Bonds\", \"side\": \"AWAY\"}], \"source\": \"OddsNotifier\", \"source_timestamp\": \"2026-09-26T08:21:16+00:00\", \"sport\": \"basketball\", \"target_line\": \"11.5\", \"target_price_source\": \"pinnacle_opening_to_current\", \"target_side\": \"HOME\", \"telegram_channel_id\": \"1475314653\", \"telegram_message_id\": \"69990\", \"unresolved\": [\"event_timezone_unspecified\", \"parenthetical_price_meaning_unspecified\"]}",
+      "provenance": "{\"has_media\": false, \"post_author\": null, \"producer\": \"core.telegram_intake\"}",
+      "baseline_classification": {
+        "status": "PARSED",
+        "reason": "Pinnacle opening 10.5 -> current 8 (HOME) selects HOME; Bet365 evaluated for that same side only",
+        "parsed": {
+          "sport": "basketball",
+          "country": "Japan",
+          "competition": "B2 League",
+          "competition_full": "Japan - B2 League",
+          "fixture": "Bambitious Nara vs Fukushima Fire Bonds",
+          "home": "Bambitious Nara",
+          "away": "Fukushima Fire Bonds",
+          "fixture_url": "https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread",
+          "scheduled_at_local": "2026-09-26T09:30",
+          "scheduled_timezone": null,
+          "format_variant": "two_sided",
+          "market": "SPREAD",
+          "market_label": "Spread",
+          "displayed_line": "8",
+          "comparison_url": "https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/",
+          "opening_marker": "\ud83d\udfe2",
+          "pinnacle": {
+            "line": "8",
+            "previous_line": null,
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.781",
+                "movement": "DOWN",
+                "movement_marker": "\u2b07\ufe0f",
+                "parenthetical_price": "1.884",
+                "side": "HOME",
+                "line": "8"
+              },
+              {
+                "position": 2,
+                "price": "1.961",
+                "movement": "UP",
+                "movement_marker": "\u2b06\ufe0f",
+                "parenthetical_price": "1.833",
+                "side": "AWAY",
+                "line": "-8"
+              }
+            ]
+          },
+          "opening": {
+            "line": "10.5",
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.819",
+                "side": "HOME",
+                "line": "10.5"
+              },
+              {
+                "position": 2,
+                "price": "1.840",
+                "side": "AWAY",
+                "line": "-10.5"
+              }
+            ],
+            "outcome_count_matches_market": true
+          },
+          "comparison": {
+            "site": "Bet365",
+            "line": "11.5",
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.80",
+                "side": "HOME",
+                "line": "11.5"
+              },
+              {
+                "position": 2,
+                "price": "1.86",
+                "side": "AWAY",
+                "line": "-11.5"
+              }
+            ],
+            "bookmaker": "Bet365",
+            "bet365_present": true,
+            "bet365_line_displayed": "11.5",
+            "reference_line_displayed": "8",
+            "bet365_line": "11.5",
+            "bet365_odds": "1.80",
+            "equal_line": false,
+            "line_difference": "3.5",
+            "line_advantage": "3.5",
+            "line_quality": "FAVOURABLE",
+            "price_quality": "NOT_COMPARABLE",
+            "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+            "supplied_ev": null
+          },
+          "alternate_line": {
+            "current": false,
+            "opening": false,
+            "comparison": false
+          },
+          "quote_mapping": {
+            "profile": "oddsnotifier_basketball_v1",
+            "production_verified": true,
+            "sides_by_position": [
+              "HOME",
+              "AWAY"
+            ],
+            "group_sides_by_position": {
+              "pinnacle": [
+                "HOME",
+                "AWAY"
+              ],
+              "opening": [
+                "HOME",
+                "AWAY"
+              ],
+              "comparison": [
+                "HOME",
+                "AWAY"
+              ]
+            },
+            "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+          },
+          "displayed_ev_percent": null,
+          "feed_displayed_ev_percent": null,
+          "highlighted_side": null,
+          "sharp_signal": {
+            "source": "pinnacle_opening_to_current",
+            "side": "HOME",
+            "opening_line": "10.5",
+            "current_line": "8",
+            "change": "-2.5",
+            "magnitude": "2.5",
+            "direction": "DOWN",
+            "status": "IDENTIFIED",
+            "reason": "Pinnacle opening 10.5 -> current 8 (HOME) selects HOME",
+            "highlight_agrees": null,
+            "recent_line_reversal": false
+          },
+          "sides": [
+            {
+              "side": "HOME",
+              "selection_name": "Bambitious Nara",
+              "selection_line": "11.5",
+              "is_target": true,
+              "reference": {
+                "bookmaker": "Pinnacle",
+                "line": "8",
+                "odds": "1.781",
+                "fair_odds": null
+              },
+              "comparison": {
+                "reference_line": "8",
+                "bet365_line": "11.5",
+                "reference_price": "1.781",
+                "bet365_price": "1.80",
+                "line_applicable": true,
+                "equal_line": false,
+                "line_difference": "3.5",
+                "line_advantage": "3.5",
+                "line_quality": "FAVOURABLE",
+                "price_difference": null,
+                "price_quality": "NOT_COMPARABLE",
+                "bookmaker": "Bet365",
+                "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+                "supplied_ev": null
+              },
+              "movement": {
+                "opening_line": "10.5",
+                "previous_line": null,
+                "current_line": "8",
+                "line_change": null,
+                "line_direction": null,
+                "opening_line_change": "-2.5",
+                "opening_line_direction": "DOWN",
+                "opening_line_equal": false,
+                "opening_price": "1.819",
+                "current_price": "1.781",
+                "previous_price_displayed": "1.884",
+                "price_direction": "SHORTENED",
+                "price_direction_source": "arrow",
+                "price_change_percent": null,
+                "price_change_basis": null,
+                "opening_to_current_price_change_percent": -2.09
+              },
+              "line_quality": "FAVOURABLE",
+              "price_quality": "NOT_COMPARABLE",
+              "bet_quality": "FAVOURABLE_LINE_SIGNAL"
+            },
+            {
+              "side": "AWAY",
+              "selection_name": "Fukushima Fire Bonds",
+              "selection_line": "-11.5",
+              "is_target": false,
+              "reference": {
+                "bookmaker": "Pinnacle",
+                "line": "-8",
+                "odds": "1.961",
+                "fair_odds": null
+              },
+              "comparison": {
+                "reference_line": "-8",
+                "bet365_line": "-11.5",
+                "reference_price": "1.961",
+                "bet365_price": "1.86",
+                "line_applicable": true,
+                "equal_line": false,
+                "line_difference": "-3.5",
+                "line_advantage": "-3.5",
+                "line_quality": "UNFAVOURABLE",
+                "price_difference": null,
+                "price_quality": "NOT_COMPARABLE",
+                "bookmaker": "Bet365",
+                "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+                "supplied_ev": null
+              },
+              "movement": {
+                "opening_line": "-10.5",
+                "previous_line": null,
+                "current_line": "-8",
+                "line_change": null,
+                "line_direction": null,
+                "opening_line_change": "2.5",
+                "opening_line_direction": "UP",
+                "opening_line_equal": false,
+                "opening_price": "1.840",
+                "current_price": "1.961",
+                "previous_price_displayed": "1.833",
+                "price_direction": "DRIFTED",
+                "price_direction_source": "arrow",
+                "price_change_percent": null,
+                "price_change_basis": null,
+                "opening_to_current_price_change_percent": 6.58
+              },
+              "line_quality": "UNFAVOURABLE",
+              "price_quality": "NOT_COMPARABLE",
+              "bet_quality": "UNFAVOURABLE"
+            }
+          ],
+          "market_movement": {
+            "opening_line": "10.5",
+            "previous_line": null,
+            "current_line": "8",
+            "line_change": null,
+            "line_direction": null,
+            "opening_line_change": "-2.5",
+            "opening_line_direction": "DOWN",
+            "opening_line_equal": false,
+            "opening_price": null,
+            "current_price": null,
+            "previous_price_displayed": null,
+            "price_direction": null,
+            "price_direction_source": null,
+            "price_change_percent": null,
+            "price_change_basis": null,
+            "opening_to_current_price_change_percent": null,
+            "line_perspective": "HOME"
+          },
+          "limit": null,
+          "target_side": "HOME",
+          "target_line": "11.5",
+          "alert_price": "1.80",
+          "target_price_source": "pinnacle_opening_to_current",
+          "implied_target": null,
+          "selection_side": "HOME",
+          "selection_name": "Bambitious Nara",
+          "selection_line": "11.5",
+          "reference": {
+            "bookmaker": "Pinnacle",
+            "line": "8",
+            "odds": "1.781",
+            "fair_odds": null
+          },
+          "movement": {
+            "opening_line": "10.5",
+            "previous_line": null,
+            "current_line": "8",
+            "line_change": null,
+            "line_direction": null,
+            "opening_line_change": "-2.5",
+            "opening_line_direction": "DOWN",
+            "opening_line_equal": false,
+            "opening_price": "1.819",
+            "current_price": "1.781",
+            "previous_price_displayed": "1.884",
+            "price_direction": "SHORTENED",
+            "price_direction_source": "arrow",
+            "price_change_percent": null,
+            "price_change_basis": null,
+            "opening_to_current_price_change_percent": -2.09
+          },
+          "line_quality": "FAVOURABLE",
+          "price_quality": "NOT_COMPARABLE",
+          "bet_quality": "FAVOURABLE_LINE_SIGNAL",
+          "schema_version": 6,
+          "interpretation_version": "sharp-money-1",
+          "source": "OddsNotifier",
+          "observation_id": "oddsnotifier:522c99378195861a1f3495fe9eb183a4e89d4c7ae828ccb0cc2335bbf72f455d",
+          "telegram_channel_id": "1475314653",
+          "telegram_message_id": "69990",
+          "source_timestamp": "2026-09-26T08:21:16+00:00",
+          "raw_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\n26.09.2026 09:30\n\nSpread (8)\n1.781\u2b07\ufe0f (1.884) - 1.961\u2b06\ufe0f (1.833)\n\n\ud83d\udfe2 Opening (10.5)\n1.819 - 1.840\n\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\n1.80 - 1.86\n\n\ud83c\udfaf EV: None (not equal lines)",
+          "sample_provenance": "unspecified",
+          "market_label_source": "label_and_fixture_url",
+          "unresolved": [
+            "event_timezone_unspecified",
+            "parenthetical_price_meaning_unspecified"
+          ],
+          "interpretation_notes": [],
+          "interpretation_status": "PARSED"
+        },
+        "profile": "oddsnotifier_basketball_v1",
+        "parser_version": "classifier-3-sharp",
+        "sport": "basketball",
+        "market": "SPREAD"
+      }
+    },
+    {
+      "id": 1881,
+      "origin": "production",
+      "source": "telegram",
+      "chat_id": "1475314653",
+      "message_id": "69991",
+      "edit_key": "",
+      "delivery": "event",
+      "duplicate_of": null,
+      "instruction_id": "on-68d6ba9dece61140cf1617ec",
+      "raw_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\nBambitious Nara vs Fukushima Fire Bonds\n26.09.2026 09:30\n\nSpread (7.5)\n1.709\u2b07\ufe0f (1.862) - 2.040\u2b06\ufe0f (1.877)\n\n\ud83d\udfe2 Opening (10.5)\n1.819 - 1.840\n\nBet365 (Spread 11.5)\n1.80 - 1.86\n\n\ud83c\udfaf EV: None (not equal lines)",
+      "formatted_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\n26.09.2026 09:30\n\nSpread (7.5)\n1.709\u2b07\ufe0f (1.862) - 2.040\u2b06\ufe0f (1.877)\n\n\ud83d\udfe2 Opening (10.5)\n1.819 - 1.840\n\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\n1.80 - 1.86\n\n\ud83c\udfaf EV: None (not equal lines)",
+      "entities": "[{\"length\": 8, \"offset\": 19, \"type\": \"bold\"}, {\"length\": 30, \"offset\": 29, \"type\": \"bold\"}, {\"length\": 39, \"offset\": 60, \"type\": \"text_url\", \"url\": \"https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread\"}, {\"length\": 39, \"offset\": 60, \"type\": \"bold\"}, {\"length\": 17, \"offset\": 99, \"type\": \"bold\"}, {\"length\": 12, \"offset\": 118, \"type\": \"bold\"}, {\"length\": 14, \"offset\": 169, \"type\": \"bold\"}, {\"length\": 20, \"offset\": 199, \"type\": \"text_url\", \"url\": \"https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/\"}, {\"length\": 20, \"offset\": 199, \"type\": \"bold\"}, {\"length\": 11, \"offset\": 233, \"type\": \"bold\"}]",
+      "source_timestamp": "2026-09-26T08:21:29+00:00",
+      "received_at": "2026-09-26T08:21:29.298+00:00",
+      "processed_at": "2026-09-26T08:21:29.298+00:00",
+      "status": "PARSED",
+      "reason": "Pinnacle opening 10.5 -> current 7.5 (HOME) selects HOME; Bet365 evaluated for that same side only",
+      "parser_profile": "oddsnotifier_basketball_v1",
+      "parser_version": "classifier-3-sharp",
+      "normalized": "{\"alert_price\": \"1.80\", \"alternate_line\": {\"comparison\": false, \"current\": false, \"opening\": false}, \"away\": \"Fukushima Fire Bonds\", \"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"comparison\": {\"bet365_line\": \"11.5\", \"bet365_line_displayed\": \"11.5\", \"bet365_odds\": \"1.80\", \"bet365_present\": true, \"bookmaker\": \"Bet365\", \"equal_line\": false, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"line\": \"11.5\", \"line_advantage\": \"4.0\", \"line_difference\": \"4.0\", \"line_quality\": \"FAVOURABLE\", \"price_quality\": \"NOT_COMPARABLE\", \"quotes\": [{\"line\": \"11.5\", \"position\": 1, \"price\": \"1.80\", \"side\": \"HOME\"}, {\"line\": \"-11.5\", \"position\": 2, \"price\": \"1.86\", \"side\": \"AWAY\"}], \"reference_line_displayed\": \"7.5\", \"site\": \"Bet365\", \"supplied_ev\": null}, \"comparison_url\": \"https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/\", \"competition\": \"B2 League\", \"competition_full\": \"Japan - B2 League\", \"country\": \"Japan\", \"displayed_ev_percent\": null, \"displayed_line\": \"7.5\", \"feed_displayed_ev_percent\": null, \"fixture\": \"Bambitious Nara vs Fukushima Fire Bonds\", \"fixture_url\": \"https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread\", \"format_variant\": \"two_sided\", \"highlighted_side\": null, \"home\": \"Bambitious Nara\", \"implied_target\": null, \"interpretation_notes\": [], \"interpretation_status\": \"PARSED\", \"interpretation_version\": \"sharp-money-1\", \"limit\": null, \"line_quality\": \"FAVOURABLE\", \"market\": \"SPREAD\", \"market_label\": \"Spread\", \"market_label_source\": \"label_and_fixture_url\", \"market_movement\": {\"current_line\": \"7.5\", \"current_price\": null, \"line_change\": null, \"line_direction\": null, \"line_perspective\": \"HOME\", \"opening_line\": \"10.5\", \"opening_line_change\": \"-3.0\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": null, \"opening_to_current_price_change_percent\": null, \"previous_line\": null, \"previous_price_displayed\": null, \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": null, \"price_direction_source\": null}, \"movement\": {\"current_line\": \"7.5\", \"current_price\": \"1.709\", \"line_change\": null, \"line_direction\": null, \"opening_line\": \"10.5\", \"opening_line_change\": \"-3.0\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": \"1.819\", \"opening_to_current_price_change_percent\": -6.05, \"previous_line\": null, \"previous_price_displayed\": \"1.862\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"SHORTENED\", \"price_direction_source\": \"arrow\"}, \"observation_id\": \"oddsnotifier:bf87cdb1cdda2a46c4e4994673e498b9f6d841421f3164cd3a5ac066f00013f1\", \"opening\": {\"line\": \"10.5\", \"outcome_count_matches_market\": true, \"quotes\": [{\"line\": \"10.5\", \"position\": 1, \"price\": \"1.819\", \"side\": \"HOME\"}, {\"line\": \"-10.5\", \"position\": 2, \"price\": \"1.840\", \"side\": \"AWAY\"}]}, \"opening_marker\": \"\\ud83d\\udfe2\", \"pinnacle\": {\"line\": \"7.5\", \"previous_line\": null, \"quotes\": [{\"line\": \"7.5\", \"movement\": \"DOWN\", \"movement_marker\": \"\\u2b07\\ufe0f\", \"parenthetical_price\": \"1.862\", \"position\": 1, \"price\": \"1.709\", \"side\": \"HOME\"}, {\"line\": \"-7.5\", \"movement\": \"UP\", \"movement_marker\": \"\\u2b06\\ufe0f\", \"parenthetical_price\": \"1.877\", \"position\": 2, \"price\": \"2.040\", \"side\": \"AWAY\"}]}, \"price_quality\": \"NOT_COMPARABLE\", \"quote_mapping\": {\"confirmation_source\": \"User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)\", \"group_sides_by_position\": {\"comparison\": [\"HOME\", \"AWAY\"], \"opening\": [\"HOME\", \"AWAY\"], \"pinnacle\": [\"HOME\", \"AWAY\"]}, \"production_verified\": true, \"profile\": \"oddsnotifier_basketball_v1\", \"sides_by_position\": [\"HOME\", \"AWAY\"]}, \"raw_text\": \"New odds update on Pinnacle\\n\\nBasketball - Japan - B2 League\\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\\n26.09.2026 09:30\\n\\nSpread (7.5)\\n1.709\\u2b07\\ufe0f (1.862) - 2.040\\u2b06\\ufe0f (1.877)\\n\\n\\ud83d\\udfe2 Opening (10.5)\\n1.819 - 1.840\\n\\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\\n1.80 - 1.86\\n\\n\\ud83c\\udfaf EV: None (not equal lines)\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"7.5\", \"odds\": \"1.709\"}, \"sample_provenance\": \"unspecified\", \"scheduled_at_local\": \"2026-09-26T09:30\", \"scheduled_timezone\": null, \"schema_version\": 6, \"selection_line\": \"11.5\", \"selection_name\": \"Bambitious Nara\", \"selection_side\": \"HOME\", \"sharp_signal\": {\"change\": \"-3.0\", \"current_line\": \"7.5\", \"direction\": \"DOWN\", \"highlight_agrees\": null, \"magnitude\": \"3.0\", \"opening_line\": \"10.5\", \"reason\": \"Pinnacle opening 10.5 -> current 7.5 (HOME) selects HOME\", \"recent_line_reversal\": false, \"side\": \"HOME\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"sides\": [{\"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"comparison\": {\"bet365_line\": \"11.5\", \"bet365_price\": \"1.80\", \"bookmaker\": \"Bet365\", \"equal_line\": false, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"line_advantage\": \"4.0\", \"line_applicable\": true, \"line_difference\": \"4.0\", \"line_quality\": \"FAVOURABLE\", \"price_difference\": null, \"price_quality\": \"NOT_COMPARABLE\", \"reference_line\": \"7.5\", \"reference_price\": \"1.709\", \"supplied_ev\": null}, \"is_target\": true, \"line_quality\": \"FAVOURABLE\", \"movement\": {\"current_line\": \"7.5\", \"current_price\": \"1.709\", \"line_change\": null, \"line_direction\": null, \"opening_line\": \"10.5\", \"opening_line_change\": \"-3.0\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": \"1.819\", \"opening_to_current_price_change_percent\": -6.05, \"previous_line\": null, \"previous_price_displayed\": \"1.862\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"SHORTENED\", \"price_direction_source\": \"arrow\"}, \"price_quality\": \"NOT_COMPARABLE\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"7.5\", \"odds\": \"1.709\"}, \"selection_line\": \"11.5\", \"selection_name\": \"Bambitious Nara\", \"side\": \"HOME\"}, {\"bet_quality\": \"UNFAVOURABLE\", \"comparison\": {\"bet365_line\": \"-11.5\", \"bet365_price\": \"1.86\", \"bookmaker\": \"Bet365\", \"equal_line\": false, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"line_advantage\": \"-4.0\", \"line_applicable\": true, \"line_difference\": \"-4.0\", \"line_quality\": \"UNFAVOURABLE\", \"price_difference\": null, \"price_quality\": \"NOT_COMPARABLE\", \"reference_line\": \"-7.5\", \"reference_price\": \"2.040\", \"supplied_ev\": null}, \"is_target\": false, \"line_quality\": \"UNFAVOURABLE\", \"movement\": {\"current_line\": \"-7.5\", \"current_price\": \"2.040\", \"line_change\": null, \"line_direction\": null, \"opening_line\": \"-10.5\", \"opening_line_change\": \"3.0\", \"opening_line_direction\": \"UP\", \"opening_line_equal\": false, \"opening_price\": \"1.840\", \"opening_to_current_price_change_percent\": 10.87, \"previous_line\": null, \"previous_price_displayed\": \"1.877\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"DRIFTED\", \"price_direction_source\": \"arrow\"}, \"price_quality\": \"NOT_COMPARABLE\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"-7.5\", \"odds\": \"2.040\"}, \"selection_line\": \"-11.5\", \"selection_name\": \"Fukushima Fire Bonds\", \"side\": \"AWAY\"}], \"source\": \"OddsNotifier\", \"source_timestamp\": \"2026-09-26T08:21:29+00:00\", \"sport\": \"basketball\", \"target_line\": \"11.5\", \"target_price_source\": \"pinnacle_opening_to_current\", \"target_side\": \"HOME\", \"telegram_channel_id\": \"1475314653\", \"telegram_message_id\": \"69991\", \"unresolved\": [\"event_timezone_unspecified\", \"parenthetical_price_meaning_unspecified\"]}",
+      "provenance": "{\"has_media\": false, \"post_author\": null, \"producer\": \"core.telegram_intake\"}",
+      "baseline_classification": {
+        "status": "PARSED",
+        "reason": "Pinnacle opening 10.5 -> current 7.5 (HOME) selects HOME; Bet365 evaluated for that same side only",
+        "parsed": {
+          "sport": "basketball",
+          "country": "Japan",
+          "competition": "B2 League",
+          "competition_full": "Japan - B2 League",
+          "fixture": "Bambitious Nara vs Fukushima Fire Bonds",
+          "home": "Bambitious Nara",
+          "away": "Fukushima Fire Bonds",
+          "fixture_url": "https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread",
+          "scheduled_at_local": "2026-09-26T09:30",
+          "scheduled_timezone": null,
+          "format_variant": "two_sided",
+          "market": "SPREAD",
+          "market_label": "Spread",
+          "displayed_line": "7.5",
+          "comparison_url": "https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/",
+          "opening_marker": "\ud83d\udfe2",
+          "pinnacle": {
+            "line": "7.5",
+            "previous_line": null,
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.709",
+                "movement": "DOWN",
+                "movement_marker": "\u2b07\ufe0f",
+                "parenthetical_price": "1.862",
+                "side": "HOME",
+                "line": "7.5"
+              },
+              {
+                "position": 2,
+                "price": "2.040",
+                "movement": "UP",
+                "movement_marker": "\u2b06\ufe0f",
+                "parenthetical_price": "1.877",
+                "side": "AWAY",
+                "line": "-7.5"
+              }
+            ]
+          },
+          "opening": {
+            "line": "10.5",
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.819",
+                "side": "HOME",
+                "line": "10.5"
+              },
+              {
+                "position": 2,
+                "price": "1.840",
+                "side": "AWAY",
+                "line": "-10.5"
+              }
+            ],
+            "outcome_count_matches_market": true
+          },
+          "comparison": {
+            "site": "Bet365",
+            "line": "11.5",
+            "quotes": [
+              {
+                "position": 1,
+                "price": "1.80",
+                "side": "HOME",
+                "line": "11.5"
+              },
+              {
+                "position": 2,
+                "price": "1.86",
+                "side": "AWAY",
+                "line": "-11.5"
+              }
+            ],
+            "bookmaker": "Bet365",
+            "bet365_present": true,
+            "bet365_line_displayed": "11.5",
+            "reference_line_displayed": "7.5",
+            "bet365_line": "11.5",
+            "bet365_odds": "1.80",
+            "equal_line": false,
+            "line_difference": "4.0",
+            "line_advantage": "4.0",
+            "line_quality": "FAVOURABLE",
+            "price_quality": "NOT_COMPARABLE",
+            "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+            "supplied_ev": null
+          },
+          "alternate_line": {
+            "current": false,
+            "opening": false,
+            "comparison": false
+          },
+          "quote_mapping": {
+            "profile": "oddsnotifier_basketball_v1",
+            "production_verified": true,
+            "sides_by_position": [
+              "HOME",
+              "AWAY"
+            ],
+            "group_sides_by_position": {
+              "pinnacle": [
+                "HOME",
+                "AWAY"
+              ],
+              "opening": [
+                "HOME",
+                "AWAY"
+              ],
+              "comparison": [
+                "HOME",
+                "AWAY"
+              ]
+            },
+            "confirmation_source": "User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)"
+          },
+          "displayed_ev_percent": null,
+          "feed_displayed_ev_percent": null,
+          "highlighted_side": null,
+          "sharp_signal": {
+            "source": "pinnacle_opening_to_current",
+            "side": "HOME",
+            "opening_line": "10.5",
+            "current_line": "7.5",
+            "change": "-3.0",
+            "magnitude": "3.0",
+            "direction": "DOWN",
+            "status": "IDENTIFIED",
+            "reason": "Pinnacle opening 10.5 -> current 7.5 (HOME) selects HOME",
+            "highlight_agrees": null,
+            "recent_line_reversal": false
+          },
+          "sides": [
+            {
+              "side": "HOME",
+              "selection_name": "Bambitious Nara",
+              "selection_line": "11.5",
+              "is_target": true,
+              "reference": {
+                "bookmaker": "Pinnacle",
+                "line": "7.5",
+                "odds": "1.709",
+                "fair_odds": null
+              },
+              "comparison": {
+                "reference_line": "7.5",
+                "bet365_line": "11.5",
+                "reference_price": "1.709",
+                "bet365_price": "1.80",
+                "line_applicable": true,
+                "equal_line": false,
+                "line_difference": "4.0",
+                "line_advantage": "4.0",
+                "line_quality": "FAVOURABLE",
+                "price_difference": null,
+                "price_quality": "NOT_COMPARABLE",
+                "bookmaker": "Bet365",
+                "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+                "supplied_ev": null
+              },
+              "movement": {
+                "opening_line": "10.5",
+                "previous_line": null,
+                "current_line": "7.5",
+                "line_change": null,
+                "line_direction": null,
+                "opening_line_change": "-3.0",
+                "opening_line_direction": "DOWN",
+                "opening_line_equal": false,
+                "opening_price": "1.819",
+                "current_price": "1.709",
+                "previous_price_displayed": "1.862",
+                "price_direction": "SHORTENED",
+                "price_direction_source": "arrow",
+                "price_change_percent": null,
+                "price_change_basis": null,
+                "opening_to_current_price_change_percent": -6.05
+              },
+              "line_quality": "FAVOURABLE",
+              "price_quality": "NOT_COMPARABLE",
+              "bet_quality": "FAVOURABLE_LINE_SIGNAL"
+            },
+            {
+              "side": "AWAY",
+              "selection_name": "Fukushima Fire Bonds",
+              "selection_line": "-11.5",
+              "is_target": false,
+              "reference": {
+                "bookmaker": "Pinnacle",
+                "line": "-7.5",
+                "odds": "2.040",
+                "fair_odds": null
+              },
+              "comparison": {
+                "reference_line": "-7.5",
+                "bet365_line": "-11.5",
+                "reference_price": "2.040",
+                "bet365_price": "1.86",
+                "line_applicable": true,
+                "equal_line": false,
+                "line_difference": "-4.0",
+                "line_advantage": "-4.0",
+                "line_quality": "UNFAVOURABLE",
+                "price_difference": null,
+                "price_quality": "NOT_COMPARABLE",
+                "bookmaker": "Bet365",
+                "ev_status": "NOT_AVAILABLE_UNEQUAL_LINES",
+                "supplied_ev": null
+              },
+              "movement": {
+                "opening_line": "-10.5",
+                "previous_line": null,
+                "current_line": "-7.5",
+                "line_change": null,
+                "line_direction": null,
+                "opening_line_change": "3.0",
+                "opening_line_direction": "UP",
+                "opening_line_equal": false,
+                "opening_price": "1.840",
+                "current_price": "2.040",
+                "previous_price_displayed": "1.877",
+                "price_direction": "DRIFTED",
+                "price_direction_source": "arrow",
+                "price_change_percent": null,
+                "price_change_basis": null,
+                "opening_to_current_price_change_percent": 10.87
+              },
+              "line_quality": "UNFAVOURABLE",
+              "price_quality": "NOT_COMPARABLE",
+              "bet_quality": "UNFAVOURABLE"
+            }
+          ],
+          "market_movement": {
+            "opening_line": "10.5",
+            "previous_line": null,
+            "current_line": "7.5",
+            "line_change": null,
+            "line_direction": null,
+            "opening_line_change": "-3.0",
+            "opening_line_direction": "DOWN",
+            "opening_line_equal": false,
+            "opening_price": null,
+            "current_price": null,
+            "previous_price_displayed": null,
+            "price_direction": null,
+            "price_direction_source": null,
+            "price_change_percent": null,
+            "price_change_basis": null,
+            "opening_to_current_price_change_percent": null,
+            "line_perspective": "HOME"
+          },
+          "limit": null,
+          "target_side": "HOME",
+          "target_line": "11.5",
+          "alert_price": "1.80",
+          "target_price_source": "pinnacle_opening_to_current",
+          "implied_target": null,
+          "selection_side": "HOME",
+          "selection_name": "Bambitious Nara",
+          "selection_line": "11.5",
+          "reference": {
+            "bookmaker": "Pinnacle",
+            "line": "7.5",
+            "odds": "1.709",
+            "fair_odds": null
+          },
+          "movement": {
+            "opening_line": "10.5",
+            "previous_line": null,
+            "current_line": "7.5",
+            "line_change": null,
+            "line_direction": null,
+            "opening_line_change": "-3.0",
+            "opening_line_direction": "DOWN",
+            "opening_line_equal": false,
+            "opening_price": "1.819",
+            "current_price": "1.709",
+            "previous_price_displayed": "1.862",
+            "price_direction": "SHORTENED",
+            "price_direction_source": "arrow",
+            "price_change_percent": null,
+            "price_change_basis": null,
+            "opening_to_current_price_change_percent": -6.05
+          },
+          "line_quality": "FAVOURABLE",
+          "price_quality": "NOT_COMPARABLE",
+          "bet_quality": "FAVOURABLE_LINE_SIGNAL",
+          "schema_version": 6,
+          "interpretation_version": "sharp-money-1",
+          "source": "OddsNotifier",
+          "observation_id": "oddsnotifier:bf87cdb1cdda2a46c4e4994673e498b9f6d841421f3164cd3a5ac066f00013f1",
+          "telegram_channel_id": "1475314653",
+          "telegram_message_id": "69991",
+          "source_timestamp": "2026-09-26T08:21:29+00:00",
+          "raw_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=Spread)\n26.09.2026 09:30\n\nSpread (7.5)\n1.709\u2b07\ufe0f (1.862) - 2.040\u2b06\ufe0f (1.877)\n\n\ud83d\udfe2 Opening (10.5)\n1.819 - 1.840\n\n[Bet365 (Spread 11.5)](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\n1.80 - 1.86\n\n\ud83c\udfaf EV: None (not equal lines)",
+          "sample_provenance": "unspecified",
+          "market_label_source": "label_and_fixture_url",
+          "unresolved": [
+            "event_timezone_unspecified",
+            "parenthetical_price_meaning_unspecified"
+          ],
+          "interpretation_notes": [],
+          "interpretation_status": "PARSED"
+        },
+        "profile": "oddsnotifier_basketball_v1",
+        "parser_version": "classifier-3-sharp",
+        "sport": "basketball",
+        "market": "SPREAD"
+      }
+    },
+    {
+      "id": 1882,
+      "origin": "production",
+      "source": "telegram",
+      "chat_id": "1475314653",
+      "message_id": "69992",
+      "edit_key": "",
+      "delivery": "event",
+      "duplicate_of": null,
+      "instruction_id": null,
+      "raw_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\nBambitious Nara vs Fukushima Fire Bonds\n26.09.2026 09:30\n3.190\u2b07\ufe0f (3.440) - 1.295\u2b06\ufe0f (1.255)\n\n\ud83d\udfe2 Opening\n4.360 - 1.120\n\nBet365\n4.50 - 1.16\n\n\ud83c\udfaf EV: 116.81%",
+      "formatted_text": "New odds update on Pinnacle\n\nBasketball - Japan - B2 League\n[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=ML)\n26.09.2026 09:30\n3.190\u2b07\ufe0f (3.440) - 1.295\u2b06\ufe0f (1.255)\n\n\ud83d\udfe2 Opening\n4.360 - 1.120\n\n[Bet365](https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/)\n**4.50** - 1.16\n\n\ud83c\udfaf EV: 116.81%",
+      "entities": "[{\"length\": 8, \"offset\": 19, \"type\": \"bold\"}, {\"length\": 30, \"offset\": 29, \"type\": \"bold\"}, {\"length\": 39, \"offset\": 60, \"type\": \"text_url\", \"url\": \"https://oddshub.io/basketball/japan-b2-league/72702830?market=ML\"}, {\"length\": 39, \"offset\": 60, \"type\": \"bold\"}, {\"length\": 17, \"offset\": 99, \"type\": \"bold\"}, {\"length\": 7, \"offset\": 155, \"type\": \"bold\"}, {\"length\": 6, \"offset\": 178, \"type\": \"text_url\", \"url\": \"https://www.bet365.com/#/AC/B18/C21171617/D19/E26799068/F19/I0/\"}, {\"length\": 6, \"offset\": 178, \"type\": \"bold\"}, {\"length\": 4, \"offset\": 185, \"type\": \"bold\"}, {\"length\": 4, \"offset\": 185, \"type\": \"underline\"}, {\"length\": 14, \"offset\": 198, \"type\": \"bold\"}]",
+      "source_timestamp": "2026-09-26T08:21:29+00:00",
+      "received_at": "2026-09-26T08:21:29.365+00:00",
+      "processed_at": "2026-09-26T08:21:29.365+00:00",
+      "status": "AMBIGUOUS",
+      "reason": "UNSUPPORTED_MAPPING: basketball MONEYLINE has no production-verified layout/ordering (Invalid or unsupported linked label: '[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=ML)')",
+      "parser_profile": null,
+      "parser_version": "classifier-3-sharp",
+      "normalized": null,
+      "provenance": "{\"has_media\": false, \"post_author\": null, \"producer\": \"core.telegram_intake\"}",
+      "baseline_classification": {
+        "status": "AMBIGUOUS",
+        "reason": "UNSUPPORTED_MAPPING: basketball MONEYLINE has no production-verified layout/ordering (Invalid or unsupported linked label: '[Bambitious Nara vs Fukushima Fire Bonds](https://oddshub.io/basketball/japan-b2-league/72702830?market=ML)')",
+        "parsed": null,
+        "profile": null,
+        "parser_version": "classifier-3-sharp",
+        "sport": "basketball",
+        "market": "MONEYLINE"
+      }
+    }
+  ]
+}

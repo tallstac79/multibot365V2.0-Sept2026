@@ -280,7 +280,7 @@ def split_rows(text):
     return [row for row in rows if row], marker[1] if marker else None
 
 
-def _cells(row, count, *, allow_bold, group):
+def _cells(row, count, *, allow_bold, group, allow_nonpaying=False):
     cells = re.split(r'\s+-\s+', row)
     if len(cells) != count:
         raise Contradiction(f'{group}: expected exactly {count} prices')
@@ -289,7 +289,9 @@ def _cells(row, count, *, allow_bold, group):
         m = re.fullmatch(rf'(\*\*)?({NUMBER})(\*\*)?\s*({ARROW})?\s*(?:\(({NUMBER})\))?', cell)
         if not m or bool(m[1]) != bool(m[3]):
             raise Contradiction(f'{group}: invalid price cell {cell!r}')
-        quote = dict(position=index + 1, price=_price(m[2]))
+        # Some real ML alerts show the OTHER Bet365 outcome at 1.00. Retain its
+        # position without treating it as executable; all other profiles stay strict.
+        quote = dict(position=index + 1, price=m[2] if allow_nonpaying and dec(m[2]) == 1 else _price(m[2]))
         if m[4]:
             quote.update(movement='DOWN' if m[4][0] in '⬇↓' else 'UP', movement_marker=m[4])
         if m[5]:
@@ -704,7 +706,13 @@ def interpret(text, *, channel_id=None, message_id=None, source_timestamp=None):
     rows, opening_marker = split_rows(text)
     try:
         head = _header(rows)
-        if re.fullmatch(rf'(Totals|Total|Spread) \({LINE}(?:{TRANSITION}{LINE})?\)({ALT})?(\s+[^:].*)?', rows[4]):
+        if head['sport'] == 'basketball' and (rows[4] in ('ML', 'Moneyline') or
+                (head['fixture_url'] and parse_qs(urlsplit(head['fixture_url']).query).get('market') == ['ML']
+                 and _is_price_row(rows[4]))):
+            from core.moneyline import parse as parse_moneyline
+            alert, ambiguities, partial = parse_moneyline(rows, head, opening_marker)
+            profile = alert['quote_mapping']['profile']
+        elif re.fullmatch(rf'(Totals|Total|Spread) \({LINE}(?:{TRANSITION}{LINE})?\)({ALT})?(\s+[^:].*)?', rows[4]):
             alert, ambiguities, partial = _two_sided(rows, head, opening_marker)
             profile = alert['quote_mapping']['profile']
         elif any(re.match(r'(Opening(?: \([^)]*\))?:|Limit:|(Spread|Totals|Total|ML|Moneyline|1X2)\b[^:]*:)', r)
@@ -724,7 +732,7 @@ def interpret(text, *, channel_id=None, message_id=None, source_timestamp=None):
     unresolved = ['event_timezone_unspecified']
     if any('parenthetical_price' in q for q in alert['pinnacle']['quotes']):
         unresolved.append('parenthetical_price_meaning_unspecified')
-    alert.update(schema_version=6, interpretation_version=VERSION, source='OddsNotifier', observation_id=observation_id,
+    alert.update(schema_version=6, interpretation_version=alert.get('interpretation_version', VERSION), source='OddsNotifier', observation_id=observation_id,
                  telegram_channel_id=channel_id if source_timestamp else None,
                  telegram_message_id=message_id if source_timestamp else None, source_timestamp=source_time,
                  raw_text=text, sample_provenance='unspecified', market_label_source='label_and_fixture_url'

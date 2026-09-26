@@ -175,6 +175,8 @@ final class CoordinatorInstruction {
                 : market.equals("MONEYLINE") ? Set.of("HOME","AWAY","DRAW")
                 : Set.of("HOME","AWAY");
             if(!sides.contains(side)) throw new IllegalArgumentException("Invalid market/side");
+            if(market.equals("MONEYLINE") && !MoneylineTerms.validSide(sport, side))
+                throw new IllegalArgumentException("Invalid sport/moneyline outcome");
             String normalizedLine = resolvedLine == null ? "" : resolvedLine.trim();
             if(market.equals("MONEYLINE")) {
                 if(!normalizedLine.isEmpty() && !normalizedLine.equalsIgnoreCase("NONE") && !normalizedLine.equalsIgnoreCase("null"))

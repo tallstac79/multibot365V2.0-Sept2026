@@ -147,11 +147,12 @@ class MoneylineTests(unittest.TestCase):
                 self.assertEqual(compare_side(market, name, None, '2.10', None, '2.10')['price_quality'], EQUAL)
                 self.assertEqual(compare_side(market, name, None, '2.10', None, None)['price_quality'], UNKNOWN)
 
-    def test_live_moneyline_ordering_stays_ambiguous(self):
+    def test_live_moneyline_uses_net_opening_candidate(self):
         for message_id in ('68001', '68005'):
             verdict = alert_classifier.classify(CORPUS[message_id])
-            self.assertEqual(verdict['status'], 'AMBIGUOUS')
-            self.assertIn('UNSUPPORTED_MAPPING: basketball MONEYLINE', verdict['reason'])
+            self.assertEqual(verdict['status'], 'PARSED')
+            self.assertEqual(verdict['parsed']['target_side'], 'HOME')
+            self.assertEqual(verdict['parsed']['market'], 'MONEYLINE')
 
 
 class FootballProductionTests(unittest.TestCase):
@@ -404,8 +405,14 @@ class ProductionRegressionTests(unittest.TestCase):
         for message_id, text in CORPUS.items():
             verdict = alert_classifier.classify(text); p = verdict['parsed']
             if verdict['status'] != 'PARSED': continue
-            delta = Decimal(p['pinnacle']['line']) - Decimal(p['opening']['line'])
-            expected = ('HOME' if delta < 0 else 'AWAY') if p['market']=='SPREAD' else ('OVER' if delta>0 else 'UNDER')
+            if p['market'] == 'MONEYLINE':
+                shorter = [a['side'] for a,b in zip(p['pinnacle']['quotes'],p['opening']['quotes'])
+                           if Decimal(a['price']) < Decimal(b['price'])]
+                self.assertEqual(len(shorter),1,message_id)
+                expected = shorter[0]
+            else:
+                delta = Decimal(p['pinnacle']['line']) - Decimal(p['opening']['line'])
+                expected = ('HOME' if delta < 0 else 'AWAY') if p['market']=='SPREAD' else ('OVER' if delta>0 else 'UNDER')
             self.assertEqual(p['target_side'], expected, message_id)
             if p['displayed_ev_percent'] is not None:
                 self.assertTrue(p['comparison']['equal_line'])

@@ -1,0 +1,136 @@
+{
+  "at": "2026-09-26T08:51:11.971123+00:00",
+  "phone": {
+    "healthy": true,
+    "state": "IDLE",
+    "current_instruction": null,
+    "app_version": "0.9.20-moneyline",
+    "version_code": 103,
+    "phone_final_action_armed": false,
+    "diagnostics_active": false,
+    "session": {
+      "state": "AUTHENTICATED",
+      "observed_at_ms": 1790412657212,
+      "detail": "idle probe",
+      "refresh_count": 13,
+      "last_refresh_at_ms": 1790412656507,
+      "last_refresh_outcome": "probe started"
+    },
+    "ocr_engine": "hybrid",
+    "fast_ocr_error": null,
+    "credentials_configured": true,
+    "credential_store": "encrypted"
+  },
+  "backend": {
+    "heartbeat_at": "2026-09-26T08:51:09.752+00:00",
+    "dispatch_enabled": false,
+    "rules_engine": "rules-7-moneyline",
+    "parser_version": "classifier-4-moneyline",
+    "event_timezone": "UTC",
+    "feed_timezone_verified": true,
+    "final_action_enabled": false,
+    "auto_approve": false,
+    "paused": true,
+    "intake": {
+      "state": "LISTENING",
+      "connected": true,
+      "last_event_at": null,
+      "last_error": null,
+      "reconnects": 0
+    },
+    "notifications": "ENABLED",
+    "commands": "ENABLED",
+    "last_error": null
+  },
+  "current_switches": {
+    "dispatch_enabled": false,
+    "final_action_enabled": false,
+    "final_action_one_shot": false,
+    "auto_approve": false
+  },
+  "paused": true,
+  "rules_unchanged": true,
+  "global_rules": {
+    "enabled": true,
+    "default_stake": 0.1,
+    "allowed_slippage": 0,
+    "max_stake": 10,
+    "stale_alert_seconds": 300,
+    "event_timezone": "UTC",
+    "min_line_advantage": 1.0,
+    "min_sharp_movement": null,
+    "feed_timezone_verified": true
+  },
+  "basketball_markets": {
+    "MONEYLINE": {
+      "enabled": true,
+      "stake": null,
+      "minimum_ev": null,
+      "allowed_slippage": null,
+      "min_price": null,
+      "max_price": null,
+      "max_odds_deterioration": null,
+      "max_line_deterioration": null,
+      "max_net_payout_deterioration_percent": 10,
+      "max_line_deterioration_percent": null
+    },
+    "SPREAD": {
+      "enabled": true,
+      "stake": null,
+      "minimum_ev": null,
+      "allowed_slippage": null,
+      "min_price": null,
+      "max_price": null,
+      "max_odds_deterioration": null,
+      "max_line_deterioration": 1.0,
+      "max_net_payout_deterioration_percent": 10,
+      "max_line_deterioration_percent": 10
+    },
+    "TOTALS": {
+      "enabled": true,
+      "stake": null,
+      "minimum_ev": null,
+      "allowed_slippage": null,
+      "min_price": null,
+      "max_price": null,
+      "max_odds_deterioration": null,
+      "max_line_deterioration": 1.0,
+      "max_net_payout_deterioration_percent": 10,
+      "max_line_deterioration_percent": null
+    }
+  },
+  "execution_limits": {
+    "max_stake_per_bet": "1.00",
+    "max_bets_per_day": 5,
+    "max_daily_stake": "5.00",
+    "max_daily_loss": "5.00",
+    "approval_timeout_seconds": 120
+  },
+  "nonterminal_instructions": [],
+  "backend_owned_slip": false,
+  "bet_count": 2,
+  "bet_states": {
+    "OPEN": 2
+  },
+  "placement_unknown": 0,
+  "current_intake_count": 1880,
+  "audit_cutoff": "2026-09-26T08:43:52.045841+00:00",
+  "new_wagers_during_ml_audit": 0,
+  "session_check": "session-result.json",
+  "prepared_run": {
+    "status": "PREPARED_NOT_ARMED",
+    "markets": [
+      "basketball SPREAD",
+      "basketball TOTALS",
+      "basketball MONEYLINE"
+    ],
+    "stake": 0.1,
+    "maximum_final_actions": 1,
+    "auto_approve": false,
+    "activation": "Separate explicit operator start; never execute this plan automatically",
+    "start_policy": "Fresh production alerts received after the supervised run starts; expire pre-run queue; no historical replay",
+    "finish_policy": "Automatic one-shot disarm after one final-action outcome; reconcile any uncertain placement, never retry a tap",
+    "observations": "Persist every original-alert versus live quote and rejection; retain original reference throughout grid, slip and pre-tap reads"
+  },
+  "queue_check": "Empty; pre-run queued alert expired under existing 300-second stale policy; zero dispatch attempts"
+}

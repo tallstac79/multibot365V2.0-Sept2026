@@ -95,12 +95,12 @@ class ClassificationTests(unittest.TestCase):
             self.assertIn('UNSUPPORTED_MAPPING: football', verdict['reason'])
             self.assertIsNone(verdict['parsed']['target_side'])
 
-    def test_unsupported_basketball_moneyline_layout_is_ambiguous(self):
+    def test_moneyline_cannot_reuse_a_totals_opening_line(self):
         text = MELBOURNE['raw_text'].replace('market=Totals', 'market=ML').replace('Totals (190.5)', 'ML') \
             .replace('Bet365 (Totals 190.5)', 'Bet365 (ML)')
         verdict = alert_classifier.classify(text)
-        self.assertEqual(verdict['status'], 'AMBIGUOUS')
-        self.assertIn('UNSUPPORTED_MAPPING: basketball MONEYLINE', verdict['reason'])
+        self.assertEqual(verdict['status'], 'INVALID')
+        self.assertIn('Opening price pair without a handicap', verdict['reason'])
 
     def test_malformed_ignored_and_empty(self):
         broken = MELBOURNE['raw_text'].replace('- 1.65', '- **1.65**')

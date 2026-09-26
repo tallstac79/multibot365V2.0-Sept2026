@@ -51,7 +51,12 @@ def compare(request, live, *, odds_tolerance=None, line_tolerance=None,
             raise ValueError('invalid selection side')
         rp, lp = number(request['price']), number(live['price'])
         floor = minimum_price(rp, net_percent=net_percent, decimal_tolerance=odds_tolerance)
-        line_limit = line_allowance(market, request.get('line'), line_tolerance, line_percent)
+        if market == 'MONEYLINE':
+            if line_percent is not None or any(v not in (None, '', 'NONE', 'null') for v in (request.get('line'), live.get('line'))):
+                raise ValueError('Moneyline cannot carry a handicap or relative line allowance')
+            line_limit = Decimal(0)
+        else:
+            line_limit = line_allowance(market, request.get('line'), line_tolerance, line_percent)
         if min(rp,lp) <= 1:
             raise ValueError('invalid price/tolerance')
         odds_loss = max(Decimal(0), rp-lp)

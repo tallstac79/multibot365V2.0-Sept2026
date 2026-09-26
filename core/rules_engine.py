@@ -15,8 +15,9 @@ import json
 from core.decision_support import validate
 from core.execution_terms import minimum_price, line_allowance
 from core.market_interpretation import ACTIONABLE_SIGNALS, SHARP_SOURCE, VERSION, sharp_signal, dec
+from core.moneyline import VERSION as ML_VERSION, PROFILE as ML_PROFILE, sharp_signal as moneyline_sharp_signal
 
-ENGINE_VERSION = 'rules-6-scaled-execution'
+ENGINE_VERSION = 'rules-7-moneyline'
 ACCEPT, REJECT, STALE = 'ACCEPT', 'REJECT', 'STALE'
 
 
@@ -98,11 +99,13 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
     check('verified_mapping', mapping.get('production_verified') is True,
           'production-verified quote mapping' if mapping.get('production_verified') else
           'quote ordering is not production-verified; no selection is guessed')
-    signal = sharp_signal(alert.get('market'), (alert.get('opening') or {}).get('line'),
+    moneyline = alert.get('market') == 'MONEYLINE' and alert.get('sport') == 'basketball'
+    signal = moneyline_sharp_signal((alert.get('opening') or {}).get('quotes'), (alert.get('pinnacle') or {}).get('quotes'),
+                                   verified=mapping.get('production_verified') is True) if moneyline else sharp_signal(alert.get('market'), (alert.get('opening') or {}).get('line'),
                           (alert.get('pinnacle') or {}).get('line'),
                           verified=mapping.get('production_verified') is True,
                           perspective=(alert.get('market_movement') or {}).get('line_perspective'))
-    check('sharp_target', alert.get('interpretation_version') == VERSION
+    check('sharp_target', alert.get('interpretation_version') == (ML_VERSION if moneyline else VERSION)
           and alert.get('interpretation_status') == 'PARSED'
           and alert.get('target_price_source') == SHARP_SOURCE
           and signal['side'] is not None and signal['side'] == alert.get('target_side'),
@@ -111,6 +114,15 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
     check('explicit_target', bool(alert.get('target_side') and alert.get('alert_price')),
           f"target {alert.get('target_side')} @ {alert.get('alert_price')} (Pinnacle opening-to-current movement)"
           if alert.get('target_side') else 'no verified sharp side and Bet365 offer')
+    if moneyline:
+        quotes = (alert.get('comparison') or {}).get('quotes') or []
+        ordered = len(quotes) == 2 and all(isinstance(q,dict) and q.get('side') == s and q.get('position') == i+1
+                                          for i,(q,s) in enumerate(zip(quotes,('HOME','AWAY'))))
+        target_quote = next((q for q in quotes if isinstance(q,dict) and q.get('side') == signal['side']), {})
+        check('moneyline_same_side_offer', mapping.get('profile') == ML_PROFILE and ordered
+              and dec(alert.get('alert_price')) == dec(target_quote.get('price'))
+              and alert.get('target_line') is None,
+              'Two-outcome basketball ML; requested Bet365 quote must belong to the independently selected Pinnacle side')
     # Market interpretation (core.market_interpretation): only an actionable signal on the
     # verified Pinnacle opening-to-current target proceeds. CLEAR_VALUE_SIGNAL = equal-line price/EV edge;
     # FAVOURABLE_LINE_SIGNAL = materially favourable Bet365 line at an acceptable price (no EV).
@@ -131,8 +143,8 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
     minimum_move = g['min_sharp_movement']
     magnitude = dec(signal.get('magnitude'))
     check('sharp_movement', magnitude is not None and magnitude > 0
-          and (minimum_move is None or magnitude >= Decimal(str(minimum_move))),
-          'Feed-qualified signal; genuine nonzero opening-to-current movement required; no duplicate movement floor' if minimum_move is None
+          and (moneyline or minimum_move is None or magnitude >= Decimal(str(minimum_move))),
+          'Feed-qualified signal; genuine nonzero opening-to-current movement required; no duplicate movement floor' if moneyline or minimum_move is None
           else f'Pinnacle net movement {magnitude} points vs minimum {minimum_move}')
     sport, market = alert.get('sport'), alert.get('market')
     rule = config['sports'].get(sport, {}).get('markets', {}).get(market)
@@ -194,7 +206,7 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
 
     if rule is not None:
         check('execution_tolerances', (rule['max_odds_deterioration'] is not None or rule['max_net_payout_deterioration_percent'] is not None)
-              and rule['max_line_deterioration'] is not None,
+              and (moneyline or rule['max_line_deterioration'] is not None),
               f"{sport} {market}: net payout tolerance {rule['max_net_payout_deterioration_percent']}%, "
               f"legacy decimal tolerance {rule['max_odds_deterioration']}, absolute line cap {rule['max_line_deterioration']}, "
               f"spread cap {rule['max_line_deterioration_percent']}% of original handicap; price and line policies require explicit configuration")
@@ -204,7 +216,7 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
     stake = min(stake, g['max_stake'])
     slippage = rule['max_odds_deterioration']
     minimum = minimum_price(price, net_percent=rule['max_net_payout_deterioration_percent'], decimal_tolerance=slippage)
-    effective_line = line_allowance(market, alert.get('target_line'), rule['max_line_deterioration'], rule['max_line_deterioration_percent'])
+    effective_line = None if moneyline else line_allowance(market, alert.get('target_line'), rule['max_line_deterioration'], rule['max_line_deterioration_percent'])
     check('stake', 0 < stake <= g['max_stake'], f'stake {stake:.2f} (max {g["max_stake"]:.2f})')
     alternate = alert.get('alternate_line') or {}
     result['decision'], result['reason'] = ACCEPT, 'All rules passed'
@@ -220,7 +232,7 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
         alert_price=str(alert.get('alert_price')), minimum_price=str(minimum), stake=f'{stake:.2f}',
         max_odds_deterioration=str(slippage) if slippage is not None else None,
         max_net_payout_deterioration_percent=rule['max_net_payout_deterioration_percent'],
-        max_line_deterioration=str(effective_line),
+        max_line_deterioration=str(effective_line) if effective_line is not None else None,
         configured_line_absolute_cap=rule['max_line_deterioration'],
         max_line_deterioration_percent=rule['max_line_deterioration_percent'],
         displayed_ev_percent=alert.get('displayed_ev_percent'), bet_quality=quality,
