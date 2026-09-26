@@ -1,0 +1,1434 @@
+{
+ "payload": {
+  "query": "UP Mexico||UMAD",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "2.5",
+  "minimum_price": "1.57",
+  "stake": "0.10",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21171833/D19/E26807165/F19/",
+  "kickoff_utc": "2026-09-26T20:30",
+  "competition": "Liga ABE",
+  "country": "Mexico",
+  "period": "FULL_GAME",
+  "max_line_deterioration": "0.25",
+  "instruction_id": "e-spread-mexico-182816",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "timeout_ms": 240000,
+  "execution_mode": "hold"
+ },
+ "result": {
+  "instruction_id": "e-spread-mexico-182816",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 10908,
+  "progress": {
+   "stage": "PREPARE_COMPLETE_EXECUTION",
+   "elapsed_ms": 10630,
+   "last_progress_at_ms": 1790443706907,
+   "instruction_id": "e-spread-mexico-182816",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790443696341
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 24,
+     "at_ms": 1790443696355
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 33,
+     "at_ms": 1790443696364,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 33,
+      "start_ts_ms": 1790443696357,
+      "end_elapsed_ms": 4266,
+      "end_ts_ms": 1790443700590,
+      "duration_ms": 4233,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3469,
+     "at_ms": 1790443696364
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4146,
+     "at_ms": 1790443696364
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4266,
+     "at_ms": 1790443700598,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 4266,
+      "start_ts_ms": 1790443700590,
+      "end_elapsed_ms": 4907,
+      "end_ts_ms": 1790443701232,
+      "duration_ms": 641,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4275,
+     "at_ms": 1790443700598
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4858,
+     "at_ms": 1790443700598
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 4907,
+     "at_ms": 1790443701245,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 4907,
+      "start_ts_ms": 1790443701232,
+      "end_elapsed_ms": 4921,
+      "end_ts_ms": 1790443701246,
+      "duration_ms": 14,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 4921,
+     "at_ms": 1790443701262,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 4921,
+      "start_ts_ms": 1790443701246,
+      "end_elapsed_ms": 4938,
+      "end_ts_ms": 1790443701262,
+      "duration_ms": 17,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 4938,
+     "at_ms": 1790443701279,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 4938,
+      "start_ts_ms": 1790443701262,
+      "end_elapsed_ms": 4955,
+      "end_ts_ms": 1790443701280,
+      "duration_ms": 17,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 4955,
+     "at_ms": 1790443701297,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 4955,
+      "start_ts_ms": 1790443701280,
+      "end_elapsed_ms": 5753,
+      "end_ts_ms": 1790443702077,
+      "duration_ms": 798,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 4974,
+     "at_ms": 1790443701297
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 5753,
+     "at_ms": 1790443702121,
+     "timing": {
+      "stage": "ENTER_STAKE",
+      "start_elapsed_ms": 5753,
+      "start_ts_ms": 1790443702077,
+      "end_elapsed_ms": 9896,
+      "end_ts_ms": 1790443706220,
+      "duration_ms": 4143,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 5798,
+     "at_ms": 1790443702121
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 6358,
+     "at_ms": 1790443702121
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 6401,
+     "at_ms": 1790443702121
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7135,
+     "at_ms": 1790443702121
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7645,
+     "at_ms": 1790443702121
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7727,
+     "at_ms": 1790443702121
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8003,
+     "at_ms": 1790443702121
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8311,
+     "at_ms": 1790443702121
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8638,
+     "at_ms": 1790443702121
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8956,
+     "at_ms": 1790443702121
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9491,
+     "at_ms": 1790443702121
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9614,
+     "at_ms": 1790443702121
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 9896,
+     "at_ms": 1790443706265,
+     "timing": {
+      "stage": "VERIFY_FINAL_STATE",
+      "start_elapsed_ms": 9896,
+      "start_ts_ms": 1790443706220,
+      "end_elapsed_ms": 10555,
+      "end_ts_ms": 1790443706879,
+      "duration_ms": 659,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 9942,
+     "at_ms": 1790443706265
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 10463,
+     "at_ms": 1790443706265
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 10555,
+     "at_ms": 1790443706907,
+     "timing": {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "start_elapsed_ms": 10555,
+      "start_ts_ms": 1790443706879,
+      "end_elapsed_ms": 10630,
+      "end_ts_ms": 1790443706955,
+      "duration_ms": 75,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 10630,
+     "at_ms": 1790443706907
+    }
+   ]
+  },
+  "device_stage": "PREPARE_COMPLETE_EXECUTION",
+  "execution_count": 1,
+  "run_id": "c_grFIJ_itWlrDJnhK8-31zgxrmDi948TIz89Rfj7p4tU",
+  "fixture_name": "UP Mexico v UMAD",
+  "home": "UP Mexico",
+  "away": "UMAD",
+  "competition": "Mexico Liga ABE • 26 Sep 21:30",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "+2.5",
+   "price": "1.74",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "UP Mexico",
+   "bounds": [
+    301,
+    655,
+    346,
+    705
+   ]
+  },
+  "final_state": {
+   "home": "UP Mexico",
+   "away": "UMAD",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "+2.5",
+   "price": "1.74",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "ready_state": {
+   "fixture_home": "UP Mexico",
+   "fixture_away": "UMAD",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "UP Mexico",
+   "line": "+2.5",
+   "price": "1.74",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "UP Mexico v UMAD",
+   "fixture_home": "UP Mexico",
+   "fixture_away": "UMAD",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "UP Mexico",
+   "line": "+2.5",
+   "price": "1.74",
+   "stake": "0.10",
+   "minimum_price": "1.57",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    20,
+    1211,
+    604,
+    1237
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     20,
+     1211,
+     604,
+     1237
+    ],
+    "center_x": 312,
+    "center_y": 1224,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790443706951,
+   "validation_hash": "2c222dd8e9a5f933b6401bbab4feabcc"
+  },
+  "wager_submitted": false,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "event_context": {
+   "home": "UP Mexico",
+   "away": "UMAD",
+   "competition": "mexico liga abe",
+   "kickoff_utc": "2026-09-26T20:30",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "held": true,
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790443701245,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+2.5",
+     "price": "1.74",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "UP Mexico",
+     "bounds": [
+      301,
+      655,
+      346,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790443701245,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+2.5",
+     "price": "1.74",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "UP Mexico",
+     "bounds": [
+      301,
+      655,
+      346,
+      705
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790443705895,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+2.5",
+     "price": "1.74",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "UP Mexico",
+     "bounds": [
+      301,
+      655,
+      346,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790443705917,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+2.5",
+     "price": "1.74",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "UP Mexico",
+     "bounds": [
+      301,
+      655,
+      346,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "final",
+    "observed_at_ms": 1790443706854,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+2.5",
+     "price": "1.74",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "UP Mexico",
+     "bounds": [
+      301,
+      655,
+      346,
+      705
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "prepare",
+    "observed_at_ms": 1790443706926,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+2.5",
+     "price": "1.74",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "UP Mexico",
+     "bounds": [
+      301,
+      655,
+      346,
+      705
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 33,
+    "start_ts_ms": 1790443696357,
+    "end_elapsed_ms": 4266,
+    "end_ts_ms": 1790443700590,
+    "duration_ms": 4233,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4266,
+    "start_ts_ms": 1790443700590,
+    "end_elapsed_ms": 4907,
+    "end_ts_ms": 1790443701232,
+    "duration_ms": 641,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 4907,
+    "start_ts_ms": 1790443701232,
+    "end_elapsed_ms": 4921,
+    "end_ts_ms": 1790443701246,
+    "duration_ms": 14,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 4921,
+    "start_ts_ms": 1790443701246,
+    "end_elapsed_ms": 4938,
+    "end_ts_ms": 1790443701262,
+    "duration_ms": 17,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 4938,
+    "start_ts_ms": 1790443701262,
+    "end_elapsed_ms": 4955,
+    "end_ts_ms": 1790443701280,
+    "duration_ms": 17,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 4955,
+    "start_ts_ms": 1790443701280,
+    "end_elapsed_ms": 5753,
+    "end_ts_ms": 1790443702077,
+    "duration_ms": 798,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 5753,
+    "start_ts_ms": 1790443702077,
+    "end_elapsed_ms": 9896,
+    "end_ts_ms": 1790443706220,
+    "duration_ms": 4143,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 9896,
+    "start_ts_ms": 1790443706220,
+    "end_elapsed_ms": 10555,
+    "end_ts_ms": 1790443706879,
+    "duration_ms": 659,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 10555,
+    "start_ts_ms": 1790443706879,
+    "end_elapsed_ms": 10630,
+    "end_ts_ms": 1790443706955,
+    "duration_ms": 75,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "stake_field_state": "EMPTY",
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "UP Mexico",
+    "bookmaker": "UP Mexico",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "UMAD",
+    "bookmaker": "UMAD",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "EXACT",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21171833/D19/E26807165/F19/"
+ },
+ "run": {
+  "run_id": "c_grFIJ_itWlrDJnhK8-31zgxrmDi948TIz89Rfj7p4tU",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790443696324,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790443696324
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 24,
+    "wall_ts_ms": 1790443696349
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 33,
+    "wall_ts_ms": 1790443696357
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3469,
+    "wall_ts_ms": 1790443699795
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 4146,
+    "wall_ts_ms": 1790443700471
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 4266,
+    "wall_ts_ms": 1790443700590
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 4275,
+    "wall_ts_ms": 1790443700599
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 4858,
+    "wall_ts_ms": 1790443701182
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 4907,
+    "wall_ts_ms": 1790443701232
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 4921,
+    "wall_ts_ms": 1790443701246
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 4938,
+    "wall_ts_ms": 1790443701262
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 4955,
+    "wall_ts_ms": 1790443701280
+   },
+   {
+    "effect": "gesture",
+    "target": "SPREAD / HOME / +2.5 / 1.74",
+    "bounds": [
+     301,
+     655,
+     346,
+     705
+    ],
+    "elapsed_ms": 4974
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 4974,
+    "wall_ts_ms": 1790443701298
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 5753,
+    "wall_ts_ms": 1790443702078
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 5798,
+    "wall_ts_ms": 1790443702122
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 6358,
+    "wall_ts_ms": 1790443702682
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     20,
+     1327,
+     214,
+     1371
+    ],
+    "elapsed_ms": 6401
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 6401,
+    "wall_ts_ms": 1790443702726
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 7135,
+    "wall_ts_ms": 1790443703460
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 7645,
+    "wall_ts_ms": 1790443703970
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 7727
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 7727,
+    "wall_ts_ms": 1790443704051
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     87,
+     1228,
+     147,
+     1272
+    ],
+    "elapsed_ms": 8002
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8003,
+    "wall_ts_ms": 1790443704327
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     87,
+     974,
+     147,
+     1018
+    ],
+    "elapsed_ms": 8311
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8311,
+    "wall_ts_ms": 1790443704636
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 8638
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8638,
+    "wall_ts_ms": 1790443704963
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 8956,
+    "wall_ts_ms": 1790443705280
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 9491,
+    "wall_ts_ms": 1790443705816
+   },
+   {
+    "effect": "gesture",
+    "target": "Done",
+    "bounds": [
+     311,
+     1333,
+     587,
+     1367
+    ],
+    "elapsed_ms": 9613
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 9614,
+    "wall_ts_ms": 1790443705938
+   },
+   {
+    "phase": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 9896,
+    "wall_ts_ms": 1790443706221
+   },
+   {
+    "phase": "CAPTURE_final",
+    "elapsed_ms": 9942,
+    "wall_ts_ms": 1790443706267
+   },
+   {
+    "phase": "CAPTURED_final",
+    "elapsed_ms": 10463,
+    "wall_ts_ms": 1790443706788
+   },
+   {
+    "phase": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 10555,
+    "wall_ts_ms": 1790443706879
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 10630,
+    "wall_ts_ms": 1790443706955
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_markets.png",
+   "s003_betslip_pre_stake.png",
+   "s004_stake_ui.png",
+   "s005_stake_typed.png",
+   "s006_final.png"
+  ],
+  "gesture_attempts": 7,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 33,
+    "start_ts_ms": 1790443696357,
+    "end_elapsed_ms": 4266,
+    "end_ts_ms": 1790443700590,
+    "duration_ms": 4233,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4266,
+    "start_ts_ms": 1790443700590,
+    "end_elapsed_ms": 4907,
+    "end_ts_ms": 1790443701232,
+    "duration_ms": 641,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 4907,
+    "start_ts_ms": 1790443701232,
+    "end_elapsed_ms": 4921,
+    "end_ts_ms": 1790443701246,
+    "duration_ms": 14,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 4921,
+    "start_ts_ms": 1790443701246,
+    "end_elapsed_ms": 4938,
+    "end_ts_ms": 1790443701262,
+    "duration_ms": 17,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 4938,
+    "start_ts_ms": 1790443701262,
+    "end_elapsed_ms": 4955,
+    "end_ts_ms": 1790443701280,
+    "duration_ms": 17,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 4955,
+    "start_ts_ms": 1790443701280,
+    "end_elapsed_ms": 5753,
+    "end_ts_ms": 1790443702077,
+    "duration_ms": 798,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 5753,
+    "start_ts_ms": 1790443702077,
+    "end_elapsed_ms": 9896,
+    "end_ts_ms": 1790443706220,
+    "duration_ms": 4143,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 9896,
+    "start_ts_ms": 1790443706220,
+    "end_elapsed_ms": 10555,
+    "end_ts_ms": 1790443706879,
+    "duration_ms": 659,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 10555,
+    "start_ts_ms": 1790443706879,
+    "end_elapsed_ms": 10630,
+    "end_ts_ms": 1790443706955,
+    "duration_ms": 75,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "search_query": "UP Mexico",
+  "identity_home": "UP Mexico",
+  "expected_away": "UMAD",
+  "identity_away": "UMAD",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21171833/D19/E26807165/F19/",
+  "current_stage": "PREPARE_COMPLETE_EXECUTION",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Mexico Liga ABE • 26 Sep 21:30",
+   "UP Mexico vs UMAD",
+   "Popular Bet Builder Game Quarter Half"
+  ],
+  "competition_check": {
+   "feed": "Liga ABE",
+   "country": "Mexico",
+   "page": "Mexico Liga ABE • 26 Sep 21:30",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "UP Mexico",
+    "bookmaker": "UP Mexico",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "UMAD",
+    "bookmaker": "UMAD",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "EXACT",
+  "route": "event_link",
+  "kickoff_verified": "26 Sep 21:30",
+  "verified_fixture": {
+   "code": "a52ae59d",
+   "home": "UP Mexico",
+   "away": "UMAD",
+   "fixture_name": "UP Mexico v UMAD",
+   "exact_fixture_text": "Home UP Mexico\nAway UMAD",
+   "competition": "Mexico Liga ABE • 26 Sep 21:30",
+   "bounds": [
+    35,
+    268,
+    560,
+    435
+   ]
+  },
+  "fixture_home": "UP Mexico",
+  "fixture_away": "UMAD",
+  "identity_verified_home": "UP Mexico",
+  "identity_verified_away": "UMAD",
+  "event_verified": true,
+  "event_context": {
+   "home": "UP Mexico",
+   "away": "UMAD",
+   "competition": "mexico liga abe",
+   "kickoff_utc": "2026-09-26T20:30",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "a52ae59d",
+   "home": "UP Mexico",
+   "away": "UMAD",
+   "fixture_name": "UP Mexico v UMAD",
+   "exact_fixture_text": "Home UP Mexico\nAway UMAD",
+   "competition": "Mexico Liga ABE • 26 Sep 21:30",
+   "bounds": [
+    35,
+    268,
+    560,
+    435
+   ]
+  },
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/+2.5@1.74",
+     "SPREAD/AWAY/-2.5@1.95",
+     "TOTAL/OVER/140.5@1.83",
+     "TOTAL/UNDER/140.5@1.83",
+     "MONEYLINE/HOME/NONE@1.95",
+     "MONEYLINE/AWAY/NONE@1.74"
+    ],
+    "notes": []
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/+2.5@1.74",
+    "SPREAD/AWAY/-2.5@1.95",
+    "TOTAL/OVER/140.5@1.83",
+    "TOTAL/UNDER/140.5@1.83",
+    "MONEYLINE/HOME/NONE@1.95",
+    "MONEYLINE/AWAY/NONE@1.74"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "+2.5",
+    "price": "1.74",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "UP Mexico",
+    "bounds": [
+     301,
+     655,
+     346,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "-2.5",
+    "price": "1.95",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "UMAD",
+    "bounds": [
+     301,
+     740,
+     345,
+     790
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "140.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     437,
+     655,
+     512,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "140.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     451,
+     737,
+     512,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "1.95",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "UP Mexico",
+    "bounds": [
+     604,
+     672,
+     648,
+     689
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "1.74",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "UMAD",
+    "bounds": [
+     604,
+     757,
+     649,
+     774
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790443701245,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+2.5",
+     "price": "1.74",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "UP Mexico",
+     "bounds": [
+      301,
+      655,
+      346,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790443701245,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+2.5",
+     "price": "1.74",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "UP Mexico",
+     "bounds": [
+      301,
+      655,
+      346,
+      705
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790443705895,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+2.5",
+     "price": "1.74",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "UP Mexico",
+     "bounds": [
+      301,
+      655,
+      346,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790443705917,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+2.5",
+     "price": "1.74",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "UP Mexico",
+     "bounds": [
+      301,
+      655,
+      346,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "final",
+    "observed_at_ms": 1790443706854,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+2.5",
+     "price": "1.74",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "UP Mexico",
+     "bounds": [
+      301,
+      655,
+      346,
+      705
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "prepare",
+    "observed_at_ms": 1790443706926,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+2.5",
+     "price": "1.74",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "UP Mexico",
+     "bounds": [
+      301,
+      655,
+      346,
+      705
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "selection_role": "HOME",
+  "selection_name": "UP Mexico",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "+2.5",
+   "price": "1.74",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "UP Mexico",
+   "bounds": [
+    301,
+    655,
+    346,
+    705
+   ]
+  },
+  "selection_preflight": "reused clean grid read",
+  "stake_keypad": {
+   "zero": [
+    360,
+    1250
+   ],
+   "dot": [
+    117,
+    1250
+   ]
+  },
+  "stake_field_state": "EMPTY",
+  "stake_check_typed": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "017",
+   "stake": "0.10",
+   "price": "1.74"
+  },
+  "stake_entered": "0.10",
+  "stake_check_final": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "017",
+   "stake": "0.10",
+   "price": "1.74"
+  },
+  "ready_state": {
+   "fixture_home": "UP Mexico",
+   "fixture_away": "UMAD",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "UP Mexico",
+   "line": "+2.5",
+   "price": "1.74",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "final_state": {
+   "home": "UP Mexico",
+   "away": "UMAD",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "+2.5",
+   "price": "1.74",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "confirmation_gate": "NONE",
+  "prepare_frame": "reused verified final frame",
+  "stake_check_prepare": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "017",
+   "stake": "0.10",
+   "price": "1.74"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "UP Mexico v UMAD",
+   "fixture_home": "UP Mexico",
+   "fixture_away": "UMAD",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "UP Mexico",
+   "line": "+2.5",
+   "price": "1.74",
+   "stake": "0.10",
+   "minimum_price": "1.57",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    20,
+    1211,
+    604,
+    1237
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     20,
+     1211,
+     604,
+     1237
+    ],
+    "center_x": 312,
+    "center_y": 1224,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790443706951,
+   "validation_hash": "2c222dd8e9a5f933b6401bbab4feabcc"
+  },
+  "prepared_gesture": {
+   "type": "tap",
+   "target": "Place Bet",
+   "package": "com.android.chrome",
+   "bounds": [
+    20,
+    1211,
+    604,
+    1237
+   ],
+   "center_x": 312,
+   "center_y": 1224,
+   "duration_ms": 100,
+   "dispatched": false
+  },
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "held": true,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 10630
+ },
+ "wall": 11.881456136703491
+}

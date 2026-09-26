@@ -928,6 +928,9 @@ final class Bet365LiveAdapter implements SiteAdapter {
                         try {
                             assertUniqueFixtureForQuery(sports, identityHome);
                             ui.put("discovery_query", typed);
+                            // exactly which ladder candidate found the event (the identity gate above used the feed names)
+                            ui.put("search_candidate_used", CoordinatorAgent.object("query", typed, "index", index,
+                                    "source", ladderSources.getOrDefault(typed, "unknown")));
                             rejectWrongSportIfEvident(sports);
                             return CompletableFuture.completedFuture(null);
                         } catch (Failure f) {
@@ -2874,7 +2877,6 @@ final class Bet365LiveAdapter implements SiteAdapter {
         ui.put("fixture_home", chosen.home);
         ui.put("fixture_away", chosen.away);
         ui.put("discovery_query", q);
-        ui.put("search_candidate_used", CoordinatorAgent.object("query", q, "source", ladderSources.getOrDefault(q, "unknown")));
         ui.put("identity_verified_home", idHome);
         ui.put("identity_verified_away", idAway);
     }

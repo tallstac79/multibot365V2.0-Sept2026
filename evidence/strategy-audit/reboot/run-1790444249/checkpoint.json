@@ -1,0 +1,194 @@
+{
+  "boot_before": "da3c3017-dfca-4652-a111-f73b74b86b69",
+  "boot_after": "4839449b-8980-4903-b66b-501c57786cc4",
+  "health": {
+    "healthy": true,
+    "heartbeat_ms": 1790444301787,
+    "uptime_ms": 8213,
+    "state": "IDLE",
+    "current_instruction": null,
+    "last_result": {
+      "instruction_id": "self-session-1790444239847",
+      "status": "PASS",
+      "stage": "PASS",
+      "detail": "SESSION_AUTHENTICATED",
+      "duration_ms": 6079,
+      "progress": {
+        "stage": "ENSURE_SESSION",
+        "elapsed_ms": 5888,
+        "last_progress_at_ms": 1790444244853,
+        "instruction_id": "self-session-1790444239847",
+        "stages": [
+          {
+            "stage": "STARTED",
+            "elapsed_ms": 0,
+            "at_ms": 1790444239998
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 27,
+            "at_ms": 1790444240005,
+            "timing": {
+              "stage": "OPEN_HOME",
+              "start_elapsed_ms": 27,
+              "start_ts_ms": 1790444239999,
+              "end_elapsed_ms": 4857,
+              "end_ts_ms": 1790444244830,
+              "duration_ms": 4830,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 34,
+            "at_ms": 1790444240015,
+            "timing": {
+              "stage": "OPEN_HOME",
+              "start_elapsed_ms": 27,
+              "start_ts_ms": 1790444239999,
+              "end_elapsed_ms": 4857,
+              "end_ts_ms": 1790444244830,
+              "duration_ms": 4830,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 2866,
+            "at_ms": 1790444240015
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 3363,
+            "at_ms": 1790444240015
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 3403,
+            "at_ms": 1790444240015
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 4076,
+            "at_ms": 1790444240015
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 4114,
+            "at_ms": 1790444240015
+          },
+          {
+            "stage": "OPEN_HOME",
+            "elapsed_ms": 4808,
+            "at_ms": 1790444240015
+          },
+          {
+            "stage": "ENSURE_SESSION",
+            "elapsed_ms": 4857,
+            "at_ms": 1790444244853,
+            "timing": {
+              "stage": "ENSURE_SESSION",
+              "start_elapsed_ms": 4857,
+              "start_ts_ms": 1790444244830,
+              "end_elapsed_ms": 5888,
+              "end_ts_ms": 1790444245860,
+              "duration_ms": 1031,
+              "status": "ok",
+              "retries": 0
+            }
+          },
+          {
+            "stage": "ENSURE_SESSION",
+            "elapsed_ms": 4882,
+            "at_ms": 1790444244853
+          },
+          {
+            "stage": "ENSURE_SESSION",
+            "elapsed_ms": 5586,
+            "at_ms": 1790444244853
+          },
+          {
+            "stage": "ENSURE_SESSION",
+            "elapsed_ms": 5888,
+            "at_ms": 1790444244853
+          }
+        ]
+      },
+      "device_stage": "ENSURE_SESSION",
+      "execution_count": 1,
+      "run_id": "c_vnFXYoUex9LhWslrFnOiMNmvMSqqZ5NujPmXHhNBHGM",
+      "fixture_name": null,
+      "home": null,
+      "away": null,
+      "competition": null,
+      "verification_detail": "Session authenticated independently; no betting instruction executed",
+      "stage_timings": [
+        {
+          "stage": "OPEN_HOME",
+          "start_elapsed_ms": 27,
+          "start_ts_ms": 1790444239999,
+          "end_elapsed_ms": 4857,
+          "end_ts_ms": 1790444244830,
+          "duration_ms": 4830,
+          "status": "ok",
+          "retries": 0
+        },
+        {
+          "stage": "ENSURE_SESSION",
+          "start_elapsed_ms": 4857,
+          "start_ts_ms": 1790444244830,
+          "end_elapsed_ms": 5888,
+          "end_ts_ms": 1790444245860,
+          "duration_ms": 1031,
+          "status": "ok",
+          "retries": 0
+        }
+      ],
+      "session_path": [
+        {
+          "saw": "ACCOUNT",
+          "state": "AUTHENTICATED",
+          "attempts": 0
+        }
+      ],
+      "session_machine": "AUTHENTICATED"
+    },
+    "app_version": "0.9.23-ops",
+    "version_code": 106,
+    "phone_final_action_armed": false,
+    "diagnostics_active": false,
+    "endpoint": "http://100.114.45.68:8767",
+    "pid": 4421,
+    "device_id": "galaxy-a13-5g",
+    "session": {
+      "state": "UNKNOWN",
+      "observed_at_ms": 1790444297639,
+      "detail": "idle probe",
+      "refresh_count": 1,
+      "last_refresh_at_ms": 1790444293953,
+      "last_refresh_outcome": "probe started"
+    },
+    "ocr_engine": "hybrid",
+    "fast_ocr_error": null,
+    "credentials_configured": true,
+    "credential_store": "encrypted",
+    "worker_id": "w-d131ef8769de",
+    "account_fingerprint": "1457f6e497f3",
+    "local_execution": {
+      "enabled": false,
+      "enabled_at_ms": 0,
+      "disabled_at_ms": 0,
+      "worker_id": "",
+      "authorised_account_fingerprint": "",
+      "last_reason": ""
+    },
+    "session_recovery": {
+      "last_attempt_at_ms": 0,
+      "attempts_last_hour": 0,
+      "last_outcome": "none"
+    }
+  },
+  "coordinator_up_s": 56.2
+}

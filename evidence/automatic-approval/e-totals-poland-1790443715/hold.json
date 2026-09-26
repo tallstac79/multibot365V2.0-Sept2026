@@ -1,0 +1,554 @@
+{
+ "payload": {
+  "query": "Kotwica Kolobrzeg||Polonia Warszawa",
+  "market": "TOTALS",
+  "side": "OVER",
+  "line": "163.5",
+  "minimum_price": "1.75",
+  "stake": "0.10",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168185/D19/E26747589/F19/I0/",
+  "kickoff_utc": "2026-09-26T18:00",
+  "competition": "1. Liga",
+  "country": "Poland",
+  "period": "FULL_GAME",
+  "max_line_deterioration": "1.0",
+  "instruction_id": "e-totals-poland-182835",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "timeout_ms": 240000,
+  "execution_mode": "hold"
+ },
+ "result": {
+  "instruction_id": "e-totals-poland-182835",
+  "status": "FAIL",
+  "stage": "TARGET_NOT_FOUND",
+  "detail": "No live selection for TOTAL/OVER/163.5",
+  "duration_ms": 6232,
+  "progress": {
+   "stage": "READ_SELECTION",
+   "elapsed_ms": 6110,
+   "last_progress_at_ms": 1790443721821,
+   "instruction_id": "e-totals-poland-182835",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790443715726
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 15,
+     "at_ms": 1790443715732
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 21,
+     "at_ms": 1790443715740,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 21,
+      "start_ts_ms": 1790443715733,
+      "end_elapsed_ms": 5485,
+      "end_ts_ms": 1790443721197,
+      "duration_ms": 5464,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3452,
+     "at_ms": 1790443715740
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3679,
+     "at_ms": 1790443715740
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4599,
+     "at_ms": 1790443715740
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5326,
+     "at_ms": 1790443715740
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5485,
+     "at_ms": 1790443721203,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 5485,
+      "start_ts_ms": 1790443721197,
+      "end_elapsed_ms": 6101,
+      "end_ts_ms": 1790443721812,
+      "duration_ms": 616,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5492,
+     "at_ms": 1790443721203
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 6059,
+     "at_ms": 1790443721203
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 6101,
+     "at_ms": 1790443721821,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 6101,
+      "start_ts_ms": 1790443721812,
+      "end_elapsed_ms": 6110,
+      "end_ts_ms": 1790443721822,
+      "duration_ms": 9,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 6110,
+     "at_ms": 1790443721821
+    }
+   ]
+  },
+  "device_stage": "READ_SELECTION",
+  "execution_count": 1,
+  "run_id": "c_HXbItQ7Nz1980qZchdsuSacBAp3eRW_8asB1c0lbrwE",
+  "fixture_name": "Kotwica Kolobrzeg v Polonia Warszawa",
+  "home": "Kotwica Kolobrzeg",
+  "away": "Polonia Warszawa",
+  "competition": "Poland 1st Division 26 Sep 19:00",
+  "verification_detail": "No live selection for TOTAL/OVER/163.5",
+  "event_context": {
+   "home": "Kotwica Kolobrzeg",
+   "away": "Polonia Warszawa",
+   "competition": "poland 1st division",
+   "kickoff_utc": "2026-09-26T18:00",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790443721821,
+    "observed": {
+     "market": "TOTAL",
+     "side": "OVER",
+     "line": "165.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "OVER",
+     "selection_name": "Over",
+     "bounds": [
+      437,
+      655,
+      512,
+      705
+     ]
+    },
+    "identity_verified": false
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 21,
+    "start_ts_ms": 1790443715733,
+    "end_elapsed_ms": 5485,
+    "end_ts_ms": 1790443721197,
+    "duration_ms": 5464,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5485,
+    "start_ts_ms": 1790443721197,
+    "end_elapsed_ms": 6101,
+    "end_ts_ms": 1790443721812,
+    "duration_ms": 616,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 6101,
+    "start_ts_ms": 1790443721812,
+    "end_elapsed_ms": 6110,
+    "end_ts_ms": 1790443721822,
+    "duration_ms": 9,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "Kotwica Kolobrzeg",
+    "bookmaker": "Kotwica Kolobrzeg",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "Polonia Warszawa",
+    "bookmaker": "Polonia Warszawa",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "EXACT",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168185/D19/E26747589/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_HXbItQ7Nz1980qZchdsuSacBAp3eRW_8asB1c0lbrwE",
+  "adapter": "live_bet365",
+  "status": "TARGET_NOT_FOUND",
+  "phase": "FINISHED",
+  "started_at_ms": 1790443715712,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790443715712
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 15,
+    "wall_ts_ms": 1790443715727
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 21,
+    "wall_ts_ms": 1790443715733
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3452,
+    "wall_ts_ms": 1790443719164
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3679,
+    "wall_ts_ms": 1790443719390
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 4599,
+    "wall_ts_ms": 1790443720311
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5326,
+    "wall_ts_ms": 1790443721039
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 5485,
+    "wall_ts_ms": 1790443721197
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 5492,
+    "wall_ts_ms": 1790443721203
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 6059,
+    "wall_ts_ms": 1790443721771
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 6101,
+    "wall_ts_ms": 1790443721812
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 6110,
+    "wall_ts_ms": 1790443721822
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png",
+   "s003_markets.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 21,
+    "start_ts_ms": 1790443715733,
+    "end_elapsed_ms": 5485,
+    "end_ts_ms": 1790443721197,
+    "duration_ms": 5464,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5485,
+    "start_ts_ms": 1790443721197,
+    "end_elapsed_ms": 6101,
+    "end_ts_ms": 1790443721812,
+    "duration_ms": 616,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 6101,
+    "start_ts_ms": 1790443721812,
+    "end_elapsed_ms": 6110,
+    "end_ts_ms": 1790443721822,
+    "duration_ms": 9,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Kotwica Kolobrzeg",
+  "identity_home": "Kotwica Kolobrzeg",
+  "expected_away": "Polonia Warszawa",
+  "identity_away": "Polonia Warszawa",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168185/D19/E26747589/F19/I0/",
+  "current_stage": "READ_SELECTION",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Poland 1st Division 26 Sep 19:00",
+   "Kotwica Kolobrzeg vs Polonia Warszawa",
+   "Popular Bet Builder Game Team Quarter H A"
+  ],
+  "competition_check": {
+   "feed": "1. Liga",
+   "country": "Poland",
+   "page": "Poland 1st Division 26 Sep 19:00",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "Kotwica Kolobrzeg",
+    "bookmaker": "Kotwica Kolobrzeg",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "Polonia Warszawa",
+    "bookmaker": "Polonia Warszawa",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "EXACT",
+  "route": "event_link",
+  "kickoff_verified": "26 Sep 19:00",
+  "verified_fixture": {
+   "code": "845a6d0f",
+   "home": "Kotwica Kolobrzeg",
+   "away": "Polonia Warszawa",
+   "fixture_name": "Kotwica Kolobrzeg v Polonia Warszawa",
+   "exact_fixture_text": "Home Kotwica Kolobrzeg\nAway Polonia Warszawa",
+   "competition": "Poland 1st Division 26 Sep 19:00",
+   "bounds": [
+    35,
+    268,
+    691,
+    436
+   ]
+  },
+  "fixture_home": "Kotwica Kolobrzeg",
+  "fixture_away": "Polonia Warszawa",
+  "identity_verified_home": "Kotwica Kolobrzeg",
+  "identity_verified_away": "Polonia Warszawa",
+  "event_verified": true,
+  "event_context": {
+   "home": "Kotwica Kolobrzeg",
+   "away": "Polonia Warszawa",
+   "competition": "poland 1st division",
+   "kickoff_utc": "2026-09-26T18:00",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "845a6d0f",
+   "home": "Kotwica Kolobrzeg",
+   "away": "Polonia Warszawa",
+   "fixture_name": "Kotwica Kolobrzeg v Polonia Warszawa",
+   "exact_fixture_text": "Home Kotwica Kolobrzeg\nAway Polonia Warszawa",
+   "competition": "Poland 1st Division 26 Sep 19:00",
+   "bounds": [
+    35,
+    268,
+    691,
+    436
+   ]
+  },
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/-3.5@1.83",
+     "SPREAD/AWAY/+3.5@1.83",
+     "TOTAL/OVER/165.5@1.83",
+     "TOTAL/UNDER/165.5@1.83",
+     "MONEYLINE/HOME/NONE@1.57",
+     "MONEYLINE/AWAY/NONE@2.25"
+    ],
+    "notes": []
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/-3.5@1.83",
+    "SPREAD/AWAY/+3.5@1.83",
+    "TOTAL/OVER/165.5@1.83",
+    "TOTAL/UNDER/165.5@1.83",
+    "MONEYLINE/HOME/NONE@1.57",
+    "MONEYLINE/AWAY/NONE@2.25"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-3.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Kotwica Kolobrzeg",
+    "bounds": [
+     301,
+     655,
+     344,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "+3.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Polonia Warszawa",
+    "bounds": [
+     301,
+     740,
+     344,
+     790
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "165.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     437,
+     655,
+     512,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "165.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     451,
+     737,
+     512,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "1.57",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Kotwica Kolobrzeg",
+    "bounds": [
+     604,
+     672,
+     648,
+     689
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "2.25",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Polonia Warszawa",
+    "bounds": [
+     603,
+     757,
+     648,
+     774
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790443721821,
+    "observed": {
+     "market": "TOTAL",
+     "side": "OVER",
+     "line": "165.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "OVER",
+     "selection_name": "Over",
+     "bounds": [
+      437,
+      655,
+      512,
+      705
+     ]
+    },
+    "identity_verified": false
+   }
+  ],
+  "detail": "No live selection for TOTAL/OVER/163.5",
+  "duration_ms": 6110
+ },
+ "wall": 6.854223251342773
+}

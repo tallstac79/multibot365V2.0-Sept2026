@@ -1,0 +1,204 @@
+{
+ "payload": {
+  "instruction_id": "e-spread-mexico-182816-place",
+  "action": "PLACE_HELD",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "+2.5",
+  "selection_name": "UP Mexico",
+  "price": "1.74",
+  "minimum_price": "1.57",
+  "stake": "0.10",
+  "execution_mode": "prepare",
+  "confirmation_status": "APPROVED",
+  "timeout_ms": 60000,
+  "held_instruction_id": "e-spread-mexico-182816",
+  "home": "UP Mexico",
+  "away": "UMAD",
+  "competition": "mexico liga abe",
+  "kickoff_utc": "2026-09-26T20:30",
+  "period": "FULL_GAME"
+ },
+ "result": {
+  "instruction_id": "e-spread-mexico-182816-place",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "PRETAP_READY",
+  "duration_ms": 846,
+  "progress": {
+   "stage": "PRETAP_CHECK",
+   "elapsed_ms": 707,
+   "last_progress_at_ms": 1790443708600,
+   "instruction_id": "e-spread-mexico-182816-place",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790443708562
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 56,
+     "at_ms": 1790443708600
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 63,
+     "at_ms": 1790443708600
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 619,
+     "at_ms": 1790443708600
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 707,
+     "at_ms": 1790443708600
+    }
+   ]
+  },
+  "device_stage": "PRETAP_CHECK",
+  "execution_count": 1,
+  "run_id": "c_PZRpLK_W1JncjhXOv2XvvSODjQGMWF3rlQYw6Qpz1RQ",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "pretap": {
+   "ok": true,
+   "market": "SPREAD",
+   "side": "HOME",
+   "selection": "UP Mexico",
+   "line": "+2.5",
+   "price": "1.74",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "execution_observations": [
+   {
+    "stage": "pretap",
+    "observed_at_ms": 1790443709218,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+2.5",
+     "price": "1.74",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "UP Mexico",
+     "bounds": [
+      20,
+      1320,
+      604,
+      1346
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [],
+  "t_start_ms": 1790443708596,
+  "t_pretap_done_ms": 1790443709246
+ },
+ "run": {
+  "run_id": "c_PZRpLK_W1JncjhXOv2XvvSODjQGMWF3rlQYw6Qpz1RQ",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790443708539,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790443708540
+   },
+   {
+    "phase": "PRETAP_CHECK",
+    "elapsed_ms": 56,
+    "wall_ts_ms": 1790443708596
+   },
+   {
+    "phase": "CAPTURE_pretap",
+    "elapsed_ms": 63,
+    "wall_ts_ms": 1790443708602
+   },
+   {
+    "phase": "CAPTURED_pretap",
+    "elapsed_ms": 619,
+    "wall_ts_ms": 1790443709158
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 707,
+    "wall_ts_ms": 1790443709247
+   }
+  ],
+  "screenshots": [
+   "s001_pretap.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [],
+  "t_start_ms": 1790443708596,
+  "execution_observations": [
+   {
+    "stage": "pretap",
+    "observed_at_ms": 1790443709218,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+2.5",
+     "price": "1.74",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "UP Mexico",
+     "bounds": [
+      20,
+      1320,
+      604,
+      1346
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stake_check_pretap": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "017",
+   "stake": "0.10",
+   "price": "1.74"
+  },
+  "pretap": {
+   "ok": true,
+   "market": "SPREAD",
+   "side": "HOME",
+   "selection": "UP Mexico",
+   "line": "+2.5",
+   "price": "1.74",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "t_pretap_done_ms": 1790443709246,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "detail": "PRETAP_READY",
+  "duration_ms": 707
+ },
+ "wall": 1.066917896270752,
+ "slip_ready_to_pretap_s": 1.5176701545715332
+}

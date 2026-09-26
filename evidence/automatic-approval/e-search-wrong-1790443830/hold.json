@@ -1,0 +1,1523 @@
+{
+ "payload": {
+  "query": "Antwerp Giants||Landstede Zwolle",
+  "market": "MONEYLINE",
+  "side": "HOME",
+  "line": "",
+  "minimum_price": "1.01",
+  "stake": "0.10",
+  "kickoff_utc": "2026-09-26T18:30",
+  "competition": "BNXT Super Cup",
+  "period": "FULL_GAME",
+  "max_line_deterioration": "0",
+  "instruction_id": "e-search-wrong-183030",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "timeout_ms": 240000,
+  "execution_mode": "hold"
+ },
+ "result": {
+  "instruction_id": "e-search-wrong-183030",
+  "status": "FAIL",
+  "stage": "WRONG_EVENT",
+  "detail": "Event link shows 'Landstede Zwolle v Antwerp Giants'; alert says 'Antwerp Giants v Landstede Zwolle': teams reversed (home/away): 'Antwerp Giants v Landstede Zwolle' is listed as 'Landstede Zwolle v Antwerp Giants'",
+  "duration_ms": 31357,
+  "progress": {
+   "stage": "VERIFY_EVENT",
+   "elapsed_ms": 31275,
+   "last_progress_at_ms": 1790443860088,
+   "instruction_id": "e-search-wrong-183030",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790443830696
+    },
+    {
+     "stage": "SPORTS_HOME",
+     "elapsed_ms": 11,
+     "at_ms": 1790443830699,
+     "timing": {
+      "stage": "SPORTS_HOME",
+      "start_elapsed_ms": 11,
+      "start_ts_ms": 1790443830696,
+      "end_elapsed_ms": 14,
+      "end_ts_ms": 1790443830700,
+      "duration_ms": 3,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 14,
+     "at_ms": 1790443830705,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 14,
+      "start_ts_ms": 1790443830700,
+      "end_elapsed_ms": 4369,
+      "end_ts_ms": 1790443835055,
+      "duration_ms": 4355,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 2840,
+     "at_ms": 1790443830705
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3224,
+     "at_ms": 1790443830705
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3238,
+     "at_ms": 1790443830705
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3772,
+     "at_ms": 1790443830705
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3818,
+     "at_ms": 1790443830705
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4348,
+     "at_ms": 1790443830705
+    },
+    {
+     "stage": "SESSION_CHECK",
+     "elapsed_ms": 4369,
+     "at_ms": 1790443835063,
+     "timing": {
+      "stage": "SESSION_CHECK",
+      "start_elapsed_ms": 4369,
+      "start_ts_ms": 1790443835055,
+      "end_elapsed_ms": 5294,
+      "end_ts_ms": 1790443835979,
+      "duration_ms": 925,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SESSION_CHECK",
+     "elapsed_ms": 4379,
+     "at_ms": 1790443835063
+    },
+    {
+     "stage": "SESSION_CHECK",
+     "elapsed_ms": 5023,
+     "at_ms": 1790443835063
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5294,
+     "at_ms": 1790443835989,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 5294,
+      "start_ts_ms": 1790443835979,
+      "end_elapsed_ms": 13321,
+      "end_ts_ms": 1790443844007,
+      "duration_ms": 8027,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 8036,
+     "at_ms": 1790443835989
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 8283,
+     "at_ms": 1790443835989
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 8294,
+     "at_ms": 1790443838988,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 5294,
+      "start_ts_ms": 1790443835979,
+      "end_elapsed_ms": 13321,
+      "end_ts_ms": 1790443844007,
+      "duration_ms": 8027,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 12306,
+     "at_ms": 1790443838988
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 13025,
+     "at_ms": 1790443838988
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 13321,
+     "at_ms": 1790443844018,
+     "timing": {
+      "stage": "OPEN_SEARCH",
+      "start_elapsed_ms": 13321,
+      "start_ts_ms": 1790443844007,
+      "end_elapsed_ms": 13333,
+      "end_ts_ms": 1790443844019,
+      "duration_ms": 12,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SPORTS_CONTEXT",
+     "elapsed_ms": 13333,
+     "at_ms": 1790443844028,
+     "timing": {
+      "stage": "SPORTS_CONTEXT",
+      "start_elapsed_ms": 13333,
+      "start_ts_ms": 1790443844019,
+      "end_elapsed_ms": 14028,
+      "end_ts_ms": 1790443844713,
+      "duration_ms": 695,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SPORTS_CONTEXT",
+     "elapsed_ms": 13344,
+     "at_ms": 1790443844028
+    },
+    {
+     "stage": "SPORTS_CONTEXT",
+     "elapsed_ms": 13930,
+     "at_ms": 1790443844028
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 14028,
+     "at_ms": 1790443844727,
+     "timing": {
+      "stage": "OPEN_SEARCH",
+      "start_elapsed_ms": 14028,
+      "start_ts_ms": 1790443844713,
+      "end_elapsed_ms": 18223,
+      "end_ts_ms": 1790443848909,
+      "duration_ms": 4195,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 14042,
+     "at_ms": 1790443844727
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 14603,
+     "at_ms": 1790443844727
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 14621,
+     "at_ms": 1790443844727
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 15259,
+     "at_ms": 1790443844727
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 15284,
+     "at_ms": 1790443844727
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 16352,
+     "at_ms": 1790443844727
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 16712,
+     "at_ms": 1790443844727
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 17735,
+     "at_ms": 1790443844727
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 18162,
+     "at_ms": 1790443844727
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 18223,
+     "at_ms": 1790443848937,
+     "timing": {
+      "stage": "ENTER_QUERY",
+      "start_elapsed_ms": 18223,
+      "start_ts_ms": 1790443848909,
+      "end_elapsed_ms": 18258,
+      "end_ts_ms": 1790443848944,
+      "duration_ms": 35,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "FOCUS",
+     "elapsed_ms": 18258,
+     "at_ms": 1790443848966,
+     "timing": {
+      "stage": "FOCUS",
+      "start_elapsed_ms": 18258,
+      "start_ts_ms": 1790443848944,
+      "end_elapsed_ms": 18283,
+      "end_ts_ms": 1790443848968,
+      "duration_ms": 25,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 18283,
+     "at_ms": 1790443848986,
+     "timing": {
+      "stage": "ENTER_QUERY",
+      "start_elapsed_ms": 18283,
+      "start_ts_ms": 1790443848968,
+      "end_elapsed_ms": 25394,
+      "end_ts_ms": 1790443856079,
+      "duration_ms": 7111,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 18302,
+     "at_ms": 1790443848986
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 18628,
+     "at_ms": 1790443848986
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 18640,
+     "at_ms": 1790443848986
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 19035,
+     "at_ms": 1790443848986
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 19048,
+     "at_ms": 1790443848986
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 19445,
+     "at_ms": 1790443848986
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 19456,
+     "at_ms": 1790443850148,
+     "timing": {
+      "stage": "ENTER_QUERY",
+      "start_elapsed_ms": 18283,
+      "start_ts_ms": 1790443848968,
+      "end_elapsed_ms": 25394,
+      "end_ts_ms": 1790443856079,
+      "duration_ms": 7111,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 25358,
+     "at_ms": 1790443850148
+    },
+    {
+     "stage": "QUERY_VERIFY",
+     "elapsed_ms": 25394,
+     "at_ms": 1790443856089,
+     "timing": {
+      "stage": "QUERY_VERIFY",
+      "start_elapsed_ms": 25394,
+      "start_ts_ms": 1790443856079,
+      "end_elapsed_ms": 27216,
+      "end_ts_ms": 1790443857902,
+      "duration_ms": 1822,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "QUERY_VERIFY",
+     "elapsed_ms": 25404,
+     "at_ms": 1790443856089
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 27216,
+     "at_ms": 1790443857911,
+     "timing": {
+      "stage": "RESULTS_WAIT",
+      "start_elapsed_ms": 27216,
+      "start_ts_ms": 1790443857902,
+      "end_elapsed_ms": 28029,
+      "end_ts_ms": 1790443858714,
+      "duration_ms": 813,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 27226,
+     "at_ms": 1790443857911
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 27536,
+     "at_ms": 1790443857911
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 27568,
+     "at_ms": 1790443857911
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 27969,
+     "at_ms": 1790443857911
+    },
+    {
+     "stage": "FIXTURE_VERIFY",
+     "elapsed_ms": 28029,
+     "at_ms": 1790443858724,
+     "timing": {
+      "stage": "FIXTURE_VERIFY",
+      "start_elapsed_ms": 28029,
+      "start_ts_ms": 1790443858714,
+      "end_elapsed_ms": 28424,
+      "end_ts_ms": 1790443859110,
+      "duration_ms": 395,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "FIXTURE_VERIFY",
+     "elapsed_ms": 28039,
+     "at_ms": 1790443858724
+    },
+    {
+     "stage": "FIXTURE_VERIFY",
+     "elapsed_ms": 28378,
+     "at_ms": 1790443858724
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 28424,
+     "at_ms": 1790443859120,
+     "timing": {
+      "stage": "SELECT_FIXTURE",
+      "start_elapsed_ms": 28424,
+      "start_ts_ms": 1790443859110,
+      "end_elapsed_ms": 29390,
+      "end_ts_ms": 1790443860076,
+      "duration_ms": 966,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 28435,
+     "at_ms": 1790443859120
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 28804,
+     "at_ms": 1790443859120
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 28824,
+     "at_ms": 1790443859120
+    },
+    {
+     "stage": "VERIFY_EVENT",
+     "elapsed_ms": 29390,
+     "at_ms": 1790443860088,
+     "timing": {
+      "stage": "VERIFY_EVENT",
+      "start_elapsed_ms": 29390,
+      "start_ts_ms": 1790443860076,
+      "end_elapsed_ms": 31275,
+      "end_ts_ms": 1790443861960,
+      "duration_ms": 1885,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_EVENT",
+     "elapsed_ms": 30608,
+     "at_ms": 1790443860088
+    },
+    {
+     "stage": "VERIFY_EVENT",
+     "elapsed_ms": 31225,
+     "at_ms": 1790443860088
+    },
+    {
+     "stage": "VERIFY_EVENT",
+     "elapsed_ms": 31275,
+     "at_ms": 1790443860088
+    }
+   ]
+  },
+  "device_stage": "VERIFY_EVENT",
+  "execution_count": 1,
+  "run_id": "c_C5dm45RlsehaG-pnziT8Ga9V7n0ranD_itF8DJ7ezEk",
+  "fixture_name": "Landstede Zwolle v Antwerp Giants",
+  "home": "Landstede Zwolle",
+  "away": "Antwerp Giants",
+  "competition": "Basketball Casino",
+  "verification_detail": "Event link shows 'Landstede Zwolle v Antwerp Giants'; alert says 'Antwerp Giants v Landstede Zwolle': teams reversed (home/away): 'Antwerp Giants v Landstede Zwolle' is listed as 'Landstede Zwolle v Antwerp Giants'",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "SPORTS_HOME",
+    "start_elapsed_ms": 11,
+    "start_ts_ms": 1790443830696,
+    "end_elapsed_ms": 14,
+    "end_ts_ms": 1790443830700,
+    "duration_ms": 3,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 14,
+    "start_ts_ms": 1790443830700,
+    "end_elapsed_ms": 4369,
+    "end_ts_ms": 1790443835055,
+    "duration_ms": 4355,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "start_elapsed_ms": 4369,
+    "start_ts_ms": 1790443835055,
+    "end_elapsed_ms": 5294,
+    "end_ts_ms": 1790443835979,
+    "duration_ms": 925,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 5294,
+    "start_ts_ms": 1790443835979,
+    "end_elapsed_ms": 13321,
+    "end_ts_ms": 1790443844007,
+    "duration_ms": 8027,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 13321,
+    "start_ts_ms": 1790443844007,
+    "end_elapsed_ms": 13333,
+    "end_ts_ms": 1790443844019,
+    "duration_ms": 12,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "start_elapsed_ms": 13333,
+    "start_ts_ms": 1790443844019,
+    "end_elapsed_ms": 14028,
+    "end_ts_ms": 1790443844713,
+    "duration_ms": 695,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 14028,
+    "start_ts_ms": 1790443844713,
+    "end_elapsed_ms": 18223,
+    "end_ts_ms": 1790443848909,
+    "duration_ms": 4195,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 18223,
+    "start_ts_ms": 1790443848909,
+    "end_elapsed_ms": 18258,
+    "end_ts_ms": 1790443848944,
+    "duration_ms": 35,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FOCUS",
+    "start_elapsed_ms": 18258,
+    "start_ts_ms": 1790443848944,
+    "end_elapsed_ms": 18283,
+    "end_ts_ms": 1790443848968,
+    "duration_ms": 25,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 18283,
+    "start_ts_ms": 1790443848968,
+    "end_elapsed_ms": 25394,
+    "end_ts_ms": 1790443856079,
+    "duration_ms": 7111,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "start_elapsed_ms": 25394,
+    "start_ts_ms": 1790443856079,
+    "end_elapsed_ms": 27216,
+    "end_ts_ms": 1790443857902,
+    "duration_ms": 1822,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "start_elapsed_ms": 27216,
+    "start_ts_ms": 1790443857902,
+    "end_elapsed_ms": 28029,
+    "end_ts_ms": 1790443858714,
+    "duration_ms": 813,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "start_elapsed_ms": 28029,
+    "start_ts_ms": 1790443858714,
+    "end_elapsed_ms": 28424,
+    "end_ts_ms": 1790443859110,
+    "duration_ms": 395,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "start_elapsed_ms": 28424,
+    "start_ts_ms": 1790443859110,
+    "end_elapsed_ms": 29390,
+    "end_ts_ms": 1790443860076,
+    "duration_ms": 966,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "start_elapsed_ms": 29390,
+    "start_ts_ms": 1790443860076,
+    "end_elapsed_ms": 31275,
+    "end_ts_ms": 1790443861960,
+    "duration_ms": 1885,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: teams reversed (home/away): 'Antwerp Giants v Landstede Zwolle' is listed as 'Landstede Zwolle v Antwerp Giants'",
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "teams reversed (home/away): 'Antwerp Giants v Landstede Zwolle' is listed as 'Landstede Zwolle v Antwerp Giants'",
+   "home": {
+    "feed": "Antwerp Giants",
+    "bookmaker": "Landstede Zwolle",
+    "level": "NONE",
+    "score": 0.33,
+    "note": "different name 0.33"
+   },
+   "away": {
+    "feed": "Landstede Zwolle",
+    "bookmaker": "Antwerp Giants",
+    "level": "NONE",
+    "score": 0.33,
+    "note": "different name 0.33"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": true
+  },
+  "identity_verdict": "MISMATCH",
+  "session_path": [
+   {
+    "saw": "UNKNOWN",
+    "state": "UNOBSERVED",
+    "attempts": 0
+   },
+   {
+    "saw": "ACCOUNT",
+    "state": "AUTHENTICATED",
+    "attempts": 0
+   }
+  ],
+  "session_machine": "AUTHENTICATED"
+ },
+ "run": {
+  "run_id": "c_C5dm45RlsehaG-pnziT8Ga9V7n0ranD_itF8DJ7ezEk",
+  "adapter": "live_bet365",
+  "status": "WRONG_EVENT",
+  "phase": "FINISHED",
+  "started_at_ms": 1790443830685,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790443830685
+   },
+   {
+    "phase": "SPORTS_HOME",
+    "elapsed_ms": 11,
+    "wall_ts_ms": 1790443830696
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 14,
+    "wall_ts_ms": 1790443830700
+   },
+   {
+    "phase": "CAPTURE_home_wait_0",
+    "elapsed_ms": 2840,
+    "wall_ts_ms": 1790443833525
+   },
+   {
+    "phase": "CAPTURED_home_wait_0",
+    "elapsed_ms": 3224,
+    "wall_ts_ms": 1790443833910
+   },
+   {
+    "phase": "CAPTURE_home",
+    "elapsed_ms": 3238,
+    "wall_ts_ms": 1790443833924
+   },
+   {
+    "phase": "CAPTURED_home",
+    "elapsed_ms": 3772,
+    "wall_ts_ms": 1790443834458
+   },
+   {
+    "phase": "CAPTURE_home_ready",
+    "elapsed_ms": 3818,
+    "wall_ts_ms": 1790443834504
+   },
+   {
+    "phase": "CAPTURED_home_ready",
+    "elapsed_ms": 4348,
+    "wall_ts_ms": 1790443835034
+   },
+   {
+    "phase": "SESSION_CHECK",
+    "elapsed_ms": 4369,
+    "wall_ts_ms": 1790443835055
+   },
+   {
+    "phase": "CAPTURE_session",
+    "elapsed_ms": 4379,
+    "wall_ts_ms": 1790443835064
+   },
+   {
+    "phase": "CAPTURED_session",
+    "elapsed_ms": 5023,
+    "wall_ts_ms": 1790443835708
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 5294,
+    "wall_ts_ms": 1790443835979
+   },
+   {
+    "phase": "CAPTURE_session_relook",
+    "elapsed_ms": 8036,
+    "wall_ts_ms": 1790443838726
+   },
+   {
+    "phase": "CAPTURED_session_relook",
+    "elapsed_ms": 8283,
+    "wall_ts_ms": 1790443838968
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 8294,
+    "wall_ts_ms": 1790443838979
+   },
+   {
+    "phase": "CAPTURE_session_relook_settle",
+    "elapsed_ms": 12306,
+    "wall_ts_ms": 1790443842991
+   },
+   {
+    "phase": "CAPTURED_session_relook_settle",
+    "elapsed_ms": 13025,
+    "wall_ts_ms": 1790443843710
+   },
+   {
+    "phase": "OPEN_SEARCH",
+    "elapsed_ms": 13321,
+    "wall_ts_ms": 1790443844007
+   },
+   {
+    "phase": "SPORTS_CONTEXT",
+    "elapsed_ms": 13333,
+    "wall_ts_ms": 1790443844019
+   },
+   {
+    "phase": "CAPTURE_sports_context_pre",
+    "elapsed_ms": 13344,
+    "wall_ts_ms": 1790443844029
+   },
+   {
+    "phase": "CAPTURED_sports_context_pre",
+    "elapsed_ms": 13930,
+    "wall_ts_ms": 1790443844615
+   },
+   {
+    "phase": "OPEN_SEARCH",
+    "elapsed_ms": 14028,
+    "wall_ts_ms": 1790443844714
+   },
+   {
+    "phase": "CAPTURE_search_button",
+    "elapsed_ms": 14042,
+    "wall_ts_ms": 1790443844728
+   },
+   {
+    "phase": "CAPTURED_search_button",
+    "elapsed_ms": 14603,
+    "wall_ts_ms": 1790443845289
+   },
+   {
+    "phase": "CAPTURE_search_button_clear",
+    "elapsed_ms": 14621,
+    "wall_ts_ms": 1790443845306
+   },
+   {
+    "phase": "CAPTURED_search_button_clear",
+    "elapsed_ms": 15259,
+    "wall_ts_ms": 1790443845945
+   },
+   {
+    "effect": "gesture",
+    "target": "Search",
+    "bounds": [
+     107,
+     273,
+     199,
+     304
+    ],
+    "elapsed_ms": 15284
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 15284,
+    "wall_ts_ms": 1790443845969
+   },
+   {
+    "phase": "CAPTURE_search_after_0_5s",
+    "elapsed_ms": 16352,
+    "wall_ts_ms": 1790443847038
+   },
+   {
+    "phase": "CAPTURED_search_after_0_5s",
+    "elapsed_ms": 16712,
+    "wall_ts_ms": 1790443847397
+   },
+   {
+    "phase": "CAPTURE_search_after_1_5s",
+    "elapsed_ms": 17735,
+    "wall_ts_ms": 1790443848421
+   },
+   {
+    "phase": "CAPTURED_search_after_1_5s",
+    "elapsed_ms": 18162,
+    "wall_ts_ms": 1790443848848
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 18223,
+    "wall_ts_ms": 1790443848910
+   },
+   {
+    "phase": "FOCUS",
+    "elapsed_ms": 18258,
+    "wall_ts_ms": 1790443848944
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 18283,
+    "wall_ts_ms": 1790443848968
+   },
+   {
+    "phase": "CAPTURE_query_pre",
+    "elapsed_ms": 18302,
+    "wall_ts_ms": 1790443848987
+   },
+   {
+    "phase": "CAPTURED_query_pre",
+    "elapsed_ms": 18628,
+    "wall_ts_ms": 1790443849313
+   },
+   {
+    "phase": "CAPTURE_search_field_0",
+    "elapsed_ms": 18640,
+    "wall_ts_ms": 1790443849325
+   },
+   {
+    "phase": "CAPTURED_search_field_0",
+    "elapsed_ms": 19035,
+    "wall_ts_ms": 1790443849720
+   },
+   {
+    "phase": "CAPTURE_query_ready",
+    "elapsed_ms": 19048,
+    "wall_ts_ms": 1790443849733
+   },
+   {
+    "phase": "CAPTURED_query_ready",
+    "elapsed_ms": 19445,
+    "wall_ts_ms": 1790443850130
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 19456,
+    "wall_ts_ms": 1790443850141
+   },
+   {
+    "phase": "QUERY_VERIFIED",
+    "elapsed_ms": 25358,
+    "wall_ts_ms": 1790443856044
+   },
+   {
+    "phase": "QUERY_VERIFY",
+    "elapsed_ms": 25394,
+    "wall_ts_ms": 1790443856079
+   },
+   {
+    "phase": "DISMISS_KEYBOARD",
+    "elapsed_ms": 25404,
+    "wall_ts_ms": 1790443856089
+   },
+   {
+    "phase": "RESULTS_WAIT",
+    "elapsed_ms": 27216,
+    "wall_ts_ms": 1790443857902
+   },
+   {
+    "phase": "CAPTURE_query_results",
+    "elapsed_ms": 27226,
+    "wall_ts_ms": 1790443857912
+   },
+   {
+    "phase": "CAPTURED_query_results",
+    "elapsed_ms": 27536,
+    "wall_ts_ms": 1790443858221
+   },
+   {
+    "phase": "CAPTURE_query_results_sports",
+    "elapsed_ms": 27568,
+    "wall_ts_ms": 1790443858253
+   },
+   {
+    "phase": "CAPTURED_query_results_sports",
+    "elapsed_ms": 27969,
+    "wall_ts_ms": 1790443858654
+   },
+   {
+    "phase": "FIXTURE_VERIFY",
+    "elapsed_ms": 28029,
+    "wall_ts_ms": 1790443858714
+   },
+   {
+    "phase": "CAPTURE_fixtures",
+    "elapsed_ms": 28039,
+    "wall_ts_ms": 1790443858725
+   },
+   {
+    "phase": "CAPTURED_fixtures",
+    "elapsed_ms": 28378,
+    "wall_ts_ms": 1790443859063
+   },
+   {
+    "phase": "SELECT_FIXTURE",
+    "elapsed_ms": 28424,
+    "wall_ts_ms": 1790443859110
+   },
+   {
+    "phase": "CAPTURE_fixture_preflight",
+    "elapsed_ms": 28435,
+    "wall_ts_ms": 1790443859121
+   },
+   {
+    "phase": "CAPTURED_fixture_preflight",
+    "elapsed_ms": 28804,
+    "wall_ts_ms": 1790443859490
+   },
+   {
+    "effect": "gesture",
+    "target": "Landstede Zwolle v Antwerp Giants",
+    "bounds": [
+     21,
+     397,
+     503,
+     423
+    ],
+    "elapsed_ms": 28824
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 28824,
+    "wall_ts_ms": 1790443859509
+   },
+   {
+    "phase": "VERIFY_EVENT",
+    "elapsed_ms": 29390,
+    "wall_ts_ms": 1790443860076
+   },
+   {
+    "phase": "CAPTURE_event",
+    "elapsed_ms": 30608,
+    "wall_ts_ms": 1790443861294
+   },
+   {
+    "phase": "CAPTURED_event",
+    "elapsed_ms": 31225,
+    "wall_ts_ms": 1790443861910
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 31275,
+    "wall_ts_ms": 1790443861960
+   }
+  ],
+  "screenshots": [
+   "s001_home_wait_0.png",
+   "s002_home.png",
+   "s003_home_ready.png",
+   "s004_session.png",
+   "s005_session_relook.png",
+   "s006_session_relook_settle.png",
+   "s007_sports_context_pre.png",
+   "s008_search_button.png",
+   "s009_search_button_clear.png",
+   "s010_search_after_0_5s.png",
+   "s011_search_after_1_5s.png",
+   "s012_query_pre.png",
+   "s013_search_field_0.png",
+   "s014_query_ready.png",
+   "s015_query_results.png",
+   "s016_query_results_sports.png",
+   "s017_fixtures.png",
+   "s018_fixture_preflight.png",
+   "s019_event.png"
+  ],
+  "gesture_attempts": 2,
+  "stage_timings": [
+   {
+    "stage": "SPORTS_HOME",
+    "start_elapsed_ms": 11,
+    "start_ts_ms": 1790443830696,
+    "end_elapsed_ms": 14,
+    "end_ts_ms": 1790443830700,
+    "duration_ms": 3,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 14,
+    "start_ts_ms": 1790443830700,
+    "end_elapsed_ms": 4369,
+    "end_ts_ms": 1790443835055,
+    "duration_ms": 4355,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "start_elapsed_ms": 4369,
+    "start_ts_ms": 1790443835055,
+    "end_elapsed_ms": 5294,
+    "end_ts_ms": 1790443835979,
+    "duration_ms": 925,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 5294,
+    "start_ts_ms": 1790443835979,
+    "end_elapsed_ms": 13321,
+    "end_ts_ms": 1790443844007,
+    "duration_ms": 8027,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 13321,
+    "start_ts_ms": 1790443844007,
+    "end_elapsed_ms": 13333,
+    "end_ts_ms": 1790443844019,
+    "duration_ms": 12,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "start_elapsed_ms": 13333,
+    "start_ts_ms": 1790443844019,
+    "end_elapsed_ms": 14028,
+    "end_ts_ms": 1790443844713,
+    "duration_ms": 695,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 14028,
+    "start_ts_ms": 1790443844713,
+    "end_elapsed_ms": 18223,
+    "end_ts_ms": 1790443848909,
+    "duration_ms": 4195,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 18223,
+    "start_ts_ms": 1790443848909,
+    "end_elapsed_ms": 18258,
+    "end_ts_ms": 1790443848944,
+    "duration_ms": 35,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FOCUS",
+    "start_elapsed_ms": 18258,
+    "start_ts_ms": 1790443848944,
+    "end_elapsed_ms": 18283,
+    "end_ts_ms": 1790443848968,
+    "duration_ms": 25,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 18283,
+    "start_ts_ms": 1790443848968,
+    "end_elapsed_ms": 25394,
+    "end_ts_ms": 1790443856079,
+    "duration_ms": 7111,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "start_elapsed_ms": 25394,
+    "start_ts_ms": 1790443856079,
+    "end_elapsed_ms": 27216,
+    "end_ts_ms": 1790443857902,
+    "duration_ms": 1822,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "start_elapsed_ms": 27216,
+    "start_ts_ms": 1790443857902,
+    "end_elapsed_ms": 28029,
+    "end_ts_ms": 1790443858714,
+    "duration_ms": 813,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "start_elapsed_ms": 28029,
+    "start_ts_ms": 1790443858714,
+    "end_elapsed_ms": 28424,
+    "end_ts_ms": 1790443859110,
+    "duration_ms": 395,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "start_elapsed_ms": 28424,
+    "start_ts_ms": 1790443859110,
+    "end_elapsed_ms": 29390,
+    "end_ts_ms": 1790443860076,
+    "duration_ms": 966,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "start_elapsed_ms": 29390,
+    "start_ts_ms": 1790443860076,
+    "end_elapsed_ms": 31275,
+    "end_ts_ms": 1790443861960,
+    "duration_ms": 1885,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "route": "event_link",
+  "current_stage": "VERIFY_EVENT",
+  "home_ready_wait_ms": 1600,
+  "home_ready": true,
+  "session_path": [
+   {
+    "saw": "UNKNOWN",
+    "state": "UNOBSERVED",
+    "attempts": 0
+   },
+   {
+    "saw": "ACCOUNT",
+    "state": "AUTHENTICATED",
+    "attempts": 0
+   }
+  ],
+  "session_machine": "AUTHENTICATED",
+  "session": "AUTHENTICATED",
+  "sports_context_pre_elapsed_ms": 666,
+  "sports_context_foreground": "18:30 Ca ll 100%0 | o bet365.com/#/HO/ + 14 | bet365 £4.07 (+) | Search | bet365 | ROULETTE | FootballI Horses Greyhounds CHAMPIONS | LEAGUE | ENG V SPA UEFA Nations League League 2 Casino | UEFA Nations League View All | Sat 26 Sep 1 X 2 | England | 3.80 3.40 2.00 | Spain | 19:45 | BET BUILDER + Player Markets > | UEFA Nations League A Sat 19:45 | Englandv Spain | Main Shots on Target Shots Fouls Tackle | Score or To bE | To Score | Acciet Rooked | (o) | Home All Sports In-Play My Bets Casino | I||",
+  "sports_context": "already_sports_or_home",
+  "sports_context_elapsed_ms": 684,
+  "search_control_text": "Search",
+  "search_control_bounds": [
+   113,
+   279,
+   193,
+   298
+  ],
+  "search_tap_bounds": [
+   107,
+   273,
+   199,
+   304
+  ],
+  "search_tap_xy": [
+   153,
+   288
+  ],
+  "search_tap_attempt": 1,
+  "search_ui_open": true,
+  "search_open_via": "verify_1_5s",
+  "search_query": "Antwerp Giants Landstede Zwolle",
+  "identity_home": "Antwerp Giants",
+  "expected_away": "Landstede Zwolle",
+  "identity_away": "Landstede Zwolle",
+  "search_query_ladder": [
+   {
+    "query": "Antwerp Giants Landstede Zwolle",
+    "source": "feed"
+   },
+   {
+    "query": "Antwerp Giants",
+    "source": "feed"
+   },
+   {
+    "query": "Landstede Zwolle",
+    "source": "feed"
+   }
+  ],
+  "search_ladder_index": 0,
+  "search_ladder_query": "Antwerp Giants Landstede Zwolle",
+  "search_bar_checks": [
+   {
+    "attempt": 0,
+    "bar": true,
+    "candidates": 1,
+    "text": "Search bet365...",
+    "empty": true,
+    "clear": null
+   }
+  ],
+  "query_evidence": {
+   "run_id": "c_C5dm45RlsehaG-pnziT8Ga9V7n0ranD_itF8DJ7ezEk",
+   "requested_text": "Antwerp Giants Landstede Zwolle",
+   "field_hint": "bet365...",
+   "package": "com.android.chrome",
+   "mechanism": "AccessibilityInputConnection.commitText",
+   "started_at_ms": 1790443850149,
+   "started_elapsed_ms": 2230643,
+   "timeout_ms": 60000,
+   "status": "PASS",
+   "field_bounds": [
+    131,
+    149,
+    494,
+    230
+   ],
+   "pre_screenshot": "files/visual/c_C5dm45RlsehaG-pnziT8Ga9V7n0ranD_itF8DJ7ezEk/before.png",
+   "post_screenshot": "files/visual/c_C5dm45RlsehaG-pnziT8Ga9V7n0ranD_itF8DJ7ezEk/after.png",
+   "verification_result": "EXACT_INPUT_OCR_SOFT",
+   "input_attempts": 1,
+   "events": [
+    {
+     "phase": "STARTED",
+     "elapsed_ms": 0
+    },
+    {
+     "phase": "LOCATING",
+     "elapsed_ms": 18
+    },
+    {
+     "phase": "FOCUS_BLUR_STALE",
+     "elapsed_ms": 388
+    },
+    {
+     "phase": "FOCUS_BLURRED",
+     "elapsed_ms": 651
+    },
+    {
+     "phase": "FOCUS_DISPATCHING",
+     "elapsed_ms": 854
+    },
+    {
+     "phase": "FOCUS_GESTURE_COMPLETED",
+     "elapsed_ms": 991
+    },
+    {
+     "phase": "FOCUS_CONFIRMED",
+     "elapsed_ms": 1225
+    },
+    {
+     "phase": "INPUT_COMMITTING",
+     "elapsed_ms": 1502
+    },
+    {
+     "phase": "INPUT_SENT",
+     "elapsed_ms": 1511
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 2122
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 3475
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 4894
+    },
+    {
+     "phase": "FINISHED",
+     "elapsed_ms": 5854
+    }
+   ],
+   "phase": "FINISHED",
+   "focus_cycle": 0,
+   "blur_tap_xy": [
+    312,
+    370
+   ],
+   "focus_baseline_generation": 36,
+   "focus_tap_elapsed_ms": 2231496,
+   "focus_tap_xy": [
+    312,
+    189
+   ],
+   "editor_package": "com.android.chrome",
+   "editor_generation": 37,
+   "editor_start_elapsed_ms": 2231764,
+   "ime_window_visible": false,
+   "focus_signals": {
+    "fresh_generation": true,
+    "generation": 37,
+    "baseline_generation": 36,
+    "ime_window_visible": false,
+    "focus_cycle": 0
+   },
+   "focused_screenshot": "files/visual/c_C5dm45RlsehaG-pnziT8Ga9V7n0ranD_itF8DJ7ezEk/focused.png",
+   "focused_field_bounds": [
+    131,
+    149,
+    494,
+    230
+   ],
+   "wrong_field": false,
+   "prior_text_length": 30,
+   "visible_field_text": "verp Giants Landstede Zwolld",
+   "ocr_verify_attempt": 2,
+   "post_field_bounds": [
+    131,
+    149,
+    494,
+    230
+   ],
+   "observed_text": "Antwerp Giants Landstede Zwolle",
+   "exact_input_match": true,
+   "visual_text_match": false,
+   "bounds_unchanged": true,
+   "focus_session_fresh": true,
+   "ocr_gate": "SOFT_SUPPORTING",
+   "ocr_soft_pass": true,
+   "detail": "Exact editor value verified; OCR supporting evidence imperfect but field/focus gates held",
+   "ended_at_ms": 1790443856003,
+   "duration_ms": 5853
+  },
+  "search_result_fixtures": [
+   {
+    "code": "d7f07092",
+    "home": "Landstede Zwolle",
+    "away": "Antwerp Giants",
+    "fixture_name": "Landstede Zwolle v Antwerp Giants",
+    "exact_fixture_text": "Home Landstede Zwolle\nAway Antwerp Giants",
+    "competition": "Basketball Casino",
+    "bounds": [
+     21,
+     397,
+     503,
+     423
+    ]
+   }
+  ],
+  "search_ocr_readback": "18:30 C all 100% | o bet365.com/#/AX/K9 + 14 | Antwerp Giants Landstede Zwolle X Close | Basketball Casino | Landstede Zwolle vs Antwerp Giants > | Landstede Zwolle vs Antwerp 1 2 | Giants | +4.5 1.83 -4.5 1.83 | Sat 26 Sep 19:30 | ((o) | Home All Sports In-Play My Bets Casino",
+  "verified_fixture": {
+   "code": "d7f07092",
+   "home": "Landstede Zwolle",
+   "away": "Antwerp Giants",
+   "fixture_name": "Landstede Zwolle v Antwerp Giants",
+   "exact_fixture_text": "Home Landstede Zwolle\nAway Antwerp Giants",
+   "competition": "Basketball Casino",
+   "bounds": [
+    21,
+    397,
+    503,
+    423
+   ]
+  },
+  "fixture_home": "Landstede Zwolle",
+  "fixture_away": "Antwerp Giants",
+  "discovery_query": "Antwerp Giants Landstede Zwolle",
+  "search_candidate_used": {
+   "query": "Antwerp Giants",
+   "source": "feed"
+  },
+  "identity_verified_home": "Antwerp Giants",
+  "identity_verified_away": "Landstede Zwolle",
+  "discovered_fixtures": [
+   {
+    "code": "d7f07092",
+    "home": "Landstede Zwolle",
+    "away": "Antwerp Giants",
+    "fixture_name": "Landstede Zwolle v Antwerp Giants",
+    "exact_fixture_text": "Home Landstede Zwolle\nAway Antwerp Giants",
+    "competition": "Basketball Casino",
+    "bounds": [
+     21,
+     397,
+     503,
+     423
+    ]
+   }
+  ],
+  "sport_observed": "basketball",
+  "fixture": {
+   "code": "d7f07092",
+   "home": "Landstede Zwolle",
+   "away": "Antwerp Giants",
+   "fixture_name": "Landstede Zwolle v Antwerp Giants",
+   "exact_fixture_text": "Home Landstede Zwolle\nAway Antwerp Giants",
+   "competition": "Basketball Casino",
+   "bounds": [
+    21,
+    397,
+    503,
+    423
+   ]
+  },
+  "direct_event_header": [
+   "BNXT Super Cup 26 Sep 19:30",
+   "Landstede Zwolle vs Antwerp Giants",
+   "Popular Bet Builder Game Team Quarter H A"
+  ],
+  "competition_check": {
+   "feed": "BNXT Super Cup",
+   "country": "",
+   "page": "BNXT Super Cup 26 Sep 19:30",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "teams reversed (home/away): 'Antwerp Giants v Landstede Zwolle' is listed as 'Landstede Zwolle v Antwerp Giants'",
+   "home": {
+    "feed": "Antwerp Giants",
+    "bookmaker": "Landstede Zwolle",
+    "level": "NONE",
+    "score": 0.33,
+    "note": "different name 0.33"
+   },
+   "away": {
+    "feed": "Landstede Zwolle",
+    "bookmaker": "Antwerp Giants",
+    "level": "NONE",
+    "score": 0.33,
+    "note": "different name 0.33"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": true
+  },
+  "identity_verdict": "MISMATCH",
+  "direct_event_rejected": "identity: teams reversed (home/away): 'Antwerp Giants v Landstede Zwolle' is listed as 'Landstede Zwolle v Antwerp Giants'",
+  "detail": "Event link shows 'Landstede Zwolle v Antwerp Giants'; alert says 'Antwerp Giants v Landstede Zwolle': teams reversed (home/away): 'Antwerp Giants v Landstede Zwolle' is listed as 'Landstede Zwolle v Antwerp Giants'",
+  "duration_ms": 31275
+ },
+ "wall": 32.463019609451294
+}
