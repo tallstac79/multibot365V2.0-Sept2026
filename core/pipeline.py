@@ -369,6 +369,12 @@ class Pipeline:
             payload['kickoff_utc'] = datetime.fromisoformat(start).strftime('%Y-%m-%dT%H:%M')
         if row['competition']:
             payload['competition'] = row['competition']
+        try:
+            country = (json.loads(row['normalized_alert'] or '{}') or {}).get('country')
+        except (ValueError, TypeError):
+            country = None
+        if country:
+            payload['country'] = str(country)      # the phone's deterministic competition gate ("Mexico Liga ABE")
         payload['period'] = 'FULL_GAME'
         # B6/B7: promoted aliases and the names Bet365 used for this same fixture before travel with the run.
         with self.store.connection() as db:

@@ -86,5 +86,20 @@ then restart the service so it re-reads the file. Continuous automatic operation
 `pipeline`: `approval_mode: "automatic"`, `dispatch_enabled: true`, `final_action_enabled: true`,
 `final_action_one_shot: false`, `expected_worker_id` and `expected_account_fingerprint` copied from the phone's
 health (`worker_id`, `account_fingerprint`); the kill switch released (`python -m tools.pipeline_service resume`);
-and the phone's own final-action permission armed on the phone (Settings screen). Manual mode: `approval_mode:
+and the phone's persistent local execution permission enabled on the phone's settings screen (`LocalExecution`,
+0.9.22: stays enabled across app, Chrome and phone restarts until disabled there; revoked automatically when the
+worker id or the account fingerprint it was granted for changes; never settable over HTTP, by the backend, Telegram or
+session recovery; reported in `/health` as `local_execution` and on the dashboard). Manual mode: `approval_mode:
 "manual"` with the same switches; the operator replies `/approve`.
+
+## Search fallback (0.9.22)
+
+Direct event links stay the primary route. When the phone must search, the ladder is deterministic and logged
+(`search_query_ladder`, `search_candidate_used` with `source`): the raw feed names, then the bookmaker's own names
+supplied with the instruction as `aliases` (the backend's event cache for this fixture and kick-off, and approved
+competition-scoped aliases; e.g. Landstede Hammers -> Landstede Zwolle recorded from a verified page on 26 Sep 2026),
+then club-prefix forms. Nothing is promoted because Search returned something; every result still passes the strict
+event identity (both teams, kick-off, competition, markers, sport) and more than one plausible fixture fails closed.
+The competition gate accepts the bookmaker's country-prefixed header ("Mexico Liga ABE" for feed "Liga ABE" from
+Mexico, sent as `country`) and the approved table `EventIdentity.COMPETITION_ALIASES` (Poland "1. Liga" -> "Poland 1st
+Division"); nothing fuzzy.

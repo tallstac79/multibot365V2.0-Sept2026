@@ -205,12 +205,35 @@ final class EventIdentity {
         return key.equals("world club friendlies") ? "club friendlies" : key;
     }
 
+    /** Approved feed-label -> bookmaker-header mappings, keyed "country|feed competition" (normalised). Each entry is
+     *  backed by an event page header captured on the phone; nothing here is inferred from similarity. */
+    static final Map<String, String> COMPETITION_ALIASES = new HashMap<>();
+    static {
+        // 2026-09-26: Kotwica Kolobrzeg v Polonia Warszawa and Spojnia Stargard v Polonia Bytom, header "Poland 1st Division"
+        COMPETITION_ALIASES.put("poland|1 liga", "poland 1st division");
+    }
+
+    /** Deterministic competition match: equal keys; the bookmaker's country-prefixed form of the feed label
+     *  ("Mexico Liga ABE" for feed "Liga ABE" from Mexico, 2026-09-26 UP Mexico v UMAD); or an approved mapping
+     *  scoped by country. Anything else is a mismatch. */
+    static boolean competitionMatches(String feedCompetition, String country, String pageCompetition) {
+        String fc = competitionKey(feedCompetition), pc = competitionKey(pageCompetition), ck = normalise(country);
+        if (fc.isEmpty() || pc.isEmpty()) return false;
+        if (fc.equals(pc)) return true;
+        if (!ck.isEmpty() && pc.equals(ck + " " + fc)) return true;
+        String approved = ck.isEmpty() ? null : COMPETITION_ALIASES.get(ck + "|" + fc);
+        return approved != null && approved.equals(pc);
+    }
+
     /** Production gate: naming similarity alone never establishes event identity. */
     static Result resolveVerified(Event feed, Event page, Map<String,String> aliases, boolean women) {
+        return resolveVerified(feed, page, aliases, women, null);
+    }
+
+    static Result resolveVerified(Event feed, Event page, Map<String,String> aliases, boolean women, String country) {
         Result r = resolve(feed, page, aliases, women);
         if (!r.accepted()) return r;
-        String fc = competitionKey(feed.competition), pc = competitionKey(page.competition);
-        if (!r.kickoffKnown || !r.kickoffAgrees || fc.isEmpty() || pc.isEmpty() || !fc.equals(pc))
+        if (!r.kickoffKnown || !r.kickoffAgrees || !competitionMatches(feed.competition, country, page.competition))
             return new Result(Verdict.AMBIGUOUS, "Known matching kick-off and competition required", r.home, r.away,
                     r.kickoffKnown, r.kickoffAgrees, false, Collections.emptyMap(), null);
         return r;

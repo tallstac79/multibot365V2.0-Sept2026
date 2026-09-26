@@ -32,6 +32,11 @@ public class CoordinatorInstructionTest {
         }
     }
 
+    @Test public void countryIsAnAdmittedHoldExtra() {
+        Map<String, String> f = womensHold(); f.put("country", "Hungary");
+        assertEquals(null, refusal(f));
+    }
+
     @Test public void womensCompetitionHoldRunIsAdmitted() {
         assertEquals(null, refusal(womensHold()));
     }

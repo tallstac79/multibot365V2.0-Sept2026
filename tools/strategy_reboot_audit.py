@@ -32,17 +32,31 @@ def main():
         except (OSError,RuntimeError):pass
         time.sleep(2)
     else:raise RuntimeError('Coordinator did not recover within 150s')
-    iid='forensic-reboot-session-'+str(int(time.time()))
-    (out/'checkpoint.json').write_text(json.dumps(dict(boot_before=boot_before,boot_after=boot_after,health=after,instruction_id=iid),indent=2))
-    safety()
-    ack=c.submit(dict(instruction_id=iid,action='SESSION_CHECK',adapter='live_bet365',scenario='live',sport='basketball',timeout_ms=120000))
-    poll_errors=[];deadline=time.monotonic()+145
-    while time.monotonic()<deadline:
-        try:
-            session=c.result(iid,seconds=10);break
-        except (ValueError,TimeoutError) as exc:
-            poll_errors.append(str(exc));time.sleep(1)
-    else:session=dict(status='UNRESOLVED',detail='Bounded result polling expired; no replacement instruction submitted')
+    coordinator_up_s=round(time.monotonic()-start,1)
+    (out/'checkpoint.json').write_text(json.dumps(dict(boot_before=boot_before,boot_after=boot_after,health=after,coordinator_up_s=coordinator_up_s),indent=2))
+    # Readiness (2026-09-26): boot -> coordinator healthy -> Chrome/Bet365 readiness (the phone's open_home now waits,
+    # state-driven, up to 30 s) -> SESSION_CHECK, with bounded retries while Chrome is still not showing Bet365.
+    # Never classify the session from a frame that shows no Bet365 at all.
+    attempts=[];session=None;poll_errors=[];ack=None
+    for attempt in range(1,4):
+        safety()
+        iid=f'forensic-reboot-session-{int(time.time())}-{attempt}'
+        t0=time.monotonic()
+        ack=c.submit(dict(instruction_id=iid,action='SESSION_CHECK',adapter='live_bet365',scenario='live',sport='basketball',timeout_ms=120000))
+        deadline=time.monotonic()+145
+        while time.monotonic()<deadline:
+            try:
+                session=c.result(iid,seconds=10);break
+            except (ValueError,TimeoutError) as exc:
+                poll_errors.append(str(exc));time.sleep(1)
+        else:session=dict(status='UNRESOLVED',detail='Bounded result polling expired; no replacement instruction submitted')
+        attempts.append(dict(attempt=attempt,instruction_id=iid,since_reboot_s=round(time.monotonic()-start,1),
+                             wall_s=round(time.monotonic()-t0,1),status=session.get('status'),stage=session.get('stage'),detail=session.get('detail')))
+        not_ready=session.get('status')=='FAIL' and 'not visible' in str(session.get('detail'))
+        if not not_ready:break
+        time.sleep(15)
+    (out/'readiness.json').write_text(json.dumps(dict(coordinator_up_s=coordinator_up_s,attempts=attempts),indent=2))
+    print('READINESS',json.dumps(attempts),flush=True)
     latest=sorted((ROOT/'evidence/strategy-audit/phone').glob('run-*'))[-1]
     prior=json.loads((latest/'hold.json').read_text(encoding='utf-8'))
     assert prior['payload']['execution_mode']=='hold'

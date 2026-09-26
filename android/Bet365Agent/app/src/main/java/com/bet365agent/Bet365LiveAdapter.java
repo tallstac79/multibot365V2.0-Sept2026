@@ -28,11 +28,15 @@ final class Bet365LiveAdapter implements SiteAdapter {
     /** Price of the selection put on the betslip in this run (stake x price is cross-checked with "To Return"). */
     private String openedPrice;
     private String targetMarket = "", targetSide = "", targetLine = "";
-    private String contextKickoff = "", contextCompetition = "", contextPeriod = "", lineTolerance = "";
+    private String contextKickoff = "", contextCompetition = "", contextPeriod = "", lineTolerance = "", contextCountry = "";
     private org.json.JSONObject heldContext;
     @Override public void set_event_context(String kickoff, String competition, String period, String tolerance) {
         contextKickoff = kickoff; contextCompetition = competition; contextPeriod = period; lineTolerance = tolerance;
     }
+    /** The alert's country: lets the competition gate accept the bookmaker's country-prefixed header deterministically. */
+    @Override public void set_country(String country) { contextCountry = country == null ? "" : country.trim(); }
+    /** Search discovery ladder of the current run: query -> source (feed / bookmaker_alias / club_prefix). */
+    private java.util.Map<String, String> ladderSources = java.util.Collections.emptyMap();
     void set_held_context(org.json.JSONObject context) { heldContext = context; }
     /** Instruction-supplied aliases (feed -> bookmaker). Static because the fixture gates are static; the
      *  coordinator runs one instruction at a time and every run sets it before use. */
@@ -169,8 +173,32 @@ final class Bet365LiveAdapter implements SiteAdapter {
         this.expectedAway = away == null ? "" : away.trim();
     }
 
+    /** State-driven wait for the home page after opening it: Chrome may still be cold (the first open after a phone
+     *  reboot on 2026-09-26 was judged at 11 s after boot and saw nothing of Bet365). Polls every second up to
+     *  HOME_READY_MS until there is something to judge (Bet365 chrome, login wall, cookie wall, splash or a Chrome
+     *  prompt); re-issues the open once when Chrome still shows nothing of Bet365 after 10 s. Never decides the
+     *  session; on timeout the existing checks fail closed. */
+    private static final long HOME_READY_MS = 30_000;
+    private CompletableFuture<Void> awaitHomeReady(int polls) {
+        return ui.delay(polls == 0 ? 1600 : 1000).thenCompose(v -> ui.capture("home_wait_" + polls)).thenCompose(s -> {
+            boolean ready = settling(s) || loginWall(s) || cookieWall(s) || chromeFirstRun(s) || chromePromptControl(s) != null
+                    || visible(s, "bet365", "Bet365", "Sports", "Search", "In-Play", "In-play", "Football", "Log In", "Login");
+            long waited = 1600L + Math.max(0, polls) * 1000L;
+            if (ready || waited >= HOME_READY_MS) {
+                ui.put("home_ready_wait_ms", waited);
+                ui.put("home_ready", ready);
+                return CompletableFuture.<Void>completedFuture(null);
+            }
+            if (polls == 9) {
+                ui.put("home_ready_reopened", true);
+                return ui.open(HOME_URL).thenCompose(x -> awaitHomeReady(polls + 1));
+            }
+            return awaitHomeReady(polls + 1);
+        });
+    }
+
     public CompletableFuture<Void> open_home() {
-        return ui.open(HOME_URL).thenCompose(v -> ui.delay(2800)).thenCompose(v -> settle("home", 0)).thenCompose(this::pastChromeFirstRun).thenCompose(s -> {
+        return ui.open(HOME_URL).thenCompose(v -> awaitHomeReady(0)).thenCompose(v -> settle("home", 0)).thenCompose(this::pastChromeFirstRun).thenCompose(s -> {
             require(!visible(s, "SIMULATOR", "SEARCHPAGE", "Fictional interface"),
                     "TARGET_NOT_FOUND", "Simulator page visible during live Bet365 run");
             return clearOverlays(s, 0).thenCompose(v -> ui.capture("home_ready")).thenAccept(ready -> {
@@ -465,7 +493,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     private CompletableFuture<VisualScreen> pastChromeFirstRun(VisualScreen s) {
         if (!chromeFirstRun(s)) return CompletableFuture.completedFuture(s);
-        return dismissChromeFirstRun(s, 0).thenCompose(v -> ui.open(HOME_URL)).thenCompose(v -> ui.delay(2800))
+        return dismissChromeFirstRun(s, 0).thenCompose(v -> ui.open(HOME_URL)).thenCompose(v -> awaitHomeReady(0))
                 .thenCompose(v -> settle("home_after_chrome_fre", 0));
     }
 
@@ -656,10 +684,13 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     public CompletableFuture<Void> enter_query(String query) {
         String homePart = setIdentity(query);
-        List<String> ladder = buildSearchQueryLadder(homePart, expectedAway);
-        ui.put("search_query_ladder", new JSONArray(ladder));
+        java.util.LinkedHashMap<String, String> ladder = searchLadder(homePart, expectedAway, instructionAliases);
+        ladderSources = ladder;
+        JSONArray shown = new JSONArray();
+        for (java.util.Map.Entry<String, String> e : ladder.entrySet()) shown.put(CoordinatorAgent.object("query", e.getKey(), "source", e.getValue()));
+        ui.put("search_query_ladder", shown);
         ui.checkpoint("FOCUS");
-        return runSearchQueryLadder(ladder, 0, false);
+        return runSearchQueryLadder(new ArrayList<>(ladder.keySet()), 0, false);
     }
 
     /** Identity from "Home||Away": identityHome / expectedAway (both checked by every fixture gate). */
@@ -750,7 +781,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
         String feedAway = expectedAway;
         EventIdentity.Result id = EventIdentity.resolveVerified(
                 new EventIdentity.Event(sport, identityHome, feedAway, want, contextCompetition, false),
-                new EventIdentity.Event(sport, teams[0], teams[1], shown, header.isEmpty() ? null : header.get(0), !ui.record.optString("event_url").isEmpty()), instructionAliases, womensCompetition);
+                new EventIdentity.Event(sport, teams[0], teams[1], shown, header.isEmpty() ? null : header.get(0), !ui.record.optString("event_url").isEmpty()),
+                instructionAliases, womensCompetition, contextCountry);
+        ui.put("competition_check", CoordinatorAgent.object("feed", contextCompetition, "country", contextCountry,
+                "page", header.isEmpty() ? "" : header.get(0),
+                "matches", EventIdentity.competitionMatches(contextCompetition, contextCountry, header.isEmpty() ? null : header.get(0))));
         ui.put("identity", CoordinatorAgent.object("verdict", id.verdict.name(), "reason", id.reason, "home", sideJson(id.home),
                 "away", sideJson(id.away), "kickoff_known", id.kickoffKnown, "kickoff_agrees", id.kickoffAgrees, "reversed", id.reversed));
         ui.put("identity_verdict", id.verdict.name());
@@ -788,41 +823,46 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     /**
-     * Bounded discovery ladder (SEARCH ONLY):
-     * A "Home Away" | B "Home" | C "Away" | D deterministic aliases (strip BC/KK/BK/FC/HJK…).
-     * Fixture identity always uses identityHome + expectedAway, never the alias alone.
+     * Deterministic discovery ladder (SEARCH ONLY), in order: the raw feed names; the bookmaker's own names for
+     * these teams as supplied with the instruction (backend event cache of this fixture and kick-off, or approved
+     * scoped aliases: never guessed here); then club-prefix forms (strip BC/KK/BK/FC/HJK...). Fixture identity
+     * always uses identityHome + expectedAway with the same aliases, never the query alone. Returns query ->
+     * source so the run logs exactly which candidate found the event (2026-09-26: "Landstede Hammers" has no
+     * Bet365 search result, "Landstede Zwolle" has).
      */
-    private static List<String> buildSearchQueryLadder(String home, String away) {
-        // Prefer alias forms early: "BC …" queries often resolve Casino-only on Bet365.
-        LinkedHashSet<String> out = new LinkedHashSet<>();
+    static java.util.LinkedHashMap<String, String> searchLadder(String home, String away, java.util.Map<String, String> aliases) {
+        java.util.LinkedHashMap<String, String> out = new java.util.LinkedHashMap<>();
         String h = home == null ? "" : home.trim();
         String a = away == null ? "" : away.trim();
-        List<String> homeAliases = searchAliasesFor(h);
-        List<String> awayAliases = searchAliasesFor(a);
+        String bh = bookmakerName(h, aliases), ba = bookmakerName(a, aliases);
         boolean awayLooksReal = a.length() >= 3 && a.length() <= 28 && a.matches("(?i)[A-Za-z0-9 .'-]+");
-        // A/D first when prefix alias exists: "Beroe Ferrol", then full "BC Beroe Ferrol"
-        if (!h.isEmpty() && !a.isEmpty() && awayLooksReal) {
-            for (String ha : homeAliases) out.add(ha + " " + a);
-            for (String ha : homeAliases) {
-                for (String aa : awayAliases) out.add(ha + " " + aa);
-            }
-            out.add(h + " " + a);
+        java.util.function.BiConsumer<String, String> add = (q, src) -> {
+            if (q != null && !q.trim().isEmpty()) out.putIfAbsent(q.trim().replaceAll("\\s+", " "), src);
+        };
+        if (!h.isEmpty() && !a.isEmpty() && awayLooksReal) add.accept(h + " " + a, "feed");
+        if (bh != null || ba != null) {
+            String ch = bh != null ? bh : h, ca = ba != null ? ba : a;
+            if (!ch.isEmpty() && !ca.isEmpty()) add.accept(ch + " " + ca, "bookmaker_alias");
+            if (bh != null) add.accept(bh, "bookmaker_alias");
+            if (ba != null) add.accept(ba, "bookmaker_alias");
         }
-        // D single-team aliases before raw prefixed home (Casino magnet)
-        for (String ha : homeAliases) out.add(ha);
-        if (!h.isEmpty()) out.add(h);
-        // Non-real away: still try once so wrong-opponent fails closed via identity gate on home hits
-        if (!a.isEmpty() && awayLooksReal) out.add(a);
-        for (String aa : awayAliases) out.add(aa);
-        if (!h.isEmpty() && !a.isEmpty() && !awayLooksReal) {
-            // Keep one combined attempt last (bounded); identity still requires both teams.
-            out.add(h + " " + a);
-        }
-        out.removeIf(s -> s == null || s.trim().isEmpty());
-        // Bound ladder length for 120s instruction budget
-        ArrayList<String> list = new ArrayList<>(out);
-        if (list.size() > 6) return new ArrayList<>(list.subList(0, 6));
-        return list;
+        for (String ha : searchAliasesFor(h)) add.accept(ha + " " + a, "club_prefix");
+        if (!h.isEmpty()) add.accept(h, "feed");
+        for (String ha : searchAliasesFor(h)) add.accept(ha, "club_prefix");
+        if (!a.isEmpty() && awayLooksReal) add.accept(a, "feed");
+        for (String aa : searchAliasesFor(a)) add.accept(aa, "club_prefix");
+        if (!h.isEmpty() && !a.isEmpty() && !awayLooksReal) add.accept(h + " " + a, "feed");   // one combined attempt, last
+        while (out.size() > 8) out.remove(new ArrayList<>(out.keySet()).get(out.size() - 1));   // bounded for the run budget
+        return out;
+    }
+
+    /** The bookmaker's name for a feed team from the instruction aliases (backend keys: lower case, single spaces);
+     *  null when there is none or it only echoes the feed name. */
+    static String bookmakerName(String feedName, java.util.Map<String, String> aliases) {
+        if (feedName == null || aliases == null || aliases.isEmpty()) return null;
+        String value = aliases.get(EventIdentity.plain(feedName));
+        if (value == null || value.trim().isEmpty() || EventIdentity.plain(value).equals(EventIdentity.plain(feedName))) return null;
+        return value.trim();
     }
 
     /** Deterministic club-prefix aliases for SEARCH discovery only. */
@@ -1071,10 +1111,17 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     private CompletableFuture<Void> recoverSportsContextThenSearch() {
         return ui.capture("casino_recover_pre").thenCompose(s -> {
-            VisualScreen.Line close = firstOf(s, "Close");
+            // Close by the search bar's own geometry (SearchBar): OCR merges the bar into one row, so a line-level
+            // "Close" match tapped the query text instead (real: 2026-09-25 Tofas SK, 2026-09-26 Landstede Hammers).
+            SearchBar.Bar bar = SearchBar.locate(wordsOf(s));
             CompletableFuture<Void> closeF = CompletableFuture.completedFuture(null);
-            if (close != null && close.bounds.top < 320) {
-                closeF = ui.tap(close.bounds, "Close casino search").thenCompose(v -> ui.delay(700));
+            if (bar != null && bar.close != null) {
+                closeF = ui.tap(new android.graphics.Rect(bar.close[0], bar.close[1], bar.close[2], bar.close[3]), "Close casino search")
+                        .thenCompose(v -> ui.delay(700));
+            } else {
+                VisualScreen.Line close = firstOf(s, "Close");
+                if (close != null && close.bounds.top < 320 && close.bounds.width() < 120)
+                    closeF = ui.tap(close.bounds, "Close casino search").thenCompose(v -> ui.delay(700));
             }
             return closeF.thenCompose(v -> ensureSportsContext())
                     .thenCompose(v -> openSearchAttempt(0));
@@ -2827,6 +2874,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
         ui.put("fixture_home", chosen.home);
         ui.put("fixture_away", chosen.away);
         ui.put("discovery_query", q);
+        ui.put("search_candidate_used", CoordinatorAgent.object("query", q, "source", ladderSources.getOrDefault(q, "unknown")));
         ui.put("identity_verified_home", idHome);
         ui.put("identity_verified_away", idAway);
     }

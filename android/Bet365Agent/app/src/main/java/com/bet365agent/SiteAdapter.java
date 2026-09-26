@@ -32,6 +32,8 @@ interface SiteAdapter {
     /** Most recent verified observation, never a new baseline for execution limits. */
     default Selection current_selection(Selection previous) { return previous; }
     default void set_event_context(String kickoffUtc, String competition, String period, String lineTolerance) {}
+    /** The alert's country (feed label), used only by the deterministic competition gate. */
+    default void set_country(String country) {}
     /** Aliases supplied with the instruction (feed name -> bookmaker name), from the backend's registry/cache. */
     default void set_aliases(java.util.Map<String, String> aliases) {}
     /** The backend established the competition as women's: a missing "(W)" on a feed name may be supplied (resolver rule). */

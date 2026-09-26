@@ -23,6 +23,15 @@ Code: `core/final_action.py`, `core/bet_matching.py`, `core/telegram_commands.py
 Kill switch: Telegram `/stop`, the dashboard "STOP" button, or `python -m tools.pipeline_service pause`.
 It cancels pending approvals and blocks all dispatch until `/resume`.
 
+Phone-side permission (0.9.22, `LocalExecution`): the phone taps Place Bet only while its persistent local execution
+permission is enabled. It is enabled and disabled only on the phone's settings screen, survives app, Chrome and phone
+restarts, is revoked automatically when the worker id or the account fingerprint it was granted for changes, and has
+no HTTP setter. It never bypasses any verification, limit or backend switch; `/health` reports it as `local_execution`.
+
+Home readiness (0.9.22): `open_home` waits state-driven (1 s polls, up to 30 s, one re-open at 10 s) until Bet365
+chrome, a login wall, a cookie wall, the splash or a Chrome prompt is on screen, instead of a fixed 2.8 s. A cold
+Chrome after a phone reboot no longer produces "Live Bet365 homepage not visible" from an empty frame.
+
 ## Flow
 
 ```

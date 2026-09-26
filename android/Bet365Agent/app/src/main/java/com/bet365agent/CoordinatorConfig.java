@@ -7,14 +7,10 @@ import java.security.SecureRandom;
 final class CoordinatorConfig {
     static final int PORT = 8767;
     static SharedPreferences prefs(Context context) { return context.getSharedPreferences("coordinator_config", 0); }
-    // Local-only, expires automatically and is invalidated by a phone reboot (elapsed clock).
-    static boolean finalActionArmed(Context c) {
-        long until = prefs(c).getLong("final_action_until_elapsed", 0);
-        long armed = prefs(c).getLong("final_action_at_elapsed", Long.MAX_VALUE);
-        long now = android.os.SystemClock.elapsedRealtime();
-        return prefs(c).getInt("final_action_boot", -1) == android.provider.Settings.Global.getInt(c.getContentResolver(), "boot_count", -2)
-                && armed <= now && now < until && until - armed <= 3_600_000L;
-    }
+    /** Local-only, persistent permission for final actions (LocalExecution, 2026-09-26): enabled only on the phone's
+     *  settings screen, kept until disabled there, revoked automatically when the worker or account identity it was
+     *  granted for changes. Replaces the one-hour lease. Backend switches still block independently. */
+    static boolean finalActionArmed(Context c) { return LocalExecution.enabled(c); }
     static synchronized String token(Context context) {
         String token = prefs(context).getString("token", "");
         if (token.isEmpty()) {

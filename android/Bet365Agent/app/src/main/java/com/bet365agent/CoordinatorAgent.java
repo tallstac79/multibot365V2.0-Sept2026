@@ -230,6 +230,7 @@ final class CoordinatorAgent implements AutoCloseable {
                 adapter.set_aliases(instruction.aliases);
                 adapter.set_competition_women(instruction.competitionWomen);
                 adapter.set_event_context(instruction.kickoffUtc, instruction.competition, instruction.period, instruction.lineTolerance);
+                adapter.set_country(instruction.country);
                 if(instruction.action.equals("SESSION_CHECK")) new SessionCheckWorkflow(session,adapter).start();
                 else if(instruction.action.equals("OPEN_SEARCH")) new SearchOpenWorkflow(session,adapter,instruction.text).start();
                 else new AdapterWorkflow(session,adapter).start(instruction.text,instruction.market,instruction.side,instruction.line,instruction.minimumPrice,instruction.stake,instruction.executionMode,instruction.confirmationStatus,instruction.eventUrl,instruction.kickoffUtc);
@@ -434,6 +435,8 @@ final class CoordinatorAgent implements AutoCloseable {
             .put("worker_id", WorkerIdentity.workerId(service))
             .put("account_fingerprint", CoordinatorConfig.hasBet365Credentials(service)
                     ? WorkerIdentity.fingerprint(CoordinatorConfig.bet365Username(service)) : JSONObject.NULL)
+            // Persistent local execution permission (LocalExecution): readable here, never settable over HTTP.
+            .put("local_execution", LocalExecution.state(service))
             .put("session_recovery", selfHealStatus());
         if (active != null) {
             put(health, "progress", progressSnapshot());

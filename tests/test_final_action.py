@@ -544,6 +544,7 @@ class HeldSlipTests(Base):
         self.assertEqual((payload['action'], payload['execution_mode']), ('ADAPTER_WORKFLOW', 'hold'))
         self.assertEqual(payload['event_url'], 'https://www.bet365.com/#/AC/B18/C21167989/D19/E26735656/F19/I0/')
         self.assertEqual(payload['kickoff_utc'], '2026-09-24T09:30')
+        self.assertEqual((payload['competition'], payload['country'], payload['period']), ('NBL', 'Australia', 'FULL_GAME'))
         self.assertNotIn('confirmation_status', payload)
 
     def test_approve_taps_the_held_slip_without_rebuilding(self):
