@@ -98,7 +98,7 @@ Local evidence and interpretation:
     checks without inventing global price bounds. Alert-to-live odds and line
     deterioration limits are market-specific: approved basketball odds loss is
     10% of net payout and spreads require both 1-point and 10%-of-handicap caps.
-    Totals line tolerance awaits a separate choice based on [FEED_TIME_AND_EXECUTION_POLICY.md](FEED_TIME_AND_EXECUTION_POLICY.md).
+    Totals allow 1.0 point deterioration (one practical market step), as recorded in [FEED_TIME_AND_EXECUTION_POLICY.md](FEED_TIME_AND_EXECUTION_POLICY.md).
 12. Apply enabled markets, timestamp age, unstarted event with known timezone,
     decimal odds, configured price/EV bounds and stake cap. Recheck at dispatch.
     An old normalized alert lacking this strategy evidence must be rejected, not

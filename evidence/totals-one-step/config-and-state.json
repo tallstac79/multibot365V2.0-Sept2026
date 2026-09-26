@@ -1,0 +1,54 @@
+{
+  "verified_at": "2026-09-26T07:47:25.452631+00:00",
+  "changed_path": "sports.basketball.markets.TOTALS.max_line_deterioration",
+  "before": null,
+  "after": 1.0,
+  "market_step_points": 1.0,
+  "policy_meaning": "Initial one-step execution slippage allowance; not a mathematical optimum",
+  "all_other_config_unchanged": true,
+  "totals": {
+    "enabled": true,
+    "stake": null,
+    "minimum_ev": null,
+    "allowed_slippage": null,
+    "min_price": null,
+    "max_price": null,
+    "max_odds_deterioration": null,
+    "max_line_deterioration": 1.0,
+    "max_net_payout_deterioration_percent": 10,
+    "max_line_deterioration_percent": null
+  },
+  "spread": {
+    "enabled": true,
+    "stake": null,
+    "minimum_ev": null,
+    "allowed_slippage": null,
+    "min_price": null,
+    "max_price": null,
+    "max_odds_deterioration": null,
+    "max_line_deterioration": 1.0,
+    "max_net_payout_deterioration_percent": 10,
+    "max_line_deterioration_percent": 10
+  },
+  "timezone": {
+    "event_timezone": "UTC",
+    "feed_timezone_verified": true
+  },
+  "comparison_persistence": "All observed comparisons retained in result execution_comparisons and ALERT_TO_LIVE_COMPARISON audit rows; original alert baseline",
+  "phone": {
+    "healthy": true,
+    "app_version": "0.9.19-scaled-execution",
+    "version_code": 102,
+    "state": "IDLE",
+    "phone_final_action_armed": false
+  },
+  "flags": {
+    "dispatch_enabled": false,
+    "final_action_enabled": false,
+    "final_action_one_shot": false,
+    "auto_approve": false
+  },
+  "paused": true,
+  "active_phone_instructions": 0,
+  "new_wagers_submitted": 0
+}

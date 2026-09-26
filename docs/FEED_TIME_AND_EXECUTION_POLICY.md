@@ -36,12 +36,14 @@ perspective, deterioration is `max(0, original_line - live_line)` for either
 HOME or AWAY, favorite or underdog. A larger signed handicap is an improvement.
 All five operator examples are covered by regression tests.
 
-Basketball totals retain `max_line_deterioration=null` pending the operator's
-choice. Spread percentages are invalid on totals. Proposed allowance: **0.5
-point absolute**, with OVER deterioration `max(0, live-original)` and UNDER
-`max(0, original-live)`. This proposal is not saved or inferred to be optimal.
-Until configured, totals eligibility fails closed. Football policies remain
-unchanged; all execution remains disarmed.
+Basketball totals use `max_line_deterioration=1.0`: **one practical market step
+is 1 full point** in the markets used, as confirmed by the operator. Spread
+percentages are invalid on totals; `max_line_deterioration_percent=null`.
+OVER deterioration is `max(0, live-original)`; UNDER deterioration is
+`max(0, original-live)`. OVER 165.5 to 166.5 and UNDER 165.5 to 164.5 pass;
+two-point deterioration rejects. Improvements always pass. This is an initial
+one-step execution-slippage allowance, not a mathematical optimum. Football
+policies remain unchanged; all execution remains disarmed.
 
 Every fresh basketball grid/slip/pre-tap quote is tested against limits derived
 once from the qualifying alert. An intermediate quote never becomes a baseline.
@@ -54,24 +56,27 @@ are persisted in instruction results and `ALERT_TO_LIVE_COMPARISON` audit rows,
 including price/line failures. Rules rejections explicitly record live terms as
 unknown; unreadable observations never borrow a previous price or line.
 
-## Historical comparison and totals recommendation
+## Historical comparison and operator correction
 
 [Full comparison](../evidence/execution-policy-v2/REPORT.md), with frozen source
-and per-quote calculations alongside it. Reproduce with
-`python -m tools.scaled_execution_report`; this reads only and never saves policy.
+and per-quote calculations alongside it. This is the historical pre-correction
+snapshot: its 0.5-point proposal and unset totals setting are superseded by the
+operator-approved 1.0-point policy above. `python -m tools.scaled_execution_report`
+reproduces that historical report; it never saves policy.
 
 The 26 stored results contain six usable alert/live pairs: five at selection
 stage and one at pre-tap. Spreads retain **3/4**; Boras/Nassjo loses 27.83% of net
 payout (2.15 to 1.83) and still rejects. Both totals quotes were unchanged, so
 candidate allowances of 0, 0.5 and 1 point each retain **2/2** when combined with
-10% net-payout tolerance. These totals counts are scenarios, not production
-acceptances while its line setting remains null.
+10% net-payout tolerance. These are quote-tolerance scenario counts, not placements or complete production
+eligibility counts. The one-point scenario is now the configured totals allowance.
 
 No historical line deteriorated in this small comparison set. It cannot measure
 full-feed retention, distinguish the totals candidates, or establish an optimum.
 The 182 resolved total-line alert records include 141 half-point and 41 whole-point
-values, supporting 0.5 point as a provisional operational unit. These are repeated
-alert records, not independent events or proof of every bookmaker ladder's steps.
+values. Fractional endings do not establish ladder step size; the earlier
+0.5-point proposal was an unsupported inference. The operator confirmed a full
+1.0-point practical step. These are repeated alert records, not independent events.
 The earlier zero-deterioration recommendation is superseded by this operator policy.
 
 ## Exactly what to check in OddsNotifier
@@ -165,3 +170,5 @@ was checked through health/version, not a new live market demonstration.
 Test logs, APK hash, configuration before/after and runtime verification are in
 `evidence/execution-policy-v2/`. No strategy direction, value, stake, alert-age or
 event-start rule changed beyond marking the operator's UTC setting verified.
+
+The totals correction changes only its saved absolute allowance, from null to 1.0. Every observed comparison remains durably stored in the instruction result and audit trail, for accepted and rejected outcomes, using the original alert as baseline. Validation/configuration evidence for this correction is in `evidence/totals-one-step/`; earlier evidence remains historical.

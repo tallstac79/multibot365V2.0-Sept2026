@@ -60,8 +60,9 @@ Operator confirmation: saved `event_timezone="UTC"` and `feed_timezone_verified=
 follow the account label and explicit fixed-UTC instruction. Defaults for a new
 installation remain unverified and fail closed. Basketball net-payout tolerance is
 10%; basketball spreads require both 1 point and 10% of original handicap caps.
-Basketball totals line tolerance remains unset pending approval of the separate
-0.5-point proposal. Other strategy checks and all arming controls are unchanged.
+Basketball totals line tolerance is 1.0 point, one operator-confirmed practical
+market step; its percentage cap remains null. This is initial execution policy,
+not a mathematically optimal allowance. Other strategy checks and all arming controls are unchanged.
 The legacy `allowed_slippage` controls sample recommendations only. Improvements
 are allowed; excess deterioration is NO BET. Requested and observed rejected
 quotes remain in the result/audit records. See [policy and evidence](FEED_TIME_AND_EXECUTION_POLICY.md).

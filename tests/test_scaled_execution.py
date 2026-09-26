@@ -14,7 +14,7 @@ def scaled_config():
     for rule in cfg['sports']['basketball']['markets'].values():
         rule.update(max_odds_deterioration=None, max_net_payout_deterioration_percent=10)
     cfg['sports']['basketball']['markets']['SPREAD'].update(max_line_deterioration=1, max_line_deterioration_percent=10)
-    cfg['sports']['basketball']['markets']['TOTALS']['max_line_deterioration'] = None
+    cfg['sports']['basketball']['markets']['TOTALS']['max_line_deterioration'] = 1.0
     return cfg
 
 
@@ -45,12 +45,14 @@ class ScaledExecutionTests(unittest.TestCase):
         r=dict(market='SPREAD',side='AWAY',line='.5',price='1.83')
         self.assertFalse(compare(r,dict(r,line='-.5'),net_percent=10,line_tolerance=1,line_percent=10)['acceptable'])
 
-    def test_totals_are_absolute_and_remain_unset(self):
+    def test_totals_allow_one_full_point_step_and_improvements(self):
         r=dict(market='TOTALS',side='OVER',line='165.5',price='1.83')
         self.assertFalse(compare(r,r,net_percent=10,line_tolerance=None)['acceptable'])
-        for side,live,ok in [('OVER','166',True),('OVER','166.5',False),('UNDER','165',True),('UNDER','164.5',False),('OVER','160',True),('UNDER','170',True)]:
+        for side,live,ok in [('OVER','166.5',True),('OVER','167.5',False),('UNDER','164.5',True),('UNDER','163.5',False),('OVER','160',True),('UNDER','170',True)]:
             req=dict(r,side=side)
-            self.assertEqual(compare(req,dict(req,line=live),net_percent=10,line_tolerance=.5)['acceptable'],ok)
+            with self.subTest(side=side,live=live):
+                self.assertEqual(compare(req,dict(req,line=live,price='1.75'),net_percent=10,line_tolerance=1)['acceptable'],ok)
+        self.assertFalse(compare(r,dict(r,price='1.74'),net_percent=10,line_tolerance=1)['acceptable'])
         with self.assertRaises(ValueError): line_allowance('TOTALS','165.5',1,10)
         validate(scaled_config())
         cfg=scaled_config();cfg['sports']['basketball']['markets']['TOTALS'].update(max_line_deterioration=1,max_line_deterioration_percent=10)
@@ -118,9 +120,39 @@ class ScaledExecutionTests(unittest.TestCase):
     def test_rules_rejection_keeps_requested_terms_with_unknown_live(self):
         from tests.pipeline_support import MELBOURNE
         with tempfile.TemporaryDirectory() as tmp:
-            p=pipeline(Path(tmp)/'p.db',Clock(),cfg=scaled_config())
+            cfg=scaled_config();cfg['sports']['basketball']['markets']['TOTALS']['max_line_deterioration']=None
+            p=pipeline(Path(tmp)/'p.db',Clock(),cfg=cfg)
             iid=p.ingest(message(MELBOURNE))['instruction_id']
             with p.store.connection() as db:
                 row=p.store.get_instruction(db,iid);self.assertEqual(row['state'],'REJECTED')
                 audit=db.execute("SELECT detail FROM audit_events WHERE kind='ALERT_TO_LIVE_COMPARISON' AND instruction_id=?",(iid,)).fetchone()
                 q=json.loads(audit[0]);self.assertIsNone(q['live']);self.assertEqual(q['requested']['price'],'2.20')
+
+    def test_totals_bind_original_step_and_persist_every_comparison(self):
+        from tests.pipeline_support import MELBOURNE
+        for loss,expected in [(1,'READY'),(2,'PRICE_CHANGED'),(-2,'READY')]:
+            with self.subTest(loss=loss), tempfile.TemporaryDirectory() as tmp:
+                c=Clock();p=pipeline(Path(tmp)/'p.db',c,cfg=scaled_config());g=FakeGateway(c)
+                iid=p.ingest(message(MELBOURNE))['instruction_id'];p.tick(g)
+                with p.store.connection() as db: row=dict(p.store.get_instruction(db,iid))
+                payload=json.loads(row['dispatch_payload'])
+                self.assertEqual(Decimal(payload['max_line_deterioration']),Decimal('1.0'))
+                self.assertEqual(payload['minimum_price'],'2.08')
+                result=ready_result(iid,price='2.08')
+                original=dict(market=row['market'],side=row['selection'],line=row['line'],price=row['alert_price'])
+                intermediate=dict(original,line=str(Decimal(row['line'])+1),price='2.10')
+                live=dict(original,line=str(Decimal(row['line'])+loss),price='2.08')
+                result['selection'].update(live)
+                result['execution_observations']=[dict(stage='selection',observed=intermediate,identity_verified=True),
+                                                  dict(stage='prepare',observed=live,identity_verified=True)]
+                self.assertEqual(p.apply_result(iid,result),expected)
+                with p.store.connection() as db:
+                    row=p.store.get_instruction(db,iid)
+                    comparisons=json.loads(row['result_payload'])['execution_comparisons']
+                    self.assertEqual(len(comparisons),2)
+                    self.assertEqual(comparisons[0]['requested'],original)
+                    self.assertEqual(comparisons[1]['requested'],original)
+                    self.assertEqual(comparisons[0]['live'],intermediate)
+                    self.assertEqual(comparisons[1]['live'],live)
+                    self.assertEqual(comparisons[1]['acceptable'],expected=='READY')
+                    self.assertEqual(db.execute("SELECT COUNT(*) FROM audit_events WHERE kind='ALERT_TO_LIVE_COMPARISON' AND instruction_id=?",(iid,)).fetchone()[0],2)

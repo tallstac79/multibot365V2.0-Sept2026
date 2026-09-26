@@ -5,6 +5,16 @@ import java.util.*;
 import org.junit.Test;
 
 public class ExecutionHardeningTest {
+    @Test public void basketballTotalsAllowOneFullPointStepFromOriginalAlert() {
+        for (String market : Arrays.asList("TOTAL", "TOTALS")) {
+            assertTrue(ExecutionTolerance.line(market,"OVER","165.5","166.5","1.0"));
+            assertFalse(ExecutionTolerance.line(market,"OVER","165.5","167.5","1.0"));
+            assertTrue(ExecutionTolerance.line(market,"UNDER","165.5","164.5","1.0"));
+            assertFalse(ExecutionTolerance.line(market,"UNDER","165.5","163.5","1.0"));
+            assertTrue(ExecutionTolerance.line(market,"OVER","165.5","160.5","1.0"));
+            assertTrue(ExecutionTolerance.line(market,"UNDER","165.5","170.5","1.0"));
+        }
+    }
     @Test public void originalAlertAllowanceHandlesSignsAndDoesNotCompound() {
         for (String side : Arrays.asList("HOME","AWAY")) {
             for (int sign : new int[]{1,-1}) {
