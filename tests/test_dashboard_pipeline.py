@@ -46,7 +46,7 @@ class DashboardPipelineTests(unittest.TestCase):
         self.assertEqual((row['instruction_id'], row['lifecycle_state'], row['side'], row['alert_price']),
                          (ready, 'READY', 'OVER', '2.20'))
         self.assertEqual(row['rules_result']['decision'], 'ACCEPT')
-        self.assertIn('Status: READY', row['notification'])
+        self.assertIn('Bet: TOTALS Over 190.5 @ 2.20', row['notification'])
         self.assertEqual([e['stage'] for e in row['timeline']],
                          ['RECEIVED', 'PARSED', 'RULES_APPLIED', 'QUEUED', 'DISPATCHED', 'DEVICE_ACTIVE', 'READY'])
         self.assertEqual(row['provenance']['mode'], 'REAL DATA')

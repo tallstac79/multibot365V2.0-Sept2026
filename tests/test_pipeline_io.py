@@ -233,10 +233,12 @@ class NotificationTests(unittest.TestCase):
         self.assertEqual(notifier.enqueue(), 1)
         self.assertEqual(notifier.deliver(), (1, 0))
         text = self.sent[0]
-        for line in ('MultiBot365', 'Event: SE Melbourne Phoenix vs Melbourne United', 'Sport: Basketball',
-                     'Market: TOTALS', 'Selection: Over 190.5', 'Odds: 2.20', 'Stake: £1.00', 'Status: READY',
-                     f'Instruction: {iid}', 'Device: galaxy-a13-5g'):
+        # concise contract (2026-09-26): headline, event, one bet line (market, selection, odds, alert odds, minimum,
+        # stake) and the short id with the device stage; nothing else for a READY-only verification
+        for line in ('MultiBot365', 'Event: SE Melbourne Phoenix vs Melbourne United',
+                     'Bet: TOTALS Over 190.5 @ 2.20 (alert 2.20, min 2.20) stake £1.00', f'Id: {iid[:10]} | stage PASS'):
             self.assertIn(line, text.splitlines())
+        self.assertLessEqual(len(text.splitlines()), 5)
         self.assertNotIn('Reason:', text)
         self.assertEqual((notifier.enqueue(), notifier.deliver()), (0, (0, 0)))  # never twice
 
@@ -248,7 +250,7 @@ class NotificationTests(unittest.TestCase):
         with self.p.store.connection() as db:
             row = db.execute('SELECT * FROM instructions WHERE instruction_id=?', (iid,)).fetchone()
         text = format_instruction(row)
-        self.assertIn('Status: PRICE_CHANGED', text)
+        self.assertTrue(text.startswith('MultiBot365 - PRICE CHANGED'))
         self.assertIn(f"Reason: {row['failure_reason']}", text)
         self.assertEqual(row['failure_reason'], 'PRICE_CHANGED: live 2.05 below minimum 2.20')
 

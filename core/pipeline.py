@@ -13,7 +13,7 @@ No live-site logic lives here: the device gateway sends the proven coordinator r
 and the Android adapter owns everything on the phone.
 """
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 import hashlib
 import json
 import logging
@@ -63,8 +63,19 @@ class Settings:
     session_max_age_seconds: int = DEFAULT_MAX_AGE_SECONDS
     # Final action (Place Bet). Off unless explicitly enabled; see core/final_action.py.
     final_action_enabled: bool = False
+    # approval_mode: 'manual' (a device-verified slip waits for /approve) or 'automatic' (the backend itself
+    # approves a device-verified slip once every policy check in FinalAction.automatic_checks passes, then the
+    # phone re-verifies the slip immediately before its single tap). auto_approve is the legacy alias.
+    approval_mode: str = 'manual'
     auto_approve: bool = False
+    # Automatic mode binds the decision to one worker and one bookmaker account: the phone reports both in its
+    # health (worker_id, account_fingerprint = sha256 of the configured username, first 12 hex) and they must
+    # equal these values. Empty = not checked (manual mode) / refused (automatic mode).
+    expected_worker_id: str = ''
+    expected_account_fingerprint: str = ''
     approval_timeout_seconds: int = 120
+    # A verified hold is consumed by its final action only while fresh (the phone enforces 120 s itself).
+    hold_max_age_seconds: int = 115
     max_stake_per_bet: str = '1.00'
     max_bets_per_day: int = 5
     max_daily_stake: str = '5.00'
@@ -81,6 +92,21 @@ class Settings:
     # needed) and wait for it instead of failing SESSION_REQUIRED straight away.
     session_warmup: bool = True
     session_warmup_timeout_seconds: int = 120
+
+    APPROVAL_MODES = ('manual', 'automatic')
+
+    def __post_init__(self):
+        mode = str(self.approval_mode or 'manual').strip().lower()
+        if mode not in self.APPROVAL_MODES:
+            raise ValueError(f'approval_mode must be one of {self.APPROVAL_MODES}, not {self.approval_mode!r}')
+        if mode == 'manual' and self.auto_approve:
+            mode = 'automatic'                     # legacy flag
+        self.approval_mode = mode
+        self.auto_approve = mode == 'automatic'   # kept in step for older readers (status file, dashboard)
+
+    @property
+    def automatic(self):
+        return self.approval_mode == 'automatic'
 
     @classmethod
     def from_dict(cls, values):
@@ -588,6 +614,19 @@ class Pipeline:
                     if breach:
                         self.store.transition(db, row['instruction_id'], State.REJECTED, actor='limits', reason=breach)
                         continue
+                    # The final action may only consume the hold on the worker that verified it, and only while
+                    # that hold is fresh (the phone refuses an older hold; do not send a doomed final action).
+                    if row['device_id'] not in (None, '', self.settings.device_id):
+                        self.store.transition(db, row['instruction_id'], State.REJECTED, actor='dispatcher',
+                                              reason=f"PRE_TAP_REJECTED: hold verified on worker {row['device_id']}, "
+                                                     f"final action bound to {self.settings.device_id}")
+                        continue
+                    hold_age = (now - datetime.fromisoformat(row['ready_at'])).total_seconds() if row['ready_at'] else None
+                    if hold_age is None or hold_age > self.settings.hold_max_age_seconds:
+                        self.store.transition(db, row['instruction_id'], State.REJECTED, actor='dispatcher',
+                                              reason=f'PRE_TAP_REJECTED: verified hold is {int(hold_age or -1)}s old, '
+                                                     f'older than {self.settings.hold_max_age_seconds}s; nothing tapped')
+                        continue
                 if in_flight or health.get('current_instruction'):
                     continue  # One instruction at a time; wait (it may later go STALE).
                 payload = self.build_payload(row, final_action=final_action and row['state'] == State.APPROVED.value)
@@ -664,11 +703,16 @@ class Pipeline:
         except ValueError as error:
             reply = error.args[0] if error.args else None
             if isinstance(reply, dict) and reply.get('stage') == 'INVALID_INSTRUCTION':
-                # The phone refused admission (schema, stake cap): definitively nothing executed.
+                # The phone refused admission (schema, stake cap, disarmed phone): definitively nothing executed.
                 with self.store.tx() as db:
                     self.store.audit(db, 'COORDINATOR_REFUSED', reply, instruction_id, self.settings.device_id)
+                    prefix = 'PRE_TAP_REJECTED: ' if payload.get('action') == 'PLACE_HELD' else ''
+                    if prefix:
+                        self.store.audit(db, 'PRE_TAP_REJECTED', dict(stage='admission', reason=reply.get('detail'),
+                                                                     execution_job_id=payload.get('instruction_id')),
+                                         instruction_id, self.settings.device_id)
                     self.store.transition(db, instruction_id, State.REJECTED, actor='coordinator',
-                                          reason=f"Coordinator refused admission: {reply.get('detail')}")
+                                          reason=f"{prefix}Coordinator refused admission: {reply.get('detail')}")
                 return
             with self.store.tx() as db:
                 self.store.audit(db, 'SUBMIT_UNCERTAIN', dict(error=f'{type(error).__name__}: {error}'[:300]),
@@ -739,11 +783,36 @@ class Pipeline:
             if state == State.READY and row['state'] == State.DISPATCHED.value:
                 self.store.transition(db, instruction_id, State.DEVICE_ACTIVE, actor=source, at=iso(now),
                                       reason='Device result received')
+            pre_tap_rejected = False
             if final_action:
                 placement = result.get('placement') if isinstance(result.get('placement'), dict) else None
                 if placement is not None:
                     fields['placement'] = placement
+                from core.lifecycle import placement_of
+                tapped = (placement_of(result) or {}).get('tapped')
+                if tapped is False and state in TERMINAL and state != State.COMPLETED:
+                    # The fresh pre-tap verification (or the phone's own guards) refused: nothing was tapped.
+                    pre_tap_rejected = True
+                    reason = 'PRE_TAP_REJECTED: ' + reason
+                if tapped is not False and result.get('t_tap_ms'):
+                    fields['intent_at'] = datetime.fromtimestamp(result['t_tap_ms'] / 1000, tz=timezone.utc).isoformat(timespec='milliseconds')
             applied = self.store.transition(db, instruction_id, state, actor=source, at=iso(now), reason=reason, **fields)
+            if applied and pre_tap_rejected:
+                self.store.audit(db, 'PRE_TAP_REJECTED', dict(stage=result.get('stage'), reason=reason, state=state.value,
+                                                             pretap=result.get('pretap'), comparison=quote,
+                                                             execution_job_id=device_instruction_id(instruction_id, 'dispatch')),
+                                 instruction_id, row['device_id'] or self.settings.device_id)
+            if applied and final_action and state == State.COMPLETED:
+                placement = result.get('placement') if isinstance(result.get('placement'), dict) else {}
+                actual = placement.get('actual_terms') if isinstance(placement.get('actual_terms'), dict) else {}
+                self.store.audit(db, 'PLACED', dict(execution_job_id=device_instruction_id(instruction_id, 'dispatch'),
+                                                    bet_reference=placement.get('bet_reference'), intent_at=fields.get('intent_at'),
+                                                    receipt=dict(line=actual.get('line'), odds=actual.get('odds') or placement.get('odds'),
+                                                                 stake=actual.get('stake') or placement.get('stake'),
+                                                                 potential_return=placement.get('potential_return')),
+                                                    pretap=result.get('pretap'), approved_by=row['approved_by'],
+                                                    approval_mode=row['approval_mode']),
+                                 instruction_id, row['device_id'] or self.settings.device_id)
             if applied and isinstance(result.get('alias_candidate'), dict):
                 # A1/B6: the event link opened the right event but a team name differs: record the sighting
                 # (strict promotion policy in IdentityRegistry) and audit the evidence.
@@ -760,8 +829,13 @@ class Pipeline:
             if applied and state == State.READY and row['execution_mode'] == 'hold':
                 # The verified bet is now on the phone's slip: it owns the phone until placed or released.
                 self.store.set_control(HELD_KEY, dict(instruction_id=instruction_id, since=iso(now)), by='dispatcher', db=db)
-            if applied and state == State.READY and not final_action and self.final.enabled():
-                self.final.on_verified(db, self.store.get_instruction(db, instruction_id))
+            if applied and state == State.READY and not final_action:
+                if self.final.enabled():
+                    self.final.on_verified(db, self.store.get_instruction(db, instruction_id))
+                elif self.settings.final_action_enabled and self.final.paused():
+                    # Kill switch engaged while the phone was verifying: nothing is approved and the slip is released.
+                    self.store.transition(db, instruction_id, State.REJECTED, actor='dispatcher',
+                                          reason='KILL_SWITCH: paused when the device verification arrived; nothing approved')
             if applied and final_action:
                 from core.lifecycle import placement_of
                 tapped = (placement_of(result) or {}).get('tapped')

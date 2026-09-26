@@ -13,7 +13,13 @@ import urllib.request
 from core.lifecycle import TERMINAL
 from core.pipeline_store import iso, utcnow
 
-DEFAULT_STATES = ('READY', 'AWAITING_APPROVAL', 'PLACEMENT_UNKNOWN') + tuple(sorted(s.value for s in TERMINAL))
+TERMINAL_NAMES = frozenset(s.value for s in TERMINAL)
+DEFAULT_STATES = ('READY', 'AWAITING_APPROVAL', 'PLACEMENT_UNKNOWN') + tuple(sorted(TERMINAL_NAMES))
+# Automatic mode also announces QUALIFIED (QUEUED) and AUTO APPROVED (APPROVED). Both are transient (an instruction
+# passes through them inside one dispatcher tick), so they are derived from the transitions history, not sampled.
+TRANSIENT_STATES = ('QUEUED', 'APPROVED')
+AUTOMATIC_STATES = TRANSIENT_STATES + DEFAULT_STATES
+TRANSIENT_SINCE_KEY = 'notifier_transient_since'   # controls row: only transitions from this moment on are announced
 SHORT_ID = 10  # Telegram commands accept this unique prefix of an instruction ID
 # Operational alerts raised from the audit log (not instruction states).
 EVENT_KINDS = ('MANUAL_CHECK_REQUIRED', 'PLACEMENT_DISCREPANCY')
@@ -56,41 +62,68 @@ def _signal(row):
     return text
 
 
-def format_instruction(row):
-    """Plain-text message from a stored instructions row (dict or sqlite3.Row)."""
+def headline_for(row):
+    """Concise headline: what happened, from the persisted state and how it was decided."""
+    state, mode = row.get('state'), row.get('execution_mode')
+    reason = row.get('failure_reason') or ''
+    if state == 'QUEUED':
+        return 'QUALIFIED'
+    if state == 'AWAITING_APPROVAL':
+        return 'APPROVAL NEEDED'
+    if state == 'APPROVED':
+        return 'AUTO APPROVED' if row.get('approved_by') == 'automatic-policy' else f"APPROVED by {row.get('approved_by')}"
+    if state == 'COMPLETED' and mode == 'dispatch':
+        return 'BET PLACED'
+    if state == 'PLACEMENT_UNKNOWN':
+        return 'PLACEMENT UNCERTAIN'
+    if reason.startswith('PRE_TAP_REJECTED') or reason.startswith('AUTO_APPROVAL_REFUSED'):
+        return 'PRE-TAP REJECTED'
+    if state == 'SESSION_REQUIRED':
+        return 'SESSION REQUIRED'
+    if state == 'REJECTED':
+        return 'REJECTED'
+    if state in TERMINAL_NAMES:
+        return state.replace('_', ' ')
+    return None
+
+
+def format_instruction(row, bet=None):
+    """Concise plain-text message from a stored instructions row (dict or sqlite3.Row).
+
+    Automatic mode never waits for a reply; only AWAITING_APPROVAL (manual mode) carries the /approve prompt."""
     row = dict(row)
+    bet = dict(bet) if bet else {}
+    headline = headline_for(row)
     selection = row.get('selection_name') or row.get('selection')
     if row.get('line') and row.get('market') in ('SPREAD', 'TOTALS'):
         selection = f"{selection} {row['line']}"
-    fields = [('Event', row.get('fixture') or (f"{row['home']} v {row['away']}" if row.get('home') else None)),
-              ('Sport', (row.get('sport') or '').title() or None), ('Market', row.get('market')),
-              ('Selection', selection), ('Signal', _signal(row)), ('Odds', row.get('observed_price') or row.get('alert_price')),
-              ('Alert odds', row.get('alert_price') if row.get('observed_price') not in (None, row.get('alert_price'))
-               else None),
-              ('Minimum', row.get('minimum_price')), ('Stake', _money(row.get('stake'))),
-              ('Verified on phone', 'fixture, market, side, line, price, stake + To Return, single selection (slip cleared)'
-               if row.get('state') == 'AWAITING_APPROVAL' and row.get('ready_at') else None), (None, None),
-              ('Status', row.get('state')),
-              ('Bet ref', row.get('bet_reference')),
-              ('Approved by', row.get('approved_by') if row.get('execution_mode') == 'dispatch' else None),
-              ('Reason', row.get('failure_reason') if row.get('state') != 'COMPLETED' else None),
-              ('Device stage', row.get('device_stage')),
-              ('Instruction', row.get('instruction_id')), ('Device', row.get('device_id'))]
-    headline = {'AWAITING_APPROVAL': 'APPROVAL NEEDED', 'COMPLETED': 'BET PLACED' if row.get('execution_mode') == 'dispatch'
-                else None, 'PLACEMENT_UNKNOWN': 'PLACEMENT UNCERTAIN'}.get(row.get('state'))
-    lines = ['MultiBot365' + (f' - {headline}' if headline else ''), '']
-    for label, value in fields:
-        if label is None:
-            lines.append('')
-        elif value not in (None, ''):
-            lines.append(f"{label}: {' '.join(str(value).split())[:300]}")
+    odds = row.get('observed_price') or row.get('alert_price')
+    event = row.get('fixture') or (f"{row.get('home')} v {row.get('away')}" if row.get('home') else '?')
+    lines = ['MultiBot365' + (f' - {headline}' if headline else ''), '', f"Event: {event}",
+             f"Bet: {row.get('market')} {selection} @ {odds} (alert {row.get('alert_price')}, min {row.get('minimum_price')}) stake {_money(row.get('stake'))}"]
+    signal = _signal(row)
+    if signal and headline in ('QUALIFIED', 'APPROVAL NEEDED', 'AUTO APPROVED'):
+        lines.append(f"Signal: {signal}")
+    if headline == 'AUTO APPROVED':
+        lines.append(f"Decided by automatic policy at {row.get('auto_approved_at')}; strategy {row.get('strategy_version')}, "
+                     f"rules {row.get('rules_version')}; job {row.get('execution_job_id')}. Fresh pre-tap check next; nothing placed yet.")
+    if headline == 'BET PLACED':
+        parts = [bet.get('actual_line') and f"line {bet['actual_line']}", bet.get('actual_odds') and f"odds {bet['actual_odds']}",
+                 bet.get('actual_stake') and f"stake {_money(bet['actual_stake'])}"]
+        actual = ' '.join(x for x in parts if x)
+        lines.append(f"Bet ref: {row.get('bet_reference') or bet.get('bet_reference') or 'pending'}; receipt {actual or 'terms not read'}; "
+                     f"approved by {row.get('approved_by')} ({row.get('approval_mode') or 'manual'}). My Bets verification follows.")
+    if row.get('state') not in ('COMPLETED', 'QUEUED', 'APPROVED', 'AWAITING_APPROVAL') and row.get('failure_reason'):
+        lines.append(f"Reason: {' '.join(str(row['failure_reason']).split())[:300]}")
+    if row.get('state') == 'PLACEMENT_UNKNOWN':
+        lines.append('Place Bet was tapped but the result was not clear. Checking My Bets now; nothing will be re-tapped.')
     short = (row.get('instruction_id') or '')[:SHORT_ID]
     if row.get('state') == 'AWAITING_APPROVAL':
         lines += ['', f'Reply /approve to place this bet, or /reject. (Bet {short})',
                   'No reply = no bet (the approval window expires).']
-    elif row.get('state') == 'PLACEMENT_UNKNOWN':
-        lines += ['', 'Place Bet was tapped but the result was not clear. Checking My Bets now; nothing will be re-tapped.']
-    return '\n'.join(lines).replace('\n\n\n', '\n\n')
+    stage = f" | stage {row.get('device_stage')}" if row.get('device_stage') and headline not in ('QUALIFIED', 'AUTO APPROVED') else ''
+    lines.append(f"Id: {short}{stage}")
+    return '\n'.join(lines)
 
 
 def format_event(kind, instruction, detail):
@@ -103,6 +136,13 @@ def format_event(kind, instruction, detail):
         text.append('The device outcome and My Bets disagree. Please check My Bets on the phone.')
     text.append(f"Detail: {' '.join(str(detail).split())[:300]}")
     return '\n'.join(text)
+
+
+def format_reconciled(bet):
+    return '\n'.join(['MultiBot365 - RECONCILED', '', f"Event: {bet['fixture']}",
+                      f"Selection: {bet['selection']} {bet['line'] or ''}".rstrip() + f" @ {bet['odds']} stake {_money(bet['stake'])}",
+                      f"My Bets: found (ref {bet['bet_reference'] or 'n/a'}); status {bet['status']}",
+                      f"Id: {bet['instruction_id'][:SHORT_ID]}"])
 
 
 def format_settlement(bet):
@@ -124,14 +164,36 @@ class Notifier:
         query = (f"SELECT * FROM instructions i WHERE state IN ({marks}) AND origin='production' AND NOT EXISTS "
                  f"(SELECT 1 FROM notifications n WHERE n.instruction_id=i.instruction_id AND n.state=i.state)")
         if not self.include_undispatched:
-            query += " AND (dispatched_at IS NOT NULL OR state IN ('READY','AWAITING_APPROVAL'))"
+            query += " AND (dispatched_at IS NOT NULL OR state IN ('QUEUED','READY','AWAITING_APPROVAL','APPROVED'))"
         created = 0
         now = iso(self.clock())
         insert = ('INSERT OR IGNORE INTO notifications(instruction_id,state,text,created_at,next_attempt_at) '
                   'VALUES (?,?,?,?,?)')
         with self.store.tx() as db:
             for row in db.execute(query, self.states).fetchall():
-                created += db.execute(insert, (row['instruction_id'], row['state'], format_instruction(row), now, now)).rowcount
+                bet = db.execute('SELECT * FROM bets WHERE instruction_id=?', (row['instruction_id'],)).fetchone() \
+                    if row['state'] == 'COMPLETED' else None
+                created += db.execute(insert, (row['instruction_id'], row['state'], format_instruction(row, bet), now, now)).rowcount
+            # Baseline: history that predates the first run of this notifier version is never announced (a fresh start
+            # over an old database would otherwise queue one message per historical instruction; real: 2026-09-26).
+            mark = db.execute('SELECT value FROM controls WHERE key=?', (TRANSIENT_SINCE_KEY,)).fetchone()
+            if mark is None:
+                db.execute('INSERT INTO controls VALUES (?,?,?,?)', (TRANSIENT_SINCE_KEY, json.dumps(now), now, 'notifier-baseline'))
+                since = now
+            else:
+                since = json.loads(mark[0])
+            transient = [s for s in TRANSIENT_STATES if s in self.states]
+            if transient:
+                marks = ','.join('?' * len(transient))
+                history = (f"SELECT i.*, t.to_state AS past_state FROM transitions t JOIN instructions i USING(instruction_id) "
+                           f"WHERE t.to_state IN ({marks}) AND t.at >= ? AND i.origin='production' AND NOT EXISTS "
+                           f"(SELECT 1 FROM notifications n WHERE n.instruction_id=i.instruction_id AND n.state=t.to_state)")
+                for row in db.execute(history, (*transient, since)).fetchall():
+                    past = dict(row, state=row['past_state'])
+                    created += db.execute(insert, (row['instruction_id'], row['past_state'], format_instruction(past), now, now)).rowcount
+            for bet in db.execute("SELECT * FROM bets WHERE verified_at IS NOT NULL AND verified_at >= ? AND status NOT IN "
+                                  "('NOT_PLACED','NOT_PLACED_CLAIMED')", (since,)).fetchall():
+                created += db.execute(insert, (bet['instruction_id'], 'RECONCILED', format_reconciled(bet), now, now)).rowcount
             marks = ','.join('?' * len(EVENT_KINDS))
             for event in db.execute(f'SELECT * FROM audit_events WHERE kind IN ({marks})', EVENT_KINDS).fetchall():
                 instruction = db.execute('SELECT * FROM instructions WHERE instruction_id=?',

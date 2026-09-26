@@ -18,7 +18,7 @@ from pathlib import Path
 
 from core.lifecycle import State, allowed, TERMINAL
 
-SCHEMA_VERSION = 6  # 6: explicit bet-term provenance and scoped independent alias observations
+SCHEMA_VERSION = 7  # 7: automatic-approval decision columns on instructions
 SCHEMA = '''
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS intake_messages (
@@ -71,7 +71,9 @@ CREATE TABLE IF NOT EXISTS instructions (
     updated_at TEXT NOT NULL,
     execution_mode TEXT, approval_requested_at TEXT, approved_at TEXT, approved_by TEXT,
     placement_unknown_at TEXT, placement TEXT, bet_reference TEXT,
-    device_started_at TEXT, terminal_at TEXT, queue_wait_ms INTEGER, device_execution_ms INTEGER
+    device_started_at TEXT, terminal_at TEXT, queue_wait_ms INTEGER, device_execution_ms INTEGER,
+    approval_mode TEXT, auto_approved_at TEXT, execution_job_id TEXT, strategy_version TEXT, rules_version TEXT,
+    intent_at TEXT, reconciliation_result TEXT
 );
 CREATE INDEX IF NOT EXISTS instruction_state ON instructions(state, queued_at);
 CREATE INDEX IF NOT EXISTS instruction_selection ON instructions(origin, selection_key);
@@ -160,6 +162,9 @@ V4_INSTRUCTION_COLUMNS = (('device_started_at', 'TEXT'), ('terminal_at', 'TEXT')
                           ('device_execution_ms', 'INTEGER'))
 V3_INSTRUCTION_COLUMNS = ('execution_mode', 'approval_requested_at', 'approved_at', 'approved_by',
                           'placement_unknown_at', 'placement', 'bet_reference')
+# v7: how the final action was approved (manual /approve or the automatic policy) and the execution record
+V7_INSTRUCTION_COLUMNS = ('approval_mode', 'auto_approved_at', 'execution_job_id', 'strategy_version', 'rules_version',
+                          'intent_at', 'reconciliation_result')
 
 STAGE_COLUMNS = {State.PARSED: 'parsed_at', State.RULES_APPLIED: 'rules_applied_at', State.QUEUED: 'queued_at',
                  State.AWAITING_APPROVAL: 'approval_requested_at', State.APPROVED: 'approved_at',
@@ -167,7 +172,7 @@ STAGE_COLUMNS = {State.PARSED: 'parsed_at', State.RULES_APPLIED: 'rules_applied_
                  State.PLACEMENT_UNKNOWN: 'placement_unknown_at'}
 UPDATABLE = {'failure_reason', 'device_stage', 'observed_price', 'device_id', 'session_state', 'rules_result',
              'dispatch_payload', 'result_payload', 'evidence', 'dispatch_attempts', 'minimum_price', 'stake',
-             'execution_mode', 'approved_by', 'placement', 'bet_reference'}
+             'execution_mode', 'approved_by', 'placement', 'bet_reference', *V7_INSTRUCTION_COLUMNS}
 JSON_COLUMNS = {'normalized_alert', 'rules_result', 'dispatch_payload', 'result_payload', 'evidence',
                 'entities', 'normalized', 'provenance', 'detail', 'health', 'placement'}
 
@@ -221,12 +226,31 @@ class Store:
         cls._migrate_v2(db)
         cls._migrate_v3(db)
         cls._migrate_v4(db)
+        cls._migrate_v7(db)
         if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='bets'").fetchone():
             present = {r[1] for r in db.execute('PRAGMA table_info(bets)')}
             with db:
                 for c in ('requested_line','requested_odds','requested_stake','verified_line','verified_odds','verified_stake',
                           'actual_line','actual_odds','actual_stake','terms_provenance'):
                     if c not in present: db.execute(f'ALTER TABLE bets ADD COLUMN {c} TEXT')
+
+    @staticmethod
+    def _migrate_v7(db):
+        """v6 -> v7: automatic-approval decision columns on instructions (additive, nullable)."""
+        if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='instructions'").fetchone() is None:
+            return
+        present = {r[1] for r in db.execute('PRAGMA table_info(instructions)')}
+        missing = [c for c in V7_INSTRUCTION_COLUMNS if c not in present]
+        if not missing:
+            return
+        db.execute('BEGIN IMMEDIATE')
+        try:
+            for column in missing:
+                db.execute(f'ALTER TABLE instructions ADD COLUMN {column} TEXT')
+            db.execute('COMMIT')
+        except Exception:
+            db.execute('ROLLBACK')
+            raise
 
     @staticmethod
     def _migrate_v4(db):

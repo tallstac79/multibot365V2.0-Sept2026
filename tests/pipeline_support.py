@@ -11,7 +11,11 @@ SNAPSHOT = json.loads((ROOT / 'evidence/dashboard/telegram-basketball-observed.j
 MELBOURNE = next(m for m in SNAPSHOT if m['message_id'] == '67894')   # OVER 190.5 @ 2.20, EV 113.52
 RYTAS = next(m for m in SNAPSHOT if m['message_id'] == '67895')       # HOME -18.5 @ 1.83 (alt. line)
 T0 = datetime(2026, 9, 23, 12, 0, tzinfo=timezone.utc)
-HEALTHY = {'healthy': True, 'state': 'IDLE', 'current_instruction': None}
+# The fake phone reports the worker/account identity and local permission the automatic policy checks.
+WORKER_ID, ACCOUNT_FINGERPRINT = 'w-test-galaxy', 'acct-test-fp01'
+HEALTHY = {'healthy': True, 'state': 'IDLE', 'current_instruction': None, 'device_id': 'galaxy-a13-5g',
+           'worker_id': WORKER_ID, 'account_fingerprint': ACCOUNT_FINGERPRINT, 'phone_final_action_armed': True,
+           'app_version': 'test'}
 
 
 class Clock:
@@ -63,7 +67,7 @@ class FakeGateway:
 
 def ready_result(instruction_id, price='2.20', session_state='LOGGED_IN'):
     return {'instruction_id': instruction_id, 'status': 'PASS', 'stage': 'PASS', 'detail': 'READY_STATE',
-            'held': True, 'event_context': {'home':'SE Melbourne Phoenix','away':'Melbourne United',
+            'held': True, 'identity_verdict': 'EXACT', 'event_context': {'home':'SE Melbourne Phoenix','away':'Melbourne United',
                 'competition':'australia nbl','period':'FULL_GAME','kickoff_utc':'2026-09-24T09:30'},
             'duration_ms': 70000, 'execution_count': 1, 'fixture_name': 'SE Melbourne Phoenix v Melbourne United',
             'selection': {'market': 'TOTALS', 'side': 'OVER', 'line': '190.5', 'price': price, 'selection_name':'Over'},
@@ -97,6 +101,9 @@ def message(sample=MELBOURNE, *, message_id=None, received=T0, source=None, text
 def pipeline(path, clock, cfg=None, instant_verification=True, **settings):
     cfg = cfg or config()
     values = dict(dispatch_enabled=True, device_id='galaxy-a13-5g')
+    if settings.get('approval_mode') == 'automatic' or settings.get('auto_approve'):
+        # automatic mode binds the decision to the fake phone's reported worker and account unless a test overrides
+        values.update(expected_worker_id=WORKER_ID, expected_account_fingerprint=ACCOUNT_FINGERPRINT)
     values.update(settings)
     p = Pipeline(path, lambda: cfg, Settings(**values), clock=clock)
     if values.get('final_action_enabled') and instant_verification:

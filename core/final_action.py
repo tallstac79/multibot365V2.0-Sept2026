@@ -4,8 +4,11 @@ Safety model
 * Two independent switches: Settings.dispatch_enabled (anything reaches the phone) and
   Settings.final_action_enabled (the phone may tap Place Bet). Both default to False.
 * Kill switch: controls.paused (Telegram /stop, dashboard, CLI) blocks all dispatch at once.
-* Every final action needs an approval: an operator APPROVE (default), or auto-approval
-  only when Settings.auto_approve is on AND every limit below passes.
+* Every final action needs an approval: an operator APPROVE (approval_mode manual, the default), or the
+  automatic policy (approval_mode automatic): a device-verified slip is approved by the backend itself only
+  when every check in FinalAction.automatic_checks passes (source, sharp signal, identity, terms within the
+  original alert's tolerance, session, worker, account, limits, no duplicate/unresolved placement, kill
+  switch). The phone then re-verifies the slip immediately before its single tap (PLACE_HELD).
 * Limits: per-bet stake cap, bets per day, stake per day, loss per day (settled bets).
   Counted over the UTC day, including placements whose outcome is still unknown.
 * After a tap, nothing is ever re-tapped. Uncertain outcomes are PLACEMENT_UNKNOWN and are
@@ -20,6 +23,10 @@ import json
 from core import bet_matching
 from core.lifecycle import State
 from core.pipeline_store import iso
+from core.session_contract import gate as session_gate
+
+ACCEPTED_IDENTITY = ('EXACT', 'CANONICAL_MATCH', 'ALIAS_MATCH', 'HIGH_CONFIDENCE_EVENT_MATCH')
+AUTOMATIC_ACTOR = 'automatic-policy'
 
 PAUSED = 'paused'
 # bets.status values
@@ -111,17 +118,166 @@ class FinalAction:
         return True
 
     def on_verified(self, db, row):
-        """READY (device-verified) -> AWAITING_APPROVAL, or APPROVED under auto-approval."""
+        """READY (device-verified) -> AWAITING_APPROVAL (manual), or APPROVED by the automatic policy."""
         breach = self.limit_breach(db, row)
         if breach:
             self.p.store.transition(db, row['instruction_id'], State.REJECTED, actor='limits', reason=breach)
             return
-        if self.s.auto_approve:
-            self.p.store.transition(db, row['instruction_id'], State.APPROVED, actor='auto-approval',
-                                    reason='Auto-approved within configured limits', approved_by='auto')
-            return True
+        if self.s.automatic:
+            return self.auto_approve(db, row)
         self.p.store.transition(db, row['instruction_id'], State.AWAITING_APPROVAL, actor='dispatcher',
                                 reason=f'Device verified; operator approval required within {self.s.approval_timeout_seconds}s')
+
+    # ------------------------------------------------------------------ automatic policy
+    def automatic_checks(self, db, row):
+        """Every condition the automatic policy requires, evaluated only from persisted records.
+
+        Returns a list of dicts {check, ok, detail}. The device already verified the slip (READY); these checks
+        prove the decision context: an authorised feed alert with a sharp-money candidate, a verified event,
+        terms within the original alert's tolerance, an authenticated session on the expected worker and
+        account, limits, and no duplicate or unresolved placement. Nothing here weakens the phone's own
+        fresh pre-tap verification, which runs again on PLACE_HELD."""
+        from core.rules_engine import evaluate, ACCEPT
+        checks = []
+
+        def check(name, ok, detail=''):
+            checks.append(dict(check=name, ok=bool(ok), detail=str(detail)[:200]))
+
+        alert = json.loads(row['normalized_alert'] or '{}') or {}
+        result = json.loads(row['result_payload'] or '{}') or {}
+        rules = json.loads(row['rules_result'] or '{}') or {}
+        selection = result.get('selection') if isinstance(result.get('selection'), dict) else {}
+        context = result.get('event_context') if isinstance(result.get('event_context'), dict) else {}
+        comparison = result.get('execution_comparison') if isinstance(result.get('execution_comparison'), dict) else {}
+        sharp = alert.get('sharp_signal') or {}
+        mapping = alert.get('quote_mapping') or {}
+        # 1. source and signal
+        check('authorised_source', row['origin'] == 'production' and alert.get('source') in (None, 'telegram', 'OddsNotifier', 'oddsnotifier')
+              and row['chat_id'] not in (None, ''), f"origin={row['origin']} chat={row['chat_id']}")
+        check('sharp_signal', sharp.get('status') == 'IDENTIFIED' and sharp.get('side') == row['selection']
+              and sharp.get('source') == 'pinnacle_opening_to_current',
+              f"{sharp.get('status')} side={sharp.get('side')} vs selection={row['selection']}")
+        check('verified_market_mapping', mapping.get('production_verified') is True and row['sport'] == 'basketball',
+              f"sport={row['sport']} profile={mapping.get('profile')}")
+        # 2. rules at the device verification time (market enabled, stale, event not started, price bounds)
+        recheck = evaluate({k: v for k, v in alert.items() if k != 'source_timestamp'}, self.p.config_provider(),
+                           instruction_id=row['instruction_id'], received_at=row['ready_at'] or row['received_at'],
+                           now=self.p.clock())
+        check('rules_recheck', recheck['decision'] == ACCEPT, recheck['reason'])
+        # 3. the device verification
+        check('device_verified_hold', result.get('status') == 'PASS' and result.get('held') is True
+              and row['execution_mode'] == 'hold', f"status={result.get('status')} held={result.get('held')}")
+        check('event_identity', result.get('identity_verdict') in ACCEPTED_IDENTITY
+              and all(context.get(k) for k in ('home', 'away', 'competition', 'kickoff_utc', 'period')),
+              f"verdict={result.get('identity_verdict')} context={sorted(k for k in context if context.get(k))}")
+        check('period_full_game', context.get('period') == 'FULL_GAME', context.get('period'))
+        check('market_and_side', (selection.get('market') or '').replace('TOTALS', 'TOTAL') == (row['market'] or '').replace('TOTALS', 'TOTAL')
+              and selection.get('side') == row['selection'], f"{selection.get('market')}/{selection.get('side')} vs {row['market']}/{row['selection']}")
+        check('terms_within_tolerance', comparison.get('acceptable') is True and comparison.get('identity_verified') is not False,
+              comparison.get('reason') or 'no alert-to-live comparison recorded')
+        check('stake_verified', str((result.get('ready_state') or {}).get('stake') or '') == str(row['stake']),
+              f"slip {((result.get('ready_state') or {}).get('stake'))} vs {row['stake']}")
+        # 4. session, worker, account, health
+        session = self.p.store.session(self.s.device_id)
+        permitted, why = session_gate(session, self.p.clock(), self.s.session_max_age_seconds)
+        check('session_authenticated', permitted, why)
+        device = self.p.store.device(self.s.device_id)
+        health = json.loads(device['health']) if device and device['health'] else {}
+        check('worker_healthy', bool(device) and device['status'] == 'ONLINE' and health.get('healthy') is True,
+              f"{device['status'] if device else 'no device record'}")
+        check('worker_identity', bool(self.s.expected_worker_id) and health.get('worker_id') == self.s.expected_worker_id
+              and (row['device_id'] in (None, '', self.s.device_id)),
+              f"phone worker_id={health.get('worker_id')} expected={self.s.expected_worker_id or '(unset)'}")
+        check('account_identity', bool(self.s.expected_account_fingerprint)
+              and health.get('account_fingerprint') == self.s.expected_account_fingerprint,
+              f"phone account={health.get('account_fingerprint')} expected={self.s.expected_account_fingerprint or '(unset)'}")
+        check('phone_final_action_permission', health.get('phone_final_action_armed') is True,
+              f"phone_final_action_armed={health.get('phone_final_action_armed')}")
+        # 5. switches and limits
+        check('kill_switch_off', not self.paused(), 'paused' if self.paused() else 'running')
+        check('dispatch_and_final_action_enabled', self.s.dispatch_enabled and self.s.final_action_enabled,
+              f"dispatch={self.s.dispatch_enabled} final_action={self.s.final_action_enabled}")
+        breach = self.limit_breach(db, row)
+        check('stake_and_daily_limits', breach is None, breach or 'within limits')
+        # 6. duplicates and unresolved placements
+        dup = db.execute("SELECT instruction_id, state FROM instructions WHERE selection_key=? AND instruction_id!=? "
+                         "AND (execution_mode='dispatch' OR state IN ('COMPLETED','PLACEMENT_UNKNOWN','APPROVED'))",
+                         (row['selection_key'], row['instruction_id'])).fetchall()
+        check('no_duplicate_execution', not dup, ', '.join(f"{d['instruction_id'][:12]}={d['state']}" for d in dup) or 'none')
+        unresolved = db.execute("SELECT instruction_id, state FROM instructions WHERE state IN ('PLACEMENT_UNKNOWN','UNKNOWN') "
+                                "AND execution_mode='dispatch' AND instruction_id!=?", (row['instruction_id'],)).fetchall()
+        unknown_bets = db.execute("SELECT instruction_id FROM bets WHERE status='UNKNOWN'").fetchall()
+        in_flight = db.execute("SELECT instruction_id FROM instructions WHERE state IN ('APPROVED','DISPATCHED','DEVICE_ACTIVE') "
+                               "AND instruction_id!=?", (row['instruction_id'],)).fetchall()
+        check('no_unresolved_prior_placement', not unresolved and not unknown_bets and not in_flight,
+              f"unresolved={[u['instruction_id'][:12] for u in unresolved]} unknown_bets={len(unknown_bets)} in_flight={len(in_flight)}")
+        return checks
+
+    def auto_approve(self, db, row):
+        """Automatic policy for a device-verified READY row: APPROVED with a durable AUTO_APPROVED record, or REJECTED."""
+        from core.alert_classifier import PARSER_VERSION
+        from core.rules_engine import ENGINE_VERSION
+        from core.market_interpretation import VERSION as STRATEGY_VERSION
+        from core.moneyline import VERSION as ML_VERSION
+        checks = self.automatic_checks(db, row)
+        failed = [c for c in checks if not c['ok']]
+        result = json.loads(row['result_payload'] or '{}') or {}
+        selection = result.get('selection') if isinstance(result.get('selection'), dict) else {}
+        now = iso(self.p.clock())
+        device = self.p.store.device(self.s.device_id)
+        health = json.loads(device['health']) if device and device['health'] else {}
+        job = f"{row['instruction_id']}-place"
+        strategy = ML_VERSION if row['market'] in ('MONEYLINE', 'ML') else STRATEGY_VERSION
+        record = dict(approval_mode='automatic', decided_by=AUTOMATIC_ACTOR, auto_approved_at=now,
+                      strategy_version=strategy, rules_version=ENGINE_VERSION, parser_version=PARSER_VERSION,
+                      instruction_id=row['instruction_id'], execution_job_id=job,
+                      worker=dict(device_id=self.s.device_id, worker_id=health.get('worker_id')),
+                      account=health.get('account_fingerprint'),
+                      requested=dict(line=row['line'], odds=row['alert_price'], minimum_price=row['minimum_price']),
+                      device_verified=dict(line=selection.get('line'), odds=selection.get('price'), at=row['ready_at']),
+                      stake=row['stake'], checks=checks)
+        if failed:
+            reason = 'AUTO_APPROVAL_REFUSED: ' + '; '.join(f"{c['check']} ({c['detail']})" for c in failed)[:400]
+            self.p.store.audit(db, 'AUTO_APPROVAL_REFUSED', dict(record, reason=reason), row['instruction_id'], self.s.device_id)
+            self.p.store.transition(db, row['instruction_id'], State.REJECTED, actor=AUTOMATIC_ACTOR, reason=reason,
+                                    approval_mode='automatic', strategy_version=strategy, rules_version=ENGINE_VERSION)
+            return False
+        reason = f'AUTO_APPROVED by {AUTOMATIC_ACTOR}: {len(checks)} checks passed; execution job {job}'
+        record['approval_reason'] = reason
+        self.p.store.audit(db, 'AUTO_APPROVED', record, row['instruction_id'], self.s.device_id)
+        self.p.store.transition(db, row['instruction_id'], State.APPROVED, actor=AUTOMATIC_ACTOR, reason=reason,
+                                approved_by=AUTOMATIC_ACTOR, approval_mode='automatic', auto_approved_at=now,
+                                execution_job_id=job, strategy_version=strategy, rules_version=ENGINE_VERSION)
+        return True
+
+    def decision_record(self, instruction_id):
+        """Everything persisted about one final-action decision and its execution (report/audit helper)."""
+        with self.p.store.connection() as db:
+            row = self.p.store.get_instruction(db, instruction_id)
+            if row is None:
+                raise LookupError(instruction_id)
+            bet = db.execute('SELECT * FROM bets WHERE instruction_id=?', (instruction_id,)).fetchone()
+            events = [dict(r) for r in db.execute("SELECT at, kind, detail FROM audit_events WHERE instruction_id=? AND kind IN "
+                                                  "('AUTO_APPROVED','AUTO_APPROVAL_REFUSED','PRE_TAP_REJECTED','FINAL_ACTION_INTENT',"
+                                                  "'PLACED','RECONCILED','PLACEMENT_DISCREPANCY','MANUAL_CHECK_REQUIRED') ORDER BY id",
+                                                  (instruction_id,))]
+            recs = [dict(r) for r in db.execute('SELECT purpose, attempt, requested_at, completed_at, outcome FROM reconciliations '
+                                                'WHERE instruction_id=? ORDER BY id', (instruction_id,))]
+            transitions = [dict(r) for r in db.execute('SELECT at, from_state, to_state, actor, reason FROM transitions '
+                                                       'WHERE instruction_id=? ORDER BY id', (instruction_id,))]
+        row = dict(row)
+        return dict(instruction_id=instruction_id, state=row['state'], approval_mode=row.get('approval_mode'),
+                    approved_by=row.get('approved_by'), approved_at=row.get('approved_at'), auto_approved_at=row.get('auto_approved_at'),
+                    execution_job_id=row.get('execution_job_id'), strategy_version=row.get('strategy_version'),
+                    rules_version=row.get('rules_version'), worker=dict(device_id=row.get('device_id')),
+                    requested=dict(line=row.get('line'), odds=row.get('alert_price'), stake=row.get('stake')),
+                    observed_pretap=dict(line=bet['verified_line'], odds=bet['verified_odds'], stake=bet['verified_stake']) if bet else None,
+                    intent_at=row.get('intent_at'),
+                    receipt=dict(line=bet['actual_line'], odds=bet['actual_odds'], stake=bet['actual_stake'],
+                                 reference=bet['bet_reference'], status=bet['status']) if bet else None,
+                    reconciliation_result=row.get('reconciliation_result'), reconciliations=recs,
+                    events=[dict(e, detail=json.loads(e['detail']) if e['detail'] else None) for e in events],
+                    transitions=transitions)
 
     def resolve(self, db, reference):
         """Instruction by full ID or unique prefix (Telegram short IDs)."""
@@ -300,7 +456,8 @@ class FinalAction:
             if bet and bet['status'] == UNKNOWN and row['state'] == State.PLACEMENT_UNKNOWN.value:
                 self.p.store.transition(db, row['instruction_id'], State.UNKNOWN, actor='reconciler',
                                         reason='MANUAL_CHECK_REQUIRED: tap may have placed a bet; My Bets could not be '
-                                               f'read after {attempts} attempts. Never re-tapped.')
+                                               f'read after {attempts} attempts. Never re-tapped.',
+                                        reconciliation_result='MANUAL_CHECK_REQUIRED')
                 self.p.store.audit(db, 'MANUAL_CHECK_REQUIRED', dict(bet=dict(bet)), row['instruction_id'])
 
     def _apply(self, rec, result):
@@ -333,6 +490,10 @@ class FinalAction:
                 self._complete(rec, 'FOUND', detail, db)
                 self.p.store.upsert_bet(db, row['instruction_id'], status=OPEN, verified_at=now,
                                         bet_reference=bet['bet_reference'] or found['bet_reference'])
+                self.p.store.update_fields(db, row['instruction_id'], reconciliation_result='FOUND_IN_MY_BETS')
+                self.p.store.audit(db, 'RECONCILED', dict(result='FOUND_IN_MY_BETS', attempt=rec['attempt'], match=found,
+                                                          bet_reference=bet['bet_reference'] or found['bet_reference']),
+                                   row['instruction_id'])
                 if row['state'] == State.PLACEMENT_UNKNOWN.value:
                     self.p.store.transition(db, row['instruction_id'], State.COMPLETED, actor='reconciler',
                                             reason='PLACED: confirmed in My Bets after uncertain outcome')
@@ -349,7 +510,9 @@ class FinalAction:
             elif bet['status'] == UNKNOWN and not_found >= 2:
                 self.p.store.upsert_bet(db, row['instruction_id'], status=NOT_PLACED, verified_at=now)
                 self.p.store.transition(db, row['instruction_id'], State.NOT_PLACED, actor='reconciler',
-                                        reason=f'NOT_PLACED: absent from My Bets in {not_found} checks. Never re-tapped.')
+                                        reason=f'NOT_PLACED: absent from My Bets in {not_found} checks. Never re-tapped.',
+                                        reconciliation_result='NOT_FOUND_IN_MY_BETS')
+                self.p.store.audit(db, 'RECONCILED', dict(result='NOT_FOUND_IN_MY_BETS', checks=not_found), row['instruction_id'])
             elif bet['status'] == PLACED_UNVERIFIED and not_found >= self.s.reconcile_max_attempts:
                 self.p.store.upsert_bet(db, row['instruction_id'], status=DISCREPANCY)
                 self.p.store.audit(db, 'PLACEMENT_DISCREPANCY', dict(claimed='PLACED receipt', found=found),

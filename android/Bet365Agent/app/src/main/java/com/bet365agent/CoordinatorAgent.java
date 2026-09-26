@@ -430,6 +430,10 @@ final class CoordinatorAgent implements AutoCloseable {
             .put("endpoint", endpoint() == null ? JSONObject.NULL : endpoint()).put("pid", android.os.Process.myPid())
             .put("device_id", DEVICE_ID).put("session", session).put("ocr_engine", CoordinatorConfig.ocrEngine(service)).put("fast_ocr_error", runner.fastEngineError() == null ? JSONObject.NULL : runner.fastEngineError())
             .put("credentials_configured", CoordinatorConfig.hasBet365Credentials(service)).put("credential_store", SecureCredentials.storeKind())
+            // Non-secret identity the backend binds automatic approvals to: this installation and the configured account.
+            .put("worker_id", WorkerIdentity.workerId(service))
+            .put("account_fingerprint", CoordinatorConfig.hasBet365Credentials(service)
+                    ? WorkerIdentity.fingerprint(CoordinatorConfig.bet365Username(service)) : JSONObject.NULL)
             .put("session_recovery", selfHealStatus());
         if (active != null) {
             put(health, "progress", progressSnapshot());

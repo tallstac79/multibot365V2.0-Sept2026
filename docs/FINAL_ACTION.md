@@ -12,8 +12,10 @@ Code: `core/final_action.py`, `core/bet_matching.py`, `core/telegram_commands.py
 |---|---|---|
 | `dispatch_enabled` | false | Anything is sent to the phone |
 | `final_action_enabled` | false | The phone may tap Place Bet (otherwise READY-only) |
-| `auto_approve` | false | Approve automatically within limits (otherwise you approve each bet) |
-| `approval_timeout_seconds` | 120 | No approval in time means no bet (STALE) |
+| `approval_mode` | "manual" | `manual`: you approve each device-verified slip (`/approve`); `automatic`: the backend approves it itself when every policy check passes, see [AUTOMATIC_APPROVAL.md](AUTOMATIC_APPROVAL.md) (`auto_approve: true` is the legacy spelling) |
+| `expected_worker_id` / `expected_account_fingerprint` | "" | Automatic mode only: must equal the phone's health `worker_id` / `account_fingerprint`; unset refuses every automatic approval |
+| `approval_timeout_seconds` | 120 | Manual mode: no approval in time means no bet (STALE) |
+| `hold_max_age_seconds` | 115 | A verified hold older than this is never consumed by a final action |
 | `max_stake_per_bet` | "1.00" | Per-bet cap (the phone has its own cap too, prefs `max_stake`, default 1.00) |
 | `max_bets_per_day` / `max_daily_stake` / `max_daily_loss` | 5 / "5.00" / "5.00" | UTC day; includes uncertain placements |
 | `session_warmup` | true | A stale/unknown session triggers one SESSION_CHECK before dispatch |
@@ -29,7 +31,8 @@ QUEUED -> DISPATCHED "hold" run (event link -> verify -> bet on slip, £0.10 + T
        --(/approve)--> APPROVED -> DISPATCHED "PLACE_HELD" as "<id>-place":
           one-frame pre-tap check of the held slip (login, same selection + exact line, approved price
           >= minimum, stake + To Return, one selection, Place Bet) -> ONE tap -> receipt -> reset -> HOME
-READY -> APPROVED (auto_approve, within limits)
+READY -> APPROVED by automatic-policy (approval_mode automatic: every check in FinalAction.automatic_checks
+         passed; audit AUTO_APPROVED) -> the same PLACE_HELD fresh pre-tap verification -> ONE tap
 ```
 
 * **Event link first.** The alert's Bet365 link (`comparison_url`, `#/AC/B18/...`) is opened

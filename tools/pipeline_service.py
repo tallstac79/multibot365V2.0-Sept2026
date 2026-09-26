@@ -26,7 +26,7 @@ sys.path.insert(0, str(ROOT))
 from core.decision_support import Store as ConfigStore  # noqa: E402
 from core.pipeline import Pipeline, Settings, SourceMessage  # noqa: E402
 from core.pipeline_store import Store, iso, utcnow  # noqa: E402
-from core.status_notifier import Notifier, TelegramBotSender, DEFAULT_STATES  # noqa: E402
+from core.status_notifier import Notifier, TelegramBotSender, AUTOMATIC_STATES, DEFAULT_STATES  # noqa: E402
 from core.rules_engine import ENGINE_VERSION
 from core.alert_classifier import PARSER_VERSION
 
@@ -107,7 +107,8 @@ async def run(settings):
     gateway = gateway_for(settings)
     notify = settings['notifications'] or {}
     sender = TelegramBotSender(notify['bot_token'], notify['chat_id']) if notify.get('enabled') else None
-    notifier = Notifier(store, sender, notify.get('states', DEFAULT_STATES), notify.get('include_undispatched', False))
+    default_states = AUTOMATIC_STATES if pipeline.settings.automatic else DEFAULT_STATES
+    notifier = Notifier(store, sender, notify.get('states', default_states), notify.get('include_undispatched', False))
     commands = None
     if notify.get('enabled') and notify.get('commands', True):
         from core.telegram_commands import BotApi, CommandHandler
@@ -161,8 +162,18 @@ async def run(settings):
 
 def status(settings):
     store = Store(settings['database'])
+    cfg = Settings.from_dict(settings['pipeline'])
     with store.connection() as db:
+        device = db.execute("SELECT health FROM device_state WHERE device_id=?", (cfg.device_id,)).fetchone()
+        health = json.loads(device[0]) if device and device[0] else {}
         summary = dict(
+            controls=dict(dispatch_enabled=cfg.dispatch_enabled, final_action_enabled=cfg.final_action_enabled,
+                          final_action_one_shot=cfg.final_action_one_shot, approval_mode=cfg.approval_mode,
+                          expected_worker_id=cfg.expected_worker_id or None,
+                          expected_account_fingerprint=cfg.expected_account_fingerprint or None,
+                          phone_final_action_armed=health.get('phone_final_action_armed'),
+                          phone_worker_id=health.get('worker_id'), phone_account_fingerprint=health.get('account_fingerprint'),
+                          phone_app_version=health.get('app_version')),
             intake={r[0]: r[1] for r in db.execute('SELECT status, COUNT(*) FROM intake_messages GROUP BY status')},
             instructions={r[0]: r[1] for r in db.execute('SELECT state, COUNT(*) FROM instructions GROUP BY state')},
             devices=[dict(r) for r in db.execute('SELECT device_id,status,checked_at,error FROM device_state')],
@@ -184,11 +195,27 @@ def operator(settings, command, reference=None):
         elif command in ('pause', 'resume'):
             pipeline.final.set_paused(command == 'pause', by)
             print('PAUSED' if command == 'pause' else 'RESUMED')
+        elif command == 'decision':
+            print(json.dumps(pipeline.final.decision_record(reference), indent=2, default=str))
         else:
             print(json.dumps(pipeline.store.bets(), indent=2))
     except (LookupError, PermissionError) as error:
         print('NOT DONE:', error)
         raise SystemExit(1)
+
+
+def set_mode(settings, mode):
+    """Config-only switch between manual and automatic approval (validated through Settings). Restart to apply."""
+    path = settings['config_path']
+    data = json.loads(Path(path).read_text(encoding='utf-8-sig'))
+    section = dict(data.setdefault('pipeline', {}))
+    section.update(approval_mode=mode, auto_approve=mode == 'automatic')
+    Settings.from_dict(section)                      # raises on an invalid value
+    data['pipeline'].update(approval_mode=mode, auto_approve=mode == 'automatic')
+    Path(path).write_text(json.dumps(data, indent=2), encoding='utf-8')
+    shown = {k: data['pipeline'].get(k) for k in ('dispatch_enabled', 'final_action_enabled', 'final_action_one_shot',
+                                                  'approval_mode', 'expected_worker_id', 'expected_account_fingerprint')}
+    print(json.dumps(dict(written=str(path), pipeline=shown, note='restart the service to apply'), indent=2))
 
 
 def replay(settings, path, chat_id, message_id):
@@ -226,10 +253,11 @@ def main():
     play.add_argument('file')
     play.add_argument('--chat-id', default='-999')
     play.add_argument('--message-id', required=True)
-    for name in ('approve', 'reject'):
+    for name in ('approve', 'reject', 'decision'):
         sub.add_parser(name).add_argument('id')
     for name in ('pause', 'resume', 'bets'):
         sub.add_parser(name)
+    sub.add_parser('mode').add_argument('value', choices=Settings.APPROVAL_MODES)
     args = parser.parse_args()
     settings = load_settings(args.settings)
     if args.command == 'run':
@@ -242,8 +270,10 @@ def main():
         status(settings)
     elif args.command == 'telegram-login':
         asyncio.run(telegram_login(settings))
-    elif args.command in ('approve', 'reject', 'pause', 'resume', 'bets'):
+    elif args.command in ('approve', 'reject', 'pause', 'resume', 'bets', 'decision'):
         operator(settings, args.command, getattr(args, 'id', None))
+    elif args.command == 'mode':
+        set_mode(settings, args.value)
     else:
         replay(settings, args.file, args.chat_id, args.message_id)
 

@@ -144,11 +144,12 @@ class LimitTests(Base):
                     max_daily_stake='5.00', max_daily_loss='5.00')
 
     def test_auto_approve_within_limits_then_bets_per_day(self):
+        self.assertEqual(self.p.settings.approval_mode, 'automatic')   # legacy auto_approve=True maps to the mode
         first = self.p.ingest(message(MELBOURNE))['instruction_id']
         self.p.tick(self.gateway)
         self.assertEqual([(x['action'], x['execution_mode']) for x in self.gateway.submitted if x['action'] in ('ADAPTER_WORKFLOW', 'PLACE_HELD')][:2],
                          [('ADAPTER_WORKFLOW', 'hold'), ('PLACE_HELD', 'dispatch')])
-        self.assertEqual(self.row(first)['approved_by'], 'auto')
+        self.assertEqual(self.row(first)['approved_by'], 'automatic-policy')
         self.gateway.results[first + "-place"] = placement_result(first)
         self.p.tick(self.gateway)
         self.assertEqual(self.row(first)['state'], 'COMPLETED')
