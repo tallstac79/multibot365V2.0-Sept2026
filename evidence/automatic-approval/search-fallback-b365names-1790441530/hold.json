@@ -1,0 +1,2536 @@
+{
+ "payload": {
+  "query": "Landstede Zwolle||Antwerp Giants",
+  "market": "MONEYLINE",
+  "side": "HOME",
+  "line": "",
+  "minimum_price": "1.01",
+  "stake": "0.10",
+  "kickoff_utc": "2026-09-26T18:30",
+  "competition": "BNXT Super Cup",
+  "period": "FULL_GAME",
+  "max_line_deterioration": "0",
+  "instruction_id": "search-fallback-b365names-175210",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "timeout_ms": 240000,
+  "execution_mode": "hold"
+ },
+ "result": {
+  "instruction_id": "search-fallback-b365names-175210",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 30610,
+  "progress": {
+   "stage": "PREPARE_COMPLETE_EXECUTION",
+   "elapsed_ms": 30456,
+   "last_progress_at_ms": 1790441560896,
+   "instruction_id": "search-fallback-b365names-175210",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790441530500
+    },
+    {
+     "stage": "SPORTS_HOME",
+     "elapsed_ms": 18,
+     "at_ms": 1790441530508,
+     "timing": {
+      "stage": "SPORTS_HOME",
+      "start_elapsed_ms": 18,
+      "start_ts_ms": 1790441530501,
+      "end_elapsed_ms": 26,
+      "end_ts_ms": 1790441530509,
+      "duration_ms": 8,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 26,
+     "at_ms": 1790441530517,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 26,
+      "start_ts_ms": 1790441530509,
+      "end_elapsed_ms": 5326,
+      "end_ts_ms": 1790441535809,
+      "duration_ms": 5300,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4062,
+     "at_ms": 1790441530517
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4515,
+     "at_ms": 1790441530517
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4538,
+     "at_ms": 1790441530517
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5307,
+     "at_ms": 1790441530517
+    },
+    {
+     "stage": "SESSION_CHECK",
+     "elapsed_ms": 5326,
+     "at_ms": 1790441535818,
+     "timing": {
+      "stage": "SESSION_CHECK",
+      "start_elapsed_ms": 5326,
+      "start_ts_ms": 1790441535809,
+      "end_elapsed_ms": 6338,
+      "end_ts_ms": 1790441536821,
+      "duration_ms": 1012,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SESSION_CHECK",
+     "elapsed_ms": 5336,
+     "at_ms": 1790441535818
+    },
+    {
+     "stage": "SESSION_CHECK",
+     "elapsed_ms": 6071,
+     "at_ms": 1790441535818
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 6338,
+     "at_ms": 1790441536826,
+     "timing": {
+      "stage": "OPEN_SEARCH",
+      "start_elapsed_ms": 6338,
+      "start_ts_ms": 1790441536821,
+      "end_elapsed_ms": 6344,
+      "end_ts_ms": 1790441536826,
+      "duration_ms": 6,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SPORTS_CONTEXT",
+     "elapsed_ms": 6344,
+     "at_ms": 1790441536831,
+     "timing": {
+      "stage": "SPORTS_CONTEXT",
+      "start_elapsed_ms": 6344,
+      "start_ts_ms": 1790441536826,
+      "end_elapsed_ms": 7055,
+      "end_ts_ms": 1790441537538,
+      "duration_ms": 711,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SPORTS_CONTEXT",
+     "elapsed_ms": 6350,
+     "at_ms": 1790441536831
+    },
+    {
+     "stage": "SPORTS_CONTEXT",
+     "elapsed_ms": 7016,
+     "at_ms": 1790441536831
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 7055,
+     "at_ms": 1790441537550,
+     "timing": {
+      "stage": "OPEN_SEARCH",
+      "start_elapsed_ms": 7055,
+      "start_ts_ms": 1790441537538,
+      "end_elapsed_ms": 10375,
+      "end_ts_ms": 1790441540858,
+      "duration_ms": 3320,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 7068,
+     "at_ms": 1790441537550
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 7845,
+     "at_ms": 1790441537550
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 7862,
+     "at_ms": 1790441537550
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 8633,
+     "at_ms": 1790441537550
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 8664,
+     "at_ms": 1790441537550
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 9727,
+     "at_ms": 1790441537550
+    },
+    {
+     "stage": "OPEN_SEARCH",
+     "elapsed_ms": 10301,
+     "at_ms": 1790441537550
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 10375,
+     "at_ms": 1790441540878,
+     "timing": {
+      "stage": "ENTER_QUERY",
+      "start_elapsed_ms": 10375,
+      "start_ts_ms": 1790441540858,
+      "end_elapsed_ms": 10397,
+      "end_ts_ms": 1790441540879,
+      "duration_ms": 22,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "FOCUS",
+     "elapsed_ms": 10397,
+     "at_ms": 1790441540886,
+     "timing": {
+      "stage": "FOCUS",
+      "start_elapsed_ms": 10397,
+      "start_ts_ms": 1790441540879,
+      "end_elapsed_ms": 10405,
+      "end_ts_ms": 1790441540887,
+      "duration_ms": 8,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 10405,
+     "at_ms": 1790441540894,
+     "timing": {
+      "stage": "ENTER_QUERY",
+      "start_elapsed_ms": 10405,
+      "start_ts_ms": 1790441540887,
+      "end_elapsed_ms": 17353,
+      "end_ts_ms": 1790441547836,
+      "duration_ms": 6948,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 10412,
+     "at_ms": 1790441540894
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 10812,
+     "at_ms": 1790441540894
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 10825,
+     "at_ms": 1790441540894
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 11234,
+     "at_ms": 1790441540894
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 11246,
+     "at_ms": 1790441540894
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 11632,
+     "at_ms": 1790441540894
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 11642,
+     "at_ms": 1790441542132,
+     "timing": {
+      "stage": "ENTER_QUERY",
+      "start_elapsed_ms": 10405,
+      "start_ts_ms": 1790441540887,
+      "end_elapsed_ms": 17353,
+      "end_ts_ms": 1790441547836,
+      "duration_ms": 6948,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_QUERY",
+     "elapsed_ms": 17314,
+     "at_ms": 1790441542132
+    },
+    {
+     "stage": "QUERY_VERIFY",
+     "elapsed_ms": 17353,
+     "at_ms": 1790441547866,
+     "timing": {
+      "stage": "QUERY_VERIFY",
+      "start_elapsed_ms": 17353,
+      "start_ts_ms": 1790441547836,
+      "end_elapsed_ms": 19212,
+      "end_ts_ms": 1790441549696,
+      "duration_ms": 1859,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "QUERY_VERIFY",
+     "elapsed_ms": 17384,
+     "at_ms": 1790441547866
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 19212,
+     "at_ms": 1790441549777,
+     "timing": {
+      "stage": "RESULTS_WAIT",
+      "start_elapsed_ms": 19212,
+      "start_ts_ms": 1790441549696,
+      "end_elapsed_ms": 20221,
+      "end_ts_ms": 1790441550704,
+      "duration_ms": 1009,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 19296,
+     "at_ms": 1790441549777
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 19764,
+     "at_ms": 1790441549777
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 19814,
+     "at_ms": 1790441549777
+    },
+    {
+     "stage": "RESULTS_WAIT",
+     "elapsed_ms": 20161,
+     "at_ms": 1790441549777
+    },
+    {
+     "stage": "FIXTURE_VERIFY",
+     "elapsed_ms": 20221,
+     "at_ms": 1790441550717,
+     "timing": {
+      "stage": "FIXTURE_VERIFY",
+      "start_elapsed_ms": 20221,
+      "start_ts_ms": 1790441550704,
+      "end_elapsed_ms": 20629,
+      "end_ts_ms": 1790441551112,
+      "duration_ms": 408,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "FIXTURE_VERIFY",
+     "elapsed_ms": 20237,
+     "at_ms": 1790441550717
+    },
+    {
+     "stage": "FIXTURE_VERIFY",
+     "elapsed_ms": 20577,
+     "at_ms": 1790441550717
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 20629,
+     "at_ms": 1790441551125,
+     "timing": {
+      "stage": "SELECT_FIXTURE",
+      "start_elapsed_ms": 20629,
+      "start_ts_ms": 1790441551112,
+      "end_elapsed_ms": 21587,
+      "end_ts_ms": 1790441552070,
+      "duration_ms": 958,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 20643,
+     "at_ms": 1790441551125
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 21002,
+     "at_ms": 1790441551125
+    },
+    {
+     "stage": "SELECT_FIXTURE",
+     "elapsed_ms": 21022,
+     "at_ms": 1790441551125
+    },
+    {
+     "stage": "VERIFY_EVENT",
+     "elapsed_ms": 21587,
+     "at_ms": 1790441552082,
+     "timing": {
+      "stage": "VERIFY_EVENT",
+      "start_elapsed_ms": 21587,
+      "start_ts_ms": 1790441552070,
+      "end_elapsed_ms": 23587,
+      "end_ts_ms": 1790441554070,
+      "duration_ms": 2000,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_EVENT",
+     "elapsed_ms": 22803,
+     "at_ms": 1790441552082
+    },
+    {
+     "stage": "VERIFY_EVENT",
+     "elapsed_ms": 23408,
+     "at_ms": 1790441552082
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 23587,
+     "at_ms": 1790441554085,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 23587,
+      "start_ts_ms": 1790441554070,
+      "end_elapsed_ms": 24112,
+      "end_ts_ms": 1790441554594,
+      "duration_ms": 525,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 23603,
+     "at_ms": 1790441554085
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 24075,
+     "at_ms": 1790441554085
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 24112,
+     "at_ms": 1790441554608,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 24112,
+      "start_ts_ms": 1790441554594,
+      "end_elapsed_ms": 24126,
+      "end_ts_ms": 1790441554609,
+      "duration_ms": 14,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 24126,
+     "at_ms": 1790441554624,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 24126,
+      "start_ts_ms": 1790441554609,
+      "end_elapsed_ms": 24141,
+      "end_ts_ms": 1790441554624,
+      "duration_ms": 15,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 24141,
+     "at_ms": 1790441554639,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 24141,
+      "start_ts_ms": 1790441554624,
+      "end_elapsed_ms": 24157,
+      "end_ts_ms": 1790441554639,
+      "duration_ms": 16,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 24157,
+     "at_ms": 1790441554654,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 24157,
+      "start_ts_ms": 1790441554639,
+      "end_elapsed_ms": 24943,
+      "end_ts_ms": 1790441555426,
+      "duration_ms": 786,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 24172,
+     "at_ms": 1790441554654
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 24943,
+     "at_ms": 1790441555441,
+     "timing": {
+      "stage": "ENTER_STAKE",
+      "start_elapsed_ms": 24943,
+      "start_ts_ms": 1790441555426,
+      "end_elapsed_ms": 29611,
+      "end_ts_ms": 1790441560094,
+      "duration_ms": 4668,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 24959,
+     "at_ms": 1790441555441
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 25458,
+     "at_ms": 1790441555441
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 25739,
+     "at_ms": 1790441555441
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 26243,
+     "at_ms": 1790441555441
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 26271,
+     "at_ms": 1790441555441
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 26996,
+     "at_ms": 1790441555441
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 27456,
+     "at_ms": 1790441555441
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 27501,
+     "at_ms": 1790441555441
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 27777,
+     "at_ms": 1790441555441
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 28078,
+     "at_ms": 1790441555441
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 28395,
+     "at_ms": 1790441555441
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 28701,
+     "at_ms": 1790441555441
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 29209,
+     "at_ms": 1790441555441
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 29340,
+     "at_ms": 1790441555441
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 29611,
+     "at_ms": 1790441560144,
+     "timing": {
+      "stage": "VERIFY_FINAL_STATE",
+      "start_elapsed_ms": 29611,
+      "start_ts_ms": 1790441560094,
+      "end_elapsed_ms": 30397,
+      "end_ts_ms": 1790441560880,
+      "duration_ms": 786,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 29663,
+     "at_ms": 1790441560144
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 30209,
+     "at_ms": 1790441560144
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 30397,
+     "at_ms": 1790441560896,
+     "timing": {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "start_elapsed_ms": 30397,
+      "start_ts_ms": 1790441560880,
+      "end_elapsed_ms": 30456,
+      "end_ts_ms": 1790441560938,
+      "duration_ms": 59,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 30456,
+     "at_ms": 1790441560896
+    }
+   ]
+  },
+  "device_stage": "PREPARE_COMPLETE_EXECUTION",
+  "execution_count": 1,
+  "run_id": "c_9DYOsEK_UtLVchS3JThJEpUv7fikzufkf5aPSzff6aI",
+  "fixture_name": "Landstede Zwolle v Antwerp Giants",
+  "home": "Landstede Zwolle",
+  "away": "Antwerp Giants",
+  "competition": "Basketball Casino",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "line": "",
+   "price": "2.55",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Landstede Zwolle",
+   "bounds": [
+    603,
+    672,
+    648,
+    689
+   ]
+  },
+  "final_state": {
+   "home": "Landstede Zwolle",
+   "away": "Antwerp Giants",
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "line": "",
+   "price": "2.55",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "ready_state": {
+   "fixture_home": "Landstede Zwolle",
+   "fixture_away": "Antwerp Giants",
+   "market": "MONEYLINE",
+   "selection_role": "HOME",
+   "selection_name": "Landstede Zwolle",
+   "line": "",
+   "price": "2.55",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Landstede Zwolle v Antwerp Giants",
+   "fixture_home": "Landstede Zwolle",
+   "fixture_away": "Antwerp Giants",
+   "market": "MONEYLINE",
+   "selection_role": "HOME",
+   "selection_name": "Landstede Zwolle",
+   "line": "",
+   "price": "2.55",
+   "stake": "0.10",
+   "minimum_price": "1.01",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    20,
+    1253,
+    604,
+    1279
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     20,
+     1253,
+     604,
+     1279
+    ],
+    "center_x": 312,
+    "center_y": 1266,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790441560935,
+   "validation_hash": "97de1fe3c4017cabbb0e11dc14aec671"
+  },
+  "wager_submitted": false,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "event_context": {
+   "home": "Landstede Zwolle",
+   "away": "Antwerp Giants",
+   "competition": "bnxt super cup",
+   "kickoff_utc": "2026-09-26T18:30",
+   "period": "FULL_GAME"
+  },
+  "route": "search",
+  "held": true,
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790441554609,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "NONE",
+     "price": "2.55",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Landstede Zwolle",
+     "bounds": [
+      603,
+      672,
+      648,
+      689
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790441554609,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "NONE",
+     "price": "2.55",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Landstede Zwolle",
+     "bounds": [
+      603,
+      672,
+      648,
+      689
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790441559764,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "",
+     "price": "2.55",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Landstede Zwolle",
+     "bounds": [
+      603,
+      672,
+      648,
+      689
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790441559794,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "",
+     "price": "2.55",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Landstede Zwolle",
+     "bounds": [
+      603,
+      672,
+      648,
+      689
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "final",
+    "observed_at_ms": 1790441560859,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "",
+     "price": "2.55",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Landstede Zwolle",
+     "bounds": [
+      603,
+      672,
+      648,
+      689
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "prepare",
+    "observed_at_ms": 1790441560914,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "",
+     "price": "2.55",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Landstede Zwolle",
+     "bounds": [
+      603,
+      672,
+      648,
+      689
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "SPORTS_HOME",
+    "start_elapsed_ms": 18,
+    "start_ts_ms": 1790441530501,
+    "end_elapsed_ms": 26,
+    "end_ts_ms": 1790441530509,
+    "duration_ms": 8,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 26,
+    "start_ts_ms": 1790441530509,
+    "end_elapsed_ms": 5326,
+    "end_ts_ms": 1790441535809,
+    "duration_ms": 5300,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "start_elapsed_ms": 5326,
+    "start_ts_ms": 1790441535809,
+    "end_elapsed_ms": 6338,
+    "end_ts_ms": 1790441536821,
+    "duration_ms": 1012,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 6338,
+    "start_ts_ms": 1790441536821,
+    "end_elapsed_ms": 6344,
+    "end_ts_ms": 1790441536826,
+    "duration_ms": 6,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "start_elapsed_ms": 6344,
+    "start_ts_ms": 1790441536826,
+    "end_elapsed_ms": 7055,
+    "end_ts_ms": 1790441537538,
+    "duration_ms": 711,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 7055,
+    "start_ts_ms": 1790441537538,
+    "end_elapsed_ms": 10375,
+    "end_ts_ms": 1790441540858,
+    "duration_ms": 3320,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 10375,
+    "start_ts_ms": 1790441540858,
+    "end_elapsed_ms": 10397,
+    "end_ts_ms": 1790441540879,
+    "duration_ms": 22,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FOCUS",
+    "start_elapsed_ms": 10397,
+    "start_ts_ms": 1790441540879,
+    "end_elapsed_ms": 10405,
+    "end_ts_ms": 1790441540887,
+    "duration_ms": 8,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 10405,
+    "start_ts_ms": 1790441540887,
+    "end_elapsed_ms": 17353,
+    "end_ts_ms": 1790441547836,
+    "duration_ms": 6948,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "start_elapsed_ms": 17353,
+    "start_ts_ms": 1790441547836,
+    "end_elapsed_ms": 19212,
+    "end_ts_ms": 1790441549696,
+    "duration_ms": 1859,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "start_elapsed_ms": 19212,
+    "start_ts_ms": 1790441549696,
+    "end_elapsed_ms": 20221,
+    "end_ts_ms": 1790441550704,
+    "duration_ms": 1009,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "start_elapsed_ms": 20221,
+    "start_ts_ms": 1790441550704,
+    "end_elapsed_ms": 20629,
+    "end_ts_ms": 1790441551112,
+    "duration_ms": 408,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "start_elapsed_ms": 20629,
+    "start_ts_ms": 1790441551112,
+    "end_elapsed_ms": 21587,
+    "end_ts_ms": 1790441552070,
+    "duration_ms": 958,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "start_elapsed_ms": 21587,
+    "start_ts_ms": 1790441552070,
+    "end_elapsed_ms": 23587,
+    "end_ts_ms": 1790441554070,
+    "duration_ms": 2000,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 23587,
+    "start_ts_ms": 1790441554070,
+    "end_elapsed_ms": 24112,
+    "end_ts_ms": 1790441554594,
+    "duration_ms": 525,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 24112,
+    "start_ts_ms": 1790441554594,
+    "end_elapsed_ms": 24126,
+    "end_ts_ms": 1790441554609,
+    "duration_ms": 14,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 24126,
+    "start_ts_ms": 1790441554609,
+    "end_elapsed_ms": 24141,
+    "end_ts_ms": 1790441554624,
+    "duration_ms": 15,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 24141,
+    "start_ts_ms": 1790441554624,
+    "end_elapsed_ms": 24157,
+    "end_ts_ms": 1790441554639,
+    "duration_ms": 16,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 24157,
+    "start_ts_ms": 1790441554639,
+    "end_elapsed_ms": 24943,
+    "end_ts_ms": 1790441555426,
+    "duration_ms": 786,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 24943,
+    "start_ts_ms": 1790441555426,
+    "end_elapsed_ms": 29611,
+    "end_ts_ms": 1790441560094,
+    "duration_ms": 4668,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 29611,
+    "start_ts_ms": 1790441560094,
+    "end_elapsed_ms": 30397,
+    "end_ts_ms": 1790441560880,
+    "duration_ms": 786,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 30397,
+    "start_ts_ms": 1790441560880,
+    "end_elapsed_ms": 30456,
+    "end_ts_ms": 1790441560938,
+    "duration_ms": 59,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "stake_field_state": "EMPTY",
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "Landstede Zwolle",
+    "bookmaker": "Landstede Zwolle",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "Antwerp Giants",
+    "bookmaker": "Antwerp Giants",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "EXACT",
+  "session_path": [
+   {
+    "saw": "ACCOUNT",
+    "state": "AUTHENTICATED",
+    "attempts": 0
+   }
+  ],
+  "session_machine": "AUTHENTICATED"
+ },
+ "run": {
+  "run_id": "c_9DYOsEK_UtLVchS3JThJEpUv7fikzufkf5aPSzff6aI",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790441530483,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790441530483
+   },
+   {
+    "phase": "SPORTS_HOME",
+    "elapsed_ms": 18,
+    "wall_ts_ms": 1790441530502
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 26,
+    "wall_ts_ms": 1790441530509
+   },
+   {
+    "phase": "CAPTURE_home",
+    "elapsed_ms": 4062,
+    "wall_ts_ms": 1790441534545
+   },
+   {
+    "phase": "CAPTURED_home",
+    "elapsed_ms": 4515,
+    "wall_ts_ms": 1790441534998
+   },
+   {
+    "phase": "CAPTURE_home_ready",
+    "elapsed_ms": 4538,
+    "wall_ts_ms": 1790441535021
+   },
+   {
+    "phase": "CAPTURED_home_ready",
+    "elapsed_ms": 5307,
+    "wall_ts_ms": 1790441535789
+   },
+   {
+    "phase": "SESSION_CHECK",
+    "elapsed_ms": 5326,
+    "wall_ts_ms": 1790441535809
+   },
+   {
+    "phase": "CAPTURE_session",
+    "elapsed_ms": 5336,
+    "wall_ts_ms": 1790441535819
+   },
+   {
+    "phase": "CAPTURED_session",
+    "elapsed_ms": 6071,
+    "wall_ts_ms": 1790441536556
+   },
+   {
+    "phase": "OPEN_SEARCH",
+    "elapsed_ms": 6338,
+    "wall_ts_ms": 1790441536821
+   },
+   {
+    "phase": "SPORTS_CONTEXT",
+    "elapsed_ms": 6344,
+    "wall_ts_ms": 1790441536826
+   },
+   {
+    "phase": "CAPTURE_sports_context_pre",
+    "elapsed_ms": 6350,
+    "wall_ts_ms": 1790441536832
+   },
+   {
+    "phase": "CAPTURED_sports_context_pre",
+    "elapsed_ms": 7016,
+    "wall_ts_ms": 1790441537499
+   },
+   {
+    "phase": "OPEN_SEARCH",
+    "elapsed_ms": 7055,
+    "wall_ts_ms": 1790441537538
+   },
+   {
+    "phase": "CAPTURE_search_button",
+    "elapsed_ms": 7068,
+    "wall_ts_ms": 1790441537551
+   },
+   {
+    "phase": "CAPTURED_search_button",
+    "elapsed_ms": 7845,
+    "wall_ts_ms": 1790441538328
+   },
+   {
+    "phase": "CAPTURE_search_button_clear",
+    "elapsed_ms": 7862,
+    "wall_ts_ms": 1790441538345
+   },
+   {
+    "phase": "CAPTURED_search_button_clear",
+    "elapsed_ms": 8633,
+    "wall_ts_ms": 1790441539115
+   },
+   {
+    "effect": "gesture",
+    "target": "Search",
+    "bounds": [
+     107,
+     273,
+     199,
+     304
+    ],
+    "elapsed_ms": 8664
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8664,
+    "wall_ts_ms": 1790441539146
+   },
+   {
+    "phase": "CAPTURE_search_after_0_5s",
+    "elapsed_ms": 9727,
+    "wall_ts_ms": 1790441540209
+   },
+   {
+    "phase": "CAPTURED_search_after_0_5s",
+    "elapsed_ms": 10301,
+    "wall_ts_ms": 1790441540784
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 10375,
+    "wall_ts_ms": 1790441540858
+   },
+   {
+    "phase": "FOCUS",
+    "elapsed_ms": 10397,
+    "wall_ts_ms": 1790441540879
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 10405,
+    "wall_ts_ms": 1790441540887
+   },
+   {
+    "phase": "CAPTURE_query_pre",
+    "elapsed_ms": 10412,
+    "wall_ts_ms": 1790441540895
+   },
+   {
+    "phase": "CAPTURED_query_pre",
+    "elapsed_ms": 10812,
+    "wall_ts_ms": 1790441541295
+   },
+   {
+    "phase": "CAPTURE_search_field_0",
+    "elapsed_ms": 10825,
+    "wall_ts_ms": 1790441541308
+   },
+   {
+    "phase": "CAPTURED_search_field_0",
+    "elapsed_ms": 11234,
+    "wall_ts_ms": 1790441541717
+   },
+   {
+    "phase": "CAPTURE_query_ready",
+    "elapsed_ms": 11246,
+    "wall_ts_ms": 1790441541729
+   },
+   {
+    "phase": "CAPTURED_query_ready",
+    "elapsed_ms": 11632,
+    "wall_ts_ms": 1790441542115
+   },
+   {
+    "phase": "ENTER_QUERY",
+    "elapsed_ms": 11642,
+    "wall_ts_ms": 1790441542125
+   },
+   {
+    "phase": "QUERY_VERIFIED",
+    "elapsed_ms": 17314,
+    "wall_ts_ms": 1790441547797
+   },
+   {
+    "phase": "QUERY_VERIFY",
+    "elapsed_ms": 17353,
+    "wall_ts_ms": 1790441547836
+   },
+   {
+    "phase": "DISMISS_KEYBOARD",
+    "elapsed_ms": 17384,
+    "wall_ts_ms": 1790441547867
+   },
+   {
+    "phase": "RESULTS_WAIT",
+    "elapsed_ms": 19212,
+    "wall_ts_ms": 1790441549697
+   },
+   {
+    "phase": "CAPTURE_query_results",
+    "elapsed_ms": 19296,
+    "wall_ts_ms": 1790441549779
+   },
+   {
+    "phase": "CAPTURED_query_results",
+    "elapsed_ms": 19764,
+    "wall_ts_ms": 1790441550247
+   },
+   {
+    "phase": "CAPTURE_query_results_sports",
+    "elapsed_ms": 19814,
+    "wall_ts_ms": 1790441550296
+   },
+   {
+    "phase": "CAPTURED_query_results_sports",
+    "elapsed_ms": 20161,
+    "wall_ts_ms": 1790441550644
+   },
+   {
+    "phase": "FIXTURE_VERIFY",
+    "elapsed_ms": 20221,
+    "wall_ts_ms": 1790441550704
+   },
+   {
+    "phase": "CAPTURE_fixtures",
+    "elapsed_ms": 20237,
+    "wall_ts_ms": 1790441550720
+   },
+   {
+    "phase": "CAPTURED_fixtures",
+    "elapsed_ms": 20577,
+    "wall_ts_ms": 1790441551060
+   },
+   {
+    "phase": "SELECT_FIXTURE",
+    "elapsed_ms": 20629,
+    "wall_ts_ms": 1790441551112
+   },
+   {
+    "phase": "CAPTURE_fixture_preflight",
+    "elapsed_ms": 20643,
+    "wall_ts_ms": 1790441551126
+   },
+   {
+    "phase": "CAPTURED_fixture_preflight",
+    "elapsed_ms": 21002,
+    "wall_ts_ms": 1790441551485
+   },
+   {
+    "effect": "gesture",
+    "target": "Landstede Zwolle v Antwerp Giants",
+    "bounds": [
+     21,
+     397,
+     503,
+     423
+    ],
+    "elapsed_ms": 21022
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 21022,
+    "wall_ts_ms": 1790441551504
+   },
+   {
+    "phase": "VERIFY_EVENT",
+    "elapsed_ms": 21587,
+    "wall_ts_ms": 1790441552070
+   },
+   {
+    "phase": "CAPTURE_event",
+    "elapsed_ms": 22803,
+    "wall_ts_ms": 1790441553287
+   },
+   {
+    "phase": "CAPTURED_event",
+    "elapsed_ms": 23408,
+    "wall_ts_ms": 1790441553891
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 23587,
+    "wall_ts_ms": 1790441554070
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 23603,
+    "wall_ts_ms": 1790441554086
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 24075,
+    "wall_ts_ms": 1790441554557
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 24112,
+    "wall_ts_ms": 1790441554594
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 24126,
+    "wall_ts_ms": 1790441554609
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 24141,
+    "wall_ts_ms": 1790441554624
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 24157,
+    "wall_ts_ms": 1790441554640
+   },
+   {
+    "effect": "gesture",
+    "target": "MONEYLINE / HOME / NONE / 2.55",
+    "bounds": [
+     603,
+     672,
+     648,
+     689
+    ],
+    "elapsed_ms": 24172
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 24172,
+    "wall_ts_ms": 1790441554655
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 24943,
+    "wall_ts_ms": 1790441555426
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 24959,
+    "wall_ts_ms": 1790441555442
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 25458,
+    "wall_ts_ms": 1790441555941
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 25739,
+    "wall_ts_ms": 1790441556222
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 26243,
+    "wall_ts_ms": 1790441556726
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     20,
+     1327,
+     214,
+     1371
+    ],
+    "elapsed_ms": 26271
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 26271,
+    "wall_ts_ms": 1790441556754
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 26996,
+    "wall_ts_ms": 1790441557479
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 27456,
+    "wall_ts_ms": 1790441557939
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 27501
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 27501,
+    "wall_ts_ms": 1790441557984
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     87,
+     1228,
+     147,
+     1272
+    ],
+    "elapsed_ms": 27776
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 27777,
+    "wall_ts_ms": 1790441558259
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     87,
+     974,
+     147,
+     1018
+    ],
+    "elapsed_ms": 28078
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 28078,
+    "wall_ts_ms": 1790441558561
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 28394
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 28395,
+    "wall_ts_ms": 1790441558878
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 28701,
+    "wall_ts_ms": 1790441559184
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 29209,
+    "wall_ts_ms": 1790441559692
+   },
+   {
+    "effect": "gesture",
+    "target": "Done",
+    "bounds": [
+     311,
+     1331,
+     587,
+     1368
+    ],
+    "elapsed_ms": 29340
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 29340,
+    "wall_ts_ms": 1790441559822
+   },
+   {
+    "phase": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 29611,
+    "wall_ts_ms": 1790441560094
+   },
+   {
+    "phase": "CAPTURE_final",
+    "elapsed_ms": 29663,
+    "wall_ts_ms": 1790441560146
+   },
+   {
+    "phase": "CAPTURED_final",
+    "elapsed_ms": 30209,
+    "wall_ts_ms": 1790441560692
+   },
+   {
+    "phase": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 30397,
+    "wall_ts_ms": 1790441560880
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 30456,
+    "wall_ts_ms": 1790441560938
+   }
+  ],
+  "screenshots": [
+   "s001_home.png",
+   "s002_home_ready.png",
+   "s003_session.png",
+   "s004_sports_context_pre.png",
+   "s005_search_button.png",
+   "s006_search_button_clear.png",
+   "s007_search_after_0_5s.png",
+   "s008_query_pre.png",
+   "s009_search_field_0.png",
+   "s010_query_ready.png",
+   "s011_query_results.png",
+   "s012_query_results_sports.png",
+   "s013_fixtures.png",
+   "s014_fixture_preflight.png",
+   "s015_event.png",
+   "s016_markets.png",
+   "s017_betslip_pre_stake.png",
+   "s018_betslip_pre_stake.png",
+   "s019_stake_ui.png",
+   "s020_stake_typed.png",
+   "s021_final.png"
+  ],
+  "gesture_attempts": 9,
+  "stage_timings": [
+   {
+    "stage": "SPORTS_HOME",
+    "start_elapsed_ms": 18,
+    "start_ts_ms": 1790441530501,
+    "end_elapsed_ms": 26,
+    "end_ts_ms": 1790441530509,
+    "duration_ms": 8,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 26,
+    "start_ts_ms": 1790441530509,
+    "end_elapsed_ms": 5326,
+    "end_ts_ms": 1790441535809,
+    "duration_ms": 5300,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SESSION_CHECK",
+    "start_elapsed_ms": 5326,
+    "start_ts_ms": 1790441535809,
+    "end_elapsed_ms": 6338,
+    "end_ts_ms": 1790441536821,
+    "duration_ms": 1012,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 6338,
+    "start_ts_ms": 1790441536821,
+    "end_elapsed_ms": 6344,
+    "end_ts_ms": 1790441536826,
+    "duration_ms": 6,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SPORTS_CONTEXT",
+    "start_elapsed_ms": 6344,
+    "start_ts_ms": 1790441536826,
+    "end_elapsed_ms": 7055,
+    "end_ts_ms": 1790441537538,
+    "duration_ms": 711,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SEARCH",
+    "start_elapsed_ms": 7055,
+    "start_ts_ms": 1790441537538,
+    "end_elapsed_ms": 10375,
+    "end_ts_ms": 1790441540858,
+    "duration_ms": 3320,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 10375,
+    "start_ts_ms": 1790441540858,
+    "end_elapsed_ms": 10397,
+    "end_ts_ms": 1790441540879,
+    "duration_ms": 22,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FOCUS",
+    "start_elapsed_ms": 10397,
+    "start_ts_ms": 1790441540879,
+    "end_elapsed_ms": 10405,
+    "end_ts_ms": 1790441540887,
+    "duration_ms": 8,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_QUERY",
+    "start_elapsed_ms": 10405,
+    "start_ts_ms": 1790441540887,
+    "end_elapsed_ms": 17353,
+    "end_ts_ms": 1790441547836,
+    "duration_ms": 6948,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "QUERY_VERIFY",
+    "start_elapsed_ms": 17353,
+    "start_ts_ms": 1790441547836,
+    "end_elapsed_ms": 19212,
+    "end_ts_ms": 1790441549696,
+    "duration_ms": 1859,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "RESULTS_WAIT",
+    "start_elapsed_ms": 19212,
+    "start_ts_ms": 1790441549696,
+    "end_elapsed_ms": 20221,
+    "end_ts_ms": 1790441550704,
+    "duration_ms": 1009,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "FIXTURE_VERIFY",
+    "start_elapsed_ms": 20221,
+    "start_ts_ms": 1790441550704,
+    "end_elapsed_ms": 20629,
+    "end_ts_ms": 1790441551112,
+    "duration_ms": 408,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "SELECT_FIXTURE",
+    "start_elapsed_ms": 20629,
+    "start_ts_ms": 1790441551112,
+    "end_elapsed_ms": 21587,
+    "end_ts_ms": 1790441552070,
+    "duration_ms": 958,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "start_elapsed_ms": 21587,
+    "start_ts_ms": 1790441552070,
+    "end_elapsed_ms": 23587,
+    "end_ts_ms": 1790441554070,
+    "duration_ms": 2000,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 23587,
+    "start_ts_ms": 1790441554070,
+    "end_elapsed_ms": 24112,
+    "end_ts_ms": 1790441554594,
+    "duration_ms": 525,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 24112,
+    "start_ts_ms": 1790441554594,
+    "end_elapsed_ms": 24126,
+    "end_ts_ms": 1790441554609,
+    "duration_ms": 14,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 24126,
+    "start_ts_ms": 1790441554609,
+    "end_elapsed_ms": 24141,
+    "end_ts_ms": 1790441554624,
+    "duration_ms": 15,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 24141,
+    "start_ts_ms": 1790441554624,
+    "end_elapsed_ms": 24157,
+    "end_ts_ms": 1790441554639,
+    "duration_ms": 16,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 24157,
+    "start_ts_ms": 1790441554639,
+    "end_elapsed_ms": 24943,
+    "end_ts_ms": 1790441555426,
+    "duration_ms": 786,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 24943,
+    "start_ts_ms": 1790441555426,
+    "end_elapsed_ms": 29611,
+    "end_ts_ms": 1790441560094,
+    "duration_ms": 4668,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 29611,
+    "start_ts_ms": 1790441560094,
+    "end_elapsed_ms": 30397,
+    "end_ts_ms": 1790441560880,
+    "duration_ms": 786,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 30397,
+    "start_ts_ms": 1790441560880,
+    "end_elapsed_ms": 30456,
+    "end_ts_ms": 1790441560938,
+    "duration_ms": 59,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "route": "search",
+  "current_stage": "PREPARE_COMPLETE_EXECUTION",
+  "session_path": [
+   {
+    "saw": "ACCOUNT",
+    "state": "AUTHENTICATED",
+    "attempts": 0
+   }
+  ],
+  "session_machine": "AUTHENTICATED",
+  "session": "AUTHENTICATED",
+  "sports_context_pre_elapsed_ms": 696,
+  "sports_context_foreground": "17:52 D C all 100% | o bet365.com/#/HO/ + 11 | bet365 £4.07 (+) | Search | bet365 | ROULETTE | FootballI Horses Greyhounds CHAMPIONS | LEAGUE | ENG V SPA UEFA Nations League League 2 Casino | UEFA Nations League View All | Sat 26 Sep 1 X 2 | England | 3.90 3.50 1.95 | Spain | 19:45 | BET BUILDER + Player Markets > | UEFA Nations League A Sat 19:45 | Englandv Spain | Main Shots on Target Shots Fouls Tackles | Score or To be | To Score | Acciet Rooked | (o) | Home All Sports In-Play My Bets Casino | I||",
+  "sports_context": "already_sports_or_home",
+  "sports_context_elapsed_ms": 706,
+  "search_control_text": "Search",
+  "search_control_bounds": [
+   113,
+   279,
+   193,
+   298
+  ],
+  "search_tap_bounds": [
+   107,
+   273,
+   199,
+   304
+  ],
+  "search_tap_xy": [
+   153,
+   288
+  ],
+  "search_tap_attempt": 1,
+  "search_ui_open": true,
+  "search_open_via": "verify_0_5s",
+  "search_query": "Landstede Zwolle Antwerp Giants",
+  "identity_home": "Landstede Zwolle",
+  "expected_away": "Antwerp Giants",
+  "identity_away": "Antwerp Giants",
+  "search_query_ladder": [
+   "Landstede Zwolle Antwerp Giants",
+   "Landstede Zwolle",
+   "Antwerp Giants"
+  ],
+  "search_ladder_index": 0,
+  "search_ladder_query": "Landstede Zwolle Antwerp Giants",
+  "search_bar_checks": [
+   {
+    "attempt": 0,
+    "bar": true,
+    "candidates": 1,
+    "text": "Search bet365...",
+    "empty": true,
+    "clear": null
+   }
+  ],
+  "query_evidence": {
+   "run_id": "c_9DYOsEK_UtLVchS3JThJEpUv7fikzufkf5aPSzff6aI",
+   "requested_text": "Landstede Zwolle Antwerp Giants",
+   "field_hint": "bet365...",
+   "package": "com.android.chrome",
+   "mechanism": "AccessibilityInputConnection.commitText",
+   "started_at_ms": 1790441542133,
+   "started_elapsed_ms": 67668626,
+   "timeout_ms": 60000,
+   "status": "PASS",
+   "field_bounds": [
+    124,
+    153,
+    487,
+    227
+   ],
+   "pre_screenshot": "files/visual/c_9DYOsEK_UtLVchS3JThJEpUv7fikzufkf5aPSzff6aI/before.png",
+   "post_screenshot": "files/visual/c_9DYOsEK_UtLVchS3JThJEpUv7fikzufkf5aPSzff6aI/after.png",
+   "verification_result": "EXACT_INPUT_OCR_SOFT",
+   "input_attempts": 1,
+   "events": [
+    {
+     "phase": "STARTED",
+     "elapsed_ms": 0
+    },
+    {
+     "phase": "LOCATING",
+     "elapsed_ms": 23
+    },
+    {
+     "phase": "FOCUS_DISPATCHING",
+     "elapsed_ms": 362
+    },
+    {
+     "phase": "FOCUS_GESTURE_COMPLETED",
+     "elapsed_ms": 473
+    },
+    {
+     "phase": "FOCUS_CONFIRMED",
+     "elapsed_ms": 710
+    },
+    {
+     "phase": "INPUT_COMMITTING",
+     "elapsed_ms": 1073
+    },
+    {
+     "phase": "INPUT_SENT",
+     "elapsed_ms": 1083
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 1690
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 3092
+    },
+    {
+     "phase": "VERIFYING",
+     "elapsed_ms": 4502
+    },
+    {
+     "phase": "FINISHED",
+     "elapsed_ms": 5606
+    }
+   ],
+   "phase": "FINISHED",
+   "focus_cycle": 0,
+   "focus_baseline_generation": 60,
+   "focus_tap_elapsed_ms": 67668988,
+   "focus_tap_xy": [
+    305,
+    190
+   ],
+   "editor_package": "com.android.chrome",
+   "editor_generation": 61,
+   "editor_start_elapsed_ms": 67669136,
+   "ime_window_visible": false,
+   "focus_signals": {
+    "fresh_generation": true,
+    "generation": 61,
+    "baseline_generation": 60,
+    "ime_window_visible": false,
+    "focus_cycle": 0
+   },
+   "focused_screenshot": "files/visual/c_9DYOsEK_UtLVchS3JThJEpUv7fikzufkf5aPSzff6aI/focused.png",
+   "focused_field_bounds": [
+    131,
+    149,
+    494,
+    230
+   ],
+   "wrong_field": false,
+   "prior_text_length": 0,
+   "visible_field_text": "lstede Zwolle Antwerp Giantsl",
+   "ocr_verify_attempt": 2,
+   "post_field_bounds": [
+    127,
+    109,
+    496,
+    296
+   ],
+   "observed_text": "Landstede Zwolle Antwerp Giants",
+   "exact_input_match": true,
+   "visual_text_match": false,
+   "bounds_unchanged": true,
+   "focus_session_fresh": true,
+   "ocr_gate": "SOFT_SUPPORTING",
+   "ocr_soft_pass": true,
+   "detail": "Exact editor value verified; OCR supporting evidence imperfect but field/focus gates held",
+   "ended_at_ms": 1790441547739,
+   "duration_ms": 5606
+  },
+  "search_result_fixtures": [
+   {
+    "code": "d7f07092",
+    "home": "Landstede Zwolle",
+    "away": "Antwerp Giants",
+    "fixture_name": "Landstede Zwolle v Antwerp Giants",
+    "exact_fixture_text": "Home Landstede Zwolle\nAway Antwerp Giants",
+    "competition": "Basketball Casino",
+    "bounds": [
+     21,
+     397,
+     503,
+     423
+    ]
+   }
+  ],
+  "search_ocr_readback": "17:52 D Co R.ll 100% | G o bet365.com/#/AX/K? + 11 | Q Landstede Zwolle Antwerp Giants X Close | Basketball Casino | Landstede Zwolle vs Antwerp Giants > | Landstede Zwolle vs Antwerp 1 2 | Giants | +4.5 1.83 -4.5 1.83 | Sat 26 Sep 19:30 | ((o) | Home All Sports In-Play My Bets Casino",
+  "verified_fixture": {
+   "code": "6e17b55e",
+   "home": "Landstede Zwolle",
+   "away": "Antwerp Giants",
+   "fixture_name": "Landstede Zwolle v Antwerp Giants",
+   "exact_fixture_text": "Home Landstede Zwolle\nAway Antwerp Giants",
+   "competition": "BNXT Super Cup 26 Sep 19:30",
+   "bounds": [
+    35,
+    266,
+    691,
+    436
+   ]
+  },
+  "fixture_home": "Landstede Zwolle",
+  "fixture_away": "Antwerp Giants",
+  "discovery_query": "Landstede Zwolle Antwerp Giants",
+  "identity_verified_home": "Landstede Zwolle",
+  "identity_verified_away": "Antwerp Giants",
+  "discovered_fixtures": [
+   {
+    "code": "d7f07092",
+    "home": "Landstede Zwolle",
+    "away": "Antwerp Giants",
+    "fixture_name": "Landstede Zwolle v Antwerp Giants",
+    "exact_fixture_text": "Home Landstede Zwolle\nAway Antwerp Giants",
+    "competition": "Basketball Casino",
+    "bounds": [
+     21,
+     397,
+     503,
+     423
+    ]
+   }
+  ],
+  "sport_observed": "basketball",
+  "fixture": {
+   "code": "d7f07092",
+   "home": "Landstede Zwolle",
+   "away": "Antwerp Giants",
+   "fixture_name": "Landstede Zwolle v Antwerp Giants",
+   "exact_fixture_text": "Home Landstede Zwolle\nAway Antwerp Giants",
+   "competition": "Basketball Casino",
+   "bounds": [
+    21,
+    397,
+    503,
+    423
+   ]
+  },
+  "direct_event_header": [
+   "BNXT Super Cup 26 Sep 19:30",
+   "Landstede Zwolle vs Antwerp Giants",
+   "Popular Bet Builder Game Team Quarter H A"
+  ],
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "Landstede Zwolle",
+    "bookmaker": "Landstede Zwolle",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "Antwerp Giants",
+    "bookmaker": "Antwerp Giants",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "EXACT",
+  "kickoff_verified": "26 Sep 19:30",
+  "event_verified": true,
+  "event_context": {
+   "home": "Landstede Zwolle",
+   "away": "Antwerp Giants",
+   "competition": "bnxt super cup",
+   "kickoff_utc": "2026-09-26T18:30",
+   "period": "FULL_GAME"
+  },
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/+4.5@1.83",
+     "SPREAD/AWAY/-4.5@1.83",
+     "TOTAL/OVER/164.5@1.83",
+     "TOTAL/UNDER/164.5@1.83",
+     "MONEYLINE/HOME/NONE@2.55",
+     "MONEYLINE/AWAY/NONE@1.47"
+    ],
+    "notes": []
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/+4.5@1.83",
+    "SPREAD/AWAY/-4.5@1.83",
+    "TOTAL/OVER/164.5@1.83",
+    "TOTAL/UNDER/164.5@1.83",
+    "MONEYLINE/HOME/NONE@2.55",
+    "MONEYLINE/AWAY/NONE@1.47"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "+4.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Landstede Zwolle",
+    "bounds": [
+     301,
+     655,
+     345,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "-4.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Antwerp Giants",
+    "bounds": [
+     301,
+     740,
+     344,
+     790
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "164.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     452,
+     655,
+     512,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "164.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     452,
+     736,
+     512,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "2.55",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Landstede Zwolle",
+    "bounds": [
+     603,
+     672,
+     648,
+     689
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "1.47",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Antwerp Giants",
+    "bounds": [
+     604,
+     757,
+     648,
+     774
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790441554609,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "NONE",
+     "price": "2.55",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Landstede Zwolle",
+     "bounds": [
+      603,
+      672,
+      648,
+      689
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790441554609,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "NONE",
+     "price": "2.55",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Landstede Zwolle",
+     "bounds": [
+      603,
+      672,
+      648,
+      689
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790441559764,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "",
+     "price": "2.55",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Landstede Zwolle",
+     "bounds": [
+      603,
+      672,
+      648,
+      689
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790441559794,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "",
+     "price": "2.55",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Landstede Zwolle",
+     "bounds": [
+      603,
+      672,
+      648,
+      689
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "final",
+    "observed_at_ms": 1790441560859,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "",
+     "price": "2.55",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Landstede Zwolle",
+     "bounds": [
+      603,
+      672,
+      648,
+      689
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "prepare",
+    "observed_at_ms": 1790441560914,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "",
+     "price": "2.55",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Landstede Zwolle",
+     "bounds": [
+      603,
+      672,
+      648,
+      689
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "selection_role": "HOME",
+  "selection_name": "Landstede Zwolle",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "line": "",
+   "price": "2.55",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Landstede Zwolle",
+   "bounds": [
+    603,
+    672,
+    648,
+    689
+   ]
+  },
+  "selection_preflight": "reused clean grid read",
+  "stake_keypad": {
+   "zero": [
+    360,
+    1250
+   ],
+   "dot": [
+    117,
+    1250
+   ]
+  },
+  "stake_field_state": "EMPTY",
+  "stake_check_typed": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "025",
+   "stake": "0.10",
+   "price": "2.55"
+  },
+  "stake_entered": "0.10",
+  "stake_check_final": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "025",
+   "stake": "0.10",
+   "price": "2.55"
+  },
+  "ready_state": {
+   "fixture_home": "Landstede Zwolle",
+   "fixture_away": "Antwerp Giants",
+   "market": "MONEYLINE",
+   "selection_role": "HOME",
+   "selection_name": "Landstede Zwolle",
+   "line": "",
+   "price": "2.55",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "final_state": {
+   "home": "Landstede Zwolle",
+   "away": "Antwerp Giants",
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "line": "",
+   "price": "2.55",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "confirmation_gate": "NONE",
+  "prepare_frame": "reused verified final frame",
+  "stake_check_prepare": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "025",
+   "stake": "0.10",
+   "price": "2.55"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Landstede Zwolle v Antwerp Giants",
+   "fixture_home": "Landstede Zwolle",
+   "fixture_away": "Antwerp Giants",
+   "market": "MONEYLINE",
+   "selection_role": "HOME",
+   "selection_name": "Landstede Zwolle",
+   "line": "",
+   "price": "2.55",
+   "stake": "0.10",
+   "minimum_price": "1.01",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    20,
+    1253,
+    604,
+    1279
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     20,
+     1253,
+     604,
+     1279
+    ],
+    "center_x": 312,
+    "center_y": 1266,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790441560935,
+   "validation_hash": "97de1fe3c4017cabbb0e11dc14aec671"
+  },
+  "prepared_gesture": {
+   "type": "tap",
+   "target": "Place Bet",
+   "package": "com.android.chrome",
+   "bounds": [
+    20,
+    1253,
+    604,
+    1279
+   ],
+   "center_x": 312,
+   "center_y": 1266,
+   "duration_ms": 100,
+   "dispatched": false
+  },
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "held": true,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 30456
+ },
+ "wall": 31.329756498336792
+}

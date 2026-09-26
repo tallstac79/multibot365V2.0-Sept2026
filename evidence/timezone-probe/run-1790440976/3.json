@@ -1,0 +1,141 @@
+{
+ "fixture": {
+  "instruction_id": "on-045d0da3a9c23a2e76ef7870",
+  "home": "Kotwica Kolobrzeg",
+  "away": "Polonia Warszawa",
+  "competition": "1. Liga",
+  "feed_time": "2026-09-26T19:00",
+  "url": "https://www.bet365.com/#/AC/B18/C21168185/D19/E26747589/F19/I0/",
+  "displayed": "2026-09-26T19:00",
+  "received_at": "2026-09-26T15:36:26.481+00:00"
+ },
+ "payload": {
+  "instruction_id": "tzprobe-1790440993-3",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "query": "Kotwica Kolobrzeg||Polonia Warszawa",
+  "market": "TOTALS",
+  "side": "OVER",
+  "line": "999.5",
+  "minimum_price": "1.01",
+  "stake": "0.10",
+  "timeout_ms": 120000,
+  "execution_mode": "ready",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168185/D19/E26747589/F19/I0/",
+  "kickoff_utc": "2026-09-26T19:00",
+  "competition": "1. Liga",
+  "period": "FULL_GAME"
+ },
+ "result": {
+  "instruction_id": "tzprobe-1790440993-3",
+  "status": "FAIL",
+  "stage": "WRONG_EVENT",
+  "detail": "Event link shows 'Kotwica Kolobrzeg v Polonia Warszawa'; alert says 'Kotwica Kolobrzeg v Polonia Warszawa': kick-off differs: alert 26 Sep 20:00 vs page 26 Sep 19:00 (UK)",
+  "duration_ms": 5540,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 5380,
+   "last_progress_at_ms": 1790440992962,
+   "instruction_id": "tzprobe-1790440993-3",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790440992948
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 19,
+     "at_ms": 1790440992954
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 25,
+     "at_ms": 1790440992962,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 25,
+      "start_ts_ms": 1790440992955,
+      "end_elapsed_ms": 5380,
+      "end_ts_ms": 1790440998309,
+      "duration_ms": 5355,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3453,
+     "at_ms": 1790440992962
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3689,
+     "at_ms": 1790440992962
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4618,
+     "at_ms": 1790440992962
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5240,
+     "at_ms": 1790440992962
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5380,
+     "at_ms": 1790440992962
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_otLQbcfxKr6N3HwLtlOH3pyGO0yK-H5q17nblQuEuM8",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'Kotwica Kolobrzeg v Polonia Warszawa'; alert says 'Kotwica Kolobrzeg v Polonia Warszawa': kick-off differs: alert 26 Sep 20:00 vs page 26 Sep 19:00 (UK)",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 25,
+    "start_ts_ms": 1790440992955,
+    "end_elapsed_ms": 5380,
+    "end_ts_ms": 1790440998309,
+    "duration_ms": 5355,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: kick-off differs: alert 26 Sep 20:00 vs page 26 Sep 19:00 (UK)",
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "kick-off differs: alert 26 Sep 20:00 vs page 26 Sep 19:00 (UK)",
+   "home": {
+    "feed": "Kotwica Kolobrzeg",
+    "bookmaker": "Kotwica Kolobrzeg",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "Polonia Warszawa",
+    "bookmaker": "Polonia Warszawa",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": false,
+   "reversed": false
+  },
+  "identity_verdict": "MISMATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168185/D19/E26747589/F19/I0/"
+ }
+}

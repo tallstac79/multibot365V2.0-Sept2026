@@ -28,6 +28,26 @@ class FeedTimeTests(unittest.TestCase):
         self.assertEqual(p, before)
         self.assertEqual(results[0]['checks'][:8], results[1]['checks'][:8])
 
+    def test_real_feed_is_europe_london_since_26_september_2026(self):
+        """Empirical (tests/fixtures/timezone_probe_20260926.json): five upcoming fixtures opened on the phone on
+        26 Sep 2026 16:46 UTC; every Bet365 page kick-off (UK) equals the feed wall time read as Europe/London (BST),
+        none equals it read as UTC. The feed switched from UTC to Europe/London between 06:01 and 07:08 UTC that day
+        (14 fixtures re-alerted with their event time one hour later); alerts before the switch keep UTC semantics."""
+        from pathlib import Path
+        rows = json.loads((Path(__file__).parent / 'fixtures/timezone_probe_20260926.json').read_text(encoding='utf-8'))
+        self.assertGreaterEqual(len(rows), 5)
+        for row in rows:
+            self.assertTrue(row['kickoff_agrees'], row['fixture'])
+            self.assertTrue(row['page_uk'].startswith(row['uk_if_feed_is_london']), row)
+            self.assertFalse(row['page_uk'].startswith(row['uk_if_feed_is_utc']), row)
+        # the rules engine under the corrected setting: Landstede Hammers v Antwerp Giants, feed 19:30 -> 18:30 UTC
+        p = parsed(9); p['scheduled_at_local'] = '2026-09-26T19:30'
+        self.assertEqual(event_start(p, 'Europe/London').isoformat(), '2026-09-26T18:30:00+00:00')
+        self.assertEqual(event_start(p, 'UTC').isoformat(), '2026-09-26T19:30:00+00:00')
+        now = datetime(2026, 9, 26, 18, 45, tzinfo=timezone.utc)          # after the real tip-off, before the UTC misreading
+        self.assertEqual(self.decide(p, config(event_timezone='Europe/London'), now)['decision'], 'STALE')
+        self.assertEqual(self.decide(p, config(event_timezone='UTC'), now)['decision'], 'ACCEPT')   # the error that was live
+
     def test_verification_only_changes_time_gate(self):
         p = parsed(9); p['scheduled_at_local'] = '2026-09-25T18:00'
         now = datetime(2026, 9, 25, 17, 30, tzinfo=timezone.utc)

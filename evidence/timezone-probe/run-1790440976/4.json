@@ -1,0 +1,131 @@
+{
+ "fixture": {
+  "instruction_id": "on-8078b925288e1ae405754a76",
+  "home": "Spojnia Stargard",
+  "away": "Polonia Bytom",
+  "competition": "1. Liga",
+  "feed_time": "2026-09-26T19:00",
+  "url": "https://www.bet365.com/#/AC/B18/C21168185/D19/E26747588/F19/I0/",
+  "displayed": "2026-09-26T19:00",
+  "received_at": "2026-09-26T15:35:54.403+00:00"
+ },
+ "payload": {
+  "instruction_id": "tzprobe-1790441000-4",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "query": "Spojnia Stargard||Polonia Bytom",
+  "market": "TOTALS",
+  "side": "OVER",
+  "line": "999.5",
+  "minimum_price": "1.01",
+  "stake": "0.10",
+  "timeout_ms": 120000,
+  "execution_mode": "ready",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168185/D19/E26747588/F19/I0/",
+  "kickoff_utc": "2026-09-26T19:00",
+  "competition": "1. Liga",
+  "period": "FULL_GAME"
+ },
+ "result": {
+  "instruction_id": "tzprobe-1790441000-4",
+  "status": "FAIL",
+  "stage": "WRONG_EVENT",
+  "detail": "Event link shows 'Spojnia Stargard v Polonia Bytom'; alert says 'Spojnia Stargard v Polonia Bytom': kick-off differs: alert 26 Sep 20:00 vs page 26 Sep 19:00 (UK)",
+  "duration_ms": 4452,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 4223,
+   "last_progress_at_ms": 1790441000955,
+   "instruction_id": "tzprobe-1790441000-4",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790441000936
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 22,
+     "at_ms": 1790441000944
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 31,
+     "at_ms": 1790441000955,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 31,
+      "start_ts_ms": 1790441000946,
+      "end_elapsed_ms": 4223,
+      "end_ts_ms": 1790441005138,
+      "duration_ms": 4192,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3473,
+     "at_ms": 1790441000955
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4115,
+     "at_ms": 1790441000955
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4223,
+     "at_ms": 1790441000955
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_KrZBg7AttAwC2zQali0U5yewOeV30KlCB0VG2L4XXaA",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'Spojnia Stargard v Polonia Bytom'; alert says 'Spojnia Stargard v Polonia Bytom': kick-off differs: alert 26 Sep 20:00 vs page 26 Sep 19:00 (UK)",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 31,
+    "start_ts_ms": 1790441000946,
+    "end_elapsed_ms": 4223,
+    "end_ts_ms": 1790441005138,
+    "duration_ms": 4192,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: kick-off differs: alert 26 Sep 20:00 vs page 26 Sep 19:00 (UK)",
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "kick-off differs: alert 26 Sep 20:00 vs page 26 Sep 19:00 (UK)",
+   "home": {
+    "feed": "Spojnia Stargard",
+    "bookmaker": "Spojnia Stargard",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "Polonia Bytom",
+    "bookmaker": "Polonia Bytom",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": false,
+   "reversed": false
+  },
+  "identity_verdict": "MISMATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168185/D19/E26747588/F19/I0/"
+ }
+}

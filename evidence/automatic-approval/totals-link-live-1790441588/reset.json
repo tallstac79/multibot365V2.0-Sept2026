@@ -1,0 +1,190 @@
+{
+ "result": {
+  "instruction_id": "rstotals-link-live-175308",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "RESET_BETSLIP",
+  "duration_ms": 2927,
+  "progress": {
+   "stage": "RESET_BETSLIP",
+   "elapsed_ms": 2840,
+   "last_progress_at_ms": 1790441602522,
+   "instruction_id": "rstotals-link-live-175308",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790441602518
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 13,
+     "at_ms": 1790441602522,
+     "timing": {
+      "stage": "RESET_BETSLIP",
+      "start_elapsed_ms": 13,
+      "start_ts_ms": 1790441602519,
+      "end_elapsed_ms": 2839,
+      "end_ts_ms": 1790441605345,
+      "duration_ms": 2826,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 18,
+     "at_ms": 1790441602522
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 481,
+     "at_ms": 1790441602522
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 503,
+     "at_ms": 1790441602522
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 2265,
+     "at_ms": 1790441602522
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 2815,
+     "at_ms": 1790441602522
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 2840,
+     "at_ms": 1790441602522
+    }
+   ]
+  },
+  "device_stage": "RESET_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_Hzm9_izGA7LfAfmylT4DF_8w-opuVgYFtQ5jEBVZcCI",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+  "betslip_reset": {
+   "tapped": true,
+   "control": "remove selection X",
+   "bounds": [
+    21,
+    1181,
+    42,
+    1202
+   ],
+   "place_bet_still_visible": false
+  },
+  "stage_timings": [
+   {
+    "stage": "RESET_BETSLIP",
+    "start_elapsed_ms": 13,
+    "start_ts_ms": 1790441602519,
+    "end_elapsed_ms": 2839,
+    "end_ts_ms": 1790441605345,
+    "duration_ms": 2826,
+    "status": "ok",
+    "retries": 0
+   }
+  ]
+ },
+ "run": {
+  "run_id": "c_Hzm9_izGA7LfAfmylT4DF_8w-opuVgYFtQ5jEBVZcCI",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790441602505,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790441602506
+   },
+   {
+    "phase": "RESET_BETSLIP",
+    "elapsed_ms": 13,
+    "wall_ts_ms": 1790441602519
+   },
+   {
+    "phase": "CAPTURE_reset_pre",
+    "elapsed_ms": 18,
+    "wall_ts_ms": 1790441602523
+   },
+   {
+    "phase": "CAPTURED_reset_pre",
+    "elapsed_ms": 481,
+    "wall_ts_ms": 1790441602987
+   },
+   {
+    "effect": "gesture",
+    "target": "Remove selection",
+    "bounds": [
+     21,
+     1181,
+     42,
+     1202
+    ],
+    "elapsed_ms": 503
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 503,
+    "wall_ts_ms": 1790441603008
+   },
+   {
+    "phase": "CAPTURE_reset_after",
+    "elapsed_ms": 2265,
+    "wall_ts_ms": 1790441604771
+   },
+   {
+    "phase": "CAPTURED_reset_after",
+    "elapsed_ms": 2815,
+    "wall_ts_ms": 1790441605321
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 2840,
+    "wall_ts_ms": 1790441605345
+   }
+  ],
+  "screenshots": [
+   "s001_reset_pre.png",
+   "s002_reset_after.png"
+  ],
+  "gesture_attempts": 1,
+  "stage_timings": [
+   {
+    "stage": "RESET_BETSLIP",
+    "start_elapsed_ms": 13,
+    "start_ts_ms": 1790441602519,
+    "end_elapsed_ms": 2839,
+    "end_ts_ms": 1790441605345,
+    "duration_ms": 2826,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "current_stage": "RESET_BETSLIP",
+  "betslip_reset": {
+   "tapped": true,
+   "control": "remove selection X",
+   "bounds": [
+    21,
+    1181,
+    42,
+    1202
+   ],
+   "place_bet_still_visible": false
+  },
+  "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+  "detail": "RESET_BETSLIP",
+  "duration_ms": 2840
+ }
+}

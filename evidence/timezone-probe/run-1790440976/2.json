@@ -1,0 +1,141 @@
+{
+ "fixture": {
+  "instruction_id": "on-3dd697b0510673ae210783e0",
+  "home": "Landstede Hammers",
+  "away": "Antwerp Giants",
+  "competition": "BNXT Super Cup",
+  "feed_time": "2026-09-26T19:30",
+  "url": "https://www.bet365.com/#/AC/B18/C21172277/D19/E26823685/F19/I0/",
+  "displayed": "2026-09-26T19:30",
+  "received_at": "2026-09-26T16:20:33.163+00:00"
+ },
+ "payload": {
+  "instruction_id": "tzprobe-1790440984-2",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "query": "Landstede Hammers||Antwerp Giants",
+  "market": "TOTALS",
+  "side": "OVER",
+  "line": "999.5",
+  "minimum_price": "1.01",
+  "stake": "0.10",
+  "timeout_ms": 120000,
+  "execution_mode": "ready",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172277/D19/E26823685/F19/I0/",
+  "kickoff_utc": "2026-09-26T19:30",
+  "competition": "BNXT Super Cup",
+  "period": "FULL_GAME"
+ },
+ "result": {
+  "instruction_id": "tzprobe-1790440984-2",
+  "status": "FAIL",
+  "stage": "WRONG_EVENT",
+  "detail": "Event link shows 'Landstede Zwolle v Antwerp Giants'; alert says 'Landstede Hammers v Antwerp Giants': kick-off differs: alert 26 Sep 20:30 vs page 26 Sep 19:30 (UK)",
+  "duration_ms": 5588,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 5437,
+   "last_progress_at_ms": 1790440984726,
+   "instruction_id": "tzprobe-1790440984-2",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790440984710
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 19,
+     "at_ms": 1790440984717
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 27,
+     "at_ms": 1790440984726,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 27,
+      "start_ts_ms": 1790440984719,
+      "end_elapsed_ms": 5437,
+      "end_ts_ms": 1790440990129,
+      "duration_ms": 5410,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3462,
+     "at_ms": 1790440984726
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3711,
+     "at_ms": 1790440984726
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4632,
+     "at_ms": 1790440984726
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5298,
+     "at_ms": 1790440984726
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5437,
+     "at_ms": 1790440984726
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_cBp6d5dUugGlFf3hjrtbecVqIlY6XUm4KgElr1NGUgE",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'Landstede Zwolle v Antwerp Giants'; alert says 'Landstede Hammers v Antwerp Giants': kick-off differs: alert 26 Sep 20:30 vs page 26 Sep 19:30 (UK)",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 27,
+    "start_ts_ms": 1790440984719,
+    "end_elapsed_ms": 5437,
+    "end_ts_ms": 1790440990129,
+    "duration_ms": 5410,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: kick-off differs: alert 26 Sep 20:30 vs page 26 Sep 19:30 (UK)",
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "kick-off differs: alert 26 Sep 20:30 vs page 26 Sep 19:30 (UK)",
+   "home": {
+    "feed": "Landstede Hammers",
+    "bookmaker": "Landstede Zwolle",
+    "level": "VARIANT",
+    "score": 1,
+    "note": "naming variant 1.00"
+   },
+   "away": {
+    "feed": "Antwerp Giants",
+    "bookmaker": "Antwerp Giants",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": false,
+   "reversed": false
+  },
+  "identity_verdict": "MISMATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172277/D19/E26823685/F19/I0/"
+ }
+}

@@ -1,0 +1,577 @@
+{
+ "payload": {
+  "query": "Landstede Hammers||Antwerp Giants",
+  "market": "TOTALS",
+  "side": "OVER",
+  "line": "162.5",
+  "minimum_price": "1.75",
+  "stake": "0.10",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172277/D19/E26823685/F19/I0/",
+  "kickoff_utc": "2026-09-26T18:30",
+  "competition": "BNXT Super Cup",
+  "period": "FULL_GAME",
+  "max_line_deterioration": "1.0",
+  "instruction_id": "totals-link-174855",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "timeout_ms": 240000,
+  "execution_mode": "hold"
+ },
+ "result": {
+  "instruction_id": "totals-link-174855",
+  "status": "FAIL",
+  "stage": "TARGET_NOT_FOUND",
+  "detail": "No live selection for TOTAL/OVER/162.5",
+  "duration_ms": 6169,
+  "progress": {
+   "stage": "READ_SELECTION",
+   "elapsed_ms": 5999,
+   "last_progress_at_ms": 1790441340947,
+   "instruction_id": "totals-link-174855",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790441334966
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 18,
+     "at_ms": 1790441334974
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 27,
+     "at_ms": 1790441334984,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 27,
+      "start_ts_ms": 1790441334975,
+      "end_elapsed_ms": 5364,
+      "end_ts_ms": 1790441340312,
+      "duration_ms": 5337,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3472,
+     "at_ms": 1790441334984
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3666,
+     "at_ms": 1790441334984
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4577,
+     "at_ms": 1790441334984
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5189,
+     "at_ms": 1790441334984
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5364,
+     "at_ms": 1790441340318,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 5364,
+      "start_ts_ms": 1790441340312,
+      "end_elapsed_ms": 5990,
+      "end_ts_ms": 1790441340938,
+      "duration_ms": 626,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5370,
+     "at_ms": 1790441340318
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5944,
+     "at_ms": 1790441340318
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 5990,
+     "at_ms": 1790441340947,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 5990,
+      "start_ts_ms": 1790441340938,
+      "end_elapsed_ms": 5999,
+      "end_ts_ms": 1790441340948,
+      "duration_ms": 9,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 5999,
+     "at_ms": 1790441340947
+    }
+   ]
+  },
+  "device_stage": "READ_SELECTION",
+  "execution_count": 1,
+  "run_id": "c_j_J3cQnfAvmqDZ93tRHqlzW7ziuE1X31hdWFZMdVeAc",
+  "fixture_name": "Landstede Zwolle v Antwerp Giants",
+  "home": "Landstede Zwolle",
+  "away": "Antwerp Giants",
+  "competition": "BNXT Super Cup 26 Sep 19:30",
+  "verification_detail": "No live selection for TOTAL/OVER/162.5",
+  "event_context": {
+   "home": "Landstede Zwolle",
+   "away": "Antwerp Giants",
+   "competition": "bnxt super cup",
+   "kickoff_utc": "2026-09-26T18:30",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790441340947,
+    "observed": {
+     "market": "TOTAL",
+     "side": "OVER",
+     "line": "164.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "OVER",
+     "selection_name": "Over",
+     "bounds": [
+      452,
+      655,
+      512,
+      705
+     ]
+    },
+    "identity_verified": false
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 27,
+    "start_ts_ms": 1790441334975,
+    "end_elapsed_ms": 5364,
+    "end_ts_ms": 1790441340312,
+    "duration_ms": 5337,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5364,
+    "start_ts_ms": 1790441340312,
+    "end_elapsed_ms": 5990,
+    "end_ts_ms": 1790441340938,
+    "duration_ms": 626,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5990,
+    "start_ts_ms": 1790441340938,
+    "end_elapsed_ms": 5999,
+    "end_ts_ms": 1790441340948,
+    "duration_ms": 9,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "alias_candidate": {
+   "feed_home": "Landstede Hammers",
+   "feed_away": "Antwerp Giants",
+   "bet365_home": "Landstede Zwolle",
+   "bet365_away": "Antwerp Giants",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21172277/D19/E26823685/F19/I0/",
+   "kickoff_shown": "26 Sep 19:30",
+   "kickoff_expected": "26 Sep 19:30",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "Landstede Hammers": "Landstede Zwolle"
+   },
+   "sport": "basketball"
+  },
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 26 Sep 19:30 + 'Antwerp Giants' exact; 'Landstede Hammers' is a naming variant of 'Landstede Zwolle' (1.00)",
+   "home": {
+    "feed": "Landstede Hammers",
+    "bookmaker": "Landstede Zwolle",
+    "level": "VARIANT",
+    "score": 1,
+    "note": "naming variant 1.00"
+   },
+   "away": {
+    "feed": "Antwerp Giants",
+    "bookmaker": "Antwerp Giants",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172277/D19/E26823685/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_j_J3cQnfAvmqDZ93tRHqlzW7ziuE1X31hdWFZMdVeAc",
+  "adapter": "live_bet365",
+  "status": "TARGET_NOT_FOUND",
+  "phase": "FINISHED",
+  "started_at_ms": 1790441334949,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790441334949
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 18,
+    "wall_ts_ms": 1790441334966
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 27,
+    "wall_ts_ms": 1790441334976
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3472,
+    "wall_ts_ms": 1790441338421
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3666,
+    "wall_ts_ms": 1790441338615
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 4577,
+    "wall_ts_ms": 1790441339527
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5189,
+    "wall_ts_ms": 1790441340138
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 5364,
+    "wall_ts_ms": 1790441340313
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 5370,
+    "wall_ts_ms": 1790441340319
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 5944,
+    "wall_ts_ms": 1790441340893
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 5990,
+    "wall_ts_ms": 1790441340938
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 5999,
+    "wall_ts_ms": 1790441340948
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png",
+   "s003_markets.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 27,
+    "start_ts_ms": 1790441334975,
+    "end_elapsed_ms": 5364,
+    "end_ts_ms": 1790441340312,
+    "duration_ms": 5337,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5364,
+    "start_ts_ms": 1790441340312,
+    "end_elapsed_ms": 5990,
+    "end_ts_ms": 1790441340938,
+    "duration_ms": 626,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5990,
+    "start_ts_ms": 1790441340938,
+    "end_elapsed_ms": 5999,
+    "end_ts_ms": 1790441340948,
+    "duration_ms": 9,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Landstede Hammers",
+  "identity_home": "Landstede Hammers",
+  "expected_away": "Antwerp Giants",
+  "identity_away": "Antwerp Giants",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172277/D19/E26823685/F19/I0/",
+  "current_stage": "READ_SELECTION",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "BNXT Super Cup 26 Sep 19:30",
+   "Landstede Zwolle vs Antwerp Giants",
+   "Popular Bet Builder Game Team Quarter"
+  ],
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 26 Sep 19:30 + 'Antwerp Giants' exact; 'Landstede Hammers' is a naming variant of 'Landstede Zwolle' (1.00)",
+   "home": {
+    "feed": "Landstede Hammers",
+    "bookmaker": "Landstede Zwolle",
+    "level": "VARIANT",
+    "score": 1,
+    "note": "naming variant 1.00"
+   },
+   "away": {
+    "feed": "Antwerp Giants",
+    "bookmaker": "Antwerp Giants",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "route": "event_link",
+  "alias_candidate": {
+   "feed_home": "Landstede Hammers",
+   "feed_away": "Antwerp Giants",
+   "bet365_home": "Landstede Zwolle",
+   "bet365_away": "Antwerp Giants",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21172277/D19/E26823685/F19/I0/",
+   "kickoff_shown": "26 Sep 19:30",
+   "kickoff_expected": "26 Sep 19:30",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "Landstede Hammers": "Landstede Zwolle"
+   },
+   "sport": "basketball"
+  },
+  "kickoff_verified": "26 Sep 19:30",
+  "verified_fixture": {
+   "code": "6e17b55e",
+   "home": "Landstede Zwolle",
+   "away": "Antwerp Giants",
+   "fixture_name": "Landstede Zwolle v Antwerp Giants",
+   "exact_fixture_text": "Home Landstede Zwolle\nAway Antwerp Giants",
+   "competition": "BNXT Super Cup 26 Sep 19:30",
+   "bounds": [
+    35,
+    266,
+    585,
+    436
+   ]
+  },
+  "fixture_home": "Landstede Zwolle",
+  "fixture_away": "Antwerp Giants",
+  "identity_verified_home": "Landstede Hammers",
+  "identity_verified_away": "Antwerp Giants",
+  "event_verified": true,
+  "event_context": {
+   "home": "Landstede Zwolle",
+   "away": "Antwerp Giants",
+   "competition": "bnxt super cup",
+   "kickoff_utc": "2026-09-26T18:30",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "6e17b55e",
+   "home": "Landstede Zwolle",
+   "away": "Antwerp Giants",
+   "fixture_name": "Landstede Zwolle v Antwerp Giants",
+   "exact_fixture_text": "Home Landstede Zwolle\nAway Antwerp Giants",
+   "competition": "BNXT Super Cup 26 Sep 19:30",
+   "bounds": [
+    35,
+    266,
+    585,
+    436
+   ]
+  },
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/+4.5@1.83",
+     "SPREAD/AWAY/-4.5@1.83",
+     "TOTAL/OVER/164.5@1.83",
+     "TOTAL/UNDER/164.5@1.83",
+     "MONEYLINE/HOME/NONE@2.55",
+     "MONEYLINE/AWAY/NONE@1.47"
+    ],
+    "notes": []
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/+4.5@1.83",
+    "SPREAD/AWAY/-4.5@1.83",
+    "TOTAL/OVER/164.5@1.83",
+    "TOTAL/UNDER/164.5@1.83",
+    "MONEYLINE/HOME/NONE@2.55",
+    "MONEYLINE/AWAY/NONE@1.47"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "+4.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Landstede Zwolle",
+    "bounds": [
+     301,
+     655,
+     345,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "-4.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Antwerp Giants",
+    "bounds": [
+     301,
+     740,
+     344,
+     790
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "164.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     452,
+     655,
+     512,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "164.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     452,
+     736,
+     512,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "2.55",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Landstede Zwolle",
+    "bounds": [
+     603,
+     672,
+     648,
+     689
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "1.47",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Antwerp Giants",
+    "bounds": [
+     604,
+     757,
+     648,
+     774
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790441340947,
+    "observed": {
+     "market": "TOTAL",
+     "side": "OVER",
+     "line": "164.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "OVER",
+     "selection_name": "Over",
+     "bounds": [
+      452,
+      655,
+      512,
+      705
+     ]
+    },
+    "identity_verified": false
+   }
+  ],
+  "detail": "No live selection for TOTAL/OVER/162.5",
+  "duration_ms": 5999
+ },
+ "wall": 6.778440237045288
+}

@@ -1,0 +1,204 @@
+{
+ "payload": {
+  "instruction_id": "spread-link-174836-place",
+  "action": "PLACE_HELD",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "+14.5",
+  "selection_name": "Baloncesto Ciudad de Badajoz",
+  "price": "1.83",
+  "minimum_price": "1.75",
+  "stake": "0.10",
+  "execution_mode": "prepare",
+  "confirmation_status": "APPROVED",
+  "timeout_ms": 60000,
+  "held_instruction_id": "spread-link-174836",
+  "home": "Baloncesto Ciudad de Badajoz",
+  "away": "Toledo",
+  "competition": "copa espana",
+  "kickoff_utc": "2026-09-26T17:00",
+  "period": "FULL_GAME"
+ },
+ "result": {
+  "instruction_id": "spread-link-174836-place",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "PRETAP_READY",
+  "duration_ms": 820,
+  "progress": {
+   "stage": "PRETAP_CHECK",
+   "elapsed_ms": 726,
+   "last_progress_at_ms": 1790441328005,
+   "instruction_id": "spread-link-174836-place",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790441327969
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 52,
+     "at_ms": 1790441328005
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 57,
+     "at_ms": 1790441328005
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 630,
+     "at_ms": 1790441328005
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 726,
+     "at_ms": 1790441328005
+    }
+   ]
+  },
+  "device_stage": "PRETAP_CHECK",
+  "execution_count": 1,
+  "run_id": "c_vQ6r4I6liUYyPc6Zp_Jd00_Mh_olzQcsOhkttpciedU",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "pretap": {
+   "ok": true,
+   "market": "SPREAD",
+   "side": "HOME",
+   "selection": "Baloncesto Ciudad de Badajoz",
+   "line": "+14.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "execution_observations": [
+   {
+    "stage": "pretap",
+    "observed_at_ms": 1790441328646,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+14.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Baloncesto Ciudad de Badajoz",
+     "bounds": [
+      20,
+      1320,
+      604,
+      1346
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [],
+  "t_start_ms": 1790441328001,
+  "t_pretap_done_ms": 1790441328675
+ },
+ "run": {
+  "run_id": "c_vQ6r4I6liUYyPc6Zp_Jd00_Mh_olzQcsOhkttpciedU",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790441327949,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790441327950
+   },
+   {
+    "phase": "PRETAP_CHECK",
+    "elapsed_ms": 52,
+    "wall_ts_ms": 1790441328002
+   },
+   {
+    "phase": "CAPTURE_pretap",
+    "elapsed_ms": 57,
+    "wall_ts_ms": 1790441328007
+   },
+   {
+    "phase": "CAPTURED_pretap",
+    "elapsed_ms": 630,
+    "wall_ts_ms": 1790441328580
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 726,
+    "wall_ts_ms": 1790441328675
+   }
+  ],
+  "screenshots": [
+   "s001_pretap.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [],
+  "t_start_ms": 1790441328001,
+  "execution_observations": [
+   {
+    "stage": "pretap",
+    "observed_at_ms": 1790441328646,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "+14.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Baloncesto Ciudad de Badajoz",
+     "bounds": [
+      20,
+      1320,
+      604,
+      1346
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stake_check_pretap": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "pretap": {
+   "ok": true,
+   "market": "SPREAD",
+   "side": "HOME",
+   "selection": "Baloncesto Ciudad de Badajoz",
+   "line": "+14.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "t_pretap_done_ms": 1790441328675,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "detail": "PRETAP_READY",
+  "duration_ms": 726
+ },
+ "wall": 1.118750810623169,
+ "slip_ready_to_pretap_s": 1.486001968383789
+}

@@ -1,0 +1,204 @@
+{
+ "payload": {
+  "instruction_id": "search-fallback-b365names-175210-place",
+  "action": "PLACE_HELD",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "market": "MONEYLINE",
+  "side": "HOME",
+  "line": "",
+  "selection_name": "Landstede Zwolle",
+  "price": "2.55",
+  "minimum_price": "1.01",
+  "stake": "0.10",
+  "execution_mode": "prepare",
+  "confirmation_status": "APPROVED",
+  "timeout_ms": 60000,
+  "held_instruction_id": "search-fallback-b365names-175210",
+  "home": "Landstede Zwolle",
+  "away": "Antwerp Giants",
+  "competition": "bnxt super cup",
+  "kickoff_utc": "2026-09-26T18:30",
+  "period": "FULL_GAME"
+ },
+ "result": {
+  "instruction_id": "search-fallback-b365names-175210-place",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "PRETAP_READY",
+  "duration_ms": 674,
+  "progress": {
+   "stage": "PRETAP_CHECK",
+   "elapsed_ms": 595,
+   "last_progress_at_ms": 1790441562212,
+   "instruction_id": "search-fallback-b365names-175210-place",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790441562172
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 52,
+     "at_ms": 1790441562212
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 56,
+     "at_ms": 1790441562212
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 534,
+     "at_ms": 1790441562212
+    },
+    {
+     "stage": "PRETAP_CHECK",
+     "elapsed_ms": 595,
+     "at_ms": 1790441562212
+    }
+   ]
+  },
+  "device_stage": "PRETAP_CHECK",
+  "execution_count": 1,
+  "run_id": "c_J8xox8tasvVh06Sr7cP_bVk6soPvzG_VY1WioiuW6vc",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "pretap": {
+   "ok": true,
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "selection": "Landstede Zwolle",
+   "line": "",
+   "price": "2.55",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "execution_observations": [
+   {
+    "stage": "pretap",
+    "observed_at_ms": 1790441562731,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "",
+     "price": "2.55",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Landstede Zwolle",
+     "bounds": [
+      20,
+      1320,
+      604,
+      1346
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [],
+  "t_start_ms": 1790441562209,
+  "t_pretap_done_ms": 1790441562752
+ },
+ "run": {
+  "run_id": "c_J8xox8tasvVh06Sr7cP_bVk6soPvzG_VY1WioiuW6vc",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790441562158,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790441562158
+   },
+   {
+    "phase": "PRETAP_CHECK",
+    "elapsed_ms": 52,
+    "wall_ts_ms": 1790441562209
+   },
+   {
+    "phase": "CAPTURE_pretap",
+    "elapsed_ms": 56,
+    "wall_ts_ms": 1790441562214
+   },
+   {
+    "phase": "CAPTURED_pretap",
+    "elapsed_ms": 534,
+    "wall_ts_ms": 1790441562692
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 595,
+    "wall_ts_ms": 1790441562753
+   }
+  ],
+  "screenshots": [
+   "s001_pretap.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [],
+  "t_start_ms": 1790441562209,
+  "execution_observations": [
+   {
+    "stage": "pretap",
+    "observed_at_ms": 1790441562731,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "",
+     "price": "2.55",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Landstede Zwolle",
+     "bounds": [
+      20,
+      1320,
+      604,
+      1346
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stake_check_pretap": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "025",
+   "stake": "0.10",
+   "price": "2.55"
+  },
+  "pretap": {
+   "ok": true,
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "selection": "Landstede Zwolle",
+   "line": "",
+   "price": "2.55",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    20,
+    1320,
+    604,
+    1346
+   ]
+  },
+  "t_pretap_done_ms": 1790441562752,
+  "verification_detail": "PLACE_HELD prepare: held slip verified and Place Bet located; NOT tapped",
+  "detail": "PRETAP_READY",
+  "duration_ms": 595
+ },
+ "wall": 1.0719828605651855,
+ "slip_ready_to_pretap_s": 1.4717881679534912
+}

@@ -1,0 +1,216 @@
+{
+ "payload": {
+  "query": "Lliria||FC Cartagena CB",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-3.5",
+  "minimum_price": "1.65",
+  "stake": "0.10",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172380/D19/E26825718/F19/I0/",
+  "kickoff_utc": "2026-09-26T17:30",
+  "competition": "Copa Espana",
+  "period": "FULL_GAME",
+  "max_line_deterioration": "0.35",
+  "instruction_id": "autoreg-171528",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "timeout_ms": 240000,
+  "execution_mode": "hold"
+ },
+ "result": {
+  "instruction_id": "autoreg-171528",
+  "status": "FAIL",
+  "stage": "WRONG_EVENT",
+  "detail": "Event link shows 'Lliria v Cartagena'; alert says 'Lliria v FC Cartagena CB': kick-off differs: alert 26 Sep 18:30 vs page 26 Sep 17:30 (UK)",
+  "duration_ms": 4108,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 3957,
+   "last_progress_at_ms": 1790439329060,
+   "instruction_id": "autoreg-171528",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790439329048
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 19,
+     "at_ms": 1790439329054
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 25,
+     "at_ms": 1790439329060,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 25,
+      "start_ts_ms": 1790439329055,
+      "end_elapsed_ms": 3957,
+      "end_ts_ms": 1790439332987,
+      "duration_ms": 3932,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3461,
+     "at_ms": 1790439329060
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3926,
+     "at_ms": 1790439329060
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3957,
+     "at_ms": 1790439329060
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_ElnPrSiOwntdOn5fy1RuntW16hbIgWEZW-nw33q0JfM",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'Lliria v Cartagena'; alert says 'Lliria v FC Cartagena CB': kick-off differs: alert 26 Sep 18:30 vs page 26 Sep 17:30 (UK)",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 25,
+    "start_ts_ms": 1790439329055,
+    "end_elapsed_ms": 3957,
+    "end_ts_ms": 1790439332987,
+    "duration_ms": 3932,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: kick-off differs: alert 26 Sep 18:30 vs page 26 Sep 17:30 (UK)",
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "kick-off differs: alert 26 Sep 18:30 vs page 26 Sep 17:30 (UK)",
+   "home": {
+    "feed": "Lliria",
+    "bookmaker": "Lliria",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "FC Cartagena CB",
+    "bookmaker": "Cartagena",
+    "level": "CANONICAL",
+    "score": 1,
+    "note": "canonical tokens equal"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": false,
+   "reversed": false
+  },
+  "identity_verdict": "MISMATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172380/D19/E26825718/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_ElnPrSiOwntdOn5fy1RuntW16hbIgWEZW-nw33q0JfM",
+  "adapter": "live_bet365",
+  "status": "WRONG_EVENT",
+  "phase": "FINISHED",
+  "started_at_ms": 1790439329030,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790439329030
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 19,
+    "wall_ts_ms": 1790439329049
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 25,
+    "wall_ts_ms": 1790439329055
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3461,
+    "wall_ts_ms": 1790439332491
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3926,
+    "wall_ts_ms": 1790439332956
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 3957,
+    "wall_ts_ms": 1790439332987
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 25,
+    "start_ts_ms": 1790439329055,
+    "end_elapsed_ms": 3957,
+    "end_ts_ms": 1790439332987,
+    "duration_ms": 3932,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Lliria",
+  "identity_home": "Lliria",
+  "expected_away": "FC Cartagena CB",
+  "identity_away": "FC Cartagena CB",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172380/D19/E26825718/F19/I0/",
+  "current_stage": "OPEN_HOME",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Copa Espana 26 Sep 17:30",
+   "Lliria vs Cartagena",
+   "Popular Bet Builder Game Team Quarter Half"
+  ],
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "kick-off differs: alert 26 Sep 18:30 vs page 26 Sep 17:30 (UK)",
+   "home": {
+    "feed": "Lliria",
+    "bookmaker": "Lliria",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "FC Cartagena CB",
+    "bookmaker": "Cartagena",
+    "level": "CANONICAL",
+    "score": 1,
+    "note": "canonical tokens equal"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": false,
+   "reversed": false
+  },
+  "identity_verdict": "MISMATCH",
+  "route": "event_link",
+  "direct_event_rejected": "identity: kick-off differs: alert 26 Sep 18:30 vs page 26 Sep 17:30 (UK)",
+  "detail": "Event link shows 'Lliria v Cartagena'; alert says 'Lliria v FC Cartagena CB': kick-off differs: alert 26 Sep 18:30 vs page 26 Sep 17:30 (UK)",
+  "duration_ms": 3957
+ },
+ "wall": 4.6688032150268555
+}

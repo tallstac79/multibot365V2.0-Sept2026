@@ -1,0 +1,141 @@
+{
+ "fixture": {
+  "instruction_id": "on-b21faee04eeb161be531bf3b",
+  "home": "UP Mexico",
+  "away": "UMAD",
+  "competition": "Liga ABE",
+  "feed_time": "2026-09-26T21:30",
+  "url": "https://www.bet365.com/#/AC/B18/C21171833/D19/E26807165/F19/",
+  "displayed": "2026-09-26T21:30",
+  "received_at": "2026-09-26T16:39:38.169+00:00"
+ },
+ "payload": {
+  "instruction_id": "tzprobe-1790440976-1",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "query": "UP Mexico||UMAD",
+  "market": "TOTALS",
+  "side": "OVER",
+  "line": "999.5",
+  "minimum_price": "1.01",
+  "stake": "0.10",
+  "timeout_ms": 120000,
+  "execution_mode": "ready",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21171833/D19/E26807165/F19/",
+  "kickoff_utc": "2026-09-26T21:30",
+  "competition": "Liga ABE",
+  "period": "FULL_GAME"
+ },
+ "result": {
+  "instruction_id": "tzprobe-1790440976-1",
+  "status": "FAIL",
+  "stage": "WRONG_EVENT",
+  "detail": "Event link shows 'UP Mexico v UMAD'; alert says 'UP Mexico v UMAD': kick-off differs: alert 26 Sep 22:30 vs page 26 Sep 21:30 (UK)",
+  "duration_ms": 5681,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 5465,
+   "last_progress_at_ms": 1790440976457,
+   "instruction_id": "tzprobe-1790440976-1",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790440976430
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 33,
+     "at_ms": 1790440976445
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 43,
+     "at_ms": 1790440976457,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 43,
+      "start_ts_ms": 1790440976447,
+      "end_elapsed_ms": 5464,
+      "end_ts_ms": 1790440981868,
+      "duration_ms": 5421,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3477,
+     "at_ms": 1790440976457
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3713,
+     "at_ms": 1790440976457
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4630,
+     "at_ms": 1790440976457
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5305,
+     "at_ms": 1790440976457
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5465,
+     "at_ms": 1790440976457
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_-0s9B_T6zpNm3qN_no5xROWXuSL4QumAhE3wn-7vy0I",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'UP Mexico v UMAD'; alert says 'UP Mexico v UMAD': kick-off differs: alert 26 Sep 22:30 vs page 26 Sep 21:30 (UK)",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 43,
+    "start_ts_ms": 1790440976447,
+    "end_elapsed_ms": 5464,
+    "end_ts_ms": 1790440981868,
+    "duration_ms": 5421,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: kick-off differs: alert 26 Sep 22:30 vs page 26 Sep 21:30 (UK)",
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "kick-off differs: alert 26 Sep 22:30 vs page 26 Sep 21:30 (UK)",
+   "home": {
+    "feed": "UP Mexico",
+    "bookmaker": "UP Mexico",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "away": {
+    "feed": "UMAD",
+    "bookmaker": "UMAD",
+    "level": "EXACT",
+    "score": 1,
+    "note": "exact"
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": false,
+   "reversed": false
+  },
+  "identity_verdict": "MISMATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21171833/D19/E26807165/F19/"
+ }
+}

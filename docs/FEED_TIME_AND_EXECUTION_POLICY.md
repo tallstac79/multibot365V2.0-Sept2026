@@ -13,13 +13,24 @@ not a rejection reason. An explicitly configured optional floor remains supporte
 Flat or ambiguous movement still cannot produce a bet. The candidate, same-side
 Bet365 comparison and existing value checks remain separate from event timing.
 
-## Current operator policy (26 September 2026)
+## Current operator policy (26 September 2026, corrected 16:50 UTC)
 
 The operator confirmed the account label `(GMT+00:00) London, Birmingham,
-Liverpool, Sheffield, Bristol` and explicitly instructed fixed UTC/GMT+0.
-The saved settings are now `event_timezone="UTC"` and
-`feed_timezone_verified=true`. This records operator confirmation, not an
-independent inference that the UI label determines daylight-saving behavior.
+Liverpool, Sheffield, Bristol` and initially instructed fixed UTC/GMT+0. The
+feed then proved to behave as **Europe/London (DST-aware)**: on 26 Sep at
+16:46 UTC five upcoming fixtures were opened on the phone and every Bet365
+page kick-off (UK time) equalled the feed wall time read as Europe/London,
+none as UTC (`evidence/timezone-probe/run-1790441189/`, regression
+`tests/test_feed_time.py::test_real_feed_is_europe_london_since_26_september_2026`).
+The stored feed shows the switch itself: 14 fixtures were re-alerted on
+26 Sep with their event time exactly one hour later than on 25 Sep (first
+new-form alert 07:08 UTC; the last old-form observation, Defensor Sporting v
+Malvin at 06:01 UTC, still agreed with UTC). Alerts before ~06:30 UTC on
+26 Sep therefore carry UTC wall times; alerts after carry Europe/London.
+The saved settings are now `event_timezone="Europe/London"` and
+`feed_timezone_verified=true`. Under the previous UTC setting every
+event-link hold after the switch failed closed as WRONG_EVENT (kick-off one
+hour off), for example Lliria v FC Cartagena CB at 16:14 UTC.
 Sharp-side selection and all existing value checks are unchanged.
 
 Basketball odds use configurable `max_net_payout_deterioration_percent=10`:
