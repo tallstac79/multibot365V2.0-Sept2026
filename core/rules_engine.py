@@ -13,9 +13,10 @@ import hashlib
 import json
 
 from core.decision_support import validate
+from core.execution_terms import minimum_price, line_allowance
 from core.market_interpretation import ACTIONABLE_SIGNALS, SHARP_SOURCE, VERSION, sharp_signal, dec
 
-ENGINE_VERSION = 'rules-5-feed-qualified'
+ENGINE_VERSION = 'rules-6-scaled-execution'
 ACCEPT, REJECT, STALE = 'ACCEPT', 'REJECT', 'STALE'
 
 
@@ -192,15 +193,18 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
             check('max_price', price <= Decimal(str(rule['max_price'])), f"price {price} vs maximum {rule['max_price']}")
 
     if rule is not None:
-        check('execution_tolerances', rule['max_odds_deterioration'] is not None and rule['max_line_deterioration'] is not None,
-              f"{sport} {market}: alert-to-live odds tolerance {rule['max_odds_deterioration']}, "
-              f"line tolerance {rule['max_line_deterioration']}; both require explicit operator configuration")
+        check('execution_tolerances', (rule['max_odds_deterioration'] is not None or rule['max_net_payout_deterioration_percent'] is not None)
+              and rule['max_line_deterioration'] is not None,
+              f"{sport} {market}: net payout tolerance {rule['max_net_payout_deterioration_percent']}%, "
+              f"legacy decimal tolerance {rule['max_odds_deterioration']}, absolute line cap {rule['max_line_deterioration']}, "
+              f"spread cap {rule['max_line_deterioration_percent']}% of original handicap; price and line policies require explicit configuration")
     if result['decision'] is not None:
         return result
     stake = rule['stake'] if rule['stake'] is not None else g['default_stake']
     stake = min(stake, g['max_stake'])
     slippage = rule['max_odds_deterioration']
-    minimum = max(Decimal('1.01'), price - Decimal(str(slippage)))
+    minimum = minimum_price(price, net_percent=rule['max_net_payout_deterioration_percent'], decimal_tolerance=slippage)
+    effective_line = line_allowance(market, alert.get('target_line'), rule['max_line_deterioration'], rule['max_line_deterioration_percent'])
     check('stake', 0 < stake <= g['max_stake'], f'stake {stake:.2f} (max {g["max_stake"]:.2f})')
     alternate = alert.get('alternate_line') or {}
     result['decision'], result['reason'] = ACCEPT, 'All rules passed'
@@ -214,7 +218,11 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
         # Per-group "(alt. line)" markers exactly as parsed: current (Pinnacle), opening, comparison (Bet365).
         alternate_line={k: bool(alternate.get(k)) for k in ('current', 'opening', 'comparison')},
         alert_price=str(alert.get('alert_price')), minimum_price=str(minimum), stake=f'{stake:.2f}',
-        max_odds_deterioration=str(slippage), max_line_deterioration=str(rule['max_line_deterioration']),
+        max_odds_deterioration=str(slippage) if slippage is not None else None,
+        max_net_payout_deterioration_percent=rule['max_net_payout_deterioration_percent'],
+        max_line_deterioration=str(effective_line),
+        configured_line_absolute_cap=rule['max_line_deterioration'],
+        max_line_deterioration_percent=rule['max_line_deterioration_percent'],
         displayed_ev_percent=alert.get('displayed_ev_percent'), bet_quality=quality,
         signal_reason=quality, line_advantage=comparison.get('line_advantage'),
         target_source=alert.get('target_price_source'), implied_target=alert.get('implied_target'),

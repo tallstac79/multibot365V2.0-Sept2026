@@ -1,6 +1,6 @@
 # Rules engine
 
-The pure `core/rules_engine.py` evaluator is **rules-5-feed-qualified**. Its configuration is
+The pure `core/rules_engine.py` evaluator is **rules-6-scaled-execution**. Its configuration is
 validated in `core/decision_support.py` and stored in `.local/dashboard.sqlite3` with
 an audit trail. The service reads it each cycle; code changes require a service restart.
 
@@ -32,11 +32,17 @@ checks when distinguishing policy exclusion from staleness.
 Global defaults: enabled=true; stake=1; max_stake=10; stale window=300s;
 event_timezone=null; feed_timezone_verified=false; min_line_advantage=1.0;
 min_sharp_movement=null. Market overrides include enabled, stake, minimum_ev,
-min_price, max_price and the two nullable execution deterioration limits. Existing
+min_price, max_price and nullable decimal/net-payout odds and absolute/relative line limits. Existing
 configs acquire the new nullable keys without silently selecting a threshold.
 Saved price and EV bounds are unchanged. The movement floor remains optional.
 
-`minimum_price = max(1.01, alert_price - max_odds_deterioration)`. Alert price bounds apply
+For the approved net-payout policy, `minimum_price = ceil_to_cent(max(1.01,
+1 + (alert_price - 1) * (1 - max_net_payout_deterioration_percent / 100)))`.
+Legacy decimal-point mode remains mutually exclusive with this percentage.
+A spread allowance is the lesser of its absolute cap and the configured percentage
+of the original signed handicap's magnitude. Totals cannot use a percentage.
+The instruction carries this effective cap; subsequent quotes cannot compound it.
+Alert price bounds apply
 at eligibility; the worker separately checks available price and the approved slip.
 `minimum_ev` is inapplicable to favourable unequal-line signals because there is no
 supplied EV at comparable lines. No synthetic EV is calculated.
@@ -50,9 +56,12 @@ pause/kill switch, dispatch/final-action flags, identity, session, approval and 
 idempotency remain separate controls. Execution stayed disarmed throughout the audit.
 
 
-Operator clarification: `feed_timezone_verified=false` is the default and the
-saved UTC assumption remains provisional. Event eligibility rejects until verified;
-aware Telegram age checks still run. Market-specific `max_odds_deterioration` and
-`max_line_deterioration` are nullable and require explicit configuration. The legacy
-`allowed_slippage` controls sample recommendations only. Improvements are allowed;
-excess deterioration is NO BET. See [the evidence and timezone instructions](FEED_TIME_AND_EXECUTION_POLICY.md).
+Operator confirmation: saved `event_timezone="UTC"` and `feed_timezone_verified=true`
+follow the account label and explicit fixed-UTC instruction. Defaults for a new
+installation remain unverified and fail closed. Basketball net-payout tolerance is
+10%; basketball spreads require both 1 point and 10% of original handicap caps.
+Basketball totals line tolerance remains unset pending approval of the separate
+0.5-point proposal. Other strategy checks and all arming controls are unchanged.
+The legacy `allowed_slippage` controls sample recommendations only. Improvements
+are allowed; excess deterioration is NO BET. Requested and observed rejected
+quotes remain in the result/audit records. See [policy and evidence](FEED_TIME_AND_EXECUTION_POLICY.md).

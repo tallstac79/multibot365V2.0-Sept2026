@@ -54,6 +54,7 @@ final class AdapterWorkflow {
             return;
         }
         adapter.set_target(market, side, line);
+        adapter.set_execution_minimum(minimumPrice);
         // Primary: the alert's exact event link (verified); Search only if absent, invalid or not verified.
         CompletableFuture<Void> located;
         if (eventUrl != null && !eventUrl.isEmpty()) {
@@ -77,9 +78,10 @@ final class AdapterWorkflow {
                 throw new SiteAdapter.Failure("BELOW_MINIMUM","Visible price "+price+" is below minimum "+minimumPrice);
             return step("OPEN_SELECTION",()->adapter.open_selection(selection));
         })
-        .thenCompose(v->step("ENTER_STAKE",()->adapter.enter_stake(stake)))
+        .thenCompose(v->{refreshSelection();return step("ENTER_STAKE",()->adapter.enter_stake(stake));})
         .thenCompose(v->step("VERIFY_FINAL_STATE",()->adapter.verify_final_state(fixture,selection,stake)))
         .thenCompose(v->{
+            refreshSelection();
             if("ready".equals(mode)) return CompletableFuture.completedFuture(null);
             if(!"hold".equals(mode) && !"APPROVED".equals(confirmationStatus))
                 throw new SiteAdapter.Failure("CONFIRMATION_REQUIRED","execution_mode "+mode+" requires confirmation_status APPROVED");
@@ -87,6 +89,7 @@ final class AdapterWorkflow {
             return step("PREPARE_COMPLETE_EXECUTION",()->adapter.prepare_complete_execution(fixture,selection,stake,minimumPrice));
         })
         .thenCompose(v->{
+            refreshSelection();
             if("hold".equals(mode)) {
                 // Verified bet stays on the slip (stake entered, Place Bet located) for PLACE_HELD after approval.
                 session.put("held", true);
@@ -131,5 +134,9 @@ final class AdapterWorkflow {
                 } else session.finish(status,message);
             }
         });
+    }
+    private void refreshSelection() {
+        selection = adapter.current_selection(selection);
+        session.put("selection", selection.json());
     }
 }

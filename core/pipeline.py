@@ -278,6 +278,11 @@ class Pipeline:
             self.store.transition(db, instruction_id, State.QUEUED, actor='rules', at=iso(now), reason='Queued for device')
             return State.QUEUED.value
         target = State.STALE if decision['decision'] == STALE else State.REJECTED
+        self.store.audit(db, 'ALERT_TO_LIVE_COMPARISON', dict(
+            requested=dict(market=parsed.get('market'), side=parsed.get('target_side'),
+                           line=parsed.get('target_line'), price=parsed.get('alert_price')),
+            live=None, stage='rules', acceptable=False, reason=decision['reason'],
+            observation_status='not sent to phone; live terms unknown'), instruction_id)
         self.store.transition(db, instruction_id, target, actor='rules', at=iso(now), reason=decision['reason'])
         return target.value
 
@@ -712,14 +717,15 @@ class Pipeline:
                 return target.value
             if state is None:
                 return row['state']  # DUPLICATE echo of the original; keep waiting for it.
-            if state == State.READY and not final_action:
-                from core.execution_terms import compare
-                policy = (json.loads(row['rules_result'] or '{}').get('instruction') or {})
-                quote = compare(dict(market=row['market'],side=row['selection'],line=row['line'],price=row['alert_price']),
-                                result.get('selection') or {}, odds_tolerance=policy.get('max_odds_deterioration'),
-                                line_tolerance=policy.get('max_line_deterioration'))
+            from core.execution_terms import comparisons_for_result
+            policy = (json.loads(row['rules_result'] or '{}').get('instruction') or {})
+            quotes = comparisons_for_result(dict(market=row['market'],side=row['selection'],line=row['line'],price=row['alert_price']),
+                                            result, policy)
+            for quote in quotes:
                 self.store.audit(db, 'ALERT_TO_LIVE_COMPARISON', quote, instruction_id)
-                result = dict(result, execution_comparison=quote)
+            quote = quotes[-1]
+            result = dict(result, execution_comparison=quote, execution_comparisons=quotes)
+            if state == State.READY and not final_action:
                 if not quote['acceptable']:
                     state, reason = State.PRICE_CHANGED, 'NO BET: ' + quote['reason']
             ready = result.get('ready_state') if isinstance(result.get('ready_state'), dict) else {}

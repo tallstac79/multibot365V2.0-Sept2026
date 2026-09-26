@@ -80,10 +80,64 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
     private long cleanGridAtMs = 0;                 // when a clean (fast-path) grid read was taken
     private VisualScreen lastFinal; private long lastFinalAtMs = 0;   // frame that passed verify_final_state
+    private String requestedLine = "", executionMinimum = "";
+    private Selection latestSelection;
+    private final JSONArray executionObservations = new JSONArray();
+
+    @Override public void set_execution_minimum(String minimumPrice) { executionMinimum = minimumPrice; }
+    @Override public Selection current_selection(Selection previous) { return latestSelection == null ? previous : latestSelection; }
+
+    private void observeExecution(String stage, Selection quote, boolean identityVerified) {
+        executionObservations.put(CoordinatorAgent.object("stage", stage, "observed_at_ms", System.currentTimeMillis(),
+                "observed", quote == null ? org.json.JSONObject.NULL : quote.json(), "identity_verified", identityVerified));
+        ui.put("execution_observations", executionObservations);
+    }
+
+    private void requireExecutionTerms(Selection quote) {
+        require("MONEYLINE".equals(quote.market) || ExecutionTolerance.line(quote.market, quote.side, requestedLine, quote.line, lineTolerance),
+                "LINE_CHANGED", "Line deterioration exceeds original alert allowance");
+        require(ExecutionTolerance.price(quote.price, executionMinimum), "BELOW_MINIMUM", "Price below original alert minimum " + executionMinimum);
+    }
+
+    private boolean stakeVerifiedWhileTyping(VisualScreen screen, String stake, String key) {
+        String price = openedPrice;
+        if ("basketball".equals(sport) && latestSelection != null) {
+            VisualScreen.Line place = findPlaceBetLine(screen);
+            List<GameLinesParser.Word> words = new ArrayList<>();
+            for (VisualScreen.Line l : screen.lines) words.add(new GameLinesParser.Word(l.text, l.bounds.left, l.bounds.top, l.bounds.right, l.bounds.bottom));
+            HeldSlipQuote quote = place == null ? null : HeldSlipQuote.read(words, latestSelection.name, latestSelection.market, place.bounds.top);
+            if (quote != null) {
+                Selection actual = new Selection(latestSelection.market, latestSelection.side, quote.line, quote.price, "OPEN", latestSelection.bounds, latestSelection.name);
+                observeExecution("stake", actual, false);
+                requireExecutionTerms(actual);
+                price = quote.price;
+            }
+            // This verifies typing only. Final/prepare must independently read the
+            // fresh row and full identity; an unreadable row can never authorize action.
+        }
+        return stakeVerified(screen, stake, price, key);
+    }
+
+    private Selection readExecutionSlip(VisualScreen screen, Fixture fixture, Selection previous, String stage) {
+        VisualScreen.Line place = findPlaceBetLine(screen);
+        List<GameLinesParser.Word> words = new ArrayList<>();
+        for (VisualScreen.Line l : screen.lines) words.add(new GameLinesParser.Word(l.text, l.bounds.left, l.bounds.top, l.bounds.right, l.bounds.bottom));
+        HeldSlipQuote quote = place == null ? null : HeldSlipQuote.read(words, previous.name, previous.market, place.bounds.top);
+        boolean identity = place != null && HeldSlipIdentity.matches(words, fixture.home, fixture.away, previous.market, place.bounds.top);
+        Selection actual = quote == null ? null : new Selection(previous.market, previous.side, quote.line, quote.price, "OPEN", previous.bounds, previous.name);
+        observeExecution(stage, actual, identity);
+        require(identity, "WRONG_EVENT", "Both approved teams and full-game market must be inside this slip");
+        require(actual != null, "PRICE_CHANGED", "Current slip line and price unreadable");
+        requireExecutionTerms(actual);
+        latestSelection = actual;
+        targetLine = actual.line;
+        return actual;
+    }
 
     @Override
     public void set_target(String market, String side, String line) {
         targetMarket = market == null ? "" : market; targetSide = side == null ? "" : side; targetLine = line == null ? "" : line;
+        requestedLine = targetLine;
     }
 
     /** First grid read is clean for THIS bet: the target cell was read and no parser note concerns its market. */
@@ -1156,6 +1210,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
         List<Selection> matches = new ArrayList<>();
         for (Selection s : all) {
             if (!s.market.equals(market) || !s.side.equals(side)) continue;
+            observeExecution("grid", s, false);
             if (line != null && !line.isEmpty() && !line.equalsIgnoreCase("NONE")
                     && !ExecutionTolerance.line(market, side, line, s.line, lineTolerance)) continue;
             matches.add(s);
@@ -1171,6 +1226,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
         require(!"SUSPENDED".equals(pick.availability), "SUSPENDED", "Selection suspended");
         require(!"UNAVAILABLE".equals(pick.availability), "UNAVAILABLE", "Selection unavailable");
         validateOneIdentity(pick);
+        latestSelection = pick;
+        observeExecution("selection", pick, true);
         ui.put("selection_role", pick.side);
         ui.put("selection_name", pick.name);
         return CompletableFuture.completedFuture(pick);
@@ -1202,18 +1259,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
         }
         if ("basketball".equals(sport) && liveFixture != null) {
             return gridConsensus("selection_preflight", 1, new ArrayList<>(), new JSONArray()).thenCompose(grid -> {
-                Selection current = null;
-                for (Selection q : grid)
-                    if (q.market.equals(selection.market) && q.side.equals(selection.side) && lineEquals(q.line, selection.line)) current = q;
-                if (current == null) {
-                    boolean sideSeen = false;
-                    for (Selection q : grid) if (q.market.equals(selection.market) && q.side.equals(selection.side)) sideSeen = true;
-                    throw new Failure(sideSeen ? "LINE_CHANGED" : "TARGET_NOT_FOUND",
-                            "Re-read has no agreed " + selection.market + "/" + selection.side + "/" + selection.line);
-                }
-                require(current.price.equals(selection.price), "PRICE_CHANGED", "Price changed before selecting live quote: " + current.price);
-                openedPrice = current.price;
-                return ui.tap(current.bounds, current.market + " / " + current.side + " / " + current.line + " / " + current.price, 650);
+                return read_selection(grid, selection.market, selection.side, requestedLine).thenCompose(current -> {
+                    requireExecutionTerms(current);
+                    openedPrice = current.price;
+                    return ui.tap(current.bounds, current.market + " / " + current.side + " / " + current.line + " / " + current.price, 650);
+                });
             });
         }
         return ui.captureTable("selection_preflight").thenCompose(s -> {
@@ -1297,13 +1347,13 @@ final class Bet365LiveAdapter implements SiteAdapter {
         CompletableFuture<Void> ready = "EMPTY".equals(fieldState) ? CompletableFuture.completedFuture(null)
                 : clearToVerifiedEmpty(uiScreen, keys, "FILLED".equals(fieldState) ? "known" : "unknown");
         return ready.thenCompose(v -> typeAmount(keys, amount))
-                .thenCompose(v -> captureUntil("stake_typed", 2, 300, s -> stakeVerified(s, amount, openedPrice, "stake_check_typed")))
+                .thenCompose(v -> captureUntil("stake_typed", 2, 300, s -> stakeVerifiedWhileTyping(s, amount, "stake_check_typed")))
                 .thenCompose(first -> {
-            if (stakeVerified(first, amount, openedPrice, "stake_check_typed")) return CompletableFuture.completedFuture(first);
+            if (stakeVerifiedWhileTyping(first, amount, "stake_check_typed")) return CompletableFuture.completedFuture(first);
             ui.put("stake_retyped", true);
             return clearToVerifiedEmpty(first, keys, "retype").thenCompose(v -> typeAmount(keys, amount)).thenCompose(v -> ui.delay(400))
                     .thenCompose(v -> ui.capture("stake_retyped")).thenCompose(second -> {
-                        if (stakeVerified(second, amount, openedPrice, "stake_check_retyped")) return CompletableFuture.completedFuture(second);
+                        if (stakeVerifiedWhileTyping(second, amount, "stake_check_retyped")) return CompletableFuture.completedFuture(second);
                         return erase(keys, 10).<VisualScreen>thenCompose(v -> {
                             throw new Failure("STAKE_REJECTED", "Typed stake did not read back as " + amount + " after one retype; field erased");
                         });
@@ -1516,20 +1566,24 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 require(visible(s, selection.name) || visibleLoose(s, selection.name),
                         "SELECTION_CHANGED", "selection_name not visible on betslip: " + selection.name);
             }
-            boolean priceOk = slipPriceShown(s, selection.price);
-            require(priceOk, "PRICE_CHANGED", "Selection price not visible on betslip: " + selection.price);
-            require(PlacementClassifier.slipShowsLine(texts(s), selection.market, selection.side, selection.name, selection.line),
-                    "LINE_CHANGED", "Betslip does not show " + selection.side + " " + selection.line);
-            require(stakeVerified(s, stake, selection.price, "stake_check_final"), "STAKE_REJECTED", "Stake not verified on betslip: " + stake);
+            Selection actual = selection;
+            if ("basketball".equals(sport)) {
+                actual = readExecutionSlip(s, fixture, selection, "final");
+            } else {
+                require(slipPriceShown(s, selection.price), "PRICE_CHANGED", "Selection price not visible on betslip: " + selection.price);
+                require(PlacementClassifier.slipShowsLine(texts(s), selection.market, selection.side, selection.name, selection.line),
+                        "LINE_CHANGED", "Betslip does not show " + selection.side + " " + selection.line);
+            }
+            require(stakeVerified(s, stake, actual.price, "stake_check_final"), "STAKE_REJECTED", "Stake not verified on betslip: " + stake);
             boolean hasPlace = visible(s, "Place Bet", "Place bet");
             ui.put("ready_state", CoordinatorAgent.object(
                     "fixture_home", fixture.home,
                     "fixture_away", fixture.away,
-                    "market", selection.market,
-                    "selection_role", selection.side,
-                    "selection_name", selection.name,
-                    "line", selection.line,
-                    "price", selection.price,
+                    "market", actual.market,
+                    "selection_role", actual.side,
+                    "selection_name", actual.name,
+                    "line", actual.line,
+                    "price", actual.price,
                     "stake", stake,
                     "session", "LOGGED_IN",
                     "state", "READY",
@@ -1541,10 +1595,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
             ui.put("final_state", CoordinatorAgent.object(
                     "home", fixture.home,
                     "away", fixture.away,
-                    "market", selection.market,
-                    "side", selection.side,
-                    "line", selection.line,
-                    "price", selection.price,
+                    "market", actual.market,
+                    "side", actual.side,
+                    "line", actual.line,
+                    "price", actual.price,
                     "stake", stake,
                     "state", "READY",
                     "place_bet_visible", hasPlace,
@@ -1655,11 +1709,14 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 require(visible(s, selection.name) || visibleLoose(s, selection.name),
                         "SELECTION_CHANGED", "selection_name missing before complete execution");
             }
-            boolean priceOk = slipPriceShown(s, selection.price);   // same evidence as verify_final_state (incl. targeted price read)
-            require(priceOk, "PRICE_CHANGED", "Price missing before complete execution: " + selection.price);
-            if (Double.parseDouble(selection.price) < Double.parseDouble(minimumPrice))
-                throw new Failure("BELOW_MINIMUM", "Price " + selection.price + " below minimum " + minimumPrice);
-            require(stakeVerified(s, stake, selection.price, "stake_check_prepare"), "STAKE_REJECTED", "Stake missing before complete execution: " + stake);
+            Selection actual = selection;
+            if ("basketball".equals(sport)) {
+                actual = readExecutionSlip(s, fixture, selection, "prepare");
+            } else {
+                require(slipPriceShown(s, selection.price), "PRICE_CHANGED", "Price missing before complete execution");
+                require(ExecutionTolerance.price(selection.price, minimumPrice), "BELOW_MINIMUM", "Price below original minimum");
+            }
+            require(stakeVerified(s, stake, actual.price, "stake_check_prepare"), "STAKE_REJECTED", "Stake missing before complete execution: " + stake);
             VisualScreen.Line place = findPlaceBetLine(s);
             require(place != null, "TARGET_NOT_FOUND", "Place Bet control not visible for COMPLETE_EXECUTION_READY");
             android.graphics.Rect tap = placeBetTapRect(place);
@@ -1672,8 +1729,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
             require(enabled, "TARGET_NOT_FOUND", "Place Bet present but not actionable");
             preparedPlaceBetBounds = new android.graphics.Rect(tap);
             long ts = System.currentTimeMillis();
-            String raw = fixture.home + "|" + fixture.away + "|" + selection.market + "|" + selection.side + "|"
-                    + selection.name + "|" + selection.line + "|" + selection.price + "|" + stake + "|"
+            String raw = fixture.home + "|" + fixture.away + "|" + actual.market + "|" + actual.side + "|"
+                    + actual.name + "|" + actual.line + "|" + actual.price + "|" + stake + "|"
                     + tap.flattenToString() + "|" + ts;
             String hash;
             try {
@@ -1698,11 +1755,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     "fixture", fixture.name(),
                     "fixture_home", fixture.home,
                     "fixture_away", fixture.away,
-                    "market", selection.market,
-                    "selection_role", selection.side,
-                    "selection_name", selection.name,
-                    "line", selection.line,
-                    "price", selection.price,
+                    "market", actual.market,
+                    "selection_role", actual.side,
+                    "selection_name", actual.name,
+                    "line", actual.line,
+                    "price", actual.price,
                     "stake", stake,
                     "minimum_price", minimumPrice,
                     "final_control", "Place Bet",
@@ -1790,13 +1847,14 @@ final class Bet365LiveAdapter implements SiteAdapter {
             require(heldContext != null, "WRONG_EVENT", "Original held event context missing");
             List<GameLinesParser.Word> slipLines = new ArrayList<>();
             for (VisualScreen.Line l : s.lines) slipLines.add(new GameLinesParser.Word(l.text, l.bounds.left, l.bounds.top, l.bounds.right, l.bounds.bottom));
-            require(HeldSlipIdentity.matches(slipLines, heldContext.optString("home"), heldContext.optString("away"), market, place.bounds.top),
-                    "WRONG_EVENT", "Both approved teams and full-game market must be inside this slip");
+            boolean identity = HeldSlipIdentity.matches(slipLines, heldContext.optString("home"), heldContext.optString("away"), market, place.bounds.top);
             HeldSlipQuote quote = HeldSlipQuote.read(slipLines, name, market, place.bounds.top);
+            observeExecution("pretap", quote == null ? null : new Selection(market, side, quote.line, quote.price, "OPEN", place.bounds, name), identity);
+            require(identity, "WRONG_EVENT", "Both approved teams and full-game market must be inside this slip");
             require(quote != null, "PRICE_CHANGED", "Current slip selection line and price unreadable");
             require("MONEYLINE".equals(market) || ExecutionTolerance.line(market, side, heldContext.optString("requested_line"),
                     quote.line, heldContext.optString("max_line_deterioration")), "LINE_CHANGED", "Alert-to-live line deterioration exceeds tolerance");
-            require(new java.math.BigDecimal(quote.price).compareTo(new java.math.BigDecimal(minimumPrice)) >= 0,
+            require(ExecutionTolerance.price(quote.price, minimumPrice),
                     "BELOW_MINIMUM", "Current slip price below alert-to-live minimum");
             require(stakeVerified(s, stake, quote.price, "stake_check_pretap"), "STAKE_REJECTED", "Held stake/return does not agree with current slip price");
             quoteHolder[0] = quote;
@@ -1809,7 +1867,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     "REJECTED", "Held event has started");
             android.graphics.Rect tap = placeBetTapRect(place);
             require(!tap.isEmpty() && tap.width() > 20 && tap.height() > 10, "TARGET_NOT_FOUND", "Place Bet bounds not actionable");
-            ui.put("pretap", CoordinatorAgent.object("ok", true, "selection", name, "line", quote.line, "price", quote.price, "stake", stake,
+            ui.put("pretap", CoordinatorAgent.object("ok", true, "market", market, "side", side, "selection", name, "line", quote.line, "price", quote.price, "stake", stake,
                     "place_bet_bounds", VisualSession.bounds(tap)));
             ui.put("t_pretap_done_ms", System.currentTimeMillis());
             tapHolder[0] = tap;

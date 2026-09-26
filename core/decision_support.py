@@ -18,13 +18,15 @@ def defaults():
                        'min_sharp_movement': None, 'feed_timezone_verified': False},
             'sports': {sport: {'markets': {market: {'enabled': True, 'stake': None, 'minimum_ev': None,
                         'allowed_slippage': None, 'min_price': None, 'max_price': None,
-                        'max_odds_deterioration': None, 'max_line_deterioration': None}
+                        'max_odds_deterioration': None, 'max_line_deterioration': None,
+                        'max_net_payout_deterioration_percent': None, 'max_line_deterioration_percent': None}
                         for market in markets}} for sport, markets in MARKETS.items()}}
 
 # Keys added after configurations were first persisted; older stored configs are
 # upgraded with these defaults. Unknown keys are still rejected.
 GLOBAL_ADDED = ('stale_alert_seconds', 'event_timezone', 'min_line_advantage', 'min_sharp_movement', 'feed_timezone_verified')
-MARKET_ADDED = ('min_price', 'max_price', 'max_odds_deterioration', 'max_line_deterioration')
+MARKET_ADDED = ('min_price', 'max_price', 'max_odds_deterioration', 'max_line_deterioration',
+                'max_net_payout_deterioration_percent', 'max_line_deterioration_percent')
 
 def upgrade(config):
     if not isinstance(config, dict):
@@ -88,6 +90,12 @@ def validate(config):
             number(rule['allowed_slippage'], 'Market slippage', 0, 1, True)
             number(rule['max_odds_deterioration'], 'Maximum odds deterioration (decimal points)', 0, 1, True)
             number(rule['max_line_deterioration'], 'Maximum line deterioration (points)', 0, 50, True)
+            number(rule['max_net_payout_deterioration_percent'], 'Maximum net payout deterioration (%)', 0, 100, True)
+            number(rule['max_line_deterioration_percent'], 'Maximum spread deterioration (% of alert handicap)', 0, 100, True)
+            if rule['max_net_payout_deterioration_percent'] is not None and rule['max_odds_deterioration'] is not None:
+                raise ValueError(f'{sport} {market}: choose net payout percentage or legacy decimal tolerance, not both')
+            if rule['max_line_deterioration_percent'] is not None and (market != 'SPREAD' or rule['max_line_deterioration'] is None):
+                raise ValueError(f'{sport} {market}: line percentage requires a spread and an absolute cap')
             number(rule['min_price'], 'Market minimum alert price', 1.01, 1000, True)
             number(rule['max_price'], 'Market maximum alert price', 1.01, 1000, True)
             if rule['min_price'] is not None and rule['max_price'] is not None and rule['min_price'] > rule['max_price']:

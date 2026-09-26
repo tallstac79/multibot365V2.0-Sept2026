@@ -33,7 +33,7 @@ Local evidence and interpretation:
   Other reference books are not silently accepted by this parser.
 * Sport, competition, fixture and event time identify the event; Telegram source
   timestamp and received timestamp identify message age. Event time has no offset.
-  The saved UTC setting must be checked against the account's actual timezone.
+  The operator confirmed fixed UTC/GMT+0 on 26 September 2026; saved UTC is verified.
 * The unlabelled price pair under Spread/Totals is current Pinnacle; Opening carries
   its separate line and prices. `(previous -> current)` is an additional, recent
   line transition, not a substitute for Opening. A previous/current reversal does
@@ -96,8 +96,9 @@ Local evidence and interpretation:
     `min_sharp_movement` is optional and unset does not reject. An explicitly
     configured floor is additional operator policy. Preserve existing value
     checks without inventing global price bounds. Alert-to-live odds and line
-    deterioration limits are market-specific and require approval from the
-    evidence in [FEED_TIME_AND_EXECUTION_POLICY.md](FEED_TIME_AND_EXECUTION_POLICY.md).
+    deterioration limits are market-specific: approved basketball odds loss is
+    10% of net payout and spreads require both 1-point and 10%-of-handicap caps.
+    Totals line tolerance awaits a separate choice based on [FEED_TIME_AND_EXECUTION_POLICY.md](FEED_TIME_AND_EXECUTION_POLICY.md).
 12. Apply enabled markets, timestamp age, unstarted event with known timezone,
     decimal odds, configured price/EV bounds and stake cap. Recheck at dispatch.
     An old normalized alert lacking this strategy evidence must be rejected, not

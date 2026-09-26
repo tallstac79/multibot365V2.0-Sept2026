@@ -1,0 +1,193 @@
+{
+  "before": {
+    "global": {
+      "enabled": true,
+      "default_stake": 0.1,
+      "allowed_slippage": 0,
+      "max_stake": 10,
+      "stale_alert_seconds": 300,
+      "event_timezone": "UTC",
+      "min_line_advantage": 1.0,
+      "min_sharp_movement": null,
+      "feed_timezone_verified": true
+    },
+    "sports": {
+      "football": {
+        "markets": {
+          "1X2": {
+            "enabled": true,
+            "stake": null,
+            "minimum_ev": null,
+            "allowed_slippage": null,
+            "min_price": null,
+            "max_price": null,
+            "max_odds_deterioration": null,
+            "max_line_deterioration": null,
+            "max_net_payout_deterioration_percent": null,
+            "max_line_deterioration_percent": null
+          },
+          "SPREAD": {
+            "enabled": true,
+            "stake": null,
+            "minimum_ev": null,
+            "allowed_slippage": null,
+            "min_price": null,
+            "max_price": null,
+            "max_odds_deterioration": null,
+            "max_line_deterioration": null,
+            "max_net_payout_deterioration_percent": null,
+            "max_line_deterioration_percent": null
+          },
+          "TOTALS": {
+            "enabled": true,
+            "stake": null,
+            "minimum_ev": null,
+            "allowed_slippage": null,
+            "min_price": null,
+            "max_price": null,
+            "max_odds_deterioration": null,
+            "max_line_deterioration": null,
+            "max_net_payout_deterioration_percent": null,
+            "max_line_deterioration_percent": null
+          }
+        }
+      },
+      "basketball": {
+        "markets": {
+          "MONEYLINE": {
+            "enabled": true,
+            "stake": null,
+            "minimum_ev": null,
+            "allowed_slippage": null,
+            "min_price": null,
+            "max_price": null,
+            "max_odds_deterioration": null,
+            "max_line_deterioration": null,
+            "max_net_payout_deterioration_percent": null,
+            "max_line_deterioration_percent": null
+          },
+          "SPREAD": {
+            "enabled": true,
+            "stake": null,
+            "minimum_ev": null,
+            "allowed_slippage": null,
+            "min_price": null,
+            "max_price": null,
+            "max_odds_deterioration": null,
+            "max_line_deterioration": null,
+            "max_net_payout_deterioration_percent": null,
+            "max_line_deterioration_percent": null
+          },
+          "TOTALS": {
+            "enabled": true,
+            "stake": null,
+            "minimum_ev": null,
+            "allowed_slippage": null,
+            "min_price": null,
+            "max_price": null,
+            "max_odds_deterioration": null,
+            "max_line_deterioration": null,
+            "max_net_payout_deterioration_percent": null,
+            "max_line_deterioration_percent": null
+          }
+        }
+      }
+    }
+  },
+  "after": {
+    "global": {
+      "enabled": true,
+      "default_stake": 0.1,
+      "allowed_slippage": 0,
+      "max_stake": 10,
+      "stale_alert_seconds": 300,
+      "event_timezone": "UTC",
+      "min_line_advantage": 1.0,
+      "min_sharp_movement": null,
+      "feed_timezone_verified": true
+    },
+    "sports": {
+      "football": {
+        "markets": {
+          "1X2": {
+            "enabled": true,
+            "stake": null,
+            "minimum_ev": null,
+            "allowed_slippage": null,
+            "min_price": null,
+            "max_price": null,
+            "max_odds_deterioration": null,
+            "max_line_deterioration": null,
+            "max_net_payout_deterioration_percent": null,
+            "max_line_deterioration_percent": null
+          },
+          "SPREAD": {
+            "enabled": true,
+            "stake": null,
+            "minimum_ev": null,
+            "allowed_slippage": null,
+            "min_price": null,
+            "max_price": null,
+            "max_odds_deterioration": null,
+            "max_line_deterioration": null,
+            "max_net_payout_deterioration_percent": null,
+            "max_line_deterioration_percent": null
+          },
+          "TOTALS": {
+            "enabled": true,
+            "stake": null,
+            "minimum_ev": null,
+            "allowed_slippage": null,
+            "min_price": null,
+            "max_price": null,
+            "max_odds_deterioration": null,
+            "max_line_deterioration": null,
+            "max_net_payout_deterioration_percent": null,
+            "max_line_deterioration_percent": null
+          }
+        }
+      },
+      "basketball": {
+        "markets": {
+          "MONEYLINE": {
+            "enabled": true,
+            "stake": null,
+            "minimum_ev": null,
+            "allowed_slippage": null,
+            "min_price": null,
+            "max_price": null,
+            "max_odds_deterioration": null,
+            "max_line_deterioration": null,
+            "max_net_payout_deterioration_percent": 10,
+            "max_line_deterioration_percent": null
+          },
+          "SPREAD": {
+            "enabled": true,
+            "stake": null,
+            "minimum_ev": null,
+            "allowed_slippage": null,
+            "min_price": null,
+            "max_price": null,
+            "max_odds_deterioration": null,
+            "max_line_deterioration": 1.0,
+            "max_net_payout_deterioration_percent": 10,
+            "max_line_deterioration_percent": 10
+          },
+          "TOTALS": {
+            "enabled": true,
+            "stake": null,
+            "minimum_ev": null,
+            "allowed_slippage": null,
+            "min_price": null,
+            "max_price": null,
+            "max_odds_deterioration": null,
+            "max_line_deterioration": null,
+            "max_net_payout_deterioration_percent": 10,
+            "max_line_deterioration_percent": null
+          }
+        }
+      }
+    }
+  },
+  "execution_disarmed": true
+}

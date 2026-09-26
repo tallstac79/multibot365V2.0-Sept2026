@@ -382,7 +382,7 @@ final class CoordinatorAgent implements AutoCloseable {
             if(proof.has("observe"))put(result,"observe",proof.opt("observe"));
             if(proof.has("betslip_reset"))put(result,"betslip_reset",proof.opt("betslip_reset"));
             if(proof.has("betslip_clear"))put(result,"betslip_clear",proof.opt("betslip_clear"));
-            for(String key:new String[]{"event_context","route","held","returned_home","home_verified","pretap","stage_timings","t_start_ms","t_pretap_done_ms","t_tap_ms","t_receipt_ms","t_home_ms","alias_candidate","direct_event_rejected","stake_field_state","stake_clear","identity","identity_verdict","event_url","bench","ocr_engine","bet_reference_fast","bet_reference_legacy","bet_reference_disputed","session_path","session_machine","session_recovered","chrome_first_run_dismissed","login_submitted"})
+            for(String key:new String[]{"event_context","route","held","returned_home","home_verified","pretap","execution_observations","stage_timings","t_start_ms","t_pretap_done_ms","t_tap_ms","t_receipt_ms","t_home_ms","alias_candidate","direct_event_rejected","stake_field_state","stake_clear","identity","identity_verdict","event_url","bench","ocr_engine","bet_reference_fast","bet_reference_legacy","bet_reference_disputed","session_path","session_machine","session_recovered","chrome_first_run_dismissed","login_submitted"})
                 if(proof.has(key))put(result,key,proof.opt(key));
             JSONObject ready = proof.optJSONObject("ready_state");
             if (ready != null && ready.has("session")) noteSession(ready.optString("session"), "ready_state");

@@ -4,6 +4,12 @@ import java.math.BigDecimal;
 
 /** Alert-to-live deterioration; improving either term consumes no tolerance. */
 final class ExecutionTolerance {
+    static boolean price(String live, String minimum) {
+        try {
+            BigDecimal quote = new BigDecimal(live), floor = new BigDecimal(minimum);
+            return floor.compareTo(BigDecimal.ONE) > 0 && quote.compareTo(floor) >= 0;
+        } catch (Exception e) { return false; }
+    }
     static boolean line(String market, String side, String requested, String live, String maximum) {
         try {
             BigDecimal limit = new BigDecimal(maximum);

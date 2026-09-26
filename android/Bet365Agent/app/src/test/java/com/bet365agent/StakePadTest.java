@@ -77,6 +77,19 @@ public class StakePadTest {
         assertTrue(StakePad.check(misread, "0.10", "1.83").ok);
     }
 
+    @Test public void stakeReturnUsesFreshToleratedPriceInsteadOfOriginalQuote() {
+        List<GameLinesParser.Word> words = Arrays.asList(w("Stake",20,654,70,669), w("£1.00",20,686,102,718),
+                w("Place",478,658,550,680), w("Bet",560,659,604,680),
+                w("To",438,696,459,711), w("Return",467,696,526,711), w("£1.75",534,696,590,715));
+        HeldSlipQuote quote = HeldSlipQuote.read(Arrays.asList(w("Under 165.0 1.75",80,520,600,540),
+                w("Game Totals",80,560,600,580)),"Under","TOTAL",658);
+        assertNotNull(quote);
+        assertTrue(ExecutionTolerance.price(quote.price,"1.75"));
+        assertTrue(StakePad.check(words,"1.00",quote.price).ok);
+        assertFalse(StakePad.check(words,"1.00","1.83").ok);
+        assertFalse(StakePad.check(words,"2.00",quote.price).ok);
+    }
+
     @Test public void realTypedStakeBeforeDone() throws Exception {
         // Edit mode: "£0.10|" OCR'd with a stray leading digit; To Return £0.18.
         StakePad.Check c = StakePad.check(load("keypad_typed_010_20260924.txt"), "0.10", "1.83");

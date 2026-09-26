@@ -5,6 +5,37 @@ import java.util.*;
 import org.junit.Test;
 
 public class ExecutionHardeningTest {
+    @Test public void originalAlertAllowanceHandlesSignsAndDoesNotCompound() {
+        for (String side : Arrays.asList("HOME","AWAY")) {
+            for (int sign : new int[]{1,-1}) {
+                for (String magnitude : Arrays.asList("25.5","15.5","10.5")) {
+                    java.math.BigDecimal line = new java.math.BigDecimal(magnitude).multiply(new java.math.BigDecimal(sign));
+                    assertTrue(ExecutionTolerance.line("SPREAD",side,line.toPlainString(),line.subtract(java.math.BigDecimal.ONE).toPlainString(),"1"));
+                }
+            }
+            assertFalse(ExecutionTolerance.line("SPREAD",side,"-5.5","-6.5","0.55"));
+            assertFalse(ExecutionTolerance.line("SPREAD",side,"1.5","0.5","0.15"));
+            assertTrue(ExecutionTolerance.line("SPREAD",side,"-10.5","-11","1"));
+            assertFalse(ExecutionTolerance.line("SPREAD",side,"-10.5","-12","1"));
+            assertTrue(ExecutionTolerance.line("SPREAD",side,"-5.5","1.5","0.55"));
+        }
+        assertTrue(ExecutionTolerance.price("1.75","1.75"));
+        assertFalse(ExecutionTolerance.price("1.74","1.75"));
+        assertTrue(ExecutionTolerance.price("2.50","1.75"));
+        assertFalse(ExecutionTolerance.price("NaN","1.75"));
+        assertFalse(ExecutionTolerance.price("1.83",""));
+    }
+    @Test public void freshSlipQuoteUsesOriginalFloorAfterIntermediateRead() {
+        HeldSlipQuote first = HeldSlipQuote.read(Arrays.asList(line("Nassjo +13.0 2.10",1180),line("Point Spread",1219)),"Nassjo","SPREAD",1324);
+        HeldSlipQuote next = HeldSlipQuote.read(Arrays.asList(line("Nassjo +12.5 2.04",1180),line("Point Spread",1219)),"Nassjo","SPREAD",1324);
+        HeldSlipQuote bad = HeldSlipQuote.read(Arrays.asList(line("Nassjo +12.0 1.95",1180),line("Point Spread",1219)),"Nassjo","SPREAD",1324);
+        for (HeldSlipQuote q : Arrays.asList(first,next)) {
+            assertNotNull(q);assertTrue(ExecutionTolerance.line("SPREAD","AWAY","13.5",q.line,"1"));
+            assertTrue(ExecutionTolerance.price(q.price,"2.04"));
+        }
+        assertNotNull(bad);assertFalse(ExecutionTolerance.line("SPREAD","AWAY","13.5",bad.line,"1"));
+        assertFalse(ExecutionTolerance.price(bad.price,"2.04"));
+    }
     private GameLinesParser.Word line(String text, int top) { return new GameLinesParser.Word(text,80,top,600,top+20); }
     @Test public void rememberedNonEmailAccountMustMatchExactly() {
         assertEquals(LoginAccount.State.MATCH, LoginAccount.inspect(Arrays.asList(line("saved_username",305), line("x",305)), "saved_username"));

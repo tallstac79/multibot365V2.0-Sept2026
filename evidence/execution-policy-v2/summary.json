@@ -1,0 +1,53 @@
+{
+  "captured_at": "2026-09-26T06:55:04.513109+00:00",
+  "source_sha256": "bc5ee1d6097420a93bb29eaa0b88999e31777d2dc9fa76179df8143155610fc2",
+  "stored_result_rows": 26,
+  "comparable_quotes": 6,
+  "stages": {
+    "selection": 5,
+    "pretap": 1
+  },
+  "spread": {
+    "retained": 3,
+    "rejected": 1
+  },
+  "totals_scenarios": [
+    {
+      "market": "TOTALS",
+      "net_payout_percent": 10,
+      "absolute_line_cap": 0,
+      "retained": 2,
+      "rejected": 0
+    },
+    {
+      "market": "TOTALS",
+      "net_payout_percent": 10,
+      "absolute_line_cap": 0.5,
+      "retained": 2,
+      "rejected": 0
+    },
+    {
+      "market": "TOTALS",
+      "net_payout_percent": 10,
+      "absolute_line_cap": 1,
+      "retained": 2,
+      "rejected": 0
+    }
+  ],
+  "totals_feed_rows": 314,
+  "totals_rows_with_target_line": 182,
+  "totals_line_fraction_counts": {
+    "0.5": 141,
+    "0": 41
+  },
+  "totals_line_range": [
+    "139.5",
+    "194.5"
+  ],
+  "totals_proposal": {
+    "absolute_points": 0.5,
+    "configured": false,
+    "reason": "Half-point increments occur in alert quotes; provisional operational choice, not an estimated optimum."
+  },
+  "limitations": "Six selected historical attempts, not independent opportunities or placements. Five selection-stage quotes and one pre-tap quote. No observed line deterioration, so retention cannot distinguish candidate totals caps or quantify full-feed effect."
+}
