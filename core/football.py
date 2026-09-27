@@ -396,7 +396,9 @@ def _parse_two_sided(rows, head, opening_marker, *, reordered=False):
         if issue:
             ambiguities.append(issue)
     else:
-        raise Contradiction('Opening line and prices are required for a football line market')
+        # In-play alerts arrive without an Opening row (Las Palmas Atletico v Badajoz, 27 Sep 2026): a valid message with no
+        # opening-to-current signal, so AMBIGUOUS / NO BET below, not INVALID.
+        opening = []
     bet365_present, bet365_line, bet365_alt, comparison_url, bet365, highlighted = False, None, False, None, [], []
     if cursor < len(rows) and re.match(r'\[?Bet365\b', rows[cursor]):
         row, comparison_url = _bet365_row(rows[cursor])
@@ -420,7 +422,7 @@ def _parse_two_sided(rows, head, opening_marker, *, reordered=False):
         cursor += 1
     if cursor != len(rows):
         raise Contradiction(f'Unexpected content: {rows[cursor][:60]!r}')
-    lines = [current] + ([previous] if previous else []) + [opening_line] + ([bet365_line] if bet365_line else [])
+    lines = [current] + ([previous] if previous else []) + ([opening_line] if opening_line else []) + ([bet365_line] if bet365_line else [])
     if market == 'TOTALS' and any(dec(v) < 0 for v in lines):
         raise Contradiction('Total lines cannot be negative')
     equal_line = dec(bet365_line) == dec(current) if bet365_present else None
@@ -483,7 +485,7 @@ def _parse_two_sided(rows, head, opening_marker, *, reordered=False):
             reference=dict(bookmaker='Pinnacle', line=cmp['reference_line'], odds=ref['price'], fair_odds=None),
             comparison=dict(cmp, bookmaker='Bet365', ev_status=side_ev_status, supplied_ev=ev),
             movement=side_movement(opening_line=side_line(opening_line, index), previous_line=side_line(previous, index),
-                                   current_line=side_line(current, index), opening_price=opening[index].get('price'),
+                                   current_line=side_line(current, index), opening_price=(opening or [{}, {}])[index].get('price'),
                                    current_price=ref['price'], marker=ref.get('movement_marker'), previous_price=ref.get('parenthetical_price')),
             line_quality=cmp['line_quality'], price_quality=cmp['price_quality'], bet_quality=quality))
     market_move = side_movement(opening_line=opening_line, previous_line=previous, current_line=current, opening_price=None, current_price=None)
@@ -516,7 +518,7 @@ def _parse_two_sided(rows, head, opening_marker, *, reordered=False):
         head, format_variant='two_sided' + ('_opening_first' if reordered else ''), market=market, market_label=m['label'],
         displayed_line=current, interpretation_version=VERSION, comparison_url=comparison_url, opening_marker=opening_marker,
         pinnacle=dict(line=current, previous_line=previous, quotes=pinnacle),
-        opening=dict(line=opening_line, quotes=opening, outcome_count_matches_market=True),
+        opening=dict(line=opening_line, quotes=opening, outcome_count_matches_market=bool(opening)),
         comparison=comparison,
         alternate_line=dict(current=bool(m['alt']), opening=opening_alt, comparison=bet365_alt),
         quote_mapping=dict(profile=PROFILE_TWO_SIDED, production_verified=True, sides_by_position=list(sides),

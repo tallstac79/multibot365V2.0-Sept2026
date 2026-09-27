@@ -136,6 +136,18 @@ class AsianHandicap(unittest.TestCase):
         s = sharp_signal_two_sided('SPREAD', '-1', '-0.75', current_alt=True, opening_quotes=op, current_quotes=cur)
         self.assertIn('alternate line', s['reason'])
 
+    def test_in_play_alert_without_opening_row_is_not_invalid(self):
+        # Real Feed 1 intake 2249 (27 Sep 2026 10:58Z): "Spread (0)" current row, no Opening row, Bet365 in-play link
+        text = ('New odds update on Pinnacle\n\nFootball - Spain - Segunda Federacion\n'
+                '[Las Palmas Atletico vs Badajoz](https://oddshub.io/football/spain-segunda-federacion-group-iv/72508382?market=Spread)\n'
+                '27.09.2026 12:00\n\nSpread (0)\n1.671⬇️ (1.787) - 2.180⬆️ (2.050)\n\n'
+                '[Bet365 (Spread 0)](https://www.bet365.com/#/IP/EV151391432692C1)\n**2.03** - 1.78\n\n🎯 EV: 116.09%')
+        r = interpret(text)
+        self.assertNotEqual(r['status'], 'INVALID')
+        self.assertIsNone(r['parsed']['target_side'])
+        self.assertEqual(r['parsed']['football']['verdict'], 'AMBIGUOUS' if r['status'] == 'AMBIGUOUS' else 'NO_BET')
+        self.assertTrue(r['parsed']['football']['in_play_link'])
+
     def test_in_play_link_is_no_bet(self):
         p = parsed(2123)['parsed']
         self.assertTrue(in_play_link(p['comparison_url']))
