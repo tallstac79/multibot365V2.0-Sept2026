@@ -138,6 +138,17 @@ stake, Place Bet located, never tapped) -> reset. Evidence: `evidence/football/h
 | same | 10:32Z | ALIAS_REQUIRED: Bet365 heads the league "Sweden 1.div Norra"; fixed (`N.div` = `Division N` in competitionKey) |
 | same | 10:35Z | identity HIGH_CONFIDENCE; Full Time Result FC Arlanda 1.65 / Draw 3.90 / Enkoping 4.10 and Goals 2.5 1.44 / 2.62 read; HOME selected; **BELOW_MINIMUM 1.65 < 1.75** (10 % net payout floor from 1.83): stopped before any tap, as the same-side policy requires |
 
+| 10:40Z Eskilsminne v AFC Malmo, Spread HOME +0.25 @2.03 (Division 1 Sodra, Sweden) | 10:40Z | ALIAS_REQUIRED: "AFC Malmo" v "Ariana FC Malmo" only a weak resemblance; fixed (initial + club affix abbreviation) |
+| same | 10:42Z / 10:46Z | EVENT_NOT_VERIFIED: Asian Lines tab not reached (the strip did not scroll from a drag started on the bell); fixed (drag from the last visible label) |
+| same | 10:47Z | identity HIGH_CONFIDENCE; Asian Lines opened; Asian Handicap Eskilsminne IF 0.0 @1.900 / Ariana FC Malmo 0.0 @1.900 read; HOME 0.0 within the 0.25 cap; **BELOW_MINIMUM 1.900 < 1.93** |
+| 10:49Z Lucksta v Taftea, 1X2 AWAY @2.35 (Division 2, Sweden) | 10:49Z / 10:51Z | ALIAS_REQUIRED: page "Sweden 2.div Norrland" (regional group); fixed; then identity HIGH_CONFIDENCE, AWAY Taftea IK 1.95 read, **BELOW_MINIMUM 1.95 < 2.22** |
+| 11:03Z FC Munsingen v SV Muttenz, 1X2 AWAY @2.25 (1. Liga Classic, Switzerland) | 11:04Z | identity CANONICAL; AWAY 2.20 >= 2.13 floor; tapped; stake £0.10 typed, To Return £0.22; refused by the multiple-bet guard because the page's "Double Chance" heading was behind the slip; fixed; slip cleared by the flow |
+| same | 11:06Z | BELOW_MINIMUM 2.10 < 2.13 |
+| 11:41Z Panionios v Zakynthos, Spread HOME -1.5 @1.98 (Super League 2, Greece) | 11:41Z | identity EXACT; Asian Handicap Panionios -1.5 @1.975 read and accepted; tapped; the slip then showed "Accept Change and Place Bet" (price moved): stake erased, nothing accepted (now reported as PRICE_CHANGED) |
+| **11:43Z Polisportiva Ossese v Sarnese, 1X2 HOME @3.60 (Serie D, Italy)** | 11:43Z | **GREEN**: identity HIGH_CONFIDENCE; Full Time Result Ossese 3.60 / Draw 3.30 / Sarnese 1.85; HOME 3.60 >= 3.34 floor; tapped; stake £0.10; final state READY, Place Bet visible, never tapped (COMPLETE_EXECUTION_READY, held); 11.0 s; reset removed the selection |
+| 11:43Z same fixture, Spread HOME +0.5 @1.85 | 11:43Z | LINE_CHANGED: HOME +0.25 read (within the cap) but the exact-line test kept scrolling and re-read a stale screen; fixed (tolerance-aware match, no stale targets) |
+| **same** | 11:47Z | **GREEN**: identity HIGH_CONFIDENCE; Asian Lines opened; Asian Handicap Ossese +0.25 @1.900 / Sarnese -0.25 @1.900; HOME +0.25 within the 0.25 cap for the alert's +0.5, 1.900 >= 1.77 floor; tapped; stake £0.10; READY, Place Bet located, never tapped (held); 16.7 s; reset removed the selection |
+
 Later proofs are appended to the evidence folder by `football_hold_watch.py` as alerts arrive.
 
 ## 7. Corpus replay (27 Sep 2026, 72 alerts)
