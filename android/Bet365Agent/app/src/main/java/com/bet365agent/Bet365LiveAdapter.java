@@ -297,8 +297,13 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     throw new Failure("LOGIN_FAILED", "Bet365 session state unclear: no account, login or challenge markers on screen");
                 }
                 final SessionMachine.State keep = state;
+                // Bet365 keeps its account header collapsed when a route is opened from a scrolled page (27 Sep 2026: four
+                // session checks read a home page without the balance pill); the second look scrolls back to the top first.
                 CompletableFuture<Void> back = !afterLogin && relooks == 0
-                        ? ui.open(HOME_URL).thenCompose(v -> ui.delay(1500)) : ui.delay(afterLogin ? 2500 : 1500);
+                        ? ui.open(HOME_URL).thenCompose(v -> ui.delay(1500))
+                        : !afterLogin && relooks == 1
+                        ? ui.swipe(360, 500, 1300, 300).thenCompose(v -> ui.delay(1200))
+                        : ui.delay(afterLogin ? 2500 : 1500);
                 return back.thenCompose(v -> sessionStep(keep, attempts, relooks + 1, label + "_relook"));
             }
             ui.put("session", SessionMachine.wireState(next));
@@ -1240,7 +1245,97 @@ final class Bet365LiveAdapter implements SiteAdapter {
         });
     }
 
+    // ------------------------------------------------------------------ football markets (0.9.26)
+    private boolean footballTargetIn(List<Selection> found) {
+        for (Selection s : found) {
+            if (!s.market.equals(targetMarket) || !s.side.equals(targetSide)) continue;
+            if ("MONEYLINE".equals(targetMarket) || requestedLine == null || requestedLine.isEmpty() || requestedLine.equalsIgnoreCase("NONE")
+                    || lineEquals(s.line, requestedLine)) return true;
+        }
+        return false;
+    }
+
+    private List<Selection> footballSelections(FootballMarkets.Result r) {
+        List<Selection> out = new ArrayList<>();
+        for (FootballMarkets.Cell c : r.cells) {
+            android.graphics.Rect b = new android.graphics.Rect(c.bounds[0], c.bounds[1], c.bounds[2], c.bounds[3]);
+            out.add(new Selection(c.market, c.side, c.line, c.price, "OPEN", b, c.name));
+        }
+        return out;
+    }
+
+    private FootballMarkets.Result footballParse(VisualScreen s, String view) {
+        FootballMarkets.Result r = FootballMarkets.parse(wordsOf(s), liveFixture.home, liveFixture.away);
+        JSONArray cells = new JSONArray();
+        for (FootballMarkets.Cell c : r.cells) cells.put(c.toString());
+        JSONArray reads = ui.record.optJSONArray("football_market_reads");
+        if (reads == null) { reads = new JSONArray(); ui.put("football_market_reads", reads); }
+        reads.put(CoordinatorAgent.object("view", view, "cells", cells, "notes", new JSONArray(r.notes), "full_time_result", r.fullTimeResult,
+                "goals_over_under", r.goalsOverUnder, "asian_handicap", r.asianHandicap, "goal_line", r.goalLine));
+        return r;
+    }
+
+    /** Football event page (Popular tab: Full Time Result and the main Goals Over/Under line; Goals tab: every total
+     *  line; Asian Lines tab: Asian Handicap and Goal Line). The requested market decides which tabs are opened and
+     *  only the frame that shows it supplies the selections, so every returned tap target is on the current screen. */
+    private CompletableFuture<List<Selection>> discoverFootballMarkets() {
+        ui.put("fixture_home", liveFixture.home);
+        ui.put("fixture_away", liveFixture.away);
+        List<String> tabs = new ArrayList<>();
+        if ("SPREAD".equals(targetMarket)) tabs.add("asia");
+        else if ("TOTAL".equals(targetMarket)) { tabs.add("goals"); tabs.add("asia"); }
+        return ui.captureTable("markets").thenCompose(s -> {
+            List<Selection> found = footballSelections(footballParse(s, "popular"));
+            if (footballTargetIn(found)) return CompletableFuture.completedFuture(found);
+            return footballTabs(tabs, 0, found);
+        }).thenApply(found -> {
+            require(!found.isEmpty(), "EVENT_NOT_VERIFIED", "No live football market quotes parsed from Bet365 event OCR (see football_market_reads)");
+            validateMoneylineIdentities(found);
+            JSONArray map = new JSONArray();
+            for (Selection q : found) map.put(CoordinatorAgent.object("market", q.market, "selection_role", q.side, "selection_name", q.name,
+                    "price", q.price, "line", q.line, "bounds", VisualSession.bounds(q.bounds)));
+            ui.put("football_markets", map);
+            return found;
+        });
+    }
+
+    private CompletableFuture<List<Selection>> footballTabs(List<String> tabs, int index, List<Selection> lastFound) {
+        if (index >= tabs.size()) {
+            // Last resort on the current view: one scroll for further lines of the same market.
+            return ui.swipe(360, 1200, 600, 400).thenCompose(v -> ui.delay(900)).thenCompose(v -> ui.captureTable("markets_scroll"))
+                    .thenApply(s -> { List<Selection> found = footballSelections(footballParse(s, "scroll")); return footballTargetIn(found) ? found : lastFound; });
+        }
+        String prefix = tabs.get(index);
+        return footballOpenTab(prefix, 0).thenCompose(v -> ui.captureTable("markets_" + prefix)).thenCompose(s -> {
+            List<Selection> found = footballSelections(footballParse(s, prefix));
+            if (footballTargetIn(found)) return CompletableFuture.completedFuture(found);
+            return ui.swipe(360, 1200, 600, 400).thenCompose(v -> ui.delay(900)).thenCompose(v -> ui.captureTable("markets_" + prefix + "_scroll")).thenCompose(s2 -> {
+                List<Selection> more = footballSelections(footballParse(s2, prefix + "_scroll"));
+                if (footballTargetIn(more)) return CompletableFuture.completedFuture(more);
+                return ui.swipe(360, 500, 1300, 300).thenCompose(v -> ui.delay(700))   // back to the top: the tab strip must be visible again
+                        .thenCompose(v -> footballTabs(tabs, index + 1, more.isEmpty() ? found : more));
+            });
+        });
+    }
+
+    /** Tap the market tab whose label starts with `prefix`; the strip scrolls horizontally, so swipe it once or twice when the tab is off-screen. */
+    private CompletableFuture<Void> footballOpenTab(String prefix, int attempt) {
+        return ui.capture("tabs_" + prefix + (attempt > 0 ? "_" + attempt : "")).thenCompose(s -> {
+            GameLinesParser.Word tab = FootballMarkets.tab(wordsOf(s), prefix);
+            if (tab != null) {
+                android.graphics.Rect box = new android.graphics.Rect(tab.left - 6, tab.top - 10, tab.right + 6, tab.bottom + 10);
+                ui.put("football_tab_" + prefix, CoordinatorAgent.object("text", tab.text, "bounds", VisualSession.bounds(box)));
+                return ui.tap(box, "football tab " + tab.text, 500).thenCompose(v -> ui.delay(1400));
+            }
+            int[] strip = FootballMarkets.tabStrip(wordsOf(s), true);
+            require(strip != null, "EVENT_NOT_VERIFIED", "Football market tab strip not visible");
+            require(attempt < 2, "EVENT_NOT_VERIFIED", "Football market tab '" + prefix + "' not found on the tab strip");
+            return ui.swipeHorizontal(strip[0], 640, 160, 350).thenCompose(v -> ui.delay(700)).thenCompose(v -> footballOpenTab(prefix, attempt + 1));
+        });
+    }
+
     public CompletableFuture<List<Selection>> discover_markets() {
+        if ("football".equals(sport) && liveFixture != null) return discoverFootballMarkets();
         if ("basketball".equals(sport) && liveFixture != null) {
             // Game Lines grid: several OCR reads must agree (single frames misread digits).
             return gridConsensus("markets", 1, new ArrayList<>(), new JSONArray()).thenApply(found -> {
@@ -2306,6 +2401,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     private Selection refind(VisualScreen screen, Selection expected) {
+        if ("football".equals(sport) && liveFixture != null) {
+            for (Selection s : footballSelections(footballParse(screen, "refind")))
+                if (s.market.equals(expected.market) && s.side.equals(expected.side) && ("MONEYLINE".equals(s.market) || lineEquals(s.line, expected.line))) return s;
+            throw new Failure("LINE_CHANGED", "Football market re-read has no " + expected.market + "/" + expected.side + "/" + expected.line);
+        }
         List<Selection> grid = parseGameLines(screen, false);
         if (!grid.isEmpty()) {
             for (Selection s : grid) if (s.market.equals(expected.market) && s.side.equals(expected.side) && lineEquals(s.line, expected.line)) return s;
@@ -2626,8 +2726,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
             if ("AWAY".equals(s.side)) sawAway = true;
         }
         if ("football".equals(sport)) {
-            require(sawHome && sawDraw && sawAway, "EVENT_NOT_VERIFIED",
-                    "Football 1X2 map incomplete home=" + sawHome + " draw=" + sawDraw + " away=" + sawAway);
+            // The Full Time Result triple is required only when it is the requested market; handicap/total frames may not show it.
+            if ("MONEYLINE".equals(targetMarket))
+                require(sawHome && sawDraw && sawAway, "EVENT_NOT_VERIFIED",
+                        "Football 1X2 map incomplete home=" + sawHome + " draw=" + sawDraw + " away=" + sawAway);
         } else {
             require(sawHome && sawAway, "EVENT_NOT_VERIFIED", "Basketball moneyline map incomplete");
         }

@@ -69,6 +69,17 @@ final class OcrBenchWorkflow {
             for (String t : texts) { if (joined.length() > 500) break; joined.append(t).append(" | "); }
             CoordinatorAgent.put(r, "text", joined.toString());
             switch (cls) {
+                case "words": {
+                    // Every word with its bounds (fixture extraction for parsers; e.g. football market pages).
+                    JSONArray all = new JSONArray();
+                    for (GameLinesParser.Word w : words) all.put(CoordinatorAgent.object("t", w.text, "l", w.left, "y", w.top, "r", w.right, "b", w.bottom));
+                    FootballMarkets.Result fm = FootballMarkets.parse(words, spec.optString("home", null), spec.optString("away", null));
+                    JSONArray cells = new JSONArray();
+                    for (FootballMarkets.Cell c : fm.cells) cells.put(c.toString());
+                    CoordinatorAgent.put(r, "words", all);
+                    CoordinatorAgent.put(r, "football", CoordinatorAgent.object("cells", cells, "notes", new JSONArray(fm.notes)));
+                    break;
+                }
                 case "grid": {
                     GameLinesParser.Result g = GameLinesParser.parse(words, spec.optString("home"), spec.optString("away"));
                     JSONArray cells = new JSONArray();

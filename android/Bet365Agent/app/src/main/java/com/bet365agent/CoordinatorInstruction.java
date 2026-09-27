@@ -84,7 +84,8 @@ final class CoordinatorInstruction {
         id = fields.getOrDefault("instruction_id", ""); action=fields.getOrDefault("action", "");
         adapter=fields.getOrDefault("adapter", ""); scenario=fields.getOrDefault("scenario", "");
         String rawMarket = fields.getOrDefault("market", "");
-        market = "TOTALS".equals(rawMarket) ? "TOTAL" : rawMarket;
+        // Wire names: TOTALS -> TOTAL; football 1X2 -> the adapter's three-way MONEYLINE (HOME/DRAW/AWAY).
+        market = "TOTALS".equals(rawMarket) ? "TOTAL" : "1X2".equals(rawMarket) ? "MONEYLINE" : rawMarket;
         side=fields.getOrDefault("side", "");
         sport=fields.getOrDefault("sport", "");
         String resolvedLine=fields.getOrDefault("line", "");
@@ -133,7 +134,7 @@ final class CoordinatorInstruction {
             expected=Set.of("instruction_id","action","adapter","scenario","sport","market","side","line","selection_name","price",
                     "minimum_price","stake","execution_mode","confirmation_status","timeout_ms","held_instruction_id","home","away","competition","period","kickoff_utc");
             if(!fields.keySet().equals(expected)) throw new IllegalArgumentException("Invalid PLACE_HELD schema");
-            if(!fields.get("price").matches("[0-9]+\\.[0-9]{2}")) throw new IllegalArgumentException("Invalid price");
+            if(!fields.get("price").matches("[0-9]+\\.[0-9]{2,3}")) throw new IllegalArgumentException("Invalid price");   // Bet365 Asian lines show 3 decimals (1.850)
             if(!fields.get("selection_name").matches("[A-Za-z0-9 ./'&()-]{2,64}")) throw new IllegalArgumentException("Invalid selection_name");
         } else if(action.equals("OCR_BENCH")) {
             expected=Set.of("instruction_id","action","adapter","scenario","frames","engine","timeout_ms");

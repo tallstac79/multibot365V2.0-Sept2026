@@ -88,12 +88,18 @@ class ClassificationTests(unittest.TestCase):
             self.assertIsNone(p['displayed_ev_percent'])
             self.assertEqual(evaluate(p, config(), instruction_id='x', received_at=T0.isoformat(), now=T0)['decision'], 'REJECT')
 
-    def test_unverified_football_formats_are_ambiguous_with_reason(self):
-        for name in ('oddsnotifier_spread.txt', 'oddsnotifier_football_ml_linked.txt'):
-            verdict = alert_classifier.classify((FIXTURES / name).read_text(encoding='utf-8'))
-            self.assertEqual(verdict['status'], 'AMBIGUOUS', name)
-            self.assertIn('UNSUPPORTED_MAPPING: football', verdict['reason'])
-            self.assertIsNone(verdict['parsed']['target_side'])
+    def test_football_formats_verified_or_ambiguous_with_reason(self):
+        # 27 Sep 2026: the production Feed 1 layouts are verified (core.football). The Welling Spread sample parses with an
+        # AWAY target (opening 1.714 -> 1.662 shortens at the same line) but its EV has no bold owner: NO BET, never a guess.
+        verdict = alert_classifier.classify((FIXTURES / 'oddsnotifier_spread.txt').read_text(encoding='utf-8'))
+        self.assertEqual(verdict['status'], 'PARSED')
+        self.assertEqual((verdict['parsed']['target_side'], verdict['parsed']['highlighted_side'], verdict['parsed']['football']['verdict']),
+                         ('AWAY', None, 'NO_BET'))
+        # the 22 Sep bare-link 1X2 sample ("Name (url)" fixture row) is not the production layout: still AMBIGUOUS, no side guessed
+        verdict = alert_classifier.classify((FIXTURES / 'oddsnotifier_football_ml_linked.txt').read_text(encoding='utf-8'))
+        self.assertEqual(verdict['status'], 'AMBIGUOUS')
+        self.assertIn('UNSUPPORTED_MAPPING: football', verdict['reason'])
+        self.assertIsNone(verdict['parsed']['target_side'])
 
     def test_moneyline_cannot_reuse_a_totals_opening_line(self):
         text = MELBOURNE['raw_text'].replace('market=Totals', 'market=ML').replace('Totals (190.5)', 'ML') \
@@ -145,7 +151,8 @@ class IntakeTests(Base):
                  'New odds update on Pinnacle\nbroken', 'Channel notice', MELBOURNE['raw_text']]
         for index, text in enumerate(texts):
             self.p.ingest(message(MELBOURNE, message_id=str(100 + index), text=text))
-        self.assertEqual([r['status'] for r in self.intake()], ['PARSED', 'AMBIGUOUS', 'INVALID', 'IGNORED', 'DUPLICATE'])
+        # 27 Sep 2026: football Spread is a verified profile (core.football), so the Welling fixture now parses.
+        self.assertEqual([r['status'] for r in self.intake()], ['PARSED', 'PARSED', 'INVALID', 'IGNORED', 'DUPLICATE'])
         self.assertTrue(all(r['reason'] for r in self.intake()))
 
     def test_duplicate_telegram_delivery_recorded_but_processed_once(self):
@@ -264,6 +271,8 @@ class RulesTests(unittest.TestCase):
 
     def test_unverified_or_targetless_alert_rejected(self):
         football = alert_classifier.classify((FIXTURES / 'oddsnotifier_spread.txt').read_text(encoding='utf-8'))['parsed']
+        # football Spread is verified since 27 Sep 2026; an alert whose mapping is NOT verified still fails at the first gate
+        football['quote_mapping']['production_verified'] = False
         self.assertTrue(self.run_rules(config(), football)['reason'].startswith('verified_mapping'))
         targetless = dict(self.alert, target_side=None, alert_price=None)
         self.assertEqual(self.run_rules(config(), targetless)['decision'], 'REJECT')

@@ -16,8 +16,10 @@ from core.decision_support import validate
 from core.execution_terms import minimum_price, line_allowance
 from core.market_interpretation import ACTIONABLE_SIGNALS, SHARP_SOURCE, VERSION, sharp_signal, dec
 from core.moneyline import VERSION as ML_VERSION, PROFILE as ML_PROFILE, sharp_signal as moneyline_sharp_signal
+from core.football import (VERSION as FOOTBALL_VERSION, PROFILE_1X2 as FOOTBALL_1X2_PROFILE, PROFILE_TWO_SIDED as FOOTBALL_TWO_SIDED_PROFILE,
+                           SIDES as FOOTBALL_SIDES, sharp_signal_for_alert as football_sharp_signal)
 
-ENGINE_VERSION = 'rules-7-moneyline'
+ENGINE_VERSION = 'rules-8-football'
 ACCEPT, REJECT, STALE = 'ACCEPT', 'REJECT', 'STALE'
 
 
@@ -100,12 +102,22 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
           'production-verified quote mapping' if mapping.get('production_verified') else
           'quote ordering is not production-verified; no selection is guessed')
     moneyline = alert.get('market') == 'MONEYLINE' and alert.get('sport') == 'basketball'
-    signal = moneyline_sharp_signal((alert.get('opening') or {}).get('quotes'), (alert.get('pinnacle') or {}).get('quotes'),
-                                   verified=mapping.get('production_verified') is True) if moneyline else sharp_signal(alert.get('market'), (alert.get('opening') or {}).get('line'),
-                          (alert.get('pinnacle') or {}).get('line'),
-                          verified=mapping.get('production_verified') is True,
-                          perspective=(alert.get('market_movement') or {}).get('line_perspective'))
-    check('sharp_target', alert.get('interpretation_version') == (ML_VERSION if moneyline else VERSION)
+    # Football (Feed 1): 1X2 / Asian-handicap Spread / Totals under core.football; the signal is re-derived here from the
+    # stored quotes and lines and must agree with the interpreted target. Basketball paths are unchanged.
+    football = alert.get('sport') == 'football' and alert.get('market') in ('1X2', 'SPREAD', 'TOTALS')
+    price_market = moneyline or (football and alert.get('market') == '1X2')
+    if moneyline:
+        signal = moneyline_sharp_signal((alert.get('opening') or {}).get('quotes'), (alert.get('pinnacle') or {}).get('quotes'),
+                                        verified=mapping.get('production_verified') is True)
+    elif football:
+        signal = football_sharp_signal(alert, verified=mapping.get('production_verified') is True)
+    else:
+        signal = sharp_signal(alert.get('market'), (alert.get('opening') or {}).get('line'),
+                              (alert.get('pinnacle') or {}).get('line'),
+                              verified=mapping.get('production_verified') is True,
+                              perspective=(alert.get('market_movement') or {}).get('line_perspective'))
+    expected_version = ML_VERSION if moneyline else FOOTBALL_VERSION if football else VERSION
+    check('sharp_target', alert.get('interpretation_version') == expected_version
           and alert.get('interpretation_status') == 'PARSED'
           and alert.get('target_price_source') == SHARP_SOURCE
           and signal['side'] is not None and signal['side'] == alert.get('target_side'),
@@ -123,6 +135,19 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
               and dec(alert.get('alert_price')) == dec(target_quote.get('price'))
               and alert.get('target_line') is None,
               'Two-outcome basketball ML; requested Bet365 quote must belong to the independently selected Pinnacle side')
+    if football:
+        sides = FOOTBALL_SIDES[alert.get('market')]
+        quotes = (alert.get('comparison') or {}).get('quotes') or []
+        ordered = len(quotes) == len(sides) and all(isinstance(q, dict) and q.get('side') == s and q.get('position') == i + 1
+                                                    for i, (q, s) in enumerate(zip(quotes, sides)))
+        target_quote = next((q for q in quotes if isinstance(q, dict) and q.get('side') == signal['side']), {})
+        expected_profile = FOOTBALL_1X2_PROFILE if alert.get('market') == '1X2' else FOOTBALL_TWO_SIDED_PROFILE
+        line_ok = alert.get('target_line') is None if price_market else dec(alert.get('target_line')) == dec(target_quote.get('line'))
+        check('football_same_side_offer', mapping.get('profile') == expected_profile and ordered and signal['side'] is not None
+              and dec(alert.get('alert_price')) == dec(target_quote.get('price')) and line_ok
+              and not (alert.get('football') or {}).get('in_play_link'),
+              f"football {alert.get('market')}: requested Bet365 quote must belong to the independently selected Pinnacle side "
+              f"({signal['side']}) at its own line, from a pre-match event link")
     # Market interpretation (core.market_interpretation): only an actionable signal on the
     # verified Pinnacle opening-to-current target proceeds. CLEAR_VALUE_SIGNAL = equal-line price/EV edge;
     # FAVOURABLE_LINE_SIGNAL = materially favourable Bet365 line at an acceptable price (no EV).
@@ -142,9 +167,10 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
               f"Bet365 line advantage {advantage} points vs minimum {g['min_line_advantage']}")
     minimum_move = g['min_sharp_movement']
     magnitude = dec(signal.get('magnitude'))
+    price_based = moneyline or (football and signal.get('basis') in ('price', 'price_same_line'))
     check('sharp_movement', magnitude is not None and magnitude > 0
-          and (moneyline or minimum_move is None or magnitude >= Decimal(str(minimum_move))),
-          'Feed-qualified signal; genuine nonzero opening-to-current movement required; no duplicate movement floor' if moneyline or minimum_move is None
+          and (price_based or minimum_move is None or magnitude >= Decimal(str(minimum_move))),
+          'Feed-qualified signal; genuine nonzero opening-to-current movement required; no duplicate movement floor' if price_based or minimum_move is None
           else f'Pinnacle net movement {magnitude} points vs minimum {minimum_move}')
     sport, market = alert.get('sport'), alert.get('market')
     rule = config['sports'].get(sport, {}).get('markets', {}).get(market)
@@ -206,7 +232,7 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
 
     if rule is not None:
         check('execution_tolerances', (rule['max_odds_deterioration'] is not None or rule['max_net_payout_deterioration_percent'] is not None)
-              and (moneyline or rule['max_line_deterioration'] is not None),
+              and (price_market or rule['max_line_deterioration'] is not None),
               f"{sport} {market}: net payout tolerance {rule['max_net_payout_deterioration_percent']}%, "
               f"legacy decimal tolerance {rule['max_odds_deterioration']}, absolute line cap {rule['max_line_deterioration']}, "
               f"spread cap {rule['max_line_deterioration_percent']}% of original handicap; price and line policies require explicit configuration")
@@ -216,7 +242,7 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
     stake = min(stake, g['max_stake'])
     slippage = rule['max_odds_deterioration']
     minimum = minimum_price(price, net_percent=rule['max_net_payout_deterioration_percent'], decimal_tolerance=slippage)
-    effective_line = None if moneyline else line_allowance(market, alert.get('target_line'), rule['max_line_deterioration'], rule['max_line_deterioration_percent'])
+    effective_line = None if price_market else line_allowance(market, alert.get('target_line'), rule['max_line_deterioration'], rule['max_line_deterioration_percent'])
     check('stake', 0 < stake <= g['max_stake'], f'stake {stake:.2f} (max {g["max_stake"]:.2f})')
     alternate = alert.get('alternate_line') or {}
     result['decision'], result['reason'] = ACCEPT, 'All rules passed'

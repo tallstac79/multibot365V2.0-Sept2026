@@ -189,13 +189,16 @@ class FootballProductionTests(unittest.TestCase):
                 row = db.execute('SELECT status, normalized FROM intake_messages').fetchone()
             self.assertEqual(json.loads(row['normalized'])['selection_name'], 'Brann')
 
-    def test_unverified_football_two_sided_keeps_market_data_without_sides(self):
+    def test_football_two_sided_is_verified_with_sides(self):
+        # Welling United v Cheshunt (real 15 Sep 2026 sample): verified football Spread profile since 27 Sep 2026.
         r = parse((FIXTURES / 'oddsnotifier_spread.txt').read_text(encoding='utf-8'))
-        self.assertEqual(r['status'], 'AMBIGUOUS')
-        self.assertIn('UNSUPPORTED_MAPPING: football SPREAD', r['reason'])
-        self.assertEqual(r['parsed']['sides'], [])
-        self.assertEqual((r['parsed']['comparison']['equal_line'], r['parsed']['comparison']['ev_status']),
-                         (True, 'SUPPLIED_EQUAL_LINE'))
+        self.assertEqual(r['status'], 'PARSED')
+        self.assertEqual(r['parsed']['quote_mapping']['profile'], 'oddsnotifier_football_two_sided_v1')
+        self.assertEqual([s['side'] for s in r['parsed']['sides']], ['HOME', 'AWAY'])
+        self.assertEqual((r['parsed']['target_side'], r['parsed']['target_line'], r['parsed']['alert_price']), ('AWAY', '+0.75', '1.95'))
+        # equal line, EV supplied but not attributed to a price (no bold): retained, never lent to the target
+        self.assertEqual((r['parsed']['comparison']['equal_line'], r['parsed']['comparison']['ev_status'], r['parsed']['bet_quality']),
+                         (True, 'SUPPLIED_OWNER_UNKNOWN', 'POTENTIAL_VALUE'))
 
 
 class BetQualityTests(unittest.TestCase):
@@ -336,10 +339,17 @@ class FavourableLineSignalTests(unittest.TestCase):
 
 class SafetyTests(unittest.TestCase):
     def test_unknown_ordering(self):
-        for name in ('oddsnotifier_spread.txt', 'oddsnotifier_football_total.txt'):
+        # 27 Sep 2026: football Spread/Totals are verified profiles (core.football); the synthetic football fixtures now parse
+        # with the sharp side but no EV owner (no bold price): NO BET, no guess.
+        for name, side in (('oddsnotifier_spread.txt', 'AWAY'), ('oddsnotifier_football_total.txt', 'OVER')):
             verdict = alert_classifier.classify((FIXTURES / name).read_text(encoding='utf-8'))
-            self.assertEqual(verdict['status'], 'AMBIGUOUS', name)
-            self.assertIsNone(verdict['parsed']['selection_side'])
+            self.assertEqual(verdict['status'], 'PARSED', name)
+            self.assertEqual((verdict['parsed']['selection_side'], verdict['parsed']['football']['verdict']), (side, 'NO_BET'))
+        # a market label with no verified ordering still fails closed without a side
+        text = (FIXTURES / 'oddsnotifier_spread.txt').read_text(encoding='utf-8').replace('Spread (-0.75)', 'Handicap (-0.75)').replace('Opening (-0.75)', 'Opening')
+        verdict = alert_classifier.classify(text)
+        self.assertEqual(verdict['status'], 'AMBIGUOUS')
+        self.assertIsNone(verdict['parsed'] and verdict['parsed'].get('selection_side'))
 
     def test_ambiguous_highlighted_price(self):
         text = MELBOURNE['raw_text'].replace('- 1.65', '- **1.65**')

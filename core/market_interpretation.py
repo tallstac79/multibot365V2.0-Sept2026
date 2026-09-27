@@ -706,7 +706,13 @@ def interpret(text, *, channel_id=None, message_id=None, source_timestamp=None):
     rows, opening_marker = split_rows(text)
     try:
         head = _header(rows)
-        if head['sport'] == 'basketball' and (rows[4] in ('ML', 'Moneyline') or
+        from core.football import is_football_alert, parse as parse_football
+        if head['sport'] == 'football' and is_football_alert(rows, head):
+            # Football (Feed 1) verified profiles: 1X2, Asian-handicap Spread and Totals (core.football). Other football
+            # layouts (side-labelled rows) and every basketball layout take the branches below, unchanged.
+            alert, ambiguities, partial = parse_football(rows, head, opening_marker)
+            profile = alert['quote_mapping']['profile']
+        elif head['sport'] == 'basketball' and (rows[4] in ('ML', 'Moneyline') or
                 (head['fixture_url'] and parse_qs(urlsplit(head['fixture_url']).query).get('market') == ['ML']
                  and _is_price_row(rows[4]))):
             from core.moneyline import parse as parse_moneyline

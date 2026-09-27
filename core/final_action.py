@@ -26,6 +26,11 @@ from core.pipeline_store import iso
 from core.session_contract import gate as session_gate
 
 ACCEPTED_IDENTITY = ('EXACT', 'CANONICAL_MATCH', 'ALIAS_MATCH', 'HIGH_CONFIDENCE_EVENT_MATCH')
+
+
+def _market_key(market):
+    """Wire/phone market names that denote the same market: TOTALS/TOTAL, and football 1X2 = the phone's three-way MONEYLINE."""
+    return (market or '').replace('TOTALS', 'TOTAL').replace('1X2', 'MONEYLINE')
 AUTOMATIC_ACTOR = 'automatic-policy'
 
 PAUSED = 'paused'
@@ -171,7 +176,7 @@ class FinalAction:
               and all(context.get(k) for k in ('home', 'away', 'competition', 'kickoff_utc', 'period')),
               f"verdict={result.get('identity_verdict')} context={sorted(k for k in context if context.get(k))}")
         check('period_full_game', context.get('period') == 'FULL_GAME', context.get('period'))
-        check('market_and_side', (selection.get('market') or '').replace('TOTALS', 'TOTAL') == (row['market'] or '').replace('TOTALS', 'TOTAL')
+        check('market_and_side', _market_key(selection.get('market')) == _market_key(row['market'])
               and selection.get('side') == row['selection'], f"{selection.get('market')}/{selection.get('side')} vs {row['market']}/{row['selection']}")
         check('terms_within_tolerance', comparison.get('acceptable') is True and comparison.get('identity_verified') is not False,
               comparison.get('reason') or 'no alert-to-live comparison recorded')
@@ -227,7 +232,8 @@ class FinalAction:
         device = self.p.store.device(self.s.device_id)
         health = json.loads(device['health']) if device and device['health'] else {}
         job = f"{row['instruction_id']}-place"
-        strategy = ML_VERSION if row['market'] in ('MONEYLINE', 'ML') else STRATEGY_VERSION
+        from core.football import VERSION as FOOTBALL_VERSION
+        strategy = ML_VERSION if row['market'] in ('MONEYLINE', 'ML') else FOOTBALL_VERSION if row['sport'] == 'football' else STRATEGY_VERSION
         record = dict(approval_mode='automatic', decided_by=AUTOMATIC_ACTOR, auto_approved_at=now,
                       strategy_version=strategy, rules_version=ENGINE_VERSION, parser_version=PARSER_VERSION,
                       instruction_id=row['instruction_id'], execution_job_id=job,

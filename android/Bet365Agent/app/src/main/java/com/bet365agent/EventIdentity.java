@@ -383,19 +383,34 @@ final class EventIdentity {
      * (the event still needs corroboration in resolve()). Any other marker difference is a MISMATCH.
      */
     static Side matchSide(String feed, String bookmaker, Map<String, String> extraAliases, boolean womensCompetition) {
+        return matchSide(feed, bookmaker, extraAliases, womensCompetition, Collections.emptySet());
+    }
+
+    /** Age-group markers carried by the competition itself ("U21 League", "U19 Cup"): the bookmaker may append them to
+     *  both team names ("JaPS U21 v PPJ U21", Finland U21 League, 27 Sep 2026) exactly as it appends "(W)" in a
+     *  women's competition. Only the competition's own marker is ever supplied, never any other. */
+    static Set<String> competitionMarkers(String competition) {
+        Set<String> out = new TreeSet<>();
+        for (String m : markers(normalise(competition))) if (AGE.matcher(m).matches()) out.add(m);
+        return out;
+    }
+
+    static Side matchSide(String feed, String bookmaker, Map<String, String> extraAliases, boolean womensCompetition, Set<String> competitionMarkers) {
         String nf = normalise(feed), nb = normalise(bookmaker);
         if (nf.isEmpty() || nb.isEmpty()) return new Side(feed, bookmaker, Level.NONE, 0, true, "empty name");
         Set<String> mf = markers(nf), mb = markers(nb);
         if (!mf.equals(mb)) {
-            Set<String> mbLessWomen = new TreeSet<>(mb);
-            boolean onlyWomenOnBookmaker = mbLessWomen.remove("women") && !mf.contains("women") && mbLessWomen.equals(mf);
-            if (!(womensCompetition && onlyWomenOnBookmaker))
+            Set<String> allowed = new TreeSet<>(competitionMarkers == null ? Collections.emptySet() : competitionMarkers);
+            if (womensCompetition) allowed.add("women");
+            Set<String> extra = new TreeSet<>(mb); extra.removeAll(mf);
+            boolean onlyCompetitionMarkersOnBookmaker = mb.containsAll(mf) && !extra.isEmpty() && allowed.containsAll(extra);
+            if (!onlyCompetitionMarkersOnBookmaker)
                 return new Side(feed, bookmaker, Level.NONE, 0, false, "protected markers differ " + mf + " vs " + mb, "markers_conflict", false, true);
             String cf = canonicalTokens(nf), cb = canonicalTokens(nb);
             TokenEvidence te = compareTokens(nf, nb);
             double score = !cf.isEmpty() && cf.equals(cb) ? 1.0 : te.score;
-            if (score < STRONG) return new Side(feed, bookmaker, Level.NONE, score, true, String.format(Locale.US, "different name %.2f (women's marker from competition)", score), "none", true, true);
-            return new Side(feed, bookmaker, Level.VARIANT, score, true, String.format(Locale.US, "women's marker supplied by the competition; names agree %.2f", score),
+            if (score < STRONG) return new Side(feed, bookmaker, Level.NONE, score, true, String.format(Locale.US, "different name %.2f (%s marker from competition)", score, extra), "none", true, true);
+            return new Side(feed, bookmaker, Level.VARIANT, score, true, String.format(Locale.US, "marker %s supplied by the competition; names agree %.2f", extra, score),
                     "women_marker_from_competition", true, !te.extraOnSecond);
         }
         if (nf.equals(nb)) return new Side(feed, bookmaker, Level.EXACT, 1, true, "exact");
@@ -542,14 +557,16 @@ final class EventIdentity {
             ev.put("policy", "sport");
             return new Result(Verdict.MISMATCH, "sport differs: " + feed.sport + " vs " + page.sport, null, null, koKnown, koAgrees, false, none, null, ev);
         }
-        Side h = matchSide(feed.home, page.home, extraAliases, womensCompetition), a = matchSide(feed.away, page.away, extraAliases, womensCompetition);
+        Set<String> cm = competitionMarkers(feed.competition);   // the competition's own age marker may be appended by Bet365 ("JaPS U21")
+        if (!cm.isEmpty()) ev.put("competition_markers", cm.toString());
+        Side h = matchSide(feed.home, page.home, extraAliases, womensCompetition, cm), a = matchSide(feed.away, page.away, extraAliases, womensCompetition, cm);
         ev.put("home_similarity", h.log());
         ev.put("away_similarity", a.log());
         ev.put("protected_markers", h.markersAgree && a.markersAgree ? "agree" : "conflict: " + (!h.markersAgree ? h.note : a.note));
         // Orientation: a reversed pairing is never accepted (a HOME/AWAY selection would land on the other team), and a
         // pairing that also reads plausibly the other way round is undecidable.
         boolean straight = h.atLeast(Level.VARIANT) && a.atLeast(Level.VARIANT);
-        Side hs = matchSide(feed.home, page.away, extraAliases, womensCompetition), as = matchSide(feed.away, page.home, extraAliases, womensCompetition);
+        Side hs = matchSide(feed.home, page.away, extraAliases, womensCompetition, cm), as = matchSide(feed.away, page.home, extraAliases, womensCompetition, cm);
         boolean crossed = hs.atLeast(Level.VARIANT) && as.atLeast(Level.VARIANT);
         if (!straight && crossed) {
             ev.put("orientation", "reversed");

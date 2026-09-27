@@ -360,6 +360,19 @@ final class VisualSession {
         return f;
     }
 
+    /** Horizontal swipe at a fixed y (scrolls a horizontal strip such as the football market tabs). */
+    CompletableFuture<Void> swipeHorizontal(int y,int fromX,int toX,long durationMs) {
+        if(!live())return failed("TIMEOUT","Session expired");
+        events.put(CoordinatorAgent.object("effect","swipe_horizontal","y",y,"from_x",fromX,"to_x",toX,"elapsed_ms",SystemClock.elapsedRealtime()-started));
+        CompletableFuture<Void> f=future();Path path=new Path();path.moveTo(fromX,y);path.lineTo(toX,y);
+        boolean accepted=service.dispatchGesture(new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path,0,durationMs)).build(),new AccessibilityService.GestureResultCallback(){
+            public void onCompleted(GestureDescription gesture){if(live())main.postDelayed(()->{if(live())f.complete(null);},600);}
+            public void onCancelled(GestureDescription gesture){f.completeExceptionally(new SiteAdapter.Failure("CLICK_FAILED","Swipe cancelled"));}
+        },main);
+        if(!accepted)f.completeExceptionally(new SiteAdapter.Failure("CLICK_FAILED","Swipe rejected"));
+        return f;
+    }
+
     /** Artifact name of the most recent capture (e.g. s012_place_bet_after.png), or null. */
     String lastImage() { return images.length()==0?null:images.optString(images.length()-1,null); }
 

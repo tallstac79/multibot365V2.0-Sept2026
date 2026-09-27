@@ -399,7 +399,7 @@ class Pipeline:
         if not name:
             name = row['selection_name']   # feed name; the phone still requires it visible on the slip
         price = selection.get('price') or ready.get('price') or row['observed_price']
-        line = selection.get('line') if row['market'] not in ('ML','MONEYLINE') else ''
+        line = selection.get('line') if row['market'] not in ('ML', 'MONEYLINE', '1X2') else ''
         if row['market'] in ('SPREAD', 'TOTALS') and not line:
             line = row['line']
         if not (name and SELECTION_NAME.match(str(name)) and price):
