@@ -1246,11 +1246,13 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     // ------------------------------------------------------------------ football markets (0.9.26)
+    /** The requested market/side is on this frame at the requested line or within the configured line allowance (the same
+     *  test read_selection applies): Ossese v Sarnese, 27 Sep 2026, requested HOME 0.5, page 0.25 within the 0.25 cap. */
     private boolean footballTargetIn(List<Selection> found) {
         for (Selection s : found) {
             if (!s.market.equals(targetMarket) || !s.side.equals(targetSide)) continue;
             if ("MONEYLINE".equals(targetMarket) || requestedLine == null || requestedLine.isEmpty() || requestedLine.equalsIgnoreCase("NONE")
-                    || lineEquals(s.line, requestedLine)) return true;
+                    || lineEquals(s.line, requestedLine) || ExecutionTolerance.line(targetMarket, targetSide, requestedLine, s.line, lineTolerance)) return true;
         }
         return false;
     }
@@ -1301,9 +1303,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     private CompletableFuture<List<Selection>> footballTabs(List<String> tabs, int index, List<Selection> lastFound) {
         if (index >= tabs.size()) {
-            // Last resort on the current view: one scroll for further lines of the same market.
+            // Last resort on the current view: one scroll for further lines of the same market. Whatever this frame shows is
+            // what is returned: tap targets from an earlier frame would be stale after the scrolls (fail closed instead).
             return ui.swipe(360, 1200, 600, 400).thenCompose(v -> ui.delay(900)).thenCompose(v -> ui.captureTable("markets_scroll"))
-                    .thenApply(s -> { List<Selection> found = footballSelections(footballParse(s, "scroll")); return footballTargetIn(found) ? found : lastFound; });
+                    .thenApply(s -> footballSelections(footballParse(s, "scroll")));
         }
         String prefix = tabs.get(index);
         return footballOpenTab(prefix, 0).thenCompose(v -> ui.captureTable("markets_" + prefix)).thenCompose(s -> {
@@ -1523,7 +1526,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
             return clearToVerifiedEmpty(first, keys, "retype").thenCompose(v -> typeAmount(keys, amount)).thenCompose(v -> ui.delay(400))
                     .thenCompose(v -> ui.capture("stake_retyped")).thenCompose(second -> {
                         if (stakeVerifiedWhileTyping(second, amount, "stake_check_retyped")) return CompletableFuture.completedFuture(second);
+                        // Bet365 replaces "To Return" with "Accept Change and Place Bet" when the price moved on the slip
+                        // (Panionios v Zakynthos, 27 Sep 2026): that is a price change, never accepted here.
+                        boolean priceChanged = visible(second, "Accept Change", "Accept Changes") || visible(first, "Accept Change", "Accept Changes");
                         return erase(keys, 10).<VisualScreen>thenCompose(v -> {
+                            if (priceChanged) throw new Failure("PRICE_CHANGED", "Bet365 asks to accept a changed price on the slip; stake erased, nothing accepted");
                             throw new Failure("STAKE_REJECTED", "Typed stake did not read back as " + amount + " after one retype; field erased");
                         });
                     });
