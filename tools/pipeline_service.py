@@ -100,6 +100,44 @@ def gateway_for(settings):
     return CoordinatorGateway(config_path=settings['coordinator_config'])
 
 
+NOTIFY_BATCH = 10   # outbox rows sent per Telegram pass (a backlog never starves operator commands)
+
+
+async def dispatch_loop(pipeline, gateway, tick_seconds, on_cycle=None, stop=None):
+    """The execution cycle: nothing but pipeline.tick (intake runs in its own task). No Telegram or other network I/O
+    here, so a slow or failing bot can never delay a dispatch or result tick (27 Sep 2026 cross-layer audit P1-4)."""
+    while stop is None or not stop.is_set():
+        error = None
+        try:
+            await asyncio.to_thread(pipeline.tick, gateway)
+        except Exception as exc:  # keep running; the store stays consistent per transaction
+            error = f'{type(exc).__name__}: {exc}'[:300]
+            log.exception('Pipeline cycle failed')
+        if on_cycle:
+            on_cycle(error)
+        await asyncio.sleep(tick_seconds)
+
+
+async def telegram_loop(notifier, commands, tick_seconds, status, stop=None, batch=NOTIFY_BATCH):
+    """Operator commands and the durable notification outbox, on their own schedule. The outbox rows are written by
+    enqueue from the store (the same durable outbox as before); only sending moved out of the execution cycle."""
+    while stop is None or not stop.is_set():
+        if commands:
+            try:
+                await asyncio.to_thread(commands.poll)
+                status.pop('commands_error', None)
+            except Exception as error:  # Telegram outage must never stop the pipeline
+                status['commands_error'] = f'{type(error).__name__}: {error}'[:200]
+        try:
+            await asyncio.to_thread(notifier.enqueue)
+            await asyncio.to_thread(notifier.deliver, batch)
+            status.pop('notify_error', None)
+        except Exception as error:
+            status['notify_error'] = f'{type(error).__name__}: {error}'[:200]
+            log.exception('Notification pass failed')
+        await asyncio.sleep(tick_seconds)
+
+
 async def run(settings):
     store, pipeline = build(settings)
     open_count = pipeline.recover()
@@ -123,40 +161,32 @@ async def run(settings):
     else:
         log.warning('telegram_intake not configured: no continuous ingestion')
 
-    async def cycle():
-        while True:
-            state = dict(heartbeat_at=iso(utcnow()), dispatch_enabled=pipeline.settings.dispatch_enabled,
-                         rules_engine=ENGINE_VERSION, parser_version=PARSER_VERSION,
-                         event_timezone=None, feed_timezone_verified=False,
-                         final_action_enabled=pipeline.settings.final_action_enabled,
-                         auto_approve=pipeline.settings.auto_approve, paused=pipeline.final.paused(),
-                         intake=intake.status if intake else dict(state='NOT_CONFIGURED'),
-                         notifications='ENABLED' if sender else 'DISABLED',
-                         commands='ENABLED' if commands else 'DISABLED', last_error=None)
-            try:
-                policy = pipeline.config_provider()['global']
-                state.update(event_timezone=policy.get('event_timezone'),
-                             feed_timezone_verified=policy.get('feed_timezone_verified', False))
-                if commands:
-                    try:
-                        await asyncio.to_thread(commands.poll)
-                    except Exception as error:  # Telegram outage must never stop the pipeline
-                        state['commands_error'] = f'{type(error).__name__}: {error}'[:200]
-                await asyncio.to_thread(pipeline.tick, gateway)
-                if pipeline.disarmed and settings.get('config_path'):
-                    persist_disarm(settings['config_path'], pipeline.disarmed)
-                await asyncio.to_thread(notifier.enqueue)
-                await asyncio.to_thread(notifier.deliver)
-            except Exception as error:  # keep running; the store stays consistent per transaction
-                state['last_error'] = f'{type(error).__name__}: {error}'[:300]
-                log.exception('Pipeline cycle failed')
-            try:
-                settings['status_file'].write_text(json.dumps(state, default=str), encoding='utf-8')
-            except OSError:
-                pass
-            await asyncio.sleep(settings['tick_seconds'])
+    telegram_status = {}
 
-    tasks.append(asyncio.create_task(cycle()))
+    def on_cycle(error):
+        state = dict(heartbeat_at=iso(utcnow()), dispatch_enabled=pipeline.settings.dispatch_enabled,
+                     rules_engine=ENGINE_VERSION, parser_version=PARSER_VERSION,
+                     event_timezone=None, feed_timezone_verified=False,
+                     final_action_enabled=pipeline.settings.final_action_enabled,
+                     auto_approve=pipeline.settings.auto_approve, paused=pipeline.final.paused(),
+                     intake=intake.status if intake else dict(state='NOT_CONFIGURED'),
+                     notifications='ENABLED' if sender else 'DISABLED',
+                     commands='ENABLED' if commands else 'DISABLED', last_error=error, **telegram_status)
+        try:
+            policy = pipeline.config_provider()['global']
+            state.update(event_timezone=policy.get('event_timezone'),
+                         feed_timezone_verified=policy.get('feed_timezone_verified', False))
+            if pipeline.disarmed and settings.get('config_path'):
+                persist_disarm(settings['config_path'], pipeline.disarmed)
+        except Exception as exc:
+            state['last_error'] = f'{type(exc).__name__}: {exc}'[:300]
+        try:
+            settings['status_file'].write_text(json.dumps(state, default=str), encoding='utf-8')
+        except OSError:
+            pass
+
+    tasks.append(asyncio.create_task(dispatch_loop(pipeline, gateway, settings['tick_seconds'], on_cycle)))
+    tasks.append(asyncio.create_task(telegram_loop(notifier, commands, settings['tick_seconds'], telegram_status)))
     await asyncio.gather(*tasks)
 
 

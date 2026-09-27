@@ -269,15 +269,15 @@ class Notifier:
                                                now, now)).rowcount
         return created
 
-    def deliver(self):
-        """Send due outbox rows. Returns (sent, failed)."""
+    def deliver(self, limit=None):
+        """Send due outbox rows (at most `limit` per call, oldest first). Returns (sent, failed)."""
         if self.sender is None:
             return 0, 0
         now = self.clock()
         with self.store.connection() as db:
             due = db.execute('SELECT * FROM notifications WHERE sent_at IS NULL AND attempts < ? AND '
-                             '(next_attempt_at IS NULL OR next_attempt_at <= ?) ORDER BY id',
-                             (MAX_ATTEMPTS, iso(now))).fetchall()
+                             '(next_attempt_at IS NULL OR next_attempt_at <= ?) ORDER BY id' + (' LIMIT ?' if limit else ''),
+                             (MAX_ATTEMPTS, iso(now), *((int(limit),) if limit else ()))).fetchall()
         sent = failed = 0
         for row in due:
             # Claim first (attempts+1) so a crash mid-send cannot loop-send the same row.

@@ -123,8 +123,9 @@ class BusyIsNotAdmission(unittest.TestCase):
         """13:32Z Pantery check 1 was refused BUSY, then waited 3 minutes and counted as a failed attempt."""
         iid = self.p.ingest(message(MELBOURNE))['instruction_id']
         with self.p.store.tx() as db:
+            from tests.pipeline_support import ACCOUNT_FINGERPRINT, WORKER_ID
             self.p.store.upsert_bet(db, iid, status='PLACED_UNVERIFIED', stake='0.10', odds='2.20', placed_at='2020-01-01T00:00:00+00:00',
-                                    source='device')
+                                    source='device', worker_id=WORKER_ID, account_fingerprint=ACCOUNT_FINGERPRINT)
         health = self.gateway.health()
         self.gateway.submit_error = BUSY
         self.assertTrue(self.p.final.schedule(self.gateway, health, True))

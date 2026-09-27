@@ -18,6 +18,7 @@ confirmed from the address bar (#/MB/U unsettled, #/MB/S settled) before absence
 """
 from decimal import Decimal, InvalidOperation
 import re
+from datetime import datetime
 
 WINDOW_BEFORE, WINDOW_AFTER = 6, 10
 SETTLED_WORDS = (('cashed out', 'CASHED_OUT'), ('cash out', 'CASHED_OUT'), ('void', 'VOID'), ('won', 'WON'),
@@ -296,24 +297,116 @@ def proves_absence(instruction, my_bets, view='OPEN'):
     return True, f'whole list read (top to footer); {same_stake} card(s) with the bet stake, none for this fixture'
 
 
-def match(instruction, my_bets, view=None):
-    """Return dict(found, confidence, window, bet_reference, status, returns) for one instruction.
+DATE_ON_CARD = re.compile(r'\b(\d{1,2}) (jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\b')
+MONTHS = {m: i + 1 for i, m in enumerate(('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'))}
 
-    confidence: EXACT/STRONG (found), INCONCLUSIVE (a collapsed card could be this bet),
-    PARTIAL / NO_FIXTURE_TEXT (not found). Raises ValueError if the requested view is not
-    confirmed by the address bar, or the result has no lines: absence is then unproven.
-    """
+
+def _reference_key(value):
+    """Bet references as printed/OCR'd ("AT3003000811 W", "Bet Ref ST2998906111W") compared on letters and digits only."""
+    return re.sub(r'[^A-Z0-9]', '', str(value or '').upper()) or None
+
+
+def _date_agrees(text, instruction):
+    """A card that prints its kick-off date must be on the instruction's event date (UK local) - a repeat fixture on another
+    day is a different bet. Cards without a date, or instructions without an event time, are not constrained here."""
+    event = instruction.get('event_time')
+    shown = DATE_ON_CARD.search(text)
+    if not event or not shown:
+        return True
+    try:
+        when = datetime.fromisoformat(str(event)[:16])
+    except ValueError:
+        return True
+    return int(shown.group(1)) == when.day and MONTHS[shown.group(2)] == when.month
+
+
+def _card_key(text, instruction):
+    """Stable identity of a card across scrolled frames: its selection line(s), money lines and date line (live scores and
+    clocks change between frames and are left out). Two different bets with identical terms share a key."""
+    keep = [seg.strip() for seg in text.split('|') if seg.strip().startswith('\u00a3') or DATE_ON_CARD.search(seg)
+            or selection_present(seg, instruction)]
+    return ' | '.join(keep)
+
+
+def _frame_match(instruction, my_bets, view):
+    """One screenshot: every card that satisfies fixture + selection + stake (+ date), and the best non-match for
+    confidence reporting. Raises ValueError if the requested view is not confirmed or there are no lines."""
+    lines = lines_of(my_bets)
+    normalised = [_norm(t) for t in lines]
+    view = view or (my_bets.get('view') if isinstance(my_bets, dict) else None)
+    if view in VIEW_MARKERS and not any(VIEW_MARKERS[view] in line for line in normalised[:4]):
+        raise ValueError(f'My Bets {view} view not confirmed by the address bar')
+    cards = _cards(normalised)
+    found, best = [], None
+    for card in cards or []:
+        text = ' | '.join(normalised[i] for i in card)
+        checks = _check_card(instruction, text)
+        raw = ' | '.join(lines[i] for i in card)
+        score = sum(checks.values()) + (2 if _found(checks) else 0)
+        collapsed = len(card) == 1 and CARD_HEADER.match(normalised[card[0]]) is not None
+        candidate = collapsed and checks['stake'] and (
+            team_present(text, instruction.get('home'), instruction.get('away'))
+            or team_present(text, instruction.get('away'), instruction.get('home')))
+        if best is None or score > best['score'] or (candidate and not best.get('candidate')):
+            best = dict(score=score, window=raw, text=text, candidate=candidate, **checks)
+        if _found(checks) and _date_agrees(text, instruction):
+            reference = REFERENCE.search(raw)
+            found.append(dict(key=_card_key(text, instruction), window=raw, text=text, checks=checks,
+                              reference=_reference_key(reference.group(1)) if reference else None))
+    return dict(cards=bool(cards), found=found, best=best)
+
+
+def match(instruction, my_bets, view=None):
+    """Return dict(found, confidence, window, bet_reference, status, returns, card_key) for one instruction.
+
+    Guarantees (27 Sep 2026 cross-layer audit P1-2):
+    * reference first - a card printing a DIFFERENT bet reference is never this bet; a card printing ours wins;
+    * a card that prints a kick-off date must be on the event date;
+    * uniqueness - more than one distinct matching card, or two identical matching cards on one screenshot (two bets
+      with the same terms), is AMBIGUOUS and not found, unless the reference singles one out; the same card seen again
+      in an overlapping scrolled frame counts once;
+    * nothing is borrowed across screenshots (each card is judged within its own frame).
+    confidence: EXACT/STRONG (found), AMBIGUOUS, INCONCLUSIVE (a collapsed card could be this bet), PARTIAL.
+    Raises ValueError if the requested view is not confirmed by the address bar, or the result has no lines."""
     frames = sorted({r.get('frame', 0) for r in my_bets.get('lines', []) if isinstance(r, dict)})
-    if len(frames) > 1:
-        # Never borrow a fixture, selection or stake from a different screenshot/card.
-        results = []
-        for frame in frames:
-            sub = dict(my_bets, lines=[r for r in my_bets['lines'] if r.get('frame',0)==frame])
-            try: results.append(match(instruction, sub, view))
-            except ValueError: continue
-        found = [r for r in results if r['found']]
-        if found: return found[0]
-        return dict(found=False, confidence='INCONCLUSIVE', window=None, bet_reference=None, status=None, returns=None)
+    reads, errors = [], 0
+    for frame in frames or [0]:
+        sub = dict(my_bets, lines=[r for r in my_bets.get('lines', []) if r.get('frame', 0) == frame]) if len(frames) > 1 else my_bets
+        try:
+            reads.append(_frame_match(instruction, sub, view))
+        except ValueError:
+            if len(frames) <= 1:
+                raise
+            errors += 1
+    none = dict(found=False, confidence='INCONCLUSIVE', window=None, bet_reference=None, status=None, returns=None, card_key=None)
+    if not reads or not any(r['cards'] for r in reads):
+        return none   # no reliable card boundary: a sliding window could join two different bets
+    cards = [c for r in reads for c in r['found']]
+    duplicated = {c['key'] for r in reads for c in r['found'] if sum(1 for d in r['found'] if d['key'] == c['key']) > 1}
+    known = _reference_key(instruction.get('bet_reference'))
+    if known:
+        cards = [c for c in cards if c['reference'] in (None, known)]
+        own = [c for c in cards if c['reference'] == known]
+        if own:
+            cards, duplicated = own[:1], set()
+    keys = list(dict.fromkeys(c['key'] for c in cards))
+    if not keys:
+        best = max((r['best'] for r in reads if r['best']), key=lambda b: (b['score'], b.get('candidate', False)), default=None)
+        if best is None:
+            return none
+        status, returns = _settlement(best['text'])   # diagnostic only: settlement acts on found cards alone
+        return dict(found=False, confidence='INCONCLUSIVE' if best['candidate'] else 'PARTIAL', window=best['window'],
+                    checks={k: best[k] for k in ('fixture', 'selection', 'stake', 'odds')}, bet_reference=None,
+                    status=status, returns=returns, card_key=None)
+    if len(keys) > 1 or keys[0] in duplicated:
+        return dict(none, confidence='AMBIGUOUS', window=' || '.join(c['window'] for c in cards[:3]),
+                    ambiguity=(f'{len(keys)} different matching cards' if len(keys) > 1
+                               else 'two identical matching cards on one screen (two bets with the same terms)'))
+    card = cards[0]
+    status, returns = _settlement(card['text'])
+    return dict(found=True, confidence='EXACT' if card['checks']['odds'] else 'STRONG', window=card['window'],
+                checks={k: card['checks'][k] for k in ('fixture', 'selection', 'stake', 'odds')},
+                bet_reference=card['reference'], status=status, returns=returns, card_key=card['key'])
     lines = lines_of(my_bets)
     normalised = [_norm(t) for t in lines]
     view = view or (my_bets.get('view') if isinstance(my_bets, dict) else None)

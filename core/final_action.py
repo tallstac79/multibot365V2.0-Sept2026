@@ -438,11 +438,23 @@ class FinalAction:
             status = UNKNOWN
         else:
             status = NOT_PLACED_CLAIMED
+        worker, account = self.phone_binding()
+        if worker and account:
+            common.update(worker_id=worker, account_fingerprint=account, binding_source='phone health at the placement result')
         self.p.store.upsert_bet(db, row['instruction_id'], status=status, source='device', **common)
         if common['bet_reference']:
             self.p.store.update_fields(db, row['instruction_id'], bet_reference=common['bet_reference'])
 
     # ------------------------------------------------------------------ reconciliation
+    def phone_binding(self):
+        """(worker_id, account_fingerprint) the phone reports now (device_state health), or (None, None)."""
+        device = self.p.store.device(self.s.device_id)
+        try:
+            health = json.loads(device['health']) if device and device['health'] else {}
+        except (ValueError, TypeError):
+            health = {}
+        return health.get('worker_id') or None, health.get('account_fingerprint') or None
+
     def device_busy(self):
         with self.p.store.connection() as db:
             return db.execute('SELECT 1 FROM reconciliations WHERE completed_at IS NULL').fetchone() is not None
@@ -457,11 +469,14 @@ class FinalAction:
 
     LATE_RECHECKS, LATE_RECHECK_SECONDS = 6, 600
 
-    def next_reconciliation(self, urgent_only=False):
+    def next_reconciliation(self, urgent_only=False, binding=None):
         """(purpose, instruction_id or None, view, attempt) that is due now, most urgent first.
 
         urgent_only (A2): live placement work is waiting, so only a PLACEMENT_UNKNOWN resolution (bet status
-        UNKNOWN) may take the phone; verification of claimed placements and settlement wait."""
+        UNKNOWN) may take the phone; verification of claimed placements and settlement wait.
+
+        binding (worker_id, account_fingerprint): only bets placed on that worker/account are due (P1-3); bets bound to
+        another account or not bound at all wait - they are never checked on, or proven absent from, the wrong account."""
         now = self.p.clock()
         with self.p.store.connection() as db:
             candidates = db.execute(
@@ -470,6 +485,8 @@ class FinalAction:
                 "r.instruction_id=b.instruction_id AND r.purpose=?) AS last_at FROM bets b WHERE b.status IN (?,?,?) "
                 "AND b.verified_at IS NULL ORDER BY CASE b.status WHEN 'UNKNOWN' THEN 0 WHEN 'PLACED_UNVERIFIED' THEN 1 "
                 "ELSE 2 END, b.id", (VERIFY, VERIFY, UNKNOWN, PLACED_UNVERIFIED, NOT_PLACED_CLAIMED)).fetchall()
+            if binding is not None:
+                candidates = [b for b in candidates if (b['worker_id'], b['account_fingerprint']) == tuple(binding)]
             for bet in candidates:
                 if bet['status'] in (UNKNOWN, PLACED_UNVERIFIED) and bet['attempts'] >= self.s.reconcile_max_attempts:
                     # exhausted uncertain placement: keep re-verifying slowly (absence may become provable later);
@@ -488,7 +505,10 @@ class FinalAction:
                 wait = self.s.reconcile_delay_seconds * (1 if bet['attempts'] == 0 else 2)
                 if (now - anchor).total_seconds() >= wait:
                     return VERIFY, bet['instruction_id'], 'OPEN', bet['attempts'] + 1
-            if not urgent_only and db.execute("SELECT 1 FROM bets WHERE status=?", (OPEN,)).fetchone():
+            open_bound = db.execute("SELECT 1 FROM bets WHERE status=? AND worker_id IS ? AND account_fingerprint IS ?",
+                                    (OPEN, *(binding or (None, None)))).fetchone() if binding is not None else \
+                db.execute("SELECT 1 FROM bets WHERE status=?", (OPEN,)).fetchone()
+            if not urgent_only and open_bound:
                 last = db.execute("SELECT MAX(requested_at) FROM reconciliations WHERE purpose=?", (SETTLE,)).fetchone()[0]
                 if last is None or (now - datetime.fromisoformat(last)).total_seconds() >= self.s.settlement_poll_minutes * 60:
                     count = db.execute("SELECT COUNT(*) FROM reconciliations WHERE purpose=?", (SETTLE,)).fetchone()[0]
@@ -499,7 +519,10 @@ class FinalAction:
         """Submit one due My Bets check if the phone is free. Returns True if submitted."""
         if not device_free or health is None or health.get('healthy') is not True or health.get('current_instruction'):
             return False
-        due = self.next_reconciliation(urgent_only)
+        binding = (health.get('worker_id') or None, health.get('account_fingerprint') or None)
+        if not all(binding):
+            return False   # the phone does not say which worker/account it is: no account's My Bets is read
+        due = self.next_reconciliation(urgent_only, binding=binding)
         if due is None:
             return False
         purpose, instruction_id, view, attempt = due
@@ -507,8 +530,8 @@ class FinalAction:
         payload = self.payload(device_id, view)
         with self.p.store.tx() as db:
             db.execute('INSERT OR IGNORE INTO reconciliations(device_instruction_id,purpose,instruction_id,view,attempt,'
-                       'requested_at) VALUES (?,?,?,?,?,?)', (device_id, purpose, instruction_id, view, attempt,
-                                                               iso(self.p.clock())))
+                       'requested_at,worker_id,account_fingerprint) VALUES (?,?,?,?,?,?,?,?)',
+                       (device_id, purpose, instruction_id, view, attempt, iso(self.p.clock()), binding[0], binding[1]))
         try:
             gateway.submit(payload)
         except Exception as error:
@@ -535,12 +558,18 @@ class FinalAction:
                 result = None
                 with self.p.store.tx() as db:
                     self.p.store.audit(db, 'RECONCILE_POLL_FAILED', dict(error=str(error)[:300]), rec['instruction_id'])
-            if isinstance(result, dict) and result.get('_pending'):
-                continue
-            if result is None:
+            if result is None or (isinstance(result, dict) and result.get('_pending')):
+                # One absolute deadline whatever the phone reports: a check still "pending" after its own timeout plus a
+                # minute ends as an audited FAILED attempt (never an absence proof, never a retried tap), so it can not
+                # hold the device - and every later dispatch - indefinitely (27 Sep 2026 cross-layer audit P1-1).
                 age = (self.p.clock() - datetime.fromisoformat(rec['requested_at'])).total_seconds()
                 if age > self.s.reconcile_timeout_ms / 1000 + 60:
-                    self._complete(rec, 'FAILED', dict(error='No My Bets result before timeout'))
+                    pending = result is not None
+                    with self.p.store.tx() as db:
+                        self.p.store.audit(db, 'RECONCILE_DEADLINE', dict(id=rec['device_instruction_id'], pending=pending,
+                                                                          age_seconds=int(age)), rec['instruction_id'])
+                    self._complete(rec, 'FAILED', dict(error='My Bets check still pending at its deadline' if pending
+                                                       else 'No My Bets result before timeout'))
                 continue
             self._apply(rec, result)
 
@@ -572,6 +601,11 @@ class FinalAction:
                 self.p.store.audit(db, 'MANUAL_CHECK_REQUIRED', dict(bet=dict(bet)), row['instruction_id'])
 
     def _apply(self, rec, result):
+        bound = (rec['worker_id'], rec['account_fingerprint']) if 'worker_id' in rec.keys() else (None, None)
+        if all(bound) and self.phone_binding() != tuple(bound):
+            # The phone now reports another worker/account: this My Bets read cannot be attributed to the bet's account.
+            self._complete(rec, 'FAILED', dict(error=f'account/worker changed: check bound to {bound}, phone now {self.phone_binding()}'))
+            return
         my_bets = result.get('my_bets') if isinstance(result, dict) else None
         if not isinstance(result, dict) or result.get('status') != 'PASS' or not isinstance(my_bets, dict):
             self._complete(rec, 'FAILED', dict(result=result))
@@ -587,7 +621,12 @@ class FinalAction:
             row = self.p.store.get_instruction(db, rec['instruction_id'])
             bet = db.execute('SELECT * FROM bets WHERE instruction_id=?', (rec['instruction_id'],)).fetchone()
             try:
-                found = bet_matching.match(placed_terms(row, bet), my_bets)
+                bound = (rec['worker_id'], rec['account_fingerprint']) if 'worker_id' in rec.keys() else (None, None)
+                if not all(bound) or (bet['worker_id'], bet['account_fingerprint']) != tuple(bound):
+                    raise ValueError(f"bet bound to {(bet['worker_id'], bet['account_fingerprint'])}, check ran on {bound}")
+                terms = placed_terms(row, bet)
+                terms['bet_reference'] = bet['bet_reference']
+                found = bet_matching.match(terms, my_bets)
             except ValueError as error:
                 self._complete(rec, 'FAILED', dict(error=str(error)), db)
                 return 'FAILED'
@@ -652,12 +691,32 @@ class FinalAction:
             self._complete(rec, 'FAILED', dict(error=str(error)[:200]))
             return
         with self.p.store.tx() as db:
-            updated = []
-            for bet in db.execute('SELECT b.*, i.home, i.away, i.market, i.dispatch_payload FROM bets b JOIN instructions i USING(instruction_id) '
-                                  'WHERE b.status=?', (OPEN,)).fetchall():
-                found = bet_matching.match(placed_terms(bet, bet), my_bets)
+            updated, ambiguous = [], []
+            bound = (rec['worker_id'], rec['account_fingerprint']) if 'worker_id' in rec.keys() else (None, None)
+            bets = db.execute('SELECT b.*, i.home, i.away, i.market, i.dispatch_payload, i.event_time FROM bets b JOIN instructions i '
+                              'USING(instruction_id) WHERE b.status=? AND b.worker_id IS ? AND b.account_fingerprint IS ?',
+                              (OPEN, *bound)).fetchall() if all(bound) else []
+            matches = []
+            for bet in bets:
+                terms = placed_terms(bet, bet)
+                terms['bet_reference'] = bet['bet_reference']
+                found = bet_matching.match(terms, my_bets)
                 if found['found'] and found['status'] in SETTLED_STATES:
-                    self.p.store.upsert_bet(db, bet['instruction_id'], status=found['status'], returns=found['returns'],
-                                            settled_at=iso(self.p.clock()))
-                    updated.append(dict(instruction_id=bet['instruction_id'], status=found['status'], returns=found['returns']))
-            self._complete(rec, 'SETTLED' if updated else 'NO_CHANGE', dict(updated=updated), db)
+                    matches.append((bet, found))
+                elif found.get('confidence') == 'AMBIGUOUS':
+                    ambiguous.append(dict(instruction_id=bet['instruction_id'], reason=found.get('ambiguity')))
+            claims = {}
+            for bet, found in matches:
+                claims.setdefault(found['card_key'], []).append(bet['instruction_id'])
+            for bet, found in matches:
+                if len(claims[found['card_key']]) > 1:
+                    # One card, several open bets with the same terms: which bet it settles is not proven.
+                    ambiguous.append(dict(instruction_id=bet['instruction_id'], reason=f"card claimed by {claims[found['card_key']]}"))
+                    continue
+                self.p.store.upsert_bet(db, bet['instruction_id'], status=found['status'], returns=found['returns'],
+                                        settled_at=iso(self.p.clock()))
+                updated.append(dict(instruction_id=bet['instruction_id'], status=found['status'], returns=found['returns']))
+            for item in ambiguous:
+                self.p.store.audit(db, 'SETTLEMENT_AMBIGUOUS', item, item['instruction_id'])
+            self._complete(rec, 'SETTLED' if updated else 'NO_CHANGE', dict(updated=updated, ambiguous=ambiguous,
+                                                                          account=bound[1], worker=bound[0]), db)

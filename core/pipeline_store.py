@@ -119,6 +119,7 @@ CREATE TABLE IF NOT EXISTS bets (
     requested_line TEXT, requested_odds TEXT, requested_stake TEXT,
     verified_line TEXT, verified_odds TEXT, verified_stake TEXT,
     actual_line TEXT, actual_odds TEXT, actual_stake TEXT, terms_provenance TEXT,
+    account_fingerprint TEXT, worker_id TEXT, binding_source TEXT,
     updated_at TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS reconciliations (
@@ -129,7 +130,8 @@ CREATE TABLE IF NOT EXISTS reconciliations (
     view TEXT NOT NULL,
     attempt INTEGER NOT NULL,
     requested_at TEXT NOT NULL,
-    submitted_at TEXT, completed_at TEXT, outcome TEXT, detail TEXT
+    submitted_at TEXT, completed_at TEXT, outcome TEXT, detail TEXT,
+    account_fingerprint TEXT, worker_id TEXT
 );
 CREATE TABLE IF NOT EXISTS controls (
     key TEXT PRIMARY KEY, value TEXT NOT NULL, updated_at TEXT NOT NULL, updated_by TEXT
@@ -231,8 +233,28 @@ class Store:
             present = {r[1] for r in db.execute('PRAGMA table_info(bets)')}
             with db:
                 for c in ('requested_line','requested_odds','requested_stake','verified_line','verified_odds','verified_stake',
-                          'actual_line','actual_odds','actual_stake','terms_provenance'):
+                          'actual_line','actual_odds','actual_stake','terms_provenance',
+                          'account_fingerprint','worker_id','binding_source'):
                     if c not in present: db.execute(f'ALTER TABLE bets ADD COLUMN {c} TEXT')
+                # Account binding (27 Sep 2026 cross-layer audit P1-3): a bet is reconciled only on the account/worker
+                # that placed it. Backfill from the automatic-approval decision, which recorded both; bets without such
+                # evidence (manual approvals of 24 Sep) stay unbound and are never reconciled on an assumed account.
+                for b in db.execute("SELECT instruction_id FROM bets WHERE account_fingerprint IS NULL").fetchall():
+                    a = db.execute("SELECT detail FROM audit_events WHERE instruction_id=? AND kind='AUTO_APPROVED' "
+                                   "ORDER BY id DESC LIMIT 1", (b[0],)).fetchone()
+                    try:
+                        d = json.loads(a[0]) if a and a[0] else {}
+                    except ValueError:
+                        d = {}
+                    account, worker = d.get('account'), (d.get('worker') or {}).get('worker_id')
+                    if account and worker:
+                        db.execute("UPDATE bets SET account_fingerprint=?, worker_id=?, binding_source=? WHERE instruction_id=?",
+                                   (account, worker, 'backfill: AUTO_APPROVED audit', b[0]))
+            if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='reconciliations'").fetchone():
+                present = {r[1] for r in db.execute('PRAGMA table_info(reconciliations)')}
+                with db:
+                    for c in ('account_fingerprint', 'worker_id'):
+                        if c not in present: db.execute(f'ALTER TABLE reconciliations ADD COLUMN {c} TEXT')
 
     @staticmethod
     def _migrate_v7(db):
