@@ -1,0 +1,137 @@
+{
+ "case": "search",
+ "payload": {
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "kickoff_utc": "2026-09-27T15:30",
+  "competition": "Super Cup",
+  "country": "Poland",
+  "period": "FULL_GAME",
+  "query": "Legia Warszawa||Zielona Gora",
+  "stake": "0.10",
+  "action": "ADAPTER_WORKFLOW",
+  "execution_mode": "hold",
+  "timeout_ms": 240000,
+  "minimum_price": "1.01",
+  "instruction_id": "mx-search-150634",
+  "market": "TOTALS",
+  "side": "UNDER",
+  "line": "163",
+  "max_line_deterioration": "1.0"
+ },
+ "paused": "PAUSED",
+ "hold": {
+  "status": "FAIL",
+  "stage": "WRONG_EVENT",
+  "detail": "No fixture pairing for 'Legia Warszawa' vs 'Zielona Gora'",
+  "route": "search",
+  "verdict": null,
+  "fixture": null,
+  "selection": {},
+  "context": null,
+  "wall": 68.8,
+  "identity": null,
+  "stages": [
+   [
+    "SPORTS_HOME",
+    0.0
+   ],
+   [
+    "OPEN_HOME",
+    4.36
+   ],
+   [
+    "SESSION_CHECK",
+    0.78
+   ],
+   [
+    "OPEN_HOME",
+    10.42
+   ],
+   [
+    "OPEN_SEARCH",
+    0.01
+   ],
+   [
+    "SPORTS_CONTEXT",
+    0.51
+   ],
+   [
+    "OPEN_SEARCH",
+    2.65
+   ],
+   [
+    "ENTER_QUERY",
+    0.03
+   ],
+   [
+    "FOCUS",
+    0.01
+   ],
+   [
+    "ENTER_QUERY",
+    7.97
+   ],
+   [
+    "QUERY_VERIFY",
+    1.82
+   ],
+   [
+    "RESULTS_WAIT",
+    5.93
+   ],
+   [
+    "ENTER_QUERY",
+    7.49
+   ],
+   [
+    "QUERY_VERIFY",
+    1.84
+   ],
+   [
+    "RESULTS_WAIT",
+    2.95
+   ],
+   [
+    "ENTER_QUERY",
+    6.35
+   ],
+   [
+    "QUERY_VERIFY",
+    1.83
+   ],
+   [
+    "RESULTS_WAIT",
+    3.13
+   ],
+   [
+    "ENTER_QUERY",
+    7.32
+   ],
+   [
+    "QUERY_VERIFY",
+    1.86
+   ],
+   [
+    "RESULTS_WAIT",
+    0.94
+   ]
+  ],
+  "place_bet_target": null,
+  "stake_check": null
+ },
+ "reset": {
+  "status": "PASS",
+  "detail": {
+   "tapped": false,
+   "detail": "No safe reset control visible"
+  }
+ },
+ "resumed": "RESUMED",
+ "phone_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.30-ops"
+ }
+}

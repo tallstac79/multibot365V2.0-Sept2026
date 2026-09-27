@@ -1819,7 +1819,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
         // Read 2 is a plain re-read (a slip still rendering after Done / a single bad frame); read 3 is Tesseract's
         // enhanced per-word pass (3x, contrast), the second engine's opinion: real slips where the plain read missed
         // "1.83" and read "£0.18" as "£0118" (Berck v Pays Salonais). The checks themselves never change.
-        CompletableFuture<VisualScreen> frame = attempt == 1 ? ui.capture(label) : attempt == 2 ? ui.capture(label + "_reread") : ui.captureEnhanced(label + "_enhanced");
+        CompletableFuture<VisualScreen> frame = attempt == 1 ? ui.capture(label).thenCompose(s -> keypadSettled(s, label, 0))
+                : attempt == 2 ? ui.capture(label + "_reread") : ui.captureEnhanced(label + "_enhanced");
         return frame.thenCompose(s -> {
             try {
                 checks.accept(s, attempt > 2);   // true = enhanced re-read frame
@@ -1898,7 +1899,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 ? CompletableFuture.completedFuture(lastFinal)
                 : ui.delay(400).thenCompose(v -> ui.capture("complete_execution_pre"));
         if (lastFinal != null) ui.put("prepare_frame", "reused verified final frame");
-        return frame.thenAccept(s -> {
+        return frame.thenCompose(s -> keypadSettled(s, "complete_execution_pre", 0)).thenAccept(s -> {
             detectBetslipFaults(s);
             require(!PlacementClassifier.multipleSelections(texts(s)), "BETSLIP_NOT_SINGLE",
                     "Betslip shows more than one selection before Place Bet");
@@ -1986,7 +1987,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
         if (preparedPlaceBetBounds == null || preparedPlaceBetBounds.isEmpty())
             return VisualSession.failed("TARGET_NOT_FOUND", "Place Bet was not prepared with the instruction's minimum price");
         android.graphics.Rect tap = new android.graphics.Rect(preparedPlaceBetBounds);
-        return ui.capture("place_bet_pre_dispatch").thenCompose(s -> {
+        return ui.capture("place_bet_pre_dispatch").thenCompose(s -> keypadSettled(s, "place_bet_pre_dispatch", 0)).thenCompose(s -> {
             detectBetslipFaults(s);
             require(!PlacementClassifier.multipleSelections(texts(s)), "BETSLIP_NOT_SINGLE", "Betslip not a single before Place Bet");
             boolean priceOk = visible(s, selection.price) || fractionalVisible(s, selection.price);
@@ -2344,6 +2345,15 @@ final class Bet365LiveAdapter implements SiteAdapter {
             }
         }
         return best;
+    }
+
+    /** Bet365 slides the stake keypad away after "Done" (~0.3 s): a frame caught mid-animation still reads the digit grid
+     *  and "Remember Stake"/"Done" (27 Sep 2026 Legia Warsaw moneyline hold, s006_final). Such a frame is re-captured (at
+     *  most 3 times, 0.7 s apart); a keypad that really stays open is still refused by placeBetTap. Never taps anything. */
+    private CompletableFuture<VisualScreen> keypadSettled(VisualScreen s, String label, int tries) {
+        if (tries >= 3 || !PlaceBetTarget.keypadOpen(wordsOf(s))) return CompletableFuture.completedFuture(s);
+        ui.put("keypad_settle_" + label, tries + 1);
+        return ui.delay(700).thenCompose(v -> ui.capture(label + "_keypad_settle")).thenCompose(n -> keypadSettled(n, label, tries + 1));
     }
 
     /** The verified Place Bet tap box on THIS frame (PlaceBetTarget: the "Place"/"Bet" word boxes, clear of the stake

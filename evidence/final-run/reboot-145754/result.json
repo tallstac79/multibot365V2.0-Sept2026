@@ -1,0 +1,58 @@
+{
+ "pause": "PAUSED",
+ "paused_at": "2026-09-27T13:57:55Z",
+ "boot_before": "f081d0e5-030e-4c04-8474-919074aa4cb3",
+ "reboot_at": "2026-09-27T13:58:01Z",
+ "boot_completed_s": 41.5,
+ "boot_after": "e042dfe3-f289-49c9-8661-6cac17e26d25",
+ "coordinator_recovered_s": 60.0,
+ "health_after_boot": {
+  "healthy": true,
+  "state": "IDLE",
+  "app_version": "0.9.30-ops",
+  "version_code": 113,
+  "worker_id": "w-d131ef8769de",
+  "account_fingerprint": "1457f6e497f3"
+ },
+ "session_checks": [
+  {
+   "instruction_id": "reboot-session-145855-0",
+   "since_reboot_s": 91.6,
+   "status": "FAIL",
+   "stage": "LOGIN_FAILED",
+   "detail": "Bet365 session state unclear: no account, login or challenge markers on screen"
+  },
+  {
+   "instruction_id": "reboot-session-145927-1",
+   "since_reboot_s": 137.9,
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "SESSION_AUTHENTICATED"
+  }
+ ],
+ "duplicate_resubmit": {
+  "instruction_id": "fbhold-TOTALS-144907",
+  "http": 409,
+  "response": {
+   "status": "FAIL",
+   "stage": "DUPLICATE",
+   "detail": "Instruction ID has already been accepted; no action repeated",
+   "duplicate": null
+  }
+ },
+ "phone_after_duplicate": {
+  "state": "IDLE",
+  "current": null
+ },
+ "backend_view": {
+  "sessions": [
+   "AUTHENTICATED"
+  ],
+  "devices": [
+   "ONLINE"
+  ],
+  "phone_app_version": "0.9.30-ops"
+ },
+ "resume": "RESUMED",
+ "resumed_at": "2026-09-27T14:00:18Z"
+}

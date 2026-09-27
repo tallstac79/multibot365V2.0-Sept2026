@@ -1,0 +1,85 @@
+{
+ "case": "wrong",
+ "payload": {
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172633/D19/E26837198/F19/I0/",
+  "kickoff_utc": "2026-09-27T15:30",
+  "competition": "Super Cup",
+  "country": "Poland",
+  "period": "FULL_GAME",
+  "query": "Tecza Leszno||azs uniwersytet gdansk",
+  "stake": "0.10",
+  "action": "ADAPTER_WORKFLOW",
+  "execution_mode": "hold",
+  "timeout_ms": 240000,
+  "minimum_price": "1.01",
+  "instruction_id": "mx-wrong-151301",
+  "market": "TOTALS",
+  "side": "UNDER",
+  "line": "163",
+  "max_line_deterioration": "1.0"
+ },
+ "paused": "PAUSED",
+ "hold": {
+  "status": "FAIL",
+  "stage": "WRONG_EVENT",
+  "detail": "Event link shows 'Legia Warsaw v Zielona Gora'; alert says 'Tecza Leszno v azs uniwersytet gdansk': 'Tecza Leszno' is not 'Legia Warsaw' (different name 0.00: no shared distinctive token ([tecza, leszno] unexplained))",
+  "route": "event_link",
+  "verdict": "MISMATCH",
+  "fixture": null,
+  "selection": {},
+  "context": null,
+  "wall": 6.2,
+  "identity": {
+   "event_id_match": true,
+   "event_anchor": "page opened from the alert's own Bet365 event link",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "country_prefixed",
+   "competing_event": "none: a single event page reached through the alert's own link",
+   "home_similarity": {
+    "feed": "Tecza Leszno",
+    "bookmaker": "Legia Warsaw",
+    "level": "NONE",
+    "kind": "none",
+    "score": 0,
+    "note": "different name 0.00: no shared distinctive token ([tecza, leszno] unexplained)"
+   },
+   "away_similarity": {
+    "feed": "azs uniwersytet gdansk",
+    "bookmaker": "Zielona Gora",
+    "level": "NONE",
+    "kind": "none",
+    "score": 0,
+    "note": "different name 0.00: no shared distinctive token ([zielona, gora] unexplained)"
+   },
+   "protected_markers": "agree",
+   "orientation": "not established",
+   "policy": "different_team",
+   "verdict": "MISMATCH"
+  },
+  "stages": [
+   [
+    "OPEN_HOME",
+    5.39
+   ]
+  ],
+  "place_bet_target": null,
+  "stake_check": null
+ },
+ "reset": {
+  "status": "PASS",
+  "detail": {
+   "tapped": false,
+   "detail": "No safe reset control visible"
+  }
+ },
+ "resumed": "RESUMED",
+ "phone_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.31-ops"
+ }
+}

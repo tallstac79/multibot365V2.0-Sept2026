@@ -48,6 +48,15 @@ public class PlaceBetTargetTest {
         assertFalse(PlaceBetTarget.changeNotice(StakePadTest.load("placebet_ossese_final_20260927.txt")));
     }
 
+    /** Keypad caught mid-close after Done (Legia Warsaw moneyline hold): still reads as open, so the adapter re-captures
+     *  (keypadSettled) instead of tapping over it; the button words are still located for the settled frame. */
+    @Test public void keypadClosingFrameStillReadsOpen() throws Exception {
+        List<GameLinesParser.Word> words = StakePadTest.load("placebet_legia_keypad_closing_20260927.txt");
+        assertTrue(PlaceBetTarget.keypadOpen(words));
+        assertNotNull(PlaceBetTarget.locate(words));
+        assertFalse(PlaceBetTarget.changeNotice(words));
+    }
+
     @Test public void failsClosedWithoutBothWords() {
         assertNull(PlaceBetTarget.locate(Arrays.asList(w("Stake", 20, 1320, 69, 1335), w("Place", 477, 1324, 550, 1346))));
         assertNull(PlaceBetTarget.locate(Arrays.asList(w("Place", 477, 1324, 550, 1346), w("Bet", 560, 1500, 604, 1520))));   // different rows
