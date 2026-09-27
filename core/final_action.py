@@ -165,7 +165,7 @@ class FinalAction:
         if stake > money(self.s.max_stake_per_bet):
             return f'LIMIT: stake {stake} above per-bet cap {self.s.max_stake_per_bet}'
         today = self.exposure_today(db)
-        if today['bets'] + 1 > self.s.max_bets_per_day:
+        if self.s.max_bets_per_day is not None and today['bets'] + 1 > self.s.max_bets_per_day:
             return f"LIMIT: {today['bets']} bets already today (max {self.s.max_bets_per_day})"
         if today['stake'] + stake > money(self.s.max_daily_stake):
             return f"LIMIT: daily stake {today['stake'] + stake} would exceed {self.s.max_daily_stake}"

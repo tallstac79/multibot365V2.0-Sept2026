@@ -77,7 +77,7 @@ class Settings:
     # A verified hold is consumed by its final action only while fresh (the phone enforces 120 s itself).
     hold_max_age_seconds: int = 115
     max_stake_per_bet: str = '1.00'
-    max_bets_per_day: int = 5
+    max_bets_per_day: int = None   # no daily bet-count cap (operator, 27 Sep 2026); stake/loss caps still apply
     max_daily_stake: str = '5.00'
     max_daily_loss: str = '5.00'
     reconcile_delay_seconds: int = 15
