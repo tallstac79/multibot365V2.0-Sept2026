@@ -259,6 +259,32 @@ final class EventIdentity {
         return null;
     }
 
+    private static Set<String> affixesOf(String normalised) {
+        Set<String> out = new HashSet<>();
+        for (String t : normalised.split(" ")) if (AFFIX.contains(t)) out.add(t);
+        return out;
+    }
+
+    /** t == the initial(s) of 1..2 consecutive unused distinctive tokens of l followed by a club affix the other name carries:
+     *  "AFC Malmo" / "Ariana FC Malmo" (Eskilsminne v AFC Malmo, 27 Sep 2026). Returns the run of tokens explained, or null. */
+    private static int[] initialAffixRun(List<String> l, boolean[] used, Set<String> dl, String t, Set<String> affixes) {
+        if (t.length() < 3 || t.length() > 5 || !t.matches("[a-z]+")) return null;
+        for (String affix : affixes) {
+            int lead = t.length() - affix.length();
+            if (!t.endsWith(affix) || lead < 1 || lead > 2) continue;
+            String prefix = t.substring(0, lead);
+            for (int start = 0; start + prefix.length() <= l.size(); start++) {
+                boolean ok = true;
+                for (int k = 0; k < prefix.length(); k++) {
+                    int idx = start + k;
+                    if (used[idx] || !dl.contains(l.get(idx)) || l.get(idx).charAt(0) != prefix.charAt(k)) { ok = false; break; }
+                }
+                if (ok) return new int[] {start, start + prefix.length() - 1};
+            }
+        }
+        return null;
+    }
+
     /** t (2..4 letters) == the initials of 2..4 consecutive unused tokens of l; returns the run or null. */
     private static int[] initialsRun(List<String> l, boolean[] used, String t) {
         if (t.length() < 2 || t.length() > 4 || !t.matches("[a-z]+")) return null;
@@ -291,6 +317,7 @@ final class EventIdentity {
         boolean familyConflict = !fa.isEmpty() && !fb.isEmpty() && !fa.containsAll(fb) && !fb.containsAll(fa);
         boolean feedIsShort = da.size() <= db.size();
         List<String> s = feedIsShort ? a : b, l = feedIsShort ? b : a;
+        Set<String> affixL = affixesOf(feedIsShort ? normBook : normFeed);   // club affixes the longer name carries ("Ariana FC Malmo")
         Set<String> ds = new HashSet<>(feedIsShort ? da : db), dl = new HashSet<>(feedIsShort ? db : da);
         boolean[] usedS = new boolean[s.size()], usedL = new boolean[l.size()];
         List<String> shared = new ArrayList<>(), unexplained = new ArrayList<>();
@@ -317,6 +344,8 @@ final class EventIdentity {
             j = -1;
             for (int k = 0; k < l.size() && j < 0; k++) if (!usedL[k] && dl.contains(l.get(k)) && abbreviation(t, l.get(k))) j = k;
             if (j >= 0) { usedL[j] = true; abbrev++; shared.add(t); continue; }
+            int[] ia = initialAffixRun(l, usedL, dl, t, affixL);
+            if (ia != null) { for (int k = ia[0]; k <= ia[1]; k++) usedL[k] = true; abbrev++; shared.add(t); continue; }
             j = -1; double best = 0;
             for (int k = 0; k < l.size(); k++) if (!usedL[k] && dl.contains(l.get(k))) { double r = stem(t, l.get(k)); if (r > best) { best = r; j = k; } }
             if (j >= 0) { usedL[j] = true; fuzzy = Math.min(fuzzy, best); stemmed = true; shared.add(t); continue; }
@@ -488,6 +517,11 @@ final class EventIdentity {
         // The feed labels the top Japanese division "B League" (B2/B3 are labelled "B2 League"/"B3 League"); Bet365 heads
         // it "Japan B League 1" (Kyoto v Shiga 25 Sep, Saga v Hiroshima 25 Sep, Utsunomiya v Yokohama 27 Sep)
         COMPETITION_ALIASES.put("japan|b league", "japan b league 1");
+        // Operator-approved 2026-09-27 (narrow: sport-independent key of country|feed label -> exact page header key)
+        // basketball: CB San Pablo Burgos v Baskonia, feed "ACB" (Spain), page "Spain Liga ACB" (live alert 10:15Z)
+        COMPETITION_ALIASES.put("spain|acb", "spain liga acb");
+        // football: Vihiga Queens FC (W) v Ulinzi Starlets (W), feed "Premier League Women" (Kenya), page "Kenya League Women"
+        COMPETITION_ALIASES.put("kenya|premier league women", "kenya league women");
     }
     /** Governing bodies Bet365 prefixes to a competition the feed names without one ("FIBA Intercontinental Cup"). */
     private static final List<String> BODY_PREFIXES = Arrays.asList("fiba", "fifa", "uefa", "concacaf", "conmebol", "afc", "caf");

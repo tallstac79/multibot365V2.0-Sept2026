@@ -59,6 +59,13 @@ public class CompetitionMatchTest {
         assertEquals("sweden division 1 norra", EventIdentity.competitionKey("Sweden 1.div Norra 27 Sep 12:00"));
         assertEquals("country_prefixed", EventIdentity.competitionMatchKind("Division 1 Norra", "Sweden", "Sweden 1.div Norra 27 Sep 12:00"));
         assertFalse(EventIdentity.competitionMatches("Division 1 Sodra", "Sweden", "Sweden 1.div Norra 27 Sep 12:00"));
+        // operator-approved narrow mappings (27 Sep 2026)
+        assertTrue(EventIdentity.competitionMatchKind("ACB", "Spain", "Spain Liga ACB 27 Sep 12:30").startsWith("approved_mapping"));
+        assertFalse(EventIdentity.competitionMatches("ACB", "Argentina", "Spain Liga ACB 27 Sep 12:30"));
+        assertFalse(EventIdentity.competitionMatches("ACB", "Spain", "Spain Liga Endesa 27 Sep 12:30"));
+        assertTrue(EventIdentity.competitionMatchKind("Premier League Women", "Kenya", "Kenya League Women 27 Sep 11:00").startsWith("approved_mapping"));
+        assertFalse(EventIdentity.competitionMatches("Premier League Women", "Kenya", "Kenya Premier League 27 Sep 11:00"));
+        assertFalse(EventIdentity.competitionMatches("Premier League Women", "Uganda", "Kenya League Women 27 Sep 11:00"));
         assertTrue(EventIdentity.competitionMatchKind("", "Mexico", "Mexico Liga ABE").startsWith("unknown"));
         assertTrue(EventIdentity.competitionMatchKind("Liga ABE", "Mexico", "Mexico LNBP").startsWith("mismatch"));
     }

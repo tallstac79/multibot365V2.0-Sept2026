@@ -1329,8 +1329,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
             }
             int[] strip = FootballMarkets.tabStrip(wordsOf(s), true);
             require(strip != null, "EVENT_NOT_VERIFIED", "Football market tab strip not visible");
-            require(attempt < 2, "EVENT_NOT_VERIFIED", "Football market tab '" + prefix + "' not found on the tab strip");
-            return ui.swipeHorizontal(strip[0], 640, 160, 350).thenCompose(v -> ui.delay(700)).thenCompose(v -> footballOpenTab(prefix, attempt + 1));
+            require(attempt < 3, "EVENT_NOT_VERIFIED", "Football market tab '" + prefix + "' not found on the tab strip");
+            // Drag the strip from its last visible label leftwards (a drag started on the bell at the right edge did not scroll it:
+            // Eskilsminne v Ariana FC Malmo, 27 Sep 2026). Slower than a fling so Chrome treats it as a scroll of the strip.
+            int fromX = Math.max(300, Math.min(strip[2] - 30, 560)) - attempt * 60;
+            return ui.swipeHorizontal(strip[0], fromX, 90, 650).thenCompose(v -> ui.delay(900)).thenCompose(v -> footballOpenTab(prefix, attempt + 1));
         });
     }
 

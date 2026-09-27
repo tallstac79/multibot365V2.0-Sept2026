@@ -125,6 +125,20 @@ public class FootballMarketsTest {
         assertNull(FootballMarkets.tab(words, "goals"));
     }
 
+    @Test public void initialPlusClubAffixAbbreviation() {
+        // Live 27 Sep 2026 10:40Z: feed "Eskilsminne v AFC Malmo", Bet365 "Eskilsminne IF v Ariana FC Malmo"
+        EventIdentity.Side s = EventIdentity.matchSide("AFC Malmo", "Ariana FC Malmo", Collections.emptyMap());
+        assertEquals(s.note, EventIdentity.Level.VARIANT, s.level);
+        assertEquals("abbreviation", s.kind);
+        EventIdentity.Result r = EventIdentity.resolveVerified(new EventIdentity.Event("football", "Eskilsminne", "AFC Malmo", "27 Sep 12:00", "Division 1 Sodra", false),
+                new EventIdentity.Event("football", "Eskilsminne IF", "Ariana FC Malmo", "27 Sep 12:00", "Sweden 1.div Sodra 27 Sep 12:00", true), Collections.emptyMap(), false, "Sweden");
+        assertEquals(r.reason, EventIdentity.Verdict.HIGH_CONFIDENCE_EVENT_MATCH, r.verdict);
+        // the initial must belong to the other name's own token, and the affix must be there
+        assertEquals(EventIdentity.Level.WEAK, EventIdentity.matchSide("AFC Malmo", "Bogus FC Malmo", Collections.emptyMap()).level);
+        assertEquals(EventIdentity.Level.WEAK, EventIdentity.matchSide("AFC Malmo", "Ariana Malmo", Collections.emptyMap()).level);
+        assertEquals(EventIdentity.Level.NONE, EventIdentity.matchSide("AFC Malmo", "Ariana FC Lund", Collections.emptyMap()).level);
+    }
+
     @Test public void competitionAgeMarkerIsSuppliedLikeTheWomensMarker() {
         // JaPS U21 v PPJ U21 (Finland U21 League, 27 Sep 2026): the feed names carry no U21, Bet365 appends the competition's own marker
         assertEquals("[u21]", EventIdentity.competitionMarkers("U21 League").toString());

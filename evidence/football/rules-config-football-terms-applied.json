@@ -1,0 +1,84 @@
+{
+ "applied_at": "2026-09-27T10:45:19+00:00",
+ "before": {
+  "markets": {
+   "1X2": {
+    "enabled": true,
+    "stake": null,
+    "minimum_ev": null,
+    "allowed_slippage": null,
+    "min_price": null,
+    "max_price": null,
+    "max_odds_deterioration": null,
+    "max_line_deterioration": null,
+    "max_net_payout_deterioration_percent": null,
+    "max_line_deterioration_percent": null
+   },
+   "SPREAD": {
+    "enabled": true,
+    "stake": null,
+    "minimum_ev": null,
+    "allowed_slippage": null,
+    "min_price": null,
+    "max_price": null,
+    "max_odds_deterioration": null,
+    "max_line_deterioration": null,
+    "max_net_payout_deterioration_percent": null,
+    "max_line_deterioration_percent": null
+   },
+   "TOTALS": {
+    "enabled": true,
+    "stake": null,
+    "minimum_ev": null,
+    "allowed_slippage": null,
+    "min_price": null,
+    "max_price": null,
+    "max_odds_deterioration": null,
+    "max_line_deterioration": null,
+    "max_net_payout_deterioration_percent": null,
+    "max_line_deterioration_percent": null
+   }
+  }
+ },
+ "after": {
+  "markets": {
+   "1X2": {
+    "enabled": false,
+    "stake": null,
+    "minimum_ev": null,
+    "allowed_slippage": null,
+    "min_price": null,
+    "max_price": null,
+    "max_odds_deterioration": null,
+    "max_line_deterioration": null,
+    "max_net_payout_deterioration_percent": 10,
+    "max_line_deterioration_percent": null
+   },
+   "SPREAD": {
+    "enabled": false,
+    "stake": null,
+    "minimum_ev": null,
+    "allowed_slippage": null,
+    "min_price": null,
+    "max_price": null,
+    "max_odds_deterioration": null,
+    "max_line_deterioration": 0.25,
+    "max_net_payout_deterioration_percent": 10,
+    "max_line_deterioration_percent": null
+   },
+   "TOTALS": {
+    "enabled": false,
+    "stake": null,
+    "minimum_ev": null,
+    "allowed_slippage": null,
+    "min_price": null,
+    "max_price": null,
+    "max_odds_deterioration": null,
+    "max_line_deterioration": 0.25,
+    "max_net_payout_deterioration_percent": 10,
+    "max_line_deterioration_percent": null
+   }
+  }
+ },
+ "note": "Operator-approved football execution terms applied 27 Sep 2026: 10% net-payout price deterioration on all football markets, 0.25-goal line cap on SPREAD/TOTALS, none on 1X2; markets disabled as a guard until the three non-final proofs are green"
+}
