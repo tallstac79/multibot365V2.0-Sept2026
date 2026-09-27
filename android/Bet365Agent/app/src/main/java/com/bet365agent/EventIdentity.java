@@ -532,6 +532,15 @@ final class EventIdentity {
         if (fc.isEmpty() || pc.isEmpty()) return "unknown (feed '" + fc + "', page '" + pc + "')";
         if (fc.equals(pc)) return "equal";
         if (!ck.isEmpty() && pc.equals(ck + " " + fc)) return "country_prefixed";
+        // The feed names the parent competition, Bet365 adds its regional group: feed "Division 2" (Sweden), page
+        // "Sweden 2.div Norrland" (Lucksta IF v Taftea IK, 27 Sep 2026). One or two plain words may follow; never a
+        // protected marker (women, U21, reserves ...) or a number, which would name a different competition.
+        if (!ck.isEmpty() && pc.startsWith(ck + " " + fc + " ")) {
+            String[] group = pc.substring((ck + " " + fc + " ").length()).split(" ");
+            boolean plain = group.length >= 1 && group.length <= 2;
+            for (String g : group) if (g.isEmpty() || !g.matches("[a-z]+") || markerToken(g) || GENERIC.contains(g)) plain = false;
+            if (plain) return "country_prefixed_group (" + String.join(" ", group) + ")";
+        }
         for (String body : BODY_PREFIXES) if (pc.equals(body + " " + fc)) return "body_prefixed (" + body + ")";
         String approved = ck.isEmpty() ? null : COMPETITION_ALIASES.get(ck + "|" + fc);
         if (approved != null && approved.equals(pc)) return "approved_mapping (" + ck + "|" + fc + " -> " + pc + ")";

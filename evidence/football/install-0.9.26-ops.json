@@ -1,6 +1,6 @@
 {
  "before": {
-  "at": "2026-09-27T10:34:35Z",
+  "at": "2026-09-27T10:51:00Z",
   "app_version": "0.9.26-ops",
   "state": "IDLE",
   "local_execution": {
@@ -13,10 +13,10 @@
   },
   "session": "AUTHENTICATED"
  },
- "paused_at": "2026-09-27T10:34:36Z",
- "installed_at": "2026-09-27T10:34:43Z",
+ "paused_at": "2026-09-27T10:51:00Z",
+ "installed_at": "2026-09-27T10:51:08Z",
  "after_install": {
-  "at": "2026-09-27T10:34:48Z",
+  "at": "2026-09-27T10:51:14Z",
   "app_version": "0.9.26-ops",
   "version_code": 109,
   "state": "IDLE",
@@ -33,29 +33,29 @@
   },
   "session": {
    "state": "UNKNOWN",
-   "observed_at_ms": 1790505285638,
+   "observed_at_ms": 1790506270351,
    "detail": "not checked yet",
    "refresh_count": 1,
-   "last_refresh_at_ms": 1790505285665,
+   "last_refresh_at_ms": 1790506270385,
    "last_refresh_outcome": "probe started"
   }
  },
  "session_check": {
-  "status": "FAIL",
-  "stage": "LOGIN_FAILED",
-  "detail": "Bet365 session state unclear: no account, login or challenge markers on screen",
-  "duration_ms": 13427,
-  "run_id": "c_v6DJuxlSMCz8oqO0pZ1fcU4OPlCu0tVugaWAjWgHwkY"
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "SESSION_AUTHENTICATED",
+  "duration_ms": 6333,
+  "run_id": "c_elRHwemeGFmAiI6CxHBHhDOnP7iLkIx60c7NE2gAYMg"
  },
  "after_session_check": {
-  "at": "2026-09-27T10:35:05Z",
+  "at": "2026-09-27T10:51:22Z",
   "state": "IDLE",
   "session": {
-   "state": "LOGGED_OUT",
-   "observed_at_ms": 1790505302450,
-   "detail": "LOGIN_FAILED; automatic recovery did not authenticate",
+   "state": "AUTHENTICATED",
+   "observed_at_ms": 1790506280431,
+   "detail": "workflow",
    "refresh_count": 1,
-   "last_refresh_at_ms": 1790505285665,
+   "last_refresh_at_ms": 1790506270385,
    "last_refresh_outcome": "probe started"
   },
   "local_execution": {
@@ -68,5 +68,5 @@
   },
   "app_version": "0.9.26-ops"
  },
- "resumed_at": "2026-09-27T10:35:05Z"
+ "resumed_at": "2026-09-27T10:51:22Z"
 }

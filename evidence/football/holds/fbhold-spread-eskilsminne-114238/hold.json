@@ -1,0 +1,681 @@
+{
+ "alert": {
+  "intake_id": 2219,
+  "message_id": "71339",
+  "source_timestamp": "2026-09-27T10:40:17+00:00",
+  "text": "New odds update on Pinnacle\n\nFootball - Sweden - Division 1 Sodra\n[Eskilsminne vs AFC Malmo](https://oddshub.io/football/sweden-ettan-sodra/68311868?market=Spread)\n27.09.2026 12:00\n\nSpread (0.25) (alt. line)\n1.574⬇️ (1.675) - 2.320⬆️ (2.180)\n\n🟢 Opening (0.25)\n1.925 - 1.819\n\n[Bet365 (Spread 0.25)](https://bet365.com/#/AC/B1/C1/D8/E201693820/F3/G40/)\n**2.03** - 1.78\n\n🎯 EV: 122.94%"
+ },
+ "interpretation": {
+  "verdict": {
+   "profile": "oddsnotifier_football_two_sided_v1",
+   "in_play_link": false,
+   "signal_basis": "price_same_line",
+   "line_candidate": null,
+   "price_candidate": "HOME",
+   "verdict": "EXECUTABLE_HOME",
+   "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 HOME 2.03 vs Pinnacle 1.574"
+  },
+  "target_side": "HOME",
+  "target_line": "0.25",
+  "alert_price": "2.03",
+  "reference": {
+   "bookmaker": "Pinnacle",
+   "line": "0.25",
+   "odds": "1.574",
+   "fair_odds": null
+  },
+  "sharp_signal": {
+   "source": "pinnacle_opening_to_current",
+   "side": "HOME",
+   "status": "IDENTIFIED",
+   "reason": "Pinnacle line 0.25 unchanged; HOME 1.925 -> 1.574 shortens, AWAY 1.819 -> 2.320 does not",
+   "basis": "price_same_line",
+   "opening_line": "0.25",
+   "current_line": "0.25",
+   "change": "-0.351",
+   "magnitude": "0.351",
+   "magnitude_units": "decimal_odds",
+   "direction": "SHORTENED",
+   "opening_prices": {
+    "HOME": "1.925",
+    "AWAY": "1.819"
+   },
+   "current_prices": {
+    "HOME": "1.574",
+    "AWAY": "2.320"
+   },
+   "changes_by_side": {
+    "HOME": "-0.351",
+    "AWAY": "0.501"
+   },
+   "line_candidate": null,
+   "price_candidate": "HOME",
+   "highlight_agrees": true,
+   "recent_line_reversal": false
+  },
+  "bet_quality": "CLEAR_VALUE_SIGNAL"
+ },
+ "rules": {
+  "decision": "ACCEPT",
+  "reason": "All rules passed",
+  "instruction": {
+   "instruction_id": "fbhold-spread-eskilsminne-114238",
+   "sport": "football",
+   "competition": "Division 1 Sodra",
+   "fixture": "Eskilsminne vs AFC Malmo",
+   "home": "Eskilsminne",
+   "away": "AFC Malmo",
+   "event_time_local": "2026-09-27T12:00",
+   "event_timezone": "Europe/London",
+   "event_start_utc": "2026-09-27T11:00:00+00:00",
+   "market": "SPREAD",
+   "side": "HOME",
+   "selection_name": "Eskilsminne",
+   "line": "0.25",
+   "alternate_line": {
+    "current": true,
+    "opening": false,
+    "comparison": false
+   },
+   "alert_price": "2.03",
+   "minimum_price": "1.93",
+   "stake": "0.10",
+   "max_odds_deterioration": null,
+   "max_net_payout_deterioration_percent": 10,
+   "max_line_deterioration": "0.25",
+   "configured_line_absolute_cap": 0.25,
+   "max_line_deterioration_percent": null,
+   "displayed_ev_percent": "122.94",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "signal_reason": "CLEAR_VALUE_SIGNAL",
+   "line_advantage": "0.00",
+   "target_source": "pinnacle_opening_to_current",
+   "implied_target": null,
+   "sharp_signal": {
+    "source": "pinnacle_opening_to_current",
+    "side": "HOME",
+    "status": "IDENTIFIED",
+    "reason": "Pinnacle line 0.25 unchanged; HOME 1.925 -> 1.574 shortens, AWAY 1.819 -> 2.320 does not",
+    "basis": "price_same_line",
+    "opening_line": "0.25",
+    "current_line": "0.25",
+    "change": "-0.351",
+    "magnitude": "0.351",
+    "magnitude_units": "decimal_odds",
+    "direction": "SHORTENED",
+    "opening_prices": {
+     "HOME": "1.925",
+     "AWAY": "1.819"
+    },
+    "current_prices": {
+     "HOME": "1.574",
+     "AWAY": "2.320"
+    },
+    "changes_by_side": {
+     "HOME": "-0.351",
+     "AWAY": "0.501"
+    },
+    "line_candidate": null,
+    "price_candidate": "HOME"
+   },
+   "highlighted_side": "HOME",
+   "ev_status": "SUPPLIED_EQUAL_LINE",
+   "line_quality": "EQUAL",
+   "price_quality": "FAVOURABLE",
+   "reference_odds": "1.574"
+  }
+ },
+ "payload": {
+  "instruction_id": "fbhold-spread-eskilsminne-114238",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Eskilsminne||AFC Malmo",
+  "sport": "football",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "0.25",
+  "minimum_price": "1.93",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693820/F3/G40/",
+  "kickoff_utc": "2026-09-27T11:00",
+  "competition": "Division 1 Sodra",
+  "period": "FULL_GAME",
+  "country": "Sweden",
+  "max_line_deterioration": "0.25"
+ },
+ "paused_at": "2026-09-27T10:42:41Z",
+ "result": {
+  "instruction_id": "fbhold-spread-eskilsminne-114238",
+  "status": "FAIL",
+  "stage": "EVENT_NOT_VERIFIED",
+  "detail": "Football market tab 'asia' not found on the tab strip",
+  "duration_ms": 11759,
+  "progress": {
+   "stage": "MARKET_NAV",
+   "elapsed_ms": 11423,
+   "last_progress_at_ms": 1790505767058,
+   "instruction_id": "fbhold-spread-eskilsminne-114238",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790505761653
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 26,
+     "at_ms": 1790505761666
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 36,
+     "at_ms": 1790505761683,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 36,
+      "start_ts_ms": 1790505761669,
+      "end_elapsed_ms": 5398,
+      "end_ts_ms": 1790505767030,
+      "duration_ms": 5362,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3473,
+     "at_ms": 1790505761683
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3728,
+     "at_ms": 1790505761683
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4661,
+     "at_ms": 1790505761683
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5275,
+     "at_ms": 1790505761683
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5398,
+     "at_ms": 1790505767058,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 5398,
+      "start_ts_ms": 1790505767030,
+      "end_elapsed_ms": 11423,
+      "end_ts_ms": 1790505773054,
+      "duration_ms": 6025,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5427,
+     "at_ms": 1790505767058
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 6013,
+     "at_ms": 1790505767058
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 6070,
+     "at_ms": 1790505767058
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 6722,
+     "at_ms": 1790505767058
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 8443,
+     "at_ms": 1790505767058
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 8992,
+     "at_ms": 1790505767058
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 10711,
+     "at_ms": 1790505767058
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 11350,
+     "at_ms": 1790505767058
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 11423,
+     "at_ms": 1790505767058
+    }
+   ]
+  },
+  "device_stage": "MARKET_NAV",
+  "execution_count": 1,
+  "run_id": "c_TzMaB86c3UVqz2GwmPw0QuWGhagIbj4Nmnw3n41Vix0",
+  "fixture_name": "Eskilsminne IF v Ariana FC Malmo",
+  "home": "Eskilsminne IF",
+  "away": "Ariana FC Malmo",
+  "competition": "Sweden 1.div Södra • 27 Sep 12:00",
+  "verification_detail": "Football market tab 'asia' not found on the tab strip",
+  "event_context": {
+   "home": "Eskilsminne IF",
+   "away": "Ariana FC Malmo",
+   "competition": "sweden division 1 sodra",
+   "kickoff_utc": "2026-09-27T11:00",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 36,
+    "start_ts_ms": 1790505761669,
+    "end_elapsed_ms": 5398,
+    "end_ts_ms": 1790505767030,
+    "duration_ms": 5362,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5398,
+    "start_ts_ms": 1790505767030,
+    "end_elapsed_ms": 11423,
+    "end_ts_ms": 1790505773054,
+    "duration_ms": 6025,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "alias_candidate": {
+   "feed_home": "Eskilsminne",
+   "feed_away": "AFC Malmo",
+   "bet365_home": "Eskilsminne IF",
+   "bet365_away": "Ariana FC Malmo",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693820/F3/G40/",
+   "kickoff_shown": "27 Sep 12:00",
+   "kickoff_expected": "27 Sep 12:00",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "AFC Malmo": "Ariana FC Malmo"
+   },
+   "sport": "football"
+  },
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 12:00 + both names compatible: 'Eskilsminne' ~ 'Eskilsminne IF' (token_containment 1.00); 'AFC Malmo' ~ 'Ariana FC Malmo' (abbreviation 0.85)",
+   "home": {
+    "feed": "Eskilsminne",
+    "bookmaker": "Eskilsminne IF",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [eskilsminne] contained; extra [if]",
+    "alias_safe": false
+   },
+   "away": {
+    "feed": "AFC Malmo",
+    "bookmaker": "Ariana FC Malmo",
+    "level": "VARIANT",
+    "kind": "abbreviation",
+    "score": 0.85,
+    "note": "naming variant 0.85: abbreviated tokens [afc, malmo]",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Eskilsminne",
+     "bookmaker": "Eskilsminne IF",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [eskilsminne] contained; extra [if]"
+    },
+    "away_similarity": {
+     "feed": "AFC Malmo",
+     "bookmaker": "Ariana FC Malmo",
+     "level": "VARIANT",
+     "kind": "abbreviation",
+     "score": 0.85,
+     "note": "naming variant 0.85: abbreviated tokens [afc, malmo]"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "event_evidence_both_variants",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+   }
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693820/F3/G40/"
+ },
+ "run": {
+  "run_id": "c_TzMaB86c3UVqz2GwmPw0QuWGhagIbj4Nmnw3n41Vix0",
+  "adapter": "live_bet365",
+  "status": "EVENT_NOT_VERIFIED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790505761631,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790505761632
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 26,
+    "wall_ts_ms": 1790505761658
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 36,
+    "wall_ts_ms": 1790505761669
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3473,
+    "wall_ts_ms": 1790505765107
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3728,
+    "wall_ts_ms": 1790505765360
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 4661,
+    "wall_ts_ms": 1790505766296
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5275,
+    "wall_ts_ms": 1790505766907
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 5398,
+    "wall_ts_ms": 1790505767030
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 5427,
+    "wall_ts_ms": 1790505767059
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 6013,
+    "wall_ts_ms": 1790505767644
+   },
+   {
+    "phase": "CAPTURE_tabs_asia",
+    "elapsed_ms": 6070,
+    "wall_ts_ms": 1790505767702
+   },
+   {
+    "phase": "CAPTURED_tabs_asia",
+    "elapsed_ms": 6722,
+    "wall_ts_ms": 1790505768354
+   },
+   {
+    "effect": "swipe_horizontal",
+    "y": 421,
+    "from_x": 640,
+    "to_x": 160,
+    "elapsed_ms": 6782
+   },
+   {
+    "phase": "CAPTURE_tabs_asia_1",
+    "elapsed_ms": 8443,
+    "wall_ts_ms": 1790505770075
+   },
+   {
+    "phase": "CAPTURED_tabs_asia_1",
+    "elapsed_ms": 8992,
+    "wall_ts_ms": 1790505770624
+   },
+   {
+    "effect": "swipe_horizontal",
+    "y": 421,
+    "from_x": 640,
+    "to_x": 160,
+    "elapsed_ms": 9051
+   },
+   {
+    "phase": "CAPTURE_tabs_asia_2",
+    "elapsed_ms": 10711,
+    "wall_ts_ms": 1790505772343
+   },
+   {
+    "phase": "CAPTURED_tabs_asia_2",
+    "elapsed_ms": 11350,
+    "wall_ts_ms": 1790505772982
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 11423,
+    "wall_ts_ms": 1790505773054
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png",
+   "s003_markets.png",
+   "s004_tabs_asia.png",
+   "s005_tabs_asia_1.png",
+   "s006_tabs_asia_2.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 36,
+    "start_ts_ms": 1790505761669,
+    "end_elapsed_ms": 5398,
+    "end_ts_ms": 1790505767030,
+    "duration_ms": 5362,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5398,
+    "start_ts_ms": 1790505767030,
+    "end_elapsed_ms": 11423,
+    "end_ts_ms": 1790505773054,
+    "duration_ms": 6025,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Eskilsminne",
+  "identity_home": "Eskilsminne",
+  "expected_away": "AFC Malmo",
+  "identity_away": "AFC Malmo",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693820/F3/G40/",
+  "current_stage": "MARKET_NAV",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Sweden 1.div Södra • 27 Sep 12:00",
+   "Eskilsminne IF v Ariana FC Malmo v",
+   "Popular Bet Builder Result Corners Goals"
+  ],
+  "competition_check": {
+   "feed": "Division 1 Sodra",
+   "country": "Sweden",
+   "page": "Sweden 1.div Södra • 27 Sep 12:00",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 12:00 + both names compatible: 'Eskilsminne' ~ 'Eskilsminne IF' (token_containment 1.00); 'AFC Malmo' ~ 'Ariana FC Malmo' (abbreviation 0.85)",
+   "home": {
+    "feed": "Eskilsminne",
+    "bookmaker": "Eskilsminne IF",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [eskilsminne] contained; extra [if]",
+    "alias_safe": false
+   },
+   "away": {
+    "feed": "AFC Malmo",
+    "bookmaker": "Ariana FC Malmo",
+    "level": "VARIANT",
+    "kind": "abbreviation",
+    "score": 0.85,
+    "note": "naming variant 0.85: abbreviated tokens [afc, malmo]",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Eskilsminne",
+     "bookmaker": "Eskilsminne IF",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [eskilsminne] contained; extra [if]"
+    },
+    "away_similarity": {
+     "feed": "AFC Malmo",
+     "bookmaker": "Ariana FC Malmo",
+     "level": "VARIANT",
+     "kind": "abbreviation",
+     "score": 0.85,
+     "note": "naming variant 0.85: abbreviated tokens [afc, malmo]"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "event_evidence_both_variants",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+   }
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "route": "event_link",
+  "alias_candidate": {
+   "feed_home": "Eskilsminne",
+   "feed_away": "AFC Malmo",
+   "bet365_home": "Eskilsminne IF",
+   "bet365_away": "Ariana FC Malmo",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693820/F3/G40/",
+   "kickoff_shown": "27 Sep 12:00",
+   "kickoff_expected": "27 Sep 12:00",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "AFC Malmo": "Ariana FC Malmo"
+   },
+   "sport": "football"
+  },
+  "kickoff_verified": "27 Sep 12:00",
+  "verified_fixture": {
+   "code": "bdaa5426",
+   "home": "Eskilsminne IF",
+   "away": "Ariana FC Malmo",
+   "fixture_name": "Eskilsminne IF v Ariana FC Malmo",
+   "exact_fixture_text": "Home Eskilsminne IF\nAway Ariana FC Malmo",
+   "competition": "Sweden 1.div Södra • 27 Sep 12:00",
+   "bounds": [
+    35,
+    268,
+    606,
+    436
+   ]
+  },
+  "fixture_home": "Eskilsminne IF",
+  "fixture_away": "Ariana FC Malmo",
+  "identity_verified_home": "Eskilsminne",
+  "identity_verified_away": "AFC Malmo",
+  "event_verified": true,
+  "event_context": {
+   "home": "Eskilsminne IF",
+   "away": "Ariana FC Malmo",
+   "competition": "sweden division 1 sodra",
+   "kickoff_utc": "2026-09-27T11:00",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "bdaa5426",
+   "home": "Eskilsminne IF",
+   "away": "Ariana FC Malmo",
+   "fixture_name": "Eskilsminne IF v Ariana FC Malmo",
+   "exact_fixture_text": "Home Eskilsminne IF\nAway Ariana FC Malmo",
+   "competition": "Sweden 1.div Södra • 27 Sep 12:00",
+   "bounds": [
+    35,
+    268,
+    606,
+    436
+   ]
+  },
+  "football_market_reads": [
+   {
+    "view": "popular",
+    "cells": [
+     "MONEYLINE/HOME/NONE@2.35 (Eskilsminne IF)",
+     "MONEYLINE/DRAW/NONE@3.70 (Draw)",
+     "MONEYLINE/AWAY/NONE@2.40 (Ariana FC Malmo)",
+     "TOTAL/OVER/2.5@1.50 (Over)",
+     "TOTAL/UNDER/2.5@2.50 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": true,
+    "goals_over_under": true,
+    "asian_handicap": false,
+    "goal_line": false
+   }
+  ],
+  "detail": "Football market tab 'asia' not found on the tab strip",
+  "duration_ms": 11423
+ },
+ "wall": 12.7,
+ "frames": [
+  "s001_event_direct.png",
+  "s002_event_direct.png",
+  "s003_markets.png",
+  "s004_tabs_asia.png",
+  "s005_tabs_asia_1.png",
+  "s006_tabs_asia_2.png"
+ ],
+ "resumed_at": "2026-09-27T10:42:55Z",
+ "health_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.26-ops"
+ }
+}

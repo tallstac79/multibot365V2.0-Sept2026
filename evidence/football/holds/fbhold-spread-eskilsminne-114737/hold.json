@@ -1,0 +1,1177 @@
+{
+ "alert": {
+  "intake_id": 2219,
+  "message_id": "71339",
+  "source_timestamp": "2026-09-27T10:40:17+00:00",
+  "text": "New odds update on Pinnacle\n\nFootball - Sweden - Division 1 Sodra\n[Eskilsminne vs AFC Malmo](https://oddshub.io/football/sweden-ettan-sodra/68311868?market=Spread)\n27.09.2026 12:00\n\nSpread (0.25) (alt. line)\n1.574⬇️ (1.675) - 2.320⬆️ (2.180)\n\n🟢 Opening (0.25)\n1.925 - 1.819\n\n[Bet365 (Spread 0.25)](https://bet365.com/#/AC/B1/C1/D8/E201693820/F3/G40/)\n**2.03** - 1.78\n\n🎯 EV: 122.94%"
+ },
+ "interpretation": {
+  "verdict": {
+   "profile": "oddsnotifier_football_two_sided_v1",
+   "in_play_link": false,
+   "signal_basis": "price_same_line",
+   "line_candidate": null,
+   "price_candidate": "HOME",
+   "verdict": "EXECUTABLE_HOME",
+   "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 HOME 2.03 vs Pinnacle 1.574"
+  },
+  "target_side": "HOME",
+  "target_line": "0.25",
+  "alert_price": "2.03",
+  "reference": {
+   "bookmaker": "Pinnacle",
+   "line": "0.25",
+   "odds": "1.574",
+   "fair_odds": null
+  },
+  "sharp_signal": {
+   "source": "pinnacle_opening_to_current",
+   "side": "HOME",
+   "status": "IDENTIFIED",
+   "reason": "Pinnacle line 0.25 unchanged; HOME 1.925 -> 1.574 shortens, AWAY 1.819 -> 2.320 does not",
+   "basis": "price_same_line",
+   "opening_line": "0.25",
+   "current_line": "0.25",
+   "change": "-0.351",
+   "magnitude": "0.351",
+   "magnitude_units": "decimal_odds",
+   "direction": "SHORTENED",
+   "opening_prices": {
+    "HOME": "1.925",
+    "AWAY": "1.819"
+   },
+   "current_prices": {
+    "HOME": "1.574",
+    "AWAY": "2.320"
+   },
+   "changes_by_side": {
+    "HOME": "-0.351",
+    "AWAY": "0.501"
+   },
+   "line_candidate": null,
+   "price_candidate": "HOME",
+   "highlight_agrees": true,
+   "recent_line_reversal": false
+  },
+  "bet_quality": "CLEAR_VALUE_SIGNAL"
+ },
+ "rules": {
+  "decision": "ACCEPT",
+  "reason": "All rules passed",
+  "instruction": {
+   "instruction_id": "fbhold-spread-eskilsminne-114737",
+   "sport": "football",
+   "competition": "Division 1 Sodra",
+   "fixture": "Eskilsminne vs AFC Malmo",
+   "home": "Eskilsminne",
+   "away": "AFC Malmo",
+   "event_time_local": "2026-09-27T12:00",
+   "event_timezone": "Europe/London",
+   "event_start_utc": "2026-09-27T11:00:00+00:00",
+   "market": "SPREAD",
+   "side": "HOME",
+   "selection_name": "Eskilsminne",
+   "line": "0.25",
+   "alternate_line": {
+    "current": true,
+    "opening": false,
+    "comparison": false
+   },
+   "alert_price": "2.03",
+   "minimum_price": "1.93",
+   "stake": "0.10",
+   "max_odds_deterioration": null,
+   "max_net_payout_deterioration_percent": 10,
+   "max_line_deterioration": "0.25",
+   "configured_line_absolute_cap": 0.25,
+   "max_line_deterioration_percent": null,
+   "displayed_ev_percent": "122.94",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "signal_reason": "CLEAR_VALUE_SIGNAL",
+   "line_advantage": "0.00",
+   "target_source": "pinnacle_opening_to_current",
+   "implied_target": null,
+   "sharp_signal": {
+    "source": "pinnacle_opening_to_current",
+    "side": "HOME",
+    "status": "IDENTIFIED",
+    "reason": "Pinnacle line 0.25 unchanged; HOME 1.925 -> 1.574 shortens, AWAY 1.819 -> 2.320 does not",
+    "basis": "price_same_line",
+    "opening_line": "0.25",
+    "current_line": "0.25",
+    "change": "-0.351",
+    "magnitude": "0.351",
+    "magnitude_units": "decimal_odds",
+    "direction": "SHORTENED",
+    "opening_prices": {
+     "HOME": "1.925",
+     "AWAY": "1.819"
+    },
+    "current_prices": {
+     "HOME": "1.574",
+     "AWAY": "2.320"
+    },
+    "changes_by_side": {
+     "HOME": "-0.351",
+     "AWAY": "0.501"
+    },
+    "line_candidate": null,
+    "price_candidate": "HOME"
+   },
+   "highlighted_side": "HOME",
+   "ev_status": "SUPPLIED_EQUAL_LINE",
+   "line_quality": "EQUAL",
+   "price_quality": "FAVOURABLE",
+   "reference_odds": "1.574"
+  }
+ },
+ "payload": {
+  "instruction_id": "fbhold-spread-eskilsminne-114737",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Eskilsminne||AFC Malmo",
+  "sport": "football",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "0.25",
+  "minimum_price": "1.93",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693820/F3/G40/",
+  "kickoff_utc": "2026-09-27T11:00",
+  "competition": "Division 1 Sodra",
+  "period": "FULL_GAME",
+  "country": "Sweden",
+  "max_line_deterioration": "0.25"
+ },
+ "paused_at": "2026-09-27T10:47:40Z",
+ "result": {
+  "instruction_id": "fbhold-spread-eskilsminne-114737",
+  "status": "FAIL",
+  "stage": "BELOW_MINIMUM",
+  "detail": "Visible price 1.900 is below minimum 1.93",
+  "duration_ms": 18908,
+  "progress": {
+   "stage": "CLEAR_BETSLIP",
+   "elapsed_ms": 18727,
+   "last_progress_at_ms": 1790506078560,
+   "instruction_id": "fbhold-spread-eskilsminne-114737",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790506060425
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 30,
+     "at_ms": 1790506060437
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 39,
+     "at_ms": 1790506060449,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 39,
+      "start_ts_ms": 1790506060439,
+      "end_elapsed_ms": 4193,
+      "end_ts_ms": 1790506064592,
+      "duration_ms": 4154,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3477,
+     "at_ms": 1790506060449
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4062,
+     "at_ms": 1790506060449
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4193,
+     "at_ms": 1790506064616,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 4193,
+      "start_ts_ms": 1790506064592,
+      "end_elapsed_ms": 17994,
+      "end_ts_ms": 1790506078394,
+      "duration_ms": 13801,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4218,
+     "at_ms": 1790506064616
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4838,
+     "at_ms": 1790506064616
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4915,
+     "at_ms": 1790506064616
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5550,
+     "at_ms": 1790506064616
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 7777,
+     "at_ms": 1790506064616
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 8373,
+     "at_ms": 1790506064616
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 8427,
+     "at_ms": 1790506064616
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 10472,
+     "at_ms": 1790506064616
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 11163,
+     "at_ms": 1790506064616
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 13133,
+     "at_ms": 1790506064616
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 13689,
+     "at_ms": 1790506064616
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 17281,
+     "at_ms": 1790506064616
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 17847,
+     "at_ms": 1790506064616
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 17994,
+     "at_ms": 1790506078431,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 17994,
+      "start_ts_ms": 1790506078394,
+      "end_elapsed_ms": 18033,
+      "end_ts_ms": 1790506078433,
+      "duration_ms": 39,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 18033,
+     "at_ms": 1790506078473,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 18033,
+      "start_ts_ms": 1790506078433,
+      "end_elapsed_ms": 18075,
+      "end_ts_ms": 1790506078475,
+      "duration_ms": 42,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 18075,
+     "at_ms": 1790506078516,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 18075,
+      "start_ts_ms": 1790506078475,
+      "end_elapsed_ms": 18727,
+      "end_ts_ms": 1790506079127,
+      "duration_ms": 652,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 18118,
+     "at_ms": 1790506078560
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 18163,
+     "at_ms": 1790506078560
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 18666,
+     "at_ms": 1790506078560
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 18727,
+     "at_ms": 1790506078560
+    }
+   ]
+  },
+  "device_stage": "CLEAR_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_bruOjY5WPXEw0vLNM6xY53kmiKFFpLUDLbjQgNaYE34",
+  "fixture_name": "Eskilsminne IF v Ariana FC Malmo",
+  "home": "Eskilsminne IF",
+  "away": "Ariana FC Malmo",
+  "competition": "Sweden 1.div Södra 27 Sep 12:00",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "0.0",
+   "price": "1.900",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Eskilsminne IF",
+   "bounds": [
+    188,
+    657,
+    272,
+    702
+   ]
+  },
+  "verification_detail": "Visible price 1.900 is below minimum 1.93",
+  "betslip_clear": {
+   "tapped": false,
+   "detail": "No remove icon on a selection line"
+  },
+  "event_context": {
+   "home": "Eskilsminne IF",
+   "away": "Ariana FC Malmo",
+   "competition": "sweden division 1 sodra",
+   "kickoff_utc": "2026-09-27T11:00",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790506078432,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "0.0",
+     "price": "1.900",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Eskilsminne IF",
+     "bounds": [
+      188,
+      657,
+      272,
+      702
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790506078432,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "0.0",
+     "price": "1.900",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Eskilsminne IF",
+     "bounds": [
+      188,
+      657,
+      272,
+      702
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 39,
+    "start_ts_ms": 1790506060439,
+    "end_elapsed_ms": 4193,
+    "end_ts_ms": 1790506064592,
+    "duration_ms": 4154,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4193,
+    "start_ts_ms": 1790506064592,
+    "end_elapsed_ms": 17994,
+    "end_ts_ms": 1790506078394,
+    "duration_ms": 13801,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 17994,
+    "start_ts_ms": 1790506078394,
+    "end_elapsed_ms": 18033,
+    "end_ts_ms": 1790506078433,
+    "duration_ms": 39,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 18033,
+    "start_ts_ms": 1790506078433,
+    "end_elapsed_ms": 18075,
+    "end_ts_ms": 1790506078475,
+    "duration_ms": 42,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 18075,
+    "start_ts_ms": 1790506078475,
+    "end_elapsed_ms": 18727,
+    "end_ts_ms": 1790506079127,
+    "duration_ms": 652,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "alias_candidate": {
+   "feed_home": "Eskilsminne",
+   "feed_away": "AFC Malmo",
+   "bet365_home": "Eskilsminne IF",
+   "bet365_away": "Ariana FC Malmo",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693820/F3/G40/",
+   "kickoff_shown": "27 Sep 12:00",
+   "kickoff_expected": "27 Sep 12:00",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "AFC Malmo": "Ariana FC Malmo"
+   },
+   "sport": "football"
+  },
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 12:00 + both names compatible: 'Eskilsminne' ~ 'Eskilsminne IF' (token_containment 1.00); 'AFC Malmo' ~ 'Ariana FC Malmo' (abbreviation 0.85)",
+   "home": {
+    "feed": "Eskilsminne",
+    "bookmaker": "Eskilsminne IF",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [eskilsminne] contained; extra [if]",
+    "alias_safe": false
+   },
+   "away": {
+    "feed": "AFC Malmo",
+    "bookmaker": "Ariana FC Malmo",
+    "level": "VARIANT",
+    "kind": "abbreviation",
+    "score": 0.85,
+    "note": "naming variant 0.85: abbreviated tokens [afc, malmo]",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Eskilsminne",
+     "bookmaker": "Eskilsminne IF",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [eskilsminne] contained; extra [if]"
+    },
+    "away_similarity": {
+     "feed": "AFC Malmo",
+     "bookmaker": "Ariana FC Malmo",
+     "level": "VARIANT",
+     "kind": "abbreviation",
+     "score": 0.85,
+     "note": "naming variant 0.85: abbreviated tokens [afc, malmo]"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "event_evidence_both_variants",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+   }
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693820/F3/G40/"
+ },
+ "run": {
+  "run_id": "c_bruOjY5WPXEw0vLNM6xY53kmiKFFpLUDLbjQgNaYE34",
+  "adapter": "live_bet365",
+  "status": "BELOW_MINIMUM",
+  "phase": "FINISHED",
+  "started_at_ms": 1790506060400,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 1,
+    "wall_ts_ms": 1790506060400
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 30,
+    "wall_ts_ms": 1790506060430
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 39,
+    "wall_ts_ms": 1790506060439
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3477,
+    "wall_ts_ms": 1790506063877
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 4062,
+    "wall_ts_ms": 1790506064463
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 4193,
+    "wall_ts_ms": 1790506064592
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 4218,
+    "wall_ts_ms": 1790506064618
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 4838,
+    "wall_ts_ms": 1790506065240
+   },
+   {
+    "phase": "CAPTURE_tabs_asia",
+    "elapsed_ms": 4915,
+    "wall_ts_ms": 1790506065315
+   },
+   {
+    "phase": "CAPTURED_tabs_asia",
+    "elapsed_ms": 5550,
+    "wall_ts_ms": 1790506065950
+   },
+   {
+    "effect": "swipe_horizontal",
+    "y": 421,
+    "from_x": 554,
+    "to_x": 90,
+    "elapsed_ms": 5608
+   },
+   {
+    "phase": "CAPTURE_tabs_asia_1",
+    "elapsed_ms": 7777,
+    "wall_ts_ms": 1790506068179
+   },
+   {
+    "phase": "CAPTURED_tabs_asia_1",
+    "elapsed_ms": 8373,
+    "wall_ts_ms": 1790506068773
+   },
+   {
+    "effect": "gesture",
+    "target": "football tab Asian",
+    "bounds": [
+     497,
+     403,
+     564,
+     440
+    ],
+    "elapsed_ms": 8427
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8427,
+    "wall_ts_ms": 1790506068827
+   },
+   {
+    "phase": "CAPTURE_markets_asia",
+    "elapsed_ms": 10472,
+    "wall_ts_ms": 1790506070873
+   },
+   {
+    "phase": "CAPTURED_markets_asia",
+    "elapsed_ms": 11163,
+    "wall_ts_ms": 1790506071563
+   },
+   {
+    "effect": "swipe",
+    "x": 360,
+    "from_y": 1200,
+    "to_y": 600,
+    "elapsed_ms": 11218
+   },
+   {
+    "phase": "CAPTURE_markets_asia_scroll",
+    "elapsed_ms": 13133,
+    "wall_ts_ms": 1790506073535
+   },
+   {
+    "phase": "CAPTURED_markets_asia_scroll",
+    "elapsed_ms": 13689,
+    "wall_ts_ms": 1790506074089
+   },
+   {
+    "effect": "swipe",
+    "x": 360,
+    "from_y": 500,
+    "to_y": 1300,
+    "elapsed_ms": 13755
+   },
+   {
+    "effect": "swipe",
+    "x": 360,
+    "from_y": 1200,
+    "to_y": 600,
+    "elapsed_ms": 15363
+   },
+   {
+    "phase": "CAPTURE_markets_scroll",
+    "elapsed_ms": 17281,
+    "wall_ts_ms": 1790506077683
+   },
+   {
+    "phase": "CAPTURED_markets_scroll",
+    "elapsed_ms": 17847,
+    "wall_ts_ms": 1790506078248
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 17994,
+    "wall_ts_ms": 1790506078394
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 18033,
+    "wall_ts_ms": 1790506078433
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 18075,
+    "wall_ts_ms": 1790506078476
+   },
+   {
+    "phase": "CLEAR_BETSLIP",
+    "elapsed_ms": 18118,
+    "wall_ts_ms": 1790506078518
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_pre",
+    "elapsed_ms": 18163,
+    "wall_ts_ms": 1790506078563
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_pre",
+    "elapsed_ms": 18666,
+    "wall_ts_ms": 1790506079066
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 18727,
+    "wall_ts_ms": 1790506079127
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_markets.png",
+   "s003_tabs_asia.png",
+   "s004_tabs_asia_1.png",
+   "s005_markets_asia.png",
+   "s006_markets_asia_scroll.png",
+   "s007_markets_scroll.png",
+   "s008_clear_betslip_pre.png"
+  ],
+  "gesture_attempts": 1,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 39,
+    "start_ts_ms": 1790506060439,
+    "end_elapsed_ms": 4193,
+    "end_ts_ms": 1790506064592,
+    "duration_ms": 4154,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4193,
+    "start_ts_ms": 1790506064592,
+    "end_elapsed_ms": 17994,
+    "end_ts_ms": 1790506078394,
+    "duration_ms": 13801,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 17994,
+    "start_ts_ms": 1790506078394,
+    "end_elapsed_ms": 18033,
+    "end_ts_ms": 1790506078433,
+    "duration_ms": 39,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 18033,
+    "start_ts_ms": 1790506078433,
+    "end_elapsed_ms": 18075,
+    "end_ts_ms": 1790506078475,
+    "duration_ms": 42,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 18075,
+    "start_ts_ms": 1790506078475,
+    "end_elapsed_ms": 18727,
+    "end_ts_ms": 1790506079127,
+    "duration_ms": 652,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Eskilsminne",
+  "identity_home": "Eskilsminne",
+  "expected_away": "AFC Malmo",
+  "identity_away": "AFC Malmo",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693820/F3/G40/",
+  "current_stage": "READ_PRICE",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Sweden 1.div Södra 27 Sep 12:00",
+   "Eskilsminne IF v Ariana FC Malmo v",
+   "Popular Bet Builder Result CornerS Goals Half C"
+  ],
+  "competition_check": {
+   "feed": "Division 1 Sodra",
+   "country": "Sweden",
+   "page": "Sweden 1.div Södra 27 Sep 12:00",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 12:00 + both names compatible: 'Eskilsminne' ~ 'Eskilsminne IF' (token_containment 1.00); 'AFC Malmo' ~ 'Ariana FC Malmo' (abbreviation 0.85)",
+   "home": {
+    "feed": "Eskilsminne",
+    "bookmaker": "Eskilsminne IF",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [eskilsminne] contained; extra [if]",
+    "alias_safe": false
+   },
+   "away": {
+    "feed": "AFC Malmo",
+    "bookmaker": "Ariana FC Malmo",
+    "level": "VARIANT",
+    "kind": "abbreviation",
+    "score": 0.85,
+    "note": "naming variant 0.85: abbreviated tokens [afc, malmo]",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Eskilsminne",
+     "bookmaker": "Eskilsminne IF",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [eskilsminne] contained; extra [if]"
+    },
+    "away_similarity": {
+     "feed": "AFC Malmo",
+     "bookmaker": "Ariana FC Malmo",
+     "level": "VARIANT",
+     "kind": "abbreviation",
+     "score": 0.85,
+     "note": "naming variant 0.85: abbreviated tokens [afc, malmo]"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "event_evidence_both_variants",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+   }
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "route": "event_link",
+  "alias_candidate": {
+   "feed_home": "Eskilsminne",
+   "feed_away": "AFC Malmo",
+   "bet365_home": "Eskilsminne IF",
+   "bet365_away": "Ariana FC Malmo",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693820/F3/G40/",
+   "kickoff_shown": "27 Sep 12:00",
+   "kickoff_expected": "27 Sep 12:00",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "AFC Malmo": "Ariana FC Malmo"
+   },
+   "sport": "football"
+  },
+  "kickoff_verified": "27 Sep 12:00",
+  "verified_fixture": {
+   "code": "bdaa5426",
+   "home": "Eskilsminne IF",
+   "away": "Ariana FC Malmo",
+   "fixture_name": "Eskilsminne IF v Ariana FC Malmo",
+   "exact_fixture_text": "Home Eskilsminne IF\nAway Ariana FC Malmo",
+   "competition": "Sweden 1.div Södra 27 Sep 12:00",
+   "bounds": [
+    35,
+    265,
+    718,
+    436
+   ]
+  },
+  "fixture_home": "Eskilsminne IF",
+  "fixture_away": "Ariana FC Malmo",
+  "identity_verified_home": "Eskilsminne",
+  "identity_verified_away": "AFC Malmo",
+  "event_verified": true,
+  "event_context": {
+   "home": "Eskilsminne IF",
+   "away": "Ariana FC Malmo",
+   "competition": "sweden division 1 sodra",
+   "kickoff_utc": "2026-09-27T11:00",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "bdaa5426",
+   "home": "Eskilsminne IF",
+   "away": "Ariana FC Malmo",
+   "fixture_name": "Eskilsminne IF v Ariana FC Malmo",
+   "exact_fixture_text": "Home Eskilsminne IF\nAway Ariana FC Malmo",
+   "competition": "Sweden 1.div Södra 27 Sep 12:00",
+   "bounds": [
+    35,
+    265,
+    718,
+    436
+   ]
+  },
+  "football_market_reads": [
+   {
+    "view": "popular",
+    "cells": [
+     "MONEYLINE/HOME/NONE@2.37 (Eskilsminne IF)",
+     "MONEYLINE/DRAW/NONE@3.70 (Draw)",
+     "MONEYLINE/AWAY/NONE@2.37 (Ariana FC Malmo)",
+     "TOTAL/OVER/2.5@1.50 (Over)",
+     "TOTAL/UNDER/2.5@2.50 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": true,
+    "goals_over_under": true,
+    "asian_handicap": false,
+    "goal_line": false
+   },
+   {
+    "view": "asia",
+    "cells": [
+     "SPREAD/HOME/0.0@1.900 (Eskilsminne IF)",
+     "SPREAD/AWAY/0.0@1.900 (Ariana FC Malmo)",
+     "TOTAL/OVER/3.0@1.800 (Over)",
+     "TOTAL/UNDER/3.0@2.000 (Under)"
+    ],
+    "notes": [
+     "asian handicap: team header not read",
+     "goal_line: no Over/Under header"
+    ],
+    "full_time_result": false,
+    "goals_over_under": false,
+    "asian_handicap": true,
+    "goal_line": true
+   },
+   {
+    "view": "asia_scroll",
+    "cells": [],
+    "notes": [
+     "goal_line: no Over/Under header"
+    ],
+    "full_time_result": false,
+    "goals_over_under": false,
+    "asian_handicap": false,
+    "goal_line": true
+   },
+   {
+    "view": "scroll",
+    "cells": [],
+    "notes": [
+     "goal_line: no Over/Under header"
+    ],
+    "full_time_result": false,
+    "goals_over_under": false,
+    "asian_handicap": false,
+    "goal_line": true
+   }
+  ],
+  "football_tab_asia": {
+   "text": "Asian",
+   "bounds": [
+    497,
+    403,
+    564,
+    440
+   ]
+  },
+  "football_markets": [
+   {
+    "market": "SPREAD",
+    "selection_role": "HOME",
+    "selection_name": "Eskilsminne IF",
+    "price": "1.900",
+    "line": "0.0",
+    "bounds": [
+     188,
+     657,
+     272,
+     702
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "selection_role": "AWAY",
+    "selection_name": "Ariana FC Malmo",
+    "price": "1.900",
+    "line": "0.0",
+    "bounds": [
+     531,
+     661,
+     616,
+     702
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "price": "1.800",
+    "line": "3.0",
+    "bounds": [
+     274,
+     906,
+     360,
+     948
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "price": "2.000",
+    "line": "3.0",
+    "bounds": [
+     530,
+     908,
+     617,
+     949
+    ]
+   }
+  ],
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "0.0",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Eskilsminne IF",
+    "bounds": [
+     188,
+     657,
+     272,
+     702
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "0.0",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Ariana FC Malmo",
+    "bounds": [
+     531,
+     661,
+     616,
+     702
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "3.0",
+    "price": "1.800",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     274,
+     906,
+     360,
+     948
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "3.0",
+    "price": "2.000",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     530,
+     908,
+     617,
+     949
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790506078432,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "0.0",
+     "price": "1.900",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Eskilsminne IF",
+     "bounds": [
+      188,
+      657,
+      272,
+      702
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790506078432,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "0.0",
+     "price": "1.900",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Eskilsminne IF",
+     "bounds": [
+      188,
+      657,
+      272,
+      702
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "selection_role": "HOME",
+  "selection_name": "Eskilsminne IF",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "0.0",
+   "price": "1.900",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Eskilsminne IF",
+   "bounds": [
+    188,
+    657,
+    272,
+    702
+   ]
+  },
+  "betslip_clear": {
+   "tapped": false,
+   "detail": "No remove icon on a selection line"
+  },
+  "detail": "Visible price 1.900 is below minimum 1.93",
+  "duration_ms": 18727
+ },
+ "wall": 19.7,
+ "frames": [
+  "s001_event_direct.png",
+  "s002_markets.png",
+  "s003_tabs_asia.png",
+  "s004_tabs_asia_1.png",
+  "s005_markets_asia.png",
+  "s006_markets_asia_scroll.png",
+  "s007_markets_scroll.png",
+  "s008_clear_betslip_pre.png"
+ ],
+ "resumed_at": "2026-09-27T10:48:02Z",
+ "health_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.26-ops"
+ }
+}

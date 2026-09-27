@@ -1,0 +1,998 @@
+{
+ "alert": {
+  "intake_id": 2235,
+  "message_id": "71365",
+  "source_timestamp": "2026-09-27T10:49:16+00:00",
+  "text": "New odds update on Pinnacle\n\nFootball - Sweden - Division 2\n[Lucksta vs Taftea](https://oddshub.io/football/sweden-division-2-norrland-championship-round/72404436?market=ML)\n27.09.2026 12:00\n3.390⬆️ (3.190) - 3.900 (3.860) - 1.781⬇️ (1.854)\n\n🟢 Opening\n2.360 - 2.430\n\n[Bet365](https://www.bet365.com/#/AC/B1/C1/D8/E201816566/F3/I1/)\n2.35 - 3.80 - **2.35**\n\n🎯 EV: 123.39%"
+ },
+ "interpretation": {
+  "verdict": {
+   "profile": "oddsnotifier_football_1x2_v1",
+   "in_play_link": false,
+   "signal_basis": "price",
+   "draw_opening_supplied": false,
+   "verdict": "EXECUTABLE_AWAY",
+   "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 AWAY 2.35 vs Pinnacle 1.781"
+  },
+  "target_side": "AWAY",
+  "target_line": null,
+  "alert_price": "2.35",
+  "reference": {
+   "bookmaker": "Pinnacle",
+   "line": null,
+   "odds": "1.781",
+   "fair_odds": null
+  },
+  "sharp_signal": {
+   "source": "pinnacle_opening_to_current",
+   "side": "AWAY",
+   "status": "IDENTIFIED",
+   "reason": "Pinnacle AWAY opening 2.430 -> current 1.781 shortens; HOME 2.360 -> 3.390 does not shorten; draw opening not supplied, draw never a candidate",
+   "basis": "price",
+   "opening_line": null,
+   "current_line": null,
+   "change": "-0.649",
+   "magnitude": "0.649",
+   "magnitude_units": "decimal_odds",
+   "direction": "SHORTENED",
+   "opening_prices": {
+    "HOME": "2.360",
+    "AWAY": "2.430"
+   },
+   "current_prices": {
+    "HOME": "3.390",
+    "DRAW": "3.900",
+    "AWAY": "1.781"
+   },
+   "changes_by_side": {
+    "HOME": "1.030",
+    "AWAY": "-0.649"
+   },
+   "draw_opening_supplied": false,
+   "candidates": [
+    "HOME",
+    "AWAY"
+   ],
+   "opening_to_current_percent": "-26.70781893004115226337448560",
+   "highlight_agrees": true
+  },
+  "bet_quality": "CLEAR_VALUE_SIGNAL"
+ },
+ "rules": {
+  "decision": "ACCEPT",
+  "reason": "All rules passed",
+  "instruction": {
+   "instruction_id": "fbhold-1x2-lucksta-115123",
+   "sport": "football",
+   "competition": "Division 2",
+   "fixture": "Lucksta vs Taftea",
+   "home": "Lucksta",
+   "away": "Taftea",
+   "event_time_local": "2026-09-27T12:00",
+   "event_timezone": "Europe/London",
+   "event_start_utc": "2026-09-27T11:00:00+00:00",
+   "market": "1X2",
+   "side": "AWAY",
+   "selection_name": "Taftea",
+   "line": null,
+   "alternate_line": {
+    "current": false,
+    "opening": false,
+    "comparison": false
+   },
+   "alert_price": "2.35",
+   "minimum_price": "2.22",
+   "stake": "0.10",
+   "max_odds_deterioration": null,
+   "max_net_payout_deterioration_percent": 10,
+   "max_line_deterioration": null,
+   "configured_line_absolute_cap": null,
+   "max_line_deterioration_percent": null,
+   "displayed_ev_percent": "123.39",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "signal_reason": "CLEAR_VALUE_SIGNAL",
+   "line_advantage": null,
+   "target_source": "pinnacle_opening_to_current",
+   "implied_target": null,
+   "sharp_signal": {
+    "source": "pinnacle_opening_to_current",
+    "side": "AWAY",
+    "status": "IDENTIFIED",
+    "reason": "Pinnacle AWAY opening 2.430 -> current 1.781 shortens; HOME 2.360 -> 3.390 does not shorten; draw opening not supplied, draw never a candidate",
+    "basis": "price",
+    "opening_line": null,
+    "current_line": null,
+    "change": "-0.649",
+    "magnitude": "0.649",
+    "magnitude_units": "decimal_odds",
+    "direction": "SHORTENED",
+    "opening_prices": {
+     "HOME": "2.360",
+     "AWAY": "2.430"
+    },
+    "current_prices": {
+     "HOME": "3.390",
+     "DRAW": "3.900",
+     "AWAY": "1.781"
+    },
+    "changes_by_side": {
+     "HOME": "1.030",
+     "AWAY": "-0.649"
+    },
+    "draw_opening_supplied": false,
+    "candidates": [
+     "HOME",
+     "AWAY"
+    ],
+    "opening_to_current_percent": "-26.70781893004115226337448560"
+   },
+   "highlighted_side": "AWAY",
+   "ev_status": "SUPPLIED_EQUAL_LINE",
+   "line_quality": "EQUAL",
+   "price_quality": "FAVOURABLE",
+   "reference_odds": "1.781"
+  }
+ },
+ "payload": {
+  "instruction_id": "fbhold-1x2-lucksta-115123",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Lucksta||Taftea",
+  "sport": "football",
+  "market": "1X2",
+  "side": "AWAY",
+  "line": "",
+  "minimum_price": "2.22",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201816566/F3/I1/",
+  "kickoff_utc": "2026-09-27T11:00",
+  "competition": "Division 2",
+  "period": "FULL_GAME",
+  "country": "Sweden"
+ },
+ "paused_at": "2026-09-27T10:51:25Z",
+ "result": {
+  "instruction_id": "fbhold-1x2-lucksta-115123",
+  "status": "FAIL",
+  "stage": "BELOW_MINIMUM",
+  "detail": "Visible price 1.95 is below minimum 2.22",
+  "duration_ms": 7933,
+  "progress": {
+   "stage": "CLEAR_BETSLIP",
+   "elapsed_ms": 7593,
+   "last_progress_at_ms": 1790506292770,
+   "instruction_id": "fbhold-1x2-lucksta-115123",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790506285914
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 32,
+     "at_ms": 1790506285933
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 46,
+     "at_ms": 1790506285949,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 46,
+      "start_ts_ms": 1790506285935,
+      "end_elapsed_ms": 5976,
+      "end_ts_ms": 1790506291865,
+      "duration_ms": 5930,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3486,
+     "at_ms": 1790506285949
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4159,
+     "at_ms": 1790506285949
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5110,
+     "at_ms": 1790506285949
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5764,
+     "at_ms": 1790506285949
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5976,
+     "at_ms": 1790506291892,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 5976,
+      "start_ts_ms": 1790506291865,
+      "end_elapsed_ms": 6698,
+      "end_ts_ms": 1790506292587,
+      "duration_ms": 722,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 6004,
+     "at_ms": 1790506291892
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 6627,
+     "at_ms": 1790506291892
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 6698,
+     "at_ms": 1790506292626,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 6698,
+      "start_ts_ms": 1790506292587,
+      "end_elapsed_ms": 6739,
+      "end_ts_ms": 1790506292628,
+      "duration_ms": 41,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 6739,
+     "at_ms": 1790506292672,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 6739,
+      "start_ts_ms": 1790506292628,
+      "end_elapsed_ms": 6784,
+      "end_ts_ms": 1790506292673,
+      "duration_ms": 45,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 6784,
+     "at_ms": 1790506292719,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 6784,
+      "start_ts_ms": 1790506292673,
+      "end_elapsed_ms": 7593,
+      "end_ts_ms": 1790506293482,
+      "duration_ms": 809,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 6832,
+     "at_ms": 1790506292770
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 6884,
+     "at_ms": 1790506292770
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 7517,
+     "at_ms": 1790506292770
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 7593,
+     "at_ms": 1790506292770
+    }
+   ]
+  },
+  "device_stage": "CLEAR_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_xxzfdFil5TiN978_MAKZfxp3Oj8DmF0wO5M50lQKtk8",
+  "fixture_name": "Lucksta IF v Taftea IK",
+  "home": "Lucksta IF",
+  "away": "Taftea IK",
+  "competition": "Sweden 2.div Norrland • 27 Sep 12:00",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "NONE",
+   "price": "1.95",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Taftea IK",
+   "bounds": [
+    552,
+    625,
+    625,
+    666
+   ]
+  },
+  "verification_detail": "Visible price 1.95 is below minimum 2.22",
+  "betslip_clear": {
+   "tapped": false,
+   "detail": "No remove icon on a selection line"
+  },
+  "event_context": {
+   "home": "Lucksta IF",
+   "away": "Taftea IK",
+   "competition": "sweden division 2 norrland",
+   "kickoff_utc": "2026-09-27T11:00",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790506292626,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "1.95",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "Taftea IK",
+     "bounds": [
+      552,
+      625,
+      625,
+      666
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790506292627,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "1.95",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "Taftea IK",
+     "bounds": [
+      552,
+      625,
+      625,
+      666
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 46,
+    "start_ts_ms": 1790506285935,
+    "end_elapsed_ms": 5976,
+    "end_ts_ms": 1790506291865,
+    "duration_ms": 5930,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5976,
+    "start_ts_ms": 1790506291865,
+    "end_elapsed_ms": 6698,
+    "end_ts_ms": 1790506292587,
+    "duration_ms": 722,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 6698,
+    "start_ts_ms": 1790506292587,
+    "end_elapsed_ms": 6739,
+    "end_ts_ms": 1790506292628,
+    "duration_ms": 41,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 6739,
+    "start_ts_ms": 1790506292628,
+    "end_elapsed_ms": 6784,
+    "end_ts_ms": 1790506292673,
+    "duration_ms": 45,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 6784,
+    "start_ts_ms": 1790506292673,
+    "end_elapsed_ms": 7593,
+    "end_ts_ms": 1790506293482,
+    "duration_ms": 809,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 12:00 + both names compatible: 'Lucksta' ~ 'Lucksta IF' (token_containment 1.00); 'Taftea' ~ 'Taftea IK' (token_containment 1.00)",
+   "home": {
+    "feed": "Lucksta",
+    "bookmaker": "Lucksta IF",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [lucksta] contained; extra [if]",
+    "alias_safe": false
+   },
+   "away": {
+    "feed": "Taftea",
+    "bookmaker": "Taftea IK",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [taftea] contained; extra [ik]",
+    "alias_safe": false
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed_group (norrland)",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Lucksta",
+     "bookmaker": "Lucksta IF",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [lucksta] contained; extra [if]"
+    },
+    "away_similarity": {
+     "feed": "Taftea",
+     "bookmaker": "Taftea IK",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [taftea] contained; extra [ik]"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "event_evidence_both_variants",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+   }
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201816566/F3/I1/"
+ },
+ "run": {
+  "run_id": "c_xxzfdFil5TiN978_MAKZfxp3Oj8DmF0wO5M50lQKtk8",
+  "adapter": "live_bet365",
+  "status": "BELOW_MINIMUM",
+  "phase": "FINISHED",
+  "started_at_ms": 1790506285888,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790506285888
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 32,
+    "wall_ts_ms": 1790506285921
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 46,
+    "wall_ts_ms": 1790506285936
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3486,
+    "wall_ts_ms": 1790506289377
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 4159,
+    "wall_ts_ms": 1790506290048
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 5110,
+    "wall_ts_ms": 1790506291002
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5764,
+    "wall_ts_ms": 1790506291655
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 5976,
+    "wall_ts_ms": 1790506291865
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 6004,
+    "wall_ts_ms": 1790506291893
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 6627,
+    "wall_ts_ms": 1790506292516
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 6698,
+    "wall_ts_ms": 1790506292587
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 6739,
+    "wall_ts_ms": 1790506292628
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 6784,
+    "wall_ts_ms": 1790506292673
+   },
+   {
+    "phase": "CLEAR_BETSLIP",
+    "elapsed_ms": 6832,
+    "wall_ts_ms": 1790506292720
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_pre",
+    "elapsed_ms": 6884,
+    "wall_ts_ms": 1790506292772
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_pre",
+    "elapsed_ms": 7517,
+    "wall_ts_ms": 1790506293407
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 7593,
+    "wall_ts_ms": 1790506293482
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png",
+   "s003_markets.png",
+   "s004_clear_betslip_pre.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 46,
+    "start_ts_ms": 1790506285935,
+    "end_elapsed_ms": 5976,
+    "end_ts_ms": 1790506291865,
+    "duration_ms": 5930,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5976,
+    "start_ts_ms": 1790506291865,
+    "end_elapsed_ms": 6698,
+    "end_ts_ms": 1790506292587,
+    "duration_ms": 722,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 6698,
+    "start_ts_ms": 1790506292587,
+    "end_elapsed_ms": 6739,
+    "end_ts_ms": 1790506292628,
+    "duration_ms": 41,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 6739,
+    "start_ts_ms": 1790506292628,
+    "end_elapsed_ms": 6784,
+    "end_ts_ms": 1790506292673,
+    "duration_ms": 45,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 6784,
+    "start_ts_ms": 1790506292673,
+    "end_elapsed_ms": 7593,
+    "end_ts_ms": 1790506293482,
+    "duration_ms": 809,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Lucksta",
+  "identity_home": "Lucksta",
+  "expected_away": "Taftea",
+  "identity_away": "Taftea",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201816566/F3/I1/",
+  "current_stage": "READ_PRICE",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Sweden 2.div Norrland • 27 Sep 12:00",
+   "Lucksta IF v Täfteà IK v",
+   "Popular Bet Builder Result Goals Half Othe"
+  ],
+  "competition_check": {
+   "feed": "Division 2",
+   "country": "Sweden",
+   "page": "Sweden 2.div Norrland • 27 Sep 12:00",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 12:00 + both names compatible: 'Lucksta' ~ 'Lucksta IF' (token_containment 1.00); 'Taftea' ~ 'Taftea IK' (token_containment 1.00)",
+   "home": {
+    "feed": "Lucksta",
+    "bookmaker": "Lucksta IF",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [lucksta] contained; extra [if]",
+    "alias_safe": false
+   },
+   "away": {
+    "feed": "Taftea",
+    "bookmaker": "Taftea IK",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [taftea] contained; extra [ik]",
+    "alias_safe": false
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed_group (norrland)",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Lucksta",
+     "bookmaker": "Lucksta IF",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [lucksta] contained; extra [if]"
+    },
+    "away_similarity": {
+     "feed": "Taftea",
+     "bookmaker": "Taftea IK",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [taftea] contained; extra [ik]"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "event_evidence_both_variants",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+   }
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "route": "event_link",
+  "kickoff_verified": "27 Sep 12:00",
+  "verified_fixture": {
+   "code": "1d392b9d",
+   "home": "Lucksta IF",
+   "away": "Taftea IK",
+   "fixture_name": "Lucksta IF v Taftea IK",
+   "exact_fixture_text": "Home Lucksta IF\nAway Taftea IK",
+   "competition": "Sweden 2.div Norrland • 27 Sep 12:00",
+   "bounds": [
+    35,
+    268,
+    632,
+    436
+   ]
+  },
+  "fixture_home": "Lucksta IF",
+  "fixture_away": "Taftea IK",
+  "identity_verified_home": "Lucksta",
+  "identity_verified_away": "Taftea",
+  "event_verified": true,
+  "event_context": {
+   "home": "Lucksta IF",
+   "away": "Taftea IK",
+   "competition": "sweden division 2 norrland",
+   "kickoff_utc": "2026-09-27T11:00",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "1d392b9d",
+   "home": "Lucksta IF",
+   "away": "Taftea IK",
+   "fixture_name": "Lucksta IF v Taftea IK",
+   "exact_fixture_text": "Home Lucksta IF\nAway Taftea IK",
+   "competition": "Sweden 2.div Norrland • 27 Sep 12:00",
+   "bounds": [
+    35,
+    268,
+    632,
+    436
+   ]
+  },
+  "football_market_reads": [
+   {
+    "view": "popular",
+    "cells": [
+     "MONEYLINE/HOME/NONE@2.90 (Lucksta IF)",
+     "MONEYLINE/DRAW/NONE@3.90 (Draw)",
+     "MONEYLINE/AWAY/NONE@1.95 (Taftea IK)",
+     "TOTAL/OVER/2.5@1.33 (Over)",
+     "TOTAL/UNDER/2.5@3.25 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": true,
+    "goals_over_under": true,
+    "asian_handicap": false,
+    "goal_line": false
+   }
+  ],
+  "football_markets": [
+   {
+    "market": "MONEYLINE",
+    "selection_role": "HOME",
+    "selection_name": "Lucksta IF",
+    "price": "2.90",
+    "line": "NONE",
+    "bounds": [
+     96,
+     625,
+     169,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "price": "3.90",
+    "line": "NONE",
+    "bounds": [
+     324,
+     625,
+     396,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "selection_role": "AWAY",
+    "selection_name": "Taftea IK",
+    "price": "1.95",
+    "line": "NONE",
+    "bounds": [
+     552,
+     625,
+     625,
+     666
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "price": "1.33",
+    "line": "2.5",
+    "bounds": [
+     282,
+     962,
+     354,
+     1003
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "price": "3.25",
+    "line": "2.5",
+    "bounds": [
+     537,
+     962,
+     610,
+     1003
+    ]
+   }
+  ],
+  "markets": [
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "2.90",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Lucksta IF",
+    "bounds": [
+     96,
+     625,
+     169,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "NONE",
+    "price": "3.90",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     324,
+     625,
+     396,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "1.95",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Taftea IK",
+    "bounds": [
+     552,
+     625,
+     625,
+     666
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.5",
+    "price": "1.33",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     282,
+     962,
+     354,
+     1003
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "2.5",
+    "price": "3.25",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     537,
+     962,
+     610,
+     1003
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790506292626,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "1.95",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "Taftea IK",
+     "bounds": [
+      552,
+      625,
+      625,
+      666
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790506292627,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "1.95",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "Taftea IK",
+     "bounds": [
+      552,
+      625,
+      625,
+      666
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "selection_role": "AWAY",
+  "selection_name": "Taftea IK",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "NONE",
+   "price": "1.95",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Taftea IK",
+   "bounds": [
+    552,
+    625,
+    625,
+    666
+   ]
+  },
+  "betslip_clear": {
+   "tapped": false,
+   "detail": "No remove icon on a selection line"
+  },
+  "detail": "Visible price 1.95 is below minimum 2.22",
+  "duration_ms": 7593
+ },
+ "wall": 8.4,
+ "frames": [
+  "s001_event_direct.png",
+  "s002_event_direct.png",
+  "s003_markets.png",
+  "s004_clear_betslip_pre.png"
+ ],
+ "resumed_at": "2026-09-27T10:51:35Z",
+ "health_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.26-ops"
+ }
+}

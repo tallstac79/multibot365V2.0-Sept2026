@@ -22,6 +22,18 @@ public class CompetitionMatchTest {
         assertFalse(EventIdentity.competitionMatches("1. Liga", null, "Poland 1st Division 26 Sep 19:00"));
     }
 
+    @Test public void bookmakerRegionalGroupSuffixIsAccepted() {
+        // 27 Sep 2026 10:49Z: feed "Division 2" (Sweden), page "Sweden 2.div Norrland 27 Sep 12:00" (Lucksta IF v Taftea IK)
+        assertEquals("country_prefixed_group (norrland)", EventIdentity.competitionMatchKind("Division 2", "Sweden", "Sweden 2.div Norrland 27 Sep 12:00"));
+        assertEquals("country_prefixed_group (norra svealand)", EventIdentity.competitionMatchKind("Division 2", "Sweden", "Sweden 2.div Norra Svealand 27 Sep 12:00"));
+        // a protected marker, a number or a third word is a different competition, not a group
+        assertFalse(EventIdentity.competitionMatches("Division 2", "Sweden", "Sweden 2.div Women 27 Sep 12:00"));
+        assertFalse(EventIdentity.competitionMatches("Division 2", "Sweden", "Sweden 2.div U21 27 Sep 12:00"));
+        assertFalse(EventIdentity.competitionMatches("Division 2", "Sweden", "Sweden 2.div 3 27 Sep 12:00"));
+        assertFalse(EventIdentity.competitionMatches("Division 2", "Sweden", "Sweden 2.div Norra Svealand Cup 27 Sep 12:00"));
+        assertFalse(EventIdentity.competitionMatches("Division 2", "Norway", "Sweden 2.div Norrland 27 Sep 12:00"));
+    }
+
     @Test public void differentCompetitionsNeverMatch() {
         assertFalse(EventIdentity.competitionMatches("Liga ABE", "Mexico", "Spain Liga ABE 26 Sep 21:30"));
         assertFalse(EventIdentity.competitionMatches("Liga ABE", "Mexico", "Mexico LNBP 26 Sep 21:30"));
