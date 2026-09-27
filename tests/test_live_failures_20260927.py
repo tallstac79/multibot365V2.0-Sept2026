@@ -137,5 +137,31 @@ class BusyIsNotAdmission(unittest.TestCase):
             self.assertEqual(db.execute('SELECT attempt FROM reconciliations').fetchall()[0][0], 1)   # still attempt 1
 
 
+class QualifiedOutcomeIsAnnounced(unittest.TestCase):
+    """on-a177051 / on-a64a66f (27 Sep 2026 17:43Z): QUALIFIED was sent, then REJECTED "LIMIT: 5 bets already today
+    (max 5)" before any phone dispatch, and no outcome message followed (the notifier skipped undispatched rows)."""
+    def test_limit_rejection_after_qualified_is_announced(self):
+        from core.status_notifier import AUTOMATIC_STATES, Notifier
+        tmp = tempfile.TemporaryDirectory(); self.addCleanup(tmp.cleanup)
+        clock = Clock(); gateway = FakeGateway(clock)
+        p = pipeline(Path(tmp.name) / 'p.sqlite3', clock, final_action_enabled=True, approval_mode='automatic', max_bets_per_day=0)
+        notifier = Notifier(p.store, sender=None, states=AUTOMATIC_STATES, clock=clock)
+        notifier.enqueue()                                   # baseline marks (history before this is never announced)
+        clock.advance(1)
+        iid = p.ingest(message(MELBOURNE))['instruction_id']
+        p.tick(gateway)
+        with p.store.connection() as db:
+            state, reason = db.execute('SELECT state, failure_reason FROM instructions WHERE instruction_id=?', (iid,)).fetchone()
+        self.assertEqual((state, reason.split(':')[0]), ('REJECTED', 'LIMIT'))
+        self.assertEqual([x['action'] for x in gateway.submitted], [])     # never reached the phone
+        notifier.enqueue()
+        with p.store.connection() as db:
+            sent = {r['state']: r['text'] for r in db.execute('SELECT state, text FROM notifications WHERE instruction_id=?', (iid,))}
+        self.assertIn('QUEUED', sent)                                       # QUALIFIED
+        self.assertIn('REJECTED', sent)                                     # ...and now the outcome
+        self.assertIn('NOT PLACED: DAILY LIMIT', sent['REJECTED'])
+        self.assertIn('LIMIT: 0 bets already today', sent['REJECTED'])
+
+
 if __name__ == '__main__':
     unittest.main()

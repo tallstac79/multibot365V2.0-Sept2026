@@ -20,6 +20,10 @@ DEFAULT_STATES = ('READY', 'AWAITING_APPROVAL', 'PLACEMENT_UNKNOWN') + tuple(sor
 TRANSIENT_STATES = ('QUEUED', 'APPROVED')
 AUTOMATIC_STATES = TRANSIENT_STATES + DEFAULT_STATES
 TRANSIENT_SINCE_KEY = 'notifier_transient_since'   # controls row: only transitions from this moment on are announced
+# controls row: from this moment, an instruction announced QUALIFIED that ends before any phone dispatch (daily limit,
+# pre-dispatch recheck, session, device) also gets its outcome announced. 27 Sep 2026: on-a177051 / on-a64a66f were
+# QUALIFIED then REJECTED "LIMIT: 5 bets already today" with no further message (503 such silent outcomes in history).
+QUALIFIED_OUTCOME_SINCE_KEY = 'notifier_qualified_outcome_since'
 SHORT_ID = 10  # Telegram commands accept this unique prefix of an instruction ID
 # Operational alerts raised from the audit log (not instruction states).
 EVENT_KINDS = ('MANUAL_CHECK_REQUIRED', 'PLACEMENT_DISCREPANCY')
@@ -116,6 +120,8 @@ def headline_for(row):
         return 'PLACEMENT UNCERTAIN'
     if reason.startswith('PRE_TAP_REJECTED') or reason.startswith('AUTO_APPROVAL_REFUSED'):
         return 'PRE-TAP REJECTED'
+    if reason.startswith('LIMIT:'):
+        return 'NOT PLACED: DAILY LIMIT' if 'today' in reason or 'daily' in reason else 'NOT PLACED: LIMIT'
     if state == 'SESSION_REQUIRED':
         return 'SESSION REQUIRED'
     if state == 'REJECTED':
@@ -229,6 +235,22 @@ class Notifier:
                 for row in db.execute(history, (*transient, since)).fetchall():
                     past = dict(row, state=row['past_state'])
                     created += db.execute(insert, (row['instruction_id'], row['past_state'], format_instruction(past), now, now)).rowcount
+            if not self.include_undispatched:
+                omark = db.execute('SELECT value FROM controls WHERE key=?', (QUALIFIED_OUTCOME_SINCE_KEY,)).fetchone()
+                if omark is None:
+                    db.execute('INSERT INTO controls VALUES (?,?,?,?)', (QUALIFIED_OUTCOME_SINCE_KEY, json.dumps(now), now, 'notifier-baseline'))
+                    osince = now
+                else:
+                    osince = json.loads(omark[0])
+                terminal = [s for s in self.states if s in TERMINAL_NAMES]
+                if terminal:
+                    marks = ','.join('?' * len(terminal))
+                    ended = (f"SELECT * FROM instructions i WHERE state IN ({marks}) AND terminal=1 AND origin='production' "
+                             f"AND dispatched_at IS NULL AND COALESCE(terminal_at, updated_at) >= ? AND EXISTS (SELECT 1 FROM "
+                             f"notifications q WHERE q.instruction_id=i.instruction_id AND q.state='QUEUED') AND NOT EXISTS "
+                             f"(SELECT 1 FROM notifications n WHERE n.instruction_id=i.instruction_id AND n.state=i.state)")
+                    for row in db.execute(ended, (*terminal, osince)).fetchall():
+                        created += db.execute(insert, (row['instruction_id'], row['state'], format_instruction(row), now, now)).rowcount
             for bet in db.execute("SELECT * FROM bets WHERE verified_at IS NOT NULL AND verified_at >= ? AND status NOT IN "
                                   "('NOT_PLACED','NOT_PLACED_CLAIMED')", (since,)).fetchall():
                 created += db.execute(insert, (bet['instruction_id'], 'RECONCILED', format_reconciled(bet), now, now)).rowcount
