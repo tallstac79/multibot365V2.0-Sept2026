@@ -1919,8 +1919,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
             require(stakeVerified(s, stake, actual.price, "stake_check_prepare"), "STAKE_REJECTED", "Stake missing before complete execution: " + stake);
             VisualScreen.Line place = findPlaceBetLine(s);
             require(place != null, "TARGET_NOT_FOUND", "Place Bet control not visible for COMPLETE_EXECUTION_READY");
-            android.graphics.Rect tap = placeBetTapRect(place);
-            require(!tap.isEmpty() && tap.width() > 20 && tap.height() > 10, "TARGET_NOT_FOUND", "Place Bet bounds not actionable");
+            android.graphics.Rect tap = placeBetTap(s);
             boolean enabled = true; // green Place Bet is actionable when stake set; grey would fail OCR presence alone
             // If OCR still shows Set Stake without stake amount, treat as not actionable
             String blob = "";
@@ -1994,7 +1993,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
             require(priceOk, "PRICE_CHANGED", "Price changed before Place Bet dispatch");
             require(stakeVerified(s, stake, selection.price, "stake_check_pre_dispatch"), "STAKE_REJECTED", "Stake missing before Place Bet dispatch");
             require(findPlaceBetLine(s) != null, "TARGET_NOT_FOUND", "Place Bet disappeared before dispatch");
-            return tapPlaceBetOnce(tap, selection, stake);
+            return tapPlaceBetOnce(placeBetTap(s), selection, stake);
         });
     }
 
@@ -2065,8 +2064,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     "WRONG_EVENT", "Fresh competition does not match held event");
             require(java.time.Instant.now().isBefore(java.time.LocalDateTime.parse(heldContext.optString("kickoff_utc")).toInstant(java.time.ZoneOffset.UTC)),
                     "REJECTED", "Held event has started");
-            android.graphics.Rect tap = placeBetTapRect(place);
-            require(!tap.isEmpty() && tap.width() > 20 && tap.height() > 10, "TARGET_NOT_FOUND", "Place Bet bounds not actionable");
+            android.graphics.Rect tap = placeBetTap(s);
             ui.put("pretap", CoordinatorAgent.object("ok", true, "market", market, "side", side, "selection", name, "line", quote.line, "price", quote.price, "stake", stake,
                     "place_bet_bounds", VisualSession.bounds(tap)));
             ui.put("t_pretap_done_ms", System.currentTimeMillis());
@@ -2084,7 +2082,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 .thenCompose(after -> {
                     frames.put(ui.lastImage());
                     List<String> lines = texts(after);
-                    PlacementClassifier.Result r = PlacementClassifier.classify(lines, findPlaceBetLine(after) != null);
+                    PlacementClassifier.Result read = PlacementClassifier.classify(lines, findPlaceBetLine(after) != null);
+                    // The pre-tap check required the keypad closed: a keypad now open with Place Bet still shown and no
+                    // receipt means the gesture landed on the stake field, not on Place Bet (never re-tapped).
+                    final PlacementClassifier.Result r = !read.definitive && findPlaceBetLine(after) != null && PlaceBetTarget.keypadOpen(wordsOf(after))
+                            ? PlacementClassifier.tapNotAccepted() : read;
                     if (!r.definitive && attempt < OUTCOME_WAITS_MS.length) return observeOutcome(attempt + 1, frames, selection, stake);
                     return confirmReference(after, r).thenCompose(reference -> {
                         String outcome = r.definitive ? r.outcome : "PLACEMENT_UNKNOWN";
@@ -2342,6 +2344,18 @@ final class Bet365LiveAdapter implements SiteAdapter {
             }
         }
         return best;
+    }
+
+    /** The verified Place Bet tap box on THIS frame (PlaceBetTarget: the "Place"/"Bet" word boxes, clear of the stake
+     *  field), with the stake keypad closed. Fails closed instead of tapping a merged line or over the keypad. */
+    private android.graphics.Rect placeBetTap(VisualScreen s) {
+        List<GameLinesParser.Word> words = wordsOf(s);
+        require(!PlaceBetTarget.keypadOpen(words), "TARGET_NOT_FOUND", "Stake keypad open over the slip; Place Bet not actionable");
+        int[] box = PlaceBetTarget.locate(words);
+        require(box != null, "TARGET_NOT_FOUND", "Place Bet words not located on the slip; not tapping a guessed target");
+        android.graphics.Rect tap = new android.graphics.Rect(box[0], box[1], box[2], box[3]);
+        ui.put("place_bet_target", CoordinatorAgent.object("bounds", VisualSession.bounds(tap), "source", "place_bet_words"));
+        return tap;
     }
 
     private static android.graphics.Rect placeBetTapRect(VisualScreen.Line place) {

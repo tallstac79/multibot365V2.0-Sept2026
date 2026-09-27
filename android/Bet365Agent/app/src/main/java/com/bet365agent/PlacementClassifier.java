@@ -75,6 +75,12 @@ final class PlacementClassifier {
         return new Result("UNKNOWN", "No recognisable outcome on screen", false, null, null, null);
     }
 
+    /** The Place Bet gesture opened the stake keypad instead (it landed on the stake field): the UI did not accept a
+     *  submission. Definitive for the device; the backend still confirms absence in My Bets. */
+    static Result tapNotAccepted() {
+        return new Result("TAP_NOT_ACCEPTED", "Place Bet gesture opened the stake keypad; no submission accepted by the UI", true, null, null, null);
+    }
+
     /** Receipt markers. Real receipt: green banner "Bet Placed" + "Bet Ref ...", then the selection and a
      *  "Stake  To Return" row. The banner stays on screen until its close (X) is tapped. */
     static boolean receiptVisible(List<String> lines) {

@@ -119,6 +119,9 @@ PLACEMENT_OUTCOME_MAP = {
     'SUSPENDED': State.SUSPENDED,
     'SESSION_EXPIRED': State.SESSION_REQUIRED,
     'REJECTED': State.REJECTED,
+    # The gesture opened the stake keypad instead of submitting (27 Sep 2026 UD Leiria): the device claims no bet;
+    # the bet row becomes NOT_PLACED_CLAIMED and My Bets still verifies it (a found bet becomes a discrepancy).
+    'TAP_NOT_ACCEPTED': State.REJECTED,
     # PLACEMENT_UNKNOWN and anything unrecognised -> PLACEMENT_UNKNOWN (reconcile)
 }
 # 0.6.18-0.6.28 phones report place_bet_result instead of a placement object.

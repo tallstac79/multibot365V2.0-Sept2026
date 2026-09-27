@@ -209,14 +209,36 @@ class FinalAction:
                          "AND (execution_mode='dispatch' OR state IN ('COMPLETED','PLACEMENT_UNKNOWN','APPROVED'))",
                          (row['selection_key'], row['instruction_id'])).fetchall()
         check('no_duplicate_execution', not dup, ', '.join(f"{d['instruction_id'][:12]}={d['state']}" for d in dup) or 'none')
-        unresolved = db.execute("SELECT instruction_id, state FROM instructions WHERE state IN ('PLACEMENT_UNKNOWN','UNKNOWN') "
-                                "AND execution_mode='dispatch' AND instruction_id!=?", (row['instruction_id'],)).fetchall()
-        unknown_bets = db.execute("SELECT instruction_id FROM bets WHERE status='UNKNOWN'").fetchall()
+        blocking, quarantined = self.unresolved_placements(db, row)
         in_flight = db.execute("SELECT instruction_id FROM instructions WHERE state IN ('APPROVED','DISPATCHED','DEVICE_ACTIVE') "
                                "AND instruction_id!=?", (row['instruction_id'],)).fetchall()
-        check('no_unresolved_prior_placement', not unresolved and not unknown_bets and not in_flight,
-              f"unresolved={[u['instruction_id'][:12] for u in unresolved]} unknown_bets={len(unknown_bets)} in_flight={len(in_flight)}")
+        check('no_unresolved_prior_placement', not blocking and not in_flight,
+              f"blocking={blocking} quarantined={quarantined} in_flight={len(in_flight)}")
         return checks
+
+    QUARANTINE_LIMIT_24H = 1   # more exhausted uncertain placements than this in 24 h = a systemic problem: block
+
+    def unresolved_placements(self, db, row):
+        """(blocking, quarantined) prior placements whose outcome is still unknown (bet row UNKNOWN or missing).
+
+        Blocking: one still being reconciled (PLACEMENT_UNKNOWN), one on the same selection/fixture as `row` (a repeat
+        could duplicate a live bet), or more than QUARANTINE_LIMIT_24H exhausted ones in 24 h (systemic). A single
+        exhausted MANUAL_CHECK record on another event is quarantined: it keeps its late re-verification, counts
+        against the daily stake/loss limits as staked, and does not paralyse new work (27 Sep 2026 UD Leiria)."""
+        rows = db.execute("SELECT i.instruction_id, i.state, i.selection_key, i.fixture, i.event_time, i.updated_at, b.status "
+                          "FROM instructions i LEFT JOIN bets b USING(instruction_id) WHERE i.state IN ('PLACEMENT_UNKNOWN','UNKNOWN') "
+                          "AND i.execution_mode='dispatch' AND i.instruction_id!=?", (row['instruction_id'],)).fetchall()
+        open_rows = [r for r in rows if r['status'] in (None, UNKNOWN)]
+        cutoff = iso(self.p.clock() - timedelta(hours=24))
+        recent = [r for r in open_rows if r['state'] == 'UNKNOWN' and (r['updated_at'] or '') >= cutoff]
+        blocking, quarantined = [], []
+        for r in open_rows:
+            same = r['selection_key'] == row['selection_key'] or (r['fixture'] == row['fixture'] and r['event_time'] == row['event_time'])
+            if r['state'] == 'PLACEMENT_UNKNOWN' or same or len(recent) > self.QUARANTINE_LIMIT_24H:
+                blocking.append(r['instruction_id'][:12])
+            else:
+                quarantined.append(r['instruction_id'][:12])
+        return blocking, quarantined
 
     def auto_approve(self, db, row):
         """Automatic policy for a device-verified READY row: APPROVED with a durable AUTO_APPROVED record, or REJECTED."""
@@ -368,6 +390,8 @@ class FinalAction:
         return dict(instruction_id=device_instruction_id, action='MY_BETS', adapter=self.s.adapter, scenario='live',
                     view=view, timeout_ms=self.s.reconcile_timeout_ms)
 
+    LATE_RECHECKS, LATE_RECHECK_SECONDS = 6, 600
+
     def next_reconciliation(self, urgent_only=False):
         """(purpose, instruction_id or None, view, attempt) that is due now, most urgent first.
 
@@ -382,6 +406,14 @@ class FinalAction:
                 "AND b.verified_at IS NULL ORDER BY CASE b.status WHEN 'UNKNOWN' THEN 0 WHEN 'PLACED_UNVERIFIED' THEN 1 "
                 "ELSE 2 END, b.id", (VERIFY, VERIFY, UNKNOWN, PLACED_UNVERIFIED, NOT_PLACED_CLAIMED)).fetchall()
             for bet in candidates:
+                if bet['status'] == UNKNOWN and bet['attempts'] >= self.s.reconcile_max_attempts:
+                    # exhausted uncertain placement: keep re-verifying slowly (absence may become provable later)
+                    if bet['attempts'] >= self.s.reconcile_max_attempts + self.LATE_RECHECKS or urgent_only:
+                        continue
+                    anchor = datetime.fromisoformat(bet['last_at'] or bet['placed_at'])
+                    if (now - anchor).total_seconds() >= self.LATE_RECHECK_SECONDS:
+                        return VERIFY, bet['instruction_id'], 'OPEN', bet['attempts'] + 1
+                    continue
                 if bet['attempts'] >= self.s.reconcile_max_attempts:
                     continue
                 if urgent_only and bet['status'] != UNKNOWN:
@@ -488,7 +520,10 @@ class FinalAction:
                 return 'FAILED'
             detail = dict(match=found, frames=my_bets.get('frames'))
             now = iso(self.p.clock())
-            if found['confidence'] == 'INCONCLUSIVE' or (not found['found'] and my_bets.get('coverage_complete') is not True):
+            absent, absence_reason = (False, None) if found['found'] else bet_matching.proves_absence(
+                dict(dict(row), stake=bet['stake']), my_bets, rec['view'] or 'OPEN')
+            detail['absence'] = absence_reason
+            if not found['found'] and not absent:
                 # A collapsed card could be this bet: neither found nor absent. Retry; never infer NOT_PLACED.
                 self._complete(rec, 'FAILED', dict(detail, reason='card identity or complete account coverage unproven; absence cannot be inferred'), db)
                 return 'FAILED'
@@ -503,6 +538,8 @@ class FinalAction:
                 if row['state'] == State.PLACEMENT_UNKNOWN.value:
                     self.p.store.transition(db, row['instruction_id'], State.COMPLETED, actor='reconciler',
                                             reason='PLACED: confirmed in My Bets after uncertain outcome')
+                elif row['state'] == State.UNKNOWN.value:
+                    self.p.store.update_fields(db, row['instruction_id'], reconciliation_result='FOUND_IN_MY_BETS_LATE')
                 elif bet['status'] == NOT_PLACED_CLAIMED:
                     self.p.store.upsert_bet(db, row['instruction_id'], status=DISCREPANCY)
                     self.p.store.audit(db, 'PLACEMENT_DISCREPANCY', dict(claimed=row['state'], found=found),
@@ -515,10 +552,14 @@ class FinalAction:
                 self.p.store.upsert_bet(db, row['instruction_id'], status=NOT_PLACED, verified_at=now)
             elif bet['status'] == UNKNOWN and not_found >= 2:
                 self.p.store.upsert_bet(db, row['instruction_id'], status=NOT_PLACED, verified_at=now)
-                self.p.store.transition(db, row['instruction_id'], State.NOT_PLACED, actor='reconciler',
-                                        reason=f'NOT_PLACED: absent from My Bets in {not_found} checks. Never re-tapped.',
-                                        reconciliation_result='NOT_FOUND_IN_MY_BETS')
-                self.p.store.audit(db, 'RECONCILED', dict(result='NOT_FOUND_IN_MY_BETS', checks=not_found), row['instruction_id'])
+                if row['state'] == State.PLACEMENT_UNKNOWN.value:
+                    self.p.store.transition(db, row['instruction_id'], State.NOT_PLACED, actor='reconciler',
+                                            reason=f'NOT_PLACED: absent from My Bets in {not_found} checks. Never re-tapped.',
+                                            reconciliation_result='NOT_FOUND_IN_MY_BETS')
+                else:   # terminal UNKNOWN (manual check) stays as the audit trail; the bet row carries the resolution
+                    self.p.store.update_fields(db, row['instruction_id'], reconciliation_result='NOT_FOUND_IN_MY_BETS_LATE')
+                self.p.store.audit(db, 'RECONCILED', dict(result='NOT_FOUND_IN_MY_BETS', checks=not_found, absence=detail.get('absence'),
+                                                          instruction_state=row['state']), row['instruction_id'])
             elif bet['status'] == PLACED_UNVERIFIED and not_found >= self.s.reconcile_max_attempts:
                 self.p.store.upsert_bet(db, row['instruction_id'], status=DISCREPANCY)
                 self.p.store.audit(db, 'PLACEMENT_DISCREPANCY', dict(claimed='PLACED receipt', found=found),

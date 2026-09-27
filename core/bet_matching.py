@@ -198,6 +198,65 @@ def _settlement(text):
     return status, returns
 
 
+TOP_OF_LIST = re.compile(r'open.*settled')
+END_OF_LIST = ('information and transmission delays', 'responsible gambling', 'safer gambling', 'terms and conditions',
+               'complaints procedure', 'deposit limits')
+EMPTY_LIST = ('no open bets', 'no bets to display', 'you have no', 'no unsettled bets')
+
+
+def proves_absence(instruction, my_bets, view='OPEN'):
+    """(absent, reason). Absence of a bet may be concluded only when the whole list was read and nothing could be it:
+
+    * every frame is the requested My Bets view (address bar), the first frame shows the list top (the Open/Settled tab
+      row) and a frame shows the end of the list (the page footer) or an explicit empty-list message;
+    * no card matches the bet, and no card with the bet's own stake could be it: every card whose header carries that
+      stake shows, inside the same frame, a fixture that names neither of the bet's teams (a header cut at a frame
+      edge, or a collapsed card, stays a possible match).
+    Anything less is not proof (27 Sep 2026: the UD Leiria tap could not be settled because absence was never provable).
+    """
+    rows = [r for r in (my_bets.get('lines') or []) if isinstance(r, dict) and isinstance(r.get('text'), str)]
+    if not rows:
+        return False, 'no My Bets lines'
+    frames = sorted({r.get('frame', 0) for r in rows})
+    per_frame = {f: [_norm(r['text']) for r in sorted((x for x in rows if x.get('frame', 0) == f), key=lambda r: (r.get('top', 0), r.get('left', 0)))]
+                 for f in frames}
+    marker = VIEW_MARKERS.get(view)
+    for f, lines in per_frame.items():
+        if marker and not any(marker in line for line in lines[:4]):
+            return False, f'frame {f}: {view} view not confirmed by the address bar'
+    blob_all = ' | '.join(' | '.join(v) for v in per_frame.values())
+    if not any(TOP_OF_LIST.search(line) for line in per_frame[frames[0]][:8]):
+        return False, 'list top (Open/Settled tabs) not in the first frame'
+    if any(e in blob_all for e in EMPTY_LIST):
+        return True, 'My Bets list is empty (tab row and empty-list message read)'
+    if not any(any(e in line for e in END_OF_LIST) for lines in per_frame.values() for line in lines):
+        return False, 'end of list (page footer) never reached'
+    try:
+        target = Decimal(str(instruction.get('stake')))
+    except (InvalidOperation, TypeError, ValueError):
+        return False, 'bet stake unknown'
+    home, away = instruction.get('home'), instruction.get('away')
+    same_stake = 0
+    for f, lines in per_frame.items():
+        cards = _cards(lines) or []
+        for card in cards:
+            header = lines[card[0]]
+            m = CARD_HEADER.match(header)
+            if not m:
+                continue
+            amount = re.match(r'^£(\d+(?:\.\d{1,2})?)', header)
+            if not amount or Decimal(amount.group(1)) != target:
+                continue
+            same_stake += 1
+            text = ' | '.join(lines[i] for i in card)
+            if team_present(text, home, away) or team_present(text, away, home):
+                return False, f'frame {f}: a card with the bet stake names one of the teams'
+            body = [lines[i] for i in card[1:] if not any(e in lines[i] for e in END_OF_LIST)]
+            if len(body) < 3:
+                return False, f'frame {f}: a card with the bet stake is not fully visible (possible match)'
+    return True, f'whole list read (top to footer); {same_stake} card(s) with the bet stake, none for this fixture'
+
+
 def match(instruction, my_bets, view=None):
     """Return dict(found, confidence, window, bet_reference, status, returns) for one instruction.
 
