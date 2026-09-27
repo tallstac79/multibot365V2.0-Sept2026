@@ -1,0 +1,1876 @@
+{
+ "alert": {
+  "intake_id": 2411,
+  "message_id": "71601",
+  "source_timestamp": "2026-09-27T13:35:38+00:00",
+  "text": "New odds update on Pinnacle\n\nFootball - Tunisia - League 2\n[EGS Gafsa vs AS Kasserine](https://oddshub.io/football/tunisia-ligue-2-group-b/74990920?market=Totals)\n27.09.2026 15:00\n\nTotals (2) (alt. line)\n1.507⬇️ (1.571) - 2.320⬆️ (2.180)\n\n🟢 Opening (2)\n1.833 - 1.877\n\n[Bet365 (Totals 2)](https://bet365.com/#/AC/B1/C1/D8/E201821677/F3/I1/)\n**1.85** - 1.95\n\n🎯 EV: 115.12%"
+ },
+ "interpretation": {
+  "verdict": {
+   "profile": "oddsnotifier_football_two_sided_v1",
+   "in_play_link": false,
+   "signal_basis": "price_same_line",
+   "line_candidate": null,
+   "price_candidate": "OVER",
+   "verdict": "EXECUTABLE_OVER",
+   "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 OVER 1.85 vs Pinnacle 1.507"
+  },
+  "target_side": "OVER",
+  "target_line": "2",
+  "alert_price": "1.85",
+  "reference": {
+   "bookmaker": "Pinnacle",
+   "line": "2",
+   "odds": "1.507",
+   "fair_odds": null
+  },
+  "sharp_signal": {
+   "source": "pinnacle_opening_to_current",
+   "side": "OVER",
+   "status": "IDENTIFIED",
+   "reason": "Pinnacle line 2 unchanged; OVER 1.833 -> 1.507 shortens, UNDER 1.877 -> 2.320 does not",
+   "basis": "price_same_line",
+   "opening_line": "2",
+   "current_line": "2",
+   "change": "-0.326",
+   "magnitude": "0.326",
+   "magnitude_units": "decimal_odds",
+   "direction": "SHORTENED",
+   "opening_prices": {
+    "OVER": "1.833",
+    "UNDER": "1.877"
+   },
+   "current_prices": {
+    "OVER": "1.507",
+    "UNDER": "2.320"
+   },
+   "changes_by_side": {
+    "OVER": "-0.326",
+    "UNDER": "0.443"
+   },
+   "line_candidate": null,
+   "price_candidate": "OVER",
+   "highlight_agrees": true,
+   "recent_line_reversal": false
+  },
+  "bet_quality": "CLEAR_VALUE_SIGNAL"
+ },
+ "rules": {
+  "decision": "ACCEPT",
+  "reason": "All rules passed",
+  "instruction": {
+   "instruction_id": "fbhold-TOTALS-144907",
+   "sport": "football",
+   "competition": "League 2",
+   "fixture": "EGS Gafsa vs AS Kasserine",
+   "home": "EGS Gafsa",
+   "away": "AS Kasserine",
+   "event_time_local": "2026-09-27T15:00",
+   "event_timezone": "Europe/London",
+   "event_start_utc": "2026-09-27T14:00:00+00:00",
+   "market": "TOTALS",
+   "side": "OVER",
+   "selection_name": "Over",
+   "line": "2",
+   "alternate_line": {
+    "current": true,
+    "opening": false,
+    "comparison": false
+   },
+   "alert_price": "1.85",
+   "minimum_price": "1.77",
+   "stake": "0.10",
+   "max_odds_deterioration": null,
+   "max_net_payout_deterioration_percent": 10,
+   "max_line_deterioration": "0.25",
+   "configured_line_absolute_cap": 0.25,
+   "max_line_deterioration_percent": null,
+   "displayed_ev_percent": "115.12",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "signal_reason": "CLEAR_VALUE_SIGNAL",
+   "line_advantage": "0",
+   "target_source": "pinnacle_opening_to_current",
+   "implied_target": null,
+   "sharp_signal": {
+    "source": "pinnacle_opening_to_current",
+    "side": "OVER",
+    "status": "IDENTIFIED",
+    "reason": "Pinnacle line 2 unchanged; OVER 1.833 -> 1.507 shortens, UNDER 1.877 -> 2.320 does not",
+    "basis": "price_same_line",
+    "opening_line": "2",
+    "current_line": "2",
+    "change": "-0.326",
+    "magnitude": "0.326",
+    "magnitude_units": "decimal_odds",
+    "direction": "SHORTENED",
+    "opening_prices": {
+     "OVER": "1.833",
+     "UNDER": "1.877"
+    },
+    "current_prices": {
+     "OVER": "1.507",
+     "UNDER": "2.320"
+    },
+    "changes_by_side": {
+     "OVER": "-0.326",
+     "UNDER": "0.443"
+    },
+    "line_candidate": null,
+    "price_candidate": "OVER"
+   },
+   "highlighted_side": "OVER",
+   "ev_status": "SUPPLIED_EQUAL_LINE",
+   "line_quality": "EQUAL",
+   "price_quality": "FAVOURABLE",
+   "reference_odds": "1.507"
+  }
+ },
+ "payload": {
+  "instruction_id": "fbhold-TOTALS-144907",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "EGS Gafsa||AS Kasserine",
+  "sport": "football",
+  "market": "TOTALS",
+  "side": "OVER",
+  "line": "2",
+  "minimum_price": "1.77",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201821677/F3/I1/",
+  "kickoff_utc": "2026-09-27T14:00",
+  "competition": "League 2",
+  "period": "FULL_GAME",
+  "country": "Tunisia",
+  "max_line_deterioration": "0.25"
+ },
+ "paused_at": "2026-09-27T13:49:09Z",
+ "result": {
+  "instruction_id": "fbhold-TOTALS-144907",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 23479,
+  "progress": {
+   "stage": "PREPARE_COMPLETE_EXECUTION",
+   "elapsed_ms": 23278,
+   "last_progress_at_ms": 1790516980617,
+   "instruction_id": "fbhold-TOTALS-144907",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790516957490
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 16,
+     "at_ms": 1790516957497
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 24,
+     "at_ms": 1790516957508,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 24,
+      "start_ts_ms": 1790516957499,
+      "end_elapsed_ms": 5360,
+      "end_ts_ms": 1790516962835,
+      "duration_ms": 5336,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3450,
+     "at_ms": 1790516957508
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3694,
+     "at_ms": 1790516957508
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4629,
+     "at_ms": 1790516957508
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5159,
+     "at_ms": 1790516957508
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5360,
+     "at_ms": 1790516962855,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 5360,
+      "start_ts_ms": 1790516962835,
+      "end_elapsed_ms": 16785,
+      "end_ts_ms": 1790516974259,
+      "duration_ms": 11425,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5381,
+     "at_ms": 1790516962855
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5952,
+     "at_ms": 1790516962855
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 6033,
+     "at_ms": 1790516962855
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 6585,
+     "at_ms": 1790516962855
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 6624,
+     "at_ms": 1790516962855
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 8659,
+     "at_ms": 1790516962855
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 9305,
+     "at_ms": 1790516962855
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 11396,
+     "at_ms": 1790516962855
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 11874,
+     "at_ms": 1790516962855
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 13529,
+     "at_ms": 1790516962855
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 13956,
+     "at_ms": 1790516962855
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 14006,
+     "at_ms": 1790516962855
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 16045,
+     "at_ms": 1790516962855
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 16669,
+     "at_ms": 1790516962855
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 16785,
+     "at_ms": 1790516974297,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 16785,
+      "start_ts_ms": 1790516974259,
+      "end_elapsed_ms": 16824,
+      "end_ts_ms": 1790516974298,
+      "duration_ms": 39,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 16824,
+     "at_ms": 1790516974341,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 16824,
+      "start_ts_ms": 1790516974298,
+      "end_elapsed_ms": 16868,
+      "end_ts_ms": 1790516974342,
+      "duration_ms": 44,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 16868,
+     "at_ms": 1790516974402,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 16868,
+      "start_ts_ms": 1790516974342,
+      "end_elapsed_ms": 16929,
+      "end_ts_ms": 1790516974404,
+      "duration_ms": 61,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 16929,
+     "at_ms": 1790516974440,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 16929,
+      "start_ts_ms": 1790516974404,
+      "end_elapsed_ms": 18385,
+      "end_ts_ms": 1790516975860,
+      "duration_ms": 1456,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 16967,
+     "at_ms": 1790516974440
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 17537,
+     "at_ms": 1790516974440
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 17595,
+     "at_ms": 1790516974440
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 18385,
+     "at_ms": 1790516975906,
+     "timing": {
+      "stage": "ENTER_STAKE",
+      "start_elapsed_ms": 18385,
+      "start_ts_ms": 1790516975860,
+      "end_elapsed_ms": 22455,
+      "end_ts_ms": 1790516979930,
+      "duration_ms": 4070,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 18432,
+     "at_ms": 1790516975906
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 18918,
+     "at_ms": 1790516975906
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 18982,
+     "at_ms": 1790516975906
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 19723,
+     "at_ms": 1790516975906
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 20236,
+     "at_ms": 1790516975906
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 20319,
+     "at_ms": 1790516975906
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 20615,
+     "at_ms": 1790516975906
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 20946,
+     "at_ms": 1790516975906
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 21251,
+     "at_ms": 1790516975906
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 21558,
+     "at_ms": 1790516975906
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 22051,
+     "at_ms": 1790516975906
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 22155,
+     "at_ms": 1790516975906
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 22455,
+     "at_ms": 1790516979984,
+     "timing": {
+      "stage": "VERIFY_FINAL_STATE",
+      "start_elapsed_ms": 22455,
+      "start_ts_ms": 1790516979930,
+      "end_elapsed_ms": 23101,
+      "end_ts_ms": 1790516980576,
+      "duration_ms": 646,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 22510,
+     "at_ms": 1790516979984
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 23011,
+     "at_ms": 1790516979984
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 23101,
+     "at_ms": 1790516980617,
+     "timing": {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "start_elapsed_ms": 23101,
+      "start_ts_ms": 1790516980576,
+      "end_elapsed_ms": 23278,
+      "end_ts_ms": 1790516980753,
+      "duration_ms": 177,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 23278,
+     "at_ms": 1790516980617
+    }
+   ]
+  },
+  "device_stage": "PREPARE_COMPLETE_EXECUTION",
+  "execution_count": 1,
+  "run_id": "c_0dOVvPIlIv8VY8SdYXpftDt9AsdadAPpFvTbo431Ol8",
+  "fixture_name": "EGS Gafsa v AS Kasserine",
+  "home": "EGS Gafsa",
+  "away": "AS Kasserine",
+  "competition": "Tunisia League 2•27 Sep 15:00",
+  "selection": {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "2.25",
+   "price": "1.900",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    274,
+    906,
+    360,
+    949
+   ]
+  },
+  "final_state": {
+   "home": "EGS Gafsa",
+   "away": "AS Kasserine",
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "2.25",
+   "price": "1.900",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "ready_state": {
+   "fixture_home": "EGS Gafsa",
+   "fixture_away": "AS Kasserine",
+   "market": "TOTAL",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "line": "2.25",
+   "price": "1.900",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "EGS Gafsa v AS Kasserine",
+   "fixture_home": "EGS Gafsa",
+   "fixture_away": "AS Kasserine",
+   "market": "TOTAL",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "line": "2.25",
+   "price": "1.900",
+   "stake": "0.10",
+   "minimum_price": "1.77",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    461,
+    952,
+    620,
+    1002
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     461,
+     952,
+     620,
+     1002
+    ],
+    "center_x": 540.5,
+    "center_y": 977,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790516980749,
+   "validation_hash": "23f02cf8686a648927cef7c86cf3c758"
+  },
+  "wager_submitted": false,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "event_context": {
+   "home": "EGS Gafsa",
+   "away": "AS Kasserine",
+   "competition": "tunisia league 2",
+   "kickoff_utc": "2026-09-27T14:00",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "held": true,
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790516974297,
+    "observed": {
+     "market": "TOTAL",
+     "side": "OVER",
+     "line": "2.25",
+     "price": "1.900",
+     "availability": "OPEN",
+     "selection_role": "OVER",
+     "selection_name": "Over",
+     "bounds": [
+      274,
+      906,
+      360,
+      949
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790516974298,
+    "observed": {
+     "market": "TOTAL",
+     "side": "OVER",
+     "line": "2.25",
+     "price": "1.900",
+     "availability": "OPEN",
+     "selection_role": "OVER",
+     "selection_name": "Over",
+     "bounds": [
+      274,
+      906,
+      360,
+      949
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 24,
+    "start_ts_ms": 1790516957499,
+    "end_elapsed_ms": 5360,
+    "end_ts_ms": 1790516962835,
+    "duration_ms": 5336,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5360,
+    "start_ts_ms": 1790516962835,
+    "end_elapsed_ms": 16785,
+    "end_ts_ms": 1790516974259,
+    "duration_ms": 11425,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 16785,
+    "start_ts_ms": 1790516974259,
+    "end_elapsed_ms": 16824,
+    "end_ts_ms": 1790516974298,
+    "duration_ms": 39,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 16824,
+    "start_ts_ms": 1790516974298,
+    "end_elapsed_ms": 16868,
+    "end_ts_ms": 1790516974342,
+    "duration_ms": 44,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 16868,
+    "start_ts_ms": 1790516974342,
+    "end_elapsed_ms": 16929,
+    "end_ts_ms": 1790516974404,
+    "duration_ms": 61,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 16929,
+    "start_ts_ms": 1790516974404,
+    "end_elapsed_ms": 18385,
+    "end_ts_ms": 1790516975860,
+    "duration_ms": 1456,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 18385,
+    "start_ts_ms": 1790516975860,
+    "end_elapsed_ms": 22455,
+    "end_ts_ms": 1790516979930,
+    "duration_ms": 4070,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 22455,
+    "start_ts_ms": 1790516979930,
+    "end_elapsed_ms": 23101,
+    "end_ts_ms": 1790516980576,
+    "duration_ms": 646,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 23101,
+    "start_ts_ms": 1790516980576,
+    "end_elapsed_ms": 23278,
+    "end_ts_ms": 1790516980753,
+    "duration_ms": 177,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "stake_field_state": "EMPTY",
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "EGS Gafsa",
+    "bookmaker": "EGS Gafsa",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "AS Kasserine",
+    "bookmaker": "AS Kasserine",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "EGS Gafsa",
+     "bookmaker": "EGS Gafsa",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "away_similarity": {
+     "feed": "AS Kasserine",
+     "bookmaker": "AS Kasserine",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "both_exact",
+    "verdict": "EXACT"
+   }
+  },
+  "identity_verdict": "EXACT",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201821677/F3/I1/"
+ },
+ "run": {
+  "run_id": "c_0dOVvPIlIv8VY8SdYXpftDt9AsdadAPpFvTbo431Ol8",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790516957475,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 1,
+    "wall_ts_ms": 1790516957475
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 16,
+    "wall_ts_ms": 1790516957490
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 24,
+    "wall_ts_ms": 1790516957499
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3450,
+    "wall_ts_ms": 1790516960925
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3694,
+    "wall_ts_ms": 1790516961169
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 4629,
+    "wall_ts_ms": 1790516962105
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5159,
+    "wall_ts_ms": 1790516962636
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 5360,
+    "wall_ts_ms": 1790516962835
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 5381,
+    "wall_ts_ms": 1790516962856
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 5952,
+    "wall_ts_ms": 1790516963427
+   },
+   {
+    "phase": "CAPTURE_tabs_goals",
+    "elapsed_ms": 6033,
+    "wall_ts_ms": 1790516963508
+   },
+   {
+    "phase": "CAPTURED_tabs_goals",
+    "elapsed_ms": 6585,
+    "wall_ts_ms": 1790516964060
+   },
+   {
+    "effect": "gesture",
+    "target": "football tab Goals",
+    "bounds": [
+     403,
+     405,
+     470,
+     441
+    ],
+    "elapsed_ms": 6624
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 6624,
+    "wall_ts_ms": 1790516964099
+   },
+   {
+    "phase": "CAPTURE_markets_goals",
+    "elapsed_ms": 8659,
+    "wall_ts_ms": 1790516966136
+   },
+   {
+    "phase": "CAPTURED_markets_goals",
+    "elapsed_ms": 9305,
+    "wall_ts_ms": 1790516966781
+   },
+   {
+    "effect": "swipe",
+    "x": 360,
+    "from_y": 1200,
+    "to_y": 600,
+    "elapsed_ms": 9480
+   },
+   {
+    "phase": "CAPTURE_markets_goals_scroll",
+    "elapsed_ms": 11396,
+    "wall_ts_ms": 1790516968872
+   },
+   {
+    "phase": "CAPTURED_markets_goals_scroll",
+    "elapsed_ms": 11874,
+    "wall_ts_ms": 1790516969349
+   },
+   {
+    "effect": "swipe",
+    "x": 360,
+    "from_y": 500,
+    "to_y": 1300,
+    "elapsed_ms": 11919
+   },
+   {
+    "phase": "CAPTURE_tabs_asia",
+    "elapsed_ms": 13529,
+    "wall_ts_ms": 1790516971003
+   },
+   {
+    "phase": "CAPTURED_tabs_asia",
+    "elapsed_ms": 13956,
+    "wall_ts_ms": 1790516971431
+   },
+   {
+    "effect": "gesture",
+    "target": "football tab Asiat",
+    "bounds": [
+     581,
+     401,
+     641,
+     443
+    ],
+    "elapsed_ms": 14006
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 14006,
+    "wall_ts_ms": 1790516971480
+   },
+   {
+    "phase": "CAPTURE_markets_asia",
+    "elapsed_ms": 16045,
+    "wall_ts_ms": 1790516973521
+   },
+   {
+    "phase": "CAPTURED_markets_asia",
+    "elapsed_ms": 16669,
+    "wall_ts_ms": 1790516974144
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 16785,
+    "wall_ts_ms": 1790516974260
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 16824,
+    "wall_ts_ms": 1790516974298
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 16868,
+    "wall_ts_ms": 1790516974343
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 16929,
+    "wall_ts_ms": 1790516974404
+   },
+   {
+    "phase": "CAPTURE_selection_preflight",
+    "elapsed_ms": 16967,
+    "wall_ts_ms": 1790516974442
+   },
+   {
+    "phase": "CAPTURED_selection_preflight",
+    "elapsed_ms": 17537,
+    "wall_ts_ms": 1790516975012
+   },
+   {
+    "effect": "gesture",
+    "target": "TOTAL / OVER / 2.25 / 1.900",
+    "bounds": [
+     274,
+     906,
+     360,
+     949
+    ],
+    "elapsed_ms": 17595
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 17595,
+    "wall_ts_ms": 1790516975069
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 18385,
+    "wall_ts_ms": 1790516975860
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 18432,
+    "wall_ts_ms": 1790516975907
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 18918,
+    "wall_ts_ms": 1790516976393
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     20,
+     1327,
+     214,
+     1371
+    ],
+    "elapsed_ms": 18982
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 18982,
+    "wall_ts_ms": 1790516976456
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 19723,
+    "wall_ts_ms": 1790516977198
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 20236,
+    "wall_ts_ms": 1790516977711
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 20319
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 20319,
+    "wall_ts_ms": 1790516977794
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     87,
+     1228,
+     147,
+     1272
+    ],
+    "elapsed_ms": 20615
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 20615,
+    "wall_ts_ms": 1790516978090
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     87,
+     974,
+     147,
+     1018
+    ],
+    "elapsed_ms": 20946
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 20946,
+    "wall_ts_ms": 1790516978420
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 21250
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 21251,
+    "wall_ts_ms": 1790516978725
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 21558,
+    "wall_ts_ms": 1790516979033
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 22051,
+    "wall_ts_ms": 1790516979526
+   },
+   {
+    "effect": "gesture",
+    "target": "Done",
+    "bounds": [
+     311,
+     1333,
+     587,
+     1367
+    ],
+    "elapsed_ms": 22155
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 22155,
+    "wall_ts_ms": 1790516979629
+   },
+   {
+    "phase": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 22455,
+    "wall_ts_ms": 1790516979930
+   },
+   {
+    "phase": "CAPTURE_final",
+    "elapsed_ms": 22510,
+    "wall_ts_ms": 1790516979985
+   },
+   {
+    "phase": "CAPTURED_final",
+    "elapsed_ms": 23011,
+    "wall_ts_ms": 1790516980485
+   },
+   {
+    "phase": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 23101,
+    "wall_ts_ms": 1790516980576
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 23278,
+    "wall_ts_ms": 1790516980753
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png",
+   "s003_markets.png",
+   "s004_tabs_goals.png",
+   "s005_markets_goals.png",
+   "s006_markets_goals_scroll.png",
+   "s007_tabs_asia.png",
+   "s008_markets_asia.png",
+   "s009_selection_preflight.png",
+   "s010_betslip_pre_stake.png",
+   "s011_stake_ui.png",
+   "s012_stake_typed.png",
+   "s013_final.png"
+  ],
+  "gesture_attempts": 9,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 24,
+    "start_ts_ms": 1790516957499,
+    "end_elapsed_ms": 5360,
+    "end_ts_ms": 1790516962835,
+    "duration_ms": 5336,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5360,
+    "start_ts_ms": 1790516962835,
+    "end_elapsed_ms": 16785,
+    "end_ts_ms": 1790516974259,
+    "duration_ms": 11425,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 16785,
+    "start_ts_ms": 1790516974259,
+    "end_elapsed_ms": 16824,
+    "end_ts_ms": 1790516974298,
+    "duration_ms": 39,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 16824,
+    "start_ts_ms": 1790516974298,
+    "end_elapsed_ms": 16868,
+    "end_ts_ms": 1790516974342,
+    "duration_ms": 44,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 16868,
+    "start_ts_ms": 1790516974342,
+    "end_elapsed_ms": 16929,
+    "end_ts_ms": 1790516974404,
+    "duration_ms": 61,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 16929,
+    "start_ts_ms": 1790516974404,
+    "end_elapsed_ms": 18385,
+    "end_ts_ms": 1790516975860,
+    "duration_ms": 1456,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 18385,
+    "start_ts_ms": 1790516975860,
+    "end_elapsed_ms": 22455,
+    "end_ts_ms": 1790516979930,
+    "duration_ms": 4070,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 22455,
+    "start_ts_ms": 1790516979930,
+    "end_elapsed_ms": 23101,
+    "end_ts_ms": 1790516980576,
+    "duration_ms": 646,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 23101,
+    "start_ts_ms": 1790516980576,
+    "end_elapsed_ms": 23278,
+    "end_ts_ms": 1790516980753,
+    "duration_ms": 177,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "search_query": "EGS Gafsa",
+  "identity_home": "EGS Gafsa",
+  "expected_away": "AS Kasserine",
+  "identity_away": "AS Kasserine",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201821677/F3/I1/",
+  "current_stage": "PREPARE_COMPLETE_EXECUTION",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Tunisia League 2•27 Sep 15:00",
+   "EGS Gafsa v AS Kasserine v",
+   "Popular Bet Builder Result Goals Half Asiat A"
+  ],
+  "competition_check": {
+   "feed": "League 2",
+   "country": "Tunisia",
+   "page": "Tunisia League 2•27 Sep 15:00",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "EGS Gafsa",
+    "bookmaker": "EGS Gafsa",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "AS Kasserine",
+    "bookmaker": "AS Kasserine",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "EGS Gafsa",
+     "bookmaker": "EGS Gafsa",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "away_similarity": {
+     "feed": "AS Kasserine",
+     "bookmaker": "AS Kasserine",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "both_exact",
+    "verdict": "EXACT"
+   }
+  },
+  "identity_verdict": "EXACT",
+  "route": "event_link",
+  "kickoff_verified": "27 Sep 15:00",
+  "verified_fixture": {
+   "code": "2120d040",
+   "home": "EGS Gafsa",
+   "away": "AS Kasserine",
+   "fixture_name": "EGS Gafsa v AS Kasserine",
+   "exact_fixture_text": "Home EGS Gafsa\nAway AS Kasserine",
+   "competition": "Tunisia League 2•27 Sep 15:00",
+   "bounds": [
+    35,
+    266,
+    688,
+    435
+   ]
+  },
+  "fixture_home": "EGS Gafsa",
+  "fixture_away": "AS Kasserine",
+  "identity_verified_home": "EGS Gafsa",
+  "identity_verified_away": "AS Kasserine",
+  "event_verified": true,
+  "event_context": {
+   "home": "EGS Gafsa",
+   "away": "AS Kasserine",
+   "competition": "tunisia league 2",
+   "kickoff_utc": "2026-09-27T14:00",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "2120d040",
+   "home": "EGS Gafsa",
+   "away": "AS Kasserine",
+   "fixture_name": "EGS Gafsa v AS Kasserine",
+   "exact_fixture_text": "Home EGS Gafsa\nAway AS Kasserine",
+   "competition": "Tunisia League 2•27 Sep 15:00",
+   "bounds": [
+    35,
+    266,
+    688,
+    435
+   ]
+  },
+  "football_market_reads": [
+   {
+    "view": "popular",
+    "cells": [
+     "MONEYLINE/HOME/NONE@4.50 (EGS Gafsa)",
+     "MONEYLINE/DRAW/NONE@3.40 (Draw)",
+     "MONEYLINE/AWAY/NONE@1.65 (AS Kasserine)",
+     "TOTAL/OVER/2.5@2.15 (Over)",
+     "TOTAL/UNDER/2.5@1.66 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": true,
+    "goals_over_under": true,
+    "asian_handicap": false,
+    "goal_line": false
+   },
+   {
+    "view": "goals",
+    "cells": [
+     "TOTAL/OVER/2.5@2.15 (Over)",
+     "TOTAL/UNDER/2.5@1.66 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": false,
+    "goals_over_under": true,
+    "asian_handicap": false,
+    "goal_line": false
+   },
+   {
+    "view": "goals_scroll",
+    "cells": [],
+    "notes": [],
+    "full_time_result": false,
+    "goals_over_under": false,
+    "asian_handicap": false,
+    "goal_line": false
+   },
+   {
+    "view": "asia",
+    "cells": [
+     "SPREAD/HOME/+0.75@1.900 (EGS Gafsa)",
+     "SPREAD/AWAY/-0.75@1.900 (AS Kasserine)",
+     "TOTAL/OVER/2.25@1.900 (Over)",
+     "TOTAL/UNDER/2.25@1.900 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": false,
+    "goals_over_under": false,
+    "asian_handicap": true,
+    "goal_line": true
+   },
+   {
+    "view": "refind",
+    "cells": [
+     "SPREAD/HOME/+0.75@1.900 (EGS Gafsa)",
+     "SPREAD/AWAY/-0.75@1.900 (AS Kasserine)",
+     "TOTAL/OVER/2.25@1.900 (Over)",
+     "TOTAL/UNDER/2.25@1.900 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": false,
+    "goals_over_under": false,
+    "asian_handicap": true,
+    "goal_line": true
+   }
+  ],
+  "football_tab_goals": {
+   "text": "Goals",
+   "bounds": [
+    403,
+    405,
+    470,
+    441
+   ]
+  },
+  "football_tab_asia": {
+   "text": "Asiat",
+   "bounds": [
+    581,
+    401,
+    641,
+    443
+   ]
+  },
+  "football_markets": [
+   {
+    "market": "SPREAD",
+    "selection_role": "HOME",
+    "selection_name": "EGS Gafsa",
+    "price": "1.900",
+    "line": "+0.75",
+    "bounds": [
+     188,
+     658,
+     272,
+     701
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "selection_role": "AWAY",
+    "selection_name": "AS Kasserine",
+    "price": "1.900",
+    "line": "-0.75",
+    "bounds": [
+     531,
+     661,
+     616,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "price": "1.900",
+    "line": "2.25",
+    "bounds": [
+     274,
+     906,
+     360,
+     949
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "price": "1.900",
+    "line": "2.25",
+    "bounds": [
+     531,
+     908,
+     617,
+     949
+    ]
+   }
+  ],
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "+0.75",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "EGS Gafsa",
+    "bounds": [
+     188,
+     658,
+     272,
+     701
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "-0.75",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "AS Kasserine",
+    "bounds": [
+     531,
+     661,
+     616,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.25",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     274,
+     906,
+     360,
+     949
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "2.25",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     531,
+     908,
+     617,
+     949
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790516974297,
+    "observed": {
+     "market": "TOTAL",
+     "side": "OVER",
+     "line": "2.25",
+     "price": "1.900",
+     "availability": "OPEN",
+     "selection_role": "OVER",
+     "selection_name": "Over",
+     "bounds": [
+      274,
+      906,
+      360,
+      949
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790516974298,
+    "observed": {
+     "market": "TOTAL",
+     "side": "OVER",
+     "line": "2.25",
+     "price": "1.900",
+     "availability": "OPEN",
+     "selection_role": "OVER",
+     "selection_name": "Over",
+     "bounds": [
+      274,
+      906,
+      360,
+      949
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "selection_role": "OVER",
+  "selection_name": "Over",
+  "selection": {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "2.25",
+   "price": "1.900",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    274,
+    906,
+    360,
+    949
+   ]
+  },
+  "stake_keypad": {
+   "zero": [
+    360,
+    1250
+   ],
+   "dot": [
+    117,
+    1250
+   ]
+  },
+  "stake_field_state": "EMPTY",
+  "stake_check_typed": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "019",
+   "stake": "0.10",
+   "price": "1.900"
+  },
+  "stake_entered": "0.10",
+  "stake_check_final": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "019",
+   "stake": "0.10",
+   "price": "1.900"
+  },
+  "ready_state": {
+   "fixture_home": "EGS Gafsa",
+   "fixture_away": "AS Kasserine",
+   "market": "TOTAL",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "line": "2.25",
+   "price": "1.900",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "final_state": {
+   "home": "EGS Gafsa",
+   "away": "AS Kasserine",
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "2.25",
+   "price": "1.900",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "confirmation_gate": "NONE",
+  "prepare_frame": "reused verified final frame",
+  "stake_check_prepare": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "019",
+   "stake": "0.10",
+   "price": "1.900"
+  },
+  "place_bet_target": {
+   "bounds": [
+    461,
+    952,
+    620,
+    1002
+   ],
+   "source": "place_bet_words"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "EGS Gafsa v AS Kasserine",
+   "fixture_home": "EGS Gafsa",
+   "fixture_away": "AS Kasserine",
+   "market": "TOTAL",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "line": "2.25",
+   "price": "1.900",
+   "stake": "0.10",
+   "minimum_price": "1.77",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    461,
+    952,
+    620,
+    1002
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     461,
+     952,
+     620,
+     1002
+    ],
+    "center_x": 540.5,
+    "center_y": 977,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790516980749,
+   "validation_hash": "23f02cf8686a648927cef7c86cf3c758"
+  },
+  "prepared_gesture": {
+   "type": "tap",
+   "target": "Place Bet",
+   "package": "com.android.chrome",
+   "bounds": [
+    461,
+    952,
+    620,
+    1002
+   ],
+   "center_x": 540.5,
+   "center_y": 977,
+   "duration_ms": 100,
+   "dispatched": false
+  },
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "held": true,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 23278
+ },
+ "wall": 31.3,
+ "frames": [
+  "s001_event_direct.png",
+  "s002_event_direct.png",
+  "s003_markets.png",
+  "s004_tabs_goals.png",
+  "s005_markets_goals.png",
+  "s006_markets_goals_scroll.png",
+  "s007_tabs_asia.png",
+  "s008_markets_asia.png",
+  "s009_selection_preflight.png",
+  "s010_betslip_pre_stake.png",
+  "s011_stake_ui.png",
+  "s012_stake_typed.png",
+  "s013_final.png"
+ ],
+ "reset": {
+  "instruction_id": "rsfbhold-TOTALS-144907",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "RESET_BETSLIP",
+  "duration_ms": 2873,
+  "progress": {
+   "stage": "RESET_BETSLIP",
+   "elapsed_ms": 2782,
+   "last_progress_at_ms": 1790516984454,
+   "instruction_id": "rsfbhold-TOTALS-144907",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790516984449
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 25,
+     "at_ms": 1790516984454,
+     "timing": {
+      "stage": "RESET_BETSLIP",
+      "start_elapsed_ms": 25,
+      "start_ts_ms": 1790516984449,
+      "end_elapsed_ms": 2782,
+      "end_ts_ms": 1790516987207,
+      "duration_ms": 2757,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 31,
+     "at_ms": 1790516984454
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 489,
+     "at_ms": 1790516984454
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 550,
+     "at_ms": 1790516984454
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 2314,
+     "at_ms": 1790516984454
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 2749,
+     "at_ms": 1790516984454
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 2782,
+     "at_ms": 1790516984454
+    }
+   ]
+  },
+  "device_stage": "RESET_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_gk_gyFJ5VyQJzXNk5yECz7xMQZxEY48tJzxRNp_dJl0",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+  "betslip_reset": {
+   "tapped": true,
+   "control": "remove selection X",
+   "bounds": [
+    20,
+    1177,
+    41,
+    1202
+   ],
+   "place_bet_still_visible": false
+  },
+  "stage_timings": [
+   {
+    "stage": "RESET_BETSLIP",
+    "start_elapsed_ms": 25,
+    "start_ts_ms": 1790516984449,
+    "end_elapsed_ms": 2782,
+    "end_ts_ms": 1790516987207,
+    "duration_ms": 2757,
+    "status": "ok",
+    "retries": 0
+   }
+  ]
+ },
+ "resumed_at": "2026-09-27T13:49:48Z",
+ "health_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.30-ops"
+ }
+}

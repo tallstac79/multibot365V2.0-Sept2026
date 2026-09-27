@@ -557,7 +557,9 @@ final class EventIdentity {
     static String competitionKey(String value) {
         if (value == null) return "";
         // A stray leading OCR digit ("6 Japan B League 1 - 25 Sep 10:35"); competition names never start with a bare digit.
-        String v = value.trim().replaceFirst("^\\d\\s+", "");
+        // Bet365's separator between competition and date can be read glued to both numbers ("Tunisia League 2*27 Sep
+        // 15:00" with a bullet, EGS Gafsa v AS Kasserine, 27 Sep 2026): a separator glyph counts as whitespace here.
+        String v = value.trim().replaceAll("[\u2022\u00b7\u2027\u2219\u2013\u2014|]", " ").replaceAll("\\s+", " ").replaceFirst("^\\d\\s+", "");
         String withoutDate = v.replaceAll("(?i)\\s+\\d{1,2}\\s+" + MONTH_RE + "[a-z]*.*$", "");
         if (withoutDate.equals(v))
             // Date glued to the league digit by OCR ("Japan B League 125 Sep 10:45"): keep the digit, drop the date.

@@ -1,0 +1,526 @@
+{
+ "alert": {
+  "intake_id": 2413,
+  "message_id": "71603",
+  "source_timestamp": "2026-09-27T13:35:40+00:00",
+  "text": "New odds update on Pinnacle\n\nFootball - Poland - 4th Liga\nUKS Pionier Bransk vs Ruch Wysokie Mazowieckie\n27.09.2026 15:00\n\nTotals (3.75) (alt. line)\n2.400⬆️ (2.110) - 1.492⬇️ (1.657)\n\n🟢 Opening (3.75)\n1.724 - 1.970\n\n[Bet365 (Totals 3.75)](https://bet365.com/#/AC/B1/C1/D8/E201871489/F3/I1/)\n1.93 - **1.88**\n\n🎯 EV: 118.95%"
+ },
+ "interpretation": {
+  "verdict": {
+   "profile": "oddsnotifier_football_two_sided_v1",
+   "in_play_link": false,
+   "signal_basis": "price_same_line",
+   "line_candidate": null,
+   "price_candidate": "UNDER",
+   "verdict": "EXECUTABLE_UNDER",
+   "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 UNDER 1.88 vs Pinnacle 1.492"
+  },
+  "target_side": "UNDER",
+  "target_line": "3.75",
+  "alert_price": "1.88",
+  "reference": {
+   "bookmaker": "Pinnacle",
+   "line": "3.75",
+   "odds": "1.492",
+   "fair_odds": null
+  },
+  "sharp_signal": {
+   "source": "pinnacle_opening_to_current",
+   "side": "UNDER",
+   "status": "IDENTIFIED",
+   "reason": "Pinnacle line 3.75 unchanged; UNDER 1.970 -> 1.492 shortens, OVER 1.724 -> 2.400 does not",
+   "basis": "price_same_line",
+   "opening_line": "3.75",
+   "current_line": "3.75",
+   "change": "-0.478",
+   "magnitude": "0.478",
+   "magnitude_units": "decimal_odds",
+   "direction": "SHORTENED",
+   "opening_prices": {
+    "OVER": "1.724",
+    "UNDER": "1.970"
+   },
+   "current_prices": {
+    "OVER": "2.400",
+    "UNDER": "1.492"
+   },
+   "changes_by_side": {
+    "OVER": "0.676",
+    "UNDER": "-0.478"
+   },
+   "line_candidate": null,
+   "price_candidate": "UNDER",
+   "highlight_agrees": true,
+   "recent_line_reversal": false
+  },
+  "bet_quality": "CLEAR_VALUE_SIGNAL"
+ },
+ "rules": {
+  "decision": "ACCEPT",
+  "reason": "All rules passed",
+  "instruction": {
+   "instruction_id": "fbhold-TOTALS-144411",
+   "sport": "football",
+   "competition": "4th Liga",
+   "fixture": "UKS Pionier Bransk vs Ruch Wysokie Mazowieckie",
+   "home": "UKS Pionier Bransk",
+   "away": "Ruch Wysokie Mazowieckie",
+   "event_time_local": "2026-09-27T15:00",
+   "event_timezone": "Europe/London",
+   "event_start_utc": "2026-09-27T14:00:00+00:00",
+   "market": "TOTALS",
+   "side": "UNDER",
+   "selection_name": "Under",
+   "line": "3.75",
+   "alternate_line": {
+    "current": true,
+    "opening": false,
+    "comparison": false
+   },
+   "alert_price": "1.88",
+   "minimum_price": "1.80",
+   "stake": "0.10",
+   "max_odds_deterioration": null,
+   "max_net_payout_deterioration_percent": 10,
+   "max_line_deterioration": "0.25",
+   "configured_line_absolute_cap": 0.25,
+   "max_line_deterioration_percent": null,
+   "displayed_ev_percent": "118.95",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "signal_reason": "CLEAR_VALUE_SIGNAL",
+   "line_advantage": "0.00",
+   "target_source": "pinnacle_opening_to_current",
+   "implied_target": null,
+   "sharp_signal": {
+    "source": "pinnacle_opening_to_current",
+    "side": "UNDER",
+    "status": "IDENTIFIED",
+    "reason": "Pinnacle line 3.75 unchanged; UNDER 1.970 -> 1.492 shortens, OVER 1.724 -> 2.400 does not",
+    "basis": "price_same_line",
+    "opening_line": "3.75",
+    "current_line": "3.75",
+    "change": "-0.478",
+    "magnitude": "0.478",
+    "magnitude_units": "decimal_odds",
+    "direction": "SHORTENED",
+    "opening_prices": {
+     "OVER": "1.724",
+     "UNDER": "1.970"
+    },
+    "current_prices": {
+     "OVER": "2.400",
+     "UNDER": "1.492"
+    },
+    "changes_by_side": {
+     "OVER": "0.676",
+     "UNDER": "-0.478"
+    },
+    "line_candidate": null,
+    "price_candidate": "UNDER"
+   },
+   "highlighted_side": "UNDER",
+   "ev_status": "SUPPLIED_EQUAL_LINE",
+   "line_quality": "EQUAL",
+   "price_quality": "FAVOURABLE",
+   "reference_odds": "1.492"
+  }
+ },
+ "payload": {
+  "instruction_id": "fbhold-TOTALS-144411",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "UKS Pionier Bransk||Ruch Wysokie Mazowieckie",
+  "sport": "football",
+  "market": "TOTALS",
+  "side": "UNDER",
+  "line": "3.75",
+  "minimum_price": "1.80",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201871489/F3/I1/",
+  "kickoff_utc": "2026-09-27T14:00",
+  "competition": "4th Liga",
+  "period": "FULL_GAME",
+  "country": "Poland",
+  "max_line_deterioration": "0.25"
+ },
+ "paused_at": "2026-09-27T13:44:13Z",
+ "result": {
+  "instruction_id": "fbhold-TOTALS-144411",
+  "status": "FAIL",
+  "stage": "ALIAS_REQUIRED",
+  "detail": "Event link shows 'Pionier Bransk v Ruch Wysokie Mazowieckie'; alert says 'UKS Pionier Bransk v Ruch Wysokie Mazowieckie': Known matching kick-off and competition required (competition mismatch (feed '4th liga' vs page 'poland iv liga'))",
+  "duration_ms": 10500,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 10306,
+   "last_progress_at_ms": 1790516659122,
+   "instruction_id": "fbhold-TOTALS-144411",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790516654260
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 19,
+     "at_ms": 1790516654268
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 27,
+     "at_ms": 1790516654276,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 27,
+      "start_ts_ms": 1790516654269,
+      "end_elapsed_ms": 10306,
+      "end_ts_ms": 1790516664547,
+      "duration_ms": 10279,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3451,
+     "at_ms": 1790516654276
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4051,
+     "at_ms": 1790516654276
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4106,
+     "at_ms": 1790516654276
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4682,
+     "at_ms": 1790516654276
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4872,
+     "at_ms": 1790516659122,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 27,
+      "start_ts_ms": 1790516654269,
+      "end_elapsed_ms": 10306,
+      "end_ts_ms": 1790516664547,
+      "duration_ms": 10279,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 8304,
+     "at_ms": 1790516659122
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 8540,
+     "at_ms": 1790516659122
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 9480,
+     "at_ms": 1790516659122
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 10090,
+     "at_ms": 1790516659122
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 10306,
+     "at_ms": 1790516659122
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_LeeulnsQp-yV9tW7HfT0wGkUzg7vvmssbBgbm8VShm8",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'Pionier Bransk v Ruch Wysokie Mazowieckie'; alert says 'UKS Pionier Bransk v Ruch Wysokie Mazowieckie': Known matching kick-off and competition required (competition mismatch (feed '4th liga' vs page 'poland iv liga'))",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 27,
+    "start_ts_ms": 1790516654269,
+    "end_elapsed_ms": 10306,
+    "end_ts_ms": 1790516664547,
+    "duration_ms": 10279,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed '4th liga' vs page 'poland iv liga'))",
+  "identity": {
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed '4th liga' vs page 'poland iv liga'))",
+   "home": {
+    "feed": "UKS Pionier Bransk",
+    "bookmaker": "Pionier Bransk",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [pionier, bransk] contained; extra [uks]",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Ruch Wysokie Mazowieckie",
+    "bookmaker": "Ruch Wysokie Mazowieckie",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "mismatch (feed '4th liga' vs page 'poland iv liga')",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "UKS Pionier Bransk",
+     "bookmaker": "Pionier Bransk",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [pionier, bransk] contained; extra [uks]"
+    },
+    "away_similarity": {
+     "feed": "Ruch Wysokie Mazowieckie",
+     "bookmaker": "Ruch Wysokie Mazowieckie",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "verified_gate_failed",
+    "verdict": "AMBIGUOUS"
+   }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201871489/F3/I1/",
+  "session_path": [
+   {
+    "saw": "ACCOUNT",
+    "state": "AUTHENTICATED",
+    "attempts": 0
+   }
+  ],
+  "session_machine": "AUTHENTICATED"
+ },
+ "run": {
+  "run_id": "c_LeeulnsQp-yV9tW7HfT0wGkUzg7vvmssbBgbm8VShm8",
+  "adapter": "live_bet365",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790516654242,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790516654242
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 19,
+    "wall_ts_ms": 1790516654261
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 27,
+    "wall_ts_ms": 1790516654269
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3451,
+    "wall_ts_ms": 1790516657693
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 4051,
+    "wall_ts_ms": 1790516658294
+   },
+   {
+    "phase": "CAPTURE_session",
+    "elapsed_ms": 4106,
+    "wall_ts_ms": 1790516658347
+   },
+   {
+    "phase": "CAPTURED_session",
+    "elapsed_ms": 4682,
+    "wall_ts_ms": 1790516658923
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 4872,
+    "wall_ts_ms": 1790516659113
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 8304,
+    "wall_ts_ms": 1790516662546
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 8540,
+    "wall_ts_ms": 1790516662781
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 9480,
+    "wall_ts_ms": 1790516663723
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 10090,
+    "wall_ts_ms": 1790516664333
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 10306,
+    "wall_ts_ms": 1790516664547
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_session.png",
+   "s003_event_direct.png",
+   "s004_event_direct.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 27,
+    "start_ts_ms": 1790516654269,
+    "end_elapsed_ms": 10306,
+    "end_ts_ms": 1790516664547,
+    "duration_ms": 10279,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "UKS Pionier Bransk",
+  "identity_home": "UKS Pionier Bransk",
+  "expected_away": "Ruch Wysokie Mazowieckie",
+  "identity_away": "Ruch Wysokie Mazowieckie",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201871489/F3/I1/",
+  "current_stage": "OPEN_HOME",
+  "session_path": [
+   {
+    "saw": "ACCOUNT",
+    "state": "AUTHENTICATED",
+    "attempts": 0
+   }
+  ],
+  "session_machine": "AUTHENTICATED",
+  "session": "AUTHENTICATED",
+  "event_direct_wait": 1,
+  "direct_event_header": [
+   "Poland IV Liga • 27 Sep 15:00",
+   "Pionier Bransk v Ruch Wysokie Mazowieckie v",
+   "Popular Bet Builder Result Goals Half Asiat"
+  ],
+  "competition_check": {
+   "feed": "4th Liga",
+   "country": "Poland",
+   "page": "Poland IV Liga • 27 Sep 15:00",
+   "matches": false
+  },
+  "identity": {
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed '4th liga' vs page 'poland iv liga'))",
+   "home": {
+    "feed": "UKS Pionier Bransk",
+    "bookmaker": "Pionier Bransk",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [pionier, bransk] contained; extra [uks]",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Ruch Wysokie Mazowieckie",
+    "bookmaker": "Ruch Wysokie Mazowieckie",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "mismatch (feed '4th liga' vs page 'poland iv liga')",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "UKS Pionier Bransk",
+     "bookmaker": "Pionier Bransk",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [pionier, bransk] contained; extra [uks]"
+    },
+    "away_similarity": {
+     "feed": "Ruch Wysokie Mazowieckie",
+     "bookmaker": "Ruch Wysokie Mazowieckie",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "verified_gate_failed",
+    "verdict": "AMBIGUOUS"
+   }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed '4th liga' vs page 'poland iv liga'))",
+  "detail": "Event link shows 'Pionier Bransk v Ruch Wysokie Mazowieckie'; alert says 'UKS Pionier Bransk v Ruch Wysokie Mazowieckie': Known matching kick-off and competition required (competition mismatch (feed '4th liga' vs page 'poland iv liga'))",
+  "duration_ms": 10306
+ },
+ "wall": 11.8,
+ "frames": [
+  "s001_event_direct.png",
+  "s002_session.png",
+  "s003_event_direct.png",
+  "s004_event_direct.png"
+ ],
+ "resumed_at": "2026-09-27T13:44:26Z",
+ "health_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.29-ops"
+ }
+}

@@ -1,0 +1,423 @@
+{
+ "alert": {
+  "intake_id": 2411,
+  "message_id": "71601",
+  "source_timestamp": "2026-09-27T13:35:38+00:00",
+  "text": "New odds update on Pinnacle\n\nFootball - Tunisia - League 2\n[EGS Gafsa vs AS Kasserine](https://oddshub.io/football/tunisia-ligue-2-group-b/74990920?market=Totals)\n27.09.2026 15:00\n\nTotals (2) (alt. line)\n1.507⬇️ (1.571) - 2.320⬆️ (2.180)\n\n🟢 Opening (2)\n1.833 - 1.877\n\n[Bet365 (Totals 2)](https://bet365.com/#/AC/B1/C1/D8/E201821677/F3/I1/)\n**1.85** - 1.95\n\n🎯 EV: 115.12%"
+ },
+ "interpretation": {
+  "verdict": {
+   "profile": "oddsnotifier_football_two_sided_v1",
+   "in_play_link": false,
+   "signal_basis": "price_same_line",
+   "line_candidate": null,
+   "price_candidate": "OVER",
+   "verdict": "EXECUTABLE_OVER",
+   "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 OVER 1.85 vs Pinnacle 1.507"
+  },
+  "target_side": "OVER",
+  "target_line": "2",
+  "alert_price": "1.85",
+  "reference": {
+   "bookmaker": "Pinnacle",
+   "line": "2",
+   "odds": "1.507",
+   "fair_odds": null
+  },
+  "sharp_signal": {
+   "source": "pinnacle_opening_to_current",
+   "side": "OVER",
+   "status": "IDENTIFIED",
+   "reason": "Pinnacle line 2 unchanged; OVER 1.833 -> 1.507 shortens, UNDER 1.877 -> 2.320 does not",
+   "basis": "price_same_line",
+   "opening_line": "2",
+   "current_line": "2",
+   "change": "-0.326",
+   "magnitude": "0.326",
+   "magnitude_units": "decimal_odds",
+   "direction": "SHORTENED",
+   "opening_prices": {
+    "OVER": "1.833",
+    "UNDER": "1.877"
+   },
+   "current_prices": {
+    "OVER": "1.507",
+    "UNDER": "2.320"
+   },
+   "changes_by_side": {
+    "OVER": "-0.326",
+    "UNDER": "0.443"
+   },
+   "line_candidate": null,
+   "price_candidate": "OVER",
+   "highlight_agrees": true,
+   "recent_line_reversal": false
+  },
+  "bet_quality": "CLEAR_VALUE_SIGNAL"
+ },
+ "rules": {
+  "decision": "ACCEPT",
+  "reason": "All rules passed",
+  "instruction": {
+   "instruction_id": "fbhold-TOTALS-144435",
+   "sport": "football",
+   "competition": "League 2",
+   "fixture": "EGS Gafsa vs AS Kasserine",
+   "home": "EGS Gafsa",
+   "away": "AS Kasserine",
+   "event_time_local": "2026-09-27T15:00",
+   "event_timezone": "Europe/London",
+   "event_start_utc": "2026-09-27T14:00:00+00:00",
+   "market": "TOTALS",
+   "side": "OVER",
+   "selection_name": "Over",
+   "line": "2",
+   "alternate_line": {
+    "current": true,
+    "opening": false,
+    "comparison": false
+   },
+   "alert_price": "1.85",
+   "minimum_price": "1.77",
+   "stake": "0.10",
+   "max_odds_deterioration": null,
+   "max_net_payout_deterioration_percent": 10,
+   "max_line_deterioration": "0.25",
+   "configured_line_absolute_cap": 0.25,
+   "max_line_deterioration_percent": null,
+   "displayed_ev_percent": "115.12",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "signal_reason": "CLEAR_VALUE_SIGNAL",
+   "line_advantage": "0",
+   "target_source": "pinnacle_opening_to_current",
+   "implied_target": null,
+   "sharp_signal": {
+    "source": "pinnacle_opening_to_current",
+    "side": "OVER",
+    "status": "IDENTIFIED",
+    "reason": "Pinnacle line 2 unchanged; OVER 1.833 -> 1.507 shortens, UNDER 1.877 -> 2.320 does not",
+    "basis": "price_same_line",
+    "opening_line": "2",
+    "current_line": "2",
+    "change": "-0.326",
+    "magnitude": "0.326",
+    "magnitude_units": "decimal_odds",
+    "direction": "SHORTENED",
+    "opening_prices": {
+     "OVER": "1.833",
+     "UNDER": "1.877"
+    },
+    "current_prices": {
+     "OVER": "1.507",
+     "UNDER": "2.320"
+    },
+    "changes_by_side": {
+     "OVER": "-0.326",
+     "UNDER": "0.443"
+    },
+    "line_candidate": null,
+    "price_candidate": "OVER"
+   },
+   "highlighted_side": "OVER",
+   "ev_status": "SUPPLIED_EQUAL_LINE",
+   "line_quality": "EQUAL",
+   "price_quality": "FAVOURABLE",
+   "reference_odds": "1.507"
+  }
+ },
+ "payload": {
+  "instruction_id": "fbhold-TOTALS-144435",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "EGS Gafsa||AS Kasserine",
+  "sport": "football",
+  "market": "TOTALS",
+  "side": "OVER",
+  "line": "2",
+  "minimum_price": "1.77",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201821677/F3/I1/",
+  "kickoff_utc": "2026-09-27T14:00",
+  "competition": "League 2",
+  "period": "FULL_GAME",
+  "country": "Tunisia",
+  "max_line_deterioration": "0.25"
+ },
+ "paused_at": "2026-09-27T13:44:37Z",
+ "result": {
+  "instruction_id": "fbhold-TOTALS-144435",
+  "status": "FAIL",
+  "stage": "ALIAS_REQUIRED",
+  "detail": "Event link shows 'EGS Gafsa v AS Kasserine'; alert says 'EGS Gafsa v AS Kasserine': Known matching kick-off and competition required (competition mismatch (feed 'league 2' vs page 'tunisia league 2 27 sep 15 00'))",
+  "duration_ms": 4344,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 4097,
+   "last_progress_at_ms": 1790516677615,
+   "instruction_id": "fbhold-TOTALS-144435",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790516677593
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 20,
+     "at_ms": 1790516677602
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 30,
+     "at_ms": 1790516677615,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 30,
+      "start_ts_ms": 1790516677604,
+      "end_elapsed_ms": 4097,
+      "end_ts_ms": 1790516681671,
+      "duration_ms": 4067,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3474,
+     "at_ms": 1790516677615
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3993,
+     "at_ms": 1790516677615
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4097,
+     "at_ms": 1790516677615
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_UWFv7mtCtFNZnxnR807yFYscKPxf6suCRp1mqyjDwuY",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'EGS Gafsa v AS Kasserine'; alert says 'EGS Gafsa v AS Kasserine': Known matching kick-off and competition required (competition mismatch (feed 'league 2' vs page 'tunisia league 2 27 sep 15 00'))",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 30,
+    "start_ts_ms": 1790516677604,
+    "end_elapsed_ms": 4097,
+    "end_ts_ms": 1790516681671,
+    "duration_ms": 4067,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed 'league 2' vs page 'tunisia league 2 27 sep 15 00'))",
+  "identity": {
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed 'league 2' vs page 'tunisia league 2 27 sep 15 00'))",
+   "home": {
+    "feed": "EGS Gafsa",
+    "bookmaker": "EGS Gafsa",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "AS Kasserine",
+    "bookmaker": "AS Kasserine",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "mismatch (feed 'league 2' vs page 'tunisia league 2 27 sep 15 00')",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "EGS Gafsa",
+     "bookmaker": "EGS Gafsa",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "away_similarity": {
+     "feed": "AS Kasserine",
+     "bookmaker": "AS Kasserine",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "verified_gate_failed",
+    "verdict": "AMBIGUOUS"
+   }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201821677/F3/I1/"
+ },
+ "run": {
+  "run_id": "c_UWFv7mtCtFNZnxnR807yFYscKPxf6suCRp1mqyjDwuY",
+  "adapter": "live_bet365",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790516677573,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790516677573
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 20,
+    "wall_ts_ms": 1790516677594
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 30,
+    "wall_ts_ms": 1790516677604
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3474,
+    "wall_ts_ms": 1790516681048
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3993,
+    "wall_ts_ms": 1790516681567
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 4097,
+    "wall_ts_ms": 1790516681671
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 30,
+    "start_ts_ms": 1790516677604,
+    "end_elapsed_ms": 4097,
+    "end_ts_ms": 1790516681671,
+    "duration_ms": 4067,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "EGS Gafsa",
+  "identity_home": "EGS Gafsa",
+  "expected_away": "AS Kasserine",
+  "identity_away": "AS Kasserine",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201821677/F3/I1/",
+  "current_stage": "OPEN_HOME",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Tunisia League 2•27 Sep 15:00",
+   "EGS Gafsa v AS Kasserine v",
+   "Popular Bet Builder Result Goals Half Asial"
+  ],
+  "competition_check": {
+   "feed": "League 2",
+   "country": "Tunisia",
+   "page": "Tunisia League 2•27 Sep 15:00",
+   "matches": false
+  },
+  "identity": {
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed 'league 2' vs page 'tunisia league 2 27 sep 15 00'))",
+   "home": {
+    "feed": "EGS Gafsa",
+    "bookmaker": "EGS Gafsa",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "AS Kasserine",
+    "bookmaker": "AS Kasserine",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "mismatch (feed 'league 2' vs page 'tunisia league 2 27 sep 15 00')",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "EGS Gafsa",
+     "bookmaker": "EGS Gafsa",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "away_similarity": {
+     "feed": "AS Kasserine",
+     "bookmaker": "AS Kasserine",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "verified_gate_failed",
+    "verdict": "AMBIGUOUS"
+   }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed 'league 2' vs page 'tunisia league 2 27 sep 15 00'))",
+  "detail": "Event link shows 'EGS Gafsa v AS Kasserine'; alert says 'EGS Gafsa v AS Kasserine': Known matching kick-off and competition required (competition mismatch (feed 'league 2' vs page 'tunisia league 2 27 sep 15 00'))",
+  "duration_ms": 4097
+ },
+ "wall": 5.4,
+ "frames": [
+  "s001_event_direct.png"
+ ],
+ "resumed_at": "2026-09-27T13:44:43Z",
+ "health_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.29-ops"
+ }
+}
