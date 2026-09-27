@@ -1,0 +1,1540 @@
+{
+ "alert": {
+  "intake_id": 2257,
+  "message_id": "71397",
+  "source_timestamp": "2026-09-27T11:03:52+00:00",
+  "text": "New odds update on Pinnacle\n\nFootball - Switzerland - 1. Liga Classic\n[Munsingen vs Muttenz](https://oddshub.io/football/switzerland-1-liga-group-b/72525882?market=ML)\n27.09.2026 13:30\n3.190⬆️ (2.570) - 3.790 (3.550) - 1.892⬇️ (2.300)\n\n🟢 Opening\n2.570 - 2.300\n\n[Bet365](https://www.bet365.com/#/AC/B1/C1/D8/E201827374/F3/I1/)\n2.50 - 3.75 - **2.25**\n\n🎯 EV: 111.13%"
+ },
+ "interpretation": {
+  "verdict": {
+   "profile": "oddsnotifier_football_1x2_v1",
+   "in_play_link": false,
+   "signal_basis": "price",
+   "draw_opening_supplied": false,
+   "verdict": "EXECUTABLE_AWAY",
+   "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 AWAY 2.25 vs Pinnacle 1.892"
+  },
+  "target_side": "AWAY",
+  "target_line": null,
+  "alert_price": "2.25",
+  "reference": {
+   "bookmaker": "Pinnacle",
+   "line": null,
+   "odds": "1.892",
+   "fair_odds": null
+  },
+  "sharp_signal": {
+   "source": "pinnacle_opening_to_current",
+   "side": "AWAY",
+   "status": "IDENTIFIED",
+   "reason": "Pinnacle AWAY opening 2.300 -> current 1.892 shortens; HOME 2.570 -> 3.190 does not shorten; draw opening not supplied, draw never a candidate",
+   "basis": "price",
+   "opening_line": null,
+   "current_line": null,
+   "change": "-0.408",
+   "magnitude": "0.408",
+   "magnitude_units": "decimal_odds",
+   "direction": "SHORTENED",
+   "opening_prices": {
+    "HOME": "2.570",
+    "AWAY": "2.300"
+   },
+   "current_prices": {
+    "HOME": "3.190",
+    "DRAW": "3.790",
+    "AWAY": "1.892"
+   },
+   "changes_by_side": {
+    "HOME": "0.620",
+    "AWAY": "-0.408"
+   },
+   "draw_opening_supplied": false,
+   "candidates": [
+    "HOME",
+    "AWAY"
+   ],
+   "opening_to_current_percent": "-17.73913043478260869565217391",
+   "highlight_agrees": true
+  },
+  "bet_quality": "CLEAR_VALUE_SIGNAL"
+ },
+ "rules": {
+  "decision": "ACCEPT",
+  "reason": "All rules passed",
+  "instruction": {
+   "instruction_id": "fbhold-1X2-120354",
+   "sport": "football",
+   "competition": "1. Liga Classic",
+   "fixture": "Munsingen vs Muttenz",
+   "home": "Munsingen",
+   "away": "Muttenz",
+   "event_time_local": "2026-09-27T13:30",
+   "event_timezone": "Europe/London",
+   "event_start_utc": "2026-09-27T12:30:00+00:00",
+   "market": "1X2",
+   "side": "AWAY",
+   "selection_name": "Muttenz",
+   "line": null,
+   "alternate_line": {
+    "current": false,
+    "opening": false,
+    "comparison": false
+   },
+   "alert_price": "2.25",
+   "minimum_price": "2.13",
+   "stake": "0.10",
+   "max_odds_deterioration": null,
+   "max_net_payout_deterioration_percent": 10,
+   "max_line_deterioration": null,
+   "configured_line_absolute_cap": null,
+   "max_line_deterioration_percent": null,
+   "displayed_ev_percent": "111.13",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "signal_reason": "CLEAR_VALUE_SIGNAL",
+   "line_advantage": null,
+   "target_source": "pinnacle_opening_to_current",
+   "implied_target": null,
+   "sharp_signal": {
+    "source": "pinnacle_opening_to_current",
+    "side": "AWAY",
+    "status": "IDENTIFIED",
+    "reason": "Pinnacle AWAY opening 2.300 -> current 1.892 shortens; HOME 2.570 -> 3.190 does not shorten; draw opening not supplied, draw never a candidate",
+    "basis": "price",
+    "opening_line": null,
+    "current_line": null,
+    "change": "-0.408",
+    "magnitude": "0.408",
+    "magnitude_units": "decimal_odds",
+    "direction": "SHORTENED",
+    "opening_prices": {
+     "HOME": "2.570",
+     "AWAY": "2.300"
+    },
+    "current_prices": {
+     "HOME": "3.190",
+     "DRAW": "3.790",
+     "AWAY": "1.892"
+    },
+    "changes_by_side": {
+     "HOME": "0.620",
+     "AWAY": "-0.408"
+    },
+    "draw_opening_supplied": false,
+    "candidates": [
+     "HOME",
+     "AWAY"
+    ],
+    "opening_to_current_percent": "-17.73913043478260869565217391"
+   },
+   "highlighted_side": "AWAY",
+   "ev_status": "SUPPLIED_EQUAL_LINE",
+   "line_quality": "EQUAL",
+   "price_quality": "FAVOURABLE",
+   "reference_odds": "1.892"
+  }
+ },
+ "payload": {
+  "instruction_id": "fbhold-1X2-120354",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Munsingen||Muttenz",
+  "sport": "football",
+  "market": "1X2",
+  "side": "AWAY",
+  "line": "",
+  "minimum_price": "2.13",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201827374/F3/I1/",
+  "kickoff_utc": "2026-09-27T12:30",
+  "competition": "1. Liga Classic",
+  "period": "FULL_GAME",
+  "country": "Switzerland"
+ },
+ "paused_at": "2026-09-27T11:03:55Z",
+ "result": {
+  "instruction_id": "fbhold-1X2-120354",
+  "status": "FAIL",
+  "stage": "BETSLIP_NOT_SINGLE",
+  "detail": "Betslip shows more than one selection; a multiple would be placed",
+  "duration_ms": 15001,
+  "progress": {
+   "stage": "CLEAR_BETSLIP",
+   "elapsed_ms": 14774,
+   "last_progress_at_ms": 1790507047983,
+   "instruction_id": "fbhold-1X2-120354",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790507036215
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 23,
+     "at_ms": 1790507036222
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 31,
+     "at_ms": 1790507036234,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 31,
+      "start_ts_ms": 1790507036224,
+      "end_elapsed_ms": 5183,
+      "end_ts_ms": 1790507041376,
+      "duration_ms": 5152,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3475,
+     "at_ms": 1790507036234
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3707,
+     "at_ms": 1790507036234
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4621,
+     "at_ms": 1790507036234
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5111,
+     "at_ms": 1790507036234
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5183,
+     "at_ms": 1790507041386,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 5183,
+      "start_ts_ms": 1790507041376,
+      "end_elapsed_ms": 5772,
+      "end_ts_ms": 1790507041965,
+      "duration_ms": 589,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5194,
+     "at_ms": 1790507041386
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5690,
+     "at_ms": 1790507041386
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 5772,
+     "at_ms": 1790507041986,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 5772,
+      "start_ts_ms": 1790507041965,
+      "end_elapsed_ms": 5794,
+      "end_ts_ms": 1790507041987,
+      "duration_ms": 22,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 5794,
+     "at_ms": 1790507042001,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 5794,
+      "start_ts_ms": 1790507041987,
+      "end_elapsed_ms": 5809,
+      "end_ts_ms": 1790507042001,
+      "duration_ms": 15,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 5809,
+     "at_ms": 1790507042016,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 5809,
+      "start_ts_ms": 1790507042001,
+      "end_elapsed_ms": 5824,
+      "end_ts_ms": 1790507042017,
+      "duration_ms": 15,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 5824,
+     "at_ms": 1790507042032,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 5824,
+      "start_ts_ms": 1790507042017,
+      "end_elapsed_ms": 7124,
+      "end_ts_ms": 1790507043317,
+      "duration_ms": 1300,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 5841,
+     "at_ms": 1790507042032
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 6312,
+     "at_ms": 1790507042032
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 6346,
+     "at_ms": 1790507042032
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7124,
+     "at_ms": 1790507043348,
+     "timing": {
+      "stage": "ENTER_STAKE",
+      "start_elapsed_ms": 7124,
+      "start_ts_ms": 1790507043317,
+      "end_elapsed_ms": 11155,
+      "end_ts_ms": 1790507047348,
+      "duration_ms": 4031,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7157,
+     "at_ms": 1790507043348
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7677,
+     "at_ms": 1790507043348
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7811,
+     "at_ms": 1790507043348
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8549,
+     "at_ms": 1790507043348
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9051,
+     "at_ms": 1790507043348
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9109,
+     "at_ms": 1790507043348
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9384,
+     "at_ms": 1790507043348
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9660,
+     "at_ms": 1790507043348
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9974,
+     "at_ms": 1790507043348
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 10285,
+     "at_ms": 1790507043348
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 10790,
+     "at_ms": 1790507043348
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 10882,
+     "at_ms": 1790507043348
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 11155,
+     "at_ms": 1790507047402,
+     "timing": {
+      "stage": "VERIFY_FINAL_STATE",
+      "start_elapsed_ms": 11155,
+      "start_ts_ms": 1790507047348,
+      "end_elapsed_ms": 14773,
+      "end_ts_ms": 1790507050966,
+      "duration_ms": 3618,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 11211,
+     "at_ms": 1790507047402
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 11714,
+     "at_ms": 1790507047402
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 11767,
+     "at_ms": 1790507047983
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 11791,
+     "at_ms": 1790507047983
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 12339,
+     "at_ms": 1790507047983
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 12370,
+     "at_ms": 1790507047983
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 14150,
+     "at_ms": 1790507047983
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 14742,
+     "at_ms": 1790507047983
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 14774,
+     "at_ms": 1790507047983
+    }
+   ]
+  },
+  "device_stage": "CLEAR_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_nZ0U0TvrUHDb7Kusd6yyFE7kGw45uWMKbzop7wanId8",
+  "fixture_name": "FC Munsingen v SV Muttenz",
+  "home": "FC Munsingen",
+  "away": "SV Muttenz",
+  "competition": "Switzerland 1.Liga Classic • 27 Sep 13:30",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "NONE",
+   "price": "2.20",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "SV Muttenz",
+   "bounds": [
+    551,
+    625,
+    624,
+    666
+   ]
+  },
+  "verification_detail": "Betslip shows more than one selection; a multiple would be placed",
+  "betslip_clear": {
+   "tapped": true,
+   "bounds": [
+    21,
+    1181,
+    42,
+    1202
+   ],
+   "place_bet_still_visible": false
+  },
+  "event_context": {
+   "home": "FC Munsingen",
+   "away": "SV Muttenz",
+   "competition": "switzerland 1 liga classic",
+   "kickoff_utc": "2026-09-27T12:30",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790507041986,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "2.20",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "SV Muttenz",
+     "bounds": [
+      551,
+      625,
+      624,
+      666
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790507041987,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "2.20",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "SV Muttenz",
+     "bounds": [
+      551,
+      625,
+      624,
+      666
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 31,
+    "start_ts_ms": 1790507036224,
+    "end_elapsed_ms": 5183,
+    "end_ts_ms": 1790507041376,
+    "duration_ms": 5152,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5183,
+    "start_ts_ms": 1790507041376,
+    "end_elapsed_ms": 5772,
+    "end_ts_ms": 1790507041965,
+    "duration_ms": 589,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5772,
+    "start_ts_ms": 1790507041965,
+    "end_elapsed_ms": 5794,
+    "end_ts_ms": 1790507041987,
+    "duration_ms": 22,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 5794,
+    "start_ts_ms": 1790507041987,
+    "end_elapsed_ms": 5809,
+    "end_ts_ms": 1790507042001,
+    "duration_ms": 15,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 5809,
+    "start_ts_ms": 1790507042001,
+    "end_elapsed_ms": 5824,
+    "end_ts_ms": 1790507042017,
+    "duration_ms": 15,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 5824,
+    "start_ts_ms": 1790507042017,
+    "end_elapsed_ms": 7124,
+    "end_ts_ms": 1790507043317,
+    "duration_ms": 1300,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 7124,
+    "start_ts_ms": 1790507043317,
+    "end_elapsed_ms": 11155,
+    "end_ts_ms": 1790507047348,
+    "duration_ms": 4031,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 11155,
+    "start_ts_ms": 1790507047348,
+    "end_elapsed_ms": 14773,
+    "end_ts_ms": 1790507050966,
+    "duration_ms": 3618,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "stake_field_state": "EMPTY",
+  "identity": {
+   "verdict": "CANONICAL_MATCH",
+   "reason": "both teams canonical",
+   "home": {
+    "feed": "Munsingen",
+    "bookmaker": "FC Munsingen",
+    "level": "CANONICAL",
+    "kind": "canonical",
+    "score": 1,
+    "note": "canonical tokens equal",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Muttenz",
+    "bookmaker": "SV Muttenz",
+    "level": "CANONICAL",
+    "kind": "canonical",
+    "score": 1,
+    "note": "canonical tokens equal",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Munsingen",
+     "bookmaker": "FC Munsingen",
+     "level": "CANONICAL",
+     "kind": "canonical",
+     "score": 1,
+     "note": "canonical tokens equal"
+    },
+    "away_similarity": {
+     "feed": "Muttenz",
+     "bookmaker": "SV Muttenz",
+     "level": "CANONICAL",
+     "kind": "canonical",
+     "score": 1,
+     "note": "canonical tokens equal"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "both_canonical",
+    "verdict": "CANONICAL_MATCH"
+   }
+  },
+  "identity_verdict": "CANONICAL_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201827374/F3/I1/"
+ },
+ "run": {
+  "run_id": "c_nZ0U0TvrUHDb7Kusd6yyFE7kGw45uWMKbzop7wanId8",
+  "adapter": "live_bet365",
+  "status": "BETSLIP_NOT_SINGLE",
+  "phase": "FINISHED",
+  "started_at_ms": 1790507036193,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 1,
+    "wall_ts_ms": 1790507036193
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 23,
+    "wall_ts_ms": 1790507036216
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 31,
+    "wall_ts_ms": 1790507036224
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3475,
+    "wall_ts_ms": 1790507039668
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3707,
+    "wall_ts_ms": 1790507039900
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 4621,
+    "wall_ts_ms": 1790507040815
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5111,
+    "wall_ts_ms": 1790507041304
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 5183,
+    "wall_ts_ms": 1790507041376
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 5194,
+    "wall_ts_ms": 1790507041387
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 5690,
+    "wall_ts_ms": 1790507041883
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 5772,
+    "wall_ts_ms": 1790507041965
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 5794,
+    "wall_ts_ms": 1790507041987
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 5809,
+    "wall_ts_ms": 1790507042002
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 5824,
+    "wall_ts_ms": 1790507042017
+   },
+   {
+    "phase": "CAPTURE_selection_preflight",
+    "elapsed_ms": 5841,
+    "wall_ts_ms": 1790507042033
+   },
+   {
+    "phase": "CAPTURED_selection_preflight",
+    "elapsed_ms": 6312,
+    "wall_ts_ms": 1790507042505
+   },
+   {
+    "effect": "gesture",
+    "target": "MONEYLINE / AWAY / NONE / 2.20",
+    "bounds": [
+     551,
+     625,
+     624,
+     666
+    ],
+    "elapsed_ms": 6346
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 6346,
+    "wall_ts_ms": 1790507042539
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 7124,
+    "wall_ts_ms": 1790507043317
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 7157,
+    "wall_ts_ms": 1790507043350
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 7677,
+    "wall_ts_ms": 1790507043870
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     19,
+     1326,
+     214,
+     1371
+    ],
+    "elapsed_ms": 7811
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 7811,
+    "wall_ts_ms": 1790507044004
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 8549,
+    "wall_ts_ms": 1790507044742
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 9051,
+    "wall_ts_ms": 1790507045244
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     331,
+     1229,
+     391,
+     1273
+    ],
+    "elapsed_ms": 9109
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 9109,
+    "wall_ts_ms": 1790507045301
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     87,
+     1229,
+     147,
+     1273
+    ],
+    "elapsed_ms": 9384
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 9384,
+    "wall_ts_ms": 1790507045576
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     87,
+     975,
+     147,
+     1019
+    ],
+    "elapsed_ms": 9660
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 9660,
+    "wall_ts_ms": 1790507045853
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     331,
+     1229,
+     391,
+     1273
+    ],
+    "elapsed_ms": 9974
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 9974,
+    "wall_ts_ms": 1790507046167
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 10285,
+    "wall_ts_ms": 1790507046478
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 10790,
+    "wall_ts_ms": 1790507046983
+   },
+   {
+    "effect": "gesture",
+    "target": "Done",
+    "bounds": [
+     311,
+     1331,
+     588,
+     1368
+    ],
+    "elapsed_ms": 10882
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 10882,
+    "wall_ts_ms": 1790507047074
+   },
+   {
+    "phase": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 11155,
+    "wall_ts_ms": 1790507047348
+   },
+   {
+    "phase": "CAPTURE_final",
+    "elapsed_ms": 11211,
+    "wall_ts_ms": 1790507047403
+   },
+   {
+    "phase": "CAPTURED_final",
+    "elapsed_ms": 11714,
+    "wall_ts_ms": 1790507047907
+   },
+   {
+    "phase": "CLEAR_BETSLIP",
+    "elapsed_ms": 11767,
+    "wall_ts_ms": 1790507047960
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_pre",
+    "elapsed_ms": 11791,
+    "wall_ts_ms": 1790507047983
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_pre",
+    "elapsed_ms": 12339,
+    "wall_ts_ms": 1790507048531
+   },
+   {
+    "effect": "gesture",
+    "target": "Remove selection from betslip",
+    "bounds": [
+     21,
+     1181,
+     42,
+     1202
+    ],
+    "elapsed_ms": 12370
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 12370,
+    "wall_ts_ms": 1790507048563
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_after",
+    "elapsed_ms": 14150,
+    "wall_ts_ms": 1790507050344
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_after",
+    "elapsed_ms": 14742,
+    "wall_ts_ms": 1790507050934
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 14774,
+    "wall_ts_ms": 1790507050966
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png",
+   "s003_markets.png",
+   "s004_selection_preflight.png",
+   "s005_betslip_pre_stake.png",
+   "s006_stake_ui.png",
+   "s007_stake_typed.png",
+   "s008_final.png",
+   "s009_clear_betslip_pre.png",
+   "s010_clear_betslip_after.png"
+  ],
+  "gesture_attempts": 8,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 31,
+    "start_ts_ms": 1790507036224,
+    "end_elapsed_ms": 5183,
+    "end_ts_ms": 1790507041376,
+    "duration_ms": 5152,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5183,
+    "start_ts_ms": 1790507041376,
+    "end_elapsed_ms": 5772,
+    "end_ts_ms": 1790507041965,
+    "duration_ms": 589,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5772,
+    "start_ts_ms": 1790507041965,
+    "end_elapsed_ms": 5794,
+    "end_ts_ms": 1790507041987,
+    "duration_ms": 22,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 5794,
+    "start_ts_ms": 1790507041987,
+    "end_elapsed_ms": 5809,
+    "end_ts_ms": 1790507042001,
+    "duration_ms": 15,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 5809,
+    "start_ts_ms": 1790507042001,
+    "end_elapsed_ms": 5824,
+    "end_ts_ms": 1790507042017,
+    "duration_ms": 15,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 5824,
+    "start_ts_ms": 1790507042017,
+    "end_elapsed_ms": 7124,
+    "end_ts_ms": 1790507043317,
+    "duration_ms": 1300,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 7124,
+    "start_ts_ms": 1790507043317,
+    "end_elapsed_ms": 11155,
+    "end_ts_ms": 1790507047348,
+    "duration_ms": 4031,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 11155,
+    "start_ts_ms": 1790507047348,
+    "end_elapsed_ms": 14773,
+    "end_ts_ms": 1790507050966,
+    "duration_ms": 3618,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Munsingen",
+  "identity_home": "Munsingen",
+  "expected_away": "Muttenz",
+  "identity_away": "Muttenz",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201827374/F3/I1/",
+  "current_stage": "VERIFY_FINAL_STATE",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Switzerland 1.Liga Classic • 27 Sep 13:30",
+   "FC Münsingen v SV Muttenz",
+   "Popular Bet Builder Result Goals Half Asia N"
+  ],
+  "competition_check": {
+   "feed": "1. Liga Classic",
+   "country": "Switzerland",
+   "page": "Switzerland 1.Liga Classic • 27 Sep 13:30",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "CANONICAL_MATCH",
+   "reason": "both teams canonical",
+   "home": {
+    "feed": "Munsingen",
+    "bookmaker": "FC Munsingen",
+    "level": "CANONICAL",
+    "kind": "canonical",
+    "score": 1,
+    "note": "canonical tokens equal",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Muttenz",
+    "bookmaker": "SV Muttenz",
+    "level": "CANONICAL",
+    "kind": "canonical",
+    "score": 1,
+    "note": "canonical tokens equal",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Munsingen",
+     "bookmaker": "FC Munsingen",
+     "level": "CANONICAL",
+     "kind": "canonical",
+     "score": 1,
+     "note": "canonical tokens equal"
+    },
+    "away_similarity": {
+     "feed": "Muttenz",
+     "bookmaker": "SV Muttenz",
+     "level": "CANONICAL",
+     "kind": "canonical",
+     "score": 1,
+     "note": "canonical tokens equal"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "both_canonical",
+    "verdict": "CANONICAL_MATCH"
+   }
+  },
+  "identity_verdict": "CANONICAL_MATCH",
+  "route": "event_link",
+  "kickoff_verified": "27 Sep 13:30",
+  "verified_fixture": {
+   "code": "67787c8d",
+   "home": "FC Munsingen",
+   "away": "SV Muttenz",
+   "fixture_name": "FC Munsingen v SV Muttenz",
+   "exact_fixture_text": "Home FC Munsingen\nAway SV Muttenz",
+   "competition": "Switzerland 1.Liga Classic • 27 Sep 13:30",
+   "bounds": [
+    35,
+    269,
+    691,
+    437
+   ]
+  },
+  "fixture_home": "FC Munsingen",
+  "fixture_away": "SV Muttenz",
+  "identity_verified_home": "Munsingen",
+  "identity_verified_away": "Muttenz",
+  "event_verified": true,
+  "event_context": {
+   "home": "FC Munsingen",
+   "away": "SV Muttenz",
+   "competition": "switzerland 1 liga classic",
+   "kickoff_utc": "2026-09-27T12:30",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "67787c8d",
+   "home": "FC Munsingen",
+   "away": "SV Muttenz",
+   "fixture_name": "FC Munsingen v SV Muttenz",
+   "exact_fixture_text": "Home FC Munsingen\nAway SV Muttenz",
+   "competition": "Switzerland 1.Liga Classic • 27 Sep 13:30",
+   "bounds": [
+    35,
+    269,
+    691,
+    437
+   ]
+  },
+  "football_market_reads": [
+   {
+    "view": "popular",
+    "cells": [
+     "MONEYLINE/HOME/NONE@2.55 (FC Munsingen)",
+     "MONEYLINE/DRAW/NONE@3.75 (Draw)",
+     "MONEYLINE/AWAY/NONE@2.20 (SV Muttenz)",
+     "TOTAL/OVER/2.5@1.53 (Over)",
+     "TOTAL/UNDER/2.5@2.37 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": true,
+    "goals_over_under": true,
+    "asian_handicap": false,
+    "goal_line": false
+   },
+   {
+    "view": "refind",
+    "cells": [
+     "MONEYLINE/HOME/NONE@2.55 (FC Munsingen)",
+     "MONEYLINE/DRAW/NONE@3.75 (Draw)",
+     "MONEYLINE/AWAY/NONE@2.20 (SV Muttenz)",
+     "TOTAL/OVER/2.5@1.53 (Over)",
+     "TOTAL/UNDER/2.5@2.37 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": true,
+    "goals_over_under": true,
+    "asian_handicap": false,
+    "goal_line": false
+   }
+  ],
+  "football_markets": [
+   {
+    "market": "MONEYLINE",
+    "selection_role": "HOME",
+    "selection_name": "FC Munsingen",
+    "price": "2.55",
+    "line": "NONE",
+    "bounds": [
+     95,
+     625,
+     170,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "price": "3.75",
+    "line": "NONE",
+    "bounds": [
+     324,
+     625,
+     398,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "selection_role": "AWAY",
+    "selection_name": "SV Muttenz",
+    "price": "2.20",
+    "line": "NONE",
+    "bounds": [
+     551,
+     625,
+     624,
+     666
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "price": "1.53",
+    "line": "2.5",
+    "bounds": [
+     282,
+     962,
+     354,
+     1003
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "price": "2.37",
+    "line": "2.5",
+    "bounds": [
+     537,
+     962,
+     611,
+     1003
+    ]
+   }
+  ],
+  "markets": [
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "2.55",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "FC Munsingen",
+    "bounds": [
+     95,
+     625,
+     170,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "NONE",
+    "price": "3.75",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     324,
+     625,
+     398,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "2.20",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "SV Muttenz",
+    "bounds": [
+     551,
+     625,
+     624,
+     666
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.5",
+    "price": "1.53",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     282,
+     962,
+     354,
+     1003
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "2.5",
+    "price": "2.37",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     537,
+     962,
+     611,
+     1003
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790507041986,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "2.20",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "SV Muttenz",
+     "bounds": [
+      551,
+      625,
+      624,
+      666
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790507041987,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "2.20",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "SV Muttenz",
+     "bounds": [
+      551,
+      625,
+      624,
+      666
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "selection_role": "AWAY",
+  "selection_name": "SV Muttenz",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "NONE",
+   "price": "2.20",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "SV Muttenz",
+   "bounds": [
+    551,
+    625,
+    624,
+    666
+   ]
+  },
+  "stake_keypad": {
+   "zero": [
+    361,
+    1251
+   ],
+   "dot": [
+    117,
+    1251
+   ]
+  },
+  "stake_field_state": "EMPTY",
+  "stake_check_typed": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "022",
+   "stake": "0.10",
+   "price": "2.20"
+  },
+  "stake_entered": "0.10",
+  "betslip_clear": {
+   "tapped": true,
+   "bounds": [
+    21,
+    1181,
+    42,
+    1202
+   ],
+   "place_bet_still_visible": false
+  },
+  "detail": "Betslip shows more than one selection; a multiple would be placed",
+  "duration_ms": 14774
+ },
+ "wall": 16.1,
+ "frames": [
+  "s001_event_direct.png",
+  "s002_event_direct.png",
+  "s003_markets.png",
+  "s004_selection_preflight.png",
+  "s005_betslip_pre_stake.png",
+  "s006_stake_ui.png",
+  "s007_stake_typed.png",
+  "s008_final.png",
+  "s009_clear_betslip_pre.png",
+  "s010_clear_betslip_after.png"
+ ],
+ "reset": {
+  "instruction_id": "rsfbhold-1X2-120354",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "RESET_BETSLIP",
+  "duration_ms": 668,
+  "progress": {
+   "stage": "RESET_BETSLIP",
+   "elapsed_ms": 527,
+   "last_progress_at_ms": 1790507054593,
+   "instruction_id": "rsfbhold-1X2-120354",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790507054585
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 12,
+     "at_ms": 1790507054593,
+     "timing": {
+      "stage": "RESET_BETSLIP",
+      "start_elapsed_ms": 12,
+      "start_ts_ms": 1790507054586,
+      "end_elapsed_ms": 527,
+      "end_ts_ms": 1790507055101,
+      "duration_ms": 515,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 21,
+     "at_ms": 1790507054593
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 505,
+     "at_ms": 1790507054593
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 527,
+     "at_ms": 1790507054593
+    }
+   ]
+  },
+  "device_stage": "RESET_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_mR-IgpPi0C1LWWCebj2Pmi5GYwvkYhGB6p99CphgQak",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+  "betslip_reset": {
+   "tapped": false,
+   "detail": "No safe reset control visible"
+  },
+  "stage_timings": [
+   {
+    "stage": "RESET_BETSLIP",
+    "start_elapsed_ms": 12,
+    "start_ts_ms": 1790507054586,
+    "end_elapsed_ms": 527,
+    "end_ts_ms": 1790507055101,
+    "duration_ms": 515,
+    "status": "ok",
+    "retries": 0
+   }
+  ]
+ },
+ "resumed_at": "2026-09-27T11:04:16Z",
+ "health_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.26-ops"
+ }
+}

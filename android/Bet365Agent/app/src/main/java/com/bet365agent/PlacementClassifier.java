@@ -234,7 +234,9 @@ final class PlacementClassifier {
 
     /** Betslip shows more than one selection: placing would create a multiple. */
     static boolean multipleSelections(List<String> lines) {
-        String blob = blob(lines);
+        // A football event page shows its "Double Chance" market behind the slip (FC Munsingen v SV Muttenz, 27 Sep 2026):
+        // that heading is a market name, not a multiple. Only the bet-type words on the slip itself count.
+        String blob = blob(lines).replace("double chance", " ");
         return has(blob, "double", "treble", "multiples", "accumulator", "trixie", "yankee", "patent", "lucky 15",
                 "2 selections", "3 selections", "4 selections", "5 selections");
     }

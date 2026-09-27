@@ -1,0 +1,975 @@
+{
+ "alert": {
+  "intake_id": 2257,
+  "message_id": "71397",
+  "source_timestamp": "2026-09-27T11:03:52+00:00",
+  "text": "New odds update on Pinnacle\n\nFootball - Switzerland - 1. Liga Classic\n[Munsingen vs Muttenz](https://oddshub.io/football/switzerland-1-liga-group-b/72525882?market=ML)\n27.09.2026 13:30\n3.190⬆️ (2.570) - 3.790 (3.550) - 1.892⬇️ (2.300)\n\n🟢 Opening\n2.570 - 2.300\n\n[Bet365](https://www.bet365.com/#/AC/B1/C1/D8/E201827374/F3/I1/)\n2.50 - 3.75 - **2.25**\n\n🎯 EV: 111.13%"
+ },
+ "interpretation": {
+  "verdict": {
+   "profile": "oddsnotifier_football_1x2_v1",
+   "in_play_link": false,
+   "signal_basis": "price",
+   "draw_opening_supplied": false,
+   "verdict": "EXECUTABLE_AWAY",
+   "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 AWAY 2.25 vs Pinnacle 1.892"
+  },
+  "target_side": "AWAY",
+  "target_line": null,
+  "alert_price": "2.25",
+  "reference": {
+   "bookmaker": "Pinnacle",
+   "line": null,
+   "odds": "1.892",
+   "fair_odds": null
+  },
+  "sharp_signal": {
+   "source": "pinnacle_opening_to_current",
+   "side": "AWAY",
+   "status": "IDENTIFIED",
+   "reason": "Pinnacle AWAY opening 2.300 -> current 1.892 shortens; HOME 2.570 -> 3.190 does not shorten; draw opening not supplied, draw never a candidate",
+   "basis": "price",
+   "opening_line": null,
+   "current_line": null,
+   "change": "-0.408",
+   "magnitude": "0.408",
+   "magnitude_units": "decimal_odds",
+   "direction": "SHORTENED",
+   "opening_prices": {
+    "HOME": "2.570",
+    "AWAY": "2.300"
+   },
+   "current_prices": {
+    "HOME": "3.190",
+    "DRAW": "3.790",
+    "AWAY": "1.892"
+   },
+   "changes_by_side": {
+    "HOME": "0.620",
+    "AWAY": "-0.408"
+   },
+   "draw_opening_supplied": false,
+   "candidates": [
+    "HOME",
+    "AWAY"
+   ],
+   "opening_to_current_percent": "-17.73913043478260869565217391",
+   "highlight_agrees": true
+  },
+  "bet_quality": "CLEAR_VALUE_SIGNAL"
+ },
+ "rules": {
+  "decision": "ACCEPT",
+  "reason": "All rules passed",
+  "instruction": {
+   "instruction_id": "fbhold-1x2-muttenz-120612",
+   "sport": "football",
+   "competition": "1. Liga Classic",
+   "fixture": "Munsingen vs Muttenz",
+   "home": "Munsingen",
+   "away": "Muttenz",
+   "event_time_local": "2026-09-27T13:30",
+   "event_timezone": "Europe/London",
+   "event_start_utc": "2026-09-27T12:30:00+00:00",
+   "market": "1X2",
+   "side": "AWAY",
+   "selection_name": "Muttenz",
+   "line": null,
+   "alternate_line": {
+    "current": false,
+    "opening": false,
+    "comparison": false
+   },
+   "alert_price": "2.25",
+   "minimum_price": "2.13",
+   "stake": "0.10",
+   "max_odds_deterioration": null,
+   "max_net_payout_deterioration_percent": 10,
+   "max_line_deterioration": null,
+   "configured_line_absolute_cap": null,
+   "max_line_deterioration_percent": null,
+   "displayed_ev_percent": "111.13",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "signal_reason": "CLEAR_VALUE_SIGNAL",
+   "line_advantage": null,
+   "target_source": "pinnacle_opening_to_current",
+   "implied_target": null,
+   "sharp_signal": {
+    "source": "pinnacle_opening_to_current",
+    "side": "AWAY",
+    "status": "IDENTIFIED",
+    "reason": "Pinnacle AWAY opening 2.300 -> current 1.892 shortens; HOME 2.570 -> 3.190 does not shorten; draw opening not supplied, draw never a candidate",
+    "basis": "price",
+    "opening_line": null,
+    "current_line": null,
+    "change": "-0.408",
+    "magnitude": "0.408",
+    "magnitude_units": "decimal_odds",
+    "direction": "SHORTENED",
+    "opening_prices": {
+     "HOME": "2.570",
+     "AWAY": "2.300"
+    },
+    "current_prices": {
+     "HOME": "3.190",
+     "DRAW": "3.790",
+     "AWAY": "1.892"
+    },
+    "changes_by_side": {
+     "HOME": "0.620",
+     "AWAY": "-0.408"
+    },
+    "draw_opening_supplied": false,
+    "candidates": [
+     "HOME",
+     "AWAY"
+    ],
+    "opening_to_current_percent": "-17.73913043478260869565217391"
+   },
+   "highlighted_side": "AWAY",
+   "ev_status": "SUPPLIED_EQUAL_LINE",
+   "line_quality": "EQUAL",
+   "price_quality": "FAVOURABLE",
+   "reference_odds": "1.892"
+  }
+ },
+ "payload": {
+  "instruction_id": "fbhold-1x2-muttenz-120612",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Munsingen||Muttenz",
+  "sport": "football",
+  "market": "1X2",
+  "side": "AWAY",
+  "line": "",
+  "minimum_price": "2.13",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201827374/F3/I1/",
+  "kickoff_utc": "2026-09-27T12:30",
+  "competition": "1. Liga Classic",
+  "period": "FULL_GAME",
+  "country": "Switzerland"
+ },
+ "paused_at": "2026-09-27T11:06:14Z",
+ "result": {
+  "instruction_id": "fbhold-1x2-muttenz-120612",
+  "status": "FAIL",
+  "stage": "BELOW_MINIMUM",
+  "detail": "Visible price 2.10 is below minimum 2.13",
+  "duration_ms": 6039,
+  "progress": {
+   "stage": "CLEAR_BETSLIP",
+   "elapsed_ms": 5743,
+   "last_progress_at_ms": 1790507179724,
+   "instruction_id": "fbhold-1x2-muttenz-120612",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790507174702
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 28,
+     "at_ms": 1790507174719
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 42,
+     "at_ms": 1790507174734,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 42,
+      "start_ts_ms": 1790507174721,
+      "end_elapsed_ms": 4218,
+      "end_ts_ms": 1790507178897,
+      "duration_ms": 4176,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3485,
+     "at_ms": 1790507174734
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4114,
+     "at_ms": 1790507174734
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4218,
+     "at_ms": 1790507178919,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 4218,
+      "start_ts_ms": 1790507178897,
+      "end_elapsed_ms": 4871,
+      "end_ts_ms": 1790507179550,
+      "duration_ms": 653,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4242,
+     "at_ms": 1790507178919
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4815,
+     "at_ms": 1790507178919
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 4871,
+     "at_ms": 1790507179586,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 4871,
+      "start_ts_ms": 1790507179550,
+      "end_elapsed_ms": 4909,
+      "end_ts_ms": 1790507179588,
+      "duration_ms": 38,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 4909,
+     "at_ms": 1790507179632,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 4909,
+      "start_ts_ms": 1790507179588,
+      "end_elapsed_ms": 4954,
+      "end_ts_ms": 1790507179632,
+      "duration_ms": 45,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 4954,
+     "at_ms": 1790507179676,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 4954,
+      "start_ts_ms": 1790507179632,
+      "end_elapsed_ms": 5743,
+      "end_ts_ms": 1790507180421,
+      "duration_ms": 789,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 4998,
+     "at_ms": 1790507179724
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 5048,
+     "at_ms": 1790507179724
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 5666,
+     "at_ms": 1790507179724
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 5743,
+     "at_ms": 1790507179724
+    }
+   ]
+  },
+  "device_stage": "CLEAR_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c__Aj1VCjTSUuBXLtpmJGAZV7G1HM0bJp35mbMlaRox1o",
+  "fixture_name": "FC Munsingen v SV Muttenz",
+  "home": "FC Munsingen",
+  "away": "SV Muttenz",
+  "competition": "Switzerland 1.Liga Classic• 27 Sep 13:30",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "NONE",
+   "price": "2.10",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "SV Muttenz",
+   "bounds": [
+    552,
+    625,
+    624,
+    666
+   ]
+  },
+  "verification_detail": "Visible price 2.10 is below minimum 2.13",
+  "betslip_clear": {
+   "tapped": false,
+   "detail": "No remove icon on a selection line"
+  },
+  "event_context": {
+   "home": "FC Munsingen",
+   "away": "SV Muttenz",
+   "competition": "switzerland 1 liga classic",
+   "kickoff_utc": "2026-09-27T12:30",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790507179587,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "2.10",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "SV Muttenz",
+     "bounds": [
+      552,
+      625,
+      624,
+      666
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790507179587,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "2.10",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "SV Muttenz",
+     "bounds": [
+      552,
+      625,
+      624,
+      666
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 42,
+    "start_ts_ms": 1790507174721,
+    "end_elapsed_ms": 4218,
+    "end_ts_ms": 1790507178897,
+    "duration_ms": 4176,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4218,
+    "start_ts_ms": 1790507178897,
+    "end_elapsed_ms": 4871,
+    "end_ts_ms": 1790507179550,
+    "duration_ms": 653,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 4871,
+    "start_ts_ms": 1790507179550,
+    "end_elapsed_ms": 4909,
+    "end_ts_ms": 1790507179588,
+    "duration_ms": 38,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 4909,
+    "start_ts_ms": 1790507179588,
+    "end_elapsed_ms": 4954,
+    "end_ts_ms": 1790507179632,
+    "duration_ms": 45,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 4954,
+    "start_ts_ms": 1790507179632,
+    "end_elapsed_ms": 5743,
+    "end_ts_ms": 1790507180421,
+    "duration_ms": 789,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "identity": {
+   "verdict": "CANONICAL_MATCH",
+   "reason": "both teams canonical",
+   "home": {
+    "feed": "Munsingen",
+    "bookmaker": "FC Munsingen",
+    "level": "CANONICAL",
+    "kind": "canonical",
+    "score": 1,
+    "note": "canonical tokens equal",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Muttenz",
+    "bookmaker": "SV Muttenz",
+    "level": "CANONICAL",
+    "kind": "canonical",
+    "score": 1,
+    "note": "canonical tokens equal",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Munsingen",
+     "bookmaker": "FC Munsingen",
+     "level": "CANONICAL",
+     "kind": "canonical",
+     "score": 1,
+     "note": "canonical tokens equal"
+    },
+    "away_similarity": {
+     "feed": "Muttenz",
+     "bookmaker": "SV Muttenz",
+     "level": "CANONICAL",
+     "kind": "canonical",
+     "score": 1,
+     "note": "canonical tokens equal"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "both_canonical",
+    "verdict": "CANONICAL_MATCH"
+   }
+  },
+  "identity_verdict": "CANONICAL_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201827374/F3/I1/"
+ },
+ "run": {
+  "run_id": "c__Aj1VCjTSUuBXLtpmJGAZV7G1HM0bJp35mbMlaRox1o",
+  "adapter": "live_bet365",
+  "status": "BELOW_MINIMUM",
+  "phase": "FINISHED",
+  "started_at_ms": 1790507174678,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790507174679
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 28,
+    "wall_ts_ms": 1790507174707
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 42,
+    "wall_ts_ms": 1790507174721
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3485,
+    "wall_ts_ms": 1790507178164
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 4114,
+    "wall_ts_ms": 1790507178793
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 4218,
+    "wall_ts_ms": 1790507178897
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 4242,
+    "wall_ts_ms": 1790507178920
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 4815,
+    "wall_ts_ms": 1790507179494
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 4871,
+    "wall_ts_ms": 1790507179550
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 4909,
+    "wall_ts_ms": 1790507179588
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 4954,
+    "wall_ts_ms": 1790507179632
+   },
+   {
+    "phase": "CLEAR_BETSLIP",
+    "elapsed_ms": 4998,
+    "wall_ts_ms": 1790507179677
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_pre",
+    "elapsed_ms": 5048,
+    "wall_ts_ms": 1790507179727
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_pre",
+    "elapsed_ms": 5666,
+    "wall_ts_ms": 1790507180345
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 5743,
+    "wall_ts_ms": 1790507180422
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_markets.png",
+   "s003_clear_betslip_pre.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 42,
+    "start_ts_ms": 1790507174721,
+    "end_elapsed_ms": 4218,
+    "end_ts_ms": 1790507178897,
+    "duration_ms": 4176,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4218,
+    "start_ts_ms": 1790507178897,
+    "end_elapsed_ms": 4871,
+    "end_ts_ms": 1790507179550,
+    "duration_ms": 653,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 4871,
+    "start_ts_ms": 1790507179550,
+    "end_elapsed_ms": 4909,
+    "end_ts_ms": 1790507179588,
+    "duration_ms": 38,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 4909,
+    "start_ts_ms": 1790507179588,
+    "end_elapsed_ms": 4954,
+    "end_ts_ms": 1790507179632,
+    "duration_ms": 45,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 4954,
+    "start_ts_ms": 1790507179632,
+    "end_elapsed_ms": 5743,
+    "end_ts_ms": 1790507180421,
+    "duration_ms": 789,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Munsingen",
+  "identity_home": "Munsingen",
+  "expected_away": "Muttenz",
+  "identity_away": "Muttenz",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201827374/F3/I1/",
+  "current_stage": "READ_PRICE",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Switzerland 1.Liga Classic• 27 Sep 13:30",
+   "FC Münsingen v SV Muttenz",
+   "Popular Bet Builder Result Goals Half Asian Lines"
+  ],
+  "competition_check": {
+   "feed": "1. Liga Classic",
+   "country": "Switzerland",
+   "page": "Switzerland 1.Liga Classic• 27 Sep 13:30",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "CANONICAL_MATCH",
+   "reason": "both teams canonical",
+   "home": {
+    "feed": "Munsingen",
+    "bookmaker": "FC Munsingen",
+    "level": "CANONICAL",
+    "kind": "canonical",
+    "score": 1,
+    "note": "canonical tokens equal",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Muttenz",
+    "bookmaker": "SV Muttenz",
+    "level": "CANONICAL",
+    "kind": "canonical",
+    "score": 1,
+    "note": "canonical tokens equal",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Munsingen",
+     "bookmaker": "FC Munsingen",
+     "level": "CANONICAL",
+     "kind": "canonical",
+     "score": 1,
+     "note": "canonical tokens equal"
+    },
+    "away_similarity": {
+     "feed": "Muttenz",
+     "bookmaker": "SV Muttenz",
+     "level": "CANONICAL",
+     "kind": "canonical",
+     "score": 1,
+     "note": "canonical tokens equal"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "both_canonical",
+    "verdict": "CANONICAL_MATCH"
+   }
+  },
+  "identity_verdict": "CANONICAL_MATCH",
+  "route": "event_link",
+  "kickoff_verified": "27 Sep 13:30",
+  "verified_fixture": {
+   "code": "67787c8d",
+   "home": "FC Munsingen",
+   "away": "SV Muttenz",
+   "fixture_name": "FC Munsingen v SV Muttenz",
+   "exact_fixture_text": "Home FC Munsingen\nAway SV Muttenz",
+   "competition": "Switzerland 1.Liga Classic• 27 Sep 13:30",
+   "bounds": [
+    35,
+    268,
+    701,
+    436
+   ]
+  },
+  "fixture_home": "FC Munsingen",
+  "fixture_away": "SV Muttenz",
+  "identity_verified_home": "Munsingen",
+  "identity_verified_away": "Muttenz",
+  "event_verified": true,
+  "event_context": {
+   "home": "FC Munsingen",
+   "away": "SV Muttenz",
+   "competition": "switzerland 1 liga classic",
+   "kickoff_utc": "2026-09-27T12:30",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "67787c8d",
+   "home": "FC Munsingen",
+   "away": "SV Muttenz",
+   "fixture_name": "FC Munsingen v SV Muttenz",
+   "exact_fixture_text": "Home FC Munsingen\nAway SV Muttenz",
+   "competition": "Switzerland 1.Liga Classic• 27 Sep 13:30",
+   "bounds": [
+    35,
+    268,
+    701,
+    436
+   ]
+  },
+  "football_market_reads": [
+   {
+    "view": "popular",
+    "cells": [
+     "MONEYLINE/HOME/NONE@2.70 (FC Munsingen)",
+     "MONEYLINE/DRAW/NONE@3.80 (Draw)",
+     "MONEYLINE/AWAY/NONE@2.10 (SV Muttenz)",
+     "TOTAL/OVER/2.5@1.53 (Over)",
+     "TOTAL/UNDER/2.5@2.37 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": true,
+    "goals_over_under": true,
+    "asian_handicap": false,
+    "goal_line": false
+   }
+  ],
+  "football_markets": [
+   {
+    "market": "MONEYLINE",
+    "selection_role": "HOME",
+    "selection_name": "FC Munsingen",
+    "price": "2.70",
+    "line": "NONE",
+    "bounds": [
+     96,
+     625,
+     169,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "price": "3.80",
+    "line": "NONE",
+    "bounds": [
+     324,
+     625,
+     397,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "selection_role": "AWAY",
+    "selection_name": "SV Muttenz",
+    "price": "2.10",
+    "line": "NONE",
+    "bounds": [
+     552,
+     625,
+     624,
+     666
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "price": "1.53",
+    "line": "2.5",
+    "bounds": [
+     282,
+     962,
+     354,
+     1003
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "price": "2.37",
+    "line": "2.5",
+    "bounds": [
+     537,
+     962,
+     610,
+     1003
+    ]
+   }
+  ],
+  "markets": [
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "2.70",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "FC Munsingen",
+    "bounds": [
+     96,
+     625,
+     169,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "NONE",
+    "price": "3.80",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     324,
+     625,
+     397,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "2.10",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "SV Muttenz",
+    "bounds": [
+     552,
+     625,
+     624,
+     666
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.5",
+    "price": "1.53",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     282,
+     962,
+     354,
+     1003
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "2.5",
+    "price": "2.37",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     537,
+     962,
+     610,
+     1003
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790507179587,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "2.10",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "SV Muttenz",
+     "bounds": [
+      552,
+      625,
+      624,
+      666
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790507179587,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "2.10",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "SV Muttenz",
+     "bounds": [
+      552,
+      625,
+      624,
+      666
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "selection_role": "AWAY",
+  "selection_name": "SV Muttenz",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "NONE",
+   "price": "2.10",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "SV Muttenz",
+   "bounds": [
+    552,
+    625,
+    624,
+    666
+   ]
+  },
+  "betslip_clear": {
+   "tapped": false,
+   "detail": "No remove icon on a selection line"
+  },
+  "detail": "Visible price 2.10 is below minimum 2.13",
+  "duration_ms": 5743
+ },
+ "wall": 6.5,
+ "frames": [
+  "s001_event_direct.png",
+  "s002_markets.png",
+  "s003_clear_betslip_pre.png"
+ ],
+ "resumed_at": "2026-09-27T11:06:21Z",
+ "health_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.26-ops"
+ }
+}

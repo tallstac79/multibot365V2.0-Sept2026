@@ -15,6 +15,14 @@ public class FootballSlipTest {
         assertTrue(PlacementClassifier.slipShowsLine(Arrays.asList("Kyoto Hannaryz 1.47"), "MONEYLINE", "HOME", "Kyoto Hannaryz", "NONE"));
     }
 
+    @Test public void doubleChanceMarketHeadingIsNotAMultiple() {
+        // Real slip frame 27 Sep 2026 12:04Z (s005_betslip_pre_stake): one selection, the page's Double Chance heading behind it
+        assertFalse(PlacementClassifier.multipleSelections(Arrays.asList("Popular", "Full Time Result", "FC Münsingen", "Double Chance",
+                "FC Münsingen v SV Muttenz", "Goals Over/Under", "Correct Score", "X SV Muttenz", "Full Time Result", "Set Stake", "Place Bet", "2.20")));
+        assertTrue(PlacementClassifier.multipleSelections(Arrays.asList("Double", "2 selections", "Place Bet")));
+        assertTrue(PlacementClassifier.multipleSelections(Arrays.asList("Double Chance", "Treble", "Place Bet")));
+    }
+
     @Test public void footballWholeHalfAndQuarterGoalLines() {
         // Asian handicap, whole goal, both spellings of the requested "-1"
         assertTrue(PlacementClassifier.slipShowsLine(Arrays.asList("Farul Constanta (W) -1.0", "Asian Handicap", "1.85"), "SPREAD", "HOME", "Farul Constanta (W)", "-1"));
