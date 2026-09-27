@@ -1,0 +1,998 @@
+{
+ "alert": {
+  "intake_id": 2393,
+  "message_id": "71578",
+  "source_timestamp": "2026-09-27T13:02:52+00:00",
+  "text": "New odds update on Pinnacle\n\nFootball - Finland - Kolmonen\nVillan Pojat vs HauPa\n27.09.2026 15:30\n2.260⬆️ (1.980) - 4.480 (4.350) - 2.250⬇️ (2.650)\n\n🟢 Opening\n1.537 - 4.140\n\n[Bet365](https://www.bet365.com/#/AC/B1/C1/D8/E201844969/F3/I1/)\n1.85 - 4.33 - **2.80**\n\n🎯 EV: 113.79%"
+ },
+ "interpretation": {
+  "verdict": {
+   "profile": "oddsnotifier_football_1x2_v1",
+   "in_play_link": false,
+   "signal_basis": "price",
+   "draw_opening_supplied": false,
+   "verdict": "EXECUTABLE_AWAY",
+   "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 AWAY 2.80 vs Pinnacle 2.250"
+  },
+  "target_side": "AWAY",
+  "target_line": null,
+  "alert_price": "2.80",
+  "reference": {
+   "bookmaker": "Pinnacle",
+   "line": null,
+   "odds": "2.250",
+   "fair_odds": null
+  },
+  "sharp_signal": {
+   "source": "pinnacle_opening_to_current",
+   "side": "AWAY",
+   "status": "IDENTIFIED",
+   "reason": "Pinnacle AWAY opening 4.140 -> current 2.250 shortens; HOME 1.537 -> 2.260 does not shorten; draw opening not supplied, draw never a candidate",
+   "basis": "price",
+   "opening_line": null,
+   "current_line": null,
+   "change": "-1.890",
+   "magnitude": "1.890",
+   "magnitude_units": "decimal_odds",
+   "direction": "SHORTENED",
+   "opening_prices": {
+    "HOME": "1.537",
+    "AWAY": "4.140"
+   },
+   "current_prices": {
+    "HOME": "2.260",
+    "DRAW": "4.480",
+    "AWAY": "2.250"
+   },
+   "changes_by_side": {
+    "HOME": "0.723",
+    "AWAY": "-1.890"
+   },
+   "draw_opening_supplied": false,
+   "candidates": [
+    "HOME",
+    "AWAY"
+   ],
+   "opening_to_current_percent": "-45.65217391304347826086956522",
+   "highlight_agrees": true
+  },
+  "bet_quality": "CLEAR_VALUE_SIGNAL"
+ },
+ "rules": {
+  "decision": "ACCEPT",
+  "reason": "All rules passed",
+  "instruction": {
+   "instruction_id": "fbhold-0931-151455",
+   "sport": "football",
+   "competition": "Kolmonen",
+   "fixture": "Villan Pojat vs HauPa",
+   "home": "Villan Pojat",
+   "away": "HauPa",
+   "event_time_local": "2026-09-27T15:30",
+   "event_timezone": "Europe/London",
+   "event_start_utc": "2026-09-27T14:30:00+00:00",
+   "market": "1X2",
+   "side": "AWAY",
+   "selection_name": "HauPa",
+   "line": null,
+   "alternate_line": {
+    "current": false,
+    "opening": false,
+    "comparison": false
+   },
+   "alert_price": "2.80",
+   "minimum_price": "2.62",
+   "stake": "0.10",
+   "max_odds_deterioration": null,
+   "max_net_payout_deterioration_percent": 10,
+   "max_line_deterioration": null,
+   "configured_line_absolute_cap": null,
+   "max_line_deterioration_percent": null,
+   "displayed_ev_percent": "113.79",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "signal_reason": "CLEAR_VALUE_SIGNAL",
+   "line_advantage": null,
+   "target_source": "pinnacle_opening_to_current",
+   "implied_target": null,
+   "sharp_signal": {
+    "source": "pinnacle_opening_to_current",
+    "side": "AWAY",
+    "status": "IDENTIFIED",
+    "reason": "Pinnacle AWAY opening 4.140 -> current 2.250 shortens; HOME 1.537 -> 2.260 does not shorten; draw opening not supplied, draw never a candidate",
+    "basis": "price",
+    "opening_line": null,
+    "current_line": null,
+    "change": "-1.890",
+    "magnitude": "1.890",
+    "magnitude_units": "decimal_odds",
+    "direction": "SHORTENED",
+    "opening_prices": {
+     "HOME": "1.537",
+     "AWAY": "4.140"
+    },
+    "current_prices": {
+     "HOME": "2.260",
+     "DRAW": "4.480",
+     "AWAY": "2.250"
+    },
+    "changes_by_side": {
+     "HOME": "0.723",
+     "AWAY": "-1.890"
+    },
+    "draw_opening_supplied": false,
+    "candidates": [
+     "HOME",
+     "AWAY"
+    ],
+    "opening_to_current_percent": "-45.65217391304347826086956522"
+   },
+   "highlighted_side": "AWAY",
+   "ev_status": "SUPPLIED_EQUAL_LINE",
+   "line_quality": "EQUAL",
+   "price_quality": "FAVOURABLE",
+   "reference_odds": "2.250"
+  }
+ },
+ "payload": {
+  "instruction_id": "fbhold-0931-151455",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Villan Pojat||HauPa",
+  "sport": "football",
+  "market": "1X2",
+  "side": "AWAY",
+  "line": "",
+  "minimum_price": "2.62",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201844969/F3/I1/",
+  "kickoff_utc": "2026-09-27T14:30",
+  "competition": "Kolmonen",
+  "period": "FULL_GAME",
+  "country": "Finland"
+ },
+ "paused_at": "2026-09-27T14:14:57Z",
+ "result": {
+  "instruction_id": "fbhold-0931-151455",
+  "status": "FAIL",
+  "stage": "BELOW_MINIMUM",
+  "detail": "Visible price 2.50 is below minimum 2.62",
+  "duration_ms": 6589,
+  "progress": {
+   "stage": "CLEAR_BETSLIP",
+   "elapsed_ms": 6381,
+   "last_progress_at_ms": 1790518503949,
+   "instruction_id": "fbhold-0931-151455",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790518498058
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 19,
+     "at_ms": 1790518498066
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 28,
+     "at_ms": 1790518498075,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 28,
+      "start_ts_ms": 1790518498068,
+      "end_elapsed_ms": 5331,
+      "end_ts_ms": 1790518503370,
+      "duration_ms": 5303,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3474,
+     "at_ms": 1790518498075
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3707,
+     "at_ms": 1790518498075
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4629,
+     "at_ms": 1790518498075
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5121,
+     "at_ms": 1790518498075
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5331,
+     "at_ms": 1790518503381,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 5331,
+      "start_ts_ms": 1790518503370,
+      "end_elapsed_ms": 5832,
+      "end_ts_ms": 1790518503871,
+      "duration_ms": 501,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5343,
+     "at_ms": 1790518503381
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5797,
+     "at_ms": 1790518503381
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 5832,
+     "at_ms": 1790518503888,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 5832,
+      "start_ts_ms": 1790518503871,
+      "end_elapsed_ms": 5850,
+      "end_ts_ms": 1790518503889,
+      "duration_ms": 18,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 5850,
+     "at_ms": 1790518503909,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 5850,
+      "start_ts_ms": 1790518503889,
+      "end_elapsed_ms": 5870,
+      "end_ts_ms": 1790518503909,
+      "duration_ms": 20,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 5870,
+     "at_ms": 1790518503929,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 5870,
+      "start_ts_ms": 1790518503909,
+      "end_elapsed_ms": 6381,
+      "end_ts_ms": 1790518504420,
+      "duration_ms": 511,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 5890,
+     "at_ms": 1790518503949
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 5910,
+     "at_ms": 1790518503949
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 6347,
+     "at_ms": 1790518503949
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 6381,
+     "at_ms": 1790518503949
+    }
+   ]
+  },
+  "device_stage": "CLEAR_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_jRueXFT6EeysHF9c8Gx5DnDzqiNlPE99gzVKeud8oss",
+  "fixture_name": "Villan Pojat v HauPa",
+  "home": "Villan Pojat",
+  "away": "HauPa",
+  "competition": "Finland Kolmonen • 27 Sep 15:30",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "NONE",
+   "price": "2.50",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "HauPa",
+   "bounds": [
+    551,
+    625,
+    624,
+    666
+   ]
+  },
+  "verification_detail": "Visible price 2.50 is below minimum 2.62",
+  "betslip_clear": {
+   "tapped": false,
+   "detail": "No remove icon on a selection line"
+  },
+  "event_context": {
+   "home": "Villan Pojat",
+   "away": "HauPa",
+   "competition": "finland kolmonen",
+   "kickoff_utc": "2026-09-27T14:30",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790518503888,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "2.50",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "HauPa",
+     "bounds": [
+      551,
+      625,
+      624,
+      666
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790518503889,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "2.50",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "HauPa",
+     "bounds": [
+      551,
+      625,
+      624,
+      666
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 28,
+    "start_ts_ms": 1790518498068,
+    "end_elapsed_ms": 5331,
+    "end_ts_ms": 1790518503370,
+    "duration_ms": 5303,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5331,
+    "start_ts_ms": 1790518503370,
+    "end_elapsed_ms": 5832,
+    "end_ts_ms": 1790518503871,
+    "duration_ms": 501,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5832,
+    "start_ts_ms": 1790518503871,
+    "end_elapsed_ms": 5850,
+    "end_ts_ms": 1790518503889,
+    "duration_ms": 18,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 5850,
+    "start_ts_ms": 1790518503889,
+    "end_elapsed_ms": 5870,
+    "end_ts_ms": 1790518503909,
+    "duration_ms": 20,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 5870,
+    "start_ts_ms": 1790518503909,
+    "end_elapsed_ms": 6381,
+    "end_ts_ms": 1790518504420,
+    "duration_ms": 511,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "Villan Pojat",
+    "bookmaker": "Villan Pojat",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "HauPa",
+    "bookmaker": "HauPa",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Villan Pojat",
+     "bookmaker": "Villan Pojat",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "away_similarity": {
+     "feed": "HauPa",
+     "bookmaker": "HauPa",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "both_exact",
+    "verdict": "EXACT"
+   }
+  },
+  "identity_verdict": "EXACT",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201844969/F3/I1/"
+ },
+ "run": {
+  "run_id": "c_jRueXFT6EeysHF9c8Gx5DnDzqiNlPE99gzVKeud8oss",
+  "adapter": "live_bet365",
+  "status": "BELOW_MINIMUM",
+  "phase": "FINISHED",
+  "started_at_ms": 1790518498039,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790518498039
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 19,
+    "wall_ts_ms": 1790518498059
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 28,
+    "wall_ts_ms": 1790518498068
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3474,
+    "wall_ts_ms": 1790518501513
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3707,
+    "wall_ts_ms": 1790518501747
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 4629,
+    "wall_ts_ms": 1790518502669
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5121,
+    "wall_ts_ms": 1790518503161
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 5331,
+    "wall_ts_ms": 1790518503370
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 5343,
+    "wall_ts_ms": 1790518503382
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 5797,
+    "wall_ts_ms": 1790518503837
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 5832,
+    "wall_ts_ms": 1790518503871
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 5850,
+    "wall_ts_ms": 1790518503889
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 5870,
+    "wall_ts_ms": 1790518503909
+   },
+   {
+    "phase": "CLEAR_BETSLIP",
+    "elapsed_ms": 5890,
+    "wall_ts_ms": 1790518503929
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_pre",
+    "elapsed_ms": 5910,
+    "wall_ts_ms": 1790518503950
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_pre",
+    "elapsed_ms": 6347,
+    "wall_ts_ms": 1790518504387
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 6381,
+    "wall_ts_ms": 1790518504420
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png",
+   "s003_markets.png",
+   "s004_clear_betslip_pre.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 28,
+    "start_ts_ms": 1790518498068,
+    "end_elapsed_ms": 5331,
+    "end_ts_ms": 1790518503370,
+    "duration_ms": 5303,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5331,
+    "start_ts_ms": 1790518503370,
+    "end_elapsed_ms": 5832,
+    "end_ts_ms": 1790518503871,
+    "duration_ms": 501,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5832,
+    "start_ts_ms": 1790518503871,
+    "end_elapsed_ms": 5850,
+    "end_ts_ms": 1790518503889,
+    "duration_ms": 18,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 5850,
+    "start_ts_ms": 1790518503889,
+    "end_elapsed_ms": 5870,
+    "end_ts_ms": 1790518503909,
+    "duration_ms": 20,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 5870,
+    "start_ts_ms": 1790518503909,
+    "end_elapsed_ms": 6381,
+    "end_ts_ms": 1790518504420,
+    "duration_ms": 511,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Villan Pojat",
+  "identity_home": "Villan Pojat",
+  "expected_away": "HauPa",
+  "identity_away": "HauPa",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201844969/F3/I1/",
+  "current_stage": "READ_PRICE",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Finland Kolmonen • 27 Sep 15:30",
+   "Villan Pojat v HauPa v",
+   "Popular Bet Builder Result Goals Half Asiar A"
+  ],
+  "competition_check": {
+   "feed": "Kolmonen",
+   "country": "Finland",
+   "page": "Finland Kolmonen • 27 Sep 15:30",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "Villan Pojat",
+    "bookmaker": "Villan Pojat",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "HauPa",
+    "bookmaker": "HauPa",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Villan Pojat",
+     "bookmaker": "Villan Pojat",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "away_similarity": {
+     "feed": "HauPa",
+     "bookmaker": "HauPa",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "both_exact",
+    "verdict": "EXACT"
+   }
+  },
+  "identity_verdict": "EXACT",
+  "route": "event_link",
+  "kickoff_verified": "27 Sep 15:30",
+  "verified_fixture": {
+   "code": "6cf0fa8f",
+   "home": "Villan Pojat",
+   "away": "HauPa",
+   "fixture_name": "Villan Pojat v HauPa",
+   "exact_fixture_text": "Home Villan Pojat\nAway HauPa",
+   "competition": "Finland Kolmonen • 27 Sep 15:30",
+   "bounds": [
+    35,
+    268,
+    689,
+    436
+   ]
+  },
+  "fixture_home": "Villan Pojat",
+  "fixture_away": "HauPa",
+  "identity_verified_home": "Villan Pojat",
+  "identity_verified_away": "HauPa",
+  "event_verified": true,
+  "event_context": {
+   "home": "Villan Pojat",
+   "away": "HauPa",
+   "competition": "finland kolmonen",
+   "kickoff_utc": "2026-09-27T14:30",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "6cf0fa8f",
+   "home": "Villan Pojat",
+   "away": "HauPa",
+   "fixture_name": "Villan Pojat v HauPa",
+   "exact_fixture_text": "Home Villan Pojat\nAway HauPa",
+   "competition": "Finland Kolmonen • 27 Sep 15:30",
+   "bounds": [
+    35,
+    268,
+    689,
+    436
+   ]
+  },
+  "football_market_reads": [
+   {
+    "view": "popular",
+    "cells": [
+     "MONEYLINE/HOME/NONE@2.05 (Villan Pojat)",
+     "MONEYLINE/DRAW/NONE@4.20 (Draw)",
+     "MONEYLINE/AWAY/NONE@2.50 (HauPa)",
+     "TOTAL/OVER/2.5@1.28 (Over)",
+     "TOTAL/UNDER/2.5@3.50 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": true,
+    "goals_over_under": true,
+    "asian_handicap": false,
+    "goal_line": false
+   }
+  ],
+  "football_markets": [
+   {
+    "market": "MONEYLINE",
+    "selection_role": "HOME",
+    "selection_name": "Villan Pojat",
+    "price": "2.05",
+    "line": "NONE",
+    "bounds": [
+     96,
+     625,
+     169,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "price": "4.20",
+    "line": "NONE",
+    "bounds": [
+     324,
+     625,
+     396,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "selection_role": "AWAY",
+    "selection_name": "HauPa",
+    "price": "2.50",
+    "line": "NONE",
+    "bounds": [
+     551,
+     625,
+     624,
+     666
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "price": "1.28",
+    "line": "2.5",
+    "bounds": [
+     282,
+     962,
+     354,
+     1003
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "price": "3.50",
+    "line": "2.5",
+    "bounds": [
+     537,
+     962,
+     610,
+     1003
+    ]
+   }
+  ],
+  "markets": [
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "2.05",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Villan Pojat",
+    "bounds": [
+     96,
+     625,
+     169,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "NONE",
+    "price": "4.20",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     324,
+     625,
+     396,
+     666
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "2.50",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "HauPa",
+    "bounds": [
+     551,
+     625,
+     624,
+     666
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.5",
+    "price": "1.28",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     282,
+     962,
+     354,
+     1003
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "2.5",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     537,
+     962,
+     610,
+     1003
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790518503888,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "2.50",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "HauPa",
+     "bounds": [
+      551,
+      625,
+      624,
+      666
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790518503889,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "AWAY",
+     "line": "NONE",
+     "price": "2.50",
+     "availability": "OPEN",
+     "selection_role": "AWAY",
+     "selection_name": "HauPa",
+     "bounds": [
+      551,
+      625,
+      624,
+      666
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "selection_role": "AWAY",
+  "selection_name": "HauPa",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "NONE",
+   "price": "2.50",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "HauPa",
+   "bounds": [
+    551,
+    625,
+    624,
+    666
+   ]
+  },
+  "betslip_clear": {
+   "tapped": false,
+   "detail": "No remove icon on a selection line"
+  },
+  "detail": "Visible price 2.50 is below minimum 2.62",
+  "duration_ms": 6381
+ },
+ "wall": 7.2,
+ "frames": [
+  "s001_event_direct.png",
+  "s002_event_direct.png",
+  "s003_markets.png",
+  "s004_clear_betslip_pre.png"
+ ],
+ "resumed_at": "2026-09-27T14:15:06Z",
+ "health_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.31-ops"
+ }
+}

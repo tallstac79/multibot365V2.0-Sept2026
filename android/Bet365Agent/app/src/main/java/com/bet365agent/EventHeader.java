@@ -55,6 +55,28 @@ final class EventHeader {
         return out;
     }
 
+    /** All OCR lines as Word boxes (text + bounds), top to bottom: the slip lines the pre-tap check reads on the phone. */
+    static List<GameLinesParser.Word> lineWords(List<GameLinesParser.Word> raw) {
+        List<GameLinesParser.Word> words = new ArrayList<>();
+        for (GameLinesParser.Word w : raw) {
+            String t = OcrText.normalize(w.text);
+            if (t != null && !t.isEmpty()) words.add(new GameLinesParser.Word(t, w.left, w.top, w.right, w.bottom));
+        }
+        words.sort(Comparator.comparingInt(GameLinesParser.Word::cy));
+        List<Line> lines = new ArrayList<>();
+        for (GameLinesParser.Word w : words) {
+            Line chosen = null;
+            int h = w.bottom - w.top;
+            for (Line line : lines) if (Math.abs(line.centerY() - w.cy()) <= Math.max(8, Math.min(line.height(), h) / 2)) { chosen = line; break; }
+            if (chosen == null) { chosen = new Line(); lines.add(chosen); }
+            chosen.add(w);
+        }
+        lines.sort(Comparator.comparingInt(l -> l.top));
+        List<GameLinesParser.Word> out = new ArrayList<>();
+        for (Line l : lines) out.add(new GameLinesParser.Word(l.text(), l.left, l.top, l.right, l.bottom));
+        return out;
+    }
+
     /** The event header: lines with top in [120, 480] that are not the bet365 logo/balance row. */
     static List<String> header(List<GameLinesParser.Word> raw) {
         List<String> out = new ArrayList<>();

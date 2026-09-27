@@ -8,6 +8,11 @@ final class HeldInstruction {
         long completed = received + duration;
         return received > 0 && duration >= 0 && now >= completed && now - completed <= 120_000L;
     }
+    static String wireMarket(String market) {
+        String m = market == null ? "" : market.replace("TOTALS", "TOTAL");
+        return "1X2".equals(m) ? "MONEYLINE" : m;
+    }
+
     static JSONObject verify(JSONObject request, JSONObject held) {
         if (held == null) throw new IllegalArgumentException("Original hold missing");
         JSONObject payload = held.optJSONObject("payload"), result = held.optJSONObject("result");
@@ -27,8 +32,8 @@ final class HeldInstruction {
             if (!payload.optString(k).equals(request.optString(k))) throw new IllegalArgumentException("Held terms changed: " + k);
         for (String k : new String[]{"side","line","price","selection_name"})
             if (!selection.optString(k).equals(request.optString(k))) throw new IllegalArgumentException("Held selection changed: " + k);
-        String market = request.optString("market").replace("TOTALS", "TOTAL");
-        if (!market.equals(selection.optString("market").replace("TOTALS", "TOTAL"))) throw new IllegalArgumentException("Held market changed");
+        // football 1X2 is the phone's three-way MONEYLINE (the hold records MONEYLINE; the pipeline sends the wire name 1X2)
+        if (!wireMarket(request.optString("market")).equals(wireMarket(selection.optString("market")))) throw new IllegalArgumentException("Held market changed");
         CoordinatorAgent.put(context, "requested_line", payload.optString("line"));
         CoordinatorAgent.put(context, "max_line_deterioration", payload.optString("max_line_deterioration"));
         return context;

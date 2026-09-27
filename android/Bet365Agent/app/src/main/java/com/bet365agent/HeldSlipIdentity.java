@@ -1,16 +1,26 @@
 package com.bet365agent;
 
+import java.util.Arrays;
 import java.util.List;
 
 /** Only a fixture inside the single slip, below its full-game market label, can authorize a tap. */
 final class HeldSlipIdentity {
     static boolean matches(List<GameLinesParser.Word> lines, String home, String away, String market, int placeTop) {
-        String label = "SPREAD".equals(market) ? "point spread" :
-                ("TOTAL".equals(market) || "TOTALS".equals(market)) ? "game totals" : "money line";
+        return matches(lines, home, away, market, placeTop, "basketball");
+    }
+
+    /** Football slips carry Bet365's football market names ("Full Time Result", "Asian Handicap", "Goal Line" /
+     *  "Goals Over/Under"; real slips 27 Sep 2026). The page's own section heading can sit just above the slip (EGS Gafsa:
+     *  "Goal Line" 190 px above Place Bet, the slip's label 101 px), so football labels are searched only inside the
+     *  slip (160 px above Place Bet); basketball keeps its 230 px window and labels unchanged. */
+    static boolean matches(List<GameLinesParser.Word> lines, String home, String away, String market, int placeTop, String sport) {
+        boolean football = "football".equals(sport);
+        List<String> labels = labels(market, football);
+        int window = football ? 160 : 230;
         int marketY = -1, markets = 0, fixtures = 0;
         for (GameLinesParser.Word line : lines) {
-            if (line.top < placeTop - 230 || line.bottom >= placeTop) continue;
-            if (EventIdentity.plain(line.text).equals(label)) { marketY = line.bottom; markets++; }
+            if (line.top < placeTop - window || line.bottom >= placeTop) continue;
+            if (labels.contains(EventIdentity.plain(line.text))) { marketY = line.bottom; markets++; }
         }
         if (markets != 1) return false;
         for (GameLinesParser.Word line : lines) {
@@ -23,5 +33,14 @@ final class HeldSlipIdentity {
             }
         }
         return fixtures == 1;
+    }
+
+    /** Slip market labels (EventIdentity.plain form) for a wire market; 1X2 is the phone's three-way MONEYLINE. */
+    static List<String> labels(String market, boolean football) {
+        boolean spread = "SPREAD".equals(market), total = "TOTAL".equals(market) || "TOTALS".equals(market);
+        if (!football) return Arrays.asList(spread ? "point spread" : total ? "game totals" : "money line");
+        if (spread) return Arrays.asList("asian handicap", "alternative asian handicap");
+        if (total) return Arrays.asList("goal line", "goals over/under", "alternative goal line", "alternative total goals");
+        return Arrays.asList("full time result");
     }
 }

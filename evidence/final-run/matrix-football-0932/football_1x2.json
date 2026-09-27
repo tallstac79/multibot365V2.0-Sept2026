@@ -1,0 +1,190 @@
+{
+ "case": "football_1x2",
+ "payload": {
+  "instruction_id": "mx-football1x2-152222",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Villan Pojat||HauPa",
+  "sport": "football",
+  "market": "1X2",
+  "side": "AWAY",
+  "line": "",
+  "minimum_price": "1.01",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201844969/F3/I1/",
+  "kickoff_utc": "2026-09-27T14:30",
+  "competition": "Kolmonen",
+  "period": "FULL_GAME",
+  "country": "Finland"
+ },
+ "paused": "PAUSED",
+ "hold": {
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "route": "event_link",
+  "verdict": "EXACT",
+  "fixture": "Villan Pojat v HauPa",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "NONE",
+   "price": "2.50",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "HauPa",
+   "bounds": [
+    551,
+    625,
+    624,
+    666
+   ]
+  },
+  "context": {
+   "home": "Villan Pojat",
+   "away": "HauPa",
+   "competition": "finland kolmonen",
+   "kickoff_utc": "2026-09-27T14:30",
+   "period": "FULL_GAME"
+  },
+  "wall": 12.9,
+  "identity": {
+   "event_id_match": true,
+   "event_anchor": "page opened from the alert's own Bet365 event link",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "country_prefixed",
+   "competing_event": "none: a single event page reached through the alert's own link",
+   "home_similarity": {
+    "feed": "Villan Pojat",
+    "bookmaker": "Villan Pojat",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact"
+   },
+   "away_similarity": {
+    "feed": "HauPa",
+    "bookmaker": "HauPa",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact"
+   },
+   "protected_markers": "agree",
+   "orientation": "agree",
+   "policy": "both_exact",
+   "verdict": "EXACT"
+  },
+  "stages": [
+   [
+    "OPEN_HOME",
+    5.17
+   ],
+   [
+    "MARKET_NAV",
+    0.52
+   ],
+   [
+    "READ_SELECTION",
+    0.02
+   ],
+   [
+    "READ_LINE",
+    0.02
+   ],
+   [
+    "READ_PRICE",
+    0.02
+   ],
+   [
+    "OPEN_SELECTION",
+    1.31
+   ],
+   [
+    "ENTER_STAKE",
+    4.23
+   ],
+   [
+    "VERIFY_FINAL_STATE",
+    0.71
+   ],
+   [
+    "PREPARE_COMPLETE_EXECUTION",
+    0.19
+   ]
+  ],
+  "place_bet_target": {
+   "bounds": [
+    461,
+    1265,
+    620,
+    1315
+   ],
+   "source": "place_bet_words"
+  },
+  "stake_check": null
+ },
+ "pretap": {
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "PRETAP_READY",
+  "tapped": null,
+  "pretap": {
+   "ok": true,
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "selection": "HauPa",
+   "line": "",
+   "price": "2.50",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    461,
+    1310,
+    620,
+    1360
+   ]
+  },
+  "stake_check": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "025",
+   "stake": "0.10",
+   "price": "2.50"
+  },
+  "place_bet_target": {
+   "bounds": [
+    461,
+    1310,
+    620,
+    1360
+   ],
+   "source": "place_bet_words"
+  },
+  "wall": 1.1
+ },
+ "reset": {
+  "status": "PASS",
+  "detail": {
+   "tapped": true,
+   "control": "remove selection X",
+   "bounds": [
+    20,
+    1180,
+    41,
+    1201
+   ],
+   "place_bet_still_visible": false
+  }
+ },
+ "resumed": "RESUMED",
+ "phone_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.32-ops"
+ }
+}

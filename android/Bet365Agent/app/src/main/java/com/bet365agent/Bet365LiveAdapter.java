@@ -2047,8 +2047,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
             require(heldContext != null, "WRONG_EVENT", "Original held event context missing");
             List<GameLinesParser.Word> slipLines = new ArrayList<>();
             for (VisualScreen.Line l : s.lines) slipLines.add(new GameLinesParser.Word(l.text, l.bounds.left, l.bounds.top, l.bounds.right, l.bounds.bottom));
-            boolean identity = HeldSlipIdentity.matches(slipLines, heldContext.optString("home"), heldContext.optString("away"), market, place.bounds.top);
-            HeldSlipQuote quote = HeldSlipQuote.read(slipLines, name, market, place.bounds.top);
+            boolean identity = HeldSlipIdentity.matches(slipLines, heldContext.optString("home"), heldContext.optString("away"), market, place.bounds.top, sport);
+            HeldSlipQuote quote = HeldSlipQuote.read(slipLines, name, market, place.bounds.top, sport);
             observeExecution("pretap", quote == null ? null : new Selection(market, side, quote.line, quote.price, "OPEN", place.bounds, name), identity);
             require(identity, "WRONG_EVENT", "Both approved teams and full-game market must be inside this slip");
             require(quote != null, "PRICE_CHANGED", "Current slip selection line and price unreadable");

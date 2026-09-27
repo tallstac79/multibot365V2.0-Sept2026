@@ -14,7 +14,7 @@ final class PlaceHeldWorkflow {
     void start(String market, String side, String line, String name, String price, String minimumPrice, String stake, String mode) {
         final boolean dispatch = "dispatch".equals(mode);
         session.put("t_start_ms", System.currentTimeMillis());
-        adapter.place_held(market, side, line, name, price, minimumPrice, stake, dispatch).whenComplete((v, error) -> {
+        adapter.place_held("1X2".equals(market) ? "MONEYLINE" : market, side, line, name, price, minimumPrice, stake, dispatch).whenComplete((v, error) -> {
             if (error == null) {
                 if (dispatch) {
                     org.json.JSONObject placement = session.record.optJSONObject("placement");
