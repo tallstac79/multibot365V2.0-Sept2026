@@ -1,0 +1,96 @@
+{
+ "case": "replay_0935",
+ "payload": {
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "competition": "Carioca B2",
+  "country": "Brazil",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201824199/F3/I1/",
+  "execution_mode": "hold",
+  "instruction_id": "mx-ee66644-173617",
+  "kickoff_utc": "2026-09-27T18:00",
+  "line": "+0.5",
+  "market": "SPREAD",
+  "max_line_deterioration": "0.25",
+  "minimum_price": "1.75",
+  "period": "FULL_GAME",
+  "query": "Santa Cruz RJ||Cardoso Moreira",
+  "scenario": "live",
+  "side": "AWAY",
+  "sport": "football",
+  "stake": "0.10",
+  "timeout_ms": 300000
+ },
+ "paused": "PAUSED",
+ "hold": {
+  "status": "FAIL",
+  "stage": "LINE_CHANGED",
+  "detail": "Bet365 SPREAD AWAY shows 0.0 @ 1.875; alert line +0.5 with allowance 0.25: line deterioration exceeds the original alert allowance",
+  "route": "event_link",
+  "verdict": "EXACT",
+  "fixture": "Santa Cruz RJ v Cardoso Moreira",
+  "selection": {},
+  "context": {
+   "home": "Santa Cruz RJ",
+   "away": "Cardoso Moreira",
+   "competition": "brazil campeonato carioca b2",
+   "kickoff_utc": "2026-09-27T18:00",
+   "period": "FULL_GAME"
+  },
+  "wall": 15.7,
+  "identity": {
+   "event_id_match": true,
+   "event_anchor": "page opened from the alert's own Bet365 event link",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "structural_compatible (feed 'carioca b2' vs page 'brazil campeonato carioca b2')",
+   "competing_event": "none: a single event page reached through the alert's own link",
+   "home_similarity": {
+    "feed": "Santa Cruz RJ",
+    "bookmaker": "Santa Cruz RJ",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact"
+   },
+   "away_similarity": {
+    "feed": "Cardoso Moreira",
+    "bookmaker": "Cardoso Moreira",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact"
+   },
+   "protected_markers": "agree",
+   "orientation": "agree",
+   "policy": "both_exact",
+   "verdict": "EXACT",
+   "competition_structure": "feed {women=false level=[] tier=[2] letters=[b] cup=false friendly=false federation=false} page {women=false level=[] tier=[2] letters=[b] cup=false friendly=false federation=false country=brazil}"
+  },
+  "stages": [
+   [
+    "OPEN_HOME",
+    4.24
+   ],
+   [
+    "MARKET_NAV",
+    10.94
+   ]
+  ],
+  "place_bet_target": null,
+  "stake_check": null
+ },
+ "reset": {
+  "status": "PASS",
+  "detail": {
+   "tapped": false,
+   "detail": "No safe reset control visible"
+  }
+ },
+ "resumed": "RESUMED",
+ "phone_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.35-ops"
+ }
+}

@@ -206,3 +206,12 @@ def interpret_device_result(result, *, final_action=False):
             return State.READY, reason, observed
         return State.UNKNOWN, 'PASS without READY or wager evidence: ' + reason, observed
     return DEVICE_STAGE_MAP.get(stage, State.UNKNOWN), reason, observed
+
+
+def busy_not_admitted(error):
+    """True when a coordinator submit failed because the phone was running another instruction and explicitly did NOT
+    consume this ID ("BUSY: one instruction at a time; ID not consumed"). That is a definitive non-admission, not an
+    uncertain delivery (27 Sep 2026: on-741157b / on-ce27926 waited 360 s for results that could never exist)."""
+    reply = error.args[0] if getattr(error, 'args', None) else error
+    text = reply.get('detail') if isinstance(reply, dict) else str(reply)
+    return isinstance(text, str) and 'BUSY' in text and 'not consumed' in text

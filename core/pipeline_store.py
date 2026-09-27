@@ -400,6 +400,23 @@ class Store:
     def get_instruction(self, db, instruction_id):
         return db.execute('SELECT * FROM instructions WHERE instruction_id=?', (instruction_id,)).fetchone()
 
+    def requeue_not_admitted(self, db, instruction_id, target, *, reason, actor='dispatcher'):
+        """DISPATCHED -> QUEUED/APPROVED, the ONLY way back in the state machine. Used solely when the coordinator
+        refused admission with "BUSY ... ID not consumed" (lifecycle.busy_not_admitted): nothing ran on the phone, so the
+        same instruction ID is sent again when the phone is free. The general graph (allowed()) stays forward-only."""
+        target = State(target)
+        if target not in (State.QUEUED, State.APPROVED):
+            raise ValueError(f'requeue only to QUEUED/APPROVED, not {target.value}')
+        at = iso(self.clock())
+        cursor = db.execute("UPDATE instructions SET state=?, updated_at=? WHERE instruction_id=? AND state='DISPATCHED' AND terminal=0",
+                            (target.value, at, instruction_id))
+        if cursor.rowcount != 1:
+            self.audit(db, 'TRANSITION_REFUSED', dict(to_state=target.value, reason=reason, actor=actor), instruction_id, at=at)
+            return False
+        db.execute('INSERT INTO transitions(instruction_id, from_state, to_state, at, actor, reason) VALUES (?,?,?,?,?,?)',
+                   (instruction_id, State.DISPATCHED.value, target.value, at, actor, reason))
+        return True
+
     def transition(self, db, instruction_id, target, *, reason=None, actor='pipeline', detail=None, at=None, **fields):
         """Compare-and-set state change. Returns True if applied, False if refused (audited)."""
         target = State(target)

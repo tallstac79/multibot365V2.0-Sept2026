@@ -21,7 +21,7 @@ import hashlib
 import json
 
 from core import bet_matching
-from core.lifecycle import State
+from core.lifecycle import State, busy_not_admitted
 from core.pipeline_store import iso
 from core.session_contract import gate as session_gate
 
@@ -47,6 +47,25 @@ def money(value):
     except (InvalidOperation, TypeError, ValueError):
         return None
 
+
+
+# Quote-mapping profiles the parsers mark production_verified, per sport (the rules engine's verified_mapping check
+# accepts exactly these). Automatic approval once required sport == 'basketball' here, so every football instruction that
+# passed the rules, the hold and all other checks was refused (27 Sep 2026 on-728c2c3d, Santa Cruz RJ AWAY 0.0 @2.050).
+def _verified_profiles():
+    from core import football, market_interpretation, moneyline, oddsnotifier_basketball
+    return {'basketball': frozenset({market_interpretation.TWO_SIDED_PROFILE, market_interpretation.SIDE_LABELLED_PROFILE,
+                                     moneyline.PROFILE, oddsnotifier_basketball.PROFILE}),
+            'football': frozenset({football.PROFILE_1X2, football.PROFILE_TWO_SIDED})}
+
+
+VERIFIED_PROFILES = _verified_profiles()
+
+
+def mapping_verified(sport, mapping):
+    """The approval gate's view of the quote mapping: production-verified AND a profile of this sport's parsers."""
+    mapping = mapping or {}
+    return mapping.get('production_verified') is True and mapping.get('profile') in VERIFIED_PROFILES.get(sport, ())
 
 
 def placed_terms(row, bet):
@@ -185,8 +204,8 @@ class FinalAction:
         check('sharp_signal', sharp.get('status') == 'IDENTIFIED' and sharp.get('side') == row['selection']
               and sharp.get('source') == 'pinnacle_opening_to_current',
               f"{sharp.get('status')} side={sharp.get('side')} vs selection={row['selection']}")
-        check('verified_market_mapping', mapping.get('production_verified') is True and row['sport'] == 'basketball',
-              f"sport={row['sport']} profile={mapping.get('profile')}")
+        check('verified_market_mapping', mapping_verified(row['sport'], mapping),
+              f"sport={row['sport']} profile={mapping.get('profile')} verified={mapping.get('production_verified')}")
         # 2. rules at the device verification time (market enabled, stale, event not started, price bounds)
         recheck = evaluate({k: v for k, v in alert.items() if k != 'source_timestamp'}, self.p.config_provider(),
                            instruction_id=row['instruction_id'], received_at=row['ready_at'] or row['received_at'],
@@ -470,6 +489,13 @@ class FinalAction:
         try:
             gateway.submit(payload)
         except Exception as error:
+            if busy_not_admitted(error):
+                # Not admitted (phone busy, ID not consumed): withdraw the row, so it is neither an attempt nor a 3-minute
+                # wait for a result that cannot exist (13:32Z Pantery check 1); the same check is resent when the phone is free.
+                with self.p.store.tx() as db:
+                    db.execute('DELETE FROM reconciliations WHERE device_instruction_id=? AND completed_at IS NULL', (device_id,))
+                    self.p.store.audit(db, 'RECONCILE_NOT_ADMITTED_BUSY', dict(id=device_id), instruction_id)
+                return True
             with self.p.store.tx() as db:
                 self.p.store.audit(db, 'RECONCILE_SUBMIT_UNCERTAIN', dict(error=str(error)[:300], id=device_id), instruction_id)
         with self.p.store.tx() as db:

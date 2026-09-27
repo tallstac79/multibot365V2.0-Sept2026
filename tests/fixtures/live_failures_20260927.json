@@ -1,0 +1,2339 @@
+{
+ "on-728c2c3d06a66870420086fa": {
+  "instruction_id": "on-728c2c3d06a66870420086fa",
+  "sport": "football",
+  "market": "SPREAD",
+  "selection": "AWAY",
+  "line": "+0.25",
+  "state": "REJECTED",
+  "failure_reason": "AUTO_APPROVAL_REFUSED: verified_market_mapping (sport=football profile=oddsnotifier_football_two_sided_v1)",
+  "normalized_alert": {
+   "alert_price": "1.88",
+   "alternate_line": {
+    "comparison": false,
+    "current": true,
+    "opening": false
+   },
+   "away": "Cardoso Moreira",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "comparison": {
+    "bet365_line": "+0.25",
+    "bet365_line_displayed": "-0.25",
+    "bet365_odds": "1.88",
+    "bet365_present": true,
+    "bookmaker": "Bet365",
+    "equal_line": true,
+    "ev_status": "SUPPLIED_EQUAL_LINE",
+    "line": "-0.25",
+    "line_advantage": "0.00",
+    "line_difference": "0.00",
+    "line_quality": "EQUAL",
+    "price_quality": "FAVOURABLE",
+    "quotes": [
+     {
+      "line": "-0.25",
+      "position": 1,
+      "price": "1.93",
+      "side": "HOME"
+     },
+     {
+      "line": "+0.25",
+      "position": 2,
+      "price": "1.88",
+      "side": "AWAY"
+     }
+    ],
+    "reference_line_displayed": "-0.25",
+    "site": "Bet365",
+    "supplied_ev": "112.52"
+   },
+   "comparison_url": "https://bet365.com/#/AC/B1/C1/D8/E201824199/F3/I1/",
+   "competition": "Carioca B2",
+   "competition_full": "Brazil - Carioca B2",
+   "country": "Brazil",
+   "displayed_ev_percent": "112.52",
+   "displayed_line": "-0.25",
+   "feed_displayed_ev_percent": "112.52",
+   "fixture": "Santa Cruz RJ vs Cardoso Moreira",
+   "fixture_url": "https://oddshub.io/football/brazil-carioca-serie-b2/73385452?market=Spread",
+   "football": {
+    "in_play_link": false,
+    "line_candidate": null,
+    "price_candidate": "AWAY",
+    "profile": "oddsnotifier_football_two_sided_v1",
+    "signal_basis": "price_same_line",
+    "verdict": "EXECUTABLE_AWAY",
+    "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 AWAY 1.88 vs Pinnacle 1.578"
+   },
+   "format_variant": "two_sided",
+   "highlighted_side": "AWAY",
+   "home": "Santa Cruz RJ",
+   "implied_target": null,
+   "interpretation_notes": [],
+   "interpretation_status": "PARSED",
+   "interpretation_version": "sharp-money-football-1",
+   "limit": null,
+   "line_quality": "EQUAL",
+   "market": "SPREAD",
+   "market_label": "Spread",
+   "market_label_source": "label_and_fixture_url",
+   "market_movement": {
+    "current_line": "-0.25",
+    "current_price": null,
+    "line_change": null,
+    "line_direction": null,
+    "line_perspective": "HOME",
+    "opening_line": "-0.25",
+    "opening_line_change": "0.00",
+    "opening_line_direction": "UNCHANGED",
+    "opening_line_equal": true,
+    "opening_price": null,
+    "opening_to_current_price_change_percent": null,
+    "previous_line": null,
+    "previous_price_displayed": null,
+    "price_change_basis": null,
+    "price_change_percent": null,
+    "price_direction": null,
+    "price_direction_source": null
+   },
+   "movement": {
+    "current_line": "+0.25",
+    "current_price": "1.578",
+    "line_change": null,
+    "line_direction": null,
+    "opening_line": "+0.25",
+    "opening_line_change": "0.00",
+    "opening_line_direction": "UNCHANGED",
+    "opening_line_equal": true,
+    "opening_price": "1.934",
+    "opening_to_current_price_change_percent": -18.41,
+    "previous_line": null,
+    "previous_price_displayed": "1.609",
+    "price_change_basis": null,
+    "price_change_percent": null,
+    "price_direction": "SHORTENED",
+    "price_direction_source": "arrow"
+   },
+   "observation_id": "oddsnotifier:fa39f734b26abc91f1f65e6fa8665b7804962553b60d05215c5ff257bde34b45",
+   "opening": {
+    "line": "-0.25",
+    "outcome_count_matches_market": true,
+    "quotes": [
+     {
+      "line": "-0.25",
+      "position": 1,
+      "price": "1.787",
+      "side": "HOME"
+     },
+     {
+      "line": "+0.25",
+      "position": 2,
+      "price": "1.934",
+      "side": "AWAY"
+     }
+    ]
+   },
+   "opening_marker": "🟢",
+   "pinnacle": {
+    "line": "-0.25",
+    "previous_line": null,
+    "quotes": [
+     {
+      "line": "-0.25",
+      "movement": "UP",
+      "movement_marker": "⬆️",
+      "parenthetical_price": "2.190",
+      "position": 1,
+      "price": "2.250",
+      "side": "HOME"
+     },
+     {
+      "line": "+0.25",
+      "movement": "DOWN",
+      "movement_marker": "⬇️",
+      "parenthetical_price": "1.609",
+      "position": 2,
+      "price": "1.578",
+      "side": "AWAY"
+     }
+    ]
+   },
+   "price_quality": "FAVOURABLE",
+   "quote_mapping": {
+    "confirmation_source": "Feed 1 corpus 26-27 Sep 2026 (28 real Spread alerts): HOME-AWAY with the displayed line as the HOME handicap; phone capture of Bet365 Asian Handicap columns home team | away team with signed lines per team (evidence/football/pages/pg-vihiga-103021); docs/FOOTBALL_STRATEGY_SPEC.md",
+    "group_sides_by_position": {
+     "comparison": [
+      "HOME",
+      "AWAY"
+     ],
+     "opening": [
+      "HOME",
+      "AWAY"
+     ],
+     "pinnacle": [
+      "HOME",
+      "AWAY"
+     ]
+    },
+    "production_verified": true,
+    "profile": "oddsnotifier_football_two_sided_v1",
+    "sides_by_position": [
+     "HOME",
+     "AWAY"
+    ]
+   },
+   "raw_text": "New odds update on Pinnacle\n\nFootball - Brazil - Carioca B2\n[Santa Cruz RJ vs Cardoso Moreira](https://oddshub.io/football/brazil-carioca-serie-b2/73385452?market=Spread)\n27.09.2026 19:00\n\nSpread (-0.25) (alt. line)\n2.250⬆️ (2.190) - 1.578⬇️ (1.609)\n\n🟢 Opening (-0.25)\n1.787 - 1.934\n\n[Bet365 (Spread -0.25)](https://bet365.com/#/AC/B1/C1/D8/E201824199/F3/I1/)\n1.93 - **1.88**\n\n🎯 EV: 112.52%",
+   "reference": {
+    "bookmaker": "Pinnacle",
+    "fair_odds": null,
+    "line": "+0.25",
+    "odds": "1.578"
+   },
+   "sample_provenance": "unspecified",
+   "scheduled_at_local": "2026-09-27T19:00",
+   "scheduled_timezone": null,
+   "schema_version": 6,
+   "selection_line": "+0.25",
+   "selection_name": "Cardoso Moreira",
+   "selection_side": "AWAY",
+   "sharp_signal": {
+    "basis": "price_same_line",
+    "change": "-0.356",
+    "changes_by_side": {
+     "AWAY": "-0.356",
+     "HOME": "0.463"
+    },
+    "current_line": "-0.25",
+    "current_prices": {
+     "AWAY": "1.578",
+     "HOME": "2.250"
+    },
+    "direction": "SHORTENED",
+    "highlight_agrees": true,
+    "line_candidate": null,
+    "magnitude": "0.356",
+    "magnitude_units": "decimal_odds",
+    "opening_line": "-0.25",
+    "opening_prices": {
+     "AWAY": "1.934",
+     "HOME": "1.787"
+    },
+    "price_candidate": "AWAY",
+    "reason": "Pinnacle line -0.25 unchanged; AWAY 1.934 -> 1.578 shortens, HOME 1.787 -> 2.250 does not",
+    "recent_line_reversal": false,
+    "side": "AWAY",
+    "source": "pinnacle_opening_to_current",
+    "status": "IDENTIFIED"
+   },
+   "sides": [
+    {
+     "bet_quality": "UNFAVOURABLE",
+     "comparison": {
+      "bet365_line": "-0.25",
+      "bet365_price": "1.93",
+      "bookmaker": "Bet365",
+      "equal_line": true,
+      "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+      "line_advantage": "0.00",
+      "line_applicable": true,
+      "line_difference": "0.00",
+      "line_quality": "EQUAL",
+      "price_difference": "-0.320",
+      "price_quality": "UNFAVOURABLE",
+      "reference_line": "-0.25",
+      "reference_price": "2.250",
+      "supplied_ev": null
+     },
+     "is_target": false,
+     "line_quality": "EQUAL",
+     "movement": {
+      "current_line": "-0.25",
+      "current_price": "2.250",
+      "line_change": null,
+      "line_direction": null,
+      "opening_line": "-0.25",
+      "opening_line_change": "0.00",
+      "opening_line_direction": "UNCHANGED",
+      "opening_line_equal": true,
+      "opening_price": "1.787",
+      "opening_to_current_price_change_percent": 25.91,
+      "previous_line": null,
+      "previous_price_displayed": "2.190",
+      "price_change_basis": null,
+      "price_change_percent": null,
+      "price_direction": "DRIFTED",
+      "price_direction_source": "arrow"
+     },
+     "price_quality": "UNFAVOURABLE",
+     "reference": {
+      "bookmaker": "Pinnacle",
+      "fair_odds": null,
+      "line": "-0.25",
+      "odds": "2.250"
+     },
+     "selection_line": "-0.25",
+     "selection_name": "Santa Cruz RJ",
+     "side": "HOME"
+    },
+    {
+     "bet_quality": "CLEAR_VALUE_SIGNAL",
+     "comparison": {
+      "bet365_line": "+0.25",
+      "bet365_price": "1.88",
+      "bookmaker": "Bet365",
+      "equal_line": true,
+      "ev_status": "SUPPLIED_EQUAL_LINE",
+      "line_advantage": "0.00",
+      "line_applicable": true,
+      "line_difference": "0.00",
+      "line_quality": "EQUAL",
+      "price_difference": "0.302",
+      "price_quality": "FAVOURABLE",
+      "reference_line": "+0.25",
+      "reference_price": "1.578",
+      "supplied_ev": "112.52"
+     },
+     "is_target": true,
+     "line_quality": "EQUAL",
+     "movement": {
+      "current_line": "+0.25",
+      "current_price": "1.578",
+      "line_change": null,
+      "line_direction": null,
+      "opening_line": "+0.25",
+      "opening_line_change": "0.00",
+      "opening_line_direction": "UNCHANGED",
+      "opening_line_equal": true,
+      "opening_price": "1.934",
+      "opening_to_current_price_change_percent": -18.41,
+      "previous_line": null,
+      "previous_price_displayed": "1.609",
+      "price_change_basis": null,
+      "price_change_percent": null,
+      "price_direction": "SHORTENED",
+      "price_direction_source": "arrow"
+     },
+     "price_quality": "FAVOURABLE",
+     "reference": {
+      "bookmaker": "Pinnacle",
+      "fair_odds": null,
+      "line": "+0.25",
+      "odds": "1.578"
+     },
+     "selection_line": "+0.25",
+     "selection_name": "Cardoso Moreira",
+     "side": "AWAY"
+    }
+   ],
+   "source": "OddsNotifier",
+   "source_timestamp": "2026-09-27T16:14:35+00:00",
+   "sport": "football",
+   "target_line": "+0.25",
+   "target_price_source": "pinnacle_opening_to_current",
+   "target_side": "AWAY",
+   "telegram_channel_id": "1645770730",
+   "telegram_message_id": "71835",
+   "unresolved": [
+    "event_timezone_unspecified",
+    "parenthetical_price_meaning_unspecified"
+   ]
+  },
+  "dispatch_payload": {
+   "action": "ADAPTER_WORKFLOW",
+   "adapter": "live_bet365",
+   "competition": "Carioca B2",
+   "country": "Brazil",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201824199/F3/I1/",
+   "execution_mode": "hold",
+   "instruction_id": "on-728c2c3d06a66870420086fa",
+   "kickoff_utc": "2026-09-27T18:00",
+   "line": "+0.25",
+   "market": "SPREAD",
+   "max_line_deterioration": "0.25",
+   "minimum_price": "1.80",
+   "period": "FULL_GAME",
+   "query": "Santa Cruz RJ||Cardoso Moreira",
+   "scenario": "live",
+   "side": "AWAY",
+   "sport": "football",
+   "stake": "0.10",
+   "timeout_ms": 300000
+  },
+  "rules_result": {
+   "checks": [
+    {
+     "detail": "production-verified quote mapping",
+     "name": "verified_mapping",
+     "passed": true
+    },
+    {
+     "detail": "Pinnacle line -0.25 unchanged; AWAY 1.934 -> 1.578 shortens, HOME 1.787 -> 2.250 does not",
+     "name": "sharp_target",
+     "passed": true
+    },
+    {
+     "detail": "target AWAY @ 1.88 (Pinnacle opening-to-current movement)",
+     "name": "explicit_target",
+     "passed": true
+    },
+    {
+     "detail": "football SPREAD: requested Bet365 quote must belong to the independently selected Pinnacle side (AWAY) at its own line, from a pre-match event link",
+     "name": "football_same_side_offer",
+     "passed": true
+    },
+    {
+     "detail": "CLEAR_VALUE_SIGNAL (line EQUAL, price FAVOURABLE, EV SUPPLIED_EQUAL_LINE)",
+     "name": "bet_quality",
+     "passed": true
+    },
+    {
+     "detail": "Feed-qualified signal; genuine nonzero opening-to-current movement required; no duplicate movement floor",
+     "name": "sharp_movement",
+     "passed": true
+    },
+    {
+     "detail": "football SPREAD",
+     "name": "known_market",
+     "passed": true
+    },
+    {
+     "detail": "global rules enabled",
+     "name": "global_enabled",
+     "passed": true
+    },
+    {
+     "detail": "football SPREAD enabled",
+     "name": "market_enabled",
+     "passed": true
+    },
+    {
+     "detail": "0s old (limit 300s)",
+     "name": "alert_age",
+     "passed": true
+    },
+    {
+     "detail": "Source/receipt times must not exceed the current clock by more than 30 seconds",
+     "name": "timestamp_consistency",
+     "passed": true
+    },
+    {
+     "detail": "Feed timezone Europe/London is operator verified",
+     "name": "feed_timezone_verified",
+     "passed": true
+    },
+    {
+     "detail": "event starts 2026-09-27T18:00:00+00:00",
+     "name": "event_not_started",
+     "passed": true
+    },
+    {
+     "detail": "alert price 1.88",
+     "name": "valid_price",
+     "passed": true
+    },
+    {
+     "detail": "football SPREAD: net payout tolerance 10%, legacy decimal tolerance None, absolute line cap 0.25, spread cap None% of original handicap; price and line policies require explicit configuration",
+     "name": "execution_tolerances",
+     "passed": true
+    },
+    {
+     "detail": "stake 0.10 (max 10.00)",
+     "name": "stake",
+     "passed": true
+    }
+   ],
+   "config_hash": "b0123d7b5e648ee4",
+   "decision": "ACCEPT",
+   "engine": "rules-8-football",
+   "evaluated_at": "2026-09-27T16:14:35.888927+00:00",
+   "event_time_assumptions": {
+    "Europe/London": {
+     "event_not_started": true,
+     "event_start_utc": "2026-09-27T18:00:00+00:00"
+    },
+    "UTC": {
+     "event_not_started": true,
+     "event_start_utc": "2026-09-27T19:00:00+00:00"
+    }
+   },
+   "event_timezone": "Europe/London",
+   "feed_timezone_verified": true,
+   "instruction": {
+    "alert_price": "1.88",
+    "alternate_line": {
+     "comparison": false,
+     "current": true,
+     "opening": false
+    },
+    "away": "Cardoso Moreira",
+    "bet_quality": "CLEAR_VALUE_SIGNAL",
+    "competition": "Carioca B2",
+    "configured_line_absolute_cap": 0.25,
+    "displayed_ev_percent": "112.52",
+    "ev_status": "SUPPLIED_EQUAL_LINE",
+    "event_start_utc": "2026-09-27T18:00:00+00:00",
+    "event_time_local": "2026-09-27T19:00",
+    "event_timezone": "Europe/London",
+    "fixture": "Santa Cruz RJ vs Cardoso Moreira",
+    "highlighted_side": "AWAY",
+    "home": "Santa Cruz RJ",
+    "implied_target": null,
+    "instruction_id": "on-728c2c3d06a66870420086fa",
+    "line": "+0.25",
+    "line_advantage": "0.00",
+    "line_quality": "EQUAL",
+    "market": "SPREAD",
+    "max_line_deterioration": "0.25",
+    "max_line_deterioration_percent": null,
+    "max_net_payout_deterioration_percent": 10,
+    "max_odds_deterioration": null,
+    "minimum_price": "1.80",
+    "price_quality": "FAVOURABLE",
+    "reference_odds": "1.578",
+    "selection_name": "Cardoso Moreira",
+    "sharp_signal": {
+     "basis": "price_same_line",
+     "change": "-0.356",
+     "changes_by_side": {
+      "AWAY": "-0.356",
+      "HOME": "0.463"
+     },
+     "current_line": "-0.25",
+     "current_prices": {
+      "AWAY": "1.578",
+      "HOME": "2.250"
+     },
+     "direction": "SHORTENED",
+     "line_candidate": null,
+     "magnitude": "0.356",
+     "magnitude_units": "decimal_odds",
+     "opening_line": "-0.25",
+     "opening_prices": {
+      "AWAY": "1.934",
+      "HOME": "1.787"
+     },
+     "price_candidate": "AWAY",
+     "reason": "Pinnacle line -0.25 unchanged; AWAY 1.934 -> 1.578 shortens, HOME 1.787 -> 2.250 does not",
+     "side": "AWAY",
+     "source": "pinnacle_opening_to_current",
+     "status": "IDENTIFIED"
+    },
+    "side": "AWAY",
+    "signal_reason": "CLEAR_VALUE_SIGNAL",
+    "sport": "football",
+    "stake": "0.10",
+    "target_source": "pinnacle_opening_to_current"
+   },
+   "reason": "All rules passed",
+   "timezone_eligibility_uncertain": false
+  },
+  "audit": [
+   {
+    "kind": "AUTO_APPROVAL_REFUSED",
+    "detail": {
+     "account": "1457f6e497f3",
+     "approval_mode": "automatic",
+     "auto_approved_at": "2026-09-27T16:16:48.613+00:00",
+     "checks": [
+      {
+       "check": "authorised_source",
+       "detail": "origin=production chat=1645770730",
+       "ok": true
+      },
+      {
+       "check": "sharp_signal",
+       "detail": "IDENTIFIED side=AWAY vs selection=AWAY",
+       "ok": true
+      },
+      {
+       "check": "verified_market_mapping",
+       "detail": "sport=football profile=oddsnotifier_football_two_sided_v1",
+       "ok": false
+      },
+      {
+       "check": "rules_recheck",
+       "detail": "All rules passed",
+       "ok": true
+      },
+      {
+       "check": "device_verified_hold",
+       "detail": "status=PASS held=True",
+       "ok": true
+      },
+      {
+       "check": "event_identity",
+       "detail": "verdict=EXACT context=['away', 'competition', 'home', 'kickoff_utc', 'period']",
+       "ok": true
+      },
+      {
+       "check": "period_full_game",
+       "detail": "FULL_GAME",
+       "ok": true
+      },
+      {
+       "check": "market_and_side",
+       "detail": "SPREAD/AWAY vs SPREAD/AWAY",
+       "ok": true
+      },
+      {
+       "check": "terms_within_tolerance",
+       "detail": "within configured tolerances",
+       "ok": true
+      },
+      {
+       "check": "stake_verified",
+       "detail": "slip 0.10 vs 0.10",
+       "ok": true
+      },
+      {
+       "check": "session_authenticated",
+       "detail": "AUTHENTICATED",
+       "ok": true
+      },
+      {
+       "check": "worker_healthy",
+       "detail": "ONLINE",
+       "ok": true
+      },
+      {
+       "check": "worker_identity",
+       "detail": "phone worker_id=w-d131ef8769de expected=w-d131ef8769de",
+       "ok": true
+      },
+      {
+       "check": "account_identity",
+       "detail": "phone account=1457f6e497f3 expected=1457f6e497f3",
+       "ok": true
+      },
+      {
+       "check": "phone_final_action_permission",
+       "detail": "phone_final_action_armed=True",
+       "ok": true
+      },
+      {
+       "check": "kill_switch_off",
+       "detail": "running",
+       "ok": true
+      },
+      {
+       "check": "dispatch_and_final_action_enabled",
+       "detail": "dispatch=True final_action=True",
+       "ok": true
+      },
+      {
+       "check": "stake_and_daily_limits",
+       "detail": "within limits",
+       "ok": true
+      },
+      {
+       "check": "no_duplicate_execution",
+       "detail": "none",
+       "ok": true
+      },
+      {
+       "check": "no_unresolved_prior_placement",
+       "detail": "blocking=[] quarantined=[] in_flight=0",
+       "ok": true
+      }
+     ],
+     "decided_by": "automatic-policy",
+     "device_verified": {
+      "at": "2026-09-27T16:16:48.585+00:00",
+      "line": "0.0",
+      "odds": "2.050"
+     },
+     "execution_job_id": "on-728c2c3d06a66870420086fa-place",
+     "instruction_id": "on-728c2c3d06a66870420086fa",
+     "parser_version": "classifier-4-moneyline",
+     "reason": "AUTO_APPROVAL_REFUSED: verified_market_mapping (sport=football profile=oddsnotifier_football_two_sided_v1)",
+     "requested": {
+      "line": "+0.25",
+      "minimum_price": "1.80",
+      "odds": "1.88"
+     },
+     "rules_version": "rules-8-football",
+     "stake": "0.10",
+     "strategy_version": "sharp-money-football-1",
+     "worker": {
+      "device_id": "galaxy-a13-5g",
+      "worker_id": "w-d131ef8769de"
+     }
+    }
+   }
+  ]
+ },
+ "on-741157b9f9da5fd391efa61c": {
+  "instruction_id": "on-741157b9f9da5fd391efa61c",
+  "sport": "football",
+  "market": "1X2",
+  "selection": "AWAY",
+  "line": null,
+  "state": "TIMEOUT",
+  "failure_reason": "No device result within 360s; outcome unknown, never re-dispatched",
+  "normalized_alert": {
+   "alert_price": "2.25",
+   "alternate_line": {
+    "comparison": false,
+    "current": false,
+    "opening": false
+   },
+   "away": "Los Cabos United",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "comparison": {
+    "bet365_line": null,
+    "bet365_line_displayed": null,
+    "bet365_odds": "2.25",
+    "bet365_present": true,
+    "bet365_price": "2.25",
+    "bookmaker": "Bet365",
+    "equal_line": true,
+    "ev_status": "SUPPLIED_EQUAL_LINE",
+    "line": null,
+    "line_advantage": null,
+    "line_applicable": false,
+    "line_difference": null,
+    "line_quality": "EQUAL",
+    "price_difference": "0.444",
+    "price_quality": "FAVOURABLE",
+    "quotes": [
+     {
+      "executable_price": true,
+      "line": null,
+      "position": 1,
+      "price": "2.80",
+      "side": "HOME"
+     },
+     {
+      "executable_price": true,
+      "line": null,
+      "position": 2,
+      "price": "3.20",
+      "side": "DRAW"
+     },
+     {
+      "executable_price": true,
+      "line": null,
+      "position": 3,
+      "price": "2.25",
+      "side": "AWAY"
+     }
+    ],
+    "reference_line": null,
+    "reference_line_displayed": null,
+    "reference_price": "1.806",
+    "site": "Bet365",
+    "supplied_ev": "115.37"
+   },
+   "comparison_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201821342/F3/I1/",
+   "competition": "Liga Premier",
+   "competition_full": "Mexico - Liga Premier",
+   "country": "Mexico",
+   "displayed_ev_percent": "115.37",
+   "displayed_line": null,
+   "feed_displayed_ev_percent": "115.37",
+   "fixture": "H20 Purepechas vs Los Cabos United",
+   "fixture_url": "https://oddshub.io/football/mexico-liga-primera-premier-group-stage/74100690?market=ML",
+   "football": {
+    "draw_opening_supplied": false,
+    "in_play_link": false,
+    "profile": "oddsnotifier_football_1x2_v1",
+    "signal_basis": "price",
+    "verdict": "EXECUTABLE_AWAY",
+    "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 AWAY 2.25 vs Pinnacle 1.806"
+   },
+   "format_variant": "football_1x2",
+   "highlighted_side": "AWAY",
+   "home": "H20 Purepechas",
+   "implied_target": null,
+   "interpretation_notes": [],
+   "interpretation_status": "PARSED",
+   "interpretation_version": "sharp-money-football-1",
+   "limit": null,
+   "line_quality": "EQUAL",
+   "market": "1X2",
+   "market_label": "ML",
+   "market_label_source": "label_and_fixture_url",
+   "market_movement": {
+    "changes_by_side": {
+     "AWAY": "-0.474",
+     "HOME": "0.900"
+    },
+    "line_perspective": "NONE",
+    "price_perspective": "HOME_DRAW_AWAY"
+   },
+   "movement": {
+    "current_line": null,
+    "current_price": "1.806",
+    "line_change": null,
+    "line_direction": null,
+    "opening_line": null,
+    "opening_line_change": null,
+    "opening_line_direction": null,
+    "opening_line_equal": null,
+    "opening_price": "2.280",
+    "opening_to_current_price_change_percent": -20.79,
+    "previous_line": null,
+    "previous_price_displayed": "2.280",
+    "price_change_basis": null,
+    "price_change_percent": null,
+    "price_direction": "SHORTENED",
+    "price_direction_source": "arrow"
+   },
+   "observation_id": "oddsnotifier:0fe80159077eed9c497208f6980bbe1970cb83b45a342cfadb15d4fa202d4bab",
+   "opening": {
+    "line": null,
+    "outcome_count_matches_market": false,
+    "quotes": [
+     {
+      "line": null,
+      "position": 1,
+      "price": "2.870",
+      "side": "HOME"
+     },
+     {
+      "line": null,
+      "position": 2,
+      "price": "2.280",
+      "side": "AWAY"
+     }
+    ]
+   },
+   "opening_marker": "🟢",
+   "pinnacle": {
+    "line": null,
+    "previous_line": null,
+    "quotes": [
+     {
+      "line": null,
+      "movement": "UP",
+      "movement_marker": "⬆️",
+      "parenthetical_price": "2.870",
+      "position": 1,
+      "price": "3.770",
+      "side": "HOME"
+     },
+     {
+      "line": null,
+      "parenthetical_price": "2.960",
+      "position": 2,
+      "price": "3.250",
+      "side": "DRAW"
+     },
+     {
+      "line": null,
+      "movement": "DOWN",
+      "movement_marker": "⬇️",
+      "parenthetical_price": "2.280",
+      "position": 3,
+      "price": "1.806",
+      "side": "AWAY"
+     }
+    ]
+   },
+   "price_quality": "FAVOURABLE",
+   "quote_mapping": {
+    "confirmation_source": "Feed 1 corpus 26-27 Sep 2026 (7 real 1X2 alerts): current row HOME-DRAW-AWAY, opening row HOME-AWAY, Bet365 row HOME-DRAW-AWAY; the bold Bet365 price always sat on the unique opening-to-current shortener; phone captures of Bet365 Full Time Result columns home | Draw | away (evidence/football/pages); docs/FOOTBALL_STRATEGY_SPEC.md",
+    "group_sides_by_position": {
+     "comparison": [
+      "HOME",
+      "DRAW",
+      "AWAY"
+     ],
+     "opening": [
+      "HOME",
+      "AWAY"
+     ],
+     "pinnacle": [
+      "HOME",
+      "DRAW",
+      "AWAY"
+     ]
+    },
+    "production_verified": true,
+    "profile": "oddsnotifier_football_1x2_v1",
+    "sides_by_position": [
+     "HOME",
+     "DRAW",
+     "AWAY"
+    ]
+   },
+   "raw_text": "New odds update on Pinnacle\n\nFootball - Mexico - Liga Premier\n[H20 Purepechas vs Los Cabos United](https://oddshub.io/football/mexico-liga-primera-premier-group-stage/74100690?market=ML)\n27.09.2026 18:00\n3.770⬆️ (2.870) - 3.250 (2.960) - 1.806⬇️ (2.280)\n\n🟢 Opening\n2.870 - 2.280\n\n[Bet365](https://www.bet365.com/#/AC/B1/C1/D8/E201821342/F3/I1/)\n2.80 - 3.20 - **2.25**\n\n🎯 EV: 115.37%",
+   "reference": {
+    "bookmaker": "Pinnacle",
+    "fair_odds": null,
+    "line": null,
+    "odds": "1.806"
+   },
+   "sample_provenance": "unspecified",
+   "scheduled_at_local": "2026-09-27T18:00",
+   "scheduled_timezone": null,
+   "schema_version": 6,
+   "selection_line": null,
+   "selection_name": "Los Cabos United",
+   "selection_side": "AWAY",
+   "sharp_signal": {
+    "basis": "price",
+    "candidates": [
+     "HOME",
+     "AWAY"
+    ],
+    "change": "-0.474",
+    "changes_by_side": {
+     "AWAY": "-0.474",
+     "HOME": "0.900"
+    },
+    "current_line": null,
+    "current_prices": {
+     "AWAY": "1.806",
+     "DRAW": "3.250",
+     "HOME": "3.770"
+    },
+    "direction": "SHORTENED",
+    "draw_opening_supplied": false,
+    "highlight_agrees": true,
+    "magnitude": "0.474",
+    "magnitude_units": "decimal_odds",
+    "opening_line": null,
+    "opening_prices": {
+     "AWAY": "2.280",
+     "HOME": "2.870"
+    },
+    "opening_to_current_percent": "-20.78947368421052631578947368",
+    "reason": "Pinnacle AWAY opening 2.280 -> current 1.806 shortens; HOME 2.870 -> 3.770 does not shorten; draw opening not supplied, draw never a candidate",
+    "side": "AWAY",
+    "source": "pinnacle_opening_to_current",
+    "status": "IDENTIFIED"
+   },
+   "sides": [
+    {
+     "bet_quality": "UNFAVOURABLE",
+     "comparison": {
+      "bet365_line": null,
+      "bet365_price": "2.80",
+      "bookmaker": "Bet365",
+      "equal_line": true,
+      "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+      "line_advantage": null,
+      "line_applicable": false,
+      "line_difference": null,
+      "line_quality": "EQUAL",
+      "price_difference": "-0.970",
+      "price_quality": "UNFAVOURABLE",
+      "reference_line": null,
+      "reference_price": "3.770",
+      "supplied_ev": null
+     },
+     "is_target": false,
+     "line_quality": "EQUAL",
+     "movement": {
+      "current_line": null,
+      "current_price": "3.770",
+      "line_change": null,
+      "line_direction": null,
+      "opening_line": null,
+      "opening_line_change": null,
+      "opening_line_direction": null,
+      "opening_line_equal": null,
+      "opening_price": "2.870",
+      "opening_to_current_price_change_percent": 31.36,
+      "previous_line": null,
+      "previous_price_displayed": "2.870",
+      "price_change_basis": null,
+      "price_change_percent": null,
+      "price_direction": "DRIFTED",
+      "price_direction_source": "arrow"
+     },
+     "price_quality": "UNFAVOURABLE",
+     "reference": {
+      "bookmaker": "Pinnacle",
+      "fair_odds": null,
+      "line": null,
+      "odds": "3.770"
+     },
+     "selection_line": null,
+     "selection_name": "H20 Purepechas",
+     "side": "HOME"
+    },
+    {
+     "bet_quality": "UNFAVOURABLE",
+     "comparison": {
+      "bet365_line": null,
+      "bet365_price": "3.20",
+      "bookmaker": "Bet365",
+      "equal_line": true,
+      "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+      "line_advantage": null,
+      "line_applicable": false,
+      "line_difference": null,
+      "line_quality": "EQUAL",
+      "price_difference": "-0.050",
+      "price_quality": "UNFAVOURABLE",
+      "reference_line": null,
+      "reference_price": "3.250",
+      "supplied_ev": null
+     },
+     "is_target": false,
+     "line_quality": "EQUAL",
+     "movement": {
+      "current_line": null,
+      "current_price": "3.250",
+      "line_change": null,
+      "line_direction": null,
+      "opening_line": null,
+      "opening_line_change": null,
+      "opening_line_direction": null,
+      "opening_line_equal": null,
+      "opening_price": null,
+      "opening_to_current_price_change_percent": null,
+      "previous_line": null,
+      "previous_price_displayed": "2.960",
+      "price_change_basis": null,
+      "price_change_percent": null,
+      "price_direction": null,
+      "price_direction_source": null
+     },
+     "price_quality": "UNFAVOURABLE",
+     "reference": {
+      "bookmaker": "Pinnacle",
+      "fair_odds": null,
+      "line": null,
+      "odds": "3.250"
+     },
+     "selection_line": null,
+     "selection_name": "Draw",
+     "side": "DRAW"
+    },
+    {
+     "bet_quality": "CLEAR_VALUE_SIGNAL",
+     "comparison": {
+      "bet365_line": null,
+      "bet365_price": "2.25",
+      "bookmaker": "Bet365",
+      "equal_line": true,
+      "ev_status": "SUPPLIED_EQUAL_LINE",
+      "line_advantage": null,
+      "line_applicable": false,
+      "line_difference": null,
+      "line_quality": "EQUAL",
+      "price_difference": "0.444",
+      "price_quality": "FAVOURABLE",
+      "reference_line": null,
+      "reference_price": "1.806",
+      "supplied_ev": "115.37"
+     },
+     "is_target": true,
+     "line_quality": "EQUAL",
+     "movement": {
+      "current_line": null,
+      "current_price": "1.806",
+      "line_change": null,
+      "line_direction": null,
+      "opening_line": null,
+      "opening_line_change": null,
+      "opening_line_direction": null,
+      "opening_line_equal": null,
+      "opening_price": "2.280",
+      "opening_to_current_price_change_percent": -20.79,
+      "previous_line": null,
+      "previous_price_displayed": "2.280",
+      "price_change_basis": null,
+      "price_change_percent": null,
+      "price_direction": "SHORTENED",
+      "price_direction_source": "arrow"
+     },
+     "price_quality": "FAVOURABLE",
+     "reference": {
+      "bookmaker": "Pinnacle",
+      "fair_odds": null,
+      "line": null,
+      "odds": "1.806"
+     },
+     "selection_line": null,
+     "selection_name": "Los Cabos United",
+     "side": "AWAY"
+    }
+   ],
+   "source": "OddsNotifier",
+   "source_timestamp": "2026-09-27T16:09:54+00:00",
+   "sport": "football",
+   "target_line": null,
+   "target_price_source": "pinnacle_opening_to_current",
+   "target_side": "AWAY",
+   "telegram_channel_id": "1645770730",
+   "telegram_message_id": "71823",
+   "unresolved": [
+    "event_timezone_unspecified",
+    "parenthetical_price_meaning_unspecified"
+   ]
+  },
+  "dispatch_payload": {
+   "action": "ADAPTER_WORKFLOW",
+   "adapter": "live_bet365",
+   "aliases": "{\"h20 purepechas\": \"H20 Purepechas FC\"}",
+   "competition": "Liga Premier",
+   "country": "Mexico",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201821342/F3/I1/",
+   "execution_mode": "hold",
+   "instruction_id": "on-741157b9f9da5fd391efa61c",
+   "kickoff_utc": "2026-09-27T17:00",
+   "line": null,
+   "market": "1X2",
+   "minimum_price": "2.13",
+   "period": "FULL_GAME",
+   "query": "H20 Purepechas||Los Cabos United",
+   "scenario": "live",
+   "side": "AWAY",
+   "sport": "football",
+   "stake": "0.10",
+   "timeout_ms": 300000
+  },
+  "rules_result": {
+   "checks": [
+    {
+     "detail": "production-verified quote mapping",
+     "name": "verified_mapping",
+     "passed": true
+    },
+    {
+     "detail": "Pinnacle AWAY opening 2.280 -> current 1.806 shortens; HOME 2.870 -> 3.770 does not shorten; draw opening not supplied, draw never a candidate",
+     "name": "sharp_target",
+     "passed": true
+    },
+    {
+     "detail": "target AWAY @ 2.25 (Pinnacle opening-to-current movement)",
+     "name": "explicit_target",
+     "passed": true
+    },
+    {
+     "detail": "football 1X2: requested Bet365 quote must belong to the independently selected Pinnacle side (AWAY) at its own line, from a pre-match event link",
+     "name": "football_same_side_offer",
+     "passed": true
+    },
+    {
+     "detail": "CLEAR_VALUE_SIGNAL (line EQUAL, price FAVOURABLE, EV SUPPLIED_EQUAL_LINE)",
+     "name": "bet_quality",
+     "passed": true
+    },
+    {
+     "detail": "Feed-qualified signal; genuine nonzero opening-to-current movement required; no duplicate movement floor",
+     "name": "sharp_movement",
+     "passed": true
+    },
+    {
+     "detail": "football 1X2",
+     "name": "known_market",
+     "passed": true
+    },
+    {
+     "detail": "global rules enabled",
+     "name": "global_enabled",
+     "passed": true
+    },
+    {
+     "detail": "football 1X2 enabled",
+     "name": "market_enabled",
+     "passed": true
+    },
+    {
+     "detail": "0s old (limit 300s)",
+     "name": "alert_age",
+     "passed": true
+    },
+    {
+     "detail": "Source/receipt times must not exceed the current clock by more than 30 seconds",
+     "name": "timestamp_consistency",
+     "passed": true
+    },
+    {
+     "detail": "Feed timezone Europe/London is operator verified",
+     "name": "feed_timezone_verified",
+     "passed": true
+    },
+    {
+     "detail": "event starts 2026-09-27T17:00:00+00:00",
+     "name": "event_not_started",
+     "passed": true
+    },
+    {
+     "detail": "alert price 2.25",
+     "name": "valid_price",
+     "passed": true
+    },
+    {
+     "detail": "football 1X2: net payout tolerance 10%, legacy decimal tolerance None, absolute line cap None, spread cap None% of original handicap; price and line policies require explicit configuration",
+     "name": "execution_tolerances",
+     "passed": true
+    },
+    {
+     "detail": "stake 0.10 (max 10.00)",
+     "name": "stake",
+     "passed": true
+    }
+   ],
+   "config_hash": "b0123d7b5e648ee4",
+   "decision": "ACCEPT",
+   "engine": "rules-8-football",
+   "evaluated_at": "2026-09-27T16:09:54.574315+00:00",
+   "event_time_assumptions": {
+    "Europe/London": {
+     "event_not_started": true,
+     "event_start_utc": "2026-09-27T17:00:00+00:00"
+    },
+    "UTC": {
+     "event_not_started": true,
+     "event_start_utc": "2026-09-27T18:00:00+00:00"
+    }
+   },
+   "event_timezone": "Europe/London",
+   "feed_timezone_verified": true,
+   "instruction": {
+    "alert_price": "2.25",
+    "alternate_line": {
+     "comparison": false,
+     "current": false,
+     "opening": false
+    },
+    "away": "Los Cabos United",
+    "bet_quality": "CLEAR_VALUE_SIGNAL",
+    "competition": "Liga Premier",
+    "configured_line_absolute_cap": null,
+    "displayed_ev_percent": "115.37",
+    "ev_status": "SUPPLIED_EQUAL_LINE",
+    "event_start_utc": "2026-09-27T17:00:00+00:00",
+    "event_time_local": "2026-09-27T18:00",
+    "event_timezone": "Europe/London",
+    "fixture": "H20 Purepechas vs Los Cabos United",
+    "highlighted_side": "AWAY",
+    "home": "H20 Purepechas",
+    "implied_target": null,
+    "instruction_id": "on-741157b9f9da5fd391efa61c",
+    "line": null,
+    "line_advantage": null,
+    "line_quality": "EQUAL",
+    "market": "1X2",
+    "max_line_deterioration": null,
+    "max_line_deterioration_percent": null,
+    "max_net_payout_deterioration_percent": 10,
+    "max_odds_deterioration": null,
+    "minimum_price": "2.13",
+    "price_quality": "FAVOURABLE",
+    "reference_odds": "1.806",
+    "selection_name": "Los Cabos United",
+    "sharp_signal": {
+     "basis": "price",
+     "candidates": [
+      "HOME",
+      "AWAY"
+     ],
+     "change": "-0.474",
+     "changes_by_side": {
+      "AWAY": "-0.474",
+      "HOME": "0.900"
+     },
+     "current_line": null,
+     "current_prices": {
+      "AWAY": "1.806",
+      "DRAW": "3.250",
+      "HOME": "3.770"
+     },
+     "direction": "SHORTENED",
+     "draw_opening_supplied": false,
+     "magnitude": "0.474",
+     "magnitude_units": "decimal_odds",
+     "opening_line": null,
+     "opening_prices": {
+      "AWAY": "2.280",
+      "HOME": "2.870"
+     },
+     "opening_to_current_percent": "-20.78947368421052631578947368",
+     "reason": "Pinnacle AWAY opening 2.280 -> current 1.806 shortens; HOME 2.870 -> 3.770 does not shorten; draw opening not supplied, draw never a candidate",
+     "side": "AWAY",
+     "source": "pinnacle_opening_to_current",
+     "status": "IDENTIFIED"
+    },
+    "side": "AWAY",
+    "signal_reason": "CLEAR_VALUE_SIGNAL",
+    "sport": "football",
+    "stake": "0.10",
+    "target_source": "pinnacle_opening_to_current"
+   },
+   "reason": "All rules passed",
+   "timezone_eligibility_uncertain": false
+  },
+  "audit": [
+   {
+    "kind": "SUBMIT_UNCERTAIN",
+    "detail": {
+     "error": "ValueError: {'instruction_id': 'on-741157b9f9da5fd391efa61c', 'status': 'FAIL', 'stage': 'INTERNAL_ERROR', 'detail': 'BUSY: one instruction at a time; ID not consumed', 'duration_ms': 0}"
+    }
+   }
+  ]
+ },
+ "on-ee666445bd94332e47037d46": {
+  "instruction_id": "on-ee666445bd94332e47037d46",
+  "sport": "football",
+  "market": "SPREAD",
+  "selection": "AWAY",
+  "line": "+0.5",
+  "state": "TARGET_NOT_FOUND",
+  "failure_reason": "EVENT_NOT_VERIFIED: No live football market quotes parsed from Bet365 event OCR (see football_market_reads)",
+  "normalized_alert": {
+   "alert_price": "1.83",
+   "alternate_line": {
+    "comparison": false,
+    "current": true,
+    "opening": false
+   },
+   "away": "Cardoso Moreira",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "comparison": {
+    "bet365_line": "+0.5",
+    "bet365_line_displayed": "-0.5",
+    "bet365_odds": "1.83",
+    "bet365_present": true,
+    "bookmaker": "Bet365",
+    "equal_line": true,
+    "ev_status": "SUPPLIED_EQUAL_LINE",
+    "line": "-0.5",
+    "line_advantage": "0.0",
+    "line_difference": "0.0",
+    "line_quality": "EQUAL",
+    "price_quality": "FAVOURABLE",
+    "quotes": [
+     {
+      "line": "-0.5",
+      "position": 1,
+      "price": "1.98",
+      "side": "HOME"
+     },
+     {
+      "line": "+0.5",
+      "position": 2,
+      "price": "1.83",
+      "side": "AWAY"
+     }
+    ],
+    "reference_line_displayed": "-0.5",
+    "site": "Bet365",
+    "supplied_ev": "110.91"
+   },
+   "comparison_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201824199/F3/I1/",
+   "competition": "Carioca B2",
+   "competition_full": "Brazil - Carioca B2",
+   "country": "Brazil",
+   "displayed_ev_percent": "110.91",
+   "displayed_line": "-0.5",
+   "feed_displayed_ev_percent": "110.91",
+   "fixture": "Santa Cruz RJ vs Cardoso Moreira",
+   "fixture_url": "https://oddshub.io/football/brazil-carioca-serie-b2/73385452?market=Spread",
+   "football": {
+    "in_play_link": false,
+    "line_candidate": null,
+    "price_candidate": "AWAY",
+    "profile": "oddsnotifier_football_two_sided_v1",
+    "signal_basis": "price_same_line",
+    "verdict": "EXECUTABLE_AWAY",
+    "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 AWAY 1.83 vs Pinnacle 1.561"
+   },
+   "format_variant": "two_sided",
+   "highlighted_side": "AWAY",
+   "home": "Santa Cruz RJ",
+   "implied_target": null,
+   "interpretation_notes": [],
+   "interpretation_status": "PARSED",
+   "interpretation_version": "sharp-money-football-1",
+   "limit": null,
+   "line_quality": "EQUAL",
+   "market": "SPREAD",
+   "market_label": "Spread",
+   "market_label_source": "label_and_fixture_url",
+   "market_movement": {
+    "current_line": "-0.5",
+    "current_price": null,
+    "line_change": null,
+    "line_direction": null,
+    "line_perspective": "HOME",
+    "opening_line": "-0.5",
+    "opening_line_change": "0.0",
+    "opening_line_direction": "UNCHANGED",
+    "opening_line_equal": true,
+    "opening_price": null,
+    "opening_to_current_price_change_percent": null,
+    "previous_line": null,
+    "previous_price_displayed": null,
+    "price_change_basis": null,
+    "price_change_percent": null,
+    "price_direction": null,
+    "price_direction_source": null
+   },
+   "movement": {
+    "current_line": "+0.5",
+    "current_price": "1.561",
+    "line_change": null,
+    "line_direction": null,
+    "opening_line": "+0.5",
+    "opening_line_change": "0.0",
+    "opening_line_direction": "UNCHANGED",
+    "opening_line_equal": true,
+    "opening_price": "1.680",
+    "opening_to_current_price_change_percent": -7.08,
+    "previous_line": null,
+    "previous_price_displayed": "1.662",
+    "price_change_basis": null,
+    "price_change_percent": null,
+    "price_direction": "SHORTENED",
+    "price_direction_source": "arrow"
+   },
+   "observation_id": "oddsnotifier:aba0cee771bb6e127da578f2aa6bf48b81df486fc1bf2f1f82113673a267366a",
+   "opening": {
+    "line": "-0.5",
+    "outcome_count_matches_market": true,
+    "quotes": [
+     {
+      "line": "-0.5",
+      "position": 1,
+      "price": "2.040",
+      "side": "HOME"
+     },
+     {
+      "line": "+0.5",
+      "position": 2,
+      "price": "1.680",
+      "side": "AWAY"
+     }
+    ]
+   },
+   "opening_marker": "🟢",
+   "pinnacle": {
+    "line": "-0.5",
+    "previous_line": null,
+    "quotes": [
+     {
+      "line": "-0.5",
+      "movement": "UP",
+      "movement_marker": "⬆️",
+      "parenthetical_price": "2.100",
+      "position": 1,
+      "price": "2.290",
+      "side": "HOME"
+     },
+     {
+      "line": "+0.5",
+      "movement": "DOWN",
+      "movement_marker": "⬇️",
+      "parenthetical_price": "1.662",
+      "position": 2,
+      "price": "1.561",
+      "side": "AWAY"
+     }
+    ]
+   },
+   "price_quality": "FAVOURABLE",
+   "quote_mapping": {
+    "confirmation_source": "Feed 1 corpus 26-27 Sep 2026 (28 real Spread alerts): HOME-AWAY with the displayed line as the HOME handicap; phone capture of Bet365 Asian Handicap columns home team | away team with signed lines per team (evidence/football/pages/pg-vihiga-103021); docs/FOOTBALL_STRATEGY_SPEC.md",
+    "group_sides_by_position": {
+     "comparison": [
+      "HOME",
+      "AWAY"
+     ],
+     "opening": [
+      "HOME",
+      "AWAY"
+     ],
+     "pinnacle": [
+      "HOME",
+      "AWAY"
+     ]
+    },
+    "production_verified": true,
+    "profile": "oddsnotifier_football_two_sided_v1",
+    "sides_by_position": [
+     "HOME",
+     "AWAY"
+    ]
+   },
+   "raw_text": "New odds update on Pinnacle\n\nFootball - Brazil - Carioca B2\n[Santa Cruz RJ vs Cardoso Moreira](https://oddshub.io/football/brazil-carioca-serie-b2/73385452?market=Spread)\n27.09.2026 19:00\n\nSpread (-0.5) (alt. line)\n2.290⬆️ (2.100) - 1.561⬇️ (1.662)\n\n🟢 Opening (-0.5)\n2.040 - 1.680\n\n[Bet365 (Spread -0.5)](https://www.bet365.com/#/AC/B1/C1/D8/E201824199/F3/I1/)\n1.98 - **1.83**\n\n🎯 EV: 110.91%",
+   "reference": {
+    "bookmaker": "Pinnacle",
+    "fair_odds": null,
+    "line": "+0.5",
+    "odds": "1.561"
+   },
+   "sample_provenance": "unspecified",
+   "scheduled_at_local": "2026-09-27T19:00",
+   "scheduled_timezone": null,
+   "schema_version": 6,
+   "selection_line": "+0.5",
+   "selection_name": "Cardoso Moreira",
+   "selection_side": "AWAY",
+   "sharp_signal": {
+    "basis": "price_same_line",
+    "change": "-0.119",
+    "changes_by_side": {
+     "AWAY": "-0.119",
+     "HOME": "0.250"
+    },
+    "current_line": "-0.5",
+    "current_prices": {
+     "AWAY": "1.561",
+     "HOME": "2.290"
+    },
+    "direction": "SHORTENED",
+    "highlight_agrees": true,
+    "line_candidate": null,
+    "magnitude": "0.119",
+    "magnitude_units": "decimal_odds",
+    "opening_line": "-0.5",
+    "opening_prices": {
+     "AWAY": "1.680",
+     "HOME": "2.040"
+    },
+    "price_candidate": "AWAY",
+    "reason": "Pinnacle line -0.5 unchanged; AWAY 1.680 -> 1.561 shortens, HOME 2.040 -> 2.290 does not",
+    "recent_line_reversal": false,
+    "side": "AWAY",
+    "source": "pinnacle_opening_to_current",
+    "status": "IDENTIFIED"
+   },
+   "sides": [
+    {
+     "bet_quality": "UNFAVOURABLE",
+     "comparison": {
+      "bet365_line": "-0.5",
+      "bet365_price": "1.98",
+      "bookmaker": "Bet365",
+      "equal_line": true,
+      "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+      "line_advantage": "0.0",
+      "line_applicable": true,
+      "line_difference": "0.0",
+      "line_quality": "EQUAL",
+      "price_difference": "-0.310",
+      "price_quality": "UNFAVOURABLE",
+      "reference_line": "-0.5",
+      "reference_price": "2.290",
+      "supplied_ev": null
+     },
+     "is_target": false,
+     "line_quality": "EQUAL",
+     "movement": {
+      "current_line": "-0.5",
+      "current_price": "2.290",
+      "line_change": null,
+      "line_direction": null,
+      "opening_line": "-0.5",
+      "opening_line_change": "0.0",
+      "opening_line_direction": "UNCHANGED",
+      "opening_line_equal": true,
+      "opening_price": "2.040",
+      "opening_to_current_price_change_percent": 12.25,
+      "previous_line": null,
+      "previous_price_displayed": "2.100",
+      "price_change_basis": null,
+      "price_change_percent": null,
+      "price_direction": "DRIFTED",
+      "price_direction_source": "arrow"
+     },
+     "price_quality": "UNFAVOURABLE",
+     "reference": {
+      "bookmaker": "Pinnacle",
+      "fair_odds": null,
+      "line": "-0.5",
+      "odds": "2.290"
+     },
+     "selection_line": "-0.5",
+     "selection_name": "Santa Cruz RJ",
+     "side": "HOME"
+    },
+    {
+     "bet_quality": "CLEAR_VALUE_SIGNAL",
+     "comparison": {
+      "bet365_line": "+0.5",
+      "bet365_price": "1.83",
+      "bookmaker": "Bet365",
+      "equal_line": true,
+      "ev_status": "SUPPLIED_EQUAL_LINE",
+      "line_advantage": "0.0",
+      "line_applicable": true,
+      "line_difference": "0.0",
+      "line_quality": "EQUAL",
+      "price_difference": "0.269",
+      "price_quality": "FAVOURABLE",
+      "reference_line": "+0.5",
+      "reference_price": "1.561",
+      "supplied_ev": "110.91"
+     },
+     "is_target": true,
+     "line_quality": "EQUAL",
+     "movement": {
+      "current_line": "+0.5",
+      "current_price": "1.561",
+      "line_change": null,
+      "line_direction": null,
+      "opening_line": "+0.5",
+      "opening_line_change": "0.0",
+      "opening_line_direction": "UNCHANGED",
+      "opening_line_equal": true,
+      "opening_price": "1.680",
+      "opening_to_current_price_change_percent": -7.08,
+      "previous_line": null,
+      "previous_price_displayed": "1.662",
+      "price_change_basis": null,
+      "price_change_percent": null,
+      "price_direction": "SHORTENED",
+      "price_direction_source": "arrow"
+     },
+     "price_quality": "FAVOURABLE",
+     "reference": {
+      "bookmaker": "Pinnacle",
+      "fair_odds": null,
+      "line": "+0.5",
+      "odds": "1.561"
+     },
+     "selection_line": "+0.5",
+     "selection_name": "Cardoso Moreira",
+     "side": "AWAY"
+    }
+   ],
+   "source": "OddsNotifier",
+   "source_timestamp": "2026-09-27T16:13:11+00:00",
+   "sport": "football",
+   "target_line": "+0.5",
+   "target_price_source": "pinnacle_opening_to_current",
+   "target_side": "AWAY",
+   "telegram_channel_id": "1645770730",
+   "telegram_message_id": "71829",
+   "unresolved": [
+    "event_timezone_unspecified",
+    "parenthetical_price_meaning_unspecified"
+   ]
+  },
+  "dispatch_payload": {
+   "action": "ADAPTER_WORKFLOW",
+   "adapter": "live_bet365",
+   "competition": "Carioca B2",
+   "country": "Brazil",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201824199/F3/I1/",
+   "execution_mode": "hold",
+   "instruction_id": "on-ee666445bd94332e47037d46",
+   "kickoff_utc": "2026-09-27T18:00",
+   "line": "+0.5",
+   "market": "SPREAD",
+   "max_line_deterioration": "0.25",
+   "minimum_price": "1.75",
+   "period": "FULL_GAME",
+   "query": "Santa Cruz RJ||Cardoso Moreira",
+   "scenario": "live",
+   "side": "AWAY",
+   "sport": "football",
+   "stake": "0.10",
+   "timeout_ms": 300000
+  },
+  "rules_result": {
+   "checks": [
+    {
+     "detail": "production-verified quote mapping",
+     "name": "verified_mapping",
+     "passed": true
+    },
+    {
+     "detail": "Pinnacle line -0.5 unchanged; AWAY 1.680 -> 1.561 shortens, HOME 2.040 -> 2.290 does not",
+     "name": "sharp_target",
+     "passed": true
+    },
+    {
+     "detail": "target AWAY @ 1.83 (Pinnacle opening-to-current movement)",
+     "name": "explicit_target",
+     "passed": true
+    },
+    {
+     "detail": "football SPREAD: requested Bet365 quote must belong to the independently selected Pinnacle side (AWAY) at its own line, from a pre-match event link",
+     "name": "football_same_side_offer",
+     "passed": true
+    },
+    {
+     "detail": "CLEAR_VALUE_SIGNAL (line EQUAL, price FAVOURABLE, EV SUPPLIED_EQUAL_LINE)",
+     "name": "bet_quality",
+     "passed": true
+    },
+    {
+     "detail": "Feed-qualified signal; genuine nonzero opening-to-current movement required; no duplicate movement floor",
+     "name": "sharp_movement",
+     "passed": true
+    },
+    {
+     "detail": "football SPREAD",
+     "name": "known_market",
+     "passed": true
+    },
+    {
+     "detail": "global rules enabled",
+     "name": "global_enabled",
+     "passed": true
+    },
+    {
+     "detail": "football SPREAD enabled",
+     "name": "market_enabled",
+     "passed": true
+    },
+    {
+     "detail": "0s old (limit 300s)",
+     "name": "alert_age",
+     "passed": true
+    },
+    {
+     "detail": "Source/receipt times must not exceed the current clock by more than 30 seconds",
+     "name": "timestamp_consistency",
+     "passed": true
+    },
+    {
+     "detail": "Feed timezone Europe/London is operator verified",
+     "name": "feed_timezone_verified",
+     "passed": true
+    },
+    {
+     "detail": "event starts 2026-09-27T18:00:00+00:00",
+     "name": "event_not_started",
+     "passed": true
+    },
+    {
+     "detail": "alert price 1.83",
+     "name": "valid_price",
+     "passed": true
+    },
+    {
+     "detail": "football SPREAD: net payout tolerance 10%, legacy decimal tolerance None, absolute line cap 0.25, spread cap None% of original handicap; price and line policies require explicit configuration",
+     "name": "execution_tolerances",
+     "passed": true
+    },
+    {
+     "detail": "stake 0.10 (max 10.00)",
+     "name": "stake",
+     "passed": true
+    }
+   ],
+   "config_hash": "b0123d7b5e648ee4",
+   "decision": "ACCEPT",
+   "engine": "rules-8-football",
+   "evaluated_at": "2026-09-27T16:13:11.850035+00:00",
+   "event_time_assumptions": {
+    "Europe/London": {
+     "event_not_started": true,
+     "event_start_utc": "2026-09-27T18:00:00+00:00"
+    },
+    "UTC": {
+     "event_not_started": true,
+     "event_start_utc": "2026-09-27T19:00:00+00:00"
+    }
+   },
+   "event_timezone": "Europe/London",
+   "feed_timezone_verified": true,
+   "instruction": {
+    "alert_price": "1.83",
+    "alternate_line": {
+     "comparison": false,
+     "current": true,
+     "opening": false
+    },
+    "away": "Cardoso Moreira",
+    "bet_quality": "CLEAR_VALUE_SIGNAL",
+    "competition": "Carioca B2",
+    "configured_line_absolute_cap": 0.25,
+    "displayed_ev_percent": "110.91",
+    "ev_status": "SUPPLIED_EQUAL_LINE",
+    "event_start_utc": "2026-09-27T18:00:00+00:00",
+    "event_time_local": "2026-09-27T19:00",
+    "event_timezone": "Europe/London",
+    "fixture": "Santa Cruz RJ vs Cardoso Moreira",
+    "highlighted_side": "AWAY",
+    "home": "Santa Cruz RJ",
+    "implied_target": null,
+    "instruction_id": "on-ee666445bd94332e47037d46",
+    "line": "+0.5",
+    "line_advantage": "0.0",
+    "line_quality": "EQUAL",
+    "market": "SPREAD",
+    "max_line_deterioration": "0.25",
+    "max_line_deterioration_percent": null,
+    "max_net_payout_deterioration_percent": 10,
+    "max_odds_deterioration": null,
+    "minimum_price": "1.75",
+    "price_quality": "FAVOURABLE",
+    "reference_odds": "1.561",
+    "selection_name": "Cardoso Moreira",
+    "sharp_signal": {
+     "basis": "price_same_line",
+     "change": "-0.119",
+     "changes_by_side": {
+      "AWAY": "-0.119",
+      "HOME": "0.250"
+     },
+     "current_line": "-0.5",
+     "current_prices": {
+      "AWAY": "1.561",
+      "HOME": "2.290"
+     },
+     "direction": "SHORTENED",
+     "line_candidate": null,
+     "magnitude": "0.119",
+     "magnitude_units": "decimal_odds",
+     "opening_line": "-0.5",
+     "opening_prices": {
+      "AWAY": "1.680",
+      "HOME": "2.040"
+     },
+     "price_candidate": "AWAY",
+     "reason": "Pinnacle line -0.5 unchanged; AWAY 1.680 -> 1.561 shortens, HOME 2.040 -> 2.290 does not",
+     "side": "AWAY",
+     "source": "pinnacle_opening_to_current",
+     "status": "IDENTIFIED"
+    },
+    "side": "AWAY",
+    "signal_reason": "CLEAR_VALUE_SIGNAL",
+    "sport": "football",
+    "stake": "0.10",
+    "target_source": "pinnacle_opening_to_current"
+   },
+   "reason": "All rules passed",
+   "timezone_eligibility_uncertain": false
+  },
+  "audit": []
+ },
+ "on-ce2792642d0cfd6458094971": {
+  "instruction_id": "on-ce2792642d0cfd6458094971",
+  "sport": "football",
+  "market": "TOTALS",
+  "selection": "OVER",
+  "line": "3.25",
+  "state": "TIMEOUT",
+  "failure_reason": "No device result within 360s; outcome unknown, never re-dispatched",
+  "normalized_alert": {
+   "alert_price": "1.90",
+   "alternate_line": {
+    "comparison": false,
+    "current": false,
+    "opening": false
+   },
+   "away": "Beitar Petah Tikva",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "comparison": {
+    "bet365_line": "3.25",
+    "bet365_line_displayed": "3.25",
+    "bet365_odds": "1.90",
+    "bet365_present": true,
+    "bookmaker": "Bet365",
+    "equal_line": true,
+    "ev_status": "SUPPLIED_EQUAL_LINE",
+    "line": "3.25",
+    "line_advantage": "0.00",
+    "line_difference": "0.00",
+    "line_quality": "EQUAL",
+    "price_quality": "FAVOURABLE",
+    "quotes": [
+     {
+      "line": "3.25",
+      "position": 1,
+      "price": "1.90",
+      "side": "OVER"
+     },
+     {
+      "line": "3.25",
+      "position": 2,
+      "price": "1.90",
+      "side": "UNDER"
+     }
+    ],
+    "reference_line_displayed": "3.25",
+    "site": "Bet365",
+    "supplied_ev": "110.59"
+   },
+   "comparison_url": "https://bet365.com/#/AC/B1/C1/D8/E201905166/F3/I1/",
+   "competition": "Liga Bet",
+   "competition_full": "Israel - Liga Bet",
+   "country": "Israel",
+   "displayed_ev_percent": "110.59",
+   "displayed_line": "3.25",
+   "feed_displayed_ev_percent": "110.59",
+   "fixture": "Maccabi Ramat HaSharon vs Beitar Petah Tikva",
+   "fixture_url": null,
+   "football": {
+    "in_play_link": false,
+    "line_candidate": null,
+    "price_candidate": "OVER",
+    "profile": "oddsnotifier_football_two_sided_v1",
+    "signal_basis": "price_same_line",
+    "verdict": "EXECUTABLE_OVER",
+    "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 OVER 1.90 vs Pinnacle 1.617"
+   },
+   "format_variant": "two_sided",
+   "highlighted_side": "OVER",
+   "home": "Maccabi Ramat HaSharon",
+   "implied_target": null,
+   "interpretation_notes": [],
+   "interpretation_status": "PARSED",
+   "interpretation_version": "sharp-money-football-1",
+   "limit": null,
+   "line_quality": "EQUAL",
+   "market": "TOTALS",
+   "market_label": "Totals",
+   "market_label_source": "standalone_label",
+   "market_movement": {
+    "current_line": "3.25",
+    "current_price": null,
+    "line_change": null,
+    "line_direction": null,
+    "line_perspective": "TOTAL",
+    "opening_line": "3.25",
+    "opening_line_change": "0.00",
+    "opening_line_direction": "UNCHANGED",
+    "opening_line_equal": true,
+    "opening_price": null,
+    "opening_to_current_price_change_percent": null,
+    "previous_line": null,
+    "previous_price_displayed": null,
+    "price_change_basis": null,
+    "price_change_percent": null,
+    "price_direction": null,
+    "price_direction_source": null
+   },
+   "movement": {
+    "current_line": "3.25",
+    "current_price": "1.617",
+    "line_change": null,
+    "line_direction": null,
+    "opening_line": "3.25",
+    "opening_line_change": "0.00",
+    "opening_line_direction": "UNCHANGED",
+    "opening_line_equal": true,
+    "opening_price": "1.819",
+    "opening_to_current_price_change_percent": -11.11,
+    "previous_line": null,
+    "previous_price_displayed": "1.781",
+    "price_change_basis": null,
+    "price_change_percent": null,
+    "price_direction": "SHORTENED",
+    "price_direction_source": "arrow"
+   },
+   "observation_id": "oddsnotifier:f71c8162be4adbb128587816127f269a5601abfac2e7941f0fe881bdb2f8cbb4",
+   "opening": {
+    "line": "3.25",
+    "outcome_count_matches_market": true,
+    "quotes": [
+     {
+      "line": "3.25",
+      "position": 1,
+      "price": "1.819",
+      "side": "OVER"
+     },
+     {
+      "line": "3.25",
+      "position": 2,
+      "price": "1.862",
+      "side": "UNDER"
+     }
+    ]
+   },
+   "opening_marker": "🟢",
+   "pinnacle": {
+    "line": "3.25",
+    "previous_line": null,
+    "quotes": [
+     {
+      "line": "3.25",
+      "movement": "DOWN",
+      "movement_marker": "⬇️",
+      "parenthetical_price": "1.781",
+      "position": 1,
+      "price": "1.617",
+      "side": "OVER"
+     },
+     {
+      "line": "3.25",
+      "movement": "UP",
+      "movement_marker": "⬆️",
+      "parenthetical_price": "1.970",
+      "position": 2,
+      "price": "2.170",
+      "side": "UNDER"
+     }
+    ]
+   },
+   "price_quality": "FAVOURABLE",
+   "quote_mapping": {
+    "confirmation_source": "Feed 1 corpus 26-27 Sep 2026 (37 real Totals alerts): OVER-UNDER; phone captures of Bet365 Goals Over/Under and Goal Line columns Over | Under (evidence/football/pages); docs/FOOTBALL_STRATEGY_SPEC.md",
+    "group_sides_by_position": {
+     "comparison": [
+      "OVER",
+      "UNDER"
+     ],
+     "opening": [
+      "OVER",
+      "UNDER"
+     ],
+     "pinnacle": [
+      "OVER",
+      "UNDER"
+     ]
+    },
+    "production_verified": true,
+    "profile": "oddsnotifier_football_two_sided_v1",
+    "sides_by_position": [
+     "OVER",
+     "UNDER"
+    ]
+   },
+   "raw_text": "New odds update on Pinnacle\n\nFootball - Israel - Liga Bet\nMaccabi Ramat HaSharon vs Beitar Petah Tikva\n27.09.2026 17:30\n\nTotals (3.25)\n1.617⬇️ (1.781) - 2.170⬆️ (1.970)\n\n🟢 Opening (3.25)\n1.819 - 1.862\n\n[Bet365 (Totals 3.25)](https://bet365.com/#/AC/B1/C1/D8/E201905166/F3/I1/)\n**1.90** - 1.90\n\n🎯 EV: 110.59%",
+   "reference": {
+    "bookmaker": "Pinnacle",
+    "fair_odds": null,
+    "line": "3.25",
+    "odds": "1.617"
+   },
+   "sample_provenance": "unspecified",
+   "scheduled_at_local": "2026-09-27T17:30",
+   "scheduled_timezone": null,
+   "schema_version": 6,
+   "selection_line": "3.25",
+   "selection_name": "Over",
+   "selection_side": "OVER",
+   "sharp_signal": {
+    "basis": "price_same_line",
+    "change": "-0.202",
+    "changes_by_side": {
+     "OVER": "-0.202",
+     "UNDER": "0.308"
+    },
+    "current_line": "3.25",
+    "current_prices": {
+     "OVER": "1.617",
+     "UNDER": "2.170"
+    },
+    "direction": "SHORTENED",
+    "highlight_agrees": true,
+    "line_candidate": null,
+    "magnitude": "0.202",
+    "magnitude_units": "decimal_odds",
+    "opening_line": "3.25",
+    "opening_prices": {
+     "OVER": "1.819",
+     "UNDER": "1.862"
+    },
+    "price_candidate": "OVER",
+    "reason": "Pinnacle line 3.25 unchanged; OVER 1.819 -> 1.617 shortens, UNDER 1.862 -> 2.170 does not",
+    "recent_line_reversal": false,
+    "side": "OVER",
+    "source": "pinnacle_opening_to_current",
+    "status": "IDENTIFIED"
+   },
+   "sides": [
+    {
+     "bet_quality": "CLEAR_VALUE_SIGNAL",
+     "comparison": {
+      "bet365_line": "3.25",
+      "bet365_price": "1.90",
+      "bookmaker": "Bet365",
+      "equal_line": true,
+      "ev_status": "SUPPLIED_EQUAL_LINE",
+      "line_advantage": "0.00",
+      "line_applicable": true,
+      "line_difference": "0.00",
+      "line_quality": "EQUAL",
+      "price_difference": "0.283",
+      "price_quality": "FAVOURABLE",
+      "reference_line": "3.25",
+      "reference_price": "1.617",
+      "supplied_ev": "110.59"
+     },
+     "is_target": true,
+     "line_quality": "EQUAL",
+     "movement": {
+      "current_line": "3.25",
+      "current_price": "1.617",
+      "line_change": null,
+      "line_direction": null,
+      "opening_line": "3.25",
+      "opening_line_change": "0.00",
+      "opening_line_direction": "UNCHANGED",
+      "opening_line_equal": true,
+      "opening_price": "1.819",
+      "opening_to_current_price_change_percent": -11.11,
+      "previous_line": null,
+      "previous_price_displayed": "1.781",
+      "price_change_basis": null,
+      "price_change_percent": null,
+      "price_direction": "SHORTENED",
+      "price_direction_source": "arrow"
+     },
+     "price_quality": "FAVOURABLE",
+     "reference": {
+      "bookmaker": "Pinnacle",
+      "fair_odds": null,
+      "line": "3.25",
+      "odds": "1.617"
+     },
+     "selection_line": "3.25",
+     "selection_name": "Over",
+     "side": "OVER"
+    },
+    {
+     "bet_quality": "UNFAVOURABLE",
+     "comparison": {
+      "bet365_line": "3.25",
+      "bet365_price": "1.90",
+      "bookmaker": "Bet365",
+      "equal_line": true,
+      "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+      "line_advantage": "0.00",
+      "line_applicable": true,
+      "line_difference": "0.00",
+      "line_quality": "EQUAL",
+      "price_difference": "-0.270",
+      "price_quality": "UNFAVOURABLE",
+      "reference_line": "3.25",
+      "reference_price": "2.170",
+      "supplied_ev": null
+     },
+     "is_target": false,
+     "line_quality": "EQUAL",
+     "movement": {
+      "current_line": "3.25",
+      "current_price": "2.170",
+      "line_change": null,
+      "line_direction": null,
+      "opening_line": "3.25",
+      "opening_line_change": "0.00",
+      "opening_line_direction": "UNCHANGED",
+      "opening_line_equal": true,
+      "opening_price": "1.862",
+      "opening_to_current_price_change_percent": 16.54,
+      "previous_line": null,
+      "previous_price_displayed": "1.970",
+      "price_change_basis": null,
+      "price_change_percent": null,
+      "price_direction": "DRIFTED",
+      "price_direction_source": "arrow"
+     },
+     "price_quality": "UNFAVOURABLE",
+     "reference": {
+      "bookmaker": "Pinnacle",
+      "fair_odds": null,
+      "line": "3.25",
+      "odds": "2.170"
+     },
+     "selection_line": "3.25",
+     "selection_name": "Under",
+     "side": "UNDER"
+    }
+   ],
+   "source": "OddsNotifier",
+   "source_timestamp": "2026-09-27T16:16:11+00:00",
+   "sport": "football",
+   "target_line": "3.25",
+   "target_price_source": "pinnacle_opening_to_current",
+   "target_side": "OVER",
+   "telegram_channel_id": "1645770730",
+   "telegram_message_id": "71838",
+   "unresolved": [
+    "event_timezone_unspecified",
+    "parenthetical_price_meaning_unspecified"
+   ]
+  },
+  "dispatch_payload": {
+   "action": "ADAPTER_WORKFLOW",
+   "adapter": "live_bet365",
+   "competition": "Liga Bet",
+   "country": "Israel",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201905166/F3/I1/",
+   "execution_mode": "hold",
+   "instruction_id": "on-ce2792642d0cfd6458094971",
+   "kickoff_utc": "2026-09-27T16:30",
+   "line": "3.25",
+   "market": "TOTALS",
+   "max_line_deterioration": "0.25",
+   "minimum_price": "1.81",
+   "period": "FULL_GAME",
+   "query": "Maccabi Ramat HaSharon||Beitar Petah Tikva",
+   "scenario": "live",
+   "side": "OVER",
+   "sport": "football",
+   "stake": "0.10",
+   "timeout_ms": 300000
+  },
+  "rules_result": {
+   "checks": [
+    {
+     "detail": "production-verified quote mapping",
+     "name": "verified_mapping",
+     "passed": true
+    },
+    {
+     "detail": "Pinnacle line 3.25 unchanged; OVER 1.819 -> 1.617 shortens, UNDER 1.862 -> 2.170 does not",
+     "name": "sharp_target",
+     "passed": true
+    },
+    {
+     "detail": "target OVER @ 1.90 (Pinnacle opening-to-current movement)",
+     "name": "explicit_target",
+     "passed": true
+    },
+    {
+     "detail": "football TOTALS: requested Bet365 quote must belong to the independently selected Pinnacle side (OVER) at its own line, from a pre-match event link",
+     "name": "football_same_side_offer",
+     "passed": true
+    },
+    {
+     "detail": "CLEAR_VALUE_SIGNAL (line EQUAL, price FAVOURABLE, EV SUPPLIED_EQUAL_LINE)",
+     "name": "bet_quality",
+     "passed": true
+    },
+    {
+     "detail": "Feed-qualified signal; genuine nonzero opening-to-current movement required; no duplicate movement floor",
+     "name": "sharp_movement",
+     "passed": true
+    },
+    {
+     "detail": "football TOTALS",
+     "name": "known_market",
+     "passed": true
+    },
+    {
+     "detail": "global rules enabled",
+     "name": "global_enabled",
+     "passed": true
+    },
+    {
+     "detail": "football TOTALS enabled",
+     "name": "market_enabled",
+     "passed": true
+    },
+    {
+     "detail": "0s old (limit 300s)",
+     "name": "alert_age",
+     "passed": true
+    },
+    {
+     "detail": "Source/receipt times must not exceed the current clock by more than 30 seconds",
+     "name": "timestamp_consistency",
+     "passed": true
+    },
+    {
+     "detail": "Feed timezone Europe/London is operator verified",
+     "name": "feed_timezone_verified",
+     "passed": true
+    },
+    {
+     "detail": "event starts 2026-09-27T16:30:00+00:00",
+     "name": "event_not_started",
+     "passed": true
+    },
+    {
+     "detail": "alert price 1.90",
+     "name": "valid_price",
+     "passed": true
+    },
+    {
+     "detail": "football TOTALS: net payout tolerance 10%, legacy decimal tolerance None, absolute line cap 0.25, spread cap None% of original handicap; price and line policies require explicit configuration",
+     "name": "execution_tolerances",
+     "passed": true
+    },
+    {
+     "detail": "stake 0.10 (max 10.00)",
+     "name": "stake",
+     "passed": true
+    }
+   ],
+   "config_hash": "b0123d7b5e648ee4",
+   "decision": "ACCEPT",
+   "engine": "rules-8-football",
+   "evaluated_at": "2026-09-27T16:16:11.601328+00:00",
+   "event_time_assumptions": {
+    "Europe/London": {
+     "event_not_started": true,
+     "event_start_utc": "2026-09-27T16:30:00+00:00"
+    },
+    "UTC": {
+     "event_not_started": true,
+     "event_start_utc": "2026-09-27T17:30:00+00:00"
+    }
+   },
+   "event_timezone": "Europe/London",
+   "feed_timezone_verified": true,
+   "instruction": {
+    "alert_price": "1.90",
+    "alternate_line": {
+     "comparison": false,
+     "current": false,
+     "opening": false
+    },
+    "away": "Beitar Petah Tikva",
+    "bet_quality": "CLEAR_VALUE_SIGNAL",
+    "competition": "Liga Bet",
+    "configured_line_absolute_cap": 0.25,
+    "displayed_ev_percent": "110.59",
+    "ev_status": "SUPPLIED_EQUAL_LINE",
+    "event_start_utc": "2026-09-27T16:30:00+00:00",
+    "event_time_local": "2026-09-27T17:30",
+    "event_timezone": "Europe/London",
+    "fixture": "Maccabi Ramat HaSharon vs Beitar Petah Tikva",
+    "highlighted_side": "OVER",
+    "home": "Maccabi Ramat HaSharon",
+    "implied_target": null,
+    "instruction_id": "on-ce2792642d0cfd6458094971",
+    "line": "3.25",
+    "line_advantage": "0.00",
+    "line_quality": "EQUAL",
+    "market": "TOTALS",
+    "max_line_deterioration": "0.25",
+    "max_line_deterioration_percent": null,
+    "max_net_payout_deterioration_percent": 10,
+    "max_odds_deterioration": null,
+    "minimum_price": "1.81",
+    "price_quality": "FAVOURABLE",
+    "reference_odds": "1.617",
+    "selection_name": "Over",
+    "sharp_signal": {
+     "basis": "price_same_line",
+     "change": "-0.202",
+     "changes_by_side": {
+      "OVER": "-0.202",
+      "UNDER": "0.308"
+     },
+     "current_line": "3.25",
+     "current_prices": {
+      "OVER": "1.617",
+      "UNDER": "2.170"
+     },
+     "direction": "SHORTENED",
+     "line_candidate": null,
+     "magnitude": "0.202",
+     "magnitude_units": "decimal_odds",
+     "opening_line": "3.25",
+     "opening_prices": {
+      "OVER": "1.819",
+      "UNDER": "1.862"
+     },
+     "price_candidate": "OVER",
+     "reason": "Pinnacle line 3.25 unchanged; OVER 1.819 -> 1.617 shortens, UNDER 1.862 -> 2.170 does not",
+     "side": "OVER",
+     "source": "pinnacle_opening_to_current",
+     "status": "IDENTIFIED"
+    },
+    "side": "OVER",
+    "signal_reason": "CLEAR_VALUE_SIGNAL",
+    "sport": "football",
+    "stake": "0.10",
+    "target_source": "pinnacle_opening_to_current"
+   },
+   "reason": "All rules passed",
+   "timezone_eligibility_uncertain": false
+  },
+  "audit": [
+   {
+    "kind": "SUBMIT_UNCERTAIN",
+    "detail": {
+     "error": "ValueError: {'instruction_id': 'on-ce2792642d0cfd6458094971', 'status': 'FAIL', 'stage': 'INTERNAL_ERROR', 'detail': 'BUSY: one instruction at a time; ID not consumed', 'duration_ms': 0}"
+    }
+   }
+  ]
+ }
+}

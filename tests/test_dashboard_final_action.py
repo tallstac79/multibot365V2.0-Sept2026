@@ -48,7 +48,9 @@ class DashboardFinalActionTests(unittest.TestCase):
         self.assertEqual(tuple(self.state(iid)), ('APPROVED', 'dashboard'))
         self.p.tick(self.gateway)                                   # first approved bet goes to the phone
         self.gateway.results[iid + "-place"] = fail_result(iid, 'SUSPENDED')   # ...and is refused before any tap
-        second = self.waiting(RYTAS)                                # phone free: second verified -> awaiting
+        second = self.waiting(RYTAS)                                # this tick releases the refused bet's slip (RESET_BETSLIP)
+        self.p.tick(self.gateway)                                   # the next tick sends the second hold (never the same tick:
+                                                                    # 27 Sep 2026 BUSY race) -> verified -> awaiting
         self.assertEqual(self.client.post(f'/api/instructions/{second}/reject').status_code, 200)
         self.assertEqual(self.state(second)[0], 'REJECTED')
         self.assertEqual(self.client.post(f'/api/instructions/{second}/approve').status_code, 409)

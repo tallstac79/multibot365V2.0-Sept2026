@@ -23,7 +23,7 @@ from core import alert_classifier
 from core.final_action import FinalAction
 from core.competition_gender import womens_competition
 from core.scoped_identity import IdentityRegistry
-from core.lifecycle import State, TERMINAL, DEVICE_OWNED, interpret_device_result, CONFIRMATION_MAP
+from core.lifecycle import State, TERMINAL, DEVICE_OWNED, interpret_device_result, CONFIRMATION_MAP, busy_not_admitted
 from core.pipeline_store import Store, iso, utcnow, instruction_id_for, selection_key
 from core.rules_engine import evaluate, ACCEPT, STALE, selection_name as rules_selection_name, time_assumptions
 from core.session_contract import parse_report, gate as session_gate, DEFAULT_MAX_AGE_SECONDS
@@ -457,6 +457,7 @@ class Pipeline:
         with self.store.tx() as db:
             self.store.audit(db, 'HELD_SLIP_RELEASED', dict(state=row['state'], reset=device_id, outcome=outcome), row['instruction_id'])
         self.store.set_control(HELD_KEY, dict(held, released=outcome, reset=device_id), by='dispatcher')
+        return outcome == 'reset sent'
 
     def tick(self, gateway):
         """One dispatcher cycle. Safe to call repeatedly and after any restart."""
@@ -467,7 +468,8 @@ class Pipeline:
         self._poll_warmup(gateway)
         self._poll_in_flight(gateway)
         self._one_shot()
-        self._release_hold(gateway, health)
+        if self._release_hold(gateway, health):
+            return  # the phone is now running RESET_BETSLIP; this tick's health snapshot is stale (27 Sep 2026 BUSY race)
         self.final.poll(gateway)
         self._expire_ready()
         self.final.expire_approvals()
@@ -729,6 +731,16 @@ class Pipeline:
                                          instruction_id, self.settings.device_id)
                     self.store.transition(db, instruction_id, State.REJECTED, actor='coordinator',
                                           reason=f"{prefix}Coordinator refused admission: {reply.get('detail')}")
+                return
+            if busy_not_admitted(error):
+                # The phone was running something else and did not consume this ID: nothing executed. Return the
+                # instruction to where it came from; the dispatcher resends the same ID when the phone is free.
+                back = State.APPROVED if payload.get('execution_mode') == 'dispatch' else State.QUEUED
+                with self.store.tx() as db:
+                    self.store.audit(db, 'SUBMIT_NOT_ADMITTED_BUSY', dict(reply=reply if isinstance(reply, dict) else str(reply)[:200]),
+                                     instruction_id, self.settings.device_id)
+                    self.store.requeue_not_admitted(db, instruction_id, back,
+                                                    reason='Phone busy: ID not consumed, nothing admitted; resent when the phone is free')
                 return
             with self.store.tx() as db:
                 self.store.audit(db, 'SUBMIT_UNCERTAIN', dict(error=f'{type(error).__name__}: {error}'[:300]),

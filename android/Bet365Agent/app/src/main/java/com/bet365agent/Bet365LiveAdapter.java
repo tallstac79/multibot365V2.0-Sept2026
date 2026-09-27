@@ -1287,7 +1287,30 @@ final class Bet365LiveAdapter implements SiteAdapter {
             android.graphics.Rect b = new android.graphics.Rect(c.bounds[0], c.bounds[1], c.bounds[2], c.bounds[3]);
             out.add(new Selection(c.market, c.side, c.line, c.price, "OPEN", b, c.name));
         }
+        footballSeen.addAll(out);
         return out;
+    }
+
+    /** Every football selection read during this run, across tabs and scrolls (evidence only, never a tap target). */
+    private final List<Selection> footballSeen = new ArrayList<>();
+
+    /** The requested market/side WAS read but never within the line allowance: that is the genuine reason (LINE_CHANGED),
+     *  not "no quotes parsed". Real: Santa Cruz RJ v Cardoso Moreira, 27 Sep 2026 16:16Z - alert AWAY +0.5, Bet365 Asian
+     *  Handicap AWAY 0.0 @2.050 (0.5 worse, allowance 0.25); the last-resort scroll frame was empty, so the run reported
+     *  EVENT_NOT_VERIFIED "No live football market quotes parsed". */
+    private void requireFootballLineWithinAllowance(List<Selection> found) {
+        if (footballTargetIn(found)) return;
+        List<String[]> seen = new ArrayList<>();
+        Selection first = null;
+        for (Selection q : footballSeen) {
+            seen.add(FootballLineCheck.quote(q.market, q.side, q.line, q.price));
+            if (first == null && q.market.equals(targetMarket) && q.side.equals(targetSide)) first = q;
+        }
+        String refusal = FootballLineCheck.lineRefusal(seen, targetMarket, targetSide, requestedLine, lineTolerance);
+        if (refusal == null) return;   // nothing seen, or seen in range but lost: not a line reason
+        observeExecution("grid", first, true);
+        latestSelection = first;
+        throw new Failure("LINE_CHANGED", refusal);
     }
 
     private FootballMarkets.Result footballParse(VisualScreen s, String view) {
@@ -1305,6 +1328,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
      *  line; Asian Lines tab: Asian Handicap and Goal Line). The requested market decides which tabs are opened and
      *  only the frame that shows it supplies the selections, so every returned tap target is on the current screen. */
     private CompletableFuture<List<Selection>> discoverFootballMarkets() {
+        footballSeen.clear();
         ui.put("fixture_home", liveFixture.home);
         ui.put("fixture_away", liveFixture.away);
         List<String> tabs = new ArrayList<>();
@@ -1315,6 +1339,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
             if (footballTargetIn(found)) return CompletableFuture.completedFuture(found);
             return footballTabs(tabs, 0, found);
         }).thenApply(found -> {
+            requireFootballLineWithinAllowance(found);
             require(!found.isEmpty(), "EVENT_NOT_VERIFIED", "No live football market quotes parsed from Bet365 event OCR (see football_market_reads)");
             validateMoneylineIdentities(found);
             JSONArray map = new JSONArray();
