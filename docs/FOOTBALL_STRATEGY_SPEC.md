@@ -126,6 +126,20 @@ as the proposed football terms; they are not applied.
 * Everything after the tap (betslip single, selection name and line on the slip, stake, To Return, Place Bet located and
   never tapped in a hold) is the existing flow.
 
+## 6a. Live phone proofs (non-final, 27 Sep 2026)
+
+`football_hold_proof.py` takes a real Feed 1 alert through classifier -> football interpreter -> rules engine (audit
+terms) -> the same hold payload the pipeline builds -> the phone (event link, identity, market tab, selection, betslip,
+stake, Place Bet located, never tapped) -> reset. Evidence: `evidence/football/holds/<tag>/hold.json` plus frames.
+
+| Alert | Run | Outcome |
+|---|---|---|
+| 10:30Z Arlanda v Enkopings, 1X2 HOME 1.83 (Division 1 Norra, Sweden) | 10:30Z | WRONG_EVENT: the header parser had dropped the accented letter ("Enk ping"); fixed (transliteration) |
+| same | 10:32Z | ALIAS_REQUIRED: Bet365 heads the league "Sweden 1.div Norra"; fixed (`N.div` = `Division N` in competitionKey) |
+| same | 10:35Z | identity HIGH_CONFIDENCE; Full Time Result FC Arlanda 1.65 / Draw 3.90 / Enkoping 4.10 and Goals 2.5 1.44 / 2.62 read; HOME selected; **BELOW_MINIMUM 1.65 < 1.75** (10 % net payout floor from 1.83): stopped before any tap, as the same-side policy requires |
+
+Later proofs are appended to the evidence folder by `football_hold_watch.py` as alerts arrive.
+
 ## 7. Corpus replay (27 Sep 2026, 72 alerts)
 
 See `evidence/football/replay-*.txt` (regenerate with `python -m tools.football_audit`): 43 executable (19 HOME,
