@@ -1,0 +1,87 @@
+{
+ "case": "negative_tier",
+ "payload": {
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "competition": "Second Division Women",
+  "competition_women": "true",
+  "country": "Portugal",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201820564/F3/I1/",
+  "execution_mode": "hold",
+  "instruction_id": "mx-negtier-163706",
+  "kickoff_utc": "2026-09-27T16:00",
+  "line": "-2.75",
+  "market": "SPREAD",
+  "max_line_deterioration": "0.25",
+  "minimum_price": "1.01",
+  "period": "FULL_GAME",
+  "query": "Torreense||Maritimo",
+  "scenario": "live",
+  "side": "HOME",
+  "sport": "football",
+  "stake": "0.10",
+  "timeout_ms": 300000
+ },
+ "paused": "PAUSED",
+ "hold": {
+  "status": "FAIL",
+  "stage": "ALIAS_REQUIRED",
+  "detail": "Event link shows 'Torreense (W) v Maritimo (W)'; alert says 'Torreense v Maritimo': Known matching kick-off and competition required (competition mismatch (feed 'second division women' vs page 'portugal campeonato nacional women'); structural conflict: tier [2] vs top)",
+  "route": "event_link",
+  "verdict": "AMBIGUOUS",
+  "fixture": null,
+  "selection": {},
+  "context": null,
+  "wall": 5.8,
+  "identity": {
+   "event_id_match": true,
+   "event_anchor": "page opened from the alert's own Bet365 event link",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "mismatch (feed 'second division women' vs page 'portugal campeonato nacional women'); structural conflict: tier [2] vs top",
+   "competing_event": "none: a single event page reached through the alert's own link",
+   "home_similarity": {
+    "feed": "Torreense",
+    "bookmaker": "Torreense (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00"
+   },
+   "away_similarity": {
+    "feed": "Maritimo",
+    "bookmaker": "Maritimo (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00"
+   },
+   "protected_markers": "agree",
+   "orientation": "agree",
+   "policy": "verified_gate_failed",
+   "verdict": "AMBIGUOUS",
+   "competition_structure": "feed {women=true level=[] tier=[2] letters=[] cup=false friendly=false federation=false} page {women=true level=[] tier=top letters=[] cup=false friendly=false federation=false country=portugal}"
+  },
+  "stages": [
+   [
+    "OPEN_HOME",
+    5.34
+   ]
+  ],
+  "place_bet_target": null,
+  "stake_check": null
+ },
+ "reset": {
+  "status": "PASS",
+  "detail": {
+   "tapped": false,
+   "detail": "No safe reset control visible"
+  }
+ },
+ "resumed": "RESUMED",
+ "phone_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.34-ops"
+ }
+}

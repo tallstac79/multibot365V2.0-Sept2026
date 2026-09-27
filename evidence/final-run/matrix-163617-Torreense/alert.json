@@ -1,0 +1,193 @@
+{
+ "case": "alert",
+ "payload": {
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "football",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201820564/F3/I1/",
+  "kickoff_utc": "2026-09-27T16:00",
+  "competition": "Nacional Championship Women",
+  "country": "Portugal",
+  "period": "FULL_GAME",
+  "query": "Torreense||Maritimo",
+  "stake": "0.10",
+  "competition_women": "true",
+  "action": "ADAPTER_WORKFLOW",
+  "execution_mode": "hold",
+  "timeout_ms": 240000,
+  "minimum_price": "1.01",
+  "instruction_id": "mx-alert-163617",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-2.75",
+  "max_line_deterioration": "0.25"
+ },
+ "paused": "PAUSED",
+ "hold": {
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "route": "event_link",
+  "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "fixture": "Torreense (W) v Maritimo (W)",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-3.0",
+   "price": "1.950",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Torreense (W)",
+   "bounds": [
+    189,
+    661,
+    274,
+    702
+   ]
+  },
+  "context": {
+   "home": "Torreense (W)",
+   "away": "Maritimo (W)",
+   "competition": "portugal campeonato nacional women",
+   "kickoff_utc": "2026-09-27T16:00",
+   "period": "FULL_GAME"
+  },
+  "wall": 19.3,
+  "identity": {
+   "event_id_match": true,
+   "event_anchor": "page opened from the alert's own Bet365 event link",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "structural_compatible (feed 'nacional championship women' vs page 'portugal campeonato nacional women')",
+   "competing_event": "none: a single event page reached through the alert's own link",
+   "home_similarity": {
+    "feed": "Torreense",
+    "bookmaker": "Torreense (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00"
+   },
+   "away_similarity": {
+    "feed": "Maritimo",
+    "bookmaker": "Maritimo (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00"
+   },
+   "protected_markers": "agree",
+   "orientation": "agree",
+   "policy": "event_evidence_both_variants",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "competition_structure": "feed {women=true level=[] tier=top letters=[] cup=false friendly=false federation=false} page {women=true level=[] tier=top letters=[] cup=false friendly=false federation=false country=portugal}"
+  },
+  "stages": [
+   [
+    "OPEN_HOME",
+    4.32
+   ],
+   [
+    "MARKET_NAV",
+    7.16
+   ],
+   [
+    "READ_SELECTION",
+    0.04
+   ],
+   [
+    "READ_LINE",
+    0.05
+   ],
+   [
+    "READ_PRICE",
+    0.05
+   ],
+   [
+    "OPEN_SELECTION",
+    1.47
+   ],
+   [
+    "ENTER_STAKE",
+    4.5
+   ],
+   [
+    "VERIFY_FINAL_STATE",
+    0.76
+   ],
+   [
+    "PREPARE_COMPLETE_EXECUTION",
+    0.21
+   ]
+  ],
+  "place_bet_target": {
+   "bounds": [
+    461,
+    1243,
+    620,
+    1293
+   ],
+   "source": "place_bet_words"
+  },
+  "stake_check": null
+ },
+ "pretap": {
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "PRETAP_READY",
+  "tapped": null,
+  "pretap": {
+   "ok": true,
+   "market": "SPREAD",
+   "side": "HOME",
+   "selection": "Torreense (W)",
+   "line": "-3.0",
+   "price": "1.950",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    461,
+    1310,
+    620,
+    1360
+   ]
+  },
+  "stake_check": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "019",
+   "stake": "0.10",
+   "price": "1.950"
+  },
+  "place_bet_target": {
+   "bounds": [
+    461,
+    1310,
+    620,
+    1360
+   ],
+   "source": "place_bet_words"
+  },
+  "wall": 1.1
+ },
+ "reset": {
+  "status": "PASS",
+  "detail": {
+   "tapped": true,
+   "control": "remove selection X",
+   "bounds": [
+    21,
+    1179,
+    42,
+    1206
+   ],
+   "place_bet_still_visible": false
+  }
+ },
+ "resumed": "RESUMED",
+ "phone_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.34-ops"
+ }
+}

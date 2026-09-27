@@ -34,6 +34,42 @@ def _money(value):
         return None
 
 
+_SIDE_ORDER = ('HOME', 'DRAW', 'AWAY', 'OVER', 'UNDER')
+
+
+def _percent(opening, current):
+    try:
+        o, c = Decimal(str(opening)), Decimal(str(current))
+        return f'{(c - o) / o * 100:+.1f}%'
+    except (InvalidOperation, TypeError, ValueError, ZeroDivisionError):
+        return '?'
+
+
+def _price_signal(sharp, cmp):
+    """Price-movement evidence (football 1X2, basketball ML, a same-line football Spread/Totals move): every Pinnacle
+    side's opening -> current price, which one uniquely shortened (the selection), sides with no opening price, the line
+    when the market has one, and Bet365's price for the selected side. Previously printed 'opening None -> current None'."""
+    side, opening, current = sharp['side'], sharp.get('opening_prices') or {}, sharp.get('current_prices') or {}
+    moves = []
+    for s in [x for x in _SIDE_ORDER if x in opening or x in current]:
+        if s in opening and s in current:
+            moves.append(f"{s} {opening[s]} -> {current[s]} ({_percent(opening[s], current[s])})" + (' shortened' if s == side else ''))
+        elif s in current:
+            moves.append(f"{s} {current[s]} (no opening price; not a candidate)")
+    line = ''
+    if sharp.get('opening_line') is not None or sharp.get('current_line') is not None:
+        line = (f"line {sharp.get('current_line')} unchanged; " if sharp.get('opening_line') == sharp.get('current_line')
+                else f"line {sharp.get('opening_line')} -> {sharp.get('current_line')}; ")
+    text = f"Pinnacle opening -> current selects {side} ({line}{'; '.join(moves)})"
+    agrees = sharp.get('highlight_agrees')
+    text += f"; Bet365 {side} {cmp.get('bet365_price') or cmp.get('bet365_odds')}"
+    text += ' (bold highlight agrees)' if agrees is True else ' (bold highlight on another side)' if agrees is False else ''
+    if cmp.get('line_applicable') and cmp.get('line_advantage') is not None:
+        text += f"; same-side Bet365 advantage {cmp.get('line_advantage')} pts"
+    ev = cmp.get('supplied_ev')
+    return text + (f"; EV {ev}%" if ev and cmp.get('ev_status') == 'SUPPLIED_EQUAL_LINE' else f"; EV {cmp.get('ev_status')}")
+
+
 def _signal(row):
     """One line naming a line-advantage signal (no EV) so the operator sees why an unequal-line bet qualified."""
     alert = row.get('normalized_alert')
@@ -44,6 +80,8 @@ def _signal(row):
     sharp = alert.get('sharp_signal') or {}
     if sharp.get('side'):
         cmp = alert.get('comparison') or {}
+        if sharp.get('opening_prices'):
+            return _price_signal(sharp, cmp)
         return (f"Pinnacle opening {sharp.get('opening_line')} -> current {sharp.get('current_line')}: "
                 f"{sharp['side']}; same-side Bet365 advantage {cmp.get('line_advantage')} pts; "
                 f"EV {cmp.get('ev_status')}")

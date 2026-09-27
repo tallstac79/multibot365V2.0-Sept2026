@@ -564,6 +564,9 @@ final class EventIdentity {
         if (withoutDate.equals(v))
             // Date glued to the league digit by OCR ("Japan B League 125 Sep 10:45"): keep the digit, drop the date.
             withoutDate = v.replaceAll("(?i)(?<=\\d)\\d{2}\\s+" + MONTH_RE + "[a-z]*.*$", "");
+        if (withoutDate.equals(v))
+            // Date glued to a word ("1st League27 Sep 15:00", Omarska v Drina Zvornik 27 Sep 2026): drop the date.
+            withoutDate = v.replaceAll("(?i)(?<=[a-z])\\d{1,2}\\s+" + MONTH_RE + "[a-z]*\\s+\\d{1,2}:\\d{2}.*$", "");
         // Bet365 abbreviates a numbered division ("Sweden 1.div Norra", 27 Sep 2026) where the feed says "Division 1 Norra".
         String key = normalise(withoutDate).replaceAll("\\b(\\d)\\s*div\\b", "division $1").replaceAll("\\bdiv\\b", "division");
         // Observed provider label (Seoul/Wonju) includes the global region; bookmaker omits it.
@@ -636,6 +639,20 @@ final class EventIdentity {
         r.evidence.put("competition_match", competition);
         if (!r.accepted() && r.verdict != Verdict.NEEDS_RECHECK) return r;
         boolean competitionOk = !competition.startsWith("mismatch") && !competition.startsWith("unknown");
+        if (!competitionOk && page.anchored && competition.startsWith("mismatch")) {
+            // The page is the alert's OWN Bet365 event link and teams/sport/kick-off are judged below: the competition name
+            // is corroboration, so harmless naming differences pass and only a structural conflict (gender, age/reserve,
+            // tier, cup/friendly/federation, country) fails closed (CompetitionStructure).
+            String conflict = CompetitionStructure.conflict(feed.competition, country, page.competition);
+            r.evidence.put("competition_structure", CompetitionStructure.describe(feed.competition, page.competition));
+            if (conflict == null) {
+                competition = "structural_compatible " + competition.substring("mismatch ".length());
+                competitionOk = true;
+            } else {
+                competition = competition + "; structural conflict: " + conflict;
+            }
+            r.evidence.put("competition_match", competition);
+        }
         if (!r.kickoffKnown || !r.kickoffAgrees || !competitionOk) {
             List<String> missing = new ArrayList<>();
             if (!r.kickoffKnown) missing.add("kick-off unknown");

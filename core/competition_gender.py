@@ -10,7 +10,10 @@ import re
 # Whole-token matches (case-insensitive) in the competition / competition_full string.
 WOMEN_TOKENS = {'women', "women's", 'womens', 'ladies', 'female', 'femenino', 'femenina', 'feminine', 'feminin',
                 'feminino', 'feminina', 'frauen', 'damen', 'dames', 'wnba', 'wnbl', 'wbbl', 'wcba', 'wkbl', 'lfb', 'bsnf',
-                'wabl', 'wsbl', 'w'}
+                'wabl', 'wsbl', 'w', 'woman', 'damas', 'femminile', 'kvinder', 'kvinner', 'kvinnor', 'naiset', 'kadinlar',
+                'zeny', 'kobiet', 'waba'}
+# Nordic compounds name the women's league in one word ("Kvindebasketligaen" DK, "Damallsvenskan" SE; 27 Sep 2026 Skovbakken).
+WOMEN_PREFIXES = ('kvinde', 'kvinne', 'frauen', 'damall', 'dameliga')
 _TOKEN = re.compile(r"[a-z0-9']+")
 
 
@@ -20,6 +23,6 @@ def womens_competition(*names):
         if not name:
             continue
         tokens = set(_TOKEN.findall(str(name).lower().replace('é', 'e')))
-        if tokens & WOMEN_TOKENS or '(w)' in str(name).lower():
+        if tokens & WOMEN_TOKENS or '(w)' in str(name).lower() or any(t.startswith(WOMEN_PREFIXES) for t in tokens):
             return True
     return False

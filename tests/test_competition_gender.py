@@ -13,10 +13,11 @@ WOMEN_ALERT = (ROOT / 'tests/fixtures/oddsnotifier_basketball_women_real.txt').r
 class CompetitionGenderTests(unittest.TestCase):
     def test_explicit_women_tokens_only(self):
         for name in ('Superior Nacional Women', 'Women', 'Eurocup Qualification Women', 'WNBA', 'Liga Femenina', 'LFB', 'BSNF',
-                     'Ligue Féminine', 'Frauen Bundesliga', 'NBL1 West W', 'Premier League (W)'):
+                     'Ligue Féminine', 'Frauen Bundesliga', 'NBL1 West W', 'Premier League (W)', 'Kvindebasketligaen',
+                     'Damallsvenskan', 'Serie A Femminile', 'Adriatic WABA'):
             self.assertTrue(womens_competition(name), name)
         for name in ('Nationale 1', 'NBL', 'B League', 'Euroleague', 'Superior Nacional', 'Bundesliga', 'Championnat Pro B',
-                     'Paulista FPB U20', None, ''):
+                     'Paulista FPB U20', 'Basketligaen', 'Allsvenskan', 'Damascus Cup', None, ''):
             self.assertFalse(womens_competition(name), name)
         self.assertTrue(womens_competition(None, 'Puerto Rico - Superior Nacional Women'))
 

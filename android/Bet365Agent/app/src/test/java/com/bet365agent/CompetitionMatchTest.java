@@ -44,7 +44,10 @@ public class CompetitionMatchTest {
     @Test public void verifiedResolutionUsesTheCountryAwareMatch() {
         EventIdentity.Event feed = new EventIdentity.Event("basketball", "UP Mexico", "UMAD", "26 Sep 21:30", "Liga ABE", false);
         EventIdentity.Event page = new EventIdentity.Event("basketball", "UP Mexico", "UMAD", "26 Sep 21:30", "Mexico Liga ABE 26 Sep 21:30", true);
-        assertEquals(EventIdentity.Verdict.AMBIGUOUS, EventIdentity.resolveVerified(feed, page, Collections.emptyMap(), false).verdict);
+        // anchored page (the alert's own event link): without an alert country the prefix cannot conflict -> structural match
+        assertEquals(EventIdentity.Verdict.EXACT, EventIdentity.resolveVerified(feed, page, Collections.emptyMap(), false).verdict);
+        EventIdentity.Event unanchored = new EventIdentity.Event("basketball", "UP Mexico", "UMAD", "26 Sep 21:30", "Mexico Liga ABE 26 Sep 21:30", false);
+        assertEquals(EventIdentity.Verdict.AMBIGUOUS, EventIdentity.resolveVerified(feed, unanchored, Collections.emptyMap(), false).verdict);
         assertEquals(EventIdentity.Verdict.EXACT, EventIdentity.resolveVerified(feed, page, Collections.emptyMap(), false, "Mexico").verdict);
         assertEquals(EventIdentity.Verdict.AMBIGUOUS, EventIdentity.resolveVerified(feed, page, Collections.emptyMap(), false, "Spain").verdict);
     }
