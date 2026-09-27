@@ -1,0 +1,1292 @@
+{
+ "alert": {
+  "intake_id": 2288,
+  "message_id": "71460",
+  "source_timestamp": "2026-09-27T11:43:11+00:00",
+  "text": "New odds update on Pinnacle\n\nFootball - Italy - Serie D\n[Polisportiva Ossese vs Sarnese](https://oddshub.io/football/italy-serie-d-group-g/73631188?market=Spread)\n27.09.2026 14:00\n\nSpread (0.5)\n1.520⬇️ (1.833) - 2.330⬆️ (1.877)\n\n🟢 Opening (0.5)\n1.833 - 1.877\n\n[Bet365 (Spread 0.5)](https://www.bet365.com/#/AC/B1/C1/D8/E201816018/F3/I1/)\n**1.85** - 1.95\n\n🎯 EV: 114.64%"
+ },
+ "interpretation": {
+  "verdict": {
+   "profile": "oddsnotifier_football_two_sided_v1",
+   "in_play_link": false,
+   "signal_basis": "price_same_line",
+   "line_candidate": null,
+   "price_candidate": "HOME",
+   "verdict": "EXECUTABLE_HOME",
+   "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 HOME 1.85 vs Pinnacle 1.520"
+  },
+  "target_side": "HOME",
+  "target_line": "0.5",
+  "alert_price": "1.85",
+  "reference": {
+   "bookmaker": "Pinnacle",
+   "line": "0.5",
+   "odds": "1.520",
+   "fair_odds": null
+  },
+  "sharp_signal": {
+   "source": "pinnacle_opening_to_current",
+   "side": "HOME",
+   "status": "IDENTIFIED",
+   "reason": "Pinnacle line 0.5 unchanged; HOME 1.833 -> 1.520 shortens, AWAY 1.877 -> 2.330 does not",
+   "basis": "price_same_line",
+   "opening_line": "0.5",
+   "current_line": "0.5",
+   "change": "-0.313",
+   "magnitude": "0.313",
+   "magnitude_units": "decimal_odds",
+   "direction": "SHORTENED",
+   "opening_prices": {
+    "HOME": "1.833",
+    "AWAY": "1.877"
+   },
+   "current_prices": {
+    "HOME": "1.520",
+    "AWAY": "2.330"
+   },
+   "changes_by_side": {
+    "HOME": "-0.313",
+    "AWAY": "0.453"
+   },
+   "line_candidate": null,
+   "price_candidate": "HOME",
+   "highlight_agrees": true,
+   "recent_line_reversal": false
+  },
+  "bet_quality": "CLEAR_VALUE_SIGNAL"
+ },
+ "rules": {
+  "decision": "ACCEPT",
+  "reason": "All rules passed",
+  "instruction": {
+   "instruction_id": "fbhold-SPREAD-124334",
+   "sport": "football",
+   "competition": "Serie D",
+   "fixture": "Polisportiva Ossese vs Sarnese",
+   "home": "Polisportiva Ossese",
+   "away": "Sarnese",
+   "event_time_local": "2026-09-27T14:00",
+   "event_timezone": "Europe/London",
+   "event_start_utc": "2026-09-27T13:00:00+00:00",
+   "market": "SPREAD",
+   "side": "HOME",
+   "selection_name": "Polisportiva Ossese",
+   "line": "0.5",
+   "alternate_line": {
+    "current": false,
+    "opening": false,
+    "comparison": false
+   },
+   "alert_price": "1.85",
+   "minimum_price": "1.77",
+   "stake": "0.10",
+   "max_odds_deterioration": null,
+   "max_net_payout_deterioration_percent": 10,
+   "max_line_deterioration": "0.25",
+   "configured_line_absolute_cap": 0.25,
+   "max_line_deterioration_percent": null,
+   "displayed_ev_percent": "114.64",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "signal_reason": "CLEAR_VALUE_SIGNAL",
+   "line_advantage": "0.0",
+   "target_source": "pinnacle_opening_to_current",
+   "implied_target": null,
+   "sharp_signal": {
+    "source": "pinnacle_opening_to_current",
+    "side": "HOME",
+    "status": "IDENTIFIED",
+    "reason": "Pinnacle line 0.5 unchanged; HOME 1.833 -> 1.520 shortens, AWAY 1.877 -> 2.330 does not",
+    "basis": "price_same_line",
+    "opening_line": "0.5",
+    "current_line": "0.5",
+    "change": "-0.313",
+    "magnitude": "0.313",
+    "magnitude_units": "decimal_odds",
+    "direction": "SHORTENED",
+    "opening_prices": {
+     "HOME": "1.833",
+     "AWAY": "1.877"
+    },
+    "current_prices": {
+     "HOME": "1.520",
+     "AWAY": "2.330"
+    },
+    "changes_by_side": {
+     "HOME": "-0.313",
+     "AWAY": "0.453"
+    },
+    "line_candidate": null,
+    "price_candidate": "HOME"
+   },
+   "highlighted_side": "HOME",
+   "ev_status": "SUPPLIED_EQUAL_LINE",
+   "line_quality": "EQUAL",
+   "price_quality": "FAVOURABLE",
+   "reference_odds": "1.520"
+  }
+ },
+ "payload": {
+  "instruction_id": "fbhold-SPREAD-124334",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Polisportiva Ossese||Sarnese",
+  "sport": "football",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "0.5",
+  "minimum_price": "1.77",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201816018/F3/I1/",
+  "kickoff_utc": "2026-09-27T13:00",
+  "competition": "Serie D",
+  "period": "FULL_GAME",
+  "country": "Italy",
+  "max_line_deterioration": "0.25"
+ },
+ "paused_at": "2026-09-27T11:43:35Z",
+ "result": {
+  "instruction_id": "fbhold-SPREAD-124334",
+  "status": "FAIL",
+  "stage": "LINE_CHANGED",
+  "detail": "Football market re-read has no SPREAD/HOME/0.25",
+  "duration_ms": 19723,
+  "progress": {
+   "stage": "CLEAR_BETSLIP",
+   "elapsed_ms": 19547,
+   "last_progress_at_ms": 1790509435498,
+   "instruction_id": "fbhold-SPREAD-124334",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790509416356
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 16,
+     "at_ms": 1790509416363
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 23,
+     "at_ms": 1790509416370,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 23,
+      "start_ts_ms": 1790509416364,
+      "end_elapsed_ms": 8635,
+      "end_ts_ms": 1790509424976,
+      "duration_ms": 8612,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3468,
+     "at_ms": 1790509416370
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3907,
+     "at_ms": 1790509416370
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3935,
+     "at_ms": 1790509416370
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4460,
+     "at_ms": 1790509416370
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4643,
+     "at_ms": 1790509420987,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 23,
+      "start_ts_ms": 1790509416364,
+      "end_elapsed_ms": 8635,
+      "end_ts_ms": 1790509424976,
+      "duration_ms": 8612,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 8064,
+     "at_ms": 1790509420987
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 8547,
+     "at_ms": 1790509420987
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 8635,
+     "at_ms": 1790509424983,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 8635,
+      "start_ts_ms": 1790509424976,
+      "end_elapsed_ms": 18650,
+      "end_ts_ms": 1790509434992,
+      "duration_ms": 10015,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 8642,
+     "at_ms": 1790509424983
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 9080,
+     "at_ms": 1790509424983
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 9095,
+     "at_ms": 1790509424983
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 9641,
+     "at_ms": 1790509424983
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 9664,
+     "at_ms": 1790509424983
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 11685,
+     "at_ms": 1790509424983
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 12232,
+     "at_ms": 1790509424983
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 14172,
+     "at_ms": 1790509424983
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 14609,
+     "at_ms": 1790509424983
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 18201,
+     "at_ms": 1790509424983
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 18582,
+     "at_ms": 1790509424983
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 18650,
+     "at_ms": 1790509435023,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 18650,
+      "start_ts_ms": 1790509434992,
+      "end_elapsed_ms": 18684,
+      "end_ts_ms": 1790509435026,
+      "duration_ms": 34,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 18684,
+     "at_ms": 1790509435052,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 18684,
+      "start_ts_ms": 1790509435026,
+      "end_elapsed_ms": 18710,
+      "end_ts_ms": 1790509435052,
+      "duration_ms": 26,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 18710,
+     "at_ms": 1790509435064,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 18710,
+      "start_ts_ms": 1790509435052,
+      "end_elapsed_ms": 18723,
+      "end_ts_ms": 1790509435065,
+      "duration_ms": 13,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 18723,
+     "at_ms": 1790509435073,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 18723,
+      "start_ts_ms": 1790509435065,
+      "end_elapsed_ms": 19547,
+      "end_ts_ms": 1790509435889,
+      "duration_ms": 824,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 18732,
+     "at_ms": 1790509435073
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 19134,
+     "at_ms": 1790509435073
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 19148,
+     "at_ms": 1790509435498
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 19157,
+     "at_ms": 1790509435498
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 19536,
+     "at_ms": 1790509435498
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 19547,
+     "at_ms": 1790509435498
+    }
+   ]
+  },
+  "device_stage": "CLEAR_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_hyVxWBwzuE5A96CnPrzFYiO_owMvRnvejVU6DyoNZk4",
+  "fixture_name": "Ossese v Sarnese",
+  "home": "Ossese",
+  "away": "Sarnese",
+  "competition": "Italy Serie D • 27 Sep 14:00",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "0.25",
+   "price": "1.900",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Ossese",
+   "bounds": [
+    188,
+    658,
+    272,
+    702
+   ]
+  },
+  "verification_detail": "Football market re-read has no SPREAD/HOME/0.25",
+  "betslip_clear": {
+   "tapped": false,
+   "detail": "No remove icon on a selection line"
+  },
+  "event_context": {
+   "home": "Ossese",
+   "away": "Sarnese",
+   "competition": "italy serie d",
+   "kickoff_utc": "2026-09-27T13:00",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790509435024,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "0.25",
+     "price": "1.900",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Ossese",
+     "bounds": [
+      188,
+      658,
+      272,
+      702
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790509435024,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "0.25",
+     "price": "1.900",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Ossese",
+     "bounds": [
+      188,
+      658,
+      272,
+      702
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 23,
+    "start_ts_ms": 1790509416364,
+    "end_elapsed_ms": 8635,
+    "end_ts_ms": 1790509424976,
+    "duration_ms": 8612,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 8635,
+    "start_ts_ms": 1790509424976,
+    "end_elapsed_ms": 18650,
+    "end_ts_ms": 1790509434992,
+    "duration_ms": 10015,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 18650,
+    "start_ts_ms": 1790509434992,
+    "end_elapsed_ms": 18684,
+    "end_ts_ms": 1790509435026,
+    "duration_ms": 34,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 18684,
+    "start_ts_ms": 1790509435026,
+    "end_elapsed_ms": 18710,
+    "end_ts_ms": 1790509435052,
+    "duration_ms": 26,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 18710,
+    "start_ts_ms": 1790509435052,
+    "end_elapsed_ms": 18723,
+    "end_ts_ms": 1790509435065,
+    "duration_ms": 13,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 18723,
+    "start_ts_ms": 1790509435065,
+    "end_elapsed_ms": 19547,
+    "end_ts_ms": 1790509435889,
+    "duration_ms": 824,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "alias_candidate": {
+   "feed_home": "Polisportiva Ossese",
+   "feed_away": "Sarnese",
+   "bet365_home": "Ossese",
+   "bet365_away": "Sarnese",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201816018/F3/I1/",
+   "kickoff_shown": "27 Sep 14:00",
+   "kickoff_expected": "27 Sep 14:00",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "Polisportiva Ossese": "Ossese"
+   },
+   "sport": "football"
+  },
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 14:00 + 'Sarnese' exact; 'Polisportiva Ossese' is a naming variant of 'Ossese' (token_containment 1.00)",
+   "home": {
+    "feed": "Polisportiva Ossese",
+    "bookmaker": "Ossese",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [ossese] contained; extra [polisportiva]",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Sarnese",
+    "bookmaker": "Sarnese",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Polisportiva Ossese",
+     "bookmaker": "Ossese",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [ossese] contained; extra [polisportiva]"
+    },
+    "away_similarity": {
+     "feed": "Sarnese",
+     "bookmaker": "Sarnese",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "one_sure_team_plus_variant",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+   }
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201816018/F3/I1/",
+  "session_path": [
+   {
+    "saw": "ACCOUNT",
+    "state": "AUTHENTICATED",
+    "attempts": 0
+   }
+  ],
+  "session_machine": "AUTHENTICATED"
+ },
+ "run": {
+  "run_id": "c_hyVxWBwzuE5A96CnPrzFYiO_owMvRnvejVU6DyoNZk4",
+  "adapter": "live_bet365",
+  "status": "LINE_CHANGED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790509416341,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790509416342
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 16,
+    "wall_ts_ms": 1790509416357
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 23,
+    "wall_ts_ms": 1790509416364
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3468,
+    "wall_ts_ms": 1790509419810
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3907,
+    "wall_ts_ms": 1790509420249
+   },
+   {
+    "phase": "CAPTURE_session",
+    "elapsed_ms": 3935,
+    "wall_ts_ms": 1790509420276
+   },
+   {
+    "phase": "CAPTURED_session",
+    "elapsed_ms": 4460,
+    "wall_ts_ms": 1790509420802
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 4643,
+    "wall_ts_ms": 1790509420985
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 8064,
+    "wall_ts_ms": 1790509424406
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 8547,
+    "wall_ts_ms": 1790509424889
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 8635,
+    "wall_ts_ms": 1790509424976
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 8642,
+    "wall_ts_ms": 1790509424984
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 9080,
+    "wall_ts_ms": 1790509425421
+   },
+   {
+    "phase": "CAPTURE_tabs_asia",
+    "elapsed_ms": 9095,
+    "wall_ts_ms": 1790509425436
+   },
+   {
+    "phase": "CAPTURED_tabs_asia",
+    "elapsed_ms": 9641,
+    "wall_ts_ms": 1790509425983
+   },
+   {
+    "effect": "gesture",
+    "target": "football tab Asiat",
+    "bounds": [
+     581,
+     400,
+     641,
+     443
+    ],
+    "elapsed_ms": 9664
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 9664,
+    "wall_ts_ms": 1790509426006
+   },
+   {
+    "phase": "CAPTURE_markets_asia",
+    "elapsed_ms": 11685,
+    "wall_ts_ms": 1790509428027
+   },
+   {
+    "phase": "CAPTURED_markets_asia",
+    "elapsed_ms": 12232,
+    "wall_ts_ms": 1790509428574
+   },
+   {
+    "effect": "swipe",
+    "x": 360,
+    "from_y": 1200,
+    "to_y": 600,
+    "elapsed_ms": 12257
+   },
+   {
+    "phase": "CAPTURE_markets_asia_scroll",
+    "elapsed_ms": 14172,
+    "wall_ts_ms": 1790509430514
+   },
+   {
+    "phase": "CAPTURED_markets_asia_scroll",
+    "elapsed_ms": 14609,
+    "wall_ts_ms": 1790509430951
+   },
+   {
+    "effect": "swipe",
+    "x": 360,
+    "from_y": 500,
+    "to_y": 1300,
+    "elapsed_ms": 14670
+   },
+   {
+    "effect": "swipe",
+    "x": 360,
+    "from_y": 1200,
+    "to_y": 600,
+    "elapsed_ms": 16288
+   },
+   {
+    "phase": "CAPTURE_markets_scroll",
+    "elapsed_ms": 18201,
+    "wall_ts_ms": 1790509434543
+   },
+   {
+    "phase": "CAPTURED_markets_scroll",
+    "elapsed_ms": 18582,
+    "wall_ts_ms": 1790509434924
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 18650,
+    "wall_ts_ms": 1790509434992
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 18684,
+    "wall_ts_ms": 1790509435026
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 18710,
+    "wall_ts_ms": 1790509435052
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 18723,
+    "wall_ts_ms": 1790509435065
+   },
+   {
+    "phase": "CAPTURE_selection_preflight",
+    "elapsed_ms": 18732,
+    "wall_ts_ms": 1790509435074
+   },
+   {
+    "phase": "CAPTURED_selection_preflight",
+    "elapsed_ms": 19134,
+    "wall_ts_ms": 1790509435476
+   },
+   {
+    "phase": "CLEAR_BETSLIP",
+    "elapsed_ms": 19148,
+    "wall_ts_ms": 1790509435490
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_pre",
+    "elapsed_ms": 19157,
+    "wall_ts_ms": 1790509435498
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_pre",
+    "elapsed_ms": 19536,
+    "wall_ts_ms": 1790509435878
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 19547,
+    "wall_ts_ms": 1790509435889
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_session.png",
+   "s003_event_direct.png",
+   "s004_markets.png",
+   "s005_tabs_asia.png",
+   "s006_markets_asia.png",
+   "s007_markets_asia_scroll.png",
+   "s008_markets_scroll.png",
+   "s009_selection_preflight.png",
+   "s010_clear_betslip_pre.png"
+  ],
+  "gesture_attempts": 1,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 23,
+    "start_ts_ms": 1790509416364,
+    "end_elapsed_ms": 8635,
+    "end_ts_ms": 1790509424976,
+    "duration_ms": 8612,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 8635,
+    "start_ts_ms": 1790509424976,
+    "end_elapsed_ms": 18650,
+    "end_ts_ms": 1790509434992,
+    "duration_ms": 10015,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 18650,
+    "start_ts_ms": 1790509434992,
+    "end_elapsed_ms": 18684,
+    "end_ts_ms": 1790509435026,
+    "duration_ms": 34,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 18684,
+    "start_ts_ms": 1790509435026,
+    "end_elapsed_ms": 18710,
+    "end_ts_ms": 1790509435052,
+    "duration_ms": 26,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 18710,
+    "start_ts_ms": 1790509435052,
+    "end_elapsed_ms": 18723,
+    "end_ts_ms": 1790509435065,
+    "duration_ms": 13,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 18723,
+    "start_ts_ms": 1790509435065,
+    "end_elapsed_ms": 19547,
+    "end_ts_ms": 1790509435889,
+    "duration_ms": 824,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Polisportiva Ossese",
+  "identity_home": "Polisportiva Ossese",
+  "expected_away": "Sarnese",
+  "identity_away": "Sarnese",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201816018/F3/I1/",
+  "current_stage": "OPEN_SELECTION",
+  "session_path": [
+   {
+    "saw": "ACCOUNT",
+    "state": "AUTHENTICATED",
+    "attempts": 0
+   }
+  ],
+  "session_machine": "AUTHENTICATED",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Italy Serie D • 27 Sep 14:00",
+   "Ossese v Sarnese",
+   "Popular Bet Builder Result Goals Half Asian Lines"
+  ],
+  "competition_check": {
+   "feed": "Serie D",
+   "country": "Italy",
+   "page": "Italy Serie D • 27 Sep 14:00",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 14:00 + 'Sarnese' exact; 'Polisportiva Ossese' is a naming variant of 'Ossese' (token_containment 1.00)",
+   "home": {
+    "feed": "Polisportiva Ossese",
+    "bookmaker": "Ossese",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [ossese] contained; extra [polisportiva]",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Sarnese",
+    "bookmaker": "Sarnese",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Polisportiva Ossese",
+     "bookmaker": "Ossese",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [ossese] contained; extra [polisportiva]"
+    },
+    "away_similarity": {
+     "feed": "Sarnese",
+     "bookmaker": "Sarnese",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "one_sure_team_plus_variant",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+   }
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "route": "event_link",
+  "alias_candidate": {
+   "feed_home": "Polisportiva Ossese",
+   "feed_away": "Sarnese",
+   "bet365_home": "Ossese",
+   "bet365_away": "Sarnese",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201816018/F3/I1/",
+   "kickoff_shown": "27 Sep 14:00",
+   "kickoff_expected": "27 Sep 14:00",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "Polisportiva Ossese": "Ossese"
+   },
+   "sport": "football"
+  },
+  "kickoff_verified": "27 Sep 14:00",
+  "verified_fixture": {
+   "code": "438a3439",
+   "home": "Ossese",
+   "away": "Sarnese",
+   "fixture_name": "Ossese v Sarnese",
+   "exact_fixture_text": "Home Ossese\nAway Sarnese",
+   "competition": "Italy Serie D • 27 Sep 14:00",
+   "bounds": [
+    35,
+    268,
+    701,
+    435
+   ]
+  },
+  "fixture_home": "Ossese",
+  "fixture_away": "Sarnese",
+  "identity_verified_home": "Polisportiva Ossese",
+  "identity_verified_away": "Sarnese",
+  "event_verified": true,
+  "event_context": {
+   "home": "Ossese",
+   "away": "Sarnese",
+   "competition": "italy serie d",
+   "kickoff_utc": "2026-09-27T13:00",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "438a3439",
+   "home": "Ossese",
+   "away": "Sarnese",
+   "fixture_name": "Ossese v Sarnese",
+   "exact_fixture_text": "Home Ossese\nAway Sarnese",
+   "competition": "Italy Serie D • 27 Sep 14:00",
+   "bounds": [
+    35,
+    268,
+    701,
+    435
+   ]
+  },
+  "football_market_reads": [
+   {
+    "view": "popular",
+    "cells": [
+     "MONEYLINE/HOME/NONE@3.00 (Ossese)",
+     "MONEYLINE/DRAW/NONE@3.20 (Draw)",
+     "MONEYLINE/AWAY/NONE@2.10 (Sarnese)",
+     "TOTAL/OVER/2.5@2.00 (Over)",
+     "TOTAL/UNDER/2.5@1.80 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": true,
+    "goals_over_under": true,
+    "asian_handicap": false,
+    "goal_line": false
+   },
+   {
+    "view": "asia",
+    "cells": [
+     "SPREAD/HOME/0.25@1.900 (Ossese)",
+     "SPREAD/AWAY/-0.25@1.900 (Sarnese)",
+     "TOTAL/OVER/2.5@2.025 (Over)",
+     "TOTAL/UNDER/2.5@1.775 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": false,
+    "goals_over_under": false,
+    "asian_handicap": true,
+    "goal_line": true
+   },
+   {
+    "view": "asia_scroll",
+    "cells": [],
+    "notes": [],
+    "full_time_result": false,
+    "goals_over_under": false,
+    "asian_handicap": false,
+    "goal_line": false
+   },
+   {
+    "view": "scroll",
+    "cells": [],
+    "notes": [],
+    "full_time_result": false,
+    "goals_over_under": false,
+    "asian_handicap": false,
+    "goal_line": false
+   },
+   {
+    "view": "refind",
+    "cells": [],
+    "notes": [],
+    "full_time_result": false,
+    "goals_over_under": false,
+    "asian_handicap": false,
+    "goal_line": false
+   }
+  ],
+  "football_tab_asia": {
+   "text": "Asiat",
+   "bounds": [
+    581,
+    400,
+    641,
+    443
+   ]
+  },
+  "football_markets": [
+   {
+    "market": "SPREAD",
+    "selection_role": "HOME",
+    "selection_name": "Ossese",
+    "price": "1.900",
+    "line": "0.25",
+    "bounds": [
+     188,
+     658,
+     272,
+     702
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "selection_role": "AWAY",
+    "selection_name": "Sarnese",
+    "price": "1.900",
+    "line": "-0.25",
+    "bounds": [
+     531,
+     661,
+     616,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "price": "2.025",
+    "line": "2.5",
+    "bounds": [
+     275,
+     908,
+     361,
+     949
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "price": "1.775",
+    "line": "2.5",
+    "bounds": [
+     531,
+     908,
+     618,
+     949
+    ]
+   }
+  ],
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "0.25",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Ossese",
+    "bounds": [
+     188,
+     658,
+     272,
+     702
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "-0.25",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Sarnese",
+    "bounds": [
+     531,
+     661,
+     616,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.5",
+    "price": "2.025",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     275,
+     908,
+     361,
+     949
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "2.5",
+    "price": "1.775",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     531,
+     908,
+     618,
+     949
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790509435024,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "0.25",
+     "price": "1.900",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Ossese",
+     "bounds": [
+      188,
+      658,
+      272,
+      702
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790509435024,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "0.25",
+     "price": "1.900",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Ossese",
+     "bounds": [
+      188,
+      658,
+      272,
+      702
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "selection_role": "HOME",
+  "selection_name": "Ossese",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "0.25",
+   "price": "1.900",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Ossese",
+   "bounds": [
+    188,
+    658,
+    272,
+    702
+   ]
+  },
+  "betslip_clear": {
+   "tapped": false,
+   "detail": "No remove icon on a selection line"
+  },
+  "detail": "Football market re-read has no SPREAD/HOME/0.25",
+  "duration_ms": 19547
+ },
+ "wall": 20.5,
+ "frames": [
+  "s001_event_direct.png",
+  "s002_session.png",
+  "s003_event_direct.png",
+  "s004_markets.png",
+  "s005_tabs_asia.png",
+  "s006_markets_asia.png",
+  "s007_markets_asia_scroll.png",
+  "s008_markets_scroll.png",
+  "s009_selection_preflight.png",
+  "s010_clear_betslip_pre.png"
+ ],
+ "resumed_at": "2026-09-27T11:44:00Z",
+ "health_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.26-ops"
+ }
+}

@@ -1,0 +1,2135 @@
+{
+ "alert": {
+  "intake_id": 2286,
+  "message_id": "71458",
+  "source_timestamp": "2026-09-27T11:41:47+00:00",
+  "text": "New odds update on Pinnacle\n\nFootball - Greece - Super League 2\n[Panionios vs Zakynthos](https://oddshub.io/football/greece-super-league-2/74172422?market=Spread)\n27.09.2026 14:00\n\nSpread (-1.5)\n1.657⬇️ (1.980) - 2.100⬆️ (1.781)\n\n🟢 Opening (-1.5)\n1.980 - 1.781\n\n[Bet365 (Spread -1.5)](https://www.bet365.com/#/AC/B1/C1/D8/E200870724/F3/I1/)\n**1.98** - 1.83\n\n🎯 EV: 112.13%"
+ },
+ "interpretation": {
+  "verdict": {
+   "profile": "oddsnotifier_football_two_sided_v1",
+   "in_play_link": false,
+   "signal_basis": "price_same_line",
+   "line_candidate": null,
+   "price_candidate": "HOME",
+   "verdict": "EXECUTABLE_HOME",
+   "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 HOME 1.98 vs Pinnacle 1.657"
+  },
+  "target_side": "HOME",
+  "target_line": "-1.5",
+  "alert_price": "1.98",
+  "reference": {
+   "bookmaker": "Pinnacle",
+   "line": "-1.5",
+   "odds": "1.657",
+   "fair_odds": null
+  },
+  "sharp_signal": {
+   "source": "pinnacle_opening_to_current",
+   "side": "HOME",
+   "status": "IDENTIFIED",
+   "reason": "Pinnacle line -1.5 unchanged; HOME 1.980 -> 1.657 shortens, AWAY 1.781 -> 2.100 does not",
+   "basis": "price_same_line",
+   "opening_line": "-1.5",
+   "current_line": "-1.5",
+   "change": "-0.323",
+   "magnitude": "0.323",
+   "magnitude_units": "decimal_odds",
+   "direction": "SHORTENED",
+   "opening_prices": {
+    "HOME": "1.980",
+    "AWAY": "1.781"
+   },
+   "current_prices": {
+    "HOME": "1.657",
+    "AWAY": "2.100"
+   },
+   "changes_by_side": {
+    "HOME": "-0.323",
+    "AWAY": "0.319"
+   },
+   "line_candidate": null,
+   "price_candidate": "HOME",
+   "highlight_agrees": true,
+   "recent_line_reversal": false
+  },
+  "bet_quality": "CLEAR_VALUE_SIGNAL"
+ },
+ "rules": {
+  "decision": "ACCEPT",
+  "reason": "All rules passed",
+  "instruction": {
+   "instruction_id": "fbhold-SPREAD-124148",
+   "sport": "football",
+   "competition": "Super League 2",
+   "fixture": "Panionios vs Zakynthos",
+   "home": "Panionios",
+   "away": "Zakynthos",
+   "event_time_local": "2026-09-27T14:00",
+   "event_timezone": "Europe/London",
+   "event_start_utc": "2026-09-27T13:00:00+00:00",
+   "market": "SPREAD",
+   "side": "HOME",
+   "selection_name": "Panionios",
+   "line": "-1.5",
+   "alternate_line": {
+    "current": false,
+    "opening": false,
+    "comparison": false
+   },
+   "alert_price": "1.98",
+   "minimum_price": "1.89",
+   "stake": "0.10",
+   "max_odds_deterioration": null,
+   "max_net_payout_deterioration_percent": 10,
+   "max_line_deterioration": "0.25",
+   "configured_line_absolute_cap": 0.25,
+   "max_line_deterioration_percent": null,
+   "displayed_ev_percent": "112.13",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "signal_reason": "CLEAR_VALUE_SIGNAL",
+   "line_advantage": "0.0",
+   "target_source": "pinnacle_opening_to_current",
+   "implied_target": null,
+   "sharp_signal": {
+    "source": "pinnacle_opening_to_current",
+    "side": "HOME",
+    "status": "IDENTIFIED",
+    "reason": "Pinnacle line -1.5 unchanged; HOME 1.980 -> 1.657 shortens, AWAY 1.781 -> 2.100 does not",
+    "basis": "price_same_line",
+    "opening_line": "-1.5",
+    "current_line": "-1.5",
+    "change": "-0.323",
+    "magnitude": "0.323",
+    "magnitude_units": "decimal_odds",
+    "direction": "SHORTENED",
+    "opening_prices": {
+     "HOME": "1.980",
+     "AWAY": "1.781"
+    },
+    "current_prices": {
+     "HOME": "1.657",
+     "AWAY": "2.100"
+    },
+    "changes_by_side": {
+     "HOME": "-0.323",
+     "AWAY": "0.319"
+    },
+    "line_candidate": null,
+    "price_candidate": "HOME"
+   },
+   "highlighted_side": "HOME",
+   "ev_status": "SUPPLIED_EQUAL_LINE",
+   "line_quality": "EQUAL",
+   "price_quality": "FAVOURABLE",
+   "reference_odds": "1.657"
+  }
+ },
+ "payload": {
+  "instruction_id": "fbhold-SPREAD-124148",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Panionios||Zakynthos",
+  "sport": "football",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-1.5",
+  "minimum_price": "1.89",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E200870724/F3/I1/",
+  "kickoff_utc": "2026-09-27T13:00",
+  "competition": "Super League 2",
+  "period": "FULL_GAME",
+  "country": "Greece",
+  "max_line_deterioration": "0.25"
+ },
+ "paused_at": "2026-09-27T11:41:50Z",
+ "result": {
+  "instruction_id": "fbhold-SPREAD-124148",
+  "status": "FAIL",
+  "stage": "STAKE_REJECTED",
+  "detail": "Typed stake did not read back as 0.10 after one retype; field erased",
+  "duration_ms": 29270,
+  "progress": {
+   "stage": "CLEAR_BETSLIP",
+   "elapsed_ms": 29074,
+   "last_progress_at_ms": 1790509336979,
+   "instruction_id": "fbhold-SPREAD-124148",
+   "stages": [
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8986,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9394,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9409,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 10126,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 10667,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 10762,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 11046,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 11353,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 11628,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 11939,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 12257,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 12567,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 12894,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 13226,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 13559,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 14195,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 14740,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 14817,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 15100,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 15383,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 15673,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 15955,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 16438,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 16794,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 17247,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 17308,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 17575,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 17847,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 18154,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 18444,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 18733,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 19068,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 19335,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 19602,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 19891,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 20485,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 21056,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 21134,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 21399,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 21686,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 21984,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 22679,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 23172,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 23240,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 23510,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 23793,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 24082,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 24388,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 24663,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 24957,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 25239,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 25598,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 25952,
+     "at_ms": 1790509319703
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 26245,
+     "at_ms": 1790509336979
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 26261,
+     "at_ms": 1790509336979
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 26680,
+     "at_ms": 1790509336979
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 26697,
+     "at_ms": 1790509336979
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 28469,
+     "at_ms": 1790509336979
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 28994,
+     "at_ms": 1790509336979
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 29074,
+     "at_ms": 1790509336979
+    }
+   ]
+  },
+  "device_stage": "CLEAR_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_iYjbnv5UCI2w7nusDnc9RJG80ApB8Jh8kTjjw36vYus",
+  "fixture_name": "Panionios v Zakynthos",
+  "home": "Panionios",
+  "away": "Zakynthos",
+  "competition": "Greece Super League 227 Sep 14:00",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-1.5",
+   "price": "1.975",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Panionios",
+   "bounds": [
+    188,
+    658,
+    272,
+    702
+   ]
+  },
+  "verification_detail": "Typed stake did not read back as 0.10 after one retype; field erased",
+  "betslip_clear": {
+   "tapped": true,
+   "bounds": [
+    21,
+    514,
+    42,
+    536
+   ],
+   "place_bet_still_visible": false
+  },
+  "event_context": {
+   "home": "Panionios",
+   "away": "Zakynthos",
+   "competition": "greece super league 2",
+   "kickoff_utc": "2026-09-27T13:00",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790509318420,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-1.5",
+     "price": "1.975",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Panionios",
+     "bounds": [
+      188,
+      658,
+      272,
+      702
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790509318421,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-1.5",
+     "price": "1.975",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Panionios",
+     "bounds": [
+      188,
+      658,
+      272,
+      702
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 42,
+    "start_ts_ms": 1790509310761,
+    "end_elapsed_ms": 4027,
+    "end_ts_ms": 1790509314746,
+    "duration_ms": 3985,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4027,
+    "start_ts_ms": 1790509314746,
+    "end_elapsed_ms": 7682,
+    "end_ts_ms": 1790509318401,
+    "duration_ms": 3655,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 7682,
+    "start_ts_ms": 1790509318401,
+    "end_elapsed_ms": 7703,
+    "end_ts_ms": 1790509318422,
+    "duration_ms": 21,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 7703,
+    "start_ts_ms": 1790509318422,
+    "end_elapsed_ms": 7721,
+    "end_ts_ms": 1790509318440,
+    "duration_ms": 18,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 7721,
+    "start_ts_ms": 1790509318440,
+    "end_elapsed_ms": 7737,
+    "end_ts_ms": 1790509318455,
+    "duration_ms": 16,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 7737,
+    "start_ts_ms": 1790509318455,
+    "end_elapsed_ms": 8950,
+    "end_ts_ms": 1790509319669,
+    "duration_ms": 1213,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 8950,
+    "start_ts_ms": 1790509319669,
+    "end_elapsed_ms": 29074,
+    "end_ts_ms": 1790509339792,
+    "duration_ms": 20124,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "stake_field_state": "UNKNOWN",
+  "stake_clear": {
+   "why": "retype",
+   "backspaces": 10
+  },
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "Panionios",
+    "bookmaker": "Panionios",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Zakynthos",
+    "bookmaker": "Zakynthos",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Panionios",
+     "bookmaker": "Panionios",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "away_similarity": {
+     "feed": "Zakynthos",
+     "bookmaker": "Zakynthos",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "both_exact",
+    "verdict": "EXACT"
+   }
+  },
+  "identity_verdict": "EXACT",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E200870724/F3/I1/"
+ },
+ "run": {
+  "run_id": "c_iYjbnv5UCI2w7nusDnc9RJG80ApB8Jh8kTjjw36vYus",
+  "adapter": "live_bet365",
+  "status": "STAKE_REJECTED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790509310719,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 1,
+    "wall_ts_ms": 1790509310719
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 36,
+    "wall_ts_ms": 1790509310755
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 42,
+    "wall_ts_ms": 1790509310761
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3486,
+    "wall_ts_ms": 1790509314205
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3950,
+    "wall_ts_ms": 1790509314669
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 4027,
+    "wall_ts_ms": 1790509314746
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 4032,
+    "wall_ts_ms": 1790509314751
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 4510,
+    "wall_ts_ms": 1790509315228
+   },
+   {
+    "phase": "CAPTURE_tabs_asia",
+    "elapsed_ms": 4554,
+    "wall_ts_ms": 1790509315272
+   },
+   {
+    "phase": "CAPTURED_tabs_asia",
+    "elapsed_ms": 5085,
+    "wall_ts_ms": 1790509315804
+   },
+   {
+    "effect": "gesture",
+    "target": "football tab Asiat",
+    "bounds": [
+     581,
+     400,
+     641,
+     443
+    ],
+    "elapsed_ms": 5097
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 5098,
+    "wall_ts_ms": 1790509315816
+   },
+   {
+    "phase": "CAPTURE_markets_asia",
+    "elapsed_ms": 7111,
+    "wall_ts_ms": 1790509317830
+   },
+   {
+    "phase": "CAPTURED_markets_asia",
+    "elapsed_ms": 7601,
+    "wall_ts_ms": 1790509318320
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 7682,
+    "wall_ts_ms": 1790509318401
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 7703,
+    "wall_ts_ms": 1790509318422
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 7721,
+    "wall_ts_ms": 1790509318440
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 7737,
+    "wall_ts_ms": 1790509318455
+   },
+   {
+    "phase": "CAPTURE_selection_preflight",
+    "elapsed_ms": 7743,
+    "wall_ts_ms": 1790509318462
+   },
+   {
+    "phase": "CAPTURED_selection_preflight",
+    "elapsed_ms": 8171,
+    "wall_ts_ms": 1790509318889
+   },
+   {
+    "effect": "gesture",
+    "target": "SPREAD / HOME / -1.5 / 1.975",
+    "bounds": [
+     188,
+     658,
+     272,
+     702
+    ],
+    "elapsed_ms": 8186
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8186,
+    "wall_ts_ms": 1790509318905
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 8950,
+    "wall_ts_ms": 1790509319670
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 8986,
+    "wall_ts_ms": 1790509319704
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 9394,
+    "wall_ts_ms": 1790509320112
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     20,
+     1327,
+     214,
+     1371
+    ],
+    "elapsed_ms": 9409
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 9409,
+    "wall_ts_ms": 1790509320128
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 10126,
+    "wall_ts_ms": 1790509320845
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 10667,
+    "wall_ts_ms": 1790509321386
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 10761
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 10762,
+    "wall_ts_ms": 1790509321480
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 11045
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 11046,
+    "wall_ts_ms": 1790509321765
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 11352
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 11353,
+    "wall_ts_ms": 1790509322072
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 11627
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 11628,
+    "wall_ts_ms": 1790509322347
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 11939
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 11939,
+    "wall_ts_ms": 1790509322658
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 12256
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 12257,
+    "wall_ts_ms": 1790509322976
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 12566
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 12567,
+    "wall_ts_ms": 1790509323286
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 12893
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 12894,
+    "wall_ts_ms": 1790509323613
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 13225
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 13226,
+    "wall_ts_ms": 1790509323945
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 13558
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 13559,
+    "wall_ts_ms": 1790509324277
+   },
+   {
+    "phase": "CAPTURE_stake_cleared",
+    "elapsed_ms": 14195,
+    "wall_ts_ms": 1790509324914
+   },
+   {
+    "phase": "CAPTURED_stake_cleared",
+    "elapsed_ms": 14740,
+    "wall_ts_ms": 1790509325459
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 14817
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 14817,
+    "wall_ts_ms": 1790509325535
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     87,
+     1228,
+     147,
+     1272
+    ],
+    "elapsed_ms": 15100
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 15100,
+    "wall_ts_ms": 1790509325819
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     87,
+     974,
+     147,
+     1018
+    ],
+    "elapsed_ms": 15383
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 15383,
+    "wall_ts_ms": 1790509326102
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 15673
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 15673,
+    "wall_ts_ms": 1790509326392
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 15955,
+    "wall_ts_ms": 1790509326674
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 16438,
+    "wall_ts_ms": 1790509327157
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 16794,
+    "wall_ts_ms": 1790509327512
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 17247,
+    "wall_ts_ms": 1790509327966
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 17308
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 17308,
+    "wall_ts_ms": 1790509328027
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 17575
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 17575,
+    "wall_ts_ms": 1790509328294
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 17847
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 17847,
+    "wall_ts_ms": 1790509328566
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 18154
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 18154,
+    "wall_ts_ms": 1790509328873
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 18444
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 18444,
+    "wall_ts_ms": 1790509329162
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 18732
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 18733,
+    "wall_ts_ms": 1790509329452
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 19068
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 19068,
+    "wall_ts_ms": 1790509329786
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 19334
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 19335,
+    "wall_ts_ms": 1790509330053
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 19602
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 19602,
+    "wall_ts_ms": 1790509330321
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 19890
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 19891,
+    "wall_ts_ms": 1790509330609
+   },
+   {
+    "phase": "CAPTURE_stake_cleared",
+    "elapsed_ms": 20485,
+    "wall_ts_ms": 1790509331204
+   },
+   {
+    "phase": "CAPTURED_stake_cleared",
+    "elapsed_ms": 21056,
+    "wall_ts_ms": 1790509331775
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 21134
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 21134,
+    "wall_ts_ms": 1790509331852
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     87,
+     1228,
+     147,
+     1272
+    ],
+    "elapsed_ms": 21399
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 21399,
+    "wall_ts_ms": 1790509332118
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     87,
+     974,
+     147,
+     1018
+    ],
+    "elapsed_ms": 21685
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 21686,
+    "wall_ts_ms": 1790509332405
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 21983
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 21984,
+    "wall_ts_ms": 1790509332703
+   },
+   {
+    "phase": "CAPTURE_stake_retyped",
+    "elapsed_ms": 22679,
+    "wall_ts_ms": 1790509333397
+   },
+   {
+    "phase": "CAPTURED_stake_retyped",
+    "elapsed_ms": 23172,
+    "wall_ts_ms": 1790509333890
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 23240
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 23240,
+    "wall_ts_ms": 1790509333958
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 23510
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 23510,
+    "wall_ts_ms": 1790509334229
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 23793
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 23793,
+    "wall_ts_ms": 1790509334512
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 24081
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 24082,
+    "wall_ts_ms": 1790509334800
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 24388
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 24388,
+    "wall_ts_ms": 1790509335106
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 24663
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 24663,
+    "wall_ts_ms": 1790509335382
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 24957
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 24957,
+    "wall_ts_ms": 1790509335675
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 25239
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 25239,
+    "wall_ts_ms": 1790509335958
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 25598
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 25598,
+    "wall_ts_ms": 1790509336317
+   },
+   {
+    "effect": "gesture",
+    "target": "key:B",
+    "bounds": [
+     569,
+     1228,
+     629,
+     1272
+    ],
+    "elapsed_ms": 25952
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 25952,
+    "wall_ts_ms": 1790509336671
+   },
+   {
+    "phase": "CLEAR_BETSLIP",
+    "elapsed_ms": 26245,
+    "wall_ts_ms": 1790509336963
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_pre",
+    "elapsed_ms": 26261,
+    "wall_ts_ms": 1790509336979
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_pre",
+    "elapsed_ms": 26680,
+    "wall_ts_ms": 1790509337398
+   },
+   {
+    "effect": "gesture",
+    "target": "Remove selection from betslip",
+    "bounds": [
+     21,
+     514,
+     42,
+     536
+    ],
+    "elapsed_ms": 26697
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 26697,
+    "wall_ts_ms": 1790509337415
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_after",
+    "elapsed_ms": 28469,
+    "wall_ts_ms": 1790509339188
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_after",
+    "elapsed_ms": 28994,
+    "wall_ts_ms": 1790509339713
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 29074,
+    "wall_ts_ms": 1790509339793
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_markets.png",
+   "s003_tabs_asia.png",
+   "s004_markets_asia.png",
+   "s005_selection_preflight.png",
+   "s006_betslip_pre_stake.png",
+   "s007_stake_ui.png",
+   "s008_stake_cleared.png",
+   "s009_stake_typed.png",
+   "s010_stake_typed.png",
+   "s011_stake_cleared.png",
+   "s012_stake_retyped.png",
+   "s013_clear_betslip_pre.png",
+   "s014_clear_betslip_after.png"
+  ],
+  "gesture_attempts": 42,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 42,
+    "start_ts_ms": 1790509310761,
+    "end_elapsed_ms": 4027,
+    "end_ts_ms": 1790509314746,
+    "duration_ms": 3985,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4027,
+    "start_ts_ms": 1790509314746,
+    "end_elapsed_ms": 7682,
+    "end_ts_ms": 1790509318401,
+    "duration_ms": 3655,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 7682,
+    "start_ts_ms": 1790509318401,
+    "end_elapsed_ms": 7703,
+    "end_ts_ms": 1790509318422,
+    "duration_ms": 21,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 7703,
+    "start_ts_ms": 1790509318422,
+    "end_elapsed_ms": 7721,
+    "end_ts_ms": 1790509318440,
+    "duration_ms": 18,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 7721,
+    "start_ts_ms": 1790509318440,
+    "end_elapsed_ms": 7737,
+    "end_ts_ms": 1790509318455,
+    "duration_ms": 16,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 7737,
+    "start_ts_ms": 1790509318455,
+    "end_elapsed_ms": 8950,
+    "end_ts_ms": 1790509319669,
+    "duration_ms": 1213,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 8950,
+    "start_ts_ms": 1790509319669,
+    "end_elapsed_ms": 29074,
+    "end_ts_ms": 1790509339792,
+    "duration_ms": 20124,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Panionios",
+  "identity_home": "Panionios",
+  "expected_away": "Zakynthos",
+  "identity_away": "Zakynthos",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E200870724/F3/I1/",
+  "current_stage": "ENTER_STAKE",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Greece Super League 227 Sep 14:00",
+   "Panionios v Zakynthos",
+   "Popular Bet Builder Result Goals Half Asian Lines"
+  ],
+  "competition_check": {
+   "feed": "Super League 2",
+   "country": "Greece",
+   "page": "Greece Super League 227 Sep 14:00",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "EXACT",
+   "reason": "both teams exact",
+   "home": {
+    "feed": "Panionios",
+    "bookmaker": "Panionios",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Zakynthos",
+    "bookmaker": "Zakynthos",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Panionios",
+     "bookmaker": "Panionios",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "away_similarity": {
+     "feed": "Zakynthos",
+     "bookmaker": "Zakynthos",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "both_exact",
+    "verdict": "EXACT"
+   }
+  },
+  "identity_verdict": "EXACT",
+  "route": "event_link",
+  "kickoff_verified": "27 Sep 14:00",
+  "verified_fixture": {
+   "code": "fd0e7977",
+   "home": "Panionios",
+   "away": "Zakynthos",
+   "fixture_name": "Panionios v Zakynthos",
+   "exact_fixture_text": "Home Panionios\nAway Zakynthos",
+   "competition": "Greece Super League 227 Sep 14:00",
+   "bounds": [
+    35,
+    266,
+    701,
+    435
+   ]
+  },
+  "fixture_home": "Panionios",
+  "fixture_away": "Zakynthos",
+  "identity_verified_home": "Panionios",
+  "identity_verified_away": "Zakynthos",
+  "event_verified": true,
+  "event_context": {
+   "home": "Panionios",
+   "away": "Zakynthos",
+   "competition": "greece super league 2",
+   "kickoff_utc": "2026-09-27T13:00",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "fd0e7977",
+   "home": "Panionios",
+   "away": "Zakynthos",
+   "fixture_name": "Panionios v Zakynthos",
+   "exact_fixture_text": "Home Panionios\nAway Zakynthos",
+   "competition": "Greece Super League 227 Sep 14:00",
+   "bounds": [
+    35,
+    266,
+    701,
+    435
+   ]
+  },
+  "football_market_reads": [
+   {
+    "view": "popular",
+    "cells": [
+     "MONEYLINE/HOME/NONE@1.30 (Panionios)",
+     "MONEYLINE/DRAW/NONE@4.75 (Draw)",
+     "MONEYLINE/AWAY/NONE@9.50 (Zakynthos)",
+     "TOTAL/OVER/2.5@2.00 (Over)",
+     "TOTAL/UNDER/2.5@1.80 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": true,
+    "goals_over_under": true,
+    "asian_handicap": false,
+    "goal_line": false
+   },
+   {
+    "view": "asia",
+    "cells": [
+     "SPREAD/HOME/-1.5@1.975 (Panionios)",
+     "SPREAD/AWAY/+1.5@1.825 (Zakynthos)",
+     "TOTAL/OVER/2.5@2.025 (Over)",
+     "TOTAL/UNDER/2.5@1.775 (Under)"
+    ],
+    "notes": [
+     "asian handicap: team header not read",
+     "goal_line: no Over/Under header"
+    ],
+    "full_time_result": false,
+    "goals_over_under": false,
+    "asian_handicap": true,
+    "goal_line": true
+   },
+   {
+    "view": "refind",
+    "cells": [
+     "SPREAD/HOME/-1.5@1.975 (Panionios)",
+     "SPREAD/AWAY/+1.5@1.825 (Zakynthos)",
+     "TOTAL/OVER/2.5@2.025 (Over)",
+     "TOTAL/UNDER/2.5@1.775 (Under)"
+    ],
+    "notes": [
+     "asian handicap: team header not read",
+     "goal_line: no Over/Under header"
+    ],
+    "full_time_result": false,
+    "goals_over_under": false,
+    "asian_handicap": true,
+    "goal_line": true
+   }
+  ],
+  "football_tab_asia": {
+   "text": "Asiat",
+   "bounds": [
+    581,
+    400,
+    641,
+    443
+   ]
+  },
+  "football_markets": [
+   {
+    "market": "SPREAD",
+    "selection_role": "HOME",
+    "selection_name": "Panionios",
+    "price": "1.975",
+    "line": "-1.5",
+    "bounds": [
+     188,
+     658,
+     272,
+     702
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "selection_role": "AWAY",
+    "selection_name": "Zakynthos",
+    "price": "1.825",
+    "line": "+1.5",
+    "bounds": [
+     531,
+     661,
+     616,
+     702
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "price": "2.025",
+    "line": "2.5",
+    "bounds": [
+     274,
+     906,
+     361,
+     948
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "price": "1.775",
+    "line": "2.5",
+    "bounds": [
+     531,
+     908,
+     618,
+     949
+    ]
+   }
+  ],
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-1.5",
+    "price": "1.975",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Panionios",
+    "bounds": [
+     188,
+     658,
+     272,
+     702
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "+1.5",
+    "price": "1.825",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Zakynthos",
+    "bounds": [
+     531,
+     661,
+     616,
+     702
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.5",
+    "price": "2.025",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     274,
+     906,
+     361,
+     948
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "2.5",
+    "price": "1.775",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     531,
+     908,
+     618,
+     949
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790509318420,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-1.5",
+     "price": "1.975",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Panionios",
+     "bounds": [
+      188,
+      658,
+      272,
+      702
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790509318421,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-1.5",
+     "price": "1.975",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Panionios",
+     "bounds": [
+      188,
+      658,
+      272,
+      702
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "selection_role": "HOME",
+  "selection_name": "Panionios",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-1.5",
+   "price": "1.975",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Panionios",
+   "bounds": [
+    188,
+    658,
+    272,
+    702
+   ]
+  },
+  "stake_keypad": {
+   "zero": [
+    360,
+    1250
+   ],
+   "dot": [
+    117,
+    1250
+   ]
+  },
+  "stake_field_state": "UNKNOWN",
+  "stake_clear": {
+   "why": "retype",
+   "backspaces": 10
+  },
+  "stake_check_typed": {
+   "ok": false,
+   "detail": "To Return not read",
+   "stake_digits": "010",
+   "return_digits": "",
+   "stake": "0.10",
+   "price": "1.975"
+  },
+  "stake_retyped": true,
+  "stake_check_retyped": {
+   "ok": false,
+   "detail": "To Return not read",
+   "stake_digits": "010",
+   "return_digits": "",
+   "stake": "0.10",
+   "price": "1.975"
+  },
+  "betslip_clear": {
+   "tapped": true,
+   "bounds": [
+    21,
+    514,
+    42,
+    536
+   ],
+   "place_bet_still_visible": false
+  },
+  "detail": "Typed stake did not read back as 0.10 after one retype; field erased",
+  "duration_ms": 29074
+ },
+ "wall": 30.5,
+ "frames": [
+  "s001_event_direct.png",
+  "s002_markets.png",
+  "s003_tabs_asia.png",
+  "s004_markets_asia.png",
+  "s005_selection_preflight.png",
+  "s006_betslip_pre_stake.png",
+  "s007_stake_ui.png",
+  "s008_stake_cleared.png",
+  "s009_stake_typed.png",
+  "s010_stake_typed.png",
+  "s011_stake_cleared.png",
+  "s012_stake_retyped.png",
+  "s013_clear_betslip_pre.png",
+  "s014_clear_betslip_after.png"
+ ],
+ "reset": {
+  "instruction_id": "rsfbhold-SPREAD-124148",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "RESET_BETSLIP",
+  "duration_ms": 640,
+  "progress": {
+   "stage": "RESET_BETSLIP",
+   "elapsed_ms": 546,
+   "last_progress_at_ms": 1790509343746,
+   "instruction_id": "rsfbhold-SPREAD-124148",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790509343741
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 24,
+     "at_ms": 1790509343746,
+     "timing": {
+      "stage": "RESET_BETSLIP",
+      "start_elapsed_ms": 24,
+      "start_ts_ms": 1790509343742,
+      "end_elapsed_ms": 546,
+      "end_ts_ms": 1790509344263,
+      "duration_ms": 522,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 30,
+     "at_ms": 1790509343746
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 517,
+     "at_ms": 1790509343746
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 546,
+     "at_ms": 1790509343746
+    }
+   ]
+  },
+  "device_stage": "RESET_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_EKMYYc_36TqInIPebfdaPi0POJsYngHoXGa0yb-FBCU",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+  "betslip_reset": {
+   "tapped": false,
+   "detail": "No safe reset control visible"
+  },
+  "stage_timings": [
+   {
+    "stage": "RESET_BETSLIP",
+    "start_elapsed_ms": 24,
+    "start_ts_ms": 1790509343742,
+    "end_elapsed_ms": 546,
+    "end_ts_ms": 1790509344263,
+    "duration_ms": 522,
+    "status": "ok",
+    "retries": 0
+   }
+  ]
+ },
+ "resumed_at": "2026-09-27T11:42:25Z",
+ "health_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.26-ops"
+ }
+}
