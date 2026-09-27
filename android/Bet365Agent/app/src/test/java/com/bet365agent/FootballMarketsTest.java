@@ -134,8 +134,13 @@ public class FootballMarketsTest {
                 new EventIdentity.Event("football", "Eskilsminne IF", "Ariana FC Malmo", "27 Sep 12:00", "Sweden 1.div Sodra 27 Sep 12:00", true), Collections.emptyMap(), false, "Sweden");
         assertEquals(r.reason, EventIdentity.Verdict.HIGH_CONFIDENCE_EVENT_MATCH, r.verdict);
         // the initial must belong to the other name's own token, and the affix must be there
-        assertEquals(EventIdentity.Level.WEAK, EventIdentity.matchSide("AFC Malmo", "Bogus FC Malmo", Collections.emptyMap()).level);
-        assertEquals(EventIdentity.Level.WEAK, EventIdentity.matchSide("AFC Malmo", "Ariana Malmo", Collections.emptyMap()).level);
+        // without the matching initial or affix it is no abbreviation; a shared "Malmo" core with a word on each side is only
+        // event-scoped evidence (shared_core, identity v2), never an alias, and needs a sure opponent under the alert's link
+        for (String other : new String[] {"Bogus FC Malmo", "Ariana Malmo"}) {
+            EventIdentity.Side x = EventIdentity.matchSide("AFC Malmo", other, Collections.emptyMap());
+            assertEquals(other, "shared_core", x.kind);
+            assertTrue(!x.aliasSafe && x.score < EventIdentity.DETERMINISTIC);
+        }
         assertEquals(EventIdentity.Level.NONE, EventIdentity.matchSide("AFC Malmo", "Ariana FC Lund", Collections.emptyMap()).level);
     }
 

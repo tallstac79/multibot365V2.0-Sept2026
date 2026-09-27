@@ -1,0 +1,1628 @@
+{
+ "instruction_id": "on-cd9540b18aba3747acedfb63",
+ "payload": {
+  "instruction_id": "idv2live-cd9540b1-131843",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Pantery Lancut||MUKS Poznan",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-8.5",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "minimum_price": "1.75",
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172128/D19/E26817271/F19/I0/",
+  "kickoff_utc": "2026-09-27T14:00",
+  "competition": "Liga 1 Women",
+  "period": "FULL_GAME",
+  "country": "Poland",
+  "max_line_deterioration": "1.0",
+  "competition_women": "true"
+ },
+ "result": {
+  "instruction_id": "idv2live-cd9540b1-131843",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 9871,
+  "progress": {
+   "stage": "PREPARE_COMPLETE_EXECUTION",
+   "elapsed_ms": 9782,
+   "last_progress_at_ms": 1790511534756,
+   "instruction_id": "idv2live-cd9540b1-131843",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790511525032
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 15,
+     "at_ms": 1790511525037
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 21,
+     "at_ms": 1790511525046,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 21,
+      "start_ts_ms": 1790511525038,
+      "end_elapsed_ms": 4074,
+      "end_ts_ms": 1790511529091,
+      "duration_ms": 4053,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3463,
+     "at_ms": 1790511525046
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3964,
+     "at_ms": 1790511525046
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4074,
+     "at_ms": 1790511529098,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 4074,
+      "start_ts_ms": 1790511529091,
+      "end_elapsed_ms": 4497,
+      "end_ts_ms": 1790511529514,
+      "duration_ms": 423,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4082,
+     "at_ms": 1790511529098
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4464,
+     "at_ms": 1790511529098
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 4497,
+     "at_ms": 1790511529523,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 4497,
+      "start_ts_ms": 1790511529514,
+      "end_elapsed_ms": 4507,
+      "end_ts_ms": 1790511529525,
+      "duration_ms": 10,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 4507,
+     "at_ms": 1790511529537,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 4507,
+      "start_ts_ms": 1790511529525,
+      "end_elapsed_ms": 4520,
+      "end_ts_ms": 1790511529538,
+      "duration_ms": 13,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 4520,
+     "at_ms": 1790511529549,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 4520,
+      "start_ts_ms": 1790511529538,
+      "end_elapsed_ms": 4532,
+      "end_ts_ms": 1790511529550,
+      "duration_ms": 12,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 4532,
+     "at_ms": 1790511529560,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 4532,
+      "start_ts_ms": 1790511529550,
+      "end_elapsed_ms": 5309,
+      "end_ts_ms": 1790511530328,
+      "duration_ms": 777,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 4543,
+     "at_ms": 1790511529560
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 5309,
+     "at_ms": 1790511530412,
+     "timing": {
+      "stage": "ENTER_STAKE",
+      "start_elapsed_ms": 5309,
+      "start_ts_ms": 1790511530328,
+      "end_elapsed_ms": 9149,
+      "end_ts_ms": 1790511534167,
+      "duration_ms": 3840,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 5396,
+     "at_ms": 1790511530412
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 5918,
+     "at_ms": 1790511530412
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 5940,
+     "at_ms": 1790511530412
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 6657,
+     "at_ms": 1790511530412
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7130,
+     "at_ms": 1790511530412
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7193,
+     "at_ms": 1790511530412
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7459,
+     "at_ms": 1790511530412
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7731,
+     "at_ms": 1790511530412
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8006,
+     "at_ms": 1790511530412
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8304,
+     "at_ms": 1790511530412
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8811,
+     "at_ms": 1790511530412
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8877,
+     "at_ms": 1790511530412
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 9149,
+     "at_ms": 1790511534208,
+     "timing": {
+      "stage": "VERIFY_FINAL_STATE",
+      "start_elapsed_ms": 9149,
+      "start_ts_ms": 1790511534167,
+      "end_elapsed_ms": 9723,
+      "end_ts_ms": 1790511534741,
+      "duration_ms": 574,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 9192,
+     "at_ms": 1790511534208
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 9658,
+     "at_ms": 1790511534208
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 9723,
+     "at_ms": 1790511534756,
+     "timing": {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "start_elapsed_ms": 9723,
+      "start_ts_ms": 1790511534741,
+      "end_elapsed_ms": 9782,
+      "end_ts_ms": 1790511534800,
+      "duration_ms": 59,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 9782,
+     "at_ms": 1790511534756
+    }
+   ]
+  },
+  "device_stage": "PREPARE_COMPLETE_EXECUTION",
+  "execution_count": 1,
+  "run_id": "c_nFBid7sBpVCF4v9Z4wngYSIcrNWW1wbE7ffTenFeRh4",
+  "fixture_name": "Pantery Lancut (W) v MUKS Poznan (W)",
+  "home": "Pantery Lancut (W)",
+  "away": "MUKS Poznan (W)",
+  "competition": "Poland 1 Liga Women 27 Sep 15:00",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-8.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Pantery Lancut (W)",
+   "bounds": [
+    301,
+    655,
+    344,
+    705
+   ]
+  },
+  "final_state": {
+   "home": "Pantery Lancut (W)",
+   "away": "MUKS Poznan (W)",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-8.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "ready_state": {
+   "fixture_home": "Pantery Lancut (W)",
+   "fixture_away": "MUKS Poznan (W)",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Pantery Lancut (W)",
+   "line": "-8.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Pantery Lancut (W) v MUKS Poznan (W)",
+   "fixture_home": "Pantery Lancut (W)",
+   "fixture_away": "MUKS Poznan (W)",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Pantery Lancut (W)",
+   "line": "-8.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "minimum_price": "1.75",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    477,
+    1230,
+    604,
+    1252
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     477,
+     1230,
+     604,
+     1252
+    ],
+    "center_x": 540.5,
+    "center_y": 1241,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790511534796,
+   "validation_hash": "98d5441f315d7388fc8381d4d73b0951"
+  },
+  "wager_submitted": false,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "event_context": {
+   "home": "Pantery Lancut (W)",
+   "away": "MUKS Poznan (W)",
+   "competition": "poland 1 liga women",
+   "kickoff_utc": "2026-09-27T14:00",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "held": true,
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790511529524,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Pantery Lancut (W)",
+     "bounds": [
+      301,
+      655,
+      344,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790511529524,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Pantery Lancut (W)",
+     "bounds": [
+      301,
+      655,
+      344,
+      705
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790511533851,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Pantery Lancut (W)",
+     "bounds": [
+      301,
+      655,
+      344,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790511533873,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Pantery Lancut (W)",
+     "bounds": [
+      301,
+      655,
+      344,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "final",
+    "observed_at_ms": 1790511534718,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Pantery Lancut (W)",
+     "bounds": [
+      301,
+      655,
+      344,
+      705
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "prepare",
+    "observed_at_ms": 1790511534774,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Pantery Lancut (W)",
+     "bounds": [
+      301,
+      655,
+      344,
+      705
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 21,
+    "start_ts_ms": 1790511525038,
+    "end_elapsed_ms": 4074,
+    "end_ts_ms": 1790511529091,
+    "duration_ms": 4053,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4074,
+    "start_ts_ms": 1790511529091,
+    "end_elapsed_ms": 4497,
+    "end_ts_ms": 1790511529514,
+    "duration_ms": 423,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 4497,
+    "start_ts_ms": 1790511529514,
+    "end_elapsed_ms": 4507,
+    "end_ts_ms": 1790511529525,
+    "duration_ms": 10,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 4507,
+    "start_ts_ms": 1790511529525,
+    "end_elapsed_ms": 4520,
+    "end_ts_ms": 1790511529538,
+    "duration_ms": 13,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 4520,
+    "start_ts_ms": 1790511529538,
+    "end_elapsed_ms": 4532,
+    "end_ts_ms": 1790511529550,
+    "duration_ms": 12,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 4532,
+    "start_ts_ms": 1790511529550,
+    "end_elapsed_ms": 5309,
+    "end_ts_ms": 1790511530328,
+    "duration_ms": 777,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 5309,
+    "start_ts_ms": 1790511530328,
+    "end_elapsed_ms": 9149,
+    "end_ts_ms": 1790511534167,
+    "duration_ms": 3840,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 9149,
+    "start_ts_ms": 1790511534167,
+    "end_elapsed_ms": 9723,
+    "end_ts_ms": 1790511534741,
+    "duration_ms": 574,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 9723,
+    "start_ts_ms": 1790511534741,
+    "end_elapsed_ms": 9782,
+    "end_ts_ms": 1790511534800,
+    "duration_ms": 59,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "alias_candidate": {
+   "feed_home": "Pantery Lancut",
+   "feed_away": "MUKS Poznan",
+   "bet365_home": "Pantery Lancut (W)",
+   "bet365_away": "MUKS Poznan (W)",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21172128/D19/E26817271/F19/I0/",
+   "kickoff_shown": "27 Sep 15:00",
+   "kickoff_expected": "27 Sep 15:00",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "Pantery Lancut": "Pantery Lancut (W)",
+    "MUKS Poznan": "MUKS Poznan (W)"
+   },
+   "sport": "basketball"
+  },
+  "stake_field_state": "EMPTY",
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 15:00 + women's competition supplies Bet365's (W) + both names compatible: 'Pantery Lancut' ~ 'Pantery Lancut (W)' (women_marker_from_competition 1.00); 'MUKS Poznan' ~ 'MUKS Poznan (W)' (women_marker_from_competition 1.00)",
+   "home": {
+    "feed": "Pantery Lancut",
+    "bookmaker": "Pantery Lancut (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "MUKS Poznan",
+    "bookmaker": "MUKS Poznan (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "same_words_reordered",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Pantery Lancut",
+     "bookmaker": "Pantery Lancut (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "away_similarity": {
+     "feed": "MUKS Poznan",
+     "bookmaker": "MUKS Poznan (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "event_evidence_both_variants",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+   }
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172128/D19/E26817271/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_nFBid7sBpVCF4v9Z4wngYSIcrNWW1wbE7ffTenFeRh4",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790511525018,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790511525018
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 15,
+    "wall_ts_ms": 1790511525032
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 21,
+    "wall_ts_ms": 1790511525039
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3463,
+    "wall_ts_ms": 1790511528481
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3964,
+    "wall_ts_ms": 1790511528982
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 4074,
+    "wall_ts_ms": 1790511529091
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 4082,
+    "wall_ts_ms": 1790511529100
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 4464,
+    "wall_ts_ms": 1790511529482
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 4497,
+    "wall_ts_ms": 1790511529514
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 4507,
+    "wall_ts_ms": 1790511529525
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 4520,
+    "wall_ts_ms": 1790511529538
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 4532,
+    "wall_ts_ms": 1790511529550
+   },
+   {
+    "effect": "gesture",
+    "target": "SPREAD / HOME / -8.5 / 1.83",
+    "bounds": [
+     301,
+     655,
+     344,
+     705
+    ],
+    "elapsed_ms": 4543
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 4543,
+    "wall_ts_ms": 1790511529561
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 5309,
+    "wall_ts_ms": 1790511530329
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 5396,
+    "wall_ts_ms": 1790511530414
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 5918,
+    "wall_ts_ms": 1790511530936
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     20,
+     1327,
+     214,
+     1371
+    ],
+    "elapsed_ms": 5940
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 5940,
+    "wall_ts_ms": 1790511530957
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 6657,
+    "wall_ts_ms": 1790511531675
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 7130,
+    "wall_ts_ms": 1790511532149
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 7193
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 7193,
+    "wall_ts_ms": 1790511532210
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     87,
+     1228,
+     147,
+     1272
+    ],
+    "elapsed_ms": 7459
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 7459,
+    "wall_ts_ms": 1790511532477
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     87,
+     974,
+     147,
+     1018
+    ],
+    "elapsed_ms": 7731
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 7731,
+    "wall_ts_ms": 1790511532748
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 8006
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8006,
+    "wall_ts_ms": 1790511533024
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 8304,
+    "wall_ts_ms": 1790511533322
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 8811,
+    "wall_ts_ms": 1790511533829
+   },
+   {
+    "effect": "gesture",
+    "target": "Done",
+    "bounds": [
+     311,
+     1331,
+     587,
+     1368
+    ],
+    "elapsed_ms": 8877
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8877,
+    "wall_ts_ms": 1790511533894
+   },
+   {
+    "phase": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 9149,
+    "wall_ts_ms": 1790511534167
+   },
+   {
+    "phase": "CAPTURE_final",
+    "elapsed_ms": 9192,
+    "wall_ts_ms": 1790511534210
+   },
+   {
+    "phase": "CAPTURED_final",
+    "elapsed_ms": 9658,
+    "wall_ts_ms": 1790511534675
+   },
+   {
+    "phase": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 9723,
+    "wall_ts_ms": 1790511534741
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 9782,
+    "wall_ts_ms": 1790511534800
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_markets.png",
+   "s003_betslip_pre_stake.png",
+   "s004_stake_ui.png",
+   "s005_stake_typed.png",
+   "s006_final.png"
+  ],
+  "gesture_attempts": 7,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 21,
+    "start_ts_ms": 1790511525038,
+    "end_elapsed_ms": 4074,
+    "end_ts_ms": 1790511529091,
+    "duration_ms": 4053,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4074,
+    "start_ts_ms": 1790511529091,
+    "end_elapsed_ms": 4497,
+    "end_ts_ms": 1790511529514,
+    "duration_ms": 423,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 4497,
+    "start_ts_ms": 1790511529514,
+    "end_elapsed_ms": 4507,
+    "end_ts_ms": 1790511529525,
+    "duration_ms": 10,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 4507,
+    "start_ts_ms": 1790511529525,
+    "end_elapsed_ms": 4520,
+    "end_ts_ms": 1790511529538,
+    "duration_ms": 13,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 4520,
+    "start_ts_ms": 1790511529538,
+    "end_elapsed_ms": 4532,
+    "end_ts_ms": 1790511529550,
+    "duration_ms": 12,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 4532,
+    "start_ts_ms": 1790511529550,
+    "end_elapsed_ms": 5309,
+    "end_ts_ms": 1790511530328,
+    "duration_ms": 777,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 5309,
+    "start_ts_ms": 1790511530328,
+    "end_elapsed_ms": 9149,
+    "end_ts_ms": 1790511534167,
+    "duration_ms": 3840,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 9149,
+    "start_ts_ms": 1790511534167,
+    "end_elapsed_ms": 9723,
+    "end_ts_ms": 1790511534741,
+    "duration_ms": 574,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 9723,
+    "start_ts_ms": 1790511534741,
+    "end_elapsed_ms": 9782,
+    "end_ts_ms": 1790511534800,
+    "duration_ms": 59,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "search_query": "Pantery Lancut",
+  "identity_home": "Pantery Lancut",
+  "expected_away": "MUKS Poznan",
+  "identity_away": "MUKS Poznan",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172128/D19/E26817271/F19/I0/",
+  "current_stage": "PREPARE_COMPLETE_EXECUTION",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Poland 1 Liga Women 27 Sep 15:00",
+   "Pantery Lancut (W) vs MUKS Poznan (W) v",
+   "Popular Bet Builder Game"
+  ],
+  "competition_check": {
+   "feed": "Liga 1 Women",
+   "country": "Poland",
+   "page": "Poland 1 Liga Women 27 Sep 15:00",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 15:00 + women's competition supplies Bet365's (W) + both names compatible: 'Pantery Lancut' ~ 'Pantery Lancut (W)' (women_marker_from_competition 1.00); 'MUKS Poznan' ~ 'MUKS Poznan (W)' (women_marker_from_competition 1.00)",
+   "home": {
+    "feed": "Pantery Lancut",
+    "bookmaker": "Pantery Lancut (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "MUKS Poznan",
+    "bookmaker": "MUKS Poznan (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "same_words_reordered",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Pantery Lancut",
+     "bookmaker": "Pantery Lancut (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "away_similarity": {
+     "feed": "MUKS Poznan",
+     "bookmaker": "MUKS Poznan (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "event_evidence_both_variants",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+   }
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "route": "event_link",
+  "alias_candidate": {
+   "feed_home": "Pantery Lancut",
+   "feed_away": "MUKS Poznan",
+   "bet365_home": "Pantery Lancut (W)",
+   "bet365_away": "MUKS Poznan (W)",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21172128/D19/E26817271/F19/I0/",
+   "kickoff_shown": "27 Sep 15:00",
+   "kickoff_expected": "27 Sep 15:00",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "Pantery Lancut": "Pantery Lancut (W)",
+    "MUKS Poznan": "MUKS Poznan (W)"
+   },
+   "sport": "basketball"
+  },
+  "kickoff_verified": "27 Sep 15:00",
+  "verified_fixture": {
+   "code": "ee47b1c",
+   "home": "Pantery Lancut (W)",
+   "away": "MUKS Poznan (W)",
+   "fixture_name": "Pantery Lancut (W) v MUKS Poznan (W)",
+   "exact_fixture_text": "Home Pantery Lancut (W)\nAway MUKS Poznan (W)",
+   "competition": "Poland 1 Liga Women 27 Sep 15:00",
+   "bounds": [
+    35,
+    268,
+    653,
+    435
+   ]
+  },
+  "fixture_home": "Pantery Lancut (W)",
+  "fixture_away": "MUKS Poznan (W)",
+  "identity_verified_home": "Pantery Lancut",
+  "identity_verified_away": "MUKS Poznan",
+  "event_verified": true,
+  "event_context": {
+   "home": "Pantery Lancut (W)",
+   "away": "MUKS Poznan (W)",
+   "competition": "poland 1 liga women",
+   "kickoff_utc": "2026-09-27T14:00",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "ee47b1c",
+   "home": "Pantery Lancut (W)",
+   "away": "MUKS Poznan (W)",
+   "fixture_name": "Pantery Lancut (W) v MUKS Poznan (W)",
+   "exact_fixture_text": "Home Pantery Lancut (W)\nAway MUKS Poznan (W)",
+   "competition": "Poland 1 Liga Women 27 Sep 15:00",
+   "bounds": [
+    35,
+    268,
+    653,
+    435
+   ]
+  },
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/-8.5@1.83",
+     "SPREAD/AWAY/+8.5@1.83",
+     "TOTAL/OVER/136.5@1.83",
+     "TOTAL/UNDER/136.5@1.83",
+     "MONEYLINE/HOME/NONE@1.25",
+     "MONEYLINE/AWAY/NONE@3.65"
+    ],
+    "notes": []
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/-8.5@1.83",
+    "SPREAD/AWAY/+8.5@1.83",
+    "TOTAL/OVER/136.5@1.83",
+    "TOTAL/UNDER/136.5@1.83",
+    "MONEYLINE/HOME/NONE@1.25",
+    "MONEYLINE/AWAY/NONE@3.65"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-8.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Pantery Lancut (W)",
+    "bounds": [
+     301,
+     655,
+     344,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "+8.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "MUKS Poznan (W)",
+    "bounds": [
+     301,
+     740,
+     344,
+     790
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "136.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     437,
+     655,
+     512,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "136.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     452,
+     736,
+     511,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "1.25",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Pantery Lancut (W)",
+    "bounds": [
+     604,
+     672,
+     648,
+     689
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "3.65",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "MUKS Poznan (W)",
+    "bounds": [
+     603,
+     757,
+     648,
+     774
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790511529524,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Pantery Lancut (W)",
+     "bounds": [
+      301,
+      655,
+      344,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790511529524,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Pantery Lancut (W)",
+     "bounds": [
+      301,
+      655,
+      344,
+      705
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790511533851,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Pantery Lancut (W)",
+     "bounds": [
+      301,
+      655,
+      344,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790511533873,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Pantery Lancut (W)",
+     "bounds": [
+      301,
+      655,
+      344,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "final",
+    "observed_at_ms": 1790511534718,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Pantery Lancut (W)",
+     "bounds": [
+      301,
+      655,
+      344,
+      705
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "prepare",
+    "observed_at_ms": 1790511534774,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.83",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Pantery Lancut (W)",
+     "bounds": [
+      301,
+      655,
+      344,
+      705
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "selection_role": "HOME",
+  "selection_name": "Pantery Lancut (W)",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-8.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Pantery Lancut (W)",
+   "bounds": [
+    301,
+    655,
+    344,
+    705
+   ]
+  },
+  "selection_preflight": "reused clean grid read",
+  "stake_keypad": {
+   "zero": [
+    360,
+    1250
+   ],
+   "dot": [
+    117,
+    1250
+   ]
+  },
+  "stake_field_state": "EMPTY",
+  "stake_check_typed": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "stake_entered": "0.10",
+  "stake_check_final": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "ready_state": {
+   "fixture_home": "Pantery Lancut (W)",
+   "fixture_away": "MUKS Poznan (W)",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Pantery Lancut (W)",
+   "line": "-8.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "final_state": {
+   "home": "Pantery Lancut (W)",
+   "away": "MUKS Poznan (W)",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-8.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "confirmation_gate": "NONE",
+  "prepare_frame": "reused verified final frame",
+  "stake_check_prepare": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Pantery Lancut (W) v MUKS Poznan (W)",
+   "fixture_home": "Pantery Lancut (W)",
+   "fixture_away": "MUKS Poznan (W)",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Pantery Lancut (W)",
+   "line": "-8.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "minimum_price": "1.75",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    477,
+    1230,
+    604,
+    1252
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     477,
+     1230,
+     604,
+     1252
+    ],
+    "center_x": 540.5,
+    "center_y": 1241,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790511534796,
+   "validation_hash": "98d5441f315d7388fc8381d4d73b0951"
+  },
+  "prepared_gesture": {
+   "type": "tap",
+   "target": "Place Bet",
+   "package": "com.android.chrome",
+   "bounds": [
+    477,
+    1230,
+    604,
+    1252
+   ],
+   "center_x": 540.5,
+   "center_y": 1241,
+   "duration_ms": 100,
+   "dispatched": false
+  },
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "held": true,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 9782
+ },
+ "wall": 10.6,
+ "reset": {
+  "instruction_id": "rsidv2live-cd9540b1-131843",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "RESET_BETSLIP",
+  "duration_ms": 2751,
+  "progress": {
+   "stage": "RESET_BETSLIP",
+   "elapsed_ms": 2660,
+   "last_progress_at_ms": 1790511535888,
+   "instruction_id": "rsidv2live-cd9540b1-131843",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790511535881
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 20,
+     "at_ms": 1790511535888,
+     "timing": {
+      "stage": "RESET_BETSLIP",
+      "start_elapsed_ms": 20,
+      "start_ts_ms": 1790511535882,
+      "end_elapsed_ms": 2660,
+      "end_ts_ms": 1790511538522,
+      "duration_ms": 2640,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 28,
+     "at_ms": 1790511535888
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 497,
+     "at_ms": 1790511535888
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 515,
+     "at_ms": 1790511535888
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 2278,
+     "at_ms": 1790511535888
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 2638,
+     "at_ms": 1790511535888
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 2660,
+     "at_ms": 1790511535888
+    }
+   ]
+  },
+  "device_stage": "RESET_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_Ezv38loA7ADhILMHub37AXo37Bbt4jEBdbAaYMdS6J0",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+  "betslip_reset": {
+   "tapped": true,
+   "control": "remove selection X",
+   "bounds": [
+    21,
+    1179,
+    42,
+    1207
+   ],
+   "place_bet_still_visible": false
+  },
+  "stage_timings": [
+   {
+    "stage": "RESET_BETSLIP",
+    "start_elapsed_ms": 20,
+    "start_ts_ms": 1790511535882,
+    "end_elapsed_ms": 2660,
+    "end_ts_ms": 1790511538522,
+    "duration_ms": 2640,
+    "status": "ok",
+    "retries": 0
+   }
+  ]
+ }
+}

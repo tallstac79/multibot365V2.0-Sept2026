@@ -1,0 +1,1650 @@
+{
+ "instruction_id": "on-4afcc5dfcb1c11e9b86e9297",
+ "payload": {
+  "instruction_id": "idv2live-4afcc5df-131825",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Phantoms Boom||Liege Panthers",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-8.5",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "minimum_price": "1.78",
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21171663/D19/E26830587/F19/I0/",
+  "kickoff_utc": "2026-09-27T13:00",
+  "competition": "Division 1 Women",
+  "period": "FULL_GAME",
+  "country": "Belgium",
+  "max_line_deterioration": "1.0",
+  "competition_women": "true"
+ },
+ "result": {
+  "instruction_id": "idv2live-4afcc5df-131825",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 11376,
+  "progress": {
+   "stage": "PREPARE_COMPLETE_EXECUTION",
+   "elapsed_ms": 11203,
+   "last_progress_at_ms": 1790511518100,
+   "instruction_id": "idv2live-4afcc5df-131825",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790511506977
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 36,
+     "at_ms": 1790511506988
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 47,
+     "at_ms": 1790511507000,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 47,
+      "start_ts_ms": 1790511506990,
+      "end_elapsed_ms": 5347,
+      "end_ts_ms": 1790511512290,
+      "duration_ms": 5300,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3488,
+     "at_ms": 1790511507000
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3703,
+     "at_ms": 1790511507000
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4616,
+     "at_ms": 1790511507000
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5174,
+     "at_ms": 1790511507000
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5347,
+     "at_ms": 1790511512297,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 5347,
+      "start_ts_ms": 1790511512290,
+      "end_elapsed_ms": 5879,
+      "end_ts_ms": 1790511512822,
+      "duration_ms": 532,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5355,
+     "at_ms": 1790511512297
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 5842,
+     "at_ms": 1790511512297
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 5879,
+     "at_ms": 1790511512831,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 5879,
+      "start_ts_ms": 1790511512822,
+      "end_elapsed_ms": 5889,
+      "end_ts_ms": 1790511512832,
+      "duration_ms": 10,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 5889,
+     "at_ms": 1790511512842,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 5889,
+      "start_ts_ms": 1790511512832,
+      "end_elapsed_ms": 5900,
+      "end_ts_ms": 1790511512843,
+      "duration_ms": 11,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 5900,
+     "at_ms": 1790511512853,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 5900,
+      "start_ts_ms": 1790511512843,
+      "end_elapsed_ms": 5911,
+      "end_ts_ms": 1790511512854,
+      "duration_ms": 11,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 5911,
+     "at_ms": 1790511512865,
+     "timing": {
+      "stage": "OPEN_SELECTION",
+      "start_elapsed_ms": 5911,
+      "start_ts_ms": 1790511512854,
+      "end_elapsed_ms": 6692,
+      "end_ts_ms": 1790511513635,
+      "duration_ms": 781,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "elapsed_ms": 5923,
+     "at_ms": 1790511512865
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 6692,
+     "at_ms": 1790511513670,
+     "timing": {
+      "stage": "ENTER_STAKE",
+      "start_elapsed_ms": 6692,
+      "start_ts_ms": 1790511513635,
+      "end_elapsed_ms": 10550,
+      "end_ts_ms": 1790511517493,
+      "duration_ms": 3858,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 6730,
+     "at_ms": 1790511513670
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7272,
+     "at_ms": 1790511513670
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 7302,
+     "at_ms": 1790511513670
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8022,
+     "at_ms": 1790511513670
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8525,
+     "at_ms": 1790511513670
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8582,
+     "at_ms": 1790511513670
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 8853,
+     "at_ms": 1790511513670
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9142,
+     "at_ms": 1790511513670
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9435,
+     "at_ms": 1790511513670
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 9731,
+     "at_ms": 1790511513670
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 10194,
+     "at_ms": 1790511513670
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "elapsed_ms": 10280,
+     "at_ms": 1790511513670
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 10550,
+     "at_ms": 1790511517525,
+     "timing": {
+      "stage": "VERIFY_FINAL_STATE",
+      "start_elapsed_ms": 10550,
+      "start_ts_ms": 1790511517493,
+      "end_elapsed_ms": 11139,
+      "end_ts_ms": 1790511518082,
+      "duration_ms": 589,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 10583,
+     "at_ms": 1790511517525
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "elapsed_ms": 11054,
+     "at_ms": 1790511517525
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 11139,
+     "at_ms": 1790511518100,
+     "timing": {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "start_elapsed_ms": 11139,
+      "start_ts_ms": 1790511518082,
+      "end_elapsed_ms": 11203,
+      "end_ts_ms": 1790511518145,
+      "duration_ms": 64,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "elapsed_ms": 11203,
+     "at_ms": 1790511518100
+    }
+   ]
+  },
+  "device_stage": "PREPARE_COMPLETE_EXECUTION",
+  "execution_count": 1,
+  "run_id": "c_-ulFhAkATelGz6FT8Hrp9ZONCquObgnmS59WhM5yyGc",
+  "fixture_name": "Phantoms Boom (W) v Liege (W)",
+  "home": "Phantoms Boom (W)",
+  "away": "Liege (W)",
+  "competition": "Belgium Div 1 Women 27 Sep 14:00",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-8.5",
+   "price": "1.86",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Phantoms Boom (W)",
+   "bounds": [
+    301,
+    655,
+    345,
+    705
+   ]
+  },
+  "final_state": {
+   "home": "Phantoms Boom (W)",
+   "away": "Liege (W)",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-8.5",
+   "price": "1.86",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "ready_state": {
+   "fixture_home": "Phantoms Boom (W)",
+   "fixture_away": "Liege (W)",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Phantoms Boom (W)",
+   "line": "-8.5",
+   "price": "1.86",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Phantoms Boom (W) v Liege (W)",
+   "fixture_home": "Phantoms Boom (W)",
+   "fixture_away": "Liege (W)",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Phantoms Boom (W)",
+   "line": "-8.5",
+   "price": "1.86",
+   "stake": "0.10",
+   "minimum_price": "1.78",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    20,
+    1160,
+    604,
+    1186
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     20,
+     1160,
+     604,
+     1186
+    ],
+    "center_x": 312,
+    "center_y": 1173,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790511518142,
+   "validation_hash": "dcccf6f114d50ee3242aca746d19f17d"
+  },
+  "wager_submitted": false,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "event_context": {
+   "home": "Phantoms Boom (W)",
+   "away": "Liege (W)",
+   "competition": "belgium division 1 women",
+   "kickoff_utc": "2026-09-27T13:00",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "held": true,
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790511512831,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.86",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Phantoms Boom (W)",
+     "bounds": [
+      301,
+      655,
+      345,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790511512832,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.86",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Phantoms Boom (W)",
+     "bounds": [
+      301,
+      655,
+      345,
+      705
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790511517177,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.86",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Phantoms Boom (W)",
+     "bounds": [
+      301,
+      655,
+      345,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790511517202,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.86",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Phantoms Boom (W)",
+     "bounds": [
+      301,
+      655,
+      345,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "final",
+    "observed_at_ms": 1790511518059,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.86",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Phantoms Boom (W)",
+     "bounds": [
+      301,
+      655,
+      345,
+      705
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "prepare",
+    "observed_at_ms": 1790511518119,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.86",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Phantoms Boom (W)",
+     "bounds": [
+      301,
+      655,
+      345,
+      705
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 47,
+    "start_ts_ms": 1790511506990,
+    "end_elapsed_ms": 5347,
+    "end_ts_ms": 1790511512290,
+    "duration_ms": 5300,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5347,
+    "start_ts_ms": 1790511512290,
+    "end_elapsed_ms": 5879,
+    "end_ts_ms": 1790511512822,
+    "duration_ms": 532,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5879,
+    "start_ts_ms": 1790511512822,
+    "end_elapsed_ms": 5889,
+    "end_ts_ms": 1790511512832,
+    "duration_ms": 10,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 5889,
+    "start_ts_ms": 1790511512832,
+    "end_elapsed_ms": 5900,
+    "end_ts_ms": 1790511512843,
+    "duration_ms": 11,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 5900,
+    "start_ts_ms": 1790511512843,
+    "end_elapsed_ms": 5911,
+    "end_ts_ms": 1790511512854,
+    "duration_ms": 11,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 5911,
+    "start_ts_ms": 1790511512854,
+    "end_elapsed_ms": 6692,
+    "end_ts_ms": 1790511513635,
+    "duration_ms": 781,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 6692,
+    "start_ts_ms": 1790511513635,
+    "end_elapsed_ms": 10550,
+    "end_ts_ms": 1790511517493,
+    "duration_ms": 3858,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 10550,
+    "start_ts_ms": 1790511517493,
+    "end_elapsed_ms": 11139,
+    "end_ts_ms": 1790511518082,
+    "duration_ms": 589,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 11139,
+    "start_ts_ms": 1790511518082,
+    "end_elapsed_ms": 11203,
+    "end_ts_ms": 1790511518145,
+    "duration_ms": 64,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "alias_candidate": {
+   "feed_home": "Phantoms Boom",
+   "feed_away": "Liege Panthers",
+   "bet365_home": "Phantoms Boom (W)",
+   "bet365_away": "Liege (W)",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21171663/D19/E26830587/F19/I0/",
+   "kickoff_shown": "27 Sep 14:00",
+   "kickoff_expected": "27 Sep 14:00",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "Phantoms Boom": "Phantoms Boom (W)",
+    "Liege Panthers": "Liege (W)"
+   },
+   "sport": "basketball"
+  },
+  "stake_field_state": "EMPTY",
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 14:00 + women's competition supplies Bet365's (W) + both names compatible: 'Phantoms Boom' ~ 'Phantoms Boom (W)' (women_marker_from_competition 1.00); 'Liege Panthers' ~ 'Liege (W)' (women_marker_from_competition 1.00)",
+   "home": {
+    "feed": "Phantoms Boom",
+    "bookmaker": "Phantoms Boom (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Liege Panthers",
+    "bookmaker": "Liege (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Phantoms Boom",
+     "bookmaker": "Phantoms Boom (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "away_similarity": {
+     "feed": "Liege Panthers",
+     "bookmaker": "Liege (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "event_evidence_both_variants",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+   }
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21171663/D19/E26830587/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_-ulFhAkATelGz6FT8Hrp9ZONCquObgnmS59WhM5yyGc",
+  "adapter": "live_bet365",
+  "status": "PASS",
+  "phase": "FINISHED",
+  "started_at_ms": 1790511506942,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790511506943
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 36,
+    "wall_ts_ms": 1790511506978
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 47,
+    "wall_ts_ms": 1790511506990
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3488,
+    "wall_ts_ms": 1790511510432
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3703,
+    "wall_ts_ms": 1790511510646
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 4616,
+    "wall_ts_ms": 1790511511560
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5174,
+    "wall_ts_ms": 1790511512117
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 5347,
+    "wall_ts_ms": 1790511512290
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 5355,
+    "wall_ts_ms": 1790511512297
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 5842,
+    "wall_ts_ms": 1790511512785
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 5879,
+    "wall_ts_ms": 1790511512822
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 5889,
+    "wall_ts_ms": 1790511512832
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 5900,
+    "wall_ts_ms": 1790511512843
+   },
+   {
+    "phase": "OPEN_SELECTION",
+    "elapsed_ms": 5911,
+    "wall_ts_ms": 1790511512854
+   },
+   {
+    "effect": "gesture",
+    "target": "SPREAD / HOME / -8.5 / 1.86",
+    "bounds": [
+     301,
+     655,
+     345,
+     705
+    ],
+    "elapsed_ms": 5923
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 5923,
+    "wall_ts_ms": 1790511512866
+   },
+   {
+    "phase": "ENTER_STAKE",
+    "elapsed_ms": 6692,
+    "wall_ts_ms": 1790511513635
+   },
+   {
+    "phase": "CAPTURE_betslip_pre_stake",
+    "elapsed_ms": 6730,
+    "wall_ts_ms": 1790511513673
+   },
+   {
+    "phase": "CAPTURED_betslip_pre_stake",
+    "elapsed_ms": 7272,
+    "wall_ts_ms": 1790511514215
+   },
+   {
+    "effect": "gesture",
+    "target": "Set Stake",
+    "bounds": [
+     20,
+     1327,
+     214,
+     1371
+    ],
+    "elapsed_ms": 7302
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 7302,
+    "wall_ts_ms": 1790511514245
+   },
+   {
+    "phase": "CAPTURE_stake_ui",
+    "elapsed_ms": 8022,
+    "wall_ts_ms": 1790511514965
+   },
+   {
+    "phase": "CAPTURED_stake_ui",
+    "elapsed_ms": 8525,
+    "wall_ts_ms": 1790511515467
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 8582
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8582,
+    "wall_ts_ms": 1790511515525
+   },
+   {
+    "effect": "gesture",
+    "target": "key:.",
+    "bounds": [
+     87,
+     1228,
+     147,
+     1272
+    ],
+    "elapsed_ms": 8853
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 8853,
+    "wall_ts_ms": 1790511515796
+   },
+   {
+    "effect": "gesture",
+    "target": "key:1",
+    "bounds": [
+     87,
+     974,
+     147,
+     1018
+    ],
+    "elapsed_ms": 9142
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 9142,
+    "wall_ts_ms": 1790511516085
+   },
+   {
+    "effect": "gesture",
+    "target": "key:0",
+    "bounds": [
+     330,
+     1228,
+     390,
+     1272
+    ],
+    "elapsed_ms": 9435
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 9435,
+    "wall_ts_ms": 1790511516378
+   },
+   {
+    "phase": "CAPTURE_stake_typed",
+    "elapsed_ms": 9731,
+    "wall_ts_ms": 1790511516675
+   },
+   {
+    "phase": "CAPTURED_stake_typed",
+    "elapsed_ms": 10194,
+    "wall_ts_ms": 1790511517136
+   },
+   {
+    "effect": "gesture",
+    "target": "Done",
+    "bounds": [
+     311,
+     1331,
+     587,
+     1368
+    ],
+    "elapsed_ms": 10280
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 10280,
+    "wall_ts_ms": 1790511517223
+   },
+   {
+    "phase": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 10550,
+    "wall_ts_ms": 1790511517493
+   },
+   {
+    "phase": "CAPTURE_final",
+    "elapsed_ms": 10583,
+    "wall_ts_ms": 1790511517526
+   },
+   {
+    "phase": "CAPTURED_final",
+    "elapsed_ms": 11054,
+    "wall_ts_ms": 1790511517997
+   },
+   {
+    "phase": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 11139,
+    "wall_ts_ms": 1790511518082
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 11203,
+    "wall_ts_ms": 1790511518146
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png",
+   "s003_markets.png",
+   "s004_betslip_pre_stake.png",
+   "s005_stake_ui.png",
+   "s006_stake_typed.png",
+   "s007_final.png"
+  ],
+  "gesture_attempts": 7,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 47,
+    "start_ts_ms": 1790511506990,
+    "end_elapsed_ms": 5347,
+    "end_ts_ms": 1790511512290,
+    "duration_ms": 5300,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 5347,
+    "start_ts_ms": 1790511512290,
+    "end_elapsed_ms": 5879,
+    "end_ts_ms": 1790511512822,
+    "duration_ms": 532,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 5879,
+    "start_ts_ms": 1790511512822,
+    "end_elapsed_ms": 5889,
+    "end_ts_ms": 1790511512832,
+    "duration_ms": 10,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 5889,
+    "start_ts_ms": 1790511512832,
+    "end_elapsed_ms": 5900,
+    "end_ts_ms": 1790511512843,
+    "duration_ms": 11,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 5900,
+    "start_ts_ms": 1790511512843,
+    "end_elapsed_ms": 5911,
+    "end_ts_ms": 1790511512854,
+    "duration_ms": 11,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "start_elapsed_ms": 5911,
+    "start_ts_ms": 1790511512854,
+    "end_elapsed_ms": 6692,
+    "end_ts_ms": 1790511513635,
+    "duration_ms": 781,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "start_elapsed_ms": 6692,
+    "start_ts_ms": 1790511513635,
+    "end_elapsed_ms": 10550,
+    "end_ts_ms": 1790511517493,
+    "duration_ms": 3858,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "start_elapsed_ms": 10550,
+    "start_ts_ms": 1790511517493,
+    "end_elapsed_ms": 11139,
+    "end_ts_ms": 1790511518082,
+    "duration_ms": 589,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "start_elapsed_ms": 11139,
+    "start_ts_ms": 1790511518082,
+    "end_elapsed_ms": 11203,
+    "end_ts_ms": 1790511518145,
+    "duration_ms": 64,
+    "status": "ok",
+    "retries": 0
+   }
+  ],
+  "search_query": "Phantoms Boom",
+  "identity_home": "Phantoms Boom",
+  "expected_away": "Liege Panthers",
+  "identity_away": "Liege Panthers",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21171663/D19/E26830587/F19/I0/",
+  "current_stage": "PREPARE_COMPLETE_EXECUTION",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Belgium Div 1 Women 27 Sep 14:00",
+   "Phantoms Boom (W) vs Liege (W)",
+   "Popular Bet Builder Game Team Quarter H A"
+  ],
+  "competition_check": {
+   "feed": "Division 1 Women",
+   "country": "Belgium",
+   "page": "Belgium Div 1 Women 27 Sep 14:00",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 14:00 + women's competition supplies Bet365's (W) + both names compatible: 'Phantoms Boom' ~ 'Phantoms Boom (W)' (women_marker_from_competition 1.00); 'Liege Panthers' ~ 'Liege (W)' (women_marker_from_competition 1.00)",
+   "home": {
+    "feed": "Phantoms Boom",
+    "bookmaker": "Phantoms Boom (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Liege Panthers",
+    "bookmaker": "Liege (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Phantoms Boom",
+     "bookmaker": "Phantoms Boom (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "away_similarity": {
+     "feed": "Liege Panthers",
+     "bookmaker": "Liege (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "event_evidence_both_variants",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+   }
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "route": "event_link",
+  "alias_candidate": {
+   "feed_home": "Phantoms Boom",
+   "feed_away": "Liege Panthers",
+   "bet365_home": "Phantoms Boom (W)",
+   "bet365_away": "Liege (W)",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21171663/D19/E26830587/F19/I0/",
+   "kickoff_shown": "27 Sep 14:00",
+   "kickoff_expected": "27 Sep 14:00",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "confidence": "deterministic",
+   "candidates": {
+    "Phantoms Boom": "Phantoms Boom (W)",
+    "Liege Panthers": "Liege (W)"
+   },
+   "sport": "basketball"
+  },
+  "kickoff_verified": "27 Sep 14:00",
+  "verified_fixture": {
+   "code": "8be51523",
+   "home": "Phantoms Boom (W)",
+   "away": "Liege (W)",
+   "fixture_name": "Phantoms Boom (W) v Liege (W)",
+   "exact_fixture_text": "Home Phantoms Boom (W)\nAway Liege (W)",
+   "competition": "Belgium Div 1 Women 27 Sep 14:00",
+   "bounds": [
+    35,
+    268,
+    691,
+    436
+   ]
+  },
+  "fixture_home": "Phantoms Boom (W)",
+  "fixture_away": "Liege (W)",
+  "identity_verified_home": "Phantoms Boom",
+  "identity_verified_away": "Liege Panthers",
+  "event_verified": true,
+  "event_context": {
+   "home": "Phantoms Boom (W)",
+   "away": "Liege (W)",
+   "competition": "belgium division 1 women",
+   "kickoff_utc": "2026-09-27T13:00",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "8be51523",
+   "home": "Phantoms Boom (W)",
+   "away": "Liege (W)",
+   "fixture_name": "Phantoms Boom (W) v Liege (W)",
+   "exact_fixture_text": "Home Phantoms Boom (W)\nAway Liege (W)",
+   "competition": "Belgium Div 1 Women 27 Sep 14:00",
+   "bounds": [
+    35,
+    268,
+    691,
+    436
+   ]
+  },
+  "game_lines_reads": [
+   {
+    "tag": "markets",
+    "cells": [
+     "SPREAD/HOME/-8.5@1.86",
+     "SPREAD/AWAY/+8.5@1.80",
+     "TOTAL/OVER/140.5@1.83",
+     "TOTAL/UNDER/140.5@1.83",
+     "MONEYLINE/HOME/NONE@1.28",
+     "MONEYLINE/AWAY/NONE@3.35"
+    ],
+    "notes": []
+   }
+  ],
+  "game_lines": {
+   "reads": 1,
+   "agreed": [
+    "SPREAD/HOME/-8.5@1.86",
+    "SPREAD/AWAY/+8.5@1.80",
+    "TOTAL/OVER/140.5@1.83",
+    "TOTAL/UNDER/140.5@1.83",
+    "MONEYLINE/HOME/NONE@1.28",
+    "MONEYLINE/AWAY/NONE@3.35"
+   ],
+   "fast_path": true
+  },
+  "markets": [
+   {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-8.5",
+    "price": "1.86",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Phantoms Boom (W)",
+    "bounds": [
+     301,
+     655,
+     345,
+     705
+    ]
+   },
+   {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "+8.5",
+    "price": "1.80",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Liege (W)",
+    "bounds": [
+     301,
+     740,
+     344,
+     790
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "140.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     436,
+     653,
+     511,
+     705
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "140.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     450,
+     736,
+     509,
+     790
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "1.28",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Phantoms Boom (W)",
+    "bounds": [
+     604,
+     672,
+     648,
+     689
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "3.35",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Liege (W)",
+    "bounds": [
+     603,
+     757,
+     648,
+     774
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790511512831,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.86",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Phantoms Boom (W)",
+     "bounds": [
+      301,
+      655,
+      345,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790511512832,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.86",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Phantoms Boom (W)",
+     "bounds": [
+      301,
+      655,
+      345,
+      705
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790511517177,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.86",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Phantoms Boom (W)",
+     "bounds": [
+      301,
+      655,
+      345,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "stake",
+    "observed_at_ms": 1790511517202,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.86",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Phantoms Boom (W)",
+     "bounds": [
+      301,
+      655,
+      345,
+      705
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "final",
+    "observed_at_ms": 1790511518059,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.86",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Phantoms Boom (W)",
+     "bounds": [
+      301,
+      655,
+      345,
+      705
+     ]
+    },
+    "identity_verified": true
+   },
+   {
+    "stage": "prepare",
+    "observed_at_ms": 1790511518119,
+    "observed": {
+     "market": "SPREAD",
+     "side": "HOME",
+     "line": "-8.5",
+     "price": "1.86",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "Phantoms Boom (W)",
+     "bounds": [
+      301,
+      655,
+      345,
+      705
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "selection_role": "HOME",
+  "selection_name": "Phantoms Boom (W)",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-8.5",
+   "price": "1.86",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Phantoms Boom (W)",
+   "bounds": [
+    301,
+    655,
+    345,
+    705
+   ]
+  },
+  "selection_preflight": "reused clean grid read",
+  "stake_keypad": {
+   "zero": [
+    360,
+    1250
+   ],
+   "dot": [
+    117,
+    1250
+   ]
+  },
+  "stake_field_state": "EMPTY",
+  "stake_check_typed": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.86"
+  },
+  "stake_entered": "0.10",
+  "stake_check_final": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.86"
+  },
+  "ready_state": {
+   "fixture_home": "Phantoms Boom (W)",
+   "fixture_away": "Liege (W)",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Phantoms Boom (W)",
+   "line": "-8.5",
+   "price": "1.86",
+   "stake": "0.10",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true
+  },
+  "final_state": {
+   "home": "Phantoms Boom (W)",
+   "away": "Liege (W)",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-8.5",
+   "price": "1.86",
+   "stake": "0.10",
+   "state": "READY",
+   "place_bet_visible": true,
+   "wager_submitted": false
+  },
+  "confirmation_gate": "NONE",
+  "prepare_frame": "reused verified final frame",
+  "stake_check_prepare": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.86"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Phantoms Boom (W) v Liege (W)",
+   "fixture_home": "Phantoms Boom (W)",
+   "fixture_away": "Liege (W)",
+   "market": "SPREAD",
+   "selection_role": "HOME",
+   "selection_name": "Phantoms Boom (W)",
+   "line": "-8.5",
+   "price": "1.86",
+   "stake": "0.10",
+   "minimum_price": "1.78",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    20,
+    1160,
+    604,
+    1186
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "prepared_gesture": {
+    "type": "tap",
+    "target": "Place Bet",
+    "package": "com.android.chrome",
+    "bounds": [
+     20,
+     1160,
+     604,
+     1186
+    ],
+    "center_x": 312,
+    "center_y": 1173,
+    "duration_ms": 100,
+    "dispatched": false
+   },
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "timestamp_ms": 1790511518142,
+   "validation_hash": "dcccf6f114d50ee3242aca746d19f17d"
+  },
+  "prepared_gesture": {
+   "type": "tap",
+   "target": "Place Bet",
+   "package": "com.android.chrome",
+   "bounds": [
+    20,
+    1160,
+    604,
+    1186
+   ],
+   "center_x": 312,
+   "center_y": 1173,
+   "duration_ms": 100,
+   "dispatched": false
+  },
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "held": true,
+  "verification_detail": "HELD: verified bet on the slip, £ stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 11203
+ },
+ "wall": 12.5,
+ "reset": {
+  "instruction_id": "rsidv2live-4afcc5df-131825",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "RESET_BETSLIP",
+  "duration_ms": 3062,
+  "progress": {
+   "stage": "RESET_BETSLIP",
+   "elapsed_ms": 2966,
+   "last_progress_at_ms": 1790511519744,
+   "instruction_id": "rsidv2live-4afcc5df-131825",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790511519736
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 22,
+     "at_ms": 1790511519744,
+     "timing": {
+      "stage": "RESET_BETSLIP",
+      "start_elapsed_ms": 22,
+      "start_ts_ms": 1790511519737,
+      "end_elapsed_ms": 2966,
+      "end_ts_ms": 1790511522681,
+      "duration_ms": 2944,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 31,
+     "at_ms": 1790511519744
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 597,
+     "at_ms": 1790511519744
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 622,
+     "at_ms": 1790511519744
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 2388,
+     "at_ms": 1790511519744
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 2939,
+     "at_ms": 1790511519744
+    },
+    {
+     "stage": "RESET_BETSLIP",
+     "elapsed_ms": 2966,
+     "at_ms": 1790511519744
+    }
+   ]
+  },
+  "device_stage": "RESET_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_34P_bRahpn_ynzydKYo9plAbMFEnI-4F_v_UIn55ZrM",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+  "betslip_reset": {
+   "tapped": true,
+   "control": "remove selection X",
+   "bounds": [
+    21,
+    1179,
+    42,
+    1207
+   ],
+   "place_bet_still_visible": false
+  },
+  "stage_timings": [
+   {
+    "stage": "RESET_BETSLIP",
+    "start_elapsed_ms": 22,
+    "start_ts_ms": 1790511519737,
+    "end_elapsed_ms": 2966,
+    "end_ts_ms": 1790511522681,
+    "duration_ms": 2944,
+    "status": "ok",
+    "retries": 0
+   }
+  ]
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "before": {
+  "at": "2026-09-27T12:11:59Z",
+  "app_version": "0.9.26-ops",
+  "state": "IDLE",
+  "local_execution": {
+   "enabled": true,
+   "enabled_at_ms": 1790445273789,
+   "disabled_at_ms": 0,
+   "worker_id": "w-d131ef8769de",
+   "authorised_account_fingerprint": "1457f6e497f3",
+   "last_reason": "enabled on the phone"
+  },
+  "session": "AUTHENTICATED"
+ },
+ "paused_at": "2026-09-27T12:12:00Z",
+ "installed_at": "2026-09-27T12:12:07Z",
+ "after_install": {
+  "at": "2026-09-27T12:12:13Z",
+  "app_version": "0.9.27-ops",
+  "version_code": 110,
+  "state": "IDLE",
+  "worker_id": "w-d131ef8769de",
+  "account_fingerprint": "1457f6e497f3",
+  "phone_final_action_armed": true,
+  "local_execution": {
+   "enabled": true,
+   "enabled_at_ms": 1790445273789,
+   "disabled_at_ms": 0,
+   "worker_id": "w-d131ef8769de",
+   "authorised_account_fingerprint": "1457f6e497f3",
+   "last_reason": "enabled on the phone"
+  },
+  "session": {
+   "state": "UNKNOWN",
+   "observed_at_ms": 1790511131763,
+   "detail": "idle probe",
+   "refresh_count": 1,
+   "last_refresh_at_ms": 1790511129992,
+   "last_refresh_outcome": "probe started"
+  }
+ },
+ "session_check": {
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "SESSION_AUTHENTICATED",
+  "duration_ms": 14175,
+  "run_id": "c_WMlcgSlfw76i2BTRENJRZqy6rD7e3P9DvUwZP5GxyYc"
+ },
+ "after_session_check": {
+  "at": "2026-09-27T12:12:33Z",
+  "state": "IDLE",
+  "session": {
+   "state": "AUTHENTICATED",
+   "observed_at_ms": 1790511148975,
+   "detail": "workflow",
+   "refresh_count": 1,
+   "last_refresh_at_ms": 1790511129992,
+   "last_refresh_outcome": "probe started"
+  },
+  "local_execution": {
+   "enabled": true,
+   "enabled_at_ms": 1790445273789,
+   "disabled_at_ms": 0,
+   "worker_id": "w-d131ef8769de",
+   "authorised_account_fingerprint": "1457f6e497f3",
+   "last_reason": "enabled on the phone"
+  },
+  "app_version": "0.9.27-ops"
+ },
+ "resumed_at": "2026-09-27T12:12:33Z"
+}

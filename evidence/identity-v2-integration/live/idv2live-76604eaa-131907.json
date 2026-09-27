@@ -1,0 +1,288 @@
+{
+ "instruction_id": "on-76604eaae12846ab7a1a6b54",
+ "payload": {
+  "instruction_id": "idv2live-76604eaa-131907",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Final Spor Genclik||Fenerbahce II",
+  "sport": "basketball",
+  "market": "TOTALS",
+  "side": "UNDER",
+  "line": "160.5",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "minimum_price": "1.75",
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21167321/D19/E26748091/F19/I0/",
+  "kickoff_utc": "2026-09-27T13:00",
+  "competition": "TBL First League",
+  "period": "FULL_GAME",
+  "country": "Turkey",
+  "max_line_deterioration": "1.0"
+ },
+ "result": {
+  "instruction_id": "idv2live-76604eaa-131907",
+  "status": "FAIL",
+  "stage": "WRONG_EVENT",
+  "detail": "Event link shows 'Final Spor v Fenerbahce Gelisim'; alert says 'Final Spor Genclik v Fenerbahce II': 'Fenerbahce II' vs 'Fenerbahce Gelisim': protected markers differ [ii] vs []",
+  "duration_ms": 4281,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 4157,
+   "last_progress_at_ms": 1790511548780,
+   "instruction_id": "idv2live-76604eaa-131907",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790511548766
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 15,
+     "at_ms": 1790511548772
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 21,
+     "at_ms": 1790511548780,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 21,
+      "start_ts_ms": 1790511548773,
+      "end_elapsed_ms": 4157,
+      "end_ts_ms": 1790511552908,
+      "duration_ms": 4136,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3455,
+     "at_ms": 1790511548780
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4057,
+     "at_ms": 1790511548780
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4157,
+     "at_ms": 1790511548780
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_teAd5zGP1wA5TJKyX7Nq_xw1eLmT4GoO3qEb9QbPc-4",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'Final Spor v Fenerbahce Gelisim'; alert says 'Final Spor Genclik v Fenerbahce II': 'Fenerbahce II' vs 'Fenerbahce Gelisim': protected markers differ [ii] vs []",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 21,
+    "start_ts_ms": 1790511548773,
+    "end_elapsed_ms": 4157,
+    "end_ts_ms": 1790511552908,
+    "duration_ms": 4136,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: 'Fenerbahce II' vs 'Fenerbahce Gelisim': protected markers differ [ii] vs []",
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "'Fenerbahce II' vs 'Fenerbahce Gelisim': protected markers differ [ii] vs []",
+   "home": {
+    "feed": "Final Spor Genclik",
+    "bookmaker": "Final Spor",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [final, spor] contained; extra [genclik]",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Fenerbahce II",
+    "bookmaker": "Fenerbahce Gelisim",
+    "level": "NONE",
+    "kind": "markers_conflict",
+    "score": 0,
+    "note": "protected markers differ [ii] vs []",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "mismatch (feed 'tbl first league' vs page 'turkiye tbl')",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Final Spor Genclik",
+     "bookmaker": "Final Spor",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [final, spor] contained; extra [genclik]"
+    },
+    "away_similarity": {
+     "feed": "Fenerbahce II",
+     "bookmaker": "Fenerbahce Gelisim",
+     "level": "NONE",
+     "kind": "markers_conflict",
+     "score": 0,
+     "note": "protected markers differ [ii] vs []"
+    },
+    "protected_markers": "conflict: protected markers differ [ii] vs []",
+    "orientation": "not established",
+    "policy": "protected_markers",
+    "verdict": "MISMATCH"
+   }
+  },
+  "identity_verdict": "MISMATCH",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21167321/D19/E26748091/F19/I0/"
+ },
+ "run": {
+  "run_id": "c_teAd5zGP1wA5TJKyX7Nq_xw1eLmT4GoO3qEb9QbPc-4",
+  "adapter": "live_bet365",
+  "status": "WRONG_EVENT",
+  "phase": "FINISHED",
+  "started_at_ms": 1790511548751,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790511548752
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 15,
+    "wall_ts_ms": 1790511548766
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 21,
+    "wall_ts_ms": 1790511548773
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3455,
+    "wall_ts_ms": 1790511552206
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 4057,
+    "wall_ts_ms": 1790511552809
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 4157,
+    "wall_ts_ms": 1790511552908
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 21,
+    "start_ts_ms": 1790511548773,
+    "end_elapsed_ms": 4157,
+    "end_ts_ms": 1790511552908,
+    "duration_ms": 4136,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Final Spor Genclik",
+  "identity_home": "Final Spor Genclik",
+  "expected_away": "Fenerbahce II",
+  "identity_away": "Fenerbahce II",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21167321/D19/E26748091/F19/I0/",
+  "current_stage": "OPEN_HOME",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Türkiye TBL • 27 Sep 14:00",
+   "Final Spor vs Fenerbahce Gelisim v",
+   "Popular Bet Builder Game Team Quarter Half"
+  ],
+  "competition_check": {
+   "feed": "TBL First League",
+   "country": "Turkey",
+   "page": "Türkiye TBL • 27 Sep 14:00",
+   "matches": false
+  },
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "'Fenerbahce II' vs 'Fenerbahce Gelisim': protected markers differ [ii] vs []",
+   "home": {
+    "feed": "Final Spor Genclik",
+    "bookmaker": "Final Spor",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [final, spor] contained; extra [genclik]",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Fenerbahce II",
+    "bookmaker": "Fenerbahce Gelisim",
+    "level": "NONE",
+    "kind": "markers_conflict",
+    "score": 0,
+    "note": "protected markers differ [ii] vs []",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "mismatch (feed 'tbl first league' vs page 'turkiye tbl')",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Final Spor Genclik",
+     "bookmaker": "Final Spor",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [final, spor] contained; extra [genclik]"
+    },
+    "away_similarity": {
+     "feed": "Fenerbahce II",
+     "bookmaker": "Fenerbahce Gelisim",
+     "level": "NONE",
+     "kind": "markers_conflict",
+     "score": 0,
+     "note": "protected markers differ [ii] vs []"
+    },
+    "protected_markers": "conflict: protected markers differ [ii] vs []",
+    "orientation": "not established",
+    "policy": "protected_markers",
+    "verdict": "MISMATCH"
+   }
+  },
+  "identity_verdict": "MISMATCH",
+  "route": "event_link",
+  "direct_event_rejected": "identity: 'Fenerbahce II' vs 'Fenerbahce Gelisim': protected markers differ [ii] vs []",
+  "detail": "Event link shows 'Final Spor v Fenerbahce Gelisim'; alert says 'Final Spor Genclik v Fenerbahce II': 'Fenerbahce II' vs 'Fenerbahce Gelisim': protected markers differ [ii] vs []",
+  "duration_ms": 4157
+ },
+ "wall": 5.3
+}

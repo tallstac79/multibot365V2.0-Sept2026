@@ -1,0 +1,1561 @@
+[
+ {
+  "case": {
+   "id": "on-f60790912f832e069a602cfc",
+   "old": "WRONG_EVENT",
+   "v2": "AMBIGUOUS",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "Orchies",
+   "away": "Lyon",
+   "kickoff": "25 Sep 19:00",
+   "competition": "Nationale 1",
+   "country": "France",
+   "women": false,
+   "capture": "on-f60790912f832e069a602cfc_s002_event_direct.txt",
+   "p": "idv2-all/f60790912f83_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "France Nationale 1 25 Sep 19:00",
+    "Orchies vs LYONSO",
+    "Popular Bet Builder Game Team Quarter H A"
+   ],
+   "teams": [
+    "Orchies",
+    "LYONSO"
+   ],
+   "verdict": "AMBIGUOUS",
+   "reason": "'Lyon' only partly resembles 'LYONSO' (weak resemblance 0.67: prefix only [lyon]); not a different event, not proven the same"
+  },
+  "final": "AMBIGUOUS",
+  "latency_ms": 522,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-7e7371a77917caeec0115220",
+   "old": "TARGET_NOT_FOUND",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Saga Ballooners",
+   "away": "Hiroshima Dragonflies",
+   "kickoff": "25 Sep 10:45",
+   "competition": "B League",
+   "country": "Japan",
+   "women": false,
+   "capture": "on-7e7371a77917caeec0115220_s002_event_direct.txt",
+   "p": "idv2-all/7e7371a77917_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Japan B League 125 Sep 10:45",
+    "Saga Ballooners vs Hiroshima Dragonflies V",
+    "Popular Bet Builder Game Team Quarter"
+   ],
+   "teams": [
+    "Saga Ballooners",
+    "Hiroshima Dragonflies"
+   ],
+   "verdict": "EXACT",
+   "reason": "both teams exact"
+  },
+  "final": "EXACT",
+  "latency_ms": 495,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-c7e5d94c9f015affa329186c",
+   "old": "WRONG_EVENT",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "Explosivas de Moca",
+   "away": "Leonas De Ponce",
+   "kickoff": "26 Sep 01:00",
+   "competition": "Superior Nacional Women",
+   "country": "Puerto Rico",
+   "women": true,
+   "capture": "on-c7e5d94c9f015affa329186c_s002_event_direct.txt",
+   "p": "idv2-all/c7e5d94c9f01_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Puerto Rico Superior Nacional Women 26 Sep 01:00",
+    "Explosivas de Moca (W) vs Leonas de Ponce",
+    "(W)",
+    "Popular Bet Builder Game Team Quarter H A"
+   ],
+   "teams": [
+    "Explosivas de Moca (W)",
+    "Leonas de Ponce (W)"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 26 Sep 01:00 + women's competition supplies Bet365's (W) + both names compatible: 'Explosivas de Moca' ~ 'Explosivas de Moca (W)' (women_marker_from_competition 1.00); 'Leonas De Ponce' ~ 'Leonas de Ponce (W)' (women_marker_from_competition 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 603,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-3df5c41a1856a1ab0a12fc25",
+   "old": "TARGET_NOT_FOUND",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Boras Basket",
+   "away": "Nassjo Basket",
+   "kickoff": "25 Sep 18:04",
+   "competition": "Basketligan",
+   "country": "Sweden",
+   "women": false,
+   "capture": "on-3df5c41a1856a1ab0a12fc25_s002_event_direct.txt",
+   "p": "idv2-all/3df5c41a1856_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Sweden Basketligan 25 Sep 18:04",
+    "Boras Basket vs Nassjo Basket v",
+    "Popular Bet Builder Game Team Quarter"
+   ],
+   "teams": [
+    "Boras Basket",
+    "Nassjo Basket"
+   ],
+   "verdict": "EXACT",
+   "reason": "both teams exact"
+  },
+  "final": "EXACT",
+  "latency_ms": 471,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-d0c9a4033e16c9ee01fb4d41",
+   "old": "ALIAS_REQUIRED",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Rytas Vilnius",
+   "away": "Atletico Boca Juniors",
+   "kickoff": "26 Sep 12:30",
+   "competition": "Intercontinental Cup",
+   "country": "World",
+   "women": false,
+   "capture": "on-d0c9a4033e16c9ee01fb4d41_s001_event_direct.txt",
+   "p": "idv2-all/d0c9a4033e16_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "FIBA Intercontinental Cup 26 Sep 12:30",
+    "Rytas vs Boca Juniors",
+    "Popular Bet Builder Game Team Quarter Half"
+   ],
+   "teams": [
+    "Rytas",
+    "Boca Juniors"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 26 Sep 12:30 + both names compatible: 'Rytas Vilnius' ~ 'Rytas' (token_containment 1.00); 'Atletico Boca Juniors' ~ 'Boca Juniors' (token_containment 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 428,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-205de8454e182f2de4fd9052",
+   "old": "TARGET_NOT_FOUND",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Poitiers",
+   "away": "Evreux",
+   "kickoff": "25 Sep 19:00",
+   "competition": "Championnat Pro B",
+   "country": "France",
+   "women": false,
+   "capture": "on-205de8454e182f2de4fd9052_s002_event_direct.txt",
+   "p": "idv2-all/205de8454e18_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "France Ligue B 25 Sep 19:00",
+    "Poitiers vs Evreux",
+    "Popular Bet Builder Game Team Quarter H A"
+   ],
+   "teams": [
+    "Poitiers",
+    "Evreux"
+   ],
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed 'championnat pro b' vs page 'france ligue b'))"
+  },
+  "final": "AMBIGUOUS",
+  "latency_ms": 461,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-628da5f5c4b471eb1ef7f49c",
+   "old": "TARGET_NOT_FOUND",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Seoul SK Knights",
+   "away": "Wonju Dongbu Promy",
+   "kickoff": "26 Sep 06:00",
+   "competition": "Club Friendlies",
+   "country": "World",
+   "women": false,
+   "capture": "on-628da5f5c4b471eb1ef7f49c_s002_event_direct.txt",
+   "p": "idv2-all/628da5f5c4b4_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Club Friendlies 26 Sep 06:00",
+    "Seoul Knights vs Wonju Promy v",
+    "Popular Bet Builder Game Team Quarter H A"
+   ],
+   "teams": [
+    "Seoul Knights",
+    "Wonju Promy"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 26 Sep 06:00 + 'Seoul SK Knights' canonical; 'Wonju Dongbu Promy' is a naming variant of 'Wonju Promy' (token_containment 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 455,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-0d5e1ef972d82943e8726fc4",
+   "old": "TARGET_NOT_FOUND",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "ASC Denain",
+   "away": "Blois",
+   "kickoff": "25 Sep 19:00",
+   "competition": "Championnat Pro B",
+   "country": "France",
+   "women": false,
+   "capture": "on-0d5e1ef972d82943e8726fc4_s001_event_direct.txt",
+   "p": "idv2-all/0d5e1ef972d8_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "France Ligue B • 25 Sep 19:00",
+    "Denain vs Blois",
+    "Popular Bet Builder Game Team Quarter Half"
+   ],
+   "teams": [
+    "Denain",
+    "Blois"
+   ],
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed 'championnat pro b' vs page 'france ligue b'))"
+  },
+  "final": "AMBIGUOUS",
+  "latency_ms": 439,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-4ab386c6be4044b9b1610706",
+   "old": "ALIAS_REQUIRED",
+   "v2": "AMBIGUOUS",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "Samsung Thunders",
+   "away": "Anyang Jungkwanjang Red Boosters",
+   "kickoff": "27 Sep 06:00",
+   "competition": "KBL Cup",
+   "country": "Korea",
+   "women": false,
+   "capture": "on-4ab386c6be4044b9b1610706_s001_event_direct.txt",
+   "p": "idv2-all/4ab386c6be40_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Club Friendlies 27 Sep 06:00",
+    "Seoul Thunders vs Anyang Red Boosters",
+    "Popular Bet Builder Game Team Quarter Half"
+   ],
+   "teams": [
+    "Seoul Thunders",
+    "Anyang Red Boosters"
+   ],
+   "verdict": "AMBIGUOUS",
+   "reason": "'Samsung Thunders' only partly resembles 'Seoul Thunders' (weak resemblance 0.50: shared [thunders] but [samsung] has no counterpart); not a different event, not proven the same"
+  },
+  "final": "AMBIGUOUS",
+  "latency_ms": 469,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-26fee8b302956f20e05d2edf",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "Suwon KT Sonicboom",
+   "away": "Goyang Skygunners",
+   "kickoff": "27 Sep 06:00",
+   "competition": "KBL Cup",
+   "country": "Korea",
+   "women": false,
+   "capture": "on-26fee8b302956f20e05d2edf_s002_event_direct.txt",
+   "p": "idv2-all/26fee8b30295_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Club Friendlies 27 Sep 06:00",
+    "Suwon Sonicboom vs Goyang Sky Gunners",
+    "Popular Bet Builder Game Team Quarter"
+   ],
+   "teams": [
+    "Suwon Sonicboom",
+    "Goyang Sky Gunners"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 06:00 + both names compatible: 'Suwon KT Sonicboom' ~ 'Suwon Sonicboom' (token_containment 1.00); 'Goyang Skygunners' ~ 'Goyang Sky Gunners' (token_split 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 508,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-d111f2c7363db709d8042394",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "Suwon KT Sonicboom",
+   "away": "Goyang Skygunners",
+   "kickoff": "27 Sep 06:00",
+   "competition": "KBL Cup",
+   "country": "Korea",
+   "women": false,
+   "capture": "on-d111f2c7363db709d8042394_s002_event_direct.txt",
+   "p": "idv2-all/d111f2c7363d_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Club Friendlies 27 Sep 06:00",
+    "Suwon Sonicboom vs Goyang Sky Gunners",
+    "Popular Bet Builder Game Team Quarter"
+   ],
+   "teams": [
+    "Suwon Sonicboom",
+    "Goyang Sky Gunners"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 06:00 + both names compatible: 'Suwon KT Sonicboom' ~ 'Suwon Sonicboom' (token_containment 1.00); 'Goyang Skygunners' ~ 'Goyang Sky Gunners' (token_split 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 493,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-25d0bcd66293960cc8e084ac",
+   "old": "ALIAS_REQUIRED",
+   "v2": "AMBIGUOUS",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "Suwon KT Sonicboom",
+   "away": "Goyang Skygunners",
+   "kickoff": "27 Sep 06:00",
+   "competition": "KBL Cup",
+   "country": "Korea",
+   "women": false,
+   "capture": "on-25d0bcd66293960cc8e084ac_s005_event_direct.txt",
+   "p": "idv2-all/25d0bcd66293_s005_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Club Friendlies 27 Sep 06:00",
+    "Suwon Sonicboom vs Goyang Sky Gunners",
+    "Popular Bet Builder Game Team Quarter Half",
+    "Game Lines"
+   ],
+   "teams": [
+    "Suwon Sonicboom",
+    "Goyang Sky Gunners"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 06:00 + both names compatible: 'Suwon KT Sonicboom' ~ 'Suwon Sonicboom' (token_containment 1.00); 'Goyang Skygunners' ~ 'Goyang Sky Gunners' (token_split 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 489,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-52f17aaf827da0d67b6ceb0b",
+   "old": "ALIAS_REQUIRED",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Utsunomiya Brex",
+   "away": "Yokohama B-Corsairs",
+   "kickoff": "27 Sep 07:05",
+   "competition": "B League",
+   "country": "Japan",
+   "women": false,
+   "capture": "on-52f17aaf827da0d67b6ceb0b_s003_event_direct.txt",
+   "p": "idv2-all/52f17aaf827d_s003_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Japan B League 127 Sep 07:05",
+    "Utsunomiya Brex vs Yokohama B-Corsairs v",
+    "Popular Bet Builder Game Team Quarter Half"
+   ],
+   "teams": [
+    "Utsunomiya Brex",
+    "Yokohama B-Corsairs"
+   ],
+   "verdict": "EXACT",
+   "reason": "both teams exact"
+  },
+  "final": "EXACT",
+  "latency_ms": 462,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-fb3301611debbbf22c2a133c",
+   "old": "ALIAS_REQUIRED",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Utsunomiya Brex",
+   "away": "Yokohama B-Corsairs",
+   "kickoff": "27 Sep 07:05",
+   "competition": "B League",
+   "country": "Japan",
+   "women": false,
+   "capture": "on-fb3301611debbbf22c2a133c_s001_event_direct.txt",
+   "p": "idv2-all/fb3301611deb_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Japan B League 127 Sep 07:05",
+    "Utsunomiya Brex vs Yokohama B-Corsairs v",
+    "Popular Bet Builder Game Team Quarter Half"
+   ],
+   "teams": [
+    "Utsunomiya Brex",
+    "Yokohama B-Corsairs"
+   ],
+   "verdict": "EXACT",
+   "reason": "both teams exact"
+  },
+  "final": "EXACT",
+  "latency_ms": 444,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-e2134b3e347e3a0482be9673",
+   "old": "ALIAS_REQUIRED",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Utsunomiya Brex",
+   "away": "Yokohama B-Corsairs",
+   "kickoff": "27 Sep 07:05",
+   "competition": "B League",
+   "country": "Japan",
+   "women": false,
+   "capture": "on-e2134b3e347e3a0482be9673_s005_event_direct.txt",
+   "p": "idv2-all/e2134b3e347e_s005_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Japan B League 127 Sep 07:05",
+    "Utsunomiya Brex vs Yokohama B-Corsairs",
+    "Popular Bet Builder Game Team Quarter H A"
+   ],
+   "teams": [
+    "Utsunomiya Brex",
+    "Yokohama B-Corsairs"
+   ],
+   "verdict": "EXACT",
+   "reason": "both teams exact"
+  },
+  "final": "EXACT",
+  "latency_ms": 424,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-59330c7f2c1340ac79b7465c",
+   "old": "ALIAS_REQUIRED",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Utsunomiya Brex",
+   "away": "Yokohama B-Corsairs",
+   "kickoff": "27 Sep 07:05",
+   "competition": "B League",
+   "country": "Japan",
+   "women": false,
+   "capture": "on-59330c7f2c1340ac79b7465c_s002_event_direct.txt",
+   "p": "idv2-all/59330c7f2c13_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Japan B League 127 Sep 07:05",
+    "Utsunomiya Brex vs Yokohama B-Corsairs",
+    "Popular Bet Builder Game Team Quarter"
+   ],
+   "teams": [
+    "Utsunomiya Brex",
+    "Yokohama B-Corsairs"
+   ],
+   "verdict": "EXACT",
+   "reason": "both teams exact"
+  },
+  "final": "EXACT",
+  "latency_ms": 460,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-e3d73d9be8ffcd6727f59839",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "Atletico Boca Juniors",
+   "away": "Tigers",
+   "kickoff": "27 Sep 07:30",
+   "competition": "Intercontinental Cup",
+   "country": "World",
+   "women": false,
+   "capture": "on-e3d73d9be8ffcd6727f59839_s001_event_direct.txt",
+   "p": "idv2-all/e3d73d9be8ff_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "FIBA Intercontinental Cup 27 Sep 07:30",
+    "Boca Juniors vs RSSB Tigers",
+    "Popular Bet Builder Game Team Quarter Half"
+   ],
+   "teams": [
+    "Boca Juniors",
+    "RSSB Tigers"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 07:30 + both names compatible: 'Atletico Boca Juniors' ~ 'Boca Juniors' (token_containment 1.00); 'Tigers' ~ 'RSSB Tigers' (token_containment 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 431,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-7035a28fe078550828b8c5e6",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "Atletico Boca Juniors",
+   "away": "Tigers",
+   "kickoff": "27 Sep 07:30",
+   "competition": "Intercontinental Cup",
+   "country": "World",
+   "women": false,
+   "capture": "on-7035a28fe078550828b8c5e6_s001_event_direct.txt",
+   "p": "idv2-all/7035a28fe078_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "FIBA Intercontinental Cup 27 Sep 07:30",
+    "Boca Juniors vs RSSB Tigers v",
+    "Popular Bet Builder Game Team Quarter Half"
+   ],
+   "teams": [
+    "Boca Juniors",
+    "RSSB Tigers"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 07:30 + both names compatible: 'Atletico Boca Juniors' ~ 'Boca Juniors' (token_containment 1.00); 'Tigers' ~ 'RSSB Tigers' (token_containment 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 462,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-3cea58f9e8f21987a58cecda",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "AB Castello",
+   "away": "Benicarlo",
+   "kickoff": "27 Sep 11:00",
+   "competition": "Copa Espana",
+   "country": "Spain",
+   "women": false,
+   "capture": "on-3cea58f9e8f21987a58cecda_s002_event_direct.txt",
+   "p": "idv2-all/3cea58f9e8f2_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Copa Espana • 27 Sep 11:00",
+    "Amics Castello vs Benicarlo v",
+    "Popular Bet Builder Game Team Quarter"
+   ],
+   "teams": [
+    "Amics Castello",
+    "Benicarlo"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 11:00 + 'Benicarlo' exact; 'AB Castello' is a naming variant of 'Amics Castello' (shared_core 0.70)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 483,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-ef04310fdfa5c607ce40a9e0",
+   "old": "ALIAS_REQUIRED",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "CB San Pablo Burgos",
+   "away": "Baskonia Vitoria Gasteiz",
+   "kickoff": "27 Sep 11:30",
+   "competition": "ACB",
+   "country": "Spain",
+   "women": false,
+   "capture": "on-ef04310fdfa5c607ce40a9e0_s002_event_direct.txt",
+   "p": "idv2-all/ef04310fdfa5_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Spain Liga ACB",
+    "27 Sep 11:30",
+    "San Pablo Burgos VS Baskonia"
+   ],
+   "teams": [
+    "San Pablo Burgos",
+    "Baskonia"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 11:30 + 'CB San Pablo Burgos' canonical; 'Baskonia Vitoria Gasteiz' is a naming variant of 'Baskonia' (token_containment 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 350,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-983f2daab50324592016597b",
+   "old": "ALIAS_REQUIRED",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Botas SK",
+   "away": "CBK Mersin Yenisehir Bld",
+   "kickoff": "27 Sep 12:00",
+   "competition": "Super League Women",
+   "country": "Turkey",
+   "women": true,
+   "capture": "on-983f2daab50324592016597b_s002_event_direct.txt",
+   "p": "idv2-all/983f2daab503_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Türkiye TKBSL Women 27 Sep 12:00",
+    "Botas (W) vs CBK Mersin (W)",
+    "Popular Bet Builder Game Team Quarter"
+   ],
+   "teams": [
+    "Botas (W)",
+    "CBK Mersin (W)"
+   ],
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed 'super league women' vs page 'turkiye tkbsl women'))"
+  },
+  "final": "AMBIGUOUS",
+  "latency_ms": 457,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-d1b2cb3a2e1f82da56772ea9",
+   "old": "ALIAS_REQUIRED",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Botas SK",
+   "away": "CBK Mersin Yenisehir Bld",
+   "kickoff": "27 Sep 12:00",
+   "competition": "Super League Women",
+   "country": "Turkey",
+   "women": true,
+   "capture": "on-d1b2cb3a2e1f82da56772ea9_s002_event_direct.txt",
+   "p": "idv2-all/d1b2cb3a2e1f_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Türkiye TKBSL Women 27 Sep 12:00",
+    "Botas (W) vs CBK Mersin (W)",
+    "Popular Bet Builder Game Team Quarter"
+   ],
+   "teams": [
+    "Botas (W)",
+    "CBK Mersin (W)"
+   ],
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed 'super league women' vs page 'turkiye tkbsl women'))"
+  },
+  "final": "AMBIGUOUS",
+  "latency_ms": 465,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-d05b8da4d9079052aecf59ad",
+   "old": "ALIAS_REQUIRED",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Botas SK",
+   "away": "CBK Mersin Yenisehir Bld",
+   "kickoff": "27 Sep 12:00",
+   "competition": "Super League Women",
+   "country": "Turkey",
+   "women": true,
+   "capture": "on-d05b8da4d9079052aecf59ad_s002_event_direct.txt",
+   "p": "idv2-all/d05b8da4d907_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Türkiye TKBSL Women 27 Sep 12:00",
+    "Botas (W) vs CBK Mersin (W) v",
+    "Popular Bet Builder Game Team Quarter"
+   ],
+   "teams": [
+    "Botas (W)",
+    "CBK Mersin (W)"
+   ],
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed 'super league women' vs page 'turkiye tkbsl women'))"
+  },
+  "final": "AMBIGUOUS",
+  "latency_ms": 454,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-4e3e08e836af7e6e3578b270",
+   "old": "ALIAS_REQUIRED",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Botas SK",
+   "away": "CBK Mersin Yenisehir Bld",
+   "kickoff": "27 Sep 12:00",
+   "competition": "Super League Women",
+   "country": "Turkey",
+   "women": true,
+   "capture": "on-4e3e08e836af7e6e3578b270_s001_event_direct.txt",
+   "p": "idv2-all/4e3e08e836af_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Türkiye TKBSL WOmen • 27 Sep 12:00",
+    "Botas (W) vs CBK Mersin (W)",
+    "Popular Bet Builder Game Team Quarter Half"
+   ],
+   "teams": [
+    "Botas (W)",
+    "CBK Mersin (W)"
+   ],
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed 'super league women' vs page 'turkiye tkbsl women'))"
+  },
+  "final": "AMBIGUOUS",
+  "latency_ms": 468,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-7f105c60eaff53424291c5cb",
+   "old": "ALIAS_REQUIRED",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Botas SK",
+   "away": "CBK Mersin Yenisehir Bld",
+   "kickoff": "27 Sep 12:00",
+   "competition": "Super League Women",
+   "country": "Turkey",
+   "women": true,
+   "capture": "on-7f105c60eaff53424291c5cb_s002_event_direct.txt",
+   "p": "idv2-all/7f105c60eaff_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Türkiye TKBSL Women 27 Sep 12:00",
+    "Botas (W) vs CBK Mersin (W)",
+    "Popular Bet Builder Game Team Quarter"
+   ],
+   "teams": [
+    "Botas (W)",
+    "CBK Mersin (W)"
+   ],
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed 'super league women' vs page 'turkiye tkbsl women'))"
+  },
+  "final": "AMBIGUOUS",
+  "latency_ms": 447,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-f3f852da85daf06d70b7bfe1",
+   "old": "ALIAS_REQUIRED",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Botas SK",
+   "away": "CBK Mersin Yenisehir Bld",
+   "kickoff": "27 Sep 12:00",
+   "competition": "Super League Women",
+   "country": "Turkey",
+   "women": true,
+   "capture": "on-f3f852da85daf06d70b7bfe1_s002_event_direct.txt",
+   "p": "idv2-all/f3f852da85da_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Türkiye TKBSL WOmen • 27 Sep 12:00",
+    "Botas (W) vs CBK Mersin (W) v",
+    "Popular Bet Builder Game Team Quarter"
+   ],
+   "teams": [
+    "Botas (W)",
+    "CBK Mersin (W)"
+   ],
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed 'super league women' vs page 'turkiye tkbsl women'))"
+  },
+  "final": "AMBIGUOUS",
+  "latency_ms": 444,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-f4f4605942f555edbd24f737",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "LKS Lodz",
+   "away": "Sparta Ziebice",
+   "kickoff": "27 Sep 12:00",
+   "competition": "Liga 1 Women",
+   "country": "Poland",
+   "women": true,
+   "capture": "on-f4f4605942f555edbd24f737_s001_event_direct.txt",
+   "p": "idv2-all/f4f4605942f5_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Poland 1 Liga Women 27 Sep 12:00",
+    "LKS KK Lodz (W) vs Sparta Ziebice (W)",
+    "Popular Bet Builder Game"
+   ],
+   "teams": [
+    "LKS KK Lodz (W)",
+    "Sparta Ziebice (W)"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 12:00 + women's competition supplies Bet365's (W) + both names compatible: 'LKS Lodz' ~ 'LKS KK Lodz (W)' (women_marker_from_competition 1.00); 'Sparta Ziebice' ~ 'Sparta Ziebice (W)' (women_marker_from_competition 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 322,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-e87ce14f483e5ac67ca32039",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "LKS Lodz",
+   "away": "Sparta Ziebice",
+   "kickoff": "27 Sep 12:00",
+   "competition": "Liga 1 Women",
+   "country": "Poland",
+   "women": true,
+   "capture": "on-e87ce14f483e5ac67ca32039_s003_event_direct.txt",
+   "p": "idv2-all/e87ce14f483e_s003_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Poland 1 Liga Women 27 Sep 12:00",
+    "LKS KK Lodz (W) vs Sparta Ziebice (W) v",
+    "Popular Bet Builder Game"
+   ],
+   "teams": [
+    "LKS KK Lodz (W)",
+    "Sparta Ziebice (W)"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 12:00 + women's competition supplies Bet365's (W) + both names compatible: 'LKS Lodz' ~ 'LKS KK Lodz (W)' (women_marker_from_competition 1.00); 'Sparta Ziebice' ~ 'Sparta Ziebice (W)' (women_marker_from_competition 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 313,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-eccc23efb23fbd66800a0ff3",
+   "old": "TARGET_NOT_FOUND",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "Elfic Fribourg",
+   "away": "GC Zurich Wildcats",
+   "kickoff": "27 Sep 12:00",
+   "competition": "SB League Women",
+   "country": "Switzerland",
+   "women": true,
+   "capture": "on-eccc23efb23fbd66800a0ff3_s001_event_direct.txt",
+   "p": "idv2-all/eccc23efb23f_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Switzerland SB League Women 27 Sep 12:00",
+    "Elfic Fribourg (W) vs GC Zurich (W)",
+    "Popular Bet Builder Game Team Quarter Half"
+   ],
+   "teams": [
+    "Elfic Fribourg (W)",
+    "GC Zurich (W)"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 12:00 + women's competition supplies Bet365's (W) + both names compatible: 'Elfic Fribourg' ~ 'Elfic Fribourg (W)' (women_marker_from_competition 1.00); 'GC Zurich Wildcats' ~ 'GC Zurich (W)' (women_marker_from_competition 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 488,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-7ad1ad27e852f0495245502e",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "LKS Lodz",
+   "away": "Sparta Ziebice",
+   "kickoff": "27 Sep 12:00",
+   "competition": "Liga 1 Women",
+   "country": "Poland",
+   "women": true,
+   "capture": "on-7ad1ad27e852f0495245502e_s002_event_direct.txt",
+   "p": "idv2-all/7ad1ad27e852_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Poland 1 Liga Women 27 Sep 12:00",
+    "LKS KK Lodz (W) vs Sparta Ziebice (W) v",
+    "Popular Bet Builder Game"
+   ],
+   "teams": [
+    "LKS KK Lodz (W)",
+    "Sparta Ziebice (W)"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 12:00 + women's competition supplies Bet365's (W) + both names compatible: 'LKS Lodz' ~ 'LKS KK Lodz (W)' (women_marker_from_competition 1.00); 'Sparta Ziebice' ~ 'Sparta Ziebice (W)' (women_marker_from_competition 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 317,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-55550c5b4e202ff80473aa81",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "LKS Lodz",
+   "away": "Sparta Ziebice",
+   "kickoff": "27 Sep 12:00",
+   "competition": "Liga 1 Women",
+   "country": "Poland",
+   "women": true,
+   "capture": "on-55550c5b4e202ff80473aa81_s002_event_direct.txt",
+   "p": "idv2-all/55550c5b4e20_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Poland 1 Liga Women 27 Sep 12:00",
+    "LKS KK Lodz (W) vs Sparta Ziebice (W) v",
+    "Popular Bet Builder Game"
+   ],
+   "teams": [
+    "LKS KK Lodz (W)",
+    "Sparta Ziebice (W)"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 12:00 + women's competition supplies Bet365's (W) + both names compatible: 'LKS Lodz' ~ 'LKS KK Lodz (W)' (women_marker_from_competition 1.00); 'Sparta Ziebice' ~ 'Sparta Ziebice (W)' (women_marker_from_competition 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 331,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-291ff3af0c7ee3b36015ca0f",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "LKS Lodz",
+   "away": "Sparta Ziebice",
+   "kickoff": "27 Sep 12:00",
+   "competition": "Liga 1 Women",
+   "country": "Poland",
+   "women": true,
+   "capture": "on-291ff3af0c7ee3b36015ca0f_s001_event_direct.txt",
+   "p": "idv2-all/291ff3af0c7e_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Poland 1 Liga Women 27 Sep 12:00",
+    "LKS KK Lodz (W) vs Sparta Ziebice (W)",
+    "Popular Bet Builder Game"
+   ],
+   "teams": [
+    "LKS KK Lodz (W)",
+    "Sparta Ziebice (W)"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 12:00 + women's competition supplies Bet365's (W) + both names compatible: 'LKS Lodz' ~ 'LKS KK Lodz (W)' (women_marker_from_competition 1.00); 'Sparta Ziebice' ~ 'Sparta Ziebice (W)' (women_marker_from_competition 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 323,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-e456262bc2b02d3ea98ae541",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "LKS Lodz",
+   "away": "Sparta Ziebice",
+   "kickoff": "27 Sep 12:00",
+   "competition": "Liga 1 Women",
+   "country": "Poland",
+   "women": true,
+   "capture": "on-e456262bc2b02d3ea98ae541_s002_event_direct.txt",
+   "p": "idv2-all/e456262bc2b0_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Poland 1 Liga Women 27 Sep 12:00",
+    "LKS KK Lodz (W) vs Sparta Ziebice (W) v",
+    "Popular Bet Builder Game"
+   ],
+   "teams": [
+    "LKS KK Lodz (W)",
+    "Sparta Ziebice (W)"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 12:00 + women's competition supplies Bet365's (W) + both names compatible: 'LKS Lodz' ~ 'LKS KK Lodz (W)' (women_marker_from_competition 1.00); 'Sparta Ziebice' ~ 'Sparta Ziebice (W)' (women_marker_from_competition 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 305,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-086891ffa6054e6a9f9fdf5b",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "LKS Lodz",
+   "away": "Sparta Ziebice",
+   "kickoff": "27 Sep 12:00",
+   "competition": "Liga 1 Women",
+   "country": "Poland",
+   "women": true,
+   "capture": "on-086891ffa6054e6a9f9fdf5b_s001_event_direct.txt",
+   "p": "idv2-all/086891ffa605_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Poland 1 Liga Women 27 Sep 12:00",
+    "LKS KK Lodz (W) vs Sparta Ziebice (W)",
+    "Popular Bet Builder Game"
+   ],
+   "teams": [
+    "LKS KK Lodz (W)",
+    "Sparta Ziebice (W)"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 12:00 + women's competition supplies Bet365's (W) + both names compatible: 'LKS Lodz' ~ 'LKS KK Lodz (W)' (women_marker_from_competition 1.00); 'Sparta Ziebice' ~ 'Sparta Ziebice (W)' (women_marker_from_competition 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 298,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-7568867893977163a3442a04",
+   "old": "WRONG_EVENT",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "KS Basket 25 II Bydgoszcz",
+   "away": "Energa Torun II",
+   "kickoff": "27 Sep 12:30",
+   "competition": "Liga 1 Women",
+   "country": "Poland",
+   "women": true,
+   "capture": "on-7568867893977163a3442a04_s002_event_direct.txt",
+   "p": "idv2-all/756886789397_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Poland 1 Liga Women 27 Sep 12:30",
+    "KS Basket 25 I| Bydgoszcz (W) vs Katarzynki II",
+    "Torun (W)",
+    "Popular Bet Builder Game"
+   ],
+   "teams": [
+    "KS Basket 25 UNREADTIER Bydgoszcz (W)",
+    "Katarzynki II Torun (W)"
+   ],
+   "verdict": "NEEDS_RECHECK",
+   "reason": "would be HIGH_CONFIDENCE_EVENT_MATCH (event link + kick-off 27 Sep 12:30 + 'KS Basket 25 II Bydgoszcz' women_marker_from_competition; 'Energa Torun II' is a naming variant of 'Katarzynki II Torun (W)' (women_marker_from_competition 0.70)) but home: page squad numeral read as unread glyph by OCR; feed says II: independent reread required",
+   "reread_header": [
+    "6 Poland 1 Liga ' | Women C 27 ' Sep 12230",
+    "KS Basket 25 ll Bydgoszcz (W) VS Katarzyn ki ll",
+    "Torun (W)",
+    "Bet Bquer Game 4;"
+   ],
+   "patched_teams": [
+    "KS Basket 25 II Bydgoszcz (W)",
+    "Katarzynki II Torun (W)"
+   ],
+   "verdict_after_reread": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason_after_reread": "event link + kick-off 27 Sep 12:30 + 'KS Basket 25 II Bydgoszcz' women_marker_from_competition; 'Energa Torun II' is a naming variant of 'Katarzynki II Torun (W)' (women_marker_from_competition 0.70)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 323,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-508cf995276ef58b04a1bb71",
+   "old": "WRONG_EVENT",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "KS Basket 25 II Bydgoszcz",
+   "away": "Energa Torun II",
+   "kickoff": "27 Sep 12:30",
+   "competition": "Liga 1 Women",
+   "country": "Poland",
+   "women": true,
+   "capture": "on-508cf995276ef58b04a1bb71_s001_event_direct.txt",
+   "p": "idv2-all/508cf995276e_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Poland 1 Liga Women 27 Sep 12:30",
+    "KS Basket 25 || Bydgoszcz (W) vs Katarzynki II",
+    "Torun (W)",
+    "Popular Bet Builder Game"
+   ],
+   "teams": [
+    "KS Basket 25 UNREADTIER Bydgoszcz (W)",
+    "Katarzynki II Torun (W)"
+   ],
+   "verdict": "NEEDS_RECHECK",
+   "reason": "would be HIGH_CONFIDENCE_EVENT_MATCH (event link + kick-off 27 Sep 12:30 + 'KS Basket 25 II Bydgoszcz' women_marker_from_competition; 'Energa Torun II' is a naming variant of 'Katarzynki II Torun (W)' (women_marker_from_competition 0.70)) but home: page squad numeral read as unread glyph by OCR; feed says II: independent reread required",
+   "reread_header": [
+    "6 Poland 1 Liga ' | Women C 27 ' Sep 12230",
+    "KS Basket 25 ll Bydgoszcz (W) VS Katarzyn ki ll",
+    "Torun (W)",
+    "Bet Bquer Game"
+   ],
+   "patched_teams": [
+    "KS Basket 25 II Bydgoszcz (W)",
+    "Katarzynki II Torun (W)"
+   ],
+   "verdict_after_reread": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason_after_reread": "event link + kick-off 27 Sep 12:30 + 'KS Basket 25 II Bydgoszcz' women_marker_from_competition; 'Energa Torun II' is a naming variant of 'Katarzynki II Torun (W)' (women_marker_from_competition 0.70)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 321,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-8d9ec0935d6e1241f712a8db",
+   "old": "WRONG_EVENT",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "KS Basket 25 II Bydgoszcz",
+   "away": "Energa Torun II",
+   "kickoff": "27 Sep 12:30",
+   "competition": "Liga 1 Women",
+   "country": "Poland",
+   "women": true,
+   "capture": "on-8d9ec0935d6e1241f712a8db_s002_event_direct.txt",
+   "p": "idv2-all/8d9ec0935d6e_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Poland 1 Liga Women 27 Sep 12:30",
+    "KS Basket 25 I| Bydgoszcz (W) vs Katarzynki II",
+    "Torun (W)",
+    "Popular Bet Builder Game"
+   ],
+   "teams": [
+    "KS Basket 25 UNREADTIER Bydgoszcz (W)",
+    "Katarzynki II Torun (W)"
+   ],
+   "verdict": "NEEDS_RECHECK",
+   "reason": "would be HIGH_CONFIDENCE_EVENT_MATCH (event link + kick-off 27 Sep 12:30 + 'KS Basket 25 II Bydgoszcz' women_marker_from_competition; 'Energa Torun II' is a naming variant of 'Katarzynki II Torun (W)' (women_marker_from_competition 0.70)) but home: page squad numeral read as unread glyph by OCR; feed says II: independent reread required",
+   "reread_header": [
+    "6 Poland 1 Liga ' | Women C 27 ' Sep 12230",
+    "KS Basket 25 ll Bydgoszcz (W) VS Katarzyn ki ll",
+    "Torun (W)",
+    "Bet Bquer Game 4;"
+   ],
+   "patched_teams": [
+    "KS Basket 25 II Bydgoszcz (W)",
+    "Katarzynki II Torun (W)"
+   ],
+   "verdict_after_reread": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason_after_reread": "event link + kick-off 27 Sep 12:30 + 'KS Basket 25 II Bydgoszcz' women_marker_from_competition; 'Energa Torun II' is a naming variant of 'Katarzynki II Torun (W)' (women_marker_from_competition 0.70)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 330,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-850bffa30672f3dbed50e235",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "Phantoms Boom",
+   "away": "Liege Panthers",
+   "kickoff": "27 Sep 14:00",
+   "competition": "Division 1 Women",
+   "country": "Belgium",
+   "women": true,
+   "capture": "on-850bffa30672f3dbed50e235_s001_event_direct.txt",
+   "p": "idv2-all/850bffa30672_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Belgium Div 1 Women 27 Sep 14:00",
+    "Phantoms Boom (W) vs Liege (W) v",
+    "Popular Bet Builder Game Team Quarter Half"
+   ],
+   "teams": [
+    "Phantoms Boom (W)",
+    "Liege (W)"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 14:00 + women's competition supplies Bet365's (W) + both names compatible: 'Phantoms Boom' ~ 'Phantoms Boom (W)' (women_marker_from_competition 1.00); 'Liege Panthers' ~ 'Liege (W)' (women_marker_from_competition 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 455,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-c9cb8c7d3ae86cc27c2ce48b",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "Phantoms Boom",
+   "away": "Liege Panthers",
+   "kickoff": "27 Sep 14:00",
+   "competition": "Division 1 Women",
+   "country": "Belgium",
+   "women": true,
+   "capture": "on-c9cb8c7d3ae86cc27c2ce48b_s002_event_direct.txt",
+   "p": "idv2-all/c9cb8c7d3ae8_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Belgium Div 1 Women 27 Sep 14:00",
+    "Phantoms Boom (W) vs Liege (W)",
+    "Popular Bet Builder Game Team Quarter H A"
+   ],
+   "teams": [
+    "Phantoms Boom (W)",
+    "Liege (W)"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 14:00 + women's competition supplies Bet365's (W) + both names compatible: 'Phantoms Boom' ~ 'Phantoms Boom (W)' (women_marker_from_competition 1.00); 'Liege Panthers' ~ 'Liege (W)' (women_marker_from_competition 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 443,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-a83207e7a11b56abd1cc3396",
+   "old": "ALIAS_REQUIRED",
+   "v2": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "Phantoms Boom",
+   "away": "Liege Panthers",
+   "kickoff": "27 Sep 14:00",
+   "competition": "Division 1 Women",
+   "country": "Belgium",
+   "women": true,
+   "capture": "on-a83207e7a11b56abd1cc3396_s002_event_direct.txt",
+   "p": "idv2-all/a83207e7a11b_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Belgium Div 1 Women 27 Sep 14:00",
+    "Phantoms Boom (W) vs Liege (W) v",
+    "Popular Bet Builder Game Team Quarter H A"
+   ],
+   "teams": [
+    "Phantoms Boom (W)",
+    "Liege (W)"
+   ],
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "reason": "event link + kick-off 27 Sep 14:00 + women's competition supplies Bet365's (W) + both names compatible: 'Phantoms Boom' ~ 'Phantoms Boom (W)' (women_marker_from_competition 1.00); 'Liege Panthers' ~ 'Liege (W)' (women_marker_from_competition 1.00)"
+  },
+  "final": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "latency_ms": 452,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-6fbafb7f07377396581ed1f2",
+   "old": "WRONG_EVENT",
+   "v2": "CONFLICT",
+   "v2c": "market_fingerprint",
+   "sport": "basketball",
+   "home": "UBI Graz",
+   "away": "ZKD Ilirija",
+   "kickoff": "27 Sep 12:30",
+   "competition": "Adriatic League 2 Women",
+   "country": null,
+   "women": true,
+   "capture": "on-6fbafb7f07377396581ed1f2_s002_event_direct.txt",
+   "p": "idv2-all/6fbafb7f0737_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Adriatic League 2 Women",
+    "27 Sep 12:30",
+    "UBI Graz (W) VS lirija (W)"
+   ],
+   "teams": [
+    "UBI Graz (W)",
+    "lirija (W)"
+   ],
+   "verdict": "MISMATCH",
+   "reason": "'ZKD Ilirija' is not 'lirija (W)' (different name 0.50 ([women] marker from competition))"
+  },
+  "final": "MISMATCH",
+  "latency_ms": 293,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-607f3290d84cd714b480fcc5",
+   "old": "WRONG_EVENT",
+   "v2": "NEEDS_RECHECK",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "UBI Graz",
+   "away": "ZKD Ilirija",
+   "kickoff": "27 Sep 12:30",
+   "competition": "Adriatic League 2 Women",
+   "country": null,
+   "women": true,
+   "capture": "on-607f3290d84cd714b480fcc5_s001_event_direct.txt",
+   "p": "idv2-all/607f3290d84c_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Adriatic League 2 Women",
+    "27 Sep 12:30",
+    "UBI Graz (W) VS lirija (W)"
+   ],
+   "teams": [
+    "UBI Graz (W)",
+    "lirija (W)"
+   ],
+   "verdict": "MISMATCH",
+   "reason": "'ZKD Ilirija' is not 'lirija (W)' (different name 0.50 ([women] marker from competition))"
+  },
+  "final": "MISMATCH",
+  "latency_ms": 302,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-e35c807553911b660ac6bb1b",
+   "old": "WRONG_EVENT",
+   "v2": "NEEDS_RECHECK",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "UBI Graz",
+   "away": "ZKD Ilirija",
+   "kickoff": "27 Sep 12:30",
+   "competition": "Adriatic League 2 Women",
+   "country": null,
+   "women": true,
+   "capture": "on-e35c807553911b660ac6bb1b_s001_event_direct.txt",
+   "p": "idv2-all/e35c80755391_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Adriatic League 2 Women",
+    "27 Sep 12:30",
+    "UBI Graz (W) VS lirija (W)"
+   ],
+   "teams": [
+    "UBI Graz (W)",
+    "lirija (W)"
+   ],
+   "verdict": "MISMATCH",
+   "reason": "'ZKD Ilirija' is not 'lirija (W)' (different name 0.50 ([women] marker from competition))"
+  },
+  "final": "MISMATCH",
+  "latency_ms": 294,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-26d2237482afd21302f182a0",
+   "old": "WRONG_EVENT",
+   "v2": "NEEDS_RECHECK",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "UBI Graz",
+   "away": "ZKD Ilirija",
+   "kickoff": "27 Sep 12:30",
+   "competition": "Adriatic League 2 Women",
+   "country": null,
+   "women": true,
+   "capture": "on-26d2237482afd21302f182a0_s001_event_direct.txt",
+   "p": "idv2-all/26d2237482af_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Adriatic League 2 Women",
+    "27 Sep 12:30",
+    "UBI Graz (W) VS lirija (W)"
+   ],
+   "teams": [
+    "UBI Graz (W)",
+    "lirija (W)"
+   ],
+   "verdict": "MISMATCH",
+   "reason": "'ZKD Ilirija' is not 'lirija (W)' (different name 0.50 ([women] marker from competition))"
+  },
+  "final": "MISMATCH",
+  "latency_ms": 303,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-91f5570037ecd75d74b98280",
+   "old": "WRONG_EVENT",
+   "v2": "NEEDS_RECHECK",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "UBI Graz",
+   "away": "ZKD Ilirija",
+   "kickoff": "27 Sep 12:30",
+   "competition": "Adriatic League 2 Women",
+   "country": null,
+   "women": true,
+   "capture": "on-91f5570037ecd75d74b98280_s002_event_direct.txt",
+   "p": "idv2-all/91f5570037ec_s002_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Adriatic League 2 Women",
+    "27 Sep 12:30",
+    "UBI Graz (W) VS lirija (W)"
+   ],
+   "teams": [
+    "UBI Graz (W)",
+    "lirija (W)"
+   ],
+   "verdict": "MISMATCH",
+   "reason": "'ZKD Ilirija' is not 'lirija (W)' (different name 0.50 ([women] marker from competition))"
+  },
+  "final": "MISMATCH",
+  "latency_ms": 317,
+  "error": null
+ },
+ {
+  "case": {
+   "id": "on-c721edd77be8f1e7be5da4ab",
+   "old": "WRONG_EVENT",
+   "v2": "NEEDS_RECHECK",
+   "v2c": "-",
+   "sport": "basketball",
+   "home": "UBI Graz",
+   "away": "ZKD Ilirija",
+   "kickoff": "27 Sep 12:30",
+   "competition": "Adriatic League 2 Women",
+   "country": null,
+   "women": true,
+   "capture": "on-c721edd77be8f1e7be5da4ab_s001_event_direct.txt",
+   "p": "idv2-all/c721edd77be8_s001_event_direct.png"
+  },
+  "identity": {
+   "header": [
+    "Adriatic League 2 Women",
+    "27 Sep 12:30",
+    "UBI Graz (W) VS lirija (W)"
+   ],
+   "teams": [
+    "UBI Graz (W)",
+    "lirija (W)"
+   ],
+   "verdict": "MISMATCH",
+   "reason": "'ZKD Ilirija' is not 'lirija (W)' (different name 0.50 ([women] marker from competition))"
+  },
+  "final": "MISMATCH",
+  "latency_ms": 308,
+  "error": null
+ }
+]

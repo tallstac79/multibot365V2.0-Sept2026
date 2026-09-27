@@ -36,7 +36,8 @@ public class EventPageTest {
         // Real run (2026-09-25 01:02): the page rendered with bet365's top bar scrolled off; the header lines the
         // adapter now passes start right below Chrome's URL bar, with the logo/balance line skipped.
         java.util.List<String> header = Arrays.asList("France Nationale 1 • 25 Sep 19:00", "Berck/Rang du Fliers vs Pays Salonais Basket", "13", "Popular Bet Builder", "Game Lines");
-        assertArrayEquals(new String[] {"Berck/Rang du Fliers", "Pays Salonais Basket"}, EventPage.teams(header));
+        // the wrapped "13" is the rest of the away name (identity v2 continuation join): "Pays Salonais Basket 13", the feed's own name
+        assertArrayEquals(new String[] {"Berck/Rang du Fliers", "Pays Salonais Basket 13"}, EventPage.teams(header));
         assertEquals("25 Sep 19:00", EventPage.kickoffText(header));
         // normal layout with the logo/balance line present would still read the same
         assertEquals("25 Sep 19:00", EventPage.kickoffText(Arrays.asList("bet365 £3.50 (+)", "France Nationale 1 • 25 Sep 19:00", "Besancon AC vs Val de Seine")));

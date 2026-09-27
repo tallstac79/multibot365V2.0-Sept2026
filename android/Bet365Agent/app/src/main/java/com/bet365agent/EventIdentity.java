@@ -49,7 +49,7 @@ import java.util.regex.Pattern;
  */
 final class EventIdentity {
     enum Level { NONE, WEAK, VARIANT, ALIAS, CANONICAL, EXACT }
-    enum Verdict { EXACT, CANONICAL_MATCH, ALIAS_MATCH, HIGH_CONFIDENCE_EVENT_MATCH, AMBIGUOUS, MISMATCH }
+    enum Verdict { EXACT, CANONICAL_MATCH, ALIAS_MATCH, HIGH_CONFIDENCE_EVENT_MATCH, AMBIGUOUS, MISMATCH, NEEDS_RECHECK }
 
     static final double STRONG = 0.70, DETERMINISTIC = 0.85;
     /** Scheduled starts this close (minutes, UK display time) are the same kick-off. */
@@ -68,6 +68,15 @@ final class EventIdentity {
             "deportivo", "hapoel", "maccabi", "elitzur", "ironi", "bnei", "dinamo", "dynamo", "spartak", "lokomotiv", "olimpia",
             "olimpija", "union", "racing", "nacional", "independiente", "estudiantes", "universitario", "universidad", "united",
             "city", "town"));
+    /** Common club nicknames: a shared nickname alone never ties two differently named clubs together ("Samsung
+     *  Thunders" / "Seoul Thunders", "Tokyo Tigers" / "RSSB Tigers"). */
+    private static final Set<String> NICKNAMES = new HashSet<>(Arrays.asList("tigers", "lions", "eagles", "giants", "thunders", "thunder",
+            "bulls", "bears", "wolves", "sharks", "hawks", "knights", "kings", "warriors", "rockets", "stars", "dragons", "panthers",
+            "jaguars", "falcons", "titans", "spurs", "heat", "magic", "jazz", "suns", "rangers", "rovers", "wanderers", "phoenix",
+            "raptors", "hornets", "pistons", "celtics", "lakers", "nets", "bucks", "pelicans", "grizzlies", "timberwolves", "mavericks",
+            "saints", "angels", "devils", "pirates", "vikings", "spartans", "trojans", "gladiators", "storm", "flames", "blaze", "fire",
+            "wildcats", "cougars", "leopards", "cheetahs", "rhinos", "buffaloes", "stallions", "mustangs", "broncos", "chiefs",
+            "dolphins", "whales", "orcas", "sonics", "clippers", "cavaliers", "bullets", "blazers", "boosters", "sky", "united", "city"));
     /** Protected markers: these distinguish teams and must agree on both sides. */
     private static final Pattern WOMEN = Pattern.compile("^(w|women|womens|ladies|female|femenino|feminin|feminino|damen|dames|fem)$");
     private static final Pattern AGE = Pattern.compile("^(u1[5-9]|u2[0-3]|u-1[5-9]|u-2[0-3])$");
@@ -86,14 +95,25 @@ final class EventIdentity {
         /** False when the bookmaker name carries distinctive tokens the feed name lacks ("Tigers" in "RSSB Tigers"):
          *  event-scoped evidence only, never an alias candidate. */
         final boolean aliasSafe;
+        /** Non-null when a decisive page reading came from an OCR glyph (a squad numeral read as "I|"): the side was
+         *  compared with the feed's reading provisionally, and only an independent reread may clear it. */
+        final String recheck;
         Side(String feed, String bookmaker, Level level, double score, boolean markersAgree, String note) {
             this(feed, bookmaker, level, score, markersAgree, note, kindFor(level), false, true);
         }
         Side(String feed, String bookmaker, Level level, double score, boolean markersAgree, String note, String kind,
              boolean markerFromCompetition, boolean aliasSafe) {
+            this(feed, bookmaker, level, score, markersAgree, note, kind, markerFromCompetition, aliasSafe, null);
+        }
+        Side(String feed, String bookmaker, Level level, double score, boolean markersAgree, String note, String kind,
+             boolean markerFromCompetition, boolean aliasSafe, String recheck) {
             this.feed = feed; this.bookmaker = bookmaker; this.level = level; this.score = score; this.markersAgree = markersAgree;
             this.note = note; this.kind = kind; this.markerFromCompetition = markerFromCompetition; this.aliasSafe = aliasSafe;
+            this.recheck = recheck;
         }
+        /** A name identical to the page's apart from a marker the competition itself supplies ("X" / "X (W)" in a women's
+         *  competition): as sure as a canonical match for pairing with a variant opponent. */
+        boolean sureWithCompetitionMarker() { return level == Level.VARIANT && markerFromCompetition && score >= 1.0; }
         private static String kindFor(Level l) { return l == Level.EXACT ? "exact" : l == Level.CANONICAL ? "canonical" : l == Level.ALIAS ? "alias" : "none"; }
         boolean atLeast(Level l) { return level.ordinal() >= l.ordinal(); }
         boolean tokenEvidence() { return level == Level.VARIANT && TOKEN_KINDS.contains(kind) && score >= DETERMINISTIC; }
@@ -101,6 +121,7 @@ final class EventIdentity {
             Map<String, Object> m = new LinkedHashMap<>();
             m.put("feed", feed); m.put("bookmaker", bookmaker); m.put("level", level.name()); m.put("kind", kind);
             m.put("score", Math.round(score * 100) / 100.0); m.put("note", note);
+            if (recheck != null) m.put("recheck", recheck);
             return m;
         }
     }
@@ -320,7 +341,7 @@ final class EventIdentity {
         Set<String> affixL = affixesOf(feedIsShort ? normBook : normFeed);   // club affixes the longer name carries ("Ariana FC Malmo")
         Set<String> ds = new HashSet<>(feedIsShort ? da : db), dl = new HashSet<>(feedIsShort ? db : da);
         boolean[] usedS = new boolean[s.size()], usedL = new boolean[l.size()];
-        List<String> shared = new ArrayList<>(), unexplained = new ArrayList<>();
+        List<String> shared = new ArrayList<>(), unexplained = new ArrayList<>(), fullShared = new ArrayList<>();
         int full = 0, abbrev = 0, sharedLetters = 0; boolean split = false, fuzzyPrefix = false, stemmed = false, lettered = false; double fuzzy = 1;
         for (int i = 0; i < s.size(); i++) {
             String t = s.get(i);
@@ -328,7 +349,7 @@ final class EventIdentity {
             usedS[i] = true;
             int j = -1;
             for (int k = 0; k < l.size() && j < 0; k++) if (!usedL[k] && (l.get(k).equals(t) || plural(t, l.get(k)))) j = k;
-            if (j >= 0) { usedL[j] = true; full++; shared.add(t); sharedLetters += t.length(); continue; }
+            if (j >= 0) { usedL[j] = true; full++; shared.add(t); fullShared.add(t); sharedLetters += t.length(); continue; }
             int[] run = concatRun(l, usedL, t);
             if (run != null) { for (int k = run[0]; k <= run[1]; k++) usedL[k] = true; full++; split = true; shared.add(t); sharedLetters += t.length(); continue; }
             // reverse split: one token of l is this token joined with the following tokens of s ("Val de Seine" -> "Valdeseine")
@@ -366,6 +387,18 @@ final class EventIdentity {
             return new TokenEvidence("family_conflict", 0, Level.NONE, "different club prefixes " + fx + " vs " + fy, shared, unexplained, extra, extraOnSecond);
         }
         if (!unexplained.isEmpty()) {
+            // Sponsor/prefix swap around a shared place or club core ("AB Castello" / "Amics Castello", "Energa Torun II" /
+            // "Katarzynki II Torun (W)"): a distinctive, non-nickname token matched in full, with unexplained alphabetic words
+            // on BOTH sides. Event-scoped evidence only (never an alias); usable only next to a sure opponent under the
+            // alert's own link, agreeing kick-off and competition (resolve / resolveVerified).
+            String core = null;
+            for (String t : fullShared) if (t.length() >= 4 && t.matches("[a-z]+") && !NICKNAMES.contains(t)) core = t;
+            boolean wordsBothSides = !extra.isEmpty();
+            for (String t : unexplained) if (!t.matches("[a-z]{2,}")) wordsBothSides = false;
+            for (String t : extra) if (!t.matches("[a-z]{3,}")) wordsBothSides = false;
+            if (core != null && wordsBothSides && full >= 1)
+                return new TokenEvidence("shared_core", STRONG, Level.VARIANT, "shared core [" + core + "]; " + unexplained + " vs " + extra
+                        + " unexplained on each side (event-scoped only)", shared, unexplained, extra, true);
             if (full >= 1 && ds.size() >= 2)
                 return new TokenEvidence("partial", Math.min(0.5, (double) full / ds.size()), Level.WEAK,
                         "shared " + shared + " but " + unexplained + " has no counterpart", shared, unexplained, extra, extraOnSecond);
@@ -424,7 +457,37 @@ final class EventIdentity {
         return out;
     }
 
+    /** EventPage.teams writes this token where OCR returned a glyph run with '|' in a team name ("I|", "||"): the squad
+     *  numeral there is unread, never guessed. */
+    static final String UNREAD_TIER = "UNREADTIER";
+
     static Side matchSide(String feed, String bookmaker, Map<String, String> extraAliases, boolean womensCompetition, Set<String> competitionMarkers) {
+        Side ocr = ocrTierSide(feed, bookmaker, extraAliases, womensCompetition, competitionMarkers);
+        if (ocr != null) return ocr;
+        return matchSideRead(feed, bookmaker, extraAliases, womensCompetition, competitionMarkers);
+    }
+
+    /** A page squad numeral that OCR could not read ("I|", "||" -> UNREADTIER), or a lone "I" where the feed says II/III:
+     *  compared provisionally with the feed's own reading (or without any numeral) and marked for an independent reread.
+     *  The provisional comparison decides only whether a reread can help; it can never accept on the glyph. */
+    private static Side ocrTierSide(String feed, String bookmaker, Map<String, String> extraAliases, boolean womensCompetition, Set<String> competitionMarkers) {
+        String nb = normalise(bookmaker), nf = normalise(feed);
+        List<String> bt = new ArrayList<>(Arrays.asList(nb.split(" ")));
+        String feedTier = null;
+        for (String t : nf.split(" ")) if (t.equals("ii") || t.equals("iii")) feedTier = t;
+        int at = bt.indexOf(UNREAD_TIER.toLowerCase(Locale.US));
+        String raw = at >= 0 ? "unread glyph" : null;
+        if (at < 0 && feedTier != null && !bt.contains(feedTier)) { at = bt.indexOf("i"); raw = at >= 0 ? "'I'" : null; }
+        if (at < 0) return null;
+        if (feedTier != null) bt.set(at, feedTier); else bt.remove(at);
+        Side provisional = matchSideRead(feed, String.join(" ", bt), extraAliases, womensCompetition, competitionMarkers);
+        String why = "page squad numeral read as " + raw + " by OCR; feed says " + (feedTier == null ? "none" : feedTier.toUpperCase(Locale.US))
+                + ": independent reread required";
+        return new Side(feed, bookmaker, provisional.level, provisional.score, provisional.markersAgree, provisional.note + "; " + why,
+                provisional.kind, provisional.markerFromCompetition, false, why);
+    }
+
+    private static Side matchSideRead(String feed, String bookmaker, Map<String, String> extraAliases, boolean womensCompetition, Set<String> competitionMarkers) {
         String nf = normalise(feed), nb = normalise(bookmaker);
         if (nf.isEmpty() || nb.isEmpty()) return new Side(feed, bookmaker, Level.NONE, 0, true, "empty name");
         Set<String> mf = markers(nf), mb = markers(nb);
@@ -500,7 +563,7 @@ final class EventIdentity {
             // Date glued to the league digit by OCR ("Japan B League 125 Sep 10:45"): keep the digit, drop the date.
             withoutDate = v.replaceAll("(?i)(?<=\\d)\\d{2}\\s+" + MONTH_RE + "[a-z]*.*$", "");
         // Bet365 abbreviates a numbered division ("Sweden 1.div Norra", 27 Sep 2026) where the feed says "Division 1 Norra".
-        String key = normalise(withoutDate).replaceAll("\\b(\\d)\\s*div\\b", "division $1");
+        String key = normalise(withoutDate).replaceAll("\\b(\\d)\\s*div\\b", "division $1").replaceAll("\\bdiv\\b", "division");
         // Observed provider label (Seoul/Wonju) includes the global region; bookmaker omits it.
         return key.equals("world club friendlies") ? "club friendlies" : key;
     }
@@ -532,6 +595,12 @@ final class EventIdentity {
         if (fc.isEmpty() || pc.isEmpty()) return "unknown (feed '" + fc + "', page '" + pc + "')";
         if (fc.equals(pc)) return "equal";
         if (!ck.isEmpty() && pc.equals(ck + " " + fc)) return "country_prefixed";
+        // Same league words in another order once the country prefix is removed ("Liga 1 Women" / "Poland 1 Liga Women",
+        // LKS Lodz v Sparta Ziebice, 27 Sep 2026). Every word and number must agree; nothing is translated or dropped.
+        String bare = !ck.isEmpty() && pc.startsWith(ck + " ") ? pc.substring(ck.length() + 1) : pc;
+        List<String> ft = new ArrayList<>(Arrays.asList(fc.split(" "))), pt = new ArrayList<>(Arrays.asList(bare.split(" ")));
+        Collections.sort(ft); Collections.sort(pt);
+        if (ft.size() >= 2 && ft.equals(pt)) return "same_words_reordered";
         // The feed names the parent competition, Bet365 adds its regional group: feed "Division 2" (Sweden), page
         // "Sweden 2.div Norrland" (Lucksta IF v Taftea IK, 27 Sep 2026). One or two plain words may follow; never a
         // protected marker (women, U21, reserves ...) or a number, which would name a different competition.
@@ -563,7 +632,7 @@ final class EventIdentity {
         Result r = resolve(feed, page, aliases, women);
         String competition = competitionMatchKind(feed.competition, country, page.competition);
         r.evidence.put("competition_match", competition);
-        if (!r.accepted()) return r;
+        if (!r.accepted() && r.verdict != Verdict.NEEDS_RECHECK) return r;
         boolean competitionOk = !competition.startsWith("mismatch") && !competition.startsWith("unknown");
         if (!r.kickoffKnown || !r.kickoffAgrees || !competitionOk) {
             List<String> missing = new ArrayList<>();
@@ -637,10 +706,23 @@ final class EventIdentity {
         }
         Level lo = h.level.ordinal() <= a.level.ordinal() ? h.level : a.level;
         Level hi = h.level.ordinal() >= a.level.ordinal() ? h.level : a.level;
-        if (lo == Level.EXACT) { ev.put("policy", "both_exact"); return new Result(Verdict.EXACT, "both teams exact", h, a, koKnown, koAgrees, false, none, null, ev); }
-        if (lo == Level.CANONICAL) { ev.put("policy", "both_canonical"); return new Result(Verdict.CANONICAL_MATCH, "both teams canonical", h, a, koKnown, koAgrees, false, none, null, ev); }
-        if (lo == Level.ALIAS) { ev.put("policy", "both_alias"); return new Result(Verdict.ALIAS_MATCH, "both teams via aliases", h, a, koKnown, koAgrees, false, none, null, ev); }
+        if (lo == Level.EXACT) { ev.put("policy", "both_exact"); return recheckIfNeeded(new Result(Verdict.EXACT, "both teams exact", h, a, koKnown, koAgrees, false, none, null, ev)); }
+        if (lo == Level.CANONICAL) { ev.put("policy", "both_canonical"); return recheckIfNeeded(new Result(Verdict.CANONICAL_MATCH, "both teams canonical", h, a, koKnown, koAgrees, false, none, null, ev)); }
+        if (lo == Level.ALIAS) { ev.put("policy", "both_alias"); return recheckIfNeeded(new Result(Verdict.ALIAS_MATCH, "both teams via aliases", h, a, koKnown, koAgrees, false, none, null, ev)); }
         String anchorText = "event link + kick-off " + page.kickoffUk + (ko.equals("exact") ? "" : " (" + ko + ")");
+        boolean sureH = h.atLeast(Level.ALIAS) || h.sureWithCompetitionMarker(), sureA = a.atLeast(Level.ALIAS) || a.sureWithCompetitionMarker();
+        if (lo == Level.VARIANT && hi == Level.VARIANT && (sureH ^ sureA) && (sureH ? a : h).score >= STRONG) {
+            // One name identical to the page's apart from the competition's own marker; the other a strong variant.
+            Side v = sureH ? a : h, sure = sureH ? h : a;
+            Map<String, String> cand = new LinkedHashMap<>();
+            if (v.aliasSafe) cand.put(v.feed, v.bookmaker);
+            if (page.anchored && koAgrees) {
+                ev.put("policy", "sure_team_with_competition_marker_plus_variant");
+                return recheckIfNeeded(new Result(Verdict.HIGH_CONFIDENCE_EVENT_MATCH, anchorText + " + '" + sure.feed + "' " + sure.kind + "; '" + v.feed
+                        + "' is a naming variant of '" + v.bookmaker + "' (" + v.kind + " " + fmt(v.score) + ")", h, a, koKnown, koAgrees, false, cand,
+                        v.score >= DETERMINISTIC ? "deterministic" : "high", ev));
+            }
+        }
         if (lo == Level.VARIANT && hi.ordinal() >= Level.ALIAS.ordinal()) {
             Side v = h.level == Level.VARIANT ? h : a;
             Map<String, String> cand = new LinkedHashMap<>();
@@ -648,8 +730,8 @@ final class EventIdentity {
             if (page.anchored && koAgrees) {
                 String conf = v.score >= DETERMINISTIC ? "deterministic" : "high";
                 ev.put("policy", "one_sure_team_plus_variant");
-                return new Result(Verdict.HIGH_CONFIDENCE_EVENT_MATCH, anchorText + " + '" + (v == h ? a.feed : h.feed) + "' " + (v == h ? a.kind : h.kind)
-                        + "; '" + v.feed + "' is a naming variant of '" + v.bookmaker + "' (" + v.kind + " " + fmt(v.score) + ")", h, a, koKnown, koAgrees, false, cand, conf, ev);
+                return recheckIfNeeded(new Result(Verdict.HIGH_CONFIDENCE_EVENT_MATCH, anchorText + " + '" + (v == h ? a.feed : h.feed) + "' " + (v == h ? a.kind : h.kind)
+                        + "; '" + v.feed + "' is a naming variant of '" + v.bookmaker + "' (" + v.kind + " " + fmt(v.score) + ")", h, a, koKnown, koAgrees, false, cand, conf, ev));
             }
             ev.put("policy", "variant_without_anchor");
             return new Result(Verdict.AMBIGUOUS, "'" + v.feed + "' only resembles '" + v.bookmaker + "' (" + v.kind + " " + fmt(v.score)
@@ -663,10 +745,7 @@ final class EventIdentity {
             if (a.aliasSafe) cand.put(a.feed, a.bookmaker);
             if (h.tokenEvidence() && a.tokenEvidence() && page.anchored && koAgrees) {
                 ev.put("policy", "event_evidence_both_variants");
-                String women = h.markerFromCompetition || a.markerFromCompetition ? " + women's competition supplies Bet365's (W)" : "";
-                return new Result(Verdict.HIGH_CONFIDENCE_EVENT_MATCH, anchorText + women + " + both names compatible: '" + h.feed + "' ~ '" + h.bookmaker
-                        + "' (" + h.kind + " " + fmt(h.score) + "); '" + a.feed + "' ~ '" + a.bookmaker + "' (" + a.kind + " " + fmt(a.score) + ")",
-                        h, a, koKnown, koAgrees, false, cand, "deterministic", ev);
+                return recheckIfNeeded(bothVariants(anchorText, h, a, koKnown, koAgrees, cand, ev));
             }
             List<String> why = new ArrayList<>();
             if (!page.anchored) why.add("no event anchor");
@@ -686,6 +765,23 @@ final class EventIdentity {
         Side bad = h.level == Level.NONE ? h : a;
         ev.put("policy", "different_team");
         return new Result(Verdict.MISMATCH, "'" + bad.feed + "' is not '" + bad.bookmaker + "' (" + bad.note + ")", h, a, koKnown, koAgrees, false, none, null, ev);
+    }
+
+    /** An accepted decision that rests on a provisional OCR reading becomes NEEDS_RECHECK (never accepted). */
+    private static Result recheckIfNeeded(Result r) {
+        String why = r.home != null && r.home.recheck != null ? "home: " + r.home.recheck : r.away != null && r.away.recheck != null ? "away: " + r.away.recheck : null;
+        if (why == null || !r.accepted()) return r;
+        r.evidence.put("policy", "ocr_recheck");
+        r.evidence.put("provisional_verdict", r.verdict.name());
+        return new Result(Verdict.NEEDS_RECHECK, "would be " + r.verdict + " (" + r.reason + ") but " + why, r.home, r.away, r.kickoffKnown, r.kickoffAgrees,
+                false, Collections.emptyMap(), null, r.evidence);
+    }
+
+    private static Result bothVariants(String anchorText, Side h, Side a, boolean koKnown, boolean koAgrees, Map<String, String> cand, Map<String, Object> ev) {
+        String women = h.markerFromCompetition || a.markerFromCompetition ? " + women's competition supplies Bet365's (W)" : "";
+        return new Result(Verdict.HIGH_CONFIDENCE_EVENT_MATCH, anchorText + women + " + both names compatible: '" + h.feed + "' ~ '" + h.bookmaker
+                + "' (" + h.kind + " " + fmt(h.score) + "); '" + a.feed + "' ~ '" + a.bookmaker + "' (" + a.kind + " " + fmt(a.score) + ")",
+                h, a, koKnown, koAgrees, false, cand, "deterministic", ev);
     }
 
     static Map<String, String> aliasesFromJson(String json) {

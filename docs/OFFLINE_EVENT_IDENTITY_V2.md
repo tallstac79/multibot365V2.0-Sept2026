@@ -132,3 +132,14 @@ these offline verdicts as part of this task. `requireSearchContext` around line
 Unresolved data needs are explicit destination-ID read-back, independent sport
 provenance, enhanced OCR confidence/crops, translated league mappings, and original
 quote history for changed markets. These are not silently filled from the alert.
+
+## Production integration (27 Sep 2026, APK 0.9.27-ops)
+
+Integrated into the phone's direct-link path as a port of the relevant evidence rules into `EventIdentity`, not by
+calling this module (the phone is the only component that sees the screen). Report, counts and live proofs:
+`evidence/identity-v2-integration/REPORT.md`. Summary: competition word order and `Div`/`Division`; wrapped team
+titles; OCR squad-numeral glyphs become NEEDS_RECHECK, cleared only by one enhanced reread of that numeral
+(`EventPage.patchNumeral`); event-scoped `shared_core` naming evidence next to a sure opponent. The market fingerprint
+is not an identity gate on the phone: the quote is judged after identity against the original alert's tolerance, and
+all 19 snapshot conflicts here are rejected there. Production-path replay: 30/46 accepted (was 16), 0 violations of
+this baseline; adversarial corpus: all negatives rejected.

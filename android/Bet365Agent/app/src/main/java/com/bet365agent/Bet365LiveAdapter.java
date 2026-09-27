@@ -759,7 +759,27 @@ final class Bet365LiveAdapter implements SiteAdapter {
             if (sessionLoggedIn(s)) { ui.put("session", "AUTHENTICATED"); return CompletableFuture.completedFuture(s); }
             // Not clearly logged in: the normal session step (may re-home / log in), then back to the event.
             return ensure_session().thenCompose(v -> ui.open(url)).thenCompose(v -> directEventLoaded(1));
-        }).thenApply(s -> verifyDirectEvent(s, kickoffUtc));
+        }).thenCompose(s -> verifyWithReread(s, kickoffUtc));
+    }
+
+    /** Identity on the captured page; a NEEDS_RECHECK (a squad numeral OCR could not read) gets ONE independent enhanced
+     *  reread of the same page. Only a clean reread can accept; the first reading is kept in identity_first_read. */
+    private CompletableFuture<Fixture> verifyWithReread(VisualScreen s, String kickoffUtc) {
+        try {
+            return CompletableFuture.completedFuture(verifyDirectEvent(s, kickoffUtc, false, null));
+        } catch (Failure f) {
+            if (!"IDENTITY_RECHECK".equals(f.stage)) throw f;
+            ui.put("identity_first_read", ui.record.opt("identity"));
+            List<String> firstHeader = headerLines(s);
+            return ui.captureEnhanced("event_reread").thenApply(reread -> {
+                List<String> again = headerLines(reread);
+                String[] patched = EventPage.patchNumeral(firstHeader, again);
+                ui.put("identity_reread", CoordinatorAgent.object("first_header", new JSONArray(firstHeader), "reread_header", new JSONArray(again),
+                        "patched_teams", patched == null ? org.json.JSONObject.NULL : new JSONArray(java.util.Arrays.asList(patched))));
+                if (patched == null) throw new Failure("ALIAS_REQUIRED", "NEEDS_RECHECK after enhanced reread: numeral not shown at the same place; " + f.getMessage());
+                return verifyDirectEvent(s, kickoffUtc, true, patched);
+            });
+        }
     }
 
     private CompletableFuture<VisualScreen> directEventLoaded(int attempt) {
@@ -777,36 +797,37 @@ final class Bet365LiveAdapter implements SiteAdapter {
      * right below Chrome's URL bar; the logo/balance line ("bet365 £3.50") is skipped so the competition stays first.
      */
     private static List<String> headerLines(VisualScreen s) {
-        List<String> out = new ArrayList<>();
-        for (VisualScreen.Line line : s.lines) if (headerLine(line)) out.add(line.text);
-        return out;
+        return EventHeader.header(wordsOf(s));   // one extraction for the wait loop, the identity decision and PLACE_HELD
     }
 
     private static boolean headerLine(VisualScreen.Line line) {
         return line.bounds.top >= 120 && line.bounds.top <= 480 && !line.text.toLowerCase(Locale.US).contains("bet365");
     }
 
-    private Fixture verifyDirectEvent(VisualScreen s, String kickoffUtc) {
+    private Fixture verifyDirectEvent(VisualScreen s, String kickoffUtc) { return verifyDirectEvent(s, kickoffUtc, true, null); }
+
+    private Fixture verifyDirectEvent(VisualScreen s, String kickoffUtc, boolean reread, String[] rereadTeams) {
         require(!visible(s, "SIMULATOR"), "WRONG_EVENT", "Simulator page on direct event link");
         if (EventPage.closed(texts(s))) {
             ui.put("direct_event_closed", true);
             throw new Failure("SUSPENDED", "Bet365 event page: betting has closed or been suspended (no search fallback)");
         }
-        List<String> header = headerLines(s);
-        String[] teams = EventPage.teams(header);
+        // Header lines from the raw OCR words (EventHeader: the same grouping as VisualScreen), so stored captures replay
+        // through this exact decision (EventPage.decide, EventIdentityV2ReplayTest).
+        List<String> header = EventHeader.header(wordsOf(s));
         ui.put("direct_event_header", new JSONArray(header));
-        if (teams == null) { ui.put("direct_event_rejected", "header teams not read"); return null; }
+        if (EventPage.teams(header) == null) { ui.put("direct_event_rejected", "header teams not read"); return null; }
         // Milestone B: the event identity resolver decides (sport, both teams, pairing, kick-off). The page was
         // opened from the alert's own link, so it is the anchor; the resolver's verdict is authoritative (A1).
-        String shown = EventPage.kickoffText(header);
         String want = kickoffUtc == null || kickoffUtc.isEmpty() ? null : EventPage.ukDisplay(kickoffUtc);
         require(!expectedAway.isEmpty(), "WRONG_EVENT", "Alert opponent is required");
         require("FULL_GAME".equals(contextPeriod), "WRONG_EVENT", "Full-game period required");
         String feedAway = expectedAway;
-        EventIdentity.Result id = EventIdentity.resolveVerified(
-                new EventIdentity.Event(sport, identityHome, feedAway, want, contextCompetition, false),
-                new EventIdentity.Event(sport, teams[0], teams[1], shown, header.isEmpty() ? null : header.get(0), !ui.record.optString("event_url").isEmpty()),
-                instructionAliases, womensCompetition, contextCountry);
+        EventPage.Direct direct = EventPage.decide(header, rereadTeams != null ? rereadTeams : EventPage.teams(header), sport, identityHome, feedAway, want,
+                contextCompetition, contextCountry, !ui.record.optString("event_url").isEmpty(), instructionAliases, womensCompetition);
+        String[] teams = direct.teams;
+        String shown = direct.shown;
+        EventIdentity.Result id = direct.result;
         ui.put("competition_check", CoordinatorAgent.object("feed", contextCompetition, "country", contextCountry,
                 "page", header.isEmpty() ? "" : header.get(0),
                 "matches", EventIdentity.competitionMatches(contextCompetition, contextCountry, header.isEmpty() ? null : header.get(0))));
@@ -828,8 +849,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
         if (!id.accepted()) {
             ui.put("direct_event_rejected", "identity: " + id.reason);
             String detail = "Event link shows '" + teams[0] + " v " + teams[1] + "'; alert says '" + identityHome + " v " + feedAway + "': " + id.reason;
-            // AMBIGUOUS = a naming variant without corroboration -> needs an alias; everything else is the wrong event.
-            throw new Failure(id.verdict == EventIdentity.Verdict.AMBIGUOUS ? "ALIAS_REQUIRED" : "WRONG_EVENT", detail);
+            // NEEDS_RECHECK: an unread squad numeral; one enhanced reread is allowed, after which it stays unresolved.
+            if (id.verdict == EventIdentity.Verdict.NEEDS_RECHECK && !reread) throw new Failure("IDENTITY_RECHECK", detail);
+            // AMBIGUOUS / unresolved recheck = not proven the same event (alias or reread needed); everything else is the wrong event.
+            throw new Failure(id.verdict == EventIdentity.Verdict.AMBIGUOUS || id.verdict == EventIdentity.Verdict.NEEDS_RECHECK
+                    ? "ALIAS_REQUIRED" : "WRONG_EVENT", (id.verdict == EventIdentity.Verdict.NEEDS_RECHECK ? "NEEDS_RECHECK after enhanced reread: " : "") + detail);
         }
         ui.put("kickoff_verified", id.kickoffKnown ? shown : (shown == null ? "not shown (in-play or unread)" : "no alert kick-off"));
         android.graphics.Rect bounds = new android.graphics.Rect();

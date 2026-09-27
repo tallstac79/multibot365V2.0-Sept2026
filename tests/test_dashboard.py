@@ -26,7 +26,9 @@ class DashboardTests(unittest.TestCase):
         self.assertEqual(data['phone']['status'], 'OFFLINE')
         self.assertIsNone(data['phone']['latency_ms'])
         self.assertTrue(data['dashboard']['online'])
-        self.assertNotIn('token', json.dumps(data))
+        # No credential field may leak. (The payload can legitimately contain the word in identity evidence such as
+        # "canonical tokens equal" from the phone's last result, so the check is on a token key, not the substring.)
+        self.assertNotIn('"token"', json.dumps(data))
     def test_health_online_degraded_and_reconnect(self):
         (self.root/'.local').mkdir()
         (self.root/'.local/coordinator.json').write_text(json.dumps({'url':'http://phone.ts.net:8767','token':'SECRET'}))

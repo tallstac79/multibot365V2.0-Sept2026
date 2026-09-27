@@ -69,6 +69,34 @@ final class OcrBenchWorkflow {
             for (String t : texts) { if (joined.length() > 500) break; joined.append(t).append(" | "); }
             CoordinatorAgent.put(r, "text", joined.toString());
             switch (cls) {
+                case "identity": {
+                    // Identity v2 device check: the direct-link identity decision (EventHeader -> EventPage.decide ->
+                    // EventIdentity.resolveVerified) on a stored event page, OCR'd with the named engine (the live first read);
+                    // a NEEDS_RECHECK gets the live reread routine (Tesseract recognizeLines) and EventPage.patchNumeral.
+                    List<String> header = EventHeader.header(words);
+                    EventPage.Direct d = EventPage.decide(header, spec.optString("sport"), spec.optString("home"), spec.optString("away"),
+                            spec.optString("kickoff", null), spec.optString("competition", null), spec.optString("country", null), true,
+                            java.util.Collections.emptyMap(), spec.optBoolean("women", false));
+                    JSONObject id = CoordinatorAgent.object("header", new JSONArray(header),
+                            "teams", d.teams == null ? JSONObject.NULL : new JSONArray(java.util.Arrays.asList(d.teams)),
+                            "verdict", d.result == null ? "NO_TEAMS" : d.result.verdict.name(), "reason", d.result == null ? "" : d.result.reason);
+                    if (d.result != null && d.result.verdict == EventIdentity.Verdict.NEEDS_RECHECK) {
+                        VisualControlRunner.Ocr again = runner.benchOcr(bitmap, true, "legacy");
+                        List<String> reread = EventHeader.header(Bet365LiveAdapter.wordsOf(new VisualScreen(again)));
+                        String[] patched = EventPage.patchNumeral(header, reread);
+                        CoordinatorAgent.put(id, "reread_header", new JSONArray(reread));
+                        CoordinatorAgent.put(id, "patched_teams", patched == null ? JSONObject.NULL : new JSONArray(java.util.Arrays.asList(patched)));
+                        if (patched != null) {
+                            EventPage.Direct d2 = EventPage.decide(header, patched, spec.optString("sport"), spec.optString("home"), spec.optString("away"),
+                                    spec.optString("kickoff", null), spec.optString("competition", null), spec.optString("country", null), true,
+                                    java.util.Collections.emptyMap(), spec.optBoolean("women", false));
+                            CoordinatorAgent.put(id, "verdict_after_reread", d2.result.verdict.name());
+                            CoordinatorAgent.put(id, "reason_after_reread", d2.result.reason);
+                        } else CoordinatorAgent.put(id, "verdict_after_reread", "NEEDS_RECHECK_UNRESOLVED");
+                    }
+                    CoordinatorAgent.put(r, "identity", id);
+                    break;
+                }
                 case "words": {
                     // Every word with its bounds (fixture extraction for parsers; e.g. football market pages).
                     JSONArray all = new JSONArray();

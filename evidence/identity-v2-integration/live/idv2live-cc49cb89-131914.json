@@ -1,0 +1,288 @@
+{
+ "instruction_id": "on-cc49cb89c192dee0fd593ef1",
+ "payload": {
+  "instruction_id": "idv2live-cc49cb89-131914",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Viktoria Plzen||Slovacko",
+  "sport": "football",
+  "market": "1X2",
+  "side": "AWAY",
+  "line": "",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "minimum_price": "2.47",
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201817351/F3/I1/",
+  "kickoff_utc": "2026-09-27T13:00",
+  "competition": "1. Liga Women",
+  "period": "FULL_GAME",
+  "country": "Czech Republic",
+  "competition_women": "true"
+ },
+ "result": {
+  "instruction_id": "idv2live-cc49cb89-131914",
+  "status": "FAIL",
+  "stage": "ALIAS_REQUIRED",
+  "detail": "Event link shows 'Viktoria Plzen (W) v Slovacko (W)'; alert says 'Viktoria Plzen v Slovacko': Known matching kick-off and competition required (competition mismatch (feed '1 liga women' vs page 'czechia division 1 women'))",
+  "duration_ms": 4101,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 4020,
+   "last_progress_at_ms": 1790511555745,
+   "instruction_id": "idv2live-cc49cb89-131914",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790511555732
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 17,
+     "at_ms": 1790511555736
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 21,
+     "at_ms": 1790511555745,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 21,
+      "start_ts_ms": 1790511555737,
+      "end_elapsed_ms": 4020,
+      "end_ts_ms": 1790511559736,
+      "duration_ms": 3999,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3453,
+     "at_ms": 1790511555745
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3942,
+     "at_ms": 1790511555745
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4020,
+     "at_ms": 1790511555745
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_BeDNjeKIsEErkwnLrhxXdF5jUfNygR6EHDljW3YyP30",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'Viktoria Plzen (W) v Slovacko (W)'; alert says 'Viktoria Plzen v Slovacko': Known matching kick-off and competition required (competition mismatch (feed '1 liga women' vs page 'czechia division 1 women'))",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 21,
+    "start_ts_ms": 1790511555737,
+    "end_elapsed_ms": 4020,
+    "end_ts_ms": 1790511559736,
+    "duration_ms": 3999,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed '1 liga women' vs page 'czechia division 1 women'))",
+  "identity": {
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed '1 liga women' vs page 'czechia division 1 women'))",
+   "home": {
+    "feed": "Viktoria Plzen",
+    "bookmaker": "Viktoria Plzen (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Slovacko",
+    "bookmaker": "Slovacko (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "mismatch (feed '1 liga women' vs page 'czechia division 1 women')",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Viktoria Plzen",
+     "bookmaker": "Viktoria Plzen (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "away_similarity": {
+     "feed": "Slovacko",
+     "bookmaker": "Slovacko (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "verified_gate_failed",
+    "verdict": "AMBIGUOUS"
+   }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201817351/F3/I1/"
+ },
+ "run": {
+  "run_id": "c_BeDNjeKIsEErkwnLrhxXdF5jUfNygR6EHDljW3YyP30",
+  "adapter": "live_bet365",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790511555716,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790511555716
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 17,
+    "wall_ts_ms": 1790511555732
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 21,
+    "wall_ts_ms": 1790511555737
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3453,
+    "wall_ts_ms": 1790511559169
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3942,
+    "wall_ts_ms": 1790511559658
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 4020,
+    "wall_ts_ms": 1790511559736
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 21,
+    "start_ts_ms": 1790511555737,
+    "end_elapsed_ms": 4020,
+    "end_ts_ms": 1790511559736,
+    "duration_ms": 3999,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Viktoria Plzen",
+  "identity_home": "Viktoria Plzen",
+  "expected_away": "Slovacko",
+  "identity_away": "Slovacko",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201817351/F3/I1/",
+  "current_stage": "OPEN_HOME",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Czechia Div 1 Women 27 Sep 14:00",
+   "Viktoria Plzen (W) v Slovacko (W)",
+   "Popular Bet Builder Result Goals Half Asian Lines"
+  ],
+  "competition_check": {
+   "feed": "1. Liga Women",
+   "country": "Czech Republic",
+   "page": "Czechia Div 1 Women 27 Sep 14:00",
+   "matches": false
+  },
+  "identity": {
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed '1 liga women' vs page 'czechia division 1 women'))",
+   "home": {
+    "feed": "Viktoria Plzen",
+    "bookmaker": "Viktoria Plzen (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Slovacko",
+    "bookmaker": "Slovacko (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "mismatch (feed '1 liga women' vs page 'czechia division 1 women')",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Viktoria Plzen",
+     "bookmaker": "Viktoria Plzen (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "away_similarity": {
+     "feed": "Slovacko",
+     "bookmaker": "Slovacko (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "verified_gate_failed",
+    "verdict": "AMBIGUOUS"
+   }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed '1 liga women' vs page 'czechia division 1 women'))",
+  "detail": "Event link shows 'Viktoria Plzen (W) v Slovacko (W)'; alert says 'Viktoria Plzen v Slovacko': Known matching kick-off and competition required (competition mismatch (feed '1 liga women' vs page 'czechia division 1 women'))",
+  "duration_ms": 4020
+ },
+ "wall": 5.3
+}

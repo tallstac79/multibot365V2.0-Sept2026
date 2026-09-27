@@ -1,0 +1,884 @@
+{
+ "instruction_id": "on-36b9859536ebbd15b90ae3b3",
+ "payload": {
+  "instruction_id": "idv2live-36b98595-131921",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Besa Biel/Bienne||Yverdon Sport II",
+  "sport": "football",
+  "market": "1X2",
+  "side": "HOME",
+  "line": "",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "minimum_price": "2.13",
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201827378/F3/I1/",
+  "kickoff_utc": "2026-09-27T13:00",
+  "competition": "2. Liga Interregional",
+  "period": "FULL_GAME",
+  "country": "Switzerland"
+ },
+ "result": {
+  "instruction_id": "idv2live-36b98595-131921",
+  "status": "FAIL",
+  "stage": "BELOW_MINIMUM",
+  "detail": "Visible price 1.95 is below minimum 2.13",
+  "duration_ms": 7743,
+  "progress": {
+   "stage": "CLEAR_BETSLIP",
+   "elapsed_ms": 7569,
+   "last_progress_at_ms": 1790511567549,
+   "instruction_id": "idv2live-36b98595-131921",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790511562860
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 22,
+     "at_ms": 1790511562867
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 30,
+     "at_ms": 1790511562877,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 30,
+      "start_ts_ms": 1790511562869,
+      "end_elapsed_ms": 4105,
+      "end_ts_ms": 1790511566943,
+      "duration_ms": 4075,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3473,
+     "at_ms": 1790511562877
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4018,
+     "at_ms": 1790511562877
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4105,
+     "at_ms": 1790511566949,
+     "timing": {
+      "stage": "MARKET_NAV",
+      "start_elapsed_ms": 4105,
+      "start_ts_ms": 1790511566943,
+      "end_elapsed_ms": 4632,
+      "end_ts_ms": 1790511567471,
+      "duration_ms": 527,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4111,
+     "at_ms": 1790511566949
+    },
+    {
+     "stage": "MARKET_NAV",
+     "elapsed_ms": 4609,
+     "at_ms": 1790511566949
+    },
+    {
+     "stage": "READ_SELECTION",
+     "elapsed_ms": 4632,
+     "at_ms": 1790511567480,
+     "timing": {
+      "stage": "READ_SELECTION",
+      "start_elapsed_ms": 4632,
+      "start_ts_ms": 1790511567471,
+      "end_elapsed_ms": 4643,
+      "end_ts_ms": 1790511567482,
+      "duration_ms": 11,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_LINE",
+     "elapsed_ms": 4643,
+     "at_ms": 1790511567505,
+     "timing": {
+      "stage": "READ_LINE",
+      "start_elapsed_ms": 4643,
+      "start_ts_ms": 1790511567482,
+      "end_elapsed_ms": 4667,
+      "end_ts_ms": 1790511567506,
+      "duration_ms": 24,
+      "status": "ok",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "READ_PRICE",
+     "elapsed_ms": 4667,
+     "at_ms": 1790511567527,
+     "timing": {
+      "stage": "READ_PRICE",
+      "start_elapsed_ms": 4667,
+      "start_ts_ms": 1790511567506,
+      "end_elapsed_ms": 7569,
+      "end_ts_ms": 1790511570408,
+      "duration_ms": 2902,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 4690,
+     "at_ms": 1790511567549
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 4711,
+     "at_ms": 1790511567549
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 5190,
+     "at_ms": 1790511567549
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 5211,
+     "at_ms": 1790511567549
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 6982,
+     "at_ms": 1790511567549
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 7536,
+     "at_ms": 1790511567549
+    },
+    {
+     "stage": "CLEAR_BETSLIP",
+     "elapsed_ms": 7569,
+     "at_ms": 1790511567549
+    }
+   ]
+  },
+  "device_stage": "CLEAR_BETSLIP",
+  "execution_count": 1,
+  "run_id": "c_AycL5g-w6Q_HpRSojp0iVVNNYzpsbjJjbbR0Wnzmvv8",
+  "fixture_name": "FC Besa Biel/Bienne v Yverdon Sport FC II",
+  "home": "FC Besa Biel/Bienne",
+  "away": "Yverdon Sport FC II",
+  "competition": "Switzerland 2. Liga Interregional 27 Sep 14:00",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "line": "NONE",
+   "price": "1.95",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "FC Besa Biel/Bienne",
+   "bounds": [
+    97,
+    657,
+    169,
+    698
+   ]
+  },
+  "verification_detail": "Visible price 1.95 is below minimum 2.13",
+  "betslip_clear": {
+   "tapped": true,
+   "bounds": [
+    19,
+    322,
+    47,
+    354
+   ],
+   "place_bet_still_visible": false
+  },
+  "event_context": {
+   "home": "FC Besa Biel/Bienne",
+   "away": "Yverdon Sport FC II",
+   "competition": "switzerland 2 liga interregional",
+   "kickoff_utc": "2026-09-27T13:00",
+   "period": "FULL_GAME"
+  },
+  "route": "event_link",
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790511567480,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "NONE",
+     "price": "1.95",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "FC Besa Biel/Bienne",
+     "bounds": [
+      97,
+      657,
+      169,
+      698
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790511567481,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "NONE",
+     "price": "1.95",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "FC Besa Biel/Bienne",
+     "bounds": [
+      97,
+      657,
+      169,
+      698
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 30,
+    "start_ts_ms": 1790511562869,
+    "end_elapsed_ms": 4105,
+    "end_ts_ms": 1790511566943,
+    "duration_ms": 4075,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4105,
+    "start_ts_ms": 1790511566943,
+    "end_elapsed_ms": 4632,
+    "end_ts_ms": 1790511567471,
+    "duration_ms": 527,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 4632,
+    "start_ts_ms": 1790511567471,
+    "end_elapsed_ms": 4643,
+    "end_ts_ms": 1790511567482,
+    "duration_ms": 11,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 4643,
+    "start_ts_ms": 1790511567482,
+    "end_elapsed_ms": 4667,
+    "end_ts_ms": 1790511567506,
+    "duration_ms": 24,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 4667,
+    "start_ts_ms": 1790511567506,
+    "end_elapsed_ms": 7569,
+    "end_ts_ms": 1790511570408,
+    "duration_ms": 2902,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "identity": {
+   "verdict": "CANONICAL_MATCH",
+   "reason": "both teams canonical",
+   "home": {
+    "feed": "Besa Biel/Bienne",
+    "bookmaker": "FC Besa Biel/Bienne",
+    "level": "CANONICAL",
+    "kind": "canonical",
+    "score": 1,
+    "note": "canonical tokens equal",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Yverdon Sport II",
+    "bookmaker": "Yverdon Sport FC II",
+    "level": "CANONICAL",
+    "kind": "canonical",
+    "score": 1,
+    "note": "canonical tokens equal",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Besa Biel/Bienne",
+     "bookmaker": "FC Besa Biel/Bienne",
+     "level": "CANONICAL",
+     "kind": "canonical",
+     "score": 1,
+     "note": "canonical tokens equal"
+    },
+    "away_similarity": {
+     "feed": "Yverdon Sport II",
+     "bookmaker": "Yverdon Sport FC II",
+     "level": "CANONICAL",
+     "kind": "canonical",
+     "score": 1,
+     "note": "canonical tokens equal"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "both_canonical",
+    "verdict": "CANONICAL_MATCH"
+   }
+  },
+  "identity_verdict": "CANONICAL_MATCH",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201827378/F3/I1/"
+ },
+ "run": {
+  "run_id": "c_AycL5g-w6Q_HpRSojp0iVVNNYzpsbjJjbbR0Wnzmvv8",
+  "adapter": "live_bet365",
+  "status": "BELOW_MINIMUM",
+  "phase": "FINISHED",
+  "started_at_ms": 1790511562839,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790511562839
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 22,
+    "wall_ts_ms": 1790511562861
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 30,
+    "wall_ts_ms": 1790511562869
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3473,
+    "wall_ts_ms": 1790511566312
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 4018,
+    "wall_ts_ms": 1790511566857
+   },
+   {
+    "phase": "MARKET_NAV",
+    "elapsed_ms": 4105,
+    "wall_ts_ms": 1790511566943
+   },
+   {
+    "phase": "CAPTURE_markets",
+    "elapsed_ms": 4111,
+    "wall_ts_ms": 1790511566949
+   },
+   {
+    "phase": "CAPTURED_markets",
+    "elapsed_ms": 4609,
+    "wall_ts_ms": 1790511567447
+   },
+   {
+    "phase": "READ_SELECTION",
+    "elapsed_ms": 4632,
+    "wall_ts_ms": 1790511567471
+   },
+   {
+    "phase": "READ_LINE",
+    "elapsed_ms": 4643,
+    "wall_ts_ms": 1790511567482
+   },
+   {
+    "phase": "READ_PRICE",
+    "elapsed_ms": 4667,
+    "wall_ts_ms": 1790511567506
+   },
+   {
+    "phase": "CLEAR_BETSLIP",
+    "elapsed_ms": 4690,
+    "wall_ts_ms": 1790511567528
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_pre",
+    "elapsed_ms": 4711,
+    "wall_ts_ms": 1790511567549
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_pre",
+    "elapsed_ms": 5190,
+    "wall_ts_ms": 1790511568028
+   },
+   {
+    "effect": "gesture",
+    "target": "Remove selection from betslip",
+    "bounds": [
+     19,
+     322,
+     47,
+     354
+    ],
+    "elapsed_ms": 5211
+   },
+   {
+    "phase": "GESTURE_DISPATCHING",
+    "elapsed_ms": 5211,
+    "wall_ts_ms": 1790511568049
+   },
+   {
+    "phase": "CAPTURE_clear_betslip_after",
+    "elapsed_ms": 6982,
+    "wall_ts_ms": 1790511569821
+   },
+   {
+    "phase": "CAPTURED_clear_betslip_after",
+    "elapsed_ms": 7536,
+    "wall_ts_ms": 1790511570375
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 7569,
+    "wall_ts_ms": 1790511570408
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_markets.png",
+   "s003_clear_betslip_pre.png",
+   "s004_clear_betslip_after.png"
+  ],
+  "gesture_attempts": 1,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 30,
+    "start_ts_ms": 1790511562869,
+    "end_elapsed_ms": 4105,
+    "end_ts_ms": 1790511566943,
+    "duration_ms": 4075,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "MARKET_NAV",
+    "start_elapsed_ms": 4105,
+    "start_ts_ms": 1790511566943,
+    "end_elapsed_ms": 4632,
+    "end_ts_ms": 1790511567471,
+    "duration_ms": 527,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_SELECTION",
+    "start_elapsed_ms": 4632,
+    "start_ts_ms": 1790511567471,
+    "end_elapsed_ms": 4643,
+    "end_ts_ms": 1790511567482,
+    "duration_ms": 11,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_LINE",
+    "start_elapsed_ms": 4643,
+    "start_ts_ms": 1790511567482,
+    "end_elapsed_ms": 4667,
+    "end_ts_ms": 1790511567506,
+    "duration_ms": 24,
+    "status": "ok",
+    "retries": 0
+   },
+   {
+    "stage": "READ_PRICE",
+    "start_elapsed_ms": 4667,
+    "start_ts_ms": 1790511567506,
+    "end_elapsed_ms": 7569,
+    "end_ts_ms": 1790511570408,
+    "duration_ms": 2902,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Besa Biel/Bienne",
+  "identity_home": "Besa Biel/Bienne",
+  "expected_away": "Yverdon Sport II",
+  "identity_away": "Yverdon Sport II",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201827378/F3/I1/",
+  "current_stage": "READ_PRICE",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Switzerland 2. Liga Interregional 27 Sep 14:00",
+   "FC Besa Biel/Bienne v Yverdon Sport FC II",
+   "Popular Bet Builder Result Goals Half Asian Lines"
+  ],
+  "competition_check": {
+   "feed": "2. Liga Interregional",
+   "country": "Switzerland",
+   "page": "Switzerland 2. Liga Interregional 27 Sep 14:00",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "CANONICAL_MATCH",
+   "reason": "both teams canonical",
+   "home": {
+    "feed": "Besa Biel/Bienne",
+    "bookmaker": "FC Besa Biel/Bienne",
+    "level": "CANONICAL",
+    "kind": "canonical",
+    "score": 1,
+    "note": "canonical tokens equal",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Yverdon Sport II",
+    "bookmaker": "Yverdon Sport FC II",
+    "level": "CANONICAL",
+    "kind": "canonical",
+    "score": 1,
+    "note": "canonical tokens equal",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Besa Biel/Bienne",
+     "bookmaker": "FC Besa Biel/Bienne",
+     "level": "CANONICAL",
+     "kind": "canonical",
+     "score": 1,
+     "note": "canonical tokens equal"
+    },
+    "away_similarity": {
+     "feed": "Yverdon Sport II",
+     "bookmaker": "Yverdon Sport FC II",
+     "level": "CANONICAL",
+     "kind": "canonical",
+     "score": 1,
+     "note": "canonical tokens equal"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "both_canonical",
+    "verdict": "CANONICAL_MATCH"
+   }
+  },
+  "identity_verdict": "CANONICAL_MATCH",
+  "route": "event_link",
+  "kickoff_verified": "27 Sep 14:00",
+  "verified_fixture": {
+   "code": "6762e6b0",
+   "home": "FC Besa Biel/Bienne",
+   "away": "Yverdon Sport FC II",
+   "fixture_name": "FC Besa Biel/Bienne v Yverdon Sport FC II",
+   "exact_fixture_text": "Home FC Besa Biel/Bienne\nAway Yverdon Sport FC II",
+   "competition": "Switzerland 2. Liga Interregional 27 Sep 14:00",
+   "bounds": [
+    35,
+    265,
+    701,
+    436
+   ]
+  },
+  "fixture_home": "FC Besa Biel/Bienne",
+  "fixture_away": "Yverdon Sport FC II",
+  "identity_verified_home": "Besa Biel/Bienne",
+  "identity_verified_away": "Yverdon Sport II",
+  "event_verified": true,
+  "event_context": {
+   "home": "FC Besa Biel/Bienne",
+   "away": "Yverdon Sport FC II",
+   "competition": "switzerland 2 liga interregional",
+   "kickoff_utc": "2026-09-27T13:00",
+   "period": "FULL_GAME"
+  },
+  "fixture": {
+   "code": "6762e6b0",
+   "home": "FC Besa Biel/Bienne",
+   "away": "Yverdon Sport FC II",
+   "fixture_name": "FC Besa Biel/Bienne v Yverdon Sport FC II",
+   "exact_fixture_text": "Home FC Besa Biel/Bienne\nAway Yverdon Sport FC II",
+   "competition": "Switzerland 2. Liga Interregional 27 Sep 14:00",
+   "bounds": [
+    35,
+    265,
+    701,
+    436
+   ]
+  },
+  "football_market_reads": [
+   {
+    "view": "popular",
+    "cells": [
+     "MONEYLINE/HOME/NONE@1.95 (FC Besa Biel/Bienne)",
+     "MONEYLINE/DRAW/NONE@4.10 (Draw)",
+     "MONEYLINE/AWAY/NONE@2.80 (Yverdon Sport FC II)",
+     "TOTAL/OVER/2.5@1.33 (Over)",
+     "TOTAL/UNDER/2.5@3.25 (Under)"
+    ],
+    "notes": [],
+    "full_time_result": true,
+    "goals_over_under": true,
+    "asian_handicap": false,
+    "goal_line": false
+   }
+  ],
+  "football_markets": [
+   {
+    "market": "MONEYLINE",
+    "selection_role": "HOME",
+    "selection_name": "FC Besa Biel/Bienne",
+    "price": "1.95",
+    "line": "NONE",
+    "bounds": [
+     97,
+     657,
+     169,
+     698
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "price": "4.10",
+    "line": "NONE",
+    "bounds": [
+     323,
+     657,
+     396,
+     698
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "selection_role": "AWAY",
+    "selection_name": "Yverdon Sport FC II",
+    "price": "2.80",
+    "line": "NONE",
+    "bounds": [
+     551,
+     657,
+     624,
+     698
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "price": "1.33",
+    "line": "2.5",
+    "bounds": [
+     282,
+     994,
+     354,
+     1035
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "price": "3.25",
+    "line": "2.5",
+    "bounds": [
+     537,
+     994,
+     610,
+     1035
+    ]
+   }
+  ],
+  "markets": [
+   {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "1.95",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "FC Besa Biel/Bienne",
+    "bounds": [
+     97,
+     657,
+     169,
+     698
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "NONE",
+    "price": "4.10",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     323,
+     657,
+     396,
+     698
+    ]
+   },
+   {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "NONE",
+    "price": "2.80",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "Yverdon Sport FC II",
+    "bounds": [
+     551,
+     657,
+     624,
+     698
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.5",
+    "price": "1.33",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     282,
+     994,
+     354,
+     1035
+    ]
+   },
+   {
+    "market": "TOTAL",
+    "side": "UNDER",
+    "line": "2.5",
+    "price": "3.25",
+    "availability": "OPEN",
+    "selection_role": "UNDER",
+    "selection_name": "Under",
+    "bounds": [
+     537,
+     994,
+     610,
+     1035
+    ]
+   }
+  ],
+  "execution_observations": [
+   {
+    "stage": "grid",
+    "observed_at_ms": 1790511567480,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "NONE",
+     "price": "1.95",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "FC Besa Biel/Bienne",
+     "bounds": [
+      97,
+      657,
+      169,
+      698
+     ]
+    },
+    "identity_verified": false
+   },
+   {
+    "stage": "selection",
+    "observed_at_ms": 1790511567481,
+    "observed": {
+     "market": "MONEYLINE",
+     "side": "HOME",
+     "line": "NONE",
+     "price": "1.95",
+     "availability": "OPEN",
+     "selection_role": "HOME",
+     "selection_name": "FC Besa Biel/Bienne",
+     "bounds": [
+      97,
+      657,
+      169,
+      698
+     ]
+    },
+    "identity_verified": true
+   }
+  ],
+  "selection_role": "HOME",
+  "selection_name": "FC Besa Biel/Bienne",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "line": "NONE",
+   "price": "1.95",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "FC Besa Biel/Bienne",
+   "bounds": [
+    97,
+    657,
+    169,
+    698
+   ]
+  },
+  "betslip_clear": {
+   "tapped": true,
+   "bounds": [
+    19,
+    322,
+    47,
+    354
+   ],
+   "place_bet_still_visible": false
+  },
+  "detail": "Visible price 1.95 is below minimum 2.13",
+  "duration_ms": 7569
+ },
+ "wall": 8.5
+}

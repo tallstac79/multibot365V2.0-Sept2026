@@ -93,7 +93,17 @@ final class EventPage {
 
     /** {home, away} from the header ("Kyoto Hannaryz vs Shiga Lakes" or "Hapoel Tel Aviv VS Bayern Munich"). */
     static String[] teams(List<String> headerLines) {
-        for (String raw : headerLines) {
+        for (int index = 0; index < headerLines.size(); index++) {
+            String raw = headerLines.get(index);
+            // A team title too long for one line wraps onto the next header line ("... vs Katarzynki II" / "Torun (W)",
+            // "... vs Leonas de Ponce" / "(W)"): join a short continuation that is neither a kick-off, a tab strip nor a fixture.
+            if (index + 1 < headerLines.size() && raw.length() >= 30 && VS.matcher(OcrText.normalize(raw)).matches()) {
+                String next = headerLines.get(index + 1).trim();
+                if (continuation(next)) raw = raw + " " + next;
+            }
+            // OCR glyph runs containing '|' inside a name ("KS Basket 25 I| Bydgoszcz", "||") are an unread squad numeral:
+            // kept as an explicit placeholder so the resolver asks for a reread instead of silently dropping it.
+            raw = raw.replaceAll("(?<=^|\\s)[|Il1!]*\\|[|Il1!]*(?=\\s|$)", EventIdentity.UNREAD_TIER);
             // Accented letters are transliterated, not dropped: "FC Arlanda v Enköping" read as "Enk ping" (27 Sep 2026,
             // live football proof) can never match the feed's "Enkopings"; "Enkoping" can.
             String ascii = java.text.Normalizer.normalize(OcrText.normalize(raw), java.text.Normalizer.Form.NFD).replaceAll("\\p{M}+", "")
@@ -107,9 +117,80 @@ final class EventPage {
         return null;
     }
 
+    private static final Pattern STROKES = Pattern.compile("^[IiLl1|!]{1,3}$");
+
+    /**
+     * Identity v2 reread of an unread squad numeral: the first read's teams with each UNREADTIER / lone "I" replaced by the
+     * numeral an independent enhanced read shows at the same place (same neighbouring words), counted in vertical strokes
+     * ("ll", "Il", "II", "||" = II; three = III; one = I). Everything else keeps the first read (the enhanced pass garbles
+     * other text: "12230" for 12:30 on the real Bydgoszcz frames). Null when the reread does not show the numeral at that
+     * place: the recheck then stays unresolved. Pure; the live adapter and EventIdentityV2AdversarialTest call it.
+     */
+    static String[] patchNumeral(List<String> firstHeader, List<String> rereadHeader) {
+        String[] first = teams(firstHeader), again = teams(rereadHeader);
+        if (first == null || again == null) return null;
+        String[] out = first.clone();
+        boolean patched = false;
+        for (int side = 0; side < 2; side++) {
+            String[] f = first[side].split("\s+");
+            java.util.List<String> r = java.util.Arrays.asList(again[side].split("\s+"));
+            for (int k = 0; k < f.length; k++) {
+                if (!f[k].equals(EventIdentity.UNREAD_TIER) && !f[k].equals("I")) continue;
+                String prev = k > 0 ? f[k - 1] : null, next = k + 1 < f.length ? f[k + 1] : null;
+                String numeral = null;
+                for (int j = 0; j < r.size(); j++) {
+                    if (!STROKES.matcher(r.get(j)).matches()) continue;
+                    boolean before = prev == null ? j == 0 : j > 0 && r.get(j - 1).equalsIgnoreCase(prev);
+                    boolean after = next == null ? j == r.size() - 1 : j + 1 < r.size() && r.get(j + 1).equalsIgnoreCase(next);
+                    if (before && after) { numeral = "III".substring(0, r.get(j).length()); break; }
+                }
+                if (numeral == null) return null;
+                f[k] = numeral; patched = true;
+            }
+            out[side] = String.join(" ", f);
+        }
+        return patched ? out : null;
+    }
+
+    private static boolean continuation(String next) {
+        if (next.isEmpty() || next.length() > 24 || next.split("\\s+").length > 3) return false;
+        if (VS.matcher(next).matches() || KICKOFF.matcher(next).find()) return false;
+        String low = next.toLowerCase(Locale.US);
+        for (String w : new String[] {"popular", "bet builder", "game lines", "result", "goals", "quarter", "half", "team", "asian", "corners"})
+            if (low.contains(w)) return false;
+        return next.matches("[A-Za-z0-9() .'&/-]+");
+    }
+
     private static String tidy(String s) {
         // Trailing header chevron OCR'd as ">" or a lone "v".
         return s.replaceAll("\\s*[>]+$", "").replaceAll("\\s+[vV]$", "").replaceAll("^[^A-Za-z0-9]+|[^A-Za-z0-9)]+$", "").trim();
+    }
+
+    /** One direct-link identity decision: the header lines of the captured page, the teams and kick-off read from them and
+     *  the resolver's verdict. The live adapter and the stored-capture replay (EventIdentityV2ReplayTest) both call this. */
+    static final class Direct {
+        final List<String> header; final String[] teams; final String shown; final EventIdentity.Result result;
+        Direct(List<String> header, String[] teams, String shown, EventIdentity.Result result) {
+            this.header = header; this.teams = teams; this.shown = shown; this.result = result;
+        }
+        String competitionLine() { return header.isEmpty() ? null : header.get(0); }
+    }
+
+    /** teams == null / result == null when the header has no readable "A v B" line. wantUk: the alert kick-off in UK display. */
+    static Direct decide(List<String> header, String sport, String feedHome, String feedAway, String wantUk, String feedCompetition,
+                         String country, boolean anchored, java.util.Map<String, String> aliases, boolean womensCompetition) {
+        return decide(header, teams(header), sport, feedHome, feedAway, wantUk, feedCompetition, country, anchored, aliases, womensCompetition);
+    }
+
+    static Direct decide(List<String> header, String[] teams, String sport, String feedHome, String feedAway, String wantUk, String feedCompetition,
+                         String country, boolean anchored, java.util.Map<String, String> aliases, boolean womensCompetition) {
+        String shown = kickoffText(header);
+        if (teams == null) return new Direct(header, null, shown, null);
+        EventIdentity.Result r = EventIdentity.resolveVerified(
+                new EventIdentity.Event(sport, feedHome, feedAway, wantUk, feedCompetition, false),
+                new EventIdentity.Event(sport, teams[0], teams[1], shown, header.isEmpty() ? null : header.get(0), anchored),
+                aliases, womensCompetition, country);
+        return new Direct(header, teams, shown, r);
     }
 
     /** "25 Sep 10:35" style kick-off text in the header, or null (live events show a clock instead). */

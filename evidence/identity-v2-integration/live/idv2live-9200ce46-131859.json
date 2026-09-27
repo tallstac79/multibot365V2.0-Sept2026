@@ -1,0 +1,311 @@
+{
+ "instruction_id": "on-9200ce469f7d54fb308d2fa2",
+ "payload": {
+  "instruction_id": "idv2live-9200ce46-131859",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Billericay Town||Chatham Town",
+  "sport": "football",
+  "market": "TOTALS",
+  "side": "OVER",
+  "line": "3.75",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "minimum_price": "1.75",
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201844108/F3/I1/",
+  "kickoff_utc": "2026-09-27T13:00",
+  "competition": "National League Cup Women",
+  "period": "FULL_GAME",
+  "country": "England",
+  "max_line_deterioration": "0.25",
+  "competition_women": "true"
+ },
+ "result": {
+  "instruction_id": "idv2live-9200ce46-131859",
+  "status": "FAIL",
+  "stage": "ALIAS_REQUIRED",
+  "detail": "Event link shows 'Billericay (W) v Chatham Town (W)'; alert says 'Billericay Town v Chatham Town': Known matching kick-off and competition required (competition mismatch (feed 'national league cup women' vs page 'england fa national league cup women'))",
+  "duration_ms": 5326,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 5121,
+   "last_progress_at_ms": 1790511540982,
+   "instruction_id": "idv2live-9200ce46-131859",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790511540968
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 18,
+     "at_ms": 1790511540974
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 25,
+     "at_ms": 1790511540982,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 25,
+      "start_ts_ms": 1790511540976,
+      "end_elapsed_ms": 5121,
+      "end_ts_ms": 1790511546072,
+      "duration_ms": 5096,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3462,
+     "at_ms": 1790511540982
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3637,
+     "at_ms": 1790511540982
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4556,
+     "at_ms": 1790511540982
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5036,
+     "at_ms": 1790511540982
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5121,
+     "at_ms": 1790511540982
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c__I-7fHZ4gfVTsDFcKsAD_frb-2dYdkFzqGq94AAgSYM",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'Billericay (W) v Chatham Town (W)'; alert says 'Billericay Town v Chatham Town': Known matching kick-off and competition required (competition mismatch (feed 'national league cup women' vs page 'england fa national league cup women'))",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 25,
+    "start_ts_ms": 1790511540976,
+    "end_elapsed_ms": 5121,
+    "end_ts_ms": 1790511546072,
+    "duration_ms": 5096,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed 'national league cup women' vs page 'england fa national league cup women'))",
+  "identity": {
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed 'national league cup women' vs page 'england fa national league cup women'))",
+   "home": {
+    "feed": "Billericay Town",
+    "bookmaker": "Billericay (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Chatham Town",
+    "bookmaker": "Chatham Town (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "mismatch (feed 'national league cup women' vs page 'england fa national league cup women')",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Billericay Town",
+     "bookmaker": "Billericay (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "away_similarity": {
+     "feed": "Chatham Town",
+     "bookmaker": "Chatham Town (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "verified_gate_failed",
+    "verdict": "AMBIGUOUS"
+   }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201844108/F3/I1/"
+ },
+ "run": {
+  "run_id": "c__I-7fHZ4gfVTsDFcKsAD_frb-2dYdkFzqGq94AAgSYM",
+  "adapter": "live_bet365",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790511540951,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 1,
+    "wall_ts_ms": 1790511540951
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 18,
+    "wall_ts_ms": 1790511540968
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 25,
+    "wall_ts_ms": 1790511540976
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3462,
+    "wall_ts_ms": 1790511544412
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3637,
+    "wall_ts_ms": 1790511544588
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 4556,
+    "wall_ts_ms": 1790511545507
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5036,
+    "wall_ts_ms": 1790511545987
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 5121,
+    "wall_ts_ms": 1790511546072
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 25,
+    "start_ts_ms": 1790511540976,
+    "end_elapsed_ms": 5121,
+    "end_ts_ms": 1790511546072,
+    "duration_ms": 5096,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Billericay Town",
+  "identity_home": "Billericay Town",
+  "expected_away": "Chatham Town",
+  "identity_away": "Chatham Town",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201844108/F3/I1/",
+  "current_stage": "OPEN_HOME",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "England FA National League Cup Women 27 Sep 14:00",
+   "Billericay (W) v Chatham Town (W)",
+   "Popular Bet Builder Result Goals Half Asiat A"
+  ],
+  "competition_check": {
+   "feed": "National League Cup Women",
+   "country": "England",
+   "page": "England FA National League Cup Women 27 Sep 14:00",
+   "matches": false
+  },
+  "identity": {
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed 'national league cup women' vs page 'england fa national league cup women'))",
+   "home": {
+    "feed": "Billericay Town",
+    "bookmaker": "Billericay (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Chatham Town",
+    "bookmaker": "Chatham Town (W)",
+    "level": "VARIANT",
+    "kind": "women_marker_from_competition",
+    "score": 1,
+    "note": "marker [women] supplied by the competition; names agree 1.00",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "mismatch (feed 'national league cup women' vs page 'england fa national league cup women')",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Billericay Town",
+     "bookmaker": "Billericay (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "away_similarity": {
+     "feed": "Chatham Town",
+     "bookmaker": "Chatham Town (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "verified_gate_failed",
+    "verdict": "AMBIGUOUS"
+   }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed 'national league cup women' vs page 'england fa national league cup women'))",
+  "detail": "Event link shows 'Billericay (W) v Chatham Town (W)'; alert says 'Billericay Town v Chatham Town': Known matching kick-off and competition required (competition mismatch (feed 'national league cup women' vs page 'england fa national league cup women'))",
+  "duration_ms": 5121
+ },
+ "wall": 5.8
+}
