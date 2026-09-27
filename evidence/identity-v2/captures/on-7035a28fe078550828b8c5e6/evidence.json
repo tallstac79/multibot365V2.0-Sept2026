@@ -1,0 +1,77 @@
+{
+  "run_id": "c_E902eyE-3Ntya4vp3QMIwrkJ5SB8TLPp35O4rRDM0xg",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790489505743,
+  "screenshots": [
+    "s001_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790489505743
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 26,
+      "wall_ts_ms": 1790489505769
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 32,
+      "wall_ts_ms": 1790489505775
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3490,
+      "wall_ts_ms": 1790489509233
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 4010,
+      "wall_ts_ms": 1790489509752
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 4102,
+      "wall_ts_ms": 1790489509844
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+  "direct_event_header": [
+    "FIBA Intercontinental Cup 27 Sep 07:30",
+    "Boca Juniors vs RSSB Tigers v",
+    "Popular Bet Builder Game Team Quarter Half"
+  ],
+  "competition_check": {
+    "feed": "Intercontinental Cup",
+    "country": "World",
+    "page": "FIBA Intercontinental Cup 27 Sep 07:30",
+    "matches": false
+  },
+  "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "both teams only resemble the page's names; no exact team to anchor on",
+    "home": {
+      "feed": "Atletico Boca Juniors",
+      "bookmaker": "Boca Juniors",
+      "level": "VARIANT",
+      "score": 1,
+      "note": "naming variant 1.00"
+    },
+    "away": {
+      "feed": "Tigers",
+      "bookmaker": "RSSB Tigers",
+      "level": "VARIANT",
+      "score": 1,
+      "note": "naming variant 1.00"
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: both teams only resemble the page's names; no exact team to anchor on"
+}

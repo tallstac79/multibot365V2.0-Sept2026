@@ -1,0 +1,15 @@
+{
+  "records": 108,
+  "read_errors": [
+    {
+      "path": "evidence/app-restart-reprove/duplicate-fulham.json",
+      "error": "JSONDecodeError"
+    },
+    {
+      "path": "evidence/coordinator-tailscale-bind/send-result.json",
+      "error": "JSONDecodeError"
+    }
+  ],
+  "scope": "All saved JSON terminal failures, deduplicated by run ID or instruction ID; operational snapshot IDs excluded",
+  "limitations": "Original quote/capture fields absent in an archive are unknown, never borrowed from another event or minimum_price."
+}

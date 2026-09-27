@@ -1,0 +1,130 @@
+{
+  "run_id": "c_brr5oF4HNfRFe9wlzzNihEa3M2MoyrB5Gjzt7Hzi3as",
+  "status": "TARGET_NOT_FOUND",
+  "phase": "FINISHED",
+  "started_at_ms": 1790341269533,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_event_direct.png",
+    "s003_markets.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790341269533
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 16,
+      "wall_ts_ms": 1790341269549
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 22,
+      "wall_ts_ms": 1790341269555
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3464,
+      "wall_ts_ms": 1790341272997
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3674,
+      "wall_ts_ms": 1790341273207
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 4590,
+      "wall_ts_ms": 1790341274124
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 5082,
+      "wall_ts_ms": 1790341274615
+    },
+    {
+      "phase": "MARKET_NAV",
+      "elapsed_ms": 5232,
+      "wall_ts_ms": 1790341274766
+    },
+    {
+      "phase": "CAPTURE_markets",
+      "elapsed_ms": 5237,
+      "wall_ts_ms": 1790341274770
+    },
+    {
+      "phase": "CAPTURED_markets",
+      "elapsed_ms": 5720,
+      "wall_ts_ms": 1790341275253
+    },
+    {
+      "phase": "READ_SELECTION",
+      "elapsed_ms": 5746,
+      "wall_ts_ms": 1790341275279
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 5752,
+      "wall_ts_ms": 1790341275285
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21163744/D19/E26817976/F19/I0/",
+  "direct_event_header": [
+    "Club Friendlies 26 Sep 06:00",
+    "Seoul Knights vs Wonju Promy v",
+    "Popular Bet Builder Game Team Quarter H A"
+  ],
+  "identity": {
+    "verdict": "ALIAS_MATCH",
+    "reason": "both teams via aliases",
+    "home": {
+      "feed": "Seoul SK Knights",
+      "bookmaker": "Seoul Knights",
+      "level": "CANONICAL",
+      "score": 1,
+      "note": "canonical tokens equal"
+    },
+    "away": {
+      "feed": "Wonju Dongbu Promy",
+      "bookmaker": "Wonju Promy",
+      "level": "ALIAS",
+      "score": 1,
+      "note": "instruction alias"
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false
+  },
+  "identity_verdict": "ALIAS_MATCH",
+  "route": "event_link",
+  "game_lines": {
+    "reads": 1,
+    "agreed": [
+      "SPREAD/HOME/+7.5@1.83",
+      "SPREAD/AWAY/-7.5@1.83",
+      "TOTAL/OVER/168.5@1.80",
+      "TOTAL/UNDER/168.5@1.86",
+      "MONEYLINE/HOME/NONE@3.15",
+      "MONEYLINE/AWAY/NONE@1.32"
+    ],
+    "fast_path": true
+  },
+  "verified_fixture": {
+    "code": "fb7e52b8",
+    "home": "Seoul Knights",
+    "away": "Wonju Promy",
+    "fixture_name": "Seoul Knights v Wonju Promy",
+    "exact_fixture_text": "Home Seoul Knights\nAway Wonju Promy",
+    "competition": "Club Friendlies 26 Sep 06:00",
+    "bounds": [
+      35,
+      265,
+      691,
+      436
+    ]
+  },
+  "fixture_home": "Seoul Knights",
+  "fixture_away": "Wonju Promy"
+}

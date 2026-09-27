@@ -1,0 +1,137 @@
+{
+  "run_id": "c_gIW2f6OIzx_hmsohPvrAZsNB49KP-eRa8MexuKl2auo",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790483027289,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_session.png",
+    "s003_session_relook.png",
+    "s004_session_relook_settle.png",
+    "s005_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790483027289
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 18,
+      "wall_ts_ms": 1790483027306
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 25,
+      "wall_ts_ms": 1790483027314
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3475,
+      "wall_ts_ms": 1790483030764
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3966,
+      "wall_ts_ms": 1790483031254
+    },
+    {
+      "phase": "CAPTURE_session",
+      "elapsed_ms": 3974,
+      "wall_ts_ms": 1790483031263
+    },
+    {
+      "phase": "CAPTURED_session",
+      "elapsed_ms": 4546,
+      "wall_ts_ms": 1790483031835
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 4659,
+      "wall_ts_ms": 1790483031948
+    },
+    {
+      "phase": "CAPTURE_session_relook",
+      "elapsed_ms": 7381,
+      "wall_ts_ms": 1790483034670
+    },
+    {
+      "phase": "CAPTURED_session_relook",
+      "elapsed_ms": 7570,
+      "wall_ts_ms": 1790483034859
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 7576,
+      "wall_ts_ms": 1790483034864
+    },
+    {
+      "phase": "CAPTURE_session_relook_settle",
+      "elapsed_ms": 11581,
+      "wall_ts_ms": 1790483038870
+    },
+    {
+      "phase": "CAPTURED_session_relook_settle",
+      "elapsed_ms": 12072,
+      "wall_ts_ms": 1790483039361
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 12181,
+      "wall_ts_ms": 1790483039470
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 15599,
+      "wall_ts_ms": 1790483042888
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 16101,
+      "wall_ts_ms": 1790483043390
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 16132,
+      "wall_ts_ms": 1790483043421
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21163744/D19/E26825649/F19/I0/",
+  "direct_event_header": [
+    "Club Friendlies 27 Sep 06:00",
+    "Suwon Sonicboom vs Goyang Sky Gunners",
+    "Popular Bet Builder Game Team Quarter Half",
+    "Game Lines"
+  ],
+  "competition_check": {
+    "feed": "KBL Cup",
+    "country": "Korea",
+    "page": "Club Friendlies 27 Sep 06:00",
+    "matches": false
+  },
+  "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "both teams only resemble the page's names; no exact team to anchor on",
+    "home": {
+      "feed": "Suwon KT Sonicboom",
+      "bookmaker": "Suwon Sonicboom",
+      "level": "VARIANT",
+      "score": 1,
+      "note": "naming variant 1.00"
+    },
+    "away": {
+      "feed": "Goyang Skygunners",
+      "bookmaker": "Goyang Sky Gunners",
+      "level": "VARIANT",
+      "score": 1,
+      "note": "naming variant 1.00"
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: both teams only resemble the page's names; no exact team to anchor on"
+}

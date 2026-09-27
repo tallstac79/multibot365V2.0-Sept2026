@@ -1,0 +1,1488 @@
+[
+  {
+    "name": "exact names positive control",
+    "expected": "DIRECT_URL_CONFIRMED",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Boca Juniors",
+      "away": "RSSB Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "original variant positive control",
+    "expected": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "wrong kickoff",
+    "expected": "CONFLICT",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-28T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "wrong opponent",
+    "expected": "AMBIGUOUS",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "Real Madrid",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "reversed fixture",
+    "expected": "CONFLICT",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "explicit men versus women",
+    "expected": "CONFLICT",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Boca Juniors Men",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors Women",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "U19 versus U21",
+    "expected": "CONFLICT",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Boca Juniors U19",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors U21",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "independently proven first versus second squad",
+    "expected": "CONFLICT",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Boca Juniors I",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors II",
+        "source": "structured"
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "OCR first versus second squad uncertain",
+    "expected": "NEEDS_RECHECK",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Boca Juniors II",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors I",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "explicit first team versus reserves",
+    "expected": "CONFLICT",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": {
+        "name": "Boca Juniors",
+        "dimensions": {
+          "reserve": false
+        }
+      },
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors reserves",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "same generic nickname different club",
+    "expected": "AMBIGUOUS",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tokyo Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "generic home URL",
+    "expected": "CONFLICT",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "search redirect page",
+    "expected": "CONFLICT",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "search",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "same names wrong event ID",
+    "expected": "CONFLICT",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": "123456789",
+      "event_id_observed": true,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "market period conflict",
+    "expected": "CONFLICT",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FIRST_HALF"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "unexplained snapshot conflict",
+    "expected": "CONFLICT",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "180.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "opposite quote conflict",
+    "expected": "CONFLICT",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.91",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "competing event",
+    "expected": "NEEDS_RECHECK",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 1,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "same names different numbered division",
+    "expected": "CONFLICT",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Division 1",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "Division 2",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "unverified link on search candidate",
+    "expected": "AMBIGUOUS",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": false,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        },
+        "period": "FULL_GAME"
+      },
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  },
+  {
+    "name": "missing fingerprint",
+    "expected": "AMBIGUOUS",
+    "provenance": "Controlled adversarial mutation of real Boca/Tigers stored observation; not historical outcome",
+    "alert": {
+      "event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "sport": "basketball",
+      "competition": "Intercontinental Cup",
+      "country": "World",
+      "home": "Atletico Boca Juniors",
+      "away": "Tigers",
+      "kickoff": "2026-09-27T06:30:00+00:00",
+      "market_fingerprint": {
+        "market": "TOTALS",
+        "side": "UNDER",
+        "line": "184.5",
+        "period": "FULL_GAME",
+        "prices": {
+          "OVER": "1.83",
+          "UNDER": "1.83"
+        }
+      }
+    },
+    "page": {
+      "event_id": null,
+      "event_id_observed": false,
+      "requested_event_id": "26832491",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+      "direct_link_capture": true,
+      "page_type": "event",
+      "unique_event": true,
+      "competitor_count": 0,
+      "competitor_scope": "single captured direct event page, not a global search",
+      "prematch": true,
+      "orientation": "home_away",
+      "sport": "basketball",
+      "sport_source": "recorded navigation URL; correlated with event-link anchor",
+      "competition": "FIBA Intercontinental Cup",
+      "kickoff": "2026-09-27T07:30:00+01:00",
+      "home": {
+        "name": "Boca Juniors",
+        "source": "ocr",
+        "confidence": null
+      },
+      "away": {
+        "name": "RSSB Tigers",
+        "source": "ocr",
+        "confidence": null
+      },
+      "captured_at": "2026-09-27T06:10:16.650000+00:00",
+      "market_fingerprint": null,
+      "grid_notes": [],
+      "header_lines": [
+        "FIBA Intercontinental Cup 27 Sep 07:30",
+        "Boca Juniors vs RSSB Tigers",
+        "Popular Bet Builder Game Team Quarter Half"
+      ],
+      "capture": "evidence/identity-v2/captures/on-e3d73d9be8ffcd6727f59839/s001_event_direct.txt",
+      "prior_snapshots": []
+    }
+  }
+]

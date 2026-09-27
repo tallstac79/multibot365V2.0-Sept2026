@@ -1,0 +1,110 @@
+{
+  "run_id": "c_vtLS7mDfTlSzCbxDt_TVkgBqC4JKkRYw7jsRllueDmE",
+  "status": "WRONG_EVENT",
+  "phase": "FINISHED",
+  "started_at_ms": 1790506718294,
+  "screenshots": [
+    "s001_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 1,
+      "wall_ts_ms": 1790506718294
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 27,
+      "wall_ts_ms": 1790506718320
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 35,
+      "wall_ts_ms": 1790506718329
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3476,
+      "wall_ts_ms": 1790506721770
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3921,
+      "wall_ts_ms": 1790506722215
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 4015,
+      "wall_ts_ms": 1790506722309
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172128/D19/E26832477/F19/I0/",
+  "direct_event_header": [
+    "Poland 1 Liga Women 27 Sep 12:30",
+    "KS Basket 25 || Bydgoszcz (W) vs Katarzynki II",
+    "Torun (W)",
+    "Popular Bet Builder Game"
+  ],
+  "competition_check": {
+    "feed": "Liga 1 Women",
+    "country": "Poland",
+    "page": "Poland 1 Liga Women 27 Sep 12:30",
+    "matches": false
+  },
+  "identity": {
+    "verdict": "MISMATCH",
+    "reason": "'KS Basket 25 II Bydgoszcz' vs 'KS Basket 25 Bydgoszcz (W)': protected markers differ [ii] vs [women]",
+    "home": {
+      "feed": "KS Basket 25 II Bydgoszcz",
+      "bookmaker": "KS Basket 25 Bydgoszcz (W)",
+      "level": "NONE",
+      "kind": "markers_conflict",
+      "score": 0,
+      "note": "protected markers differ [ii] vs [women]",
+      "alias_safe": true
+    },
+    "away": {
+      "feed": "Energa Torun II",
+      "bookmaker": "Katarzynki II",
+      "level": "NONE",
+      "kind": "none",
+      "score": 0,
+      "note": "different name 0.00: no shared distinctive token ([katarzynki] unexplained)",
+      "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+      "event_id_match": true,
+      "event_anchor": "page opened from the alert's own Bet365 event link",
+      "sport_match": "equal",
+      "kickoff_match": "exact",
+      "competition_match": "mismatch (feed 'liga 1 women' vs page 'poland 1 liga women')",
+      "competing_event": "none: a single event page reached through the alert's own link",
+      "home_similarity": {
+        "feed": "KS Basket 25 II Bydgoszcz",
+        "bookmaker": "KS Basket 25 Bydgoszcz (W)",
+        "level": "NONE",
+        "kind": "markers_conflict",
+        "score": 0,
+        "note": "protected markers differ [ii] vs [women]"
+      },
+      "away_similarity": {
+        "feed": "Energa Torun II",
+        "bookmaker": "Katarzynki II",
+        "level": "NONE",
+        "kind": "none",
+        "score": 0,
+        "note": "different name 0.00: no shared distinctive token ([katarzynki] unexplained)"
+      },
+      "protected_markers": "conflict: protected markers differ [ii] vs [women]",
+      "orientation": "not established",
+      "policy": "protected_markers",
+      "verdict": "MISMATCH"
+    }
+  },
+  "identity_verdict": "MISMATCH",
+  "route": "event_link",
+  "direct_event_rejected": "identity: 'KS Basket 25 II Bydgoszcz' vs 'KS Basket 25 Bydgoszcz (W)': protected markers differ [ii] vs [women]"
+}

@@ -1,0 +1,163 @@
+{
+  "run_id": "c_7ERtyRWsK4UagzwhiEUjitbFALGfNFLHVMx8nCrUiUg",
+  "status": "TARGET_NOT_FOUND",
+  "phase": "FINISHED",
+  "started_at_ms": 1790505717692,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_markets.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790505717692
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 15,
+      "wall_ts_ms": 1790505717707
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 23,
+      "wall_ts_ms": 1790505717715
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3469,
+      "wall_ts_ms": 1790505721162
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 4137,
+      "wall_ts_ms": 1790505721829
+    },
+    {
+      "phase": "MARKET_NAV",
+      "elapsed_ms": 4240,
+      "wall_ts_ms": 1790505721932
+    },
+    {
+      "phase": "CAPTURE_markets",
+      "elapsed_ms": 4249,
+      "wall_ts_ms": 1790505721940
+    },
+    {
+      "phase": "CAPTURED_markets",
+      "elapsed_ms": 4879,
+      "wall_ts_ms": 1790505722570
+    },
+    {
+      "phase": "READ_SELECTION",
+      "elapsed_ms": 4922,
+      "wall_ts_ms": 1790505722613
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 4932,
+      "wall_ts_ms": 1790505722624
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172276/D19/E26832647/F19/",
+  "direct_event_header": [
+    "Switzerland SB League Women 27 Sep 12:00",
+    "Elfic Fribourg (W) vs GC Zurich (W)",
+    "Popular Bet Builder Game Team Quarter Half"
+  ],
+  "competition_check": {
+    "feed": "SB League Women",
+    "country": "Switzerland",
+    "page": "Switzerland SB League Women 27 Sep 12:00",
+    "matches": true
+  },
+  "identity": {
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+    "reason": "event link + kick-off 27 Sep 12:00 + women's competition supplies Bet365's (W) + both names compatible: 'Elfic Fribourg' ~ 'Elfic Fribourg (W)' (women_marker_from_competition 1.00); 'GC Zurich Wildcats' ~ 'GC Zurich (W)' (women_marker_from_competition 1.00)",
+    "home": {
+      "feed": "Elfic Fribourg",
+      "bookmaker": "Elfic Fribourg (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [women] supplied by the competition; names agree 1.00",
+      "alias_safe": true
+    },
+    "away": {
+      "feed": "GC Zurich Wildcats",
+      "bookmaker": "GC Zurich (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [women] supplied by the competition; names agree 1.00",
+      "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+      "event_id_match": true,
+      "event_anchor": "page opened from the alert's own Bet365 event link",
+      "sport_match": "equal",
+      "kickoff_match": "exact",
+      "competition_match": "country_prefixed",
+      "competing_event": "none: a single event page reached through the alert's own link",
+      "home_similarity": {
+        "feed": "Elfic Fribourg",
+        "bookmaker": "Elfic Fribourg (W)",
+        "level": "VARIANT",
+        "kind": "women_marker_from_competition",
+        "score": 1,
+        "note": "marker [women] supplied by the competition; names agree 1.00"
+      },
+      "away_similarity": {
+        "feed": "GC Zurich Wildcats",
+        "bookmaker": "GC Zurich (W)",
+        "level": "VARIANT",
+        "kind": "women_marker_from_competition",
+        "score": 1,
+        "note": "marker [women] supplied by the competition; names agree 1.00"
+      },
+      "protected_markers": "agree",
+      "orientation": "agree",
+      "policy": "event_evidence_both_variants",
+      "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+    }
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "route": "event_link",
+  "event_context": {
+    "home": "Elfic Fribourg (W)",
+    "away": "GC Zurich (W)",
+    "competition": "switzerland sb league women",
+    "kickoff_utc": "2026-09-27T11:00",
+    "period": "FULL_GAME"
+  },
+  "game_lines": {
+    "reads": 1,
+    "agreed": [
+      "SPREAD/HOME/-16.5@1.83",
+      "SPREAD/AWAY/+16.5@1.83",
+      "TOTAL/OVER/147.5@1.80",
+      "TOTAL/UNDER/147.5@1.86",
+      "MONEYLINE/AWAY/NONE@8.75"
+    ],
+    "fast_path": true
+  },
+  "verified_fixture": {
+    "code": "99de6f1a",
+    "home": "Elfic Fribourg (W)",
+    "away": "GC Zurich (W)",
+    "fixture_name": "Elfic Fribourg (W) v GC Zurich (W)",
+    "exact_fixture_text": "Home Elfic Fribourg (W)\nAway GC Zurich (W)",
+    "competition": "Switzerland SB League Women 27 Sep 12:00",
+    "bounds": [
+      35,
+      268,
+      656,
+      435
+    ]
+  },
+  "fixture_home": "Elfic Fribourg (W)",
+  "fixture_away": "GC Zurich (W)"
+}

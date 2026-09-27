@@ -1,0 +1,88 @@
+{
+  "run_id": "c_cM7vfHIJPwLIEnvwRwWgVNDBYzlPU7r3yhBAQEeSAlI",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790483013342,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790483013342
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 13,
+      "wall_ts_ms": 1790483013355
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 18,
+      "wall_ts_ms": 1790483013360
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3457,
+      "wall_ts_ms": 1790483016799
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3657,
+      "wall_ts_ms": 1790483016999
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 4570,
+      "wall_ts_ms": 1790483017912
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 5076,
+      "wall_ts_ms": 1790483018418
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 5209,
+      "wall_ts_ms": 1790483018551
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21163744/D19/E26825649/F19/I0/",
+  "direct_event_header": [
+    "Club Friendlies 27 Sep 06:00",
+    "Suwon Sonicboom vs Goyang Sky Gunners",
+    "Popular Bet Builder Game Team Quarter"
+  ],
+  "competition_check": {
+    "feed": "KBL Cup",
+    "country": "Korea",
+    "page": "Club Friendlies 27 Sep 06:00",
+    "matches": false
+  },
+  "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "both teams only resemble the page's names; no exact team to anchor on",
+    "home": {
+      "feed": "Suwon KT Sonicboom",
+      "bookmaker": "Suwon Sonicboom",
+      "level": "VARIANT",
+      "score": 1,
+      "note": "naming variant 1.00"
+    },
+    "away": {
+      "feed": "Goyang Skygunners",
+      "bookmaker": "Goyang Sky Gunners",
+      "level": "VARIANT",
+      "score": 1,
+      "note": "naming variant 1.00"
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: both teams only resemble the page's names; no exact team to anchor on"
+}

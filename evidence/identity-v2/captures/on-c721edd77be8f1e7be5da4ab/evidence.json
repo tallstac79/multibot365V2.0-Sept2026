@@ -1,0 +1,109 @@
+{
+  "run_id": "c_VSs1UaFOL67552LMvncMpl7SRycDQ5awSn3t28rxe4Y",
+  "status": "WRONG_EVENT",
+  "phase": "FINISHED",
+  "started_at_ms": 1790507882251,
+  "screenshots": [
+    "s001_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790507882252
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 21,
+      "wall_ts_ms": 1790507882273
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 29,
+      "wall_ts_ms": 1790507882280
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3469,
+      "wall_ts_ms": 1790507885721
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3905,
+      "wall_ts_ms": 1790507886156
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 3983,
+      "wall_ts_ms": 1790507886234
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172353/D19/E26832091/F19/I0/",
+  "direct_event_header": [
+    "Adriatic League 2 Women",
+    "27 Sep 12:30",
+    "UBI Graz (W) VS lirija (W)"
+  ],
+  "competition_check": {
+    "feed": "Adriatic League 2 Women",
+    "country": "",
+    "page": "Adriatic League 2 Women",
+    "matches": true
+  },
+  "identity": {
+    "verdict": "MISMATCH",
+    "reason": "'ZKD Ilirija' is not 'lirija (W)' (different name 0.50 ([women] marker from competition))",
+    "home": {
+      "feed": "UBI Graz",
+      "bookmaker": "UBI Graz (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [women] supplied by the competition; names agree 1.00",
+      "alias_safe": true
+    },
+    "away": {
+      "feed": "ZKD Ilirija",
+      "bookmaker": "lirija (W)",
+      "level": "NONE",
+      "kind": "none",
+      "score": 0.5,
+      "note": "different name 0.50 ([women] marker from competition)",
+      "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+      "event_id_match": true,
+      "event_anchor": "page opened from the alert's own Bet365 event link",
+      "sport_match": "equal",
+      "kickoff_match": "exact",
+      "competition_match": "equal",
+      "competing_event": "none: a single event page reached through the alert's own link",
+      "home_similarity": {
+        "feed": "UBI Graz",
+        "bookmaker": "UBI Graz (W)",
+        "level": "VARIANT",
+        "kind": "women_marker_from_competition",
+        "score": 1,
+        "note": "marker [women] supplied by the competition; names agree 1.00"
+      },
+      "away_similarity": {
+        "feed": "ZKD Ilirija",
+        "bookmaker": "lirija (W)",
+        "level": "NONE",
+        "kind": "none",
+        "score": 0.5,
+        "note": "different name 0.50 ([women] marker from competition)"
+      },
+      "protected_markers": "agree",
+      "orientation": "not established",
+      "policy": "different_team",
+      "verdict": "MISMATCH"
+    }
+  },
+  "identity_verdict": "MISMATCH",
+  "route": "event_link",
+  "direct_event_rejected": "identity: 'ZKD Ilirija' is not 'lirija (W)' (different name 0.50 ([women] marker from competition))"
+}

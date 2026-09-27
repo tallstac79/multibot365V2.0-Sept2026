@@ -1,0 +1,120 @@
+{
+  "run_id": "c_y3JhbUxx9XE6wUjEQsM2gaMr3_FsIXTmzuOpl4fQCmo",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790502760293,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790502760293
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 18,
+      "wall_ts_ms": 1790502760311
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 26,
+      "wall_ts_ms": 1790502760319
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3464,
+      "wall_ts_ms": 1790502763756
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3674,
+      "wall_ts_ms": 1790502763967
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 4581,
+      "wall_ts_ms": 1790502764874
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 5124,
+      "wall_ts_ms": 1790502765417
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 5220,
+      "wall_ts_ms": 1790502765512
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172380/D19/E26832714/F19/",
+  "direct_event_header": [
+    "Copa Espana \u2022 27 Sep 11:00",
+    "Amics Castello vs Benicarlo v",
+    "Popular Bet Builder Game Team Quarter"
+  ],
+  "competition_check": {
+    "feed": "Copa Espana",
+    "country": "Spain",
+    "page": "Copa Espana \u2022 27 Sep 11:00",
+    "matches": true
+  },
+  "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "'AB Castello' only partly resembles 'Amics Castello' (weak resemblance 0.50: shared [castello] but [ab] has no counterpart); not a different event, not proven the same",
+    "home": {
+      "feed": "AB Castello",
+      "bookmaker": "Amics Castello",
+      "level": "WEAK",
+      "kind": "partial",
+      "score": 0.5,
+      "note": "weak resemblance 0.50: shared [castello] but [ab] has no counterpart",
+      "alias_safe": false
+    },
+    "away": {
+      "feed": "Benicarlo",
+      "bookmaker": "Benicarlo",
+      "level": "EXACT",
+      "kind": "exact",
+      "score": 1,
+      "note": "exact",
+      "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+      "event_id_match": true,
+      "event_anchor": "page opened from the alert's own Bet365 event link",
+      "sport_match": "equal",
+      "kickoff_match": "exact",
+      "competition_match": "equal",
+      "competing_event": "none: a single event page reached through the alert's own link",
+      "home_similarity": {
+        "feed": "AB Castello",
+        "bookmaker": "Amics Castello",
+        "level": "WEAK",
+        "kind": "partial",
+        "score": 0.5,
+        "note": "weak resemblance 0.50: shared [castello] but [ab] has no counterpart"
+      },
+      "away_similarity": {
+        "feed": "Benicarlo",
+        "bookmaker": "Benicarlo",
+        "level": "EXACT",
+        "kind": "exact",
+        "score": 1,
+        "note": "exact"
+      },
+      "protected_markers": "agree",
+      "orientation": "not established",
+      "policy": "weak_resemblance",
+      "verdict": "AMBIGUOUS"
+    }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: 'AB Castello' only partly resembles 'Amics Castello' (weak resemblance 0.50: shared [castello] but [ab] has no counterpart); not a different event, not proven the same"
+}

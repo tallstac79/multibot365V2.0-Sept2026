@@ -1,0 +1,120 @@
+{
+  "run_id": "c_YoAqQrNkVjpIDIIq_IiBrCQ71v062x7kZdgYKzHW-Qw",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790507423388,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790507423389
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 22,
+      "wall_ts_ms": 1790507423411
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 33,
+      "wall_ts_ms": 1790507423422
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3486,
+      "wall_ts_ms": 1790507426875
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3707,
+      "wall_ts_ms": 1790507427096
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 4634,
+      "wall_ts_ms": 1790507428024
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 5294,
+      "wall_ts_ms": 1790507428683
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 5430,
+      "wall_ts_ms": 1790507428819
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21171663/D19/E26830587/F19/I0/",
+  "direct_event_header": [
+    "Belgium Div 1 Women 27 Sep 14:00",
+    "Phantoms Boom (W) vs Liege (W)",
+    "Popular Bet Builder Game Team Quarter H A"
+  ],
+  "competition_check": {
+    "feed": "Division 1 Women",
+    "country": "Belgium",
+    "page": "Belgium Div 1 Women 27 Sep 14:00",
+    "matches": false
+  },
+  "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "Known matching kick-off and competition required (competition mismatch (feed 'division 1 women' vs page 'belgium div 1 women'))",
+    "home": {
+      "feed": "Phantoms Boom",
+      "bookmaker": "Phantoms Boom (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [women] supplied by the competition; names agree 1.00",
+      "alias_safe": true
+    },
+    "away": {
+      "feed": "Liege Panthers",
+      "bookmaker": "Liege (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [women] supplied by the competition; names agree 1.00",
+      "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+      "event_id_match": true,
+      "event_anchor": "page opened from the alert's own Bet365 event link",
+      "sport_match": "equal",
+      "kickoff_match": "exact",
+      "competition_match": "mismatch (feed 'division 1 women' vs page 'belgium div 1 women')",
+      "competing_event": "none: a single event page reached through the alert's own link",
+      "home_similarity": {
+        "feed": "Phantoms Boom",
+        "bookmaker": "Phantoms Boom (W)",
+        "level": "VARIANT",
+        "kind": "women_marker_from_competition",
+        "score": 1,
+        "note": "marker [women] supplied by the competition; names agree 1.00"
+      },
+      "away_similarity": {
+        "feed": "Liege Panthers",
+        "bookmaker": "Liege (W)",
+        "level": "VARIANT",
+        "kind": "women_marker_from_competition",
+        "score": 1,
+        "note": "marker [women] supplied by the competition; names agree 1.00"
+      },
+      "protected_markers": "agree",
+      "orientation": "agree",
+      "policy": "verified_gate_failed",
+      "verdict": "AMBIGUOUS"
+    }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed 'division 1 women' vs page 'belgium div 1 women'))"
+}

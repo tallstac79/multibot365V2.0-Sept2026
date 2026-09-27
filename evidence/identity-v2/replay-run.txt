@@ -1,0 +1,169 @@
+{
+  "captured_at": "2026-09-27T11:21:23.815681+00:00",
+  "total": 46,
+  "old_stages": {
+    "WRONG_EVENT": 11,
+    "TARGET_NOT_FOUND": 6,
+    "ALIAS_REQUIRED": 29
+  },
+  "offline_verdicts": {
+    "AMBIGUOUS": 3,
+    "CONFLICT": 19,
+    "DIRECT_URL_CONFIRMED_NAME_VARIANT": 19,
+    "NEEDS_RECHECK": 5
+  },
+  "recovered_identity_failures": [
+    "on-c7e5d94c9f015affa329186c",
+    "on-26fee8b302956f20e05d2edf",
+    "on-d111f2c7363db709d8042394",
+    "on-e3d73d9be8ffcd6727f59839",
+    "on-7035a28fe078550828b8c5e6",
+    "on-3cea58f9e8f21987a58cecda",
+    "on-f4f4605942f555edbd24f737",
+    "on-e87ce14f483e5ac67ca32039",
+    "on-7ad1ad27e852f0495245502e",
+    "on-55550c5b4e202ff80473aa81",
+    "on-291ff3af0c7ee3b36015ca0f",
+    "on-e456262bc2b02d3ea98ae541",
+    "on-086891ffa6054e6a9f9fdf5b",
+    "on-7568867893977163a3442a04",
+    "on-508cf995276ef58b04a1bb71",
+    "on-8d9ec0935d6e1241f712a8db",
+    "on-850bffa30672f3dbed50e235",
+    "on-c9cb8c7d3ae86cc27c2ce48b",
+    "on-a83207e7a11b56abd1cc3396"
+  ],
+  "fingerprints": {
+    "MATCHES": 18,
+    "CONFLICT": 19,
+    "MOVED_PLAUSIBLY": 9
+  },
+  "conflicts": [
+    {
+      "instruction_id": "on-7e7371a77917caeec0115220",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-3df5c41a1856a1ab0a12fc25",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-d0c9a4033e16c9ee01fb4d41",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-205de8454e182f2de4fd9052",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-628da5f5c4b471eb1ef7f49c",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-0d5e1ef972d82943e8726fc4",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-52f17aaf827da0d67b6ceb0b",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-fb3301611debbbf22c2a133c",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-e2134b3e347e3a0482be9673",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-59330c7f2c1340ac79b7465c",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-ef04310fdfa5c607ce40a9e0",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-983f2daab50324592016597b",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-d1b2cb3a2e1f82da56772ea9",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-d05b8da4d9079052aecf59ad",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-4e3e08e836af7e6e3578b270",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-7f105c60eaff53424291c5cb",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-f3f852da85daf06d70b7bfe1",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-eccc23efb23fbd66800a0ff3",
+      "fields": [
+        "market_fingerprint"
+      ]
+    },
+    {
+      "instruction_id": "on-6fbafb7f07377396581ed1f2",
+      "fields": [
+        "market_fingerprint"
+      ]
+    }
+  ],
+  "archive_total": 108,
+  "archive_verdicts": {
+    "CONFLICT": 16,
+    "AMBIGUOUS": 86,
+    "NEEDS_RECHECK": 6
+  },
+  "limitations": [
+    "Frozen direct-link operational DB cohort; verdict concerns identity, not execution eligibility.",
+    "Destination event IDs were not read back; requested-link/captured-page anchor provenance is explicit.",
+    "OCR confidence absent in old artifacts remains null. Visual reviews are labelled separately.",
+    "Search never receives direct-link privileges. No global aliases, production changes or device actions."
+  ]
+}

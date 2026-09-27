@@ -1,0 +1,130 @@
+{
+  "run_id": "c_TdH8Ob5UapG1QqvN6HDfCc119RwhAYam2FUw1WrZJbo",
+  "status": "TARGET_NOT_FOUND",
+  "phase": "FINISHED",
+  "started_at_ms": 1790341261951,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_event_direct.png",
+    "s003_markets.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790341261951
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 28,
+      "wall_ts_ms": 1790341261979
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 35,
+      "wall_ts_ms": 1790341261986
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3486,
+      "wall_ts_ms": 1790341265438
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3703,
+      "wall_ts_ms": 1790341265654
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 4617,
+      "wall_ts_ms": 1790341266568
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 5156,
+      "wall_ts_ms": 1790341267108
+    },
+    {
+      "phase": "MARKET_NAV",
+      "elapsed_ms": 5288,
+      "wall_ts_ms": 1790341267239
+    },
+    {
+      "phase": "CAPTURE_markets",
+      "elapsed_ms": 5300,
+      "wall_ts_ms": 1790341267251
+    },
+    {
+      "phase": "CAPTURED_markets",
+      "elapsed_ms": 5782,
+      "wall_ts_ms": 1790341267733
+    },
+    {
+      "phase": "READ_SELECTION",
+      "elapsed_ms": 5860,
+      "wall_ts_ms": 1790341267811
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 5873,
+      "wall_ts_ms": 1790341267823
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169917/D19/E26738533/F19/I0/",
+  "direct_event_header": [
+    "France Ligue B 25 Sep 19:00",
+    "Poitiers vs Evreux",
+    "Popular Bet Builder Game Team Quarter H A"
+  ],
+  "identity": {
+    "verdict": "EXACT",
+    "reason": "both teams exact",
+    "home": {
+      "feed": "Poitiers",
+      "bookmaker": "Poitiers",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "away": {
+      "feed": "Evreux",
+      "bookmaker": "Evreux",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false
+  },
+  "identity_verdict": "EXACT",
+  "route": "event_link",
+  "game_lines": {
+    "reads": 1,
+    "agreed": [
+      "SPREAD/HOME/-5.5@1.83",
+      "SPREAD/AWAY/+5.5@1.83",
+      "TOTAL/OVER/165.5@1.83",
+      "TOTAL/UNDER/165.5@1.83",
+      "MONEYLINE/HOME/NONE@1.41",
+      "MONEYLINE/AWAY/NONE@2.70"
+    ],
+    "fast_path": true
+  },
+  "verified_fixture": {
+    "code": "55f671c",
+    "home": "Poitiers",
+    "away": "Evreux",
+    "fixture_name": "Poitiers v Evreux",
+    "exact_fixture_text": "Home Poitiers\nAway Evreux",
+    "competition": "France Ligue B 25 Sep 19:00",
+    "bounds": [
+      35,
+      268,
+      691,
+      436
+    ]
+  },
+  "fixture_home": "Poitiers",
+  "fixture_away": "Evreux"
+}

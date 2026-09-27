@@ -1,0 +1,83 @@
+{
+  "run_id": "c_eTTFpE1BI7XcPXIolS1H03BFzwSdWr-K0bgKkK_f4LI",
+  "status": "WRONG_EVENT",
+  "phase": "FINISHED",
+  "started_at_ms": 1790300974340,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790300974341
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 30,
+      "wall_ts_ms": 1790300974370
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 39,
+      "wall_ts_ms": 1790300974379
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3481,
+      "wall_ts_ms": 1790300977821
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3689,
+      "wall_ts_ms": 1790300978029
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 4602,
+      "wall_ts_ms": 1790300978942
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 5165,
+      "wall_ts_ms": 1790300979506
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 5305,
+      "wall_ts_ms": 1790300979645
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21171164/D19/E26809995/F19/I0/",
+  "direct_event_header": [
+    "Puerto Rico Superior Nacional Women 26 Sep 01:00",
+    "Explosivas de Moca (W) vs Leonas de Ponce",
+    "(W)",
+    "Popular Bet Builder Game Team Quarter H A"
+  ],
+  "identity": {
+    "verdict": "MISMATCH",
+    "reason": "'Explosivas de Moca' vs 'Explosivas de Moca (W)': protected markers differ [] vs [women]",
+    "home": {
+      "feed": "Explosivas de Moca",
+      "bookmaker": "Explosivas de Moca (W)",
+      "level": "NONE",
+      "score": 0,
+      "note": "protected markers differ [] vs [women]"
+    },
+    "away": {
+      "feed": "Leonas De Ponce",
+      "bookmaker": "Leonas de Ponce",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false
+  },
+  "identity_verdict": "MISMATCH",
+  "route": "event_link",
+  "direct_event_rejected": "identity: 'Explosivas de Moca' vs 'Explosivas de Moca (W)': protected markers differ [] vs [women]"
+}

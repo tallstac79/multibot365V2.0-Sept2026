@@ -1,0 +1,77 @@
+{
+  "run_id": "c_TDlxmr_mQBopDlUQN7wbplfSv6Wyu3Rv-R8HDks2v1w",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790488054850,
+  "screenshots": [
+    "s001_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790488054850
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 19,
+      "wall_ts_ms": 1790488054870
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 26,
+      "wall_ts_ms": 1790488054876
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3486,
+      "wall_ts_ms": 1790488058337
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3982,
+      "wall_ts_ms": 1790488058833
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 4089,
+      "wall_ts_ms": 1790488058940
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737841/F19/I0/",
+  "direct_event_header": [
+    "Japan B League 127 Sep 07:05",
+    "Utsunomiya Brex vs Yokohama B-Corsairs v",
+    "Popular Bet Builder Game Team Quarter Half"
+  ],
+  "competition_check": {
+    "feed": "B League",
+    "country": "Japan",
+    "page": "Japan B League 127 Sep 07:05",
+    "matches": false
+  },
+  "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "Known matching kick-off and competition required",
+    "home": {
+      "feed": "Utsunomiya Brex",
+      "bookmaker": "Utsunomiya Brex",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "away": {
+      "feed": "Yokohama B-Corsairs",
+      "bookmaker": "Yokohama B-Corsairs",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "kickoff_known": false,
+    "kickoff_agrees": false,
+    "reversed": false
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: Known matching kick-off and competition required"
+}

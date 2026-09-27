@@ -1,0 +1,77 @@
+{
+  "run_id": "c_p6ezbDB0J1RqwY2RjvV4s1E3IG7nE8kR5K73q257Ays",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790489412682,
+  "screenshots": [
+    "s001_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 1,
+      "wall_ts_ms": 1790489412682
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 18,
+      "wall_ts_ms": 1790489412700
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 24,
+      "wall_ts_ms": 1790489412705
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3469,
+      "wall_ts_ms": 1790489416152
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3968,
+      "wall_ts_ms": 1790489416650
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 4059,
+      "wall_ts_ms": 1790489416741
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172577/D19/E26832491/F19/I0/",
+  "direct_event_header": [
+    "FIBA Intercontinental Cup 27 Sep 07:30",
+    "Boca Juniors vs RSSB Tigers",
+    "Popular Bet Builder Game Team Quarter Half"
+  ],
+  "competition_check": {
+    "feed": "Intercontinental Cup",
+    "country": "World",
+    "page": "FIBA Intercontinental Cup 27 Sep 07:30",
+    "matches": false
+  },
+  "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "both teams only resemble the page's names; no exact team to anchor on",
+    "home": {
+      "feed": "Atletico Boca Juniors",
+      "bookmaker": "Boca Juniors",
+      "level": "VARIANT",
+      "score": 1,
+      "note": "naming variant 1.00"
+    },
+    "away": {
+      "feed": "Tigers",
+      "bookmaker": "RSSB Tigers",
+      "level": "VARIANT",
+      "score": 1,
+      "note": "naming variant 1.00"
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: both teams only resemble the page's names; no exact team to anchor on"
+}

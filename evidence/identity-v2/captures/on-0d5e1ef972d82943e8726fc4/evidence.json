@@ -1,0 +1,119 @@
+{
+  "run_id": "c_kpuYdpPODCbLfI7kiomixA4Ja264JK-nQ7aprLX2dpg",
+  "status": "TARGET_NOT_FOUND",
+  "phase": "FINISHED",
+  "started_at_ms": 1790341277182,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_markets.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 1,
+      "wall_ts_ms": 1790341277182
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 15,
+      "wall_ts_ms": 1790341277197
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 21,
+      "wall_ts_ms": 1790341277203
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3460,
+      "wall_ts_ms": 1790341280642
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3986,
+      "wall_ts_ms": 1790341281168
+    },
+    {
+      "phase": "MARKET_NAV",
+      "elapsed_ms": 4036,
+      "wall_ts_ms": 1790341281218
+    },
+    {
+      "phase": "CAPTURE_markets",
+      "elapsed_ms": 4046,
+      "wall_ts_ms": 1790341281228
+    },
+    {
+      "phase": "CAPTURED_markets",
+      "elapsed_ms": 4567,
+      "wall_ts_ms": 1790341281749
+    },
+    {
+      "phase": "READ_SELECTION",
+      "elapsed_ms": 4593,
+      "wall_ts_ms": 1790341281775
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 4603,
+      "wall_ts_ms": 1790341281785
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169917/D19/E26738535/F19/I0/",
+  "direct_event_header": [
+    "France Ligue B \u2022 25 Sep 19:00",
+    "Denain vs Blois",
+    "Popular Bet Builder Game Team Quarter Half"
+  ],
+  "identity": {
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+    "reason": "event link + kick-off 25 Sep 19:00 + 'Blois' exact; 'ASC Denain' is a naming variant of 'Denain' (1.00)",
+    "home": {
+      "feed": "ASC Denain",
+      "bookmaker": "Denain",
+      "level": "VARIANT",
+      "score": 1,
+      "note": "naming variant 1.00"
+    },
+    "away": {
+      "feed": "Blois",
+      "bookmaker": "Blois",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false
+  },
+  "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "route": "event_link",
+  "game_lines": {
+    "reads": 1,
+    "agreed": [
+      "SPREAD/HOME/-2.5@1.83",
+      "SPREAD/AWAY/+2.5@1.83",
+      "TOTAL/OVER/166.5@1.83",
+      "TOTAL/UNDER/166.5@1.83",
+      "MONEYLINE/HOME/NONE@1.64",
+      "MONEYLINE/AWAY/NONE@2.12"
+    ],
+    "fast_path": true
+  },
+  "verified_fixture": {
+    "code": "149559ac",
+    "home": "Denain",
+    "away": "Blois",
+    "fixture_name": "Denain v Blois",
+    "exact_fixture_text": "Home Denain\nAway Blois",
+    "competition": "France Ligue B \u2022 25 Sep 19:00",
+    "bounds": [
+      35,
+      268,
+      657,
+      435
+    ]
+  },
+  "fixture_home": "Denain",
+  "fixture_away": "Blois"
+}

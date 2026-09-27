@@ -1,0 +1,82 @@
+{
+  "run_id": "c_zplEgl7Kq6kcIRgaVuhVODuK3qRMNT5HeIUZyg_Bj_M",
+  "status": "WRONG_EVENT",
+  "phase": "FINISHED",
+  "started_at_ms": 1790296499122,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790296499123
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 24,
+      "wall_ts_ms": 1790296499146
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 31,
+      "wall_ts_ms": 1790296499153
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3541,
+      "wall_ts_ms": 1790296502664
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3819,
+      "wall_ts_ms": 1790296502942
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 4732,
+      "wall_ts_ms": 1790296503854
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 5245,
+      "wall_ts_ms": 1790296504368
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 5342,
+      "wall_ts_ms": 1790296504464
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747386/F19/I0/",
+  "direct_event_header": [
+    "France Nationale 1 25 Sep 19:00",
+    "Orchies vs LYONSO",
+    "Popular Bet Builder Game Team Quarter H A"
+  ],
+  "identity": {
+    "verdict": "MISMATCH",
+    "reason": "'Lyon' is not 'LYONSO' (different name 0.67)",
+    "home": {
+      "feed": "Orchies",
+      "bookmaker": "Orchies",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "away": {
+      "feed": "Lyon",
+      "bookmaker": "LYONSO",
+      "level": "NONE",
+      "score": 0.67,
+      "note": "different name 0.67"
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false
+  },
+  "identity_verdict": "MISMATCH",
+  "route": "event_link",
+  "direct_event_rejected": "identity: 'Lyon' is not 'LYONSO' (different name 0.67)"
+}

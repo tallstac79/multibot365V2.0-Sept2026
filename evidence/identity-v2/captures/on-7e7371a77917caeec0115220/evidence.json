@@ -1,0 +1,141 @@
+{
+  "run_id": "c_1D4M9qHTzzffl_2-Fi6lkVxuB76-KlGslSiwZN7IbHo",
+  "status": "TARGET_NOT_FOUND",
+  "phase": "FINISHED",
+  "started_at_ms": 1790299072090,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_event_direct.png",
+    "s003_markets.png",
+    "s004_markets.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 1,
+      "wall_ts_ms": 1790299072090
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 17,
+      "wall_ts_ms": 1790299072106
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 22,
+      "wall_ts_ms": 1790299072112
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3470,
+      "wall_ts_ms": 1790299075559
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3686,
+      "wall_ts_ms": 1790299075775
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 4597,
+      "wall_ts_ms": 1790299076687
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 5035,
+      "wall_ts_ms": 1790299077125
+    },
+    {
+      "phase": "MARKET_NAV",
+      "elapsed_ms": 5148,
+      "wall_ts_ms": 1790299077238
+    },
+    {
+      "phase": "CAPTURE_markets",
+      "elapsed_ms": 5156,
+      "wall_ts_ms": 1790299077246
+    },
+    {
+      "phase": "CAPTURED_markets",
+      "elapsed_ms": 5618,
+      "wall_ts_ms": 1790299077707
+    },
+    {
+      "phase": "CAPTURE_markets",
+      "elapsed_ms": 6255,
+      "wall_ts_ms": 1790299078344
+    },
+    {
+      "phase": "CAPTURED_markets",
+      "elapsed_ms": 6751,
+      "wall_ts_ms": 1790299078841
+    },
+    {
+      "phase": "READ_SELECTION",
+      "elapsed_ms": 6852,
+      "wall_ts_ms": 1790299078941
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 6860,
+      "wall_ts_ms": 1790299078949
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737826/F19/I0/",
+  "direct_event_header": [
+    "Japan B League 125 Sep 10:45",
+    "Saga Ballooners vs Hiroshima Dragonflies V",
+    "Popular Bet Builder Game Team Quarter"
+  ],
+  "identity": {
+    "verdict": "EXACT",
+    "reason": "both teams exact",
+    "home": {
+      "feed": "Saga Ballooners",
+      "bookmaker": "Saga Ballooners",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "away": {
+      "feed": "Hiroshima Dragonflies",
+      "bookmaker": "Hiroshima Dragonflies",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "kickoff_known": false,
+    "kickoff_agrees": false,
+    "reversed": false
+  },
+  "identity_verdict": "EXACT",
+  "route": "event_link",
+  "game_lines": {
+    "reads": 2,
+    "agreed": [
+      "SPREAD/HOME/-2.5@1.83",
+      "SPREAD/AWAY/+2.5@1.83",
+      "TOTAL/OVER/164.5@1.83",
+      "TOTAL/UNDER/164.5@1.83",
+      "MONEYLINE/HOME/NONE@1.64",
+      "MONEYLINE/AWAY/NONE@2.12"
+    ],
+    "fast_path": false
+  },
+  "verified_fixture": {
+    "code": "a127ae1b",
+    "home": "Saga Ballooners",
+    "away": "Hiroshima Dragonflies",
+    "fixture_name": "Saga Ballooners v Hiroshima Dragonflies",
+    "exact_fixture_text": "Home Saga Ballooners\nAway Hiroshima Dragonflies",
+    "competition": "Japan B League 125 Sep 10:45",
+    "bounds": [
+      35,
+      266,
+      660,
+      435
+    ]
+  },
+  "fixture_home": "Saga Ballooners",
+  "fixture_away": "Hiroshima Dragonflies"
+}

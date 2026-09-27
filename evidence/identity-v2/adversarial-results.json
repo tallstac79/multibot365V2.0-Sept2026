@@ -1,0 +1,107 @@
+[
+  {
+    "name": "exact names positive control",
+    "expected": "DIRECT_URL_CONFIRMED",
+    "actual": "DIRECT_URL_CONFIRMED"
+  },
+  {
+    "name": "original variant positive control",
+    "expected": "DIRECT_URL_CONFIRMED_NAME_VARIANT",
+    "actual": "DIRECT_URL_CONFIRMED_NAME_VARIANT"
+  },
+  {
+    "name": "wrong kickoff",
+    "expected": "CONFLICT",
+    "actual": "CONFLICT"
+  },
+  {
+    "name": "wrong opponent",
+    "expected": "AMBIGUOUS",
+    "actual": "AMBIGUOUS"
+  },
+  {
+    "name": "reversed fixture",
+    "expected": "CONFLICT",
+    "actual": "CONFLICT"
+  },
+  {
+    "name": "explicit men versus women",
+    "expected": "CONFLICT",
+    "actual": "CONFLICT"
+  },
+  {
+    "name": "U19 versus U21",
+    "expected": "CONFLICT",
+    "actual": "CONFLICT"
+  },
+  {
+    "name": "independently proven first versus second squad",
+    "expected": "CONFLICT",
+    "actual": "CONFLICT"
+  },
+  {
+    "name": "OCR first versus second squad uncertain",
+    "expected": "NEEDS_RECHECK",
+    "actual": "NEEDS_RECHECK"
+  },
+  {
+    "name": "explicit first team versus reserves",
+    "expected": "CONFLICT",
+    "actual": "CONFLICT"
+  },
+  {
+    "name": "same generic nickname different club",
+    "expected": "AMBIGUOUS",
+    "actual": "AMBIGUOUS"
+  },
+  {
+    "name": "generic home URL",
+    "expected": "CONFLICT",
+    "actual": "CONFLICT"
+  },
+  {
+    "name": "search redirect page",
+    "expected": "CONFLICT",
+    "actual": "CONFLICT"
+  },
+  {
+    "name": "same names wrong event ID",
+    "expected": "CONFLICT",
+    "actual": "CONFLICT"
+  },
+  {
+    "name": "market period conflict",
+    "expected": "CONFLICT",
+    "actual": "CONFLICT"
+  },
+  {
+    "name": "unexplained snapshot conflict",
+    "expected": "CONFLICT",
+    "actual": "CONFLICT"
+  },
+  {
+    "name": "opposite quote conflict",
+    "expected": "CONFLICT",
+    "actual": "CONFLICT"
+  },
+  {
+    "name": "competing event",
+    "expected": "NEEDS_RECHECK",
+    "actual": "NEEDS_RECHECK"
+  },
+  {
+    "name": "same names different numbered division",
+    "expected": "CONFLICT",
+    "actual": "CONFLICT"
+  },
+  {
+    "name": "unverified link on search candidate",
+    "expected": "AMBIGUOUS",
+    "actual": "AMBIGUOUS"
+  },
+  {
+    "name": "missing fingerprint",
+    "expected": "AMBIGUOUS",
+    "actual": "AMBIGUOUS"
+  }
+]

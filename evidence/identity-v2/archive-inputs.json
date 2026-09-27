@@ -1,0 +1,3863 @@
+[
+  {
+    "instruction_id": "tzprobe-1790440976-1",
+    "source_id": "evidence/timezone-probe/run-1790440976/1.json;evidence/timezone-probe/run-1790440976/summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 26 Sep 22:30 vs page 26 Sep 21:30 (UK)",
+    "alert": {
+      "home": "UP Mexico",
+      "away": "UMAD",
+      "sport": "basketball",
+      "competition": "Liga ABE",
+      "kickoff": "2026-09-26T21:30:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21171833/D19/E26807165/F19/",
+      "event_id": "26807165"
+    },
+    "page": {
+      "home": {
+        "name": "UP Mexico",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "UMAD",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/timezone-probe/run-1790440976/1.json",
+        "evidence/timezone-probe/run-1790440976/summary.json"
+      ],
+      "kickoff": "2026-09-26T21:30:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "tzprobe-1790441189-1",
+    "source_id": "evidence/timezone-probe/run-1790441189/1.json;evidence/timezone-probe/run-1790441189/summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": "CANONICAL_MATCH",
+    "old_reason": "both teams canonical",
+    "alert": {
+      "home": "Baloncesto Ciudad De Badajoz",
+      "away": "CB Toledo",
+      "sport": "basketball",
+      "competition": "Copa Espana",
+      "kickoff": "2026-09-26T17:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172380/D19/E26832209/F19/I0/",
+      "event_id": "26832209"
+    },
+    "page": {
+      "home": {
+        "name": "Baloncesto Ciudad de Badajoz",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Toledo",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/timezone-probe/run-1790441189/1.json",
+        "evidence/timezone-probe/run-1790441189/summary.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "fbhold-1X2-113024",
+    "source_id": "evidence/football/holds/fbhold-1X2-113024/hold.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "'Enkopings' is not 'Enk ping' (different name 0.00: no shared distinctive token ([enkopings] unexplained))",
+    "alert": {
+      "home": "Arlanda",
+      "away": "Enkopings",
+      "sport": "football",
+      "competition": "Division 1 Norra",
+      "kickoff": "2026-09-27T11:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693824/F3/I1/",
+      "event_id": "201693824"
+    },
+    "page": {
+      "home": {
+        "name": "FC Arlanda",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Enk ping",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/football/holds/fbhold-1X2-113024/hold.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "lan-1789940143-spaces",
+    "source_id": "evidence/coordinator/environment.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No unique outlined field containing OCR hint Search",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/coordinator/environment.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "on-f24902a9a6dc166b07e79880",
+    "source_id": "evidence/identity-corpus/backend_records.json;evidence/live-ready-dispatch/on-f24902a9a6dc166b07e79880-health-after.json;evidence/live-ready-dispatch/on-f24902a9a6dc166b07e79880-result.json;evidence/live-ready-dispatch/phone-result.json;evidence/session-login/session-login-1790175263-health.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": "basketball",
+      "competition": "Women",
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/identity-corpus/backend_records.json",
+        "evidence/live-ready-dispatch/on-f24902a9a6dc166b07e79880-health-after.json",
+        "evidence/live-ready-dispatch/on-f24902a9a6dc166b07e79880-result.json",
+        "evidence/live-ready-dispatch/phone-result.json",
+        "evidence/session-login/session-login-1790175263-health.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "on-baaa1c7fe15d239c2cd5593c",
+    "source_id": "evidence/identity-corpus/backend_records.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": "basketball",
+      "competition": "Nemzeti Bajnoksag I.A",
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/identity-corpus/backend_records.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "wrong_opponent-234553",
+    "source_id": "evidence/milestone-b/wrong_opponent-234553.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "'Bayern Munich' is not 'Shiga Lakes' (different name 0.17)",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Bayern Munich",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:35:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737823/F19/I0/",
+      "event_id": "26737823"
+    },
+    "page": {
+      "home": {
+        "name": "Kyoto Hannaryz",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Shiga Lakes",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/milestone-b/wrong_opponent-234553.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_37jVB4Bhzay9XEVO3CEONWAfaXcdSfgj_WORvwhumM8",
+    "source_id": "evidence/search-kyoto/batch1/kyoto-201414.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "No fixture pairing for 'Kyoto Hannaryz' vs 'Shiga Lake Stars'",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/search-kyoto/batch1/kyoto-201414.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_3ApI6SSi0c2m2RE2pkv5SxpwaNBPfuCIWX_AM8cgC5Q",
+    "source_id": "evidence/football/captures/fb-vihiga-spread-w-102815/capture.json;evidence/football/captures/session-102830.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "ALIAS_REQUIRED",
+    "old_verdict": "AMBIGUOUS",
+    "old_reason": "Known matching kick-off and competition required (competition mismatch (feed 'premier league women' vs page 'kenya league women'))",
+    "alert": {
+      "home": "Vihiga Queens",
+      "away": "Ulinzi Starlets",
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201829714/F3/I1/",
+      "event_id": "201829714"
+    },
+    "page": {
+      "home": {
+        "name": "Vihiga Queens FC (W)",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Ulinzi Starlets (W)",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/football/captures/fb-vihiga-spread-w-102815/capture.json",
+        "evidence/football/captures/session-102830.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_3GhgeTKnyfdZPd20puOt71MC4uKx0dNfObrG3Ek5o6g",
+    "source_id": "evidence/betslip-proof-0631/proof-spread-104052.json;evidence/betslip-proof-0631/spread-run-result.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "No fixture pairing for 'Hapoel Tel Aviv' vs 'Bayern Munich'",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/betslip-proof-0631/proof-spread-104052.json",
+        "evidence/betslip-proof-0631/spread-run-result.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "lan-1789944114-missing",
+    "source_id": "evidence/fixture/coordinator-regression/missing/result.json;evidence/fixture/coordinator-regression/results.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No unique outlined field containing OCR hint Nonexistent",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/fixture/coordinator-regression/missing/result.json",
+        "evidence/fixture/coordinator-regression/results.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "forensic-1790366148-moved-line",
+    "source_id": "evidence/strategy-audit/phone/run-1790366148/moved-line.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": "EXACT",
+    "old_reason": "both teams exact",
+    "alert": {
+      "home": "Kirchheim",
+      "away": "SBB Baskets Wolmirstedt",
+      "sport": "basketball",
+      "competition": "Germany Pro A 26 Sep 17:00",
+      "kickoff": "2026-09-26T16:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21170155/D19/E26748183/F19/I0/",
+      "event_id": "26748183"
+    },
+    "page": {
+      "home": {
+        "name": "Kirchheim",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "SBB Baskets Wolmirstedt",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/strategy-audit/phone/run-1790366148/moved-line.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "tzprobe-1790441023-7",
+    "source_id": "evidence/timezone-probe/run-1790440976/7.json;evidence/timezone-probe/run-1790440976/summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "'Defensor Sporting' vs 'Defensor Sporting (W)': protected markers differ [] vs [women]",
+    "alert": {
+      "home": "Defensor Sporting",
+      "away": "Malvin",
+      "sport": "basketball",
+      "competition": "Liga Femenina",
+      "kickoff": "2026-09-27T00:45:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172219/D19/E26822673/F19/",
+      "event_id": "26822673"
+    },
+    "page": {
+      "home": {
+        "name": "Defensor Sporting (W)",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Malvin (W)",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/timezone-probe/run-1790440976/7.json",
+        "evidence/timezone-probe/run-1790440976/summary.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_4u0USTXacwZaL-Kis5y8xZ74kD-3Nr5qyfiUTYW-V3I",
+    "source_id": "evidence/search-kyoto/batch1/kyoto-201154.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "No fixture pairing for 'Kyoto Hannaryz' vs 'Shiga Lake Stars'",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/search-kyoto/batch1/kyoto-201154.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_7R5O3gY0dIDRpcEPyshIWVC1VDnfsqHIq7vUd65ah8Q",
+    "source_id": "evidence/search-kyoto/batch1/kyoto-201631.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "No fixture pairing for 'Kyoto Hannaryz' vs 'Shiga Lake Stars'",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/search-kyoto/batch1/kyoto-201631.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_8uwtDedTTNkpouKYWkRAtM3WyhUCxrWOxK6IY7ULULo",
+    "source_id": "evidence/stage-timeout-gunma-proof/gunma-evidence.json;evidence/stage-timeout-gunma-proof/gunma-result.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "No fixture pairing for 'Gunma Crane Thunders' vs 'Altiri Chiba'",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/stage-timeout-gunma-proof/gunma-evidence.json",
+        "evidence/stage-timeout-gunma-proof/gunma-result.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "tzprobe-1790441007-5",
+    "source_id": "evidence/timezone-probe/run-1790440976/5.json;evidence/timezone-probe/run-1790440976/summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "'Flammes Carolo Basket' vs 'Flammes Carolo Basket (W)': protected markers differ [] vs [women]",
+    "alert": {
+      "home": "Flammes Carolo Basket",
+      "away": "Lyon",
+      "sport": "basketball",
+      "competition": "Ligue F\u00e9minine de Basketball",
+      "kickoff": "2026-09-26T19:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21169915/D19/E26738521/F19/I0/",
+      "event_id": "26738521"
+    },
+    "page": {
+      "home": {
+        "name": "Flammes Carolo Basket (W)",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "OL Lyonnes (W)",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/timezone-probe/run-1790440976/5.json",
+        "evidence/timezone-probe/run-1790440976/summary.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_9UhqcdbWDyS6CTeOYu_UEHspGdoLevUUnxwjK681umM",
+    "source_id": "evidence/stage-timeout-gunma-proof/bb3-evidence.json;evidence/stage-timeout-gunma-proof/bb3-result.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No unique outlined field containing OCR hint Search",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/stage-timeout-gunma-proof/bb3-evidence.json",
+        "evidence/stage-timeout-gunma-proof/bb3-result.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "e-search-wrong-183030",
+    "source_id": "evidence/automatic-approval/e-search-wrong-1790443830/hold.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "teams reversed (home/away): 'Antwerp Giants v Landstede Zwolle' is listed as 'Landstede Zwolle v Antwerp Giants'",
+    "alert": {
+      "home": "Antwerp Giants",
+      "away": "Landstede Zwolle",
+      "sport": "basketball",
+      "competition": "BNXT Super Cup",
+      "kickoff": "2026-09-26T18:30:00+00:00",
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": "Landstede Zwolle",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Antwerp Giants",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/automatic-approval/e-search-wrong-1790443830/hold.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "alias_required-231854",
+    "source_id": "evidence/milestone-a/alias_required-231854.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "ALIAS_REQUIRED",
+    "old_verdict": null,
+    "old_reason": "Event link shows 'Besancon Ac v Val de Seine'; alert says 'Besancon v Valdeseine' (same kick-off 25 Sep 19:00; bookmaker naming variant needs an alias)",
+    "alert": {
+      "home": "Besancon",
+      "away": "Valdeseine",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T18:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/milestone-a/alias_required-231854.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "wrong_link_fail_closed-002741",
+    "source_id": "evidence/milestone-c/wrong_link_fail_closed-002741.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Shiga Lake Stars",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:35:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": "Besancon AC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Val de Seine",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/milestone-c/wrong_link_fail_closed-002741.json"
+      ],
+      "kickoff": "2026-09-25T19:00:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "tzprobe-1790441198-2",
+    "source_id": "evidence/timezone-probe/run-1790441189/2.json;evidence/timezone-probe/run-1790441189/summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "ALIAS_REQUIRED",
+    "old_verdict": "AMBIGUOUS",
+    "old_reason": "Known matching kick-off and competition required",
+    "alert": {
+      "home": "UP Mexico",
+      "away": "UMAD",
+      "sport": "basketball",
+      "competition": "Liga ABE",
+      "kickoff": "2026-09-26T20:30:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21171833/D19/E26807165/F19/",
+      "event_id": "26807165"
+    },
+    "page": {
+      "home": {
+        "name": "UP Mexico",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "UMAD",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/timezone-probe/run-1790441189/2.json",
+        "evidence/timezone-probe/run-1790441189/summary.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "wrong_link_fail_closed-011034",
+    "source_id": "evidence/task1-stake/wrong_link_fail_closed-011034.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Shiga Lake Stars",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:35:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": "Besancon AC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Val de Seine",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/task1-stake/wrong_link_fail_closed-011034.json"
+      ],
+      "kickoff": "2026-09-25T19:00:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_E2NGT17c3hdDd8QpbiaDijERLlq4RMiZfaQk4pS2Z84",
+    "source_id": "evidence/betslip-proof-0631/proof-zvezda-111751.json;evidence/betslip-proof-0631/zvezda-run.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "Home team not visible on live event page",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/betslip-proof-0631/proof-zvezda-111751.json",
+        "evidence/betslip-proof-0631/zvezda-run.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "sm-logged-out-login-1790319036",
+    "source_id": "evidence/session-machine/sm-logged-out-login-1790319036.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "Cookie consent still blocking live Bet365 home",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/session-machine/sm-logged-out-login-1790319036.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "wrong_link_fail_closed-005843",
+    "source_id": "evidence/task1-stake/wrong_link_fail_closed-005843.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Shiga Lake Stars",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:35:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": "Besancon AC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Val de Seine",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/task1-stake/wrong_link_fail_closed-005843.json"
+      ],
+      "kickoff": "2026-09-25T19:00:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "besancon-085702",
+    "source_id": "evidence/women-marker/besancon-085702.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": "CANONICAL_MATCH",
+    "old_reason": "both teams canonical",
+    "alert": {
+      "home": "Besancon",
+      "away": "Val De Seine",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T18:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": "Besancon AC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Val de Seine",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/women-marker/besancon-085702.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "autoreg-171528",
+    "source_id": "evidence/automatic-approval/hold-1790439328/hold.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 26 Sep 18:30 vs page 26 Sep 17:30 (UK)",
+    "alert": {
+      "home": "Lliria",
+      "away": "FC Cartagena CB",
+      "sport": "basketball",
+      "competition": "Copa Espana",
+      "kickoff": "2026-09-26T17:30:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172380/D19/E26825718/F19/I0/",
+      "event_id": "26825718"
+    },
+    "page": {
+      "home": {
+        "name": "Lliria",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Cartagena",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/automatic-approval/hold-1790439328/hold.json"
+      ],
+      "kickoff": "2026-09-26T17:30:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "wrong_link_fail_closed-003247",
+    "source_id": "evidence/milestone-c/wrong_link_fail_closed-003247.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Shiga Lake Stars",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:35:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": "Besancon AC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Val de Seine",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/milestone-c/wrong_link_fail_closed-003247.json"
+      ],
+      "kickoff": "2026-09-25T19:00:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "fbhold-1x2-arlanda-113234",
+    "source_id": "evidence/football/holds/fbhold-1x2-arlanda-113234/hold.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "ALIAS_REQUIRED",
+    "old_verdict": "AMBIGUOUS",
+    "old_reason": "Known matching kick-off and competition required (competition mismatch (feed 'division 1 norra' vs page 'sweden 1 div norra'))",
+    "alert": {
+      "home": "Arlanda",
+      "away": "Enkopings",
+      "sport": "football",
+      "competition": "Division 1 Norra",
+      "kickoff": "2026-09-27T11:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693824/F3/I1/",
+      "event_id": "201693824"
+    },
+    "page": {
+      "home": {
+        "name": "FC Arlanda",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Enkoping",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/football/holds/fbhold-1x2-arlanda-113234/hold.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_H-axNQrUXRMasrJ8wdiFZTUctPCQLuZdEhFVMxR5UMs",
+    "source_id": "evidence/sports-discovery-proof/bball-03-evidence.json;evidence/sports-discovery-proof/bball-03-result.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "Search control not visible on live Bet365",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/sports-discovery-proof/bball-03-evidence.json",
+        "evidence/sports-discovery-proof/bball-03-result.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "e-totals-poland-182835",
+    "source_id": "evidence/automatic-approval/e-totals-poland-1790443715/hold.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": "EXACT",
+    "old_reason": "both teams exact",
+    "alert": {
+      "home": "Kotwica Kolobrzeg",
+      "away": "Polonia Warszawa",
+      "sport": "basketball",
+      "competition": "1. Liga",
+      "kickoff": "2026-09-26T18:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168185/D19/E26747589/F19/I0/",
+      "event_id": "26747589"
+    },
+    "page": {
+      "home": {
+        "name": "Kotwica Kolobrzeg",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Polonia Warszawa",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/automatic-approval/e-totals-poland-1790443715/hold.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "fbhold-1X2-114917",
+    "source_id": "evidence/football/holds/fbhold-1X2-114917/hold.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "ALIAS_REQUIRED",
+    "old_verdict": "AMBIGUOUS",
+    "old_reason": "Known matching kick-off and competition required (competition mismatch (feed 'division 2' vs page 'sweden division 2 norrland'))",
+    "alert": {
+      "home": "Lucksta",
+      "away": "Taftea",
+      "sport": "football",
+      "competition": "Division 2",
+      "kickoff": "2026-09-27T11:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201816566/F3/I1/",
+      "event_id": "201816566"
+    },
+    "page": {
+      "home": {
+        "name": "Lucksta IF",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Taftea IK",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/football/holds/fbhold-1X2-114917/hold.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "st-inact2-1790203438",
+    "source_id": "evidence/stage-timeout-gunma-proof/inactivity2-result.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No live selection for SPREAD/HOME/-0.5",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": "Football Casino",
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/stage-timeout-gunma-proof/inactivity2-result.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "sopron-011657",
+    "source_id": "evidence/task1-stake/sopron-011657.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": "ALIAS_MATCH",
+    "old_reason": "both teams via aliases",
+    "alert": {
+      "home": "Soproni KC",
+      "away": "Debreceni EAC",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T17:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21170159/D19/E26748278/F19/I0/",
+      "event_id": "26748278"
+    },
+    "page": {
+      "home": {
+        "name": "Sopron KC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "DEAC Debreceni",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/task1-stake/sopron-011657.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "tzprobe-1790441000-4",
+    "source_id": "evidence/timezone-probe/run-1790440976/4.json;evidence/timezone-probe/run-1790440976/summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 26 Sep 20:00 vs page 26 Sep 19:00 (UK)",
+    "alert": {
+      "home": "Spojnia Stargard",
+      "away": "Polonia Bytom",
+      "sport": "basketball",
+      "competition": "1. Liga",
+      "kickoff": "2026-09-26T19:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168185/D19/E26747588/F19/I0/",
+      "event_id": "26747588"
+    },
+    "page": {
+      "home": {
+        "name": "Spojnia Stargard",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Polonia Bytom",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/timezone-probe/run-1790440976/4.json",
+        "evidence/timezone-probe/run-1790440976/summary.json"
+      ],
+      "kickoff": "2026-09-26T19:00:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "sm-logged-out-login-1790318028",
+    "source_id": "evidence/session-machine/sm-logged-out-login-1790318028.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "Cookie Accept control not found on live Bet365",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/session-machine/sm-logged-out-login-1790318028.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_MLY9kYPMwfGlBODHKBJQw9VU3lkp4iCuLGwMW9_hFBM",
+    "source_id": "evidence/identity-corpus/backend_records.json;evidence/search-kyoto/live/run.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No unique outlined field containing OCR hint Search",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/identity-corpus/backend_records.json",
+        "evidence/search-kyoto/live/run.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "wrong_opponent-232729",
+    "source_id": "evidence/milestone-a/wrong_opponent-232729.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "Event link shows 'Kyoto Hannaryz v Shiga Lakes'; alert says 'Kyoto Hannaryz v Bayern Munich'",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Bayern Munich",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:35:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737823/F19/I0/",
+      "event_id": "26737823"
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/milestone-a/wrong_opponent-232729.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_O-qRB_vZkf_5EsfJttCigF8DIt9yx8b53JjUEauGWco",
+    "source_id": "evidence/sports-discovery-proof/bball-chartres-evidence.json;evidence/sports-discovery-proof/bball-chartres-result.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "No fixture pairing for 'Chartres' vs 'Levharti Chomutov'",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/sports-discovery-proof/bball-chartres-evidence.json",
+        "evidence/sports-discovery-proof/bball-chartres-result.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "berck-010229",
+    "source_id": "evidence/task1-stake/berck-010229.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "ALIAS_REQUIRED",
+    "old_verdict": "AMBIGUOUS",
+    "old_reason": "'Pays Salonais Basket 13' only resembles 'Pays Salonais Basket' (1.00) and there is no event anchor with an agreeing kick-off",
+    "alert": {
+      "home": "Berck Fliers Range",
+      "away": "Pays Salonais Basket 13",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T18:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747383/F19/I0/",
+      "event_id": "26747383"
+    },
+    "page": {
+      "home": {
+        "name": "Berck/Rang du Fliers",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Pays Salonais Basket",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/task1-stake/berck-010229.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_OErk6jLTuUn3-QZIcFq_Y_e_eT0oIUK-J-kgIurNZwM",
+    "source_id": "evidence/prepare-0641/prep4-run.json;evidence/prepare-0641/proof-prep-193206.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No live selection for TOTAL/OVER/177.5",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/prepare-0641/prep4-run.json",
+        "evidence/prepare-0641/proof-prep-193206.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "wrong_link_fail_closed-011706",
+    "source_id": "evidence/task1-stake/wrong_link_fail_closed-011706.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Shiga Lake Stars",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:35:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": "Besancon AC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Val de Seine",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/task1-stake/wrong_link_fail_closed-011706.json"
+      ],
+      "kickoff": "2026-09-25T19:00:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_QOwg_e9ukRMyR6mKtGIVDCE4caRUtbdbLimGRe6I0EA",
+    "source_id": "evidence/stage-timeout-gunma-proof/bb1-evidence.json;evidence/stage-timeout-gunma-proof/bb1-result.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No unique outlined field containing OCR hint Search",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/stage-timeout-gunma-proof/bb1-evidence.json",
+        "evidence/stage-timeout-gunma-proof/bb1-result.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_RTw6Kk1vwtsajFrh5KskaLqzRccHnrboOS9SWMkZcxw",
+    "source_id": "evidence/search-kyoto/batch1/kyoto-200936.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "No fixture pairing for 'Kyoto Hannaryz' vs 'Shiga Lake Stars'",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/search-kyoto/batch1/kyoto-200936.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "link-szolnoki-130334",
+    "source_id": "evidence/milestone-b/search-route-defect/verify-0.9.15/link-szolnoki-130334.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": "EXACT",
+    "old_reason": "both teams exact",
+    "alert": {
+      "home": "Szolnoki Olaj",
+      "away": "OSE Lions",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T16:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21170159/D19/E26748276/F19/I0/",
+      "event_id": "26748276"
+    },
+    "page": {
+      "home": {
+        "name": "Szolnoki Olaj",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "OSE Lions",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/milestone-b/search-route-defect/verify-0.9.15/link-szolnoki-130334.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_SODyaH1jdRensYo0Y9aABtxhQ7NjGkEw4M6vy35CX8Q",
+    "source_id": "evidence/football/captures/fb-japs-totals-102753/capture.json;evidence/football/captures/session-102830.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "'JaPS' vs 'JaPS U21': protected markers differ [] vs [u21]",
+    "alert": {
+      "home": "JaPS",
+      "away": "PPJ",
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201845402/F3/I1/",
+      "event_id": "201845402"
+    },
+    "page": {
+      "home": {
+        "name": "JaPS U21",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "PPJ U21",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/football/captures/fb-japs-totals-102753/capture.json",
+        "evidence/football/captures/session-102830.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "sm-logged-out-login-1790318106",
+    "source_id": "evidence/session-machine/sm-logged-out-login-1790318106.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No unique outlined field containing OCR hint Username",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/session-machine/sm-logged-out-login-1790318106.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "hardening-1790373127-wrong-link",
+    "source_id": "evidence/execution-hardening/phone-/hardening-1790373127/wrong-link.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "'Kyoto Hannaryz' is not 'Kirchheim' (different name 0.15)",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Shiga Lake Stars",
+      "sport": "basketball",
+      "competition": "Germany Pro A",
+      "kickoff": "2026-09-26T16:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21170155/D19/E26748183/F19/I0/",
+      "event_id": "26748183"
+    },
+    "page": {
+      "home": {
+        "name": "Kirchheim",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "SBB Baskets Wolmirstedt",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/execution-hardening/phone-/hardening-1790373127/wrong-link.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "search-tofas-130256",
+    "source_id": "evidence/milestone-b/search-route-defect/verify-0.9.15/search-tofas-130256.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "Search control not visible on live Bet365",
+    "alert": {
+      "home": "Tofas SK",
+      "away": "Bordo Sportif",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T16:00:00+00:00",
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/milestone-b/search-route-defect/verify-0.9.15/search-tofas-130256.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "sopron-002726",
+    "source_id": "evidence/milestone-c/sopron-002726.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": "ALIAS_MATCH",
+    "old_reason": "both teams via aliases",
+    "alert": {
+      "home": "Soproni KC",
+      "away": "Debreceni EAC",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T17:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21170159/D19/E26748278/F19/I0/",
+      "event_id": "26748278"
+    },
+    "page": {
+      "home": {
+        "name": "Sopron KC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "DEAC Debreceni",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/milestone-c/sopron-002726.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "saga-085826",
+    "source_id": "evidence/women-marker/saga-085826.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": "EXACT",
+    "old_reason": "both teams exact",
+    "alert": {
+      "home": "Saga Ballooners",
+      "away": "Hiroshima Dragonflies",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:45:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737826/F19/I0/",
+      "event_id": "26737826"
+    },
+    "page": {
+      "home": {
+        "name": "Saga Ballooners",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Hiroshima Dragonflies",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/women-marker/saga-085826.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "sm-eventlink-login-1790319232",
+    "source_id": "evidence/session-machine/sm-eventlink-login-1790319232.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": "CANONICAL_MATCH",
+    "old_reason": "both teams canonical",
+    "alert": {
+      "home": "Besancon",
+      "away": "Val De Seine",
+      "sport": null,
+      "competition": "France Nationale 1 25 Sep 19:00",
+      "kickoff": null,
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": "Besancon AC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Val de Seine",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/session-machine/sm-eventlink-login-1790319232.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_V9AJWB1diY4c8pEgvFppnzxHiQ95gxVrjATFov8nQbc",
+    "source_id": "evidence/identity-corpus/backend_records.json;evidence/live-araraquara/run.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "No fixture pairing for 'Araraquara' vs 'Mogi Das Cruzes'",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": "https://www.bet365.com/#/AC/B18/C21169442/D19/E26722034/F19/I0/",
+      "event_id": "26722034"
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/identity-corpus/backend_records.json",
+        "evidence/live-araraquara/run.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_WBT_j67LJORKAHk9A14IGeO1SzGAvUE1aFvjOe-ONQM",
+    "source_id": "evidence/betslip-proof-0631/proof-totals-110409.json;evidence/betslip-proof-0631/totals1-run.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No live selection for TOTAL/UNDER/173.5",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/betslip-proof-0631/proof-totals-110409.json",
+        "evidence/betslip-proof-0631/totals1-run.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "no_alias_mismatch-234543",
+    "source_id": "evidence/milestone-b/no_alias_mismatch-234543.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "'Riverside Club' is not 'Val de Seine' (different name 0.44)",
+    "alert": {
+      "home": "Besancon",
+      "away": "Riverside Club",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T18:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": "Besancon AC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Val de Seine",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/milestone-b/no_alias_mismatch-234543.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_YWbjTtzxvkm4hwTLFFzoPRhjxHEP4Brv-yeDjWG72jI",
+    "source_id": "evidence/search-kyoto/batch1/kyoto-201841.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "No fixture pairing for 'Kyoto Hannaryz' vs 'Shiga Lake Stars'",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/search-kyoto/batch1/kyoto-201841.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c__JFbnp-CFK2FaMj-SJUghTCbYUgKvtrmmnTb23pNzIY",
+    "source_id": "evidence/football/captures/fb-vihiga-spread-102532/capture.json;evidence/football/captures/session-102545.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "'Vihiga Queens' vs 'Vihiga Queens FC (W)': protected markers differ [] vs [women]",
+    "alert": {
+      "home": "Vihiga Queens",
+      "away": "Ulinzi Starlets",
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201829714/F3/I1/",
+      "event_id": "201829714"
+    },
+    "page": {
+      "home": {
+        "name": "Vihiga Queens FC (W)",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Ulinzi Starlets (W)",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/football/captures/fb-vihiga-spread-102532/capture.json",
+        "evidence/football/captures/session-102545.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c__Ni1LwR5o1RXJ6OeG8tBYI78KR9XjaJ6n9ucBtCSv2c",
+    "source_id": "evidence/prepare-0641/prep3-run.json;evidence/prepare-0641/proof-prep-192905.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No live selection for TOTAL/OVER/177.5",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/prepare-0641/prep3-run.json",
+        "evidence/prepare-0641/proof-prep-192905.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "search-fallback-174922",
+    "source_id": "evidence/automatic-approval/search-fallback-1790441362/hold.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "Search control not visible on live Bet365",
+    "alert": {
+      "home": "Landstede Hammers",
+      "away": "Antwerp Giants",
+      "sport": "basketball",
+      "competition": "BNXT Super Cup",
+      "kickoff": "2026-09-26T18:30:00+00:00",
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/automatic-approval/search-fallback-1790441362/hold.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_aYMzUpZXxsm79he8Crwq08_Xh8f-x3TFwT3xosHdKZ0",
+    "source_id": "evidence/stage-timeout-gunma-proof/fulham-evidence.json;evidence/stage-timeout-gunma-proof/fulham-result.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No live selection for SPREAD/HOME/-0.5",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/stage-timeout-gunma-proof/fulham-evidence.json",
+        "evidence/stage-timeout-gunma-proof/fulham-result.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "tzprobe-1790441207-3",
+    "source_id": "evidence/timezone-probe/run-1790441189/3.json;evidence/timezone-probe/run-1790441189/summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+    "old_reason": "event link + kick-off 26 Sep 19:30 + 'Antwerp Giants' exact; 'Landstede Hammers' is a naming variant of 'Landstede Zwolle' (1.00)",
+    "alert": {
+      "home": "Landstede Hammers",
+      "away": "Antwerp Giants",
+      "sport": "basketball",
+      "competition": "BNXT Super Cup",
+      "kickoff": "2026-09-26T18:30:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172277/D19/E26823685/F19/I0/",
+      "event_id": "26823685"
+    },
+    "page": {
+      "home": {
+        "name": "Landstede Zwolle",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Antwerp Giants",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/timezone-probe/run-1790441189/3.json",
+        "evidence/timezone-probe/run-1790441189/summary.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "tzprobe-1790440984-2",
+    "source_id": "evidence/timezone-probe/run-1790440976/2.json;evidence/timezone-probe/run-1790440976/summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 26 Sep 20:30 vs page 26 Sep 19:30 (UK)",
+    "alert": {
+      "home": "Landstede Hammers",
+      "away": "Antwerp Giants",
+      "sport": "basketball",
+      "competition": "BNXT Super Cup",
+      "kickoff": "2026-09-26T19:30:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172277/D19/E26823685/F19/I0/",
+      "event_id": "26823685"
+    },
+    "page": {
+      "home": {
+        "name": "Landstede Zwolle",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Antwerp Giants",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/timezone-probe/run-1790440976/2.json",
+        "evidence/timezone-probe/run-1790440976/summary.json"
+      ],
+      "kickoff": "2026-09-26T19:30:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "wrong_link_fail_closed-003716",
+    "source_id": "evidence/milestone-c/wrong_link_fail_closed-003716.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Shiga Lake Stars",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:35:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": "Besancon AC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Val de Seine",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/milestone-c/wrong_link_fail_closed-003716.json"
+      ],
+      "kickoff": "2026-09-25T19:00:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "forensic-1790366014-hold",
+    "source_id": "evidence/strategy-audit/phone/hold.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "ALIAS_REQUIRED",
+    "old_verdict": "AMBIGUOUS",
+    "old_reason": "both teams only resemble the page's names; no exact team to anchor on",
+    "alert": {
+      "home": "VFL Kirchheim Knights",
+      "away": "Wolmirstedt",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-26T16:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21170155/D19/E26748183/F19/I0/",
+      "event_id": "26748183"
+    },
+    "page": {
+      "home": {
+        "name": "Kirchheim",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "SBB Baskets Wolmirstedt",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/strategy-audit/phone/hold.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_dzXcEaxoxTHkykuakAHBbmgB7re-F2w6M7u_jyLaSlY",
+    "source_id": "evidence/identity-corpus/backend_records.json;evidence/live-berck/run.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "No fixture pairing for 'Berck Fliers Range' vs 'Pays Salonais Basket 13'",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/identity-corpus/backend_records.json",
+        "evidence/live-berck/run.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "fbhold-SPREAD-114020",
+    "source_id": "evidence/football/holds/fbhold-SPREAD-114020/hold.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "ALIAS_REQUIRED",
+    "old_verdict": "AMBIGUOUS",
+    "old_reason": "'AFC Malmo' only partly resembles 'Ariana FC Malmo' (weak resemblance 0.50: shared [malmo] but [afc] has no counterpart); not a different event, not proven the same",
+    "alert": {
+      "home": "Eskilsminne",
+      "away": "AFC Malmo",
+      "sport": "football",
+      "competition": "Division 1 Sodra",
+      "kickoff": "2026-09-27T11:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693820/F3/G40/",
+      "event_id": "201693820"
+    },
+    "page": {
+      "home": {
+        "name": "Eskilsminne IF",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Ariana FC Malmo",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/football/holds/fbhold-SPREAD-114020/hold.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_gLb8IoyTHNATmAx2bnKeg8HCNBvlPvvyStmT4JKZbUY",
+    "source_id": "evidence/search-kyoto/k1/run.json;evidence/search-kyoto/proof-kyoto1-200619.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "No fixture pairing for 'Kyoto Hannaryz' vs 'Shiga Lake Stars'",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/search-kyoto/k1/run.json",
+        "evidence/search-kyoto/proof-kyoto1-200619.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_gR0euvZSiHnpIc0ArMFhuEoVjw5d3odpPi8KFHtD11U",
+    "source_id": "evidence/football/captures/fb-farul-spread-102524/capture.json;evidence/football/captures/session-102545.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "'Farul Constanta' vs 'Farul Constanta (W)': protected markers differ [] vs [women]",
+    "alert": {
+      "home": "Farul Constanta",
+      "away": "Csikszereda Miercurea Ciuc",
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201820591/F3/I1/",
+      "event_id": "201820591"
+    },
+    "page": {
+      "home": {
+        "name": "Farul Constanta (W)",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "FK Csikszereda",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/football/captures/fb-farul-spread-102524/capture.json",
+        "evidence/football/captures/session-102545.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_hWAIR9te6AzccO-41HaVv03fm1r1Ic4vsBXClkPzc4E",
+    "source_id": "evidence/fixture-m5/results.json;evidence/fixture-m5/wrong_event/evidence.json;evidence/fixture-m5/wrong_event/result.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "Event identity differs from discovered fixture",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/fixture-m5/results.json",
+        "evidence/fixture-m5/wrong_event/evidence.json",
+        "evidence/fixture-m5/wrong_event/result.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "tzprobe-1790441227-5",
+    "source_id": "evidence/timezone-probe/run-1790441189/5.json;evidence/timezone-probe/run-1790441189/summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "ALIAS_REQUIRED",
+    "old_verdict": "AMBIGUOUS",
+    "old_reason": "Known matching kick-off and competition required",
+    "alert": {
+      "home": "Spojnia Stargard",
+      "away": "Polonia Bytom",
+      "sport": "basketball",
+      "competition": "1. Liga",
+      "kickoff": "2026-09-26T18:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168185/D19/E26747588/F19/I0/",
+      "event_id": "26747588"
+    },
+    "page": {
+      "home": {
+        "name": "Spojnia Stargard",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Polonia Bytom",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/timezone-probe/run-1790441189/5.json",
+        "evidence/timezone-probe/run-1790441189/summary.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "wrong_link-231907",
+    "source_id": "evidence/milestone-a/wrong_link-231907.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "Event link shows 'Besancon Ac v Val de Seine'; alert says 'Kyoto Hannaryz v Shiga Lake Stars'; kick-off 25 Sep 19:00 vs alert 25 Sep 10:35",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Shiga Lake Stars",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:35:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/milestone-a/wrong_link-231907.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "wrong_link_fail_closed-085859",
+    "source_id": "evidence/women-marker/wrong_link_fail_closed-085859.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Shiga Lake Stars",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:35:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": "Besancon AC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Val de Seine",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/women-marker/wrong_link_fail_closed-085859.json"
+      ],
+      "kickoff": "2026-09-25T19:00:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "tzprobe-1790441014-6",
+    "source_id": "evidence/timezone-probe/run-1790440976/6.json;evidence/timezone-probe/run-1790440976/summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 26 Sep 19:15 vs page 26 Sep 18:15 (UK)",
+    "alert": {
+      "home": "Dziki Warshawa",
+      "away": "Zielona Gora",
+      "sport": "basketball",
+      "competition": "Super Cup",
+      "kickoff": "2026-09-26T18:15:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21169971/D19/E26740897/F19/I0/",
+      "event_id": "26740897"
+    },
+    "page": {
+      "home": {
+        "name": "Dziki Warszawa",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Zielona Gora",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/timezone-probe/run-1790440976/6.json",
+        "evidence/timezone-probe/run-1790440976/summary.json"
+      ],
+      "kickoff": "2026-09-26T18:15:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_jGDQNDSIZJ48ZOeaG96fpEfPFHsEQedT4_aC7bVh80k",
+    "source_id": "evidence/stage-timeout-gunma-proof/bb2-evidence.json;evidence/stage-timeout-gunma-proof/bb2-result.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No unique outlined field containing OCR hint Search",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/stage-timeout-gunma-proof/bb2-evidence.json",
+        "evidence/stage-timeout-gunma-proof/bb2-result.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "totals-link-174855",
+    "source_id": "evidence/automatic-approval/totals-link-1790441335/hold.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+    "old_reason": "event link + kick-off 26 Sep 19:30 + 'Antwerp Giants' exact; 'Landstede Hammers' is a naming variant of 'Landstede Zwolle' (1.00)",
+    "alert": {
+      "home": "Landstede Hammers",
+      "away": "Antwerp Giants",
+      "sport": "basketball",
+      "competition": "BNXT Super Cup",
+      "kickoff": "2026-09-26T18:30:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21172277/D19/E26823685/F19/I0/",
+      "event_id": "26823685"
+    },
+    "page": {
+      "home": {
+        "name": "Landstede Zwolle",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Antwerp Giants",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/automatic-approval/totals-link-1790441335/hold.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "besancon-215619",
+    "source_id": "evidence/fast-0703/besancon-215619.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No live selection for SPREAD/AWAY/+3.5",
+    "alert": {
+      "home": "Besancon",
+      "away": "Val De Seine",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T18:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/fast-0703/besancon-215619.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "wrong_link_fail_closed-005323",
+    "source_id": "evidence/task1-stake/wrong_link_fail_closed-005323.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Shiga Lake Stars",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:35:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": "Besancon AC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Val de Seine",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/task1-stake/wrong_link_fail_closed-005323.json"
+      ],
+      "kickoff": "2026-09-25T19:00:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "wrong_link_fail_closed-010355",
+    "source_id": "evidence/task1-stake/wrong_link_fail_closed-010355.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "'Kyoto Hannaryz' is not 'Besancon AC' (different name 0.23)",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Shiga Lake Stars",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:35:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": "Besancon AC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Val de Seine",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/task1-stake/wrong_link_fail_closed-010355.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_o_8yz3RKj6BIE9jGT0d9zhUb27Ww4EA81LK96aHORVA",
+    "source_id": "evidence/identity-corpus/backend_records.json;evidence/live-saga/run.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "No fixture pairing for 'Saga Ballooners' vs 'Hiroshima Dragonflies'",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737826/F19/I0/",
+      "event_id": "26737826"
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/identity-corpus/backend_records.json",
+        "evidence/live-saga/run.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "tzprobe-1790440993-3",
+    "source_id": "evidence/timezone-probe/run-1790440976/3.json;evidence/timezone-probe/run-1790440976/summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 26 Sep 20:00 vs page 26 Sep 19:00 (UK)",
+    "alert": {
+      "home": "Kotwica Kolobrzeg",
+      "away": "Polonia Warszawa",
+      "sport": "basketball",
+      "competition": "1. Liga",
+      "kickoff": "2026-09-26T19:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168185/D19/E26747589/F19/I0/",
+      "event_id": "26747589"
+    },
+    "page": {
+      "home": {
+        "name": "Kotwica Kolobrzeg",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Polonia Warszawa",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/timezone-probe/run-1790440976/3.json",
+        "evidence/timezone-probe/run-1790440976/summary.json"
+      ],
+      "kickoff": "2026-09-26T19:00:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "alias_required-232745",
+    "source_id": "evidence/milestone-a/alias_required-232745.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "ALIAS_REQUIRED",
+    "old_verdict": null,
+    "old_reason": "Event link shows 'Besancon Ac v Val de Seine'; alert says 'Besancon v Valdeseine' (same kick-off 25 Sep 19:00; bookmaker naming variant needs an alias)",
+    "alert": {
+      "home": "Besancon",
+      "away": "Valdeseine",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T18:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/milestone-a/alias_required-232745.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "lan-1789940231-missing",
+    "source_id": "evidence/coordinator/missing/result.json;evidence/coordinator/results.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No unique outlined field containing OCR hint Nonexistent",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/coordinator/missing/result.json",
+        "evidence/coordinator/results.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "hapoel_jerusalem_search-010931",
+    "source_id": "evidence/task1-stake/hapoel_jerusalem_search-010931.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No unique outlined field containing OCR hint bet365...",
+    "alert": {
+      "home": "Hapoel Jerusalem",
+      "away": "Bnei Herzliya",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/task1-stake/hapoel_jerusalem_search-010931.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "adapter-1790102402-bb_spread",
+    "source_id": "evidence/fixture-m5/resumed-environment.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "Event identity differs from discovered fixture",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": "Pro",
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/fixture-m5/resumed-environment.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_sCn6JfkLlfh9JpKlr6-_ChSknXZOat2P3HicGdn4C90",
+    "source_id": "evidence/fixture/results.json;evidence/fixture/wrong_event/evidence.json;evidence/fixture/wrong_event/result.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "Event identity differs from discovered fixture",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/fixture/results.json",
+        "evidence/fixture/wrong_event/evidence.json",
+        "evidence/fixture/wrong_event/result.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "wrong_link_fail_closed-012020",
+    "source_id": "evidence/task1-stake/wrong_link_fail_closed-012020.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK)",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Shiga Lake Stars",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:35:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168177/D19/E26747385/F19/I0/",
+      "event_id": "26747385"
+    },
+    "page": {
+      "home": {
+        "name": "Besancon AC",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Val de Seine",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/task1-stake/wrong_link_fail_closed-012020.json"
+      ],
+      "kickoff": "2026-09-25T19:00:00+01:00",
+      "kickoff_source": "timestamp explicitly preserved in historical comparison diagnostic"
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "wrong_opponent-231839",
+    "source_id": "evidence/milestone-a/wrong_opponent-231839.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "ALIAS_REQUIRED",
+    "old_verdict": null,
+    "old_reason": "Event link shows 'Kyoto Hannaryz v Shiga Lakes'; alert says 'Kyoto Hannaryz v Bayern Munich' (same kick-off 25 Sep 10:35; bookmaker naming variant needs an alias)",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Bayern Munich",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-25T09:35:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737823/F19/I0/",
+      "event_id": "26737823"
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/milestone-a/wrong_opponent-231839.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "hardening-1790373127-worse-line",
+    "source_id": "evidence/execution-hardening/phone-/hardening-1790373127/worse-line.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": "EXACT",
+    "old_reason": "both teams exact",
+    "alert": {
+      "home": "Kirchheim",
+      "away": "SBB Baskets Wolmirstedt",
+      "sport": "basketball",
+      "competition": "Germany Pro A",
+      "kickoff": "2026-09-26T16:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21170155/D19/E26748183/F19/I0/",
+      "event_id": "26748183"
+    },
+    "page": {
+      "home": {
+        "name": "Kirchheim",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "SBB Baskets Wolmirstedt",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/execution-hardening/phone-/hardening-1790373127/worse-line.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "st-stuck-1790203071",
+    "source_id": "evidence/stage-timeout-gunma-proof/stuck-evidence.json;evidence/stage-timeout-gunma-proof/stuck-result.json;evidence/stage-timeout-gunma-proof/stuck-summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "Live Bet365 homepage not visible",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/stage-timeout-gunma-proof/stuck-evidence.json",
+        "evidence/stage-timeout-gunma-proof/stuck-result.json",
+        "evidence/stage-timeout-gunma-proof/stuck-summary.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "forensic-1790366148-wrong-link",
+    "source_id": "evidence/strategy-audit/phone/run-1790366148/wrong-link.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": "MISMATCH",
+    "old_reason": "'Kyoto Hannaryz' is not 'Kirchheim' (different name 0.15)",
+    "alert": {
+      "home": "Kyoto Hannaryz",
+      "away": "Shiga Lake Stars",
+      "sport": "basketball",
+      "competition": null,
+      "kickoff": "2026-09-26T16:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21170155/D19/E26748183/F19/I0/",
+      "event_id": "26748183"
+    },
+    "page": {
+      "home": {
+        "name": "Kirchheim",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "SBB Baskets Wolmirstedt",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/strategy-audit/phone/run-1790366148/wrong-link.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "run:c_xySs9FgWLSxMWteSQyaZGIA6PCu4x-JOTPdQSGnrq-w",
+    "source_id": "evidence/prepare-0641/prep1-run.json;evidence/prepare-0641/proof-prep-192101.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No unique outlined field containing OCR hint Search",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/prepare-0641/prep1-run.json",
+        "evidence/prepare-0641/proof-prep-192101.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "st-inact-1790203235",
+    "source_id": "evidence/stage-timeout-gunma-proof/inactivity-result.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "Search control not visible on live Bet365",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/stage-timeout-gunma-proof/inactivity-result.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "forensic-reboot-session-1790441665",
+    "source_id": "evidence/strategy-audit/reboot/run-1790441607/result.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "Live Bet365 homepage not visible",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/strategy-audit/reboot/run-1790441607/result.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "tzprobe-1790441219-4",
+    "source_id": "evidence/timezone-probe/run-1790441189/4.json;evidence/timezone-probe/run-1790441189/summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "ALIAS_REQUIRED",
+    "old_verdict": "AMBIGUOUS",
+    "old_reason": "Known matching kick-off and competition required",
+    "alert": {
+      "home": "Kotwica Kolobrzeg",
+      "away": "Polonia Warszawa",
+      "sport": "basketball",
+      "competition": "1. Liga",
+      "kickoff": "2026-09-26T18:00:00+00:00",
+      "event_url": "https://www.bet365.com/#/AC/B18/C21168185/D19/E26747589/F19/I0/",
+      "event_id": "26747589"
+    },
+    "page": {
+      "home": {
+        "name": "Kotwica Kolobrzeg",
+        "source": "ocr"
+      },
+      "away": {
+        "name": "Polonia Warszawa",
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/timezone-probe/run-1790441189/4.json",
+        "evidence/timezone-probe/run-1790441189/summary.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "on-03419b83bafdc2db695f4b59",
+    "source_id": "evidence/search-kyoto/instruction.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": "basketball",
+      "competition": "B League",
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/search-kyoto/instruction.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "on-9c1f869413a122505ff3ba63",
+    "source_id": "evidence/identity-corpus-raw.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "",
+    "alert": {
+      "home": "Araraquara",
+      "away": "Mogi Das Cruzes",
+      "sport": "basketball",
+      "competition": "Paulista FPB U20",
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/identity-corpus-raw.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "on-a9f4768dfff8689b3ef53b1b",
+    "source_id": "evidence/identity-corpus-raw.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "",
+    "alert": {
+      "home": "Berck Fliers Range",
+      "away": "Pays Salonais Basket 13",
+      "sport": "basketball",
+      "competition": "Nationale 1",
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/identity-corpus-raw.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "on-baaa1c7fe15d239c2cd5593c",
+    "source_id": "evidence/identity-corpus-raw.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "",
+    "alert": {
+      "home": "Soproni KC",
+      "away": "Debreceni EAC",
+      "sport": "basketball",
+      "competition": "Nemzeti Bajnoksag I.A",
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/identity-corpus-raw.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "on-c0cd66b641a41e1026e4eb80",
+    "source_id": "evidence/identity-corpus-raw.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "",
+    "alert": {
+      "home": "Cojute",
+      "away": "Aguila San Miguel",
+      "sport": "basketball",
+      "competition": "Liga Mayor de Baloncesto",
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/identity-corpus-raw.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "on-e5072bbf31e3639d80a35f79",
+    "source_id": "evidence/identity-corpus-raw.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "",
+    "alert": {
+      "home": "Saga Ballooners",
+      "away": "Hiroshima Dragonflies",
+      "sport": "basketball",
+      "competition": "B League",
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/identity-corpus-raw.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "on-f24902a9a6dc166b07e79880",
+    "source_id": "evidence/live-ready-dispatch/on-f24902a9a6dc166b07e79880-instructions.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": "basketball",
+      "competition": "Women",
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/live-ready-dispatch/on-f24902a9a6dc166b07e79880-instructions.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "sd-bball-03-1790195899",
+    "source_id": "evidence/sports-discovery-proof/proof-summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "Search control not visible on live Bet365",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": "Europe Cup Qualification",
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/sports-discovery-proof/proof-summary.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "st-bb1-1790202210",
+    "source_id": "evidence/stage-timeout-gunma-proof/bb1-summary.json;evidence/stage-timeout-gunma-proof/proof-summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No unique outlined field containing OCR hint Search",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/stage-timeout-gunma-proof/bb1-summary.json",
+        "evidence/stage-timeout-gunma-proof/proof-summary.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "st-bb2-1790202451",
+    "source_id": "evidence/stage-timeout-gunma-proof/bb2-summary.json;evidence/stage-timeout-gunma-proof/proof-summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No unique outlined field containing OCR hint Search",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/stage-timeout-gunma-proof/bb2-summary.json",
+        "evidence/stage-timeout-gunma-proof/proof-summary.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "st-bb3-1790202690",
+    "source_id": "evidence/stage-timeout-gunma-proof/bb3-summary.json;evidence/stage-timeout-gunma-proof/proof-summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No unique outlined field containing OCR hint Search",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/stage-timeout-gunma-proof/bb3-summary.json",
+        "evidence/stage-timeout-gunma-proof/proof-summary.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "st-fulham-1790202936",
+    "source_id": "evidence/stage-timeout-gunma-proof/fulham-summary.json;evidence/stage-timeout-gunma-proof/proof-summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "TARGET_NOT_FOUND",
+    "old_verdict": null,
+    "old_reason": "No live selection for SPREAD/HOME/-0.5",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/stage-timeout-gunma-proof/fulham-summary.json",
+        "evidence/stage-timeout-gunma-proof/proof-summary.json"
+      ]
+    },
+    "observations": []
+  },
+  {
+    "instruction_id": "st-gunma-1790202034",
+    "source_id": "evidence/stage-timeout-gunma-proof/gunma-summary.json;evidence/stage-timeout-gunma-proof/proof-summary.json",
+    "cohort": "archive",
+    "archive_kind": "historical probes/search/incomplete records; separate from intake cohort",
+    "old_stage": "WRONG_EVENT",
+    "old_verdict": null,
+    "old_reason": "No fixture pairing for 'Gunma Crane Thunders' vs 'Altiri Chiba'",
+    "alert": {
+      "home": null,
+      "away": null,
+      "sport": null,
+      "competition": null,
+      "kickoff": null,
+      "event_url": null,
+      "event_id": null
+    },
+    "page": {
+      "home": {
+        "name": null,
+        "source": "ocr"
+      },
+      "away": {
+        "name": null,
+        "source": "ocr"
+      },
+      "competition": null,
+      "event_id": null,
+      "event_id_observed": false,
+      "archive_sources": [
+        "evidence/stage-timeout-gunma-proof/gunma-summary.json",
+        "evidence/stage-timeout-gunma-proof/proof-summary.json"
+      ]
+    },
+    "observations": []
+  }
+]

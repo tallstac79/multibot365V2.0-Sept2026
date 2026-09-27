@@ -1,0 +1,129 @@
+{
+  "run_id": "c_ZnVvBA7Q7Ir50d_2Jf4SEj8KnMlQLr0S6wbS_rdCNFA",
+  "status": "TARGET_NOT_FOUND",
+  "phase": "FINISHED",
+  "started_at_ms": 1790338027959,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_event_direct.png",
+    "s003_markets.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790338027959
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 31,
+      "wall_ts_ms": 1790338027990
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 40,
+      "wall_ts_ms": 1790338028000
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3486,
+      "wall_ts_ms": 1790338031447
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3726,
+      "wall_ts_ms": 1790338031685
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 4634,
+      "wall_ts_ms": 1790338032594
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 5228,
+      "wall_ts_ms": 1790338033188
+    },
+    {
+      "phase": "MARKET_NAV",
+      "elapsed_ms": 5361,
+      "wall_ts_ms": 1790338033320
+    },
+    {
+      "phase": "CAPTURE_markets",
+      "elapsed_ms": 5367,
+      "wall_ts_ms": 1790338033326
+    },
+    {
+      "phase": "CAPTURED_markets",
+      "elapsed_ms": 5880,
+      "wall_ts_ms": 1790338033839
+    },
+    {
+      "phase": "READ_SELECTION",
+      "elapsed_ms": 5914,
+      "wall_ts_ms": 1790338033873
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 5923,
+      "wall_ts_ms": 1790338033882
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169978/D19/E26741037/F19/I0/",
+  "direct_event_header": [
+    "Sweden Basketligan 25 Sep 18:04",
+    "Boras Basket vs Nassjo Basket v",
+    "Popular Bet Builder Game Team Quarter"
+  ],
+  "identity": {
+    "verdict": "EXACT",
+    "reason": "both teams exact",
+    "home": {
+      "feed": "Boras Basket",
+      "bookmaker": "Boras Basket",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "away": {
+      "feed": "Nassjo Basket",
+      "bookmaker": "Nassjo Basket",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false
+  },
+  "identity_verdict": "EXACT",
+  "route": "event_link",
+  "game_lines": {
+    "reads": 1,
+    "agreed": [
+      "SPREAD/HOME/-14.5@1.83",
+      "SPREAD/AWAY/+14.5@1.83",
+      "TOTAL/OVER/172.5@1.83",
+      "TOTAL/UNDER/172.5@1.83",
+      "MONEYLINE/AWAY/NONE@7.50"
+    ],
+    "fast_path": true
+  },
+  "verified_fixture": {
+    "code": "d7215b21",
+    "home": "Boras Basket",
+    "away": "Nassjo Basket",
+    "fixture_name": "Boras Basket v Nassjo Basket",
+    "exact_fixture_text": "Home Boras Basket\nAway Nassjo Basket",
+    "competition": "Sweden Basketligan 25 Sep 18:04",
+    "bounds": [
+      35,
+      268,
+      583,
+      436
+    ]
+  },
+  "fixture_home": "Boras Basket",
+  "fixture_away": "Nassjo Basket"
+}

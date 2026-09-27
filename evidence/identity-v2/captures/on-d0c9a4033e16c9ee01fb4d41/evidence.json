@@ -1,0 +1,71 @@
+{
+  "run_id": "c_7xExABbMwQ92-lQdMCi-f4PagaGTBr-TlJ6DDrrZdgc",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790340268915,
+  "screenshots": [
+    "s001_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790340268916
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 8,
+      "wall_ts_ms": 1790340268924
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 14,
+      "wall_ts_ms": 1790340268930
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3471,
+      "wall_ts_ms": 1790340272388
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 4009,
+      "wall_ts_ms": 1790340272925
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 4112,
+      "wall_ts_ms": 1790340273028
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172153/D19/E26824005/F19/",
+  "direct_event_header": [
+    "FIBA Intercontinental Cup 26 Sep 12:30",
+    "Rytas vs Boca Juniors",
+    "Popular Bet Builder Game Team Quarter Half"
+  ],
+  "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "both teams only resemble the page's names; no exact team to anchor on",
+    "home": {
+      "feed": "Rytas Vilnius",
+      "bookmaker": "Rytas",
+      "level": "VARIANT",
+      "score": 1,
+      "note": "naming variant 1.00"
+    },
+    "away": {
+      "feed": "Atletico Boca Juniors",
+      "bookmaker": "Boca Juniors",
+      "level": "VARIANT",
+      "score": 1,
+      "note": "naming variant 1.00"
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: both teams only resemble the page's names; no exact team to anchor on"
+}

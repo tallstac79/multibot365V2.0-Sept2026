@@ -1,0 +1,109 @@
+{
+  "run_id": "c_zPV6tpN6vq2Z216ri9HveXoyAMqebgWLXNl-Y83Ar-I",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790505165622,
+  "screenshots": [
+    "s001_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790505165623
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 18,
+      "wall_ts_ms": 1790505165641
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 30,
+      "wall_ts_ms": 1790505165654
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3472,
+      "wall_ts_ms": 1790505169096
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 4032,
+      "wall_ts_ms": 1790505169656
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 4206,
+      "wall_ts_ms": 1790505169828
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172128/D19/E26832474/F19/I0/",
+  "direct_event_header": [
+    "Poland 1 Liga Women 27 Sep 12:00",
+    "LKS KK Lodz (W) vs Sparta Ziebice (W)",
+    "Popular Bet Builder Game"
+  ],
+  "competition_check": {
+    "feed": "Liga 1 Women",
+    "country": "Poland",
+    "page": "Poland 1 Liga Women 27 Sep 12:00",
+    "matches": false
+  },
+  "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "Known matching kick-off and competition required (competition mismatch (feed 'liga 1 women' vs page 'poland 1 liga women'))",
+    "home": {
+      "feed": "LKS Lodz",
+      "bookmaker": "LKS KK Lodz (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [women] supplied by the competition; names agree 1.00",
+      "alias_safe": true
+    },
+    "away": {
+      "feed": "Sparta Ziebice",
+      "bookmaker": "Sparta Ziebice (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [women] supplied by the competition; names agree 1.00",
+      "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+      "event_id_match": true,
+      "event_anchor": "page opened from the alert's own Bet365 event link",
+      "sport_match": "equal",
+      "kickoff_match": "exact",
+      "competition_match": "mismatch (feed 'liga 1 women' vs page 'poland 1 liga women')",
+      "competing_event": "none: a single event page reached through the alert's own link",
+      "home_similarity": {
+        "feed": "LKS Lodz",
+        "bookmaker": "LKS KK Lodz (W)",
+        "level": "VARIANT",
+        "kind": "women_marker_from_competition",
+        "score": 1,
+        "note": "marker [women] supplied by the competition; names agree 1.00"
+      },
+      "away_similarity": {
+        "feed": "Sparta Ziebice",
+        "bookmaker": "Sparta Ziebice (W)",
+        "level": "VARIANT",
+        "kind": "women_marker_from_competition",
+        "score": 1,
+        "note": "marker [women] supplied by the competition; names agree 1.00"
+      },
+      "protected_markers": "agree",
+      "orientation": "agree",
+      "policy": "verified_gate_failed",
+      "verdict": "AMBIGUOUS"
+    }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed 'liga 1 women' vs page 'poland 1 liga women'))"
+}

@@ -1,0 +1,104 @@
+{
+  "run_id": "c_oLUF8bGjpDFEPaRp5zLzRSAtEBWlfW9N1DUhzau9A_E",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790487986699,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_session.png",
+    "s003_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790487986699
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 18,
+      "wall_ts_ms": 1790487986716
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 24,
+      "wall_ts_ms": 1790487986723
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3464,
+      "wall_ts_ms": 1790487990162
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3992,
+      "wall_ts_ms": 1790487990691
+    },
+    {
+      "phase": "CAPTURE_session",
+      "elapsed_ms": 4017,
+      "wall_ts_ms": 1790487990715
+    },
+    {
+      "phase": "CAPTURED_session",
+      "elapsed_ms": 4566,
+      "wall_ts_ms": 1790487991265
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 4688,
+      "wall_ts_ms": 1790487991386
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 8108,
+      "wall_ts_ms": 1790487994807
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 8611,
+      "wall_ts_ms": 1790487995309
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 8670,
+      "wall_ts_ms": 1790487995368
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737841/F19/I0/",
+  "direct_event_header": [
+    "Japan B League 127 Sep 07:05",
+    "Utsunomiya Brex vs Yokohama B-Corsairs v",
+    "Popular Bet Builder Game Team Quarter Half"
+  ],
+  "competition_check": {
+    "feed": "B League",
+    "country": "Japan",
+    "page": "Japan B League 127 Sep 07:05",
+    "matches": false
+  },
+  "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "Known matching kick-off and competition required",
+    "home": {
+      "feed": "Utsunomiya Brex",
+      "bookmaker": "Utsunomiya Brex",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "away": {
+      "feed": "Yokohama B-Corsairs",
+      "bookmaker": "Yokohama B-Corsairs",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "kickoff_known": false,
+    "kickoff_agrees": false,
+    "reversed": false
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: Known matching kick-off and competition required"
+}

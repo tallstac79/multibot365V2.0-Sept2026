@@ -1,0 +1,120 @@
+{
+  "run_id": "c_EylfpTVR3x4kYYblgthbfbciy8oyXl5mMLPIojlgeu4",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790504924875,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790504924876
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 19,
+      "wall_ts_ms": 1790504924895
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 26,
+      "wall_ts_ms": 1790504924902
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3466,
+      "wall_ts_ms": 1790504928342
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3685,
+      "wall_ts_ms": 1790504928561
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 4603,
+      "wall_ts_ms": 1790504929479
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 5143,
+      "wall_ts_ms": 1790504930021
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 5336,
+      "wall_ts_ms": 1790504930212
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21171421/D19/E26823830/F19/I0/",
+  "direct_event_header": [
+    "T\u00fcrkiye TKBSL WOmen \u2022 27 Sep 12:00",
+    "Botas (W) vs CBK Mersin (W) v",
+    "Popular Bet Builder Game Team Quarter"
+  ],
+  "competition_check": {
+    "feed": "Super League Women",
+    "country": "Turkey",
+    "page": "T\u00fcrkiye TKBSL WOmen \u2022 27 Sep 12:00",
+    "matches": false
+  },
+  "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "Known matching kick-off and competition required (competition mismatch (feed 'super league women' vs page 'turkiye tkbsl women'))",
+    "home": {
+      "feed": "Botas SK",
+      "bookmaker": "Botas (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [women] supplied by the competition; names agree 1.00",
+      "alias_safe": true
+    },
+    "away": {
+      "feed": "CBK Mersin Yenisehir Bld",
+      "bookmaker": "CBK Mersin (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [women] supplied by the competition; names agree 1.00",
+      "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+      "event_id_match": true,
+      "event_anchor": "page opened from the alert's own Bet365 event link",
+      "sport_match": "equal",
+      "kickoff_match": "exact",
+      "competition_match": "mismatch (feed 'super league women' vs page 'turkiye tkbsl women')",
+      "competing_event": "none: a single event page reached through the alert's own link",
+      "home_similarity": {
+        "feed": "Botas SK",
+        "bookmaker": "Botas (W)",
+        "level": "VARIANT",
+        "kind": "women_marker_from_competition",
+        "score": 1,
+        "note": "marker [women] supplied by the competition; names agree 1.00"
+      },
+      "away_similarity": {
+        "feed": "CBK Mersin Yenisehir Bld",
+        "bookmaker": "CBK Mersin (W)",
+        "level": "VARIANT",
+        "kind": "women_marker_from_competition",
+        "score": 1,
+        "note": "marker [women] supplied by the competition; names agree 1.00"
+      },
+      "protected_markers": "agree",
+      "orientation": "agree",
+      "policy": "verified_gate_failed",
+      "verdict": "AMBIGUOUS"
+    }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed 'super league women' vs page 'turkiye tkbsl women'))"
+}

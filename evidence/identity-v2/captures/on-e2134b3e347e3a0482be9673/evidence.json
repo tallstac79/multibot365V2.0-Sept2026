@@ -1,0 +1,136 @@
+{
+  "run_id": "c_0wbbtIxAwZH2xrqY4a0MnruOmCuxzWIf92ra-n0pYdo",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790488060529,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_session.png",
+    "s003_session_relook.png",
+    "s004_session_relook_settle.png",
+    "s005_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 0,
+      "wall_ts_ms": 1790488060529
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 15,
+      "wall_ts_ms": 1790488060545
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 20,
+      "wall_ts_ms": 1790488060549
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3472,
+      "wall_ts_ms": 1790488064002
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3980,
+      "wall_ts_ms": 1790488064509
+    },
+    {
+      "phase": "CAPTURE_session",
+      "elapsed_ms": 4011,
+      "wall_ts_ms": 1790488064541
+    },
+    {
+      "phase": "CAPTURED_session",
+      "elapsed_ms": 4540,
+      "wall_ts_ms": 1790488065070
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 4725,
+      "wall_ts_ms": 1790488065255
+    },
+    {
+      "phase": "CAPTURE_session_relook",
+      "elapsed_ms": 7447,
+      "wall_ts_ms": 1790488067977
+    },
+    {
+      "phase": "CAPTURED_session_relook",
+      "elapsed_ms": 7632,
+      "wall_ts_ms": 1790488068162
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 7636,
+      "wall_ts_ms": 1790488068165
+    },
+    {
+      "phase": "CAPTURE_session_relook_settle",
+      "elapsed_ms": 11642,
+      "wall_ts_ms": 1790488072172
+    },
+    {
+      "phase": "CAPTURED_session_relook_settle",
+      "elapsed_ms": 12157,
+      "wall_ts_ms": 1790488072687
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 12317,
+      "wall_ts_ms": 1790488072847
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 15733,
+      "wall_ts_ms": 1790488076263
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 16295,
+      "wall_ts_ms": 1790488076824
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 16353,
+      "wall_ts_ms": 1790488076883
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169888/D19/E26737841/F19/I0/",
+  "direct_event_header": [
+    "Japan B League 127 Sep 07:05",
+    "Utsunomiya Brex vs Yokohama B-Corsairs",
+    "Popular Bet Builder Game Team Quarter H A"
+  ],
+  "competition_check": {
+    "feed": "B League",
+    "country": "Japan",
+    "page": "Japan B League 127 Sep 07:05",
+    "matches": false
+  },
+  "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "Known matching kick-off and competition required",
+    "home": {
+      "feed": "Utsunomiya Brex",
+      "bookmaker": "Utsunomiya Brex",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "away": {
+      "feed": "Yokohama B-Corsairs",
+      "bookmaker": "Yokohama B-Corsairs",
+      "level": "EXACT",
+      "score": 1,
+      "note": "exact"
+    },
+    "kickoff_known": false,
+    "kickoff_agrees": false,
+    "reversed": false
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: Known matching kick-off and competition required"
+}

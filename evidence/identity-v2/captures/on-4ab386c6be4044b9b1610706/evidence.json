@@ -1,0 +1,77 @@
+{
+  "run_id": "c_9HmYokRCKg_P14xvccdNz7NVrL42td8Bb46ed83xeck",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790482291365,
+  "screenshots": [
+    "s001_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 1,
+      "wall_ts_ms": 1790482291365
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 18,
+      "wall_ts_ms": 1790482291383
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 25,
+      "wall_ts_ms": 1790482291390
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3469,
+      "wall_ts_ms": 1790482294834
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3975,
+      "wall_ts_ms": 1790482295340
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 4074,
+      "wall_ts_ms": 1790482295438
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21163744/D19/E26825648/F19/I0/",
+  "direct_event_header": [
+    "Club Friendlies 27 Sep 06:00",
+    "Seoul Thunders vs Anyang Red Boosters",
+    "Popular Bet Builder Game Team Quarter Half"
+  ],
+  "competition_check": {
+    "feed": "KBL Cup",
+    "country": "Korea",
+    "page": "Club Friendlies 27 Sep 06:00",
+    "matches": false
+  },
+  "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "both teams only resemble the page's names; no exact team to anchor on",
+    "home": {
+      "feed": "Samsung Thunders",
+      "bookmaker": "Seoul Thunders",
+      "level": "VARIANT",
+      "score": 1,
+      "note": "naming variant 1.00"
+    },
+    "away": {
+      "feed": "Anyang Jungkwanjang Red Boosters",
+      "bookmaker": "Anyang Red Boosters",
+      "level": "VARIANT",
+      "score": 1,
+      "note": "naming variant 1.00"
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: both teams only resemble the page's names; no exact team to anchor on"
+}

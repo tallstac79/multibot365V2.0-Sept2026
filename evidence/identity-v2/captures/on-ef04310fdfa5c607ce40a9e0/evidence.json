@@ -1,0 +1,120 @@
+{
+  "run_id": "c_pJvcAA0aqrTHWwhjTHf9A2bWPvb9IZLFPSY290JbWNA",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790504151568,
+  "screenshots": [
+    "s001_event_direct.png",
+    "s002_event_direct.png"
+  ],
+  "events": [
+    {
+      "phase": "STARTED",
+      "elapsed_ms": 1,
+      "wall_ts_ms": 1790504151568
+    },
+    {
+      "phase": "OPEN_EVENT",
+      "elapsed_ms": 27,
+      "wall_ts_ms": 1790504151595
+    },
+    {
+      "phase": "OPEN_HOME",
+      "elapsed_ms": 37,
+      "wall_ts_ms": 1790504151605
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 3484,
+      "wall_ts_ms": 1790504155053
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 3732,
+      "wall_ts_ms": 1790504155300
+    },
+    {
+      "phase": "CAPTURE_event_direct",
+      "elapsed_ms": 4659,
+      "wall_ts_ms": 1790504156227
+    },
+    {
+      "phase": "CAPTURED_event_direct",
+      "elapsed_ms": 5157,
+      "wall_ts_ms": 1790504156726
+    },
+    {
+      "phase": "FINISHED",
+      "elapsed_ms": 5250,
+      "wall_ts_ms": 1790504156817
+    }
+  ],
+  "event_url": "https://www.bet365.com/#/AC/B18/C21169873/D19/E26737533/F19/I0/",
+  "direct_event_header": [
+    "Spain Liga ACB",
+    "27 Sep 11:30",
+    "San Pablo Burgos VS Baskonia"
+  ],
+  "competition_check": {
+    "feed": "ACB",
+    "country": "Spain",
+    "page": "Spain Liga ACB",
+    "matches": false
+  },
+  "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "Known matching kick-off and competition required (competition mismatch (feed 'acb' vs page 'spain liga acb'))",
+    "home": {
+      "feed": "CB San Pablo Burgos",
+      "bookmaker": "San Pablo Burgos",
+      "level": "CANONICAL",
+      "kind": "canonical",
+      "score": 1,
+      "note": "canonical tokens equal",
+      "alias_safe": true
+    },
+    "away": {
+      "feed": "Baskonia Vitoria Gasteiz",
+      "bookmaker": "Baskonia",
+      "level": "VARIANT",
+      "kind": "token_containment",
+      "score": 1,
+      "note": "naming variant 1.00: distinctive tokens [baskonia] contained; extra [vitoria, gasteiz]",
+      "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+      "event_id_match": true,
+      "event_anchor": "page opened from the alert's own Bet365 event link",
+      "sport_match": "equal",
+      "kickoff_match": "exact",
+      "competition_match": "mismatch (feed 'acb' vs page 'spain liga acb')",
+      "competing_event": "none: a single event page reached through the alert's own link",
+      "home_similarity": {
+        "feed": "CB San Pablo Burgos",
+        "bookmaker": "San Pablo Burgos",
+        "level": "CANONICAL",
+        "kind": "canonical",
+        "score": 1,
+        "note": "canonical tokens equal"
+      },
+      "away_similarity": {
+        "feed": "Baskonia Vitoria Gasteiz",
+        "bookmaker": "Baskonia",
+        "level": "VARIANT",
+        "kind": "token_containment",
+        "score": 1,
+        "note": "naming variant 1.00: distinctive tokens [baskonia] contained; extra [vitoria, gasteiz]"
+      },
+      "protected_markers": "agree",
+      "orientation": "agree",
+      "policy": "verified_gate_failed",
+      "verdict": "AMBIGUOUS"
+    }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed 'acb' vs page 'spain liga acb'))"
+}
