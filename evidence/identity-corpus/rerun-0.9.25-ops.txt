@@ -1,0 +1,46 @@
+# EventIdentityCorpusTest output, APK 0.9.25-ops (versionCode 108), run 2026-09-27 10:00 UK. 139 JVM tests, 0 failures.
+IDENTITY_CORPUS 40 cases
+  Kyoto Hannaryz v Shiga Lake Stars (live on-0 prior=WRONG_EVENT                now=ALIAS_MATCH                  both teams via aliases
+  Berck Fliers Range v Pays Salonais Basket 13 prior=WRONG_EVENT                now=ALIAS_MATCH                  both teams via aliases
+  Soproni KC v Debreceni EAC (live on-baaa1c7f prior=WRONG_EVENT                now=ALIAS_MATCH                  both teams via aliases
+  Soproni without any registry alias (resolver prior=WRONG_EVENT                now=HIGH_CONFIDENCE_EVENT_MATCH  event link + kick-off 25 Sep 18:00 + 'DEAC Debreceni' exact; 'Soproni' is a naming variant of 'Sopron KC' (ste
+  Saga Ballooners v Hiroshima Dragonflies (liv prior=WRONG_EVENT                now=EXACT                        both teams exact
+  Araraquara v Mogi Das Cruzes (live on-9c1f86 prior=WRONG_EVENT                now=MISMATCH                     'Araraquara' is not 'Corinthians' (different name 0.00: no shared distinctive token ([araraquara] unexplained)
+  Hapoel Tel Aviv v Bayern Munich (Euroleague  prior=PASS                       now=EXACT                        both teams exact
+  Crvena Zvezda v Zalgiris (Euroleague proof)  prior=PASS                       now=EXACT                        both teams exact
+  Hapoel Jerusalem v Bnei Herzliya (PREPARE pr prior=PASS                       now=EXACT                        both teams exact
+  Besancon v Val De Seine (two live placements prior=PASS                       now=CANONICAL_MATCH              both teams canonical
+  Besancon v Val De Seine, page OCR 'Besancon  prior=PASS                       now=CANONICAL_MATCH              both teams canonical
+  Fulham v Crystal Palace (football search pro prior=PASS                       now=EXACT                        both teams exact
+  BC Beroe v Ferrol vs search 'Beroe (W) v Uni prior=accepted by legacy contain now=MISMATCH                     'BC Beroe' vs 'Beroe (W)': protected markers differ [] vs [women]
+  Chartres v Levharti Chomutov vs search 'Char prior=not found                  now=MISMATCH                     'Chartres' vs 'Chartres (W)': protected markers differ [] vs [women]
+  Kyoto Hannaryz v Bayern Munich against the K prior=WRONG_EVENT                now=MISMATCH                     'Bayern Munich' is not 'Shiga Lakes' (different name 0.00: no shared distinctive token ([bayern, munich] unexp
+  Kyoto/Shiga names against the Besancon page  prior=WRONG_EVENT                now=MISMATCH                     kick-off differs: alert 25 Sep 10:35 vs page 25 Sep 19:00 (UK, mismatch (+505 min))
+  Besancon v Valdeseine synthetic variant (Mil prior=ALIAS_REQUIRED             now=HIGH_CONFIDENCE_EVENT_MATCH  event link + kick-off 25 Sep 19:00 + 'Besancon' canonical; 'Valdeseine' is a naming variant of 'Val de Seine' 
+  Gunma Crane Thunders vs garbage search row   prior=not found                  now=MISMATCH                     'Gunma Crane Thunders' is not '(F1 Serbia & Yes (v Greece)' (different name 0.00: no shared distinctive token 
+  Hapoel Tel Aviv search row OCR 'Bayern 1 2'  prior=WRONG_EVENT (fixed 0.6.32) now=AMBIGUOUS                    'Bayern Munich' only partly resembles 'Bayern 1 2' (weak resemblance 0.50: shared [bayern] but [munich] has no
+  Orchies v Lyon -> Orchies v LYONSO (live on- prior=WRONG_EVENT                now=AMBIGUOUS                    'Lyon' only partly resembles 'LYONSO' (weak resemblance 0.67: prefix only [lyon]); not a different event, not 
+  Explosivas de Moca v Leonas De Ponce -> Expl prior=WRONG_EVENT                now=HIGH_CONFIDENCE_EVENT_MATCH  event link + kick-off 26 Sep 01:00 + 'Leonas De Ponce' exact; 'Explosivas de Moca' is a naming variant of 'Exp
+  Rytas Vilnius v Atletico Boca Juniors -> Ryt prior=ALIAS_REQUIRED             now=HIGH_CONFIDENCE_EVENT_MATCH  event link + kick-off 26 Sep 12:30 + both names compatible: 'Rytas Vilnius' ~ 'Rytas' (token_containment 1.00)
+  Samsung Thunders v Anyang Jungkwanjang Red B prior=ALIAS_REQUIRED             now=AMBIGUOUS                    'Samsung Thunders' only partly resembles 'Seoul Thunders' (weak resemblance 0.50: shared [thunders] but [samsu
+  Suwon KT Sonicboom v Goyang Skygunners -> Su prior=ALIAS_REQUIRED             now=HIGH_CONFIDENCE_EVENT_MATCH  event link + kick-off 27 Sep 06:00 + both names compatible: 'Suwon KT Sonicboom' ~ 'Suwon Sonicboom' (token_co
+  Utsunomiya Brex v Yokohama B-Corsairs (live  prior=ALIAS_REQUIRED             now=EXACT                        both teams exact
+  Atletico Boca Juniors v Tigers -> Boca Junio prior=ALIAS_REQUIRED             now=HIGH_CONFIDENCE_EVENT_MATCH  event link + kick-off 27 Sep 07:30 + both names compatible: 'Atletico Boca Juniors' ~ 'Boca Juniors' (token_co
+  Boca v Tigers against the same page one hour prior=constructed lookalike      now=MISMATCH                     kick-off differs: alert 27 Sep 07:30 vs page 27 Sep 08:30 (UK, mismatch (+60 min))
+  Boca v Tigers against a women's Tigers page  prior=constructed lookalike      now=MISMATCH                     'Tigers' vs 'RSSB Tigers (W)': protected markers differ [] vs [women]
+  Boca v Tigers against a U19 Tigers page      prior=constructed lookalike      now=MISMATCH                     'Tigers' vs 'RSSB Tigers U19': protected markers differ [] vs [u19]
+  Boca v Tigers against a Boca Juniors II page prior=constructed lookalike      now=MISMATCH                     'Atletico Boca Juniors' vs 'Boca Juniors II': protected markers differ [junior] vs [ii, junior]
+  Boca v Tigers with the alert naming another  prior=constructed lookalike      now=AMBIGUOUS                    Known matching kick-off and competition required (competition mismatch (feed 'liga nacional' vs page 'fiba int
+  Boca v Tigers without the event anchor (sear prior=constructed lookalike      now=AMBIGUOUS                    both names only resemble the page's names and the event evidence is not deterministic: no event anchor
+  Tigers v Boca (reversed pairing) against the prior=constructed lookalike      now=MISMATCH                     teams reversed (home/away): 'Tigers v Atletico Boca Juniors' is listed as 'Boca Juniors v RSSB Tigers'
+  Boca v Tigers against a Boca v Tigres page ( prior=constructed lookalike      now=AMBIGUOUS                    both names only resemble the page's names and the event evidence is not deterministic: 'Tigers' vs 'Tigres' re
+  Boca v Leicester Tigers against the Boca v R prior=constructed lookalike      now=AMBIGUOUS                    'Leicester Tigers' only partly resembles 'RSSB Tigers' (weak resemblance 0.50: shared [tigers] but [leicester]
+  Real Madrid v Barcelona against an Atletico  prior=constructed lookalike      now=MISMATCH                     'Real Madrid' is not 'Atletico Madrid' (different name 0.00: different club prefixes [real] vs [atletico])
+  Hapoel Tel Aviv v Bayern against a Maccabi T prior=constructed lookalike      now=MISMATCH                     'Hapoel Tel Aviv' is not 'Maccabi Tel Aviv' (different name 0.00: different club prefixes [hapoel] vs [maccabi
+  Manchester United v Arsenal against a Manche prior=constructed lookalike      now=MISMATCH                     'Manchester United' is not 'Manchester City' (different name 0.00: different club prefixes [united] vs [city])
+  Suwon v Goyang pair with the KBL mapping sco prior=constructed lookalike      now=AMBIGUOUS                    Known matching kick-off and competition required (competition mismatch (feed 'kbl cup' vs page 'club friendlie
+  Hapoel Jerusalem v Bnei Herzliya against a H prior=constructed lookalike      now=MISMATCH                     'Hapoel Jerusalem' is not 'Hapoel Tel Aviv' (different name 0.00: no shared distinctive token ([jerusalem] une
+COUNTS {EXACT=6, CANONICAL_MATCH=2, ALIAS_MATCH=3, HIGH_CONFIDENCE_EVENT_MATCH=6, AMBIGUOUS=8, MISMATCH=15}
+PRIOR_FAILURES 19 NOW_ACCEPTED 11
+HISTORICAL_ALIAS_REQUIRED_NOW {EXACT=1, HIGH_CONFIDENCE_EVENT_MATCH=4, AMBIGUOUS=1}
+CONSTRUCTED_LOOKALIKES 14 ACCEPTED 0
