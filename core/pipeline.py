@@ -78,7 +78,7 @@ class Settings:
     hold_max_age_seconds: int = 115
     max_stake_per_bet: str = '1.00'
     max_bets_per_day: int = None   # no daily bet-count cap (operator, 27 Sep 2026); stake/loss caps still apply
-    max_daily_stake: str = '5.00'
+    max_daily_stake: str = None    # no daily total-stake cap (operator, 27 Sep 2026); per-bet and daily-loss caps still apply
     max_daily_loss: str = '5.00'
     reconcile_delay_seconds: int = 15
     reconcile_max_attempts: int = 3

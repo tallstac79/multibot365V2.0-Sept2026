@@ -130,5 +130,5 @@ class CommandHandler:
             f"Dispatch: {'ON' if s.dispatch_enabled else 'OFF'} | Final action: {'ON' if s.final_action_enabled else 'OFF'}"
             f" | {'PAUSED' if self.p.final.paused() else 'running'} | Approval: {s.approval_mode.upper()}",
             f"Today: {today['bets']} bets, stake {today['stake']}, loss {today['loss']} "
-            f"(limits {s.max_bets_per_day if s.max_bets_per_day is not None else 'no'} bet cap / {s.max_daily_stake} stake / {s.max_daily_loss} loss)",
+            f"(limits {s.max_bets_per_day if s.max_bets_per_day is not None else 'no'} bet cap / {s.max_daily_stake if s.max_daily_stake is not None else 'no'} stake cap / {s.max_daily_loss} loss)",
             f"Awaiting approval: {', '.join(waiting) or 'none'}", f'Placement uncertain: {unknown}'])
