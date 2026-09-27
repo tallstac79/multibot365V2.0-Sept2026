@@ -65,11 +65,32 @@ READY -> APPROVED by automatic-policy (approval_mode automatic: every check in F
   women's marker the feed name lacks ("Explosivas de Moca (W)") is compared without it, capped at VARIANT, so
   the event still needs its own link, an agreeing kick-off and the other team at ALIAS or better; markers are
   never stripped globally and the reverse case (feed has (W), page has not) stays a mismatch — or the team is
-  a MISMATCH. Verdicts: EXACT / CANONICAL_MATCH / ALIAS_MATCH / HIGH_CONFIDENCE_EVENT_MATCH (own link +
-  agreeing kick-off + one team ALIAS-or-better + the other a strong variant: accepted, and the variant is
-  reported as an alias candidate) / AMBIGUOUS (variant without that corroboration -> ALIAS_REQUIRED) /
-  MISMATCH (sport, kick-off, markers, wrong opponent, reversed home/away -> WRONG_EVENT). Reversed pairings
-  are never accepted: a HOME/AWAY selection would land on the other team.
+  a MISMATCH. Verdicts: EXACT / CANONICAL_MATCH / ALIAS_MATCH / HIGH_CONFIDENCE_EVENT_MATCH / AMBIGUOUS
+  (-> ALIAS_REQUIRED) / MISMATCH (sport, kick-off, markers, club-family prefix, wrong opponent, reversed
+  home/away -> WRONG_EVENT). Reversed pairings are never accepted: a HOME/AWAY selection would land on the
+  other team.
+  **Event-level evidence (0.9.25-ops, 2026-09-27).** The VARIANT layer is deterministic token evidence
+  (`EventIdentity.compareTokens`): every distinctive token of the shorter name must be explained by the longer
+  one - same token, plural, split ("Skygunners" / "Sky Gunners"), initials ("TA" / "Tel Aviv"), abbreviation
+  ("JLM" / "Jerusalem"), inflected stem ("Soproni" / "Sopron") - or the whole single-token names agree letter
+  for letter (>= 0.80). Descriptor words (basket, club, de ...) carry nothing; a club-family prefix present on
+  one side only is ignorable ("Atletico Boca Juniors" / "Boca Juniors") but two different ones are two clubs
+  (Real / Atletico Madrid, Hapoel / Maccabi Tel Aviv, United / City). A shared nickname next to an unexplained
+  token ("Samsung Thunders" / "Seoul Thunders") or a bare prefix ("Lyon" / "LYONSO") is WEAK: AMBIGUOUS,
+  never accepted, never a wrong event. HIGH_CONFIDENCE_EVENT_MATCH needs the alert's own event link, an
+  agreeing kick-off (exact or within 5 minutes), agreeing markers, a decidable HOME/AWAY orientation (the
+  crossed pairing must not also read plausibly) and either one team ALIAS-or-better with the other a strong
+  VARIANT, or BOTH teams with deterministic token evidence ("Atletico Boca Juniors v Tigers" against
+  "Boca Juniors v RSSB Tigers"). `resolveVerified` still requires a known kick-off and a deterministic
+  competition match (equal, country-prefixed, governing-body-prefixed "FIBA ...", or an approved mapping:
+  Poland 1 liga, Korea KBL Cup -> Club Friendlies, Japan B League -> B League 1). Every result carries an
+  evidence log (`identity.evidence` in the run record: event_id_match, sport_match, competition_match,
+  kickoff_match, home/away similarity with level/kind/score, protected_markers, orientation, competing_event,
+  policy). A nickname contained in a longer bookmaker name ("Tigers" in "RSSB Tigers") is event-scoped
+  evidence and is never proposed as an alias candidate (`Side.aliasSafe`), so no broad alias such as
+  Tigers = RSSB Tigers can arise from it; the specific-to-shorter direction ("Rytas Vilnius" -> "Rytas") may
+  still be proposed to the competition-scoped registry. Corpus: `identity_corpus.txt` (40 cases, live +
+  constructed lookalikes; evidence/identity-corpus/).
 * **Alias registry and event cache (B6/B7, backend `core/identity_registry.py`).** Candidates from the
   phone are recorded with evidence (`alias_candidates`). Promotion is strict and audited: "deterministic"
   (score >= 0.85 with full event corroboration) on first sight, "high" after 2 sightings, anything else

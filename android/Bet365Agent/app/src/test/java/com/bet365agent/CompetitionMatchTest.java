@@ -36,4 +36,26 @@ public class CompetitionMatchTest {
         assertEquals(EventIdentity.Verdict.EXACT, EventIdentity.resolveVerified(feed, page, Collections.emptyMap(), false, "Mexico").verdict);
         assertEquals(EventIdentity.Verdict.AMBIGUOUS, EventIdentity.resolveVerified(feed, page, Collections.emptyMap(), false, "Spain").verdict);
     }
+
+    @Test public void bodyPrefixAndApprovedMappingsFromCapturedHeaders() {
+        // 26-27 Sep 2026: feed "Intercontinental Cup" (World), pages headed "FIBA Intercontinental Cup"
+        assertEquals("body_prefixed (fiba)", EventIdentity.competitionMatchKind("Intercontinental Cup", "World", "FIBA Intercontinental Cup 27 Sep 07:30"));
+        assertFalse(EventIdentity.competitionMatches("Intercontinental Cup", "World", "Euro Intercontinental Cup 27 Sep 07:30"));
+        // 27 Sep 2026 04:11-04:23: feed "KBL Cup" (Korea), three pages headed "Club Friendlies"
+        assertTrue(EventIdentity.competitionMatchKind("KBL Cup", "Korea", "Club Friendlies 27 Sep 06:00").startsWith("approved_mapping"));
+        assertFalse(EventIdentity.competitionMatches("KBL Cup", "Japan", "Club Friendlies 27 Sep 06:00"));
+        assertFalse(EventIdentity.competitionMatches("KBL Cup", "Korea", "Club Friendlies Women 27 Sep 06:00"));
+        // feed "B League" (Japan) is the first division; B2/B3 are labelled "B2 League"/"B3 League" by the feed
+        assertTrue(EventIdentity.competitionMatches("B League", "Japan", "Japan B League 1 • 25 Sep 10:35"));
+        assertTrue(EventIdentity.competitionMatches("B League", "Japan", "Japan B League 127 Sep 07:05"));      // OCR glued the date to the "1"
+        assertTrue(EventIdentity.competitionMatches("B League", "Japan", "6 Japan B League 1 - 25 Sep 10:35"));  // stray leading OCR digit
+        assertFalse(EventIdentity.competitionMatches("B League", "Japan", "Japan B League 2 25 Sep 10:35"));
+        assertFalse(EventIdentity.competitionMatches("B2 League", "Japan", "Japan B League 1 25 Sep 10:35"));
+        assertEquals("japan b league 1", EventIdentity.competitionKey("Japan B League 125 Sep 10:45"));
+        assertEquals("japan b league 1", EventIdentity.competitionKey("Japan B League 1 25 Sep 10:45"));
+        assertEquals("france nationale 1", EventIdentity.competitionKey("France Nationale 1 • 25 Sep 19:00"));
+        assertEquals("club friendlies", EventIdentity.competitionKey("Club Friendlies 27 Sep 06:00"));
+        assertTrue(EventIdentity.competitionMatchKind("", "Mexico", "Mexico Liga ABE").startsWith("unknown"));
+        assertTrue(EventIdentity.competitionMatchKind("Liga ABE", "Mexico", "Mexico LNBP").startsWith("mismatch"));
+    }
 }

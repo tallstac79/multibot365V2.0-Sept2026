@@ -82,7 +82,13 @@ public class EventIdentityTest {
         EventIdentity.Result hc = resolve("Besancon", "Valdeseine", "25 Sep 19:00", "Besancon AC", "Val de Seine", "25 Sep 19:00", true);
         assertEquals(EventIdentity.Verdict.HIGH_CONFIDENCE_EVENT_MATCH, hc.verdict);
         assertEquals("Val de Seine", hc.aliasCandidates.get("Valdeseine"));
-        assertEquals("high", hc.candidateConfidence);                      // letters agree 0.80: strong, not deterministic
+        assertEquals("deterministic", hc.candidateConfidence);             // 0.9.25: "Valdeseine" = "Val"+"de"+"Seine" is a token split (1.00)
+        assertEquals("token_split", hc.away.kind);
+        // letters-only agreement (an OCR/typo variant of a whole single-token name) stays "high", not deterministic
+        EventIdentity.Result typo = resolve("Rytis", "Boca Juniors", "26 Sep 12:30", "Rytas", "Boca Juniors", "26 Sep 12:30", true);
+        assertEquals(EventIdentity.Verdict.HIGH_CONFIDENCE_EVENT_MATCH, typo.verdict);
+        assertEquals("high", typo.candidateConfidence);                    // letters agree 0.80 on a whole single-token name
+        assertEquals("letters", typo.home.kind);
         // Names still match without a kick-off (in-play page / search results): the name layers decide.
         assertEquals(EventIdentity.Verdict.ALIAS_MATCH, resolve("Kyoto Hannaryz", "Shiga Lake Stars", null, "Kyoto Hannaryz", "Shiga Lakes", null, false).verdict);
     }

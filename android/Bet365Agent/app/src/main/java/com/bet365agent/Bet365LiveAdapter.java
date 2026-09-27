@@ -53,7 +53,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     private static org.json.JSONObject sideJson(EventIdentity.Side side) {
         return side == null ? null : CoordinatorAgent.object("feed", side.feed, "bookmaker", side.bookmaker, "level", side.level.name(),
-                "score", Math.round(side.score * 100) / 100.0, "note", side.note);
+                "kind", side.kind, "score", Math.round(side.score * 100) / 100.0, "note", side.note, "alias_safe", side.aliasSafe);
     }
     private String expectedPrice;    // price the slip must show (set by the check that uses readbackRetry)
     private String slipPriceRead;    // targeted numeric read of the slip's price box, once per check
@@ -805,8 +805,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
         ui.put("competition_check", CoordinatorAgent.object("feed", contextCompetition, "country", contextCountry,
                 "page", header.isEmpty() ? "" : header.get(0),
                 "matches", EventIdentity.competitionMatches(contextCompetition, contextCountry, header.isEmpty() ? null : header.get(0))));
+        // Evidence log (0.9.25): event anchor, sport, competition, kick-off, both similarities, markers, orientation, policy.
         ui.put("identity", CoordinatorAgent.object("verdict", id.verdict.name(), "reason", id.reason, "home", sideJson(id.home),
-                "away", sideJson(id.away), "kickoff_known", id.kickoffKnown, "kickoff_agrees", id.kickoffAgrees, "reversed", id.reversed));
+                "away", sideJson(id.away), "kickoff_known", id.kickoffKnown, "kickoff_agrees", id.kickoffAgrees, "reversed", id.reversed,
+                "evidence", new org.json.JSONObject(id.evidence)));
         ui.put("identity_verdict", id.verdict.name());
         ui.put("route", "event_link");
         if (!id.aliasCandidates.isEmpty()) {

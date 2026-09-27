@@ -20,7 +20,9 @@ import java.util.regex.Pattern;
 final class EventPage {
     private static final Pattern URL = Pattern.compile("^https://www\\.bet365\\.com/#/AC/B(\\d{1,3})(/[A-Z]\\d{1,12}){2,8}/?$");
     private static final Pattern VS = Pattern.compile("(?i)^(.+?)\\s+(?:vs|v)\\s+(.+)$");
-    private static final Pattern KICKOFF = Pattern.compile("(?i)\\b(\\d{1,2})\\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\s*(\\d{1,2}):(\\d{2})\\b");
+    /** "25 Sep 10:35"; tolerates one OCR digit glued in front of a two-digit day ("Japan B League 127 Sep 07:05" is the
+     *  league's "1" joined to "27 Sep" - seen 40 times in the 25-27 Sep captures) without ever splitting a real day. */
+    private static final Pattern KICKOFF = Pattern.compile("(?i)(?<!\\d)(?:\\d(?=\\d{2}\\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)))?(\\d{1,2})\\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\s*(\\d{1,2}):(\\d{2})\\b");
     static final ZoneId UK = ZoneId.of("Europe/London");
     private static final String[] MONTHS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
@@ -110,7 +112,10 @@ final class EventPage {
     static String kickoffText(List<String> headerLines) {
         for (String line : headerLines) {
             Matcher m = KICKOFF.matcher(line);
-            if (m.find()) return m.group(1) + " " + cap(m.group(2)) + " " + pad(m.group(3)) + ":" + m.group(4);
+            while (m.find()) {
+                int day = Integer.parseInt(m.group(1)), hour = Integer.parseInt(m.group(3)), minute = Integer.parseInt(m.group(4));
+                if (day >= 1 && day <= 31 && hour <= 23 && minute <= 59) return day + " " + cap(m.group(2)) + " " + pad(m.group(3)) + ":" + m.group(4);
+            }
         }
         return null;
     }

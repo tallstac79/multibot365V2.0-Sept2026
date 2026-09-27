@@ -70,4 +70,16 @@ public class EventPageTest {
         assertEquals("5 Dec 18:00", EventPage.ukDisplay("2026-12-05T18:00"));      // GMT = UTC in winter
         assertNull(EventPage.kickoffText(Arrays.asList("Q3 04:12", "Kyoto Hannaryz vs Shiga Lakes")));
     }
+
+    @Test public void kickoffSurvivesAnOcrDigitGluedToTheDay() {
+        // Real headers 25-27 Sep 2026: the league's "1" joined to the day ("Japan B League 127 Sep 07:05", 4 runs of
+        // Utsunomiya v Yokohama were ALIAS_REQUIRED because the kick-off was unread; "Japan B League 125 Sep 10:45" 36 captures)
+        assertEquals("27 Sep 07:05", EventPage.kickoffText(Arrays.asList("Japan B League 127 Sep 07:05")));
+        assertEquals("25 Sep 10:45", EventPage.kickoffText(Arrays.asList("Japan B League 125 Sep 10:45")));
+        assertEquals("25 Sep 10:35", EventPage.kickoffText(Arrays.asList("6 Japan B League 1 - 25 Sep 10:35")));
+        // a real two-digit day is never split
+        assertEquals("12 Sep 19:00", EventPage.kickoffText(Arrays.asList("France Nationale 1 12 Sep 19:00")));
+        assertEquals("1 Oct 19:00", EventPage.kickoffText(Arrays.asList("France Nationale 1 1 Oct 19:00")));
+        assertNull(EventPage.kickoffText(Arrays.asList("Japan B League 1 99 Sep 07:05")));
+    }
 }
