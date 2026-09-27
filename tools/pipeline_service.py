@@ -146,7 +146,9 @@ async def run(settings):
     notify = settings['notifications'] or {}
     sender = TelegramBotSender(notify['bot_token'], notify['chat_id']) if notify.get('enabled') else None
     default_states = AUTOMATIC_STATES if pipeline.settings.automatic else DEFAULT_STATES
-    notifier = Notifier(store, sender, notify.get('states', default_states), notify.get('include_undispatched', False))
+    notifier = Notifier(store, sender, notify.get('states', default_states), notify.get('include_undispatched', False),
+                        outcome_only=pipeline.settings.automatic and notify.get('outcome_only', True),
+                        unknown_recheck_limit=pipeline.settings.reconcile_max_attempts + pipeline.final.LATE_RECHECKS)
     commands = None
     if notify.get('enabled') and notify.get('commands', True):
         from core.telegram_commands import BotApi, CommandHandler

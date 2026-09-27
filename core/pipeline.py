@@ -301,6 +301,13 @@ class Pipeline:
                               **({'minimum_price': decision['instruction']['minimum_price'],
                                   'stake': decision['instruction']['stake']} if decision.get('instruction') else {}))
         if decision['decision'] == ACCEPT:
+            # One bet per market per game: a later alert for a market already bet on this game is ignored here, before it
+            # qualifies (no operator message). Durable: read from the store.
+            from core.final_action import market_already_bet
+            already = market_already_bet(db, self.store.get_instruction(db, instruction_id))
+            if already:
+                self.store.transition(db, instruction_id, State.REJECTED, actor='rules', at=iso(now), reason=already)
+                return State.REJECTED.value
             self.store.transition(db, instruction_id, State.QUEUED, actor='rules', at=iso(now), reason='Queued for device')
             return State.QUEUED.value
         target = State.STALE if decision['decision'] == STALE else State.REJECTED

@@ -171,6 +171,69 @@ def format_instruction(row, bet=None):
     return '\n'.join(lines)
 
 
+OUTCOME_SINCE_KEY = 'notifier_outcome_since'   # outcome-only mode: instructions ending before this are never announced
+OUTCOME_KEY, CORRECTION_KEY = 'OUTCOME', 'OUTCOME_CORRECTION'
+FOUND_STATUSES = ('OPEN', 'WON', 'LOST', 'VOID', 'CASHED_OUT', 'RETURNED', 'DISCREPANCY')
+MISSED_REASONS = (
+    ('LINE_CHANGED', 'line moved beyond tolerance'), ('BELOW_MINIMUM', 'price below minimum'),
+    ('PRICE_CHANGED', 'price changed'), ('WRONG_EVENT', 'event not verified'), ('ALIAS_REQUIRED', 'event not verified'),
+    ('EVENT_NOT_VERIFIED', 'event/market not verified'), ('TARGET_NOT_FOUND', 'event/market not found'),
+    ('AUTO_APPROVAL_REFUSED', 'automatic approval check failed'), ('PRE_TAP_REJECTED', 'pre-tap check failed'),
+    ('LIMIT', 'limit reached'), ('SUSPENDED', 'market suspended'), ('STAKE_LIMITED', 'stake limited by Bet365'),
+    ('INSUFFICIENT', 'insufficient funds'), ('SESSION', 'Bet365 session not available'), ('LOGIN', 'Bet365 session not available'),
+    ('TAP_NOT_ACCEPTED', 'Place Bet tap not accepted'), ('MANUAL_CHECK_REQUIRED', 'placement unconfirmed'),
+    ('DEVICE_OFFLINE', 'phone offline'), ('No device result', 'no phone result'), ('Pre-dispatch recheck: alert_age', 'alert expired before dispatch'),
+    ('Pre-dispatch recheck: event_not_started', 'event already started'), ('Pre-dispatch recheck', 'rules recheck failed before dispatch'),
+    ('NO BET', 'terms outside tolerance'))
+
+
+def missed_reason(row, bet=None):
+    """Short, stable reason for the MISSED headline; the exact stored reason follows in the body."""
+    if (bet or {}).get('status') in ('NOT_PLACED', 'NOT_PLACED_CLAIMED') and row.get('state') == 'UNKNOWN':
+        return 'not placed (confirmed in My Bets)'
+    reason = str(row.get('failure_reason') or '')
+    for key, text in MISSED_REASONS:
+        if reason.startswith(key) or f' {key}' in reason[:60]:
+            return text
+    state = str(row.get('state') or '')
+    return {'STALE': 'alert expired', 'TIMEOUT': 'no phone result', 'UNKNOWN': 'placement unconfirmed',
+            'PRICE_CHANGED': 'price or line changed', 'TARGET_NOT_FOUND': 'event/market not found',
+            'SESSION_REQUIRED': 'Bet365 session not available'}.get(state, state.replace('_', ' ').lower() or 'not placed')
+
+
+def _terms(market, side, line, price):
+    parts = [str(x) for x in (market, side) if x]
+    if line not in (None, '', 'NONE', 'None') and market not in ('MONEYLINE', '1X2'):
+        parts.append(str(line))
+    return ' '.join(parts) + (f' @ {price}' if price else '')
+
+
+def format_outcome(row, bet=None, observed=None, correction=False):
+    """The single operator message for an instruction in automatic mode: PLACED or MISSED - <reason>, with the requested
+    terms and, where the phone saw them, the observed terms (receipt terms for a placed bet)."""
+    row, bet = dict(row), dict(bet or {})
+    kickoff = f" ({row['competition']}, {row['event_time'].replace('T', ' ')} UK)" if row.get('competition') and row.get('event_time') else ''
+    requested = (_terms(row.get('market'), row.get('selection_name') or row.get('selection'), row.get('line'), row.get('alert_price'))
+                 + f" (min {row.get('minimum_price')}), stake {_money(row.get('stake'))}")
+    placed = correction or (row.get('state') == 'COMPLETED' and row.get('execution_mode') == 'dispatch') or bet.get('status') in FOUND_STATUSES
+    if placed:
+        head = 'MultiBot365 - PLACED' + (' (correction: found in My Bets after a MISSED report)' if correction else '')
+        receipt = _terms(row.get('market'), row.get('selection_name') or row.get('selection'),
+                         bet.get('actual_line') or bet.get('verified_line') or row.get('line'),
+                         bet.get('actual_odds') or bet.get('verified_odds') or bet.get('odds'))
+        lines = [head, f"Event: {row.get('fixture')}{kickoff}", f"Placed: {receipt}, stake {_money(bet.get('actual_stake') or bet.get('stake') or row.get('stake'))}"
+                 + (f", to return {_money(bet.get('potential_return'))}" if bet.get('potential_return') else ''),
+                 f"Requested: {requested}", f"Bet ref: {row.get('bet_reference') or bet.get('bet_reference') or 'not read'}"]
+    else:
+        lines = [f"MultiBot365 - MISSED - {missed_reason(row, bet)}", f"Event: {row.get('fixture')}{kickoff}", f"Requested: {requested}"]
+        if observed:
+            lines.append(f"Observed: {_terms(observed.get('market'), observed.get('selection_name') or observed.get('side') or observed.get('selection_role'), observed.get('line'), observed.get('price'))}")
+        if row.get('failure_reason'):
+            lines.append(f"Reason: {' '.join(str(row['failure_reason']).split())[:300]}")
+    lines.append(f"Id: {(row.get('instruction_id') or '')[:SHORT_ID]}")
+    return '\n'.join(lines)
+
+
 def format_event(kind, instruction, detail):
     row = dict(instruction or {})
     title = {'MANUAL_CHECK_REQUIRED': 'MANUAL CHECK REQUIRED', 'PLACEMENT_DISCREPANCY': 'PLACEMENT DISCREPANCY'}.get(kind, kind)
@@ -198,15 +261,24 @@ def format_settlement(bet):
 
 
 class Notifier:
-    def __init__(self, store, sender=None, states=DEFAULT_STATES, include_undispatched=False, clock=utcnow):
+    def __init__(self, store, sender=None, states=DEFAULT_STATES, include_undispatched=False, clock=utcnow, outcome_only=False,
+                 unknown_recheck_limit=9):
         self.store, self.sender, self.clock = store, sender, clock
         self.states = tuple(states)
         self.include_undispatched = include_undispatched
+        # Automatic mode (operator, 27 Sep 2026): exactly one Telegram message per qualified instruction, PLACED or
+        # MISSED - <reason>. Every intermediate lifecycle event stays in the database/dashboard only.
+        self.outcome_only = outcome_only
+        # A placement left UNKNOWN is reported once My Bets has resolved it or its rechecks are exhausted
+        # (reconcile_max_attempts + FinalAction.LATE_RECHECKS), never as a guess while it is still being checked.
+        self.unknown_recheck_limit = unknown_recheck_limit
         with self.store.tx() as db:
             initialize_baseline(db, iso(self.clock()))
 
     def enqueue(self):
         """Create outbox rows for newly reached notifiable states. Returns count."""
+        if self.outcome_only:
+            return self._enqueue_outcomes()
         marks = ','.join('?' * len(self.states))
         query = (f"SELECT * FROM instructions i WHERE state IN ({marks}) AND origin='production' AND NOT EXISTS "
                  f"(SELECT 1 FROM notifications n WHERE n.instruction_id=i.instruction_id AND n.state=i.state)")
@@ -267,6 +339,52 @@ class Notifier:
             for bet in db.execute("SELECT * FROM bets WHERE status IN ('WON','LOST','VOID','CASHED_OUT','RETURNED')").fetchall():
                 created += db.execute(insert, (bet['instruction_id'], f"SETTLED:{bet['status']}", format_settlement(bet),
                                                now, now)).rowcount
+        return created
+
+    def _enqueue_outcomes(self):
+        """One OUTCOME row per instruction that was QUALIFIED (reached QUEUED) and has ended (terminal). A superseded alert
+        is not an outcome (its newer alert for the same selection reports). The (instruction_id, state) key of the outbox
+        makes a second outcome row for the same instruction impossible. Safety exception: a bet reported MISSED that My
+        Bets later shows as placed gets ONE correction."""
+        now = iso(self.clock())
+        insert = ('INSERT OR IGNORE INTO notifications(instruction_id,state,text,created_at,next_attempt_at) '
+                  'VALUES (?,?,?,?,?)')
+        created = 0
+        with self.store.tx() as db:
+            mark = db.execute('SELECT value FROM controls WHERE key=?', (OUTCOME_SINCE_KEY,)).fetchone()
+            if mark is None:
+                db.execute('INSERT INTO controls VALUES (?,?,?,?)', (OUTCOME_SINCE_KEY, json.dumps(now), now, 'notifier-baseline'))
+                since = now
+            else:
+                since = json.loads(mark[0])
+            rows = db.execute(
+                "SELECT * FROM instructions i WHERE terminal=1 AND origin='production' AND COALESCE(terminal_at, updated_at) >= ? "
+                "AND COALESCE(failure_reason, '') NOT LIKE 'SUPERSEDED%' AND COALESCE(failure_reason, '') NOT LIKE 'ALREADY_BET%' "
+                "AND EXISTS (SELECT 1 FROM transitions t WHERE t.instruction_id=i.instruction_id AND t.to_state='QUEUED') "
+                "AND NOT EXISTS (SELECT 1 FROM notifications n WHERE n.instruction_id=i.instruction_id AND n.state=?) "
+                "AND NOT (i.state='UNKNOWN' AND EXISTS (SELECT 1 FROM bets b WHERE b.instruction_id=i.instruction_id AND b.status='UNKNOWN') "
+                "AND (SELECT COUNT(*) FROM reconciliations r WHERE r.instruction_id=i.instruction_id) < ?)",
+                (since, OUTCOME_KEY, self.unknown_recheck_limit)).fetchall()
+            for row in rows:
+                bet = db.execute('SELECT * FROM bets WHERE instruction_id=?', (row['instruction_id'],)).fetchone()
+                observed = None
+                for (detail,) in db.execute("SELECT detail FROM audit_events WHERE instruction_id=? AND kind='ALERT_TO_LIVE_COMPARISON' "
+                                            "ORDER BY id DESC", (row['instruction_id'],)):
+                    try:
+                        live = (json.loads(detail) or {}).get('live')
+                    except (TypeError, ValueError):
+                        live = None
+                    if isinstance(live, dict) and live.get('price'):
+                        observed = live
+                        break
+                created += db.execute(insert, (row['instruction_id'], OUTCOME_KEY, format_outcome(row, bet, observed), now, now)).rowcount
+            for row in db.execute(
+                    f"SELECT i.* FROM instructions i JOIN bets b USING(instruction_id) JOIN notifications n ON n.instruction_id=i.instruction_id "
+                    f"AND n.state=? WHERE b.status IN ({','.join('?' * len(FOUND_STATUSES))}) AND n.text LIKE 'MultiBot365 - MISSED%' "
+                    f"AND NOT EXISTS (SELECT 1 FROM notifications c WHERE c.instruction_id=i.instruction_id AND c.state=?)",
+                    (OUTCOME_KEY, *FOUND_STATUSES, CORRECTION_KEY)).fetchall():
+                bet = db.execute('SELECT * FROM bets WHERE instruction_id=?', (row['instruction_id'],)).fetchone()
+                created += db.execute(insert, (row['instruction_id'], CORRECTION_KEY, format_outcome(row, bet, correction=True), now, now)).rowcount
         return created
 
     def deliver(self, limit=None):

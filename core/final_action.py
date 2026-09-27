@@ -19,6 +19,7 @@ from datetime import datetime, timedelta, timezone
 from decimal import Decimal, InvalidOperation
 import hashlib
 import json
+import re
 
 from core import bet_matching
 from core.lifecycle import State, busy_not_admitted
@@ -66,6 +67,58 @@ def mapping_verified(sport, mapping):
     """The approval gate's view of the quote mapping: production-verified AND a profile of this sport's parsers."""
     mapping = mapping or {}
     return mapping.get('production_verified') is True and mapping.get('profile') in VERIFIED_PROFILES.get(sport, ())
+
+
+# ---------------------------------------------------------------------- one bet per market per game (operator, 27 Sep 2026)
+NOT_PLACED_STATUSES = ('NOT_PLACED', 'NOT_PLACED_CLAIMED')
+TAP_STATES = ('APPROVED', 'DISPATCHED', 'DEVICE_ACTIVE', 'PLACEMENT_UNKNOWN')
+
+
+def _market_family(market):
+    """ML and football 1X2 are one market (the game's winner); SPREAD and TOTALS are their own."""
+    m = str(market or '').upper().replace('TOTAL', 'TOTALS').replace('TOTALSS', 'TOTALS')
+    return 'MONEYLINE' if m in ('ML', 'MONEYLINE', '1X2') else m
+
+
+def _event_id(row):
+    try:
+        alert = json.loads(row['normalized_alert'] or '{}') if isinstance(row['normalized_alert'], str) else (row['normalized_alert'] or {})
+    except (ValueError, TypeError, IndexError, KeyError):
+        alert = {}
+    found = re.search(r'/E(\d+)/', str(alert.get('comparison_url') or ''))
+    return found.group(1) if found else None
+
+
+def _team(value):
+    return ' '.join(str(value or '').lower().split())
+
+
+def market_already_bet(db, row):
+    """None, or why `row` must not be bet: a bet on the SAME market of the SAME game was already taken - placed, possibly
+    placed (UNKNOWN / unresolved), or a tap in flight. An attempt proven not placed (NOT_PLACED / NOT_PLACED_CLAIMED, or
+    ended before any tap) does not count. Same game: the same Bet365 event id, or the same sport, teams and kick-off.
+    Read from the durable store, so it holds across restarts."""
+    family = _market_family(row['market'])
+    event = _event_id(row)
+    for other in db.execute(
+            "SELECT i.instruction_id, i.state, i.market, i.home, i.away, i.event_time, i.normalized_alert, i.approved_at, "
+            "b.status AS bet_status, b.bet_reference FROM instructions i LEFT JOIN bets b ON b.instruction_id=i.instruction_id "
+            "WHERE i.sport=? AND i.instruction_id<>? AND (b.id IS NOT NULL OR (i.state IN (%s) AND i.approved_at IS NOT NULL))"
+            % ','.join('?' * len(TAP_STATES)), (row['sport'], row['instruction_id'], *TAP_STATES)).fetchall():
+        if _market_family(other['market']) != family:
+            continue
+        other_event = _event_id(other)
+        same_game = (event and other_event and event == other_event) or (
+            _team(other['home']) == _team(row['home']) and _team(other['away']) == _team(row['away'])
+            and (other['event_time'] or '') == (row['event_time'] or '') and row['event_time'])
+        if not same_game:
+            continue
+        if other['bet_status'] in NOT_PLACED_STATUSES:
+            continue
+        what = (f"bet {other['bet_reference']}" if other['bet_reference'] else
+                f"bet status {other['bet_status']}" if other['bet_status'] else f"tap in flight ({other['state']})")
+        return f"ALREADY_BET: {family} on this game already taken by {other['instruction_id'][:12]} ({what})"
+    return None
 
 
 def placed_terms(row, bet):
@@ -164,6 +217,9 @@ class FinalAction:
             return 'LIMIT: stake missing or invalid'
         if stake > money(self.s.max_stake_per_bet):
             return f'LIMIT: stake {stake} above per-bet cap {self.s.max_stake_per_bet}'
+        already = market_already_bet(db, row)
+        if already:
+            return already
         today = self.exposure_today(db)
         if self.s.max_bets_per_day is not None and today['bets'] + 1 > self.s.max_bets_per_day:
             return f"LIMIT: {today['bets']} bets already today (max {self.s.max_bets_per_day})"
