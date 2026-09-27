@@ -49,11 +49,15 @@ final class PlacementClassifier {
         if (has(blob, "password") && has(blob, "log in", "login")) {
             return definitive("SESSION_EXPIRED", "Login wall after Place Bet");
         }
-        if (has(blob, "line has changed", "line changed", "handicap has changed", "handicap changed", "points changed")) {
+        // current Bet365 wording (27 Sep 2026): "The line and price of your selection changed" / "The price of your
+        // selection changed" with the button relabelled "Accept Change and Place Bet". Nothing is placed until accepted.
+        if (has(blob, "line has changed", "line changed", "handicap has changed", "handicap changed", "points changed",
+                "line and price of your selection", "line of your selection changed")) {
             return definitive("LINE_CHANGED", "Bet365 reports the line changed; changes NOT accepted");
         }
         if (has(blob, "odds have changed", "odds changed", "price has changed", "price changed", "accept odds",
-                "accept changes", "accept price", "accept new odds")) {
+                "accept changes", "accept price", "accept new odds", "price of your selection changed",
+                "odds of your selection changed", "accept change")) {
             return definitive("PRICE_CHANGED", "Bet365 reports the odds changed; changes NOT accepted");
         }
         if (has(blob, "max stake", "maximum stake", "stake limit", "exceeds the maximum", "stake is too high",

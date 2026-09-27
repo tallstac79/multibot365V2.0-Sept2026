@@ -41,6 +41,13 @@ public class PlaceBetTargetTest {
         assertTrue(Arrays.toString(box), cx >= 477 && cx <= 604);
     }
 
+    @Test public void acceptChangeSlipIsNeverATarget() throws Exception {
+        assertTrue(PlaceBetTarget.changeNotice(StakePadTest.load("placebet_pantery_change_20260927.txt")));
+        assertFalse(PlaceBetTarget.changeNotice(StakePadTest.load("placebet_pantery_pretap_20260927.txt")));
+        assertFalse(PlaceBetTarget.changeNotice(StakePadTest.load("placebet_leiria_pretap_20260927.txt")));
+        assertFalse(PlaceBetTarget.changeNotice(StakePadTest.load("placebet_ossese_final_20260927.txt")));
+    }
+
     @Test public void failsClosedWithoutBothWords() {
         assertNull(PlaceBetTarget.locate(Arrays.asList(w("Stake", 20, 1320, 69, 1335), w("Place", 477, 1324, 550, 1346))));
         assertNull(PlaceBetTarget.locate(Arrays.asList(w("Place", 477, 1324, 550, 1346), w("Bet", 560, 1500, 604, 1520))));   // different rows

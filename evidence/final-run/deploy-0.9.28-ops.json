@@ -1,0 +1,51 @@
+{
+ "pause": "PAUSED",
+ "paused_at": "2026-09-27T13:29:24Z",
+ "install": "Success",
+ "session_check_0": {
+  "status": "FAIL",
+  "stage": "LOGIN_FAILED",
+  "detail": "Bet365 session state unclear: no account, login or challenge markers on screen"
+ },
+ "session_check_1": {
+  "status": "FAIL",
+  "stage": "LOGIN_FAILED",
+  "detail": "Bet365 session state unclear: no account, login or challenge markers on screen"
+ },
+ "backend_pids_before": [
+  30192
+ ],
+ "backend_pids_after": [
+  29964
+ ],
+ "verify": {
+  "controls": {
+   "dispatch_enabled": true,
+   "final_action_enabled": true,
+   "final_action_one_shot": false,
+   "approval_mode": "automatic",
+   "expected_worker_id": "w-d131ef8769de",
+   "expected_account_fingerprint": "1457f6e497f3",
+   "phone_final_action_armed": true,
+   "phone_worker_id": "w-d131ef8769de",
+   "phone_account_fingerprint": "1457f6e497f3",
+   "phone_app_version": "0.9.28-ops"
+  },
+  "sessions": [
+   "LOGGED_OUT"
+  ],
+  "devices": [
+   "ONLINE"
+  ],
+  "phone": {
+   "app_version": "0.9.28-ops",
+   "version_code": 111,
+   "state": "EXECUTING",
+   "worker": "w-d131ef8769de",
+   "account": "1457f6e497f3",
+   "local_execution": true
+  }
+ },
+ "resume": "RESUMED",
+ "resumed_at": "2026-09-27T13:30:27Z"
+}

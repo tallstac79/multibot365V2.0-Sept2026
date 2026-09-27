@@ -116,6 +116,21 @@ public class PlacementClassifierTest {
         assertFalse(PlacementClassifier.safeResetControl("Accept & Place Bet"));
     }
 
+    /** Real after-tap slip, 27 Sep 2026 Pantery Lancut -8.5 (moved to -10.0): Bet365 refused and asked to accept. */
+    @Test public void currentBet365ChangeNoticeIsDefinitiveNotPlaced() {
+        PlacementClassifier.Result line = classify(false, "Pantery Lancut (W) vs MUKS Poznan (W)", "The line and price of your selection changed",
+                "X Pantery Lancut (W) -10.0 1.83", "Point Spread", "Get your bets on quicker", "Auto allow odds and line changes",
+                "Stake Accept Change and", "£0.10 Place Bet");
+        assertEquals("LINE_CHANGED", line.outcome);
+        assertTrue(line.definitive);
+        PlacementClassifier.Result price = classify(false, "The price of your selection changed", "X Pantery Lancut (W) -8.5 1.83",
+                "Stake Accept Change and", "£0.10 Place Bet");
+        assertEquals("PRICE_CHANGED", price.outcome);
+        assertTrue(price.definitive);
+        // the settings toggle text alone ("Auto allow odds and line changes") is not a change notice
+        assertEquals("PENDING", classify(true, "Get your bets on quicker", "Auto allow odds and line changes", "Place Bet").outcome);
+    }
+
     @Test public void lineChangeBeatsGenericOddsWording() {
         assertEquals("LINE_CHANGED", classify(false, "Line has changed", "Accept Changes").outcome);
     }

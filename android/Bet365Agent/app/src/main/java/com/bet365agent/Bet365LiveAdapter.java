@@ -2351,6 +2351,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
     private android.graphics.Rect placeBetTap(VisualScreen s) {
         List<GameLinesParser.Word> words = wordsOf(s);
         require(!PlaceBetTarget.keypadOpen(words), "TARGET_NOT_FOUND", "Stake keypad open over the slip; Place Bet not actionable");
+        require(!PlaceBetTarget.changeNotice(words), "PRICE_CHANGED", "Bet365 change notice on the slip; Accept Change is never tapped");
         int[] box = PlaceBetTarget.locate(words);
         require(box != null, "TARGET_NOT_FOUND", "Place Bet words not located on the slip; not tapping a guessed target");
         android.graphics.Rect tap = new android.graphics.Rect(box[0], box[1], box[2], box[3]);

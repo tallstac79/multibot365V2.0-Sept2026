@@ -57,6 +57,20 @@ final class PlaceBetTarget {
         return (remember || done) && digits >= 5;
     }
 
+    /** Bet365 shows a change notice on the slip ("The line and price of your selection changed") and relabels the
+     *  button "Accept Change and Place Bet": tapping it would ACCEPT the new terms, so it is never a Place Bet target
+     *  (27 Sep 2026 Pantery Lancut, -8.5 moved to -10.0). Any "Accept" word in the lower half (slip / banner) counts. */
+    static boolean changeNotice(List<GameLinesParser.Word> words) {
+        boolean selection = false, changed = false;
+        for (GameLinesParser.Word w : words) {
+            String t = clean(w.text);
+            if (t.startsWith("accept") && w.top > 800) return true;
+            if (t.equals("selection")) selection = true;
+            if (t.equals("changed")) changed = true;
+        }
+        return selection && changed;
+    }
+
     private static boolean stakeWord(String text) {
         String t = clean(text);
         return t.equals("stake") || t.equals("set") || text.trim().matches("[£€$]\\s?\\d+(?:[.,]\\d{1,2})?");

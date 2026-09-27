@@ -198,7 +198,7 @@ def _settlement(text):
     return status, returns
 
 
-TOP_OF_LIST = re.compile(r'open.*settled')
+TOP_OF_LIST = re.compile(r'\bopen\b.*\bsettled\b')
 END_OF_LIST = ('information and transmission delays', 'responsible gambling', 'safer gambling', 'terms and conditions',
                'complaints procedure', 'deposit limits')
 EMPTY_LIST = ('no open bets', 'no bets to display', 'you have no', 'no unsettled bets')
