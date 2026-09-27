@@ -48,6 +48,29 @@ def money(value):
         return None
 
 
+
+def placed_terms(row, bet):
+    """The terms My Bets must show: what the bet was actually struck at. Receipt facts (actual_*) first, then the pre-tap
+    verified terms, then the alert/instruction. A line that moved within tolerance before the tap (27 Sep 2026 Elitzur
+    Ashkelon v Maccabi Kiryat Gat: alert UNDER 165.5, pre-tap and receipt UNDER 166.5) made verification compare My Bets
+    with the alert line, so a receipted bet could never be found."""
+    def pick(*keys):
+        for k in keys:
+            try:
+                value = bet[k]
+            except (KeyError, IndexError):
+                value = None
+            if value not in (None, ''):
+                return value
+        return None
+    terms = dict(dict(row))
+    line = pick('actual_line', 'verified_line')
+    if line is not None and terms.get('market') not in ('MONEYLINE', 'ML', '1X2'):
+        terms['line'] = line
+    terms['odds'] = pick('actual_odds', 'verified_odds', 'odds') or terms.get('odds')
+    terms['stake'] = pick('actual_stake', 'stake') or terms.get('stake')
+    return terms
+
 class FinalAction:
     def __init__(self, pipeline):
         self.p = pipeline
@@ -406,8 +429,9 @@ class FinalAction:
                 "AND b.verified_at IS NULL ORDER BY CASE b.status WHEN 'UNKNOWN' THEN 0 WHEN 'PLACED_UNVERIFIED' THEN 1 "
                 "ELSE 2 END, b.id", (VERIFY, VERIFY, UNKNOWN, PLACED_UNVERIFIED, NOT_PLACED_CLAIMED)).fetchall()
             for bet in candidates:
-                if bet['status'] == UNKNOWN and bet['attempts'] >= self.s.reconcile_max_attempts:
-                    # exhausted uncertain placement: keep re-verifying slowly (absence may become provable later)
+                if bet['status'] in (UNKNOWN, PLACED_UNVERIFIED) and bet['attempts'] >= self.s.reconcile_max_attempts:
+                    # exhausted uncertain placement: keep re-verifying slowly (absence may become provable later);
+                    # a receipted bet not yet found in My Bets likewise keeps being looked for (27 Sep 2026 Elitzur)
                     if bet['attempts'] >= self.s.reconcile_max_attempts + self.LATE_RECHECKS or urgent_only:
                         continue
                     anchor = datetime.fromisoformat(bet['last_at'] or bet['placed_at'])
@@ -514,7 +538,7 @@ class FinalAction:
             row = self.p.store.get_instruction(db, rec['instruction_id'])
             bet = db.execute('SELECT * FROM bets WHERE instruction_id=?', (rec['instruction_id'],)).fetchone()
             try:
-                found = bet_matching.match(dict(dict(row), odds=bet['odds'], stake=bet['stake']), my_bets)
+                found = bet_matching.match(placed_terms(row, bet), my_bets)
             except ValueError as error:
                 self._complete(rec, 'FAILED', dict(error=str(error)), db)
                 return 'FAILED'
@@ -572,7 +596,7 @@ class FinalAction:
             with self.p.store.connection() as db:
                 for bet in db.execute('SELECT b.*, i.home, i.away FROM bets b JOIN instructions i USING(instruction_id) '
                                       'WHERE b.status=? LIMIT 1', (OPEN,)).fetchall():
-                    bet_matching.match(dict(bet), my_bets)      # raises if the Settled view is not confirmed
+                    bet_matching.match(placed_terms(bet, bet), my_bets)      # raises if the Settled view is not confirmed
         except ValueError as error:
             # Unconfirmed/unreadable Settled view: this check FAILED (retried next cycle). It must complete,
             # or the open reconciliation would block every later dispatch (real: 2026-09-24 21:22).
@@ -582,7 +606,7 @@ class FinalAction:
             updated = []
             for bet in db.execute('SELECT b.*, i.home, i.away FROM bets b JOIN instructions i USING(instruction_id) '
                                   'WHERE b.status=?', (OPEN,)).fetchall():
-                found = bet_matching.match(dict(bet), my_bets)
+                found = bet_matching.match(placed_terms(bet, bet), my_bets)
                 if found['found'] and found['status'] in SETTLED_STATES:
                     self.p.store.upsert_bet(db, bet['instruction_id'], status=found['status'], returns=found['returns'],
                                             settled_at=iso(self.p.clock()))
