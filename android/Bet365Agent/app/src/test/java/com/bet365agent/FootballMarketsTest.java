@@ -101,6 +101,19 @@ public class FootballMarketsTest {
         assertTrue(cells(r).toString(), cells(r).contains("TOTAL/OVER/2.75@1.900") && cells(r).contains("TOTAL/UNDER/2.75@1.900"));
     }
 
+    @Test public void accentedColumnLabelsMatchTransliteratedFixtureNames() {
+        // Real page 27 Sep 2026 10:32Z (FC Arlanda v Enköping): labels row "FC Arlanda | Draw | Enköping", prices 1.65 3.90 4.10
+        List<GameLinesParser.Word> words = new ArrayList<>();
+        Collections.addAll(words, w("Popular", 35, 396, 112, 426), w("Bet", 155, 414, 186, 444), w("Builder", 194, 414, 262, 444), w("Result", 307, 414, 367, 444),
+                w("Full", 39, 522, 81, 550), w("Time", 90, 522, 153, 550), w("Result", 163, 522, 241, 550),
+                w("FC", 60, 594, 86, 616), w("Arlanda", 94, 594, 180, 616), w("Draw", 335, 594, 387, 616), w("Enköping", 540, 594, 640, 616),
+                w("1.65", 111, 630, 155, 652), w("3.90", 339, 630, 382, 652), w("4.10", 566, 630, 611, 652), w("Double", 39, 702, 125, 728), w("Chance", 134, 702, 227, 728));
+        FootballMarkets.Result r = FootballMarkets.parse(words, "FC Arlanda", "Enkoping");
+        assertEquals(List.of("MONEYLINE/HOME/NONE@1.65", "MONEYLINE/DRAW/NONE@3.90", "MONEYLINE/AWAY/NONE@4.10"), cells(r));
+        assertEquals("enkoping", FootballMarkets.ascii("Enköping"));
+        assertEquals("brondby if", FootballMarkets.ascii("Brøndby IF"));
+    }
+
     @Test public void tabStripSurvivesAHorizontalScroll() {
         // after the strip is swiped left, "Popular" is off-screen; the strip is still recognised by its other labels
         List<GameLinesParser.Word> words = new ArrayList<>();

@@ -94,7 +94,11 @@ final class EventPage {
     /** {home, away} from the header ("Kyoto Hannaryz vs Shiga Lakes" or "Hapoel Tel Aviv VS Bayern Munich"). */
     static String[] teams(List<String> headerLines) {
         for (String raw : headerLines) {
-            String t = OcrText.normalize(raw).replaceAll("[^A-Za-z0-9/ .'&()-]", " ").replaceAll("\\s+", " ").trim();
+            // Accented letters are transliterated, not dropped: "FC Arlanda v Enköping" read as "Enk ping" (27 Sep 2026,
+            // live football proof) can never match the feed's "Enkopings"; "Enkoping" can.
+            String ascii = java.text.Normalizer.normalize(OcrText.normalize(raw), java.text.Normalizer.Form.NFD).replaceAll("\\p{M}+", "")
+                    .replace('ø', 'o').replace('Ø', 'O').replace('ł', 'l').replace('Ł', 'L').replace('ß', 's').replace('æ', 'a').replace('Æ', 'A').replace('đ', 'd').replace('Đ', 'D');
+            String t = ascii.replaceAll("[^A-Za-z0-9/ .'&()-]", " ").replaceAll("\\s+", " ").trim();
             Matcher m = VS.matcher(t);
             if (!m.matches()) continue;
             String home = tidy(m.group(1)), away = tidy(m.group(2));

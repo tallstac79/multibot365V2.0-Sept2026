@@ -55,6 +55,10 @@ public class CompetitionMatchTest {
         assertEquals("japan b league 1", EventIdentity.competitionKey("Japan B League 1 25 Sep 10:45"));
         assertEquals("france nationale 1", EventIdentity.competitionKey("France Nationale 1 • 25 Sep 19:00"));
         assertEquals("club friendlies", EventIdentity.competitionKey("Club Friendlies 27 Sep 06:00"));
+        // 27 Sep 2026 football: feed "Division 1 Norra" (Sweden), page "Sweden 1.div Norra 27 Sep 12:00" (FC Arlanda v Enköping)
+        assertEquals("sweden division 1 norra", EventIdentity.competitionKey("Sweden 1.div Norra 27 Sep 12:00"));
+        assertEquals("country_prefixed", EventIdentity.competitionMatchKind("Division 1 Norra", "Sweden", "Sweden 1.div Norra 27 Sep 12:00"));
+        assertFalse(EventIdentity.competitionMatches("Division 1 Sodra", "Sweden", "Sweden 1.div Norra 27 Sep 12:00"));
         assertTrue(EventIdentity.competitionMatchKind("", "Mexico", "Mexico Liga ABE").startsWith("unknown"));
         assertTrue(EventIdentity.competitionMatchKind("Liga ABE", "Mexico", "Mexico LNBP").startsWith("mismatch"));
     }

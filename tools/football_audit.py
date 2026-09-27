@@ -31,7 +31,8 @@ def football_config(*, enable=True):
     """The live defaults plus the football execution terms this audit assumes (NOT the live configuration: the live
     football tolerances are unset, which makes every football alert REJECT at execution_tolerances)."""
     cfg = defaults()
-    cfg['global'].update(feed_timezone_verified=True, event_timezone='Europe/London', min_sharp_movement=None)
+    # the live global defaults: fixed £0.10 stake, verified Europe/London feed time, no extra movement floor
+    cfg['global'].update(feed_timezone_verified=True, event_timezone='Europe/London', min_sharp_movement=None, default_stake=0.1)
     for market, rule in cfg['sports']['football']['markets'].items():
         rule.update(enabled=enable, max_odds_deterioration=None, max_net_payout_deterioration_percent=10,
                     max_line_deterioration=None if market == '1X2' else 0.25, max_line_deterioration_percent=None)

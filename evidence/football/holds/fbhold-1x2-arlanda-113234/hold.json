@@ -1,0 +1,430 @@
+{
+ "alert": {
+  "intake_id": 2214,
+  "message_id": "71330",
+  "source_timestamp": "2026-09-27T10:30:18+00:00",
+  "text": "New odds update on Pinnacle\n\nFootball - Sweden - Division 1 Norra\n[Arlanda vs Enkopings](https://oddshub.io/football/sweden-ettan-sodra/68311158?market=ML)\n27.09.2026 12:00\n1.588⬇️ (1.719) - 4.440 (4.190) - 4.470⬆️ (3.890)\n\n🟢 Opening\n1.806 - 3.430\n\n[Bet365](https://www.bet365.com/#/AC/B1/C1/D8/E201693824/F3/I1/)\n**1.83** - 3.70 - 3.40\n\n🎯 EV: 110.75%"
+ },
+ "interpretation": {
+  "verdict": {
+   "profile": "oddsnotifier_football_1x2_v1",
+   "in_play_link": false,
+   "signal_basis": "price",
+   "draw_opening_supplied": false,
+   "verdict": "EXECUTABLE_HOME",
+   "verdict_reason": "CLEAR_VALUE_SIGNAL: Bet365 HOME 1.83 vs Pinnacle 1.588"
+  },
+  "target_side": "HOME",
+  "target_line": null,
+  "alert_price": "1.83",
+  "reference": {
+   "bookmaker": "Pinnacle",
+   "line": null,
+   "odds": "1.588",
+   "fair_odds": null
+  },
+  "sharp_signal": {
+   "source": "pinnacle_opening_to_current",
+   "side": "HOME",
+   "status": "IDENTIFIED",
+   "reason": "Pinnacle HOME opening 1.806 -> current 1.588 shortens; AWAY 3.430 -> 4.470 does not shorten; draw opening not supplied, draw never a candidate",
+   "basis": "price",
+   "opening_line": null,
+   "current_line": null,
+   "change": "-0.218",
+   "magnitude": "0.218",
+   "magnitude_units": "decimal_odds",
+   "direction": "SHORTENED",
+   "opening_prices": {
+    "HOME": "1.806",
+    "AWAY": "3.430"
+   },
+   "current_prices": {
+    "HOME": "1.588",
+    "DRAW": "4.440",
+    "AWAY": "4.470"
+   },
+   "changes_by_side": {
+    "HOME": "-0.218",
+    "AWAY": "1.040"
+   },
+   "draw_opening_supplied": false,
+   "candidates": [
+    "HOME",
+    "AWAY"
+   ],
+   "opening_to_current_percent": "-12.07087486157253599114064230",
+   "highlight_agrees": true
+  },
+  "bet_quality": "CLEAR_VALUE_SIGNAL"
+ },
+ "rules": {
+  "decision": "ACCEPT",
+  "reason": "All rules passed",
+  "instruction": {
+   "instruction_id": "fbhold-1x2-arlanda-113234",
+   "sport": "football",
+   "competition": "Division 1 Norra",
+   "fixture": "Arlanda vs Enkopings",
+   "home": "Arlanda",
+   "away": "Enkopings",
+   "event_time_local": "2026-09-27T12:00",
+   "event_timezone": "Europe/London",
+   "event_start_utc": "2026-09-27T11:00:00+00:00",
+   "market": "1X2",
+   "side": "HOME",
+   "selection_name": "Arlanda",
+   "line": null,
+   "alternate_line": {
+    "current": false,
+    "opening": false,
+    "comparison": false
+   },
+   "alert_price": "1.83",
+   "minimum_price": "1.75",
+   "stake": "1.00",
+   "max_odds_deterioration": null,
+   "max_net_payout_deterioration_percent": 10,
+   "max_line_deterioration": null,
+   "configured_line_absolute_cap": null,
+   "max_line_deterioration_percent": null,
+   "displayed_ev_percent": "110.75",
+   "bet_quality": "CLEAR_VALUE_SIGNAL",
+   "signal_reason": "CLEAR_VALUE_SIGNAL",
+   "line_advantage": null,
+   "target_source": "pinnacle_opening_to_current",
+   "implied_target": null,
+   "sharp_signal": {
+    "source": "pinnacle_opening_to_current",
+    "side": "HOME",
+    "status": "IDENTIFIED",
+    "reason": "Pinnacle HOME opening 1.806 -> current 1.588 shortens; AWAY 3.430 -> 4.470 does not shorten; draw opening not supplied, draw never a candidate",
+    "basis": "price",
+    "opening_line": null,
+    "current_line": null,
+    "change": "-0.218",
+    "magnitude": "0.218",
+    "magnitude_units": "decimal_odds",
+    "direction": "SHORTENED",
+    "opening_prices": {
+     "HOME": "1.806",
+     "AWAY": "3.430"
+    },
+    "current_prices": {
+     "HOME": "1.588",
+     "DRAW": "4.440",
+     "AWAY": "4.470"
+    },
+    "changes_by_side": {
+     "HOME": "-0.218",
+     "AWAY": "1.040"
+    },
+    "draw_opening_supplied": false,
+    "candidates": [
+     "HOME",
+     "AWAY"
+    ],
+    "opening_to_current_percent": "-12.07087486157253599114064230"
+   },
+   "highlighted_side": "HOME",
+   "ev_status": "SUPPLIED_EQUAL_LINE",
+   "line_quality": "EQUAL",
+   "price_quality": "FAVOURABLE",
+   "reference_odds": "1.588"
+  }
+ },
+ "payload": {
+  "instruction_id": "fbhold-1x2-arlanda-113234",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "query": "Arlanda||Enkopings",
+  "sport": "football",
+  "market": "1X2",
+  "side": "HOME",
+  "line": "",
+  "minimum_price": "1.75",
+  "stake": "1.00",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693824/F3/I1/",
+  "kickoff_utc": "2026-09-27T11:00",
+  "competition": "Division 1 Norra",
+  "period": "FULL_GAME",
+  "country": "Sweden"
+ },
+ "paused_at": "2026-09-27T10:32:36Z",
+ "result": {
+  "instruction_id": "fbhold-1x2-arlanda-113234",
+  "status": "FAIL",
+  "stage": "ALIAS_REQUIRED",
+  "detail": "Event link shows 'FC Arlanda v Enkoping'; alert says 'Arlanda v Enkopings': Known matching kick-off and competition required (competition mismatch (feed 'division 1 norra' vs page 'sweden 1 div norra'))",
+  "duration_ms": 4680,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 4311,
+   "last_progress_at_ms": 1790505157330,
+   "instruction_id": "fbhold-1x2-arlanda-113234",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790505157300
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 31,
+     "at_ms": 1790505157311
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 40,
+     "at_ms": 1790505157330,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 40,
+      "start_ts_ms": 1790505157314,
+      "end_elapsed_ms": 4311,
+      "end_ts_ms": 1790505161585,
+      "duration_ms": 4271,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3481,
+     "at_ms": 1790505157330
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4167,
+     "at_ms": 1790505157330
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4311,
+     "at_ms": 1790505157330
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_GXBb9h4lgRHla3ZUraddtfng-_TxSoO_EEaO9z-AmVU",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'FC Arlanda v Enkoping'; alert says 'Arlanda v Enkopings': Known matching kick-off and competition required (competition mismatch (feed 'division 1 norra' vs page 'sweden 1 div norra'))",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 40,
+    "start_ts_ms": 1790505157314,
+    "end_elapsed_ms": 4311,
+    "end_ts_ms": 1790505161585,
+    "duration_ms": 4271,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed 'division 1 norra' vs page 'sweden 1 div norra'))",
+  "identity": {
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed 'division 1 norra' vs page 'sweden 1 div norra'))",
+   "home": {
+    "feed": "Arlanda",
+    "bookmaker": "FC Arlanda",
+    "level": "CANONICAL",
+    "kind": "canonical",
+    "score": 1,
+    "note": "canonical tokens equal",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Enkopings",
+    "bookmaker": "Enkoping",
+    "level": "VARIANT",
+    "kind": "tokens_equal",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens equal [enkopings]",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "mismatch (feed 'division 1 norra' vs page 'sweden 1 div norra')",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Arlanda",
+     "bookmaker": "FC Arlanda",
+     "level": "CANONICAL",
+     "kind": "canonical",
+     "score": 1,
+     "note": "canonical tokens equal"
+    },
+    "away_similarity": {
+     "feed": "Enkopings",
+     "bookmaker": "Enkoping",
+     "level": "VARIANT",
+     "kind": "tokens_equal",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens equal [enkopings]"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "verified_gate_failed",
+    "verdict": "AMBIGUOUS"
+   }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693824/F3/I1/"
+ },
+ "run": {
+  "run_id": "c_GXBb9h4lgRHla3ZUraddtfng-_TxSoO_EEaO9z-AmVU",
+  "adapter": "live_bet365",
+  "status": "ALIAS_REQUIRED",
+  "phase": "FINISHED",
+  "started_at_ms": 1790505157273,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790505157274
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 31,
+    "wall_ts_ms": 1790505157304
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 40,
+    "wall_ts_ms": 1790505157314
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3481,
+    "wall_ts_ms": 1790505160756
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 4167,
+    "wall_ts_ms": 1790505161441
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 4311,
+    "wall_ts_ms": 1790505161585
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 40,
+    "start_ts_ms": 1790505157314,
+    "end_elapsed_ms": 4311,
+    "end_ts_ms": 1790505161585,
+    "duration_ms": 4271,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Arlanda",
+  "identity_home": "Arlanda",
+  "expected_away": "Enkopings",
+  "identity_away": "Enkopings",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201693824/F3/I1/",
+  "current_stage": "OPEN_HOME",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Sweden 1.div Norra 27 Sep 12:00",
+   "FC Arlanda v Enköping",
+   "Popular Bet Builder Result Corners Goals Half C"
+  ],
+  "competition_check": {
+   "feed": "Division 1 Norra",
+   "country": "Sweden",
+   "page": "Sweden 1.div Norra 27 Sep 12:00",
+   "matches": false
+  },
+  "identity": {
+   "verdict": "AMBIGUOUS",
+   "reason": "Known matching kick-off and competition required (competition mismatch (feed 'division 1 norra' vs page 'sweden 1 div norra'))",
+   "home": {
+    "feed": "Arlanda",
+    "bookmaker": "FC Arlanda",
+    "level": "CANONICAL",
+    "kind": "canonical",
+    "score": 1,
+    "note": "canonical tokens equal",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Enkopings",
+    "bookmaker": "Enkoping",
+    "level": "VARIANT",
+    "kind": "tokens_equal",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens equal [enkopings]",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "mismatch (feed 'division 1 norra' vs page 'sweden 1 div norra')",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Arlanda",
+     "bookmaker": "FC Arlanda",
+     "level": "CANONICAL",
+     "kind": "canonical",
+     "score": 1,
+     "note": "canonical tokens equal"
+    },
+    "away_similarity": {
+     "feed": "Enkopings",
+     "bookmaker": "Enkoping",
+     "level": "VARIANT",
+     "kind": "tokens_equal",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens equal [enkopings]"
+    },
+    "protected_markers": "agree",
+    "orientation": "agree",
+    "policy": "verified_gate_failed",
+    "verdict": "AMBIGUOUS"
+   }
+  },
+  "identity_verdict": "AMBIGUOUS",
+  "route": "event_link",
+  "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed 'division 1 norra' vs page 'sweden 1 div norra'))",
+  "detail": "Event link shows 'FC Arlanda v Enkoping'; alert says 'Arlanda v Enkopings': Known matching kick-off and competition required (competition mismatch (feed 'division 1 norra' vs page 'sweden 1 div norra'))",
+  "duration_ms": 4311
+ },
+ "wall": 5.3,
+ "frames": [
+  "s001_event_direct.png"
+ ],
+ "resumed_at": "2026-09-27T10:32:42Z",
+ "health_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.26-ops"
+ }
+}

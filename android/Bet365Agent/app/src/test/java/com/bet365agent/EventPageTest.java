@@ -71,6 +71,14 @@ public class EventPageTest {
         assertNull(EventPage.kickoffText(Arrays.asList("Q3 04:12", "Kyoto Hannaryz vs Shiga Lakes")));
     }
 
+    @Test public void accentedTeamNamesAreTransliteratedNotDropped() {
+        // Real football proof 27 Sep 2026 10:30Z: header "FC Arlanda v Enköping" had become "Enk ping" and could not match "Enkopings"
+        assertArrayEquals(new String[] {"FC Arlanda", "Enkoping"}, EventPage.teams(Arrays.asList("Sweden Division 2 • 27 Sep 12:00", "FC Arlanda v Enköping")));
+        assertArrayEquals(new String[] {"Besancon AC", "Val de Seine"}, EventPage.teams(Arrays.asList("Besançon AC vs Val de Seine")));
+        assertArrayEquals(new String[] {"Brondby IF", "Malmo FF"}, EventPage.teams(Arrays.asList("Brøndby IF v Malmö FF")));
+        assertEquals(EventIdentity.Level.VARIANT, EventIdentity.matchSide("Enkopings", "Enkoping", java.util.Collections.emptyMap()).level);
+    }
+
     @Test public void kickoffSurvivesAnOcrDigitGluedToTheDay() {
         // Real headers 25-27 Sep 2026: the league's "1" joined to the day ("Japan B League 127 Sep 07:05", 4 runs of
         // Utsunomiya v Yokohama were ALIAS_REQUIRED because the kick-off was unread; "Japan B League 125 Sep 10:45" 36 captures)

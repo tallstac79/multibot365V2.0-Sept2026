@@ -470,7 +470,8 @@ final class EventIdentity {
         if (withoutDate.equals(v))
             // Date glued to the league digit by OCR ("Japan B League 125 Sep 10:45"): keep the digit, drop the date.
             withoutDate = v.replaceAll("(?i)(?<=\\d)\\d{2}\\s+" + MONTH_RE + "[a-z]*.*$", "");
-        String key = normalise(withoutDate);
+        // Bet365 abbreviates a numbered division ("Sweden 1.div Norra", 27 Sep 2026) where the feed says "Division 1 Norra".
+        String key = normalise(withoutDate).replaceAll("\\b(\\d)\\s*div\\b", "division $1");
         // Observed provider label (Seoul/Wonju) includes the global region; bookmaker omits it.
         return key.equals("world club friendlies") ? "club friendlies" : key;
     }

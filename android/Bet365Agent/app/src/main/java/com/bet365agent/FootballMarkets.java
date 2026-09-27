@@ -286,20 +286,27 @@ final class FootballMarkets {
         return best;
     }
 
+    /** Accent-insensitive lower-case ASCII ("Enköping" and "Enkoping" read the same; the header parser transliterates too). */
+    static String ascii(String s) {
+        String n = java.text.Normalizer.normalize(OcrText.normalize(s == null ? "" : s), java.text.Normalizer.Form.NFD).replaceAll("\\p{M}+", "");
+        return n.replace('ø', 'o').replace('Ø', 'O').replace('ł', 'l').replace('Ł', 'L').replace('ß', 's').replace('æ', 'a').replace('Æ', 'A')
+                .replace('đ', 'd').replace('Đ', 'D').toLowerCase(Locale.US);
+    }
+
     /** Centre x of the team's label words on a row (first-token match, OCR variants of "(W)" tolerated), or -1. */
     private static int labelX(Row row, String team) {
         if (team == null) return -1;
-        String first = OcrText.normalize(team).toLowerCase(Locale.US).split("\\s+")[0];
+        String first = ascii(team).split("\\s+")[0];
         int left = -1, right = -1;
         for (GameLinesParser.Word w : row.words) {
-            if (OcrText.normalize(w.text).toLowerCase(Locale.US).equals(first)) { left = w.left; right = w.right; break; }
+            if (ascii(w.text).equals(first)) { left = w.left; right = w.right; break; }
         }
         return left < 0 ? -1 : (left + right) / 2;
     }
 
     private static boolean teamMatch(String team, String label) {
-        String a = OcrText.normalize(team).toLowerCase(Locale.US).replaceAll("[^a-z0-9 ]", " ").trim();
-        String b = OcrText.normalize(label).toLowerCase(Locale.US).replaceAll("[^a-z0-9 ]", " ").trim();
+        String a = ascii(team).replaceAll("[^a-z0-9 ]", " ").replaceAll("\\s+", " ").trim();
+        String b = ascii(label).replaceAll("[^a-z0-9 ]", " ").replaceAll("\\s+", " ").trim();
         if (a.isEmpty() || b.isEmpty()) return false;
         if (a.equals(b) || a.startsWith(b) || b.startsWith(a)) return true;
         String firstA = a.split("\\s+")[0], firstB = b.split("\\s+")[0];
