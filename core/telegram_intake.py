@@ -152,6 +152,8 @@ class TelegramIntake:
         self.stopped = asyncio.Event()
         self.feeds = {}   # peer id -> {'title', 'username', 'peer_id', 'configured_as'} resolved at catch-up
         self.status = dict(state='STARTING', connected=False, last_event_at=None, last_error=None, reconnects=0, chats={})
+        self.status.update(last_catch_up_completed_at=None, last_reconcile_started_at=None,
+                           last_reconcile_completed_at=None, reconcile_count=0, feed_checks={})
 
     def _session_path(self):
         path = Path(self.session)
@@ -213,9 +215,11 @@ class TelegramIntake:
                 continue
             async for message in client.iter_messages(entity, min_id=last, reverse=True):
                 await self._store(message, peer, 'catch_up')
+        self.status['last_catch_up_completed_at'] = iso(utcnow())
 
     async def reconcile(self, client):
         from telethon import utils
+        self.status['last_reconcile_started_at'] = iso(utcnow())
         for chat in self.chats:
             entity = await self._entity(client, chat)
             peer = utils.get_peer_id(entity)
@@ -227,6 +231,11 @@ class TelegramIntake:
             for message in reversed(recent):
                 if str(message.id) not in known and message.id > floor:
                     await self._store(message, peer, 'reconcile')
+            self.status['feed_checks'][str(peer)] = dict(
+                checked_at=iso(utcnow()), latest_message_id=max((m.id for m in recent), default=None),
+                messages_checked=len(recent))
+        self.status['last_reconcile_completed_at'] = iso(utcnow())
+        self.status['reconcile_count'] += 1
 
     async def run(self):
         from telethon import events, utils

@@ -1,0 +1,1224 @@
+[
+  {
+    "id": 2582,
+    "chat_id": "1645770730",
+    "message_id": "71943",
+    "source_timestamp": "2026-09-27T17:56:00+00:00",
+    "received_at": "2026-09-27T17:56:00.707+00:00",
+    "processed_at": "2026-09-27T17:56:00.707+00:00",
+    "status": "PARSED_PARTIAL",
+    "reason": "Bet365 link is an in-play page; pre-match identity cannot be verified, no executable target",
+    "normalized": {
+      "alert_price": null,
+      "alternate_line": {
+        "comparison": false,
+        "current": false,
+        "opening": false
+      },
+      "away": "Bandeirante",
+      "bet_quality": null,
+      "comparison": {
+        "bet365_line": "4.5",
+        "bet365_line_displayed": "4.5",
+        "bet365_odds": null,
+        "bet365_present": true,
+        "bookmaker": "Bet365",
+        "equal_line": true,
+        "ev_status": "SUPPLIED_EQUAL_LINE",
+        "line": "4.5",
+        "line_advantage": null,
+        "line_difference": "0.0",
+        "line_quality": null,
+        "price_quality": null,
+        "quotes": [
+          {
+            "line": "4.5",
+            "position": 1,
+            "price": "2.00",
+            "side": "OVER"
+          },
+          {
+            "line": "4.5",
+            "position": 2,
+            "price": "1.80",
+            "side": "UNDER"
+          }
+        ],
+        "reference_line_displayed": "4.5",
+        "site": "Bet365",
+        "supplied_ev": null
+      },
+      "comparison_url": "https://www.bet365.com/#/IP/EV151391536192C1",
+      "competition": "Paulista U20",
+      "competition_full": "Brazil - Paulista U20",
+      "country": "Brazil",
+      "displayed_ev_percent": null,
+      "displayed_line": "4.5",
+      "feed_displayed_ev_percent": "110.98",
+      "fixture": "RB Bragantino vs Bandeirante",
+      "fixture_url": "https://oddshub.io/football/brazil-u20-paulista-playoffs/74807778?market=Totals",
+      "football": {
+        "in_play_link": true,
+        "line_candidate": null,
+        "price_candidate": "OVER",
+        "profile": "oddsnotifier_football_two_sided_v1",
+        "signal_basis": "price_same_line",
+        "verdict": "NO_BET",
+        "verdict_reason": "Bet365 link is an in-play page (#/IP/): no scheduled kick-off or pre-match identity to verify"
+      },
+      "format_variant": "two_sided",
+      "highlighted_side": "OVER",
+      "home": "RB Bragantino",
+      "implied_target": null,
+      "interpretation_notes": [
+        "Bet365 link is an in-play page; pre-match identity cannot be verified, no executable target"
+      ],
+      "interpretation_status": "PARSED_PARTIAL",
+      "interpretation_version": "sharp-money-football-1",
+      "limit": null,
+      "line_quality": null,
+      "market": "TOTALS",
+      "market_label": "Totals",
+      "market_label_source": "label_and_fixture_url",
+      "market_movement": {
+        "current_line": "4.5",
+        "current_price": null,
+        "line_change": null,
+        "line_direction": null,
+        "line_perspective": "TOTAL",
+        "opening_line": "4.5",
+        "opening_line_change": "0.0",
+        "opening_line_direction": "UNCHANGED",
+        "opening_line_equal": true,
+        "opening_price": null,
+        "opening_to_current_price_change_percent": null,
+        "previous_line": null,
+        "previous_price_displayed": null,
+        "price_change_basis": null,
+        "price_change_percent": null,
+        "price_direction": null,
+        "price_direction_source": null
+      },
+      "movement": {
+        "current_line": "4.5",
+        "current_price": null,
+        "line_change": null,
+        "line_direction": null,
+        "line_perspective": "TOTAL",
+        "opening_line": "4.5",
+        "opening_line_change": "0.0",
+        "opening_line_direction": "UNCHANGED",
+        "opening_line_equal": true,
+        "opening_price": null,
+        "opening_to_current_price_change_percent": null,
+        "previous_line": null,
+        "previous_price_displayed": null,
+        "price_change_basis": null,
+        "price_change_percent": null,
+        "price_direction": null,
+        "price_direction_source": null
+      },
+      "observation_id": "oddsnotifier:1819c21c9c1febf4c157e360b1c66b972f6874b5a32635d68b0c7ade25be2d06",
+      "opening": {
+        "line": "4.5",
+        "outcome_count_matches_market": true,
+        "quotes": [
+          {
+            "line": "4.5",
+            "position": 1,
+            "price": "2.020",
+            "side": "OVER"
+          },
+          {
+            "line": "4.5",
+            "position": 2,
+            "price": "1.666",
+            "side": "UNDER"
+          }
+        ]
+      },
+      "opening_marker": "🟢",
+      "pinnacle": {
+        "line": "4.5",
+        "previous_line": null,
+        "quotes": [
+          {
+            "line": "4.5",
+            "movement": "DOWN",
+            "movement_marker": "⬇️",
+            "parenthetical_price": "1.925",
+            "position": 1,
+            "price": "1.680",
+            "side": "OVER"
+          },
+          {
+            "line": "4.5",
+            "movement": "UP",
+            "movement_marker": "⬆️",
+            "parenthetical_price": "1.787",
+            "position": 2,
+            "price": "2.040",
+            "side": "UNDER"
+          }
+        ]
+      },
+      "price_quality": null,
+      "quote_mapping": {
+        "confirmation_source": "Feed 1 corpus 26-27 Sep 2026 (37 real Totals alerts): OVER-UNDER; phone captures of Bet365 Goals Over/Under and Goal Line columns Over | Under (evidence/football/pages); docs/FOOTBALL_STRATEGY_SPEC.md",
+        "group_sides_by_position": {
+          "comparison": [
+            "OVER",
+            "UNDER"
+          ],
+          "opening": [
+            "OVER",
+            "UNDER"
+          ],
+          "pinnacle": [
+            "OVER",
+            "UNDER"
+          ]
+        },
+        "production_verified": true,
+        "profile": "oddsnotifier_football_two_sided_v1",
+        "sides_by_position": [
+          "OVER",
+          "UNDER"
+        ]
+      },
+      "raw_text": "New odds update on Pinnacle\n\nFootball - Brazil - Paulista U20\n[RB Bragantino vs Bandeirante](https://oddshub.io/football/brazil-u20-paulista-playoffs/74807778?market=Totals)\n27.09.2026 19:00\n\nTotals (4.5)\n1.680⬇️ (1.925) - 2.040⬆️ (1.787)\n\n🟢 Opening (4.5)\n2.020 - 1.666\n\n[Bet365 (Totals 4.5)](https://www.bet365.com/#/IP/EV151391536192C1)\n**2.00** - 1.80\n\n🎯 EV: 110.98%",
+      "reference": {
+        "bookmaker": "Pinnacle",
+        "fair_odds": null,
+        "line": "4.5",
+        "line_perspective": "TOTAL",
+        "odds": null
+      },
+      "sample_provenance": "unspecified",
+      "scheduled_at_local": "2026-09-27T19:00",
+      "scheduled_timezone": null,
+      "schema_version": 6,
+      "selection_line": null,
+      "selection_name": null,
+      "selection_side": null,
+      "sharp_signal": {
+        "basis": "price_same_line",
+        "change": "-0.340",
+        "changes_by_side": {
+          "OVER": "-0.340",
+          "UNDER": "0.374"
+        },
+        "current_line": "4.5",
+        "current_prices": {
+          "OVER": "1.680",
+          "UNDER": "2.040"
+        },
+        "direction": "SHORTENED",
+        "highlight_agrees": true,
+        "line_candidate": null,
+        "magnitude": "0.340",
+        "magnitude_units": "decimal_odds",
+        "opening_line": "4.5",
+        "opening_prices": {
+          "OVER": "2.020",
+          "UNDER": "1.666"
+        },
+        "price_candidate": "OVER",
+        "reason": "Pinnacle line 4.5 unchanged; OVER 2.020 -> 1.680 shortens, UNDER 1.666 -> 2.040 does not",
+        "recent_line_reversal": false,
+        "side": "OVER",
+        "source": "pinnacle_opening_to_current",
+        "status": "IDENTIFIED"
+      },
+      "sides": [
+        {
+          "bet_quality": "POTENTIAL_VALUE",
+          "comparison": {
+            "bet365_line": "4.5",
+            "bet365_price": "2.00",
+            "bookmaker": "Bet365",
+            "equal_line": true,
+            "ev_status": "SUPPLIED_EQUAL_LINE",
+            "line_advantage": "0.0",
+            "line_applicable": true,
+            "line_difference": "0.0",
+            "line_quality": "EQUAL",
+            "price_difference": "0.320",
+            "price_quality": "FAVOURABLE",
+            "reference_line": "4.5",
+            "reference_price": "1.680",
+            "supplied_ev": "110.98"
+          },
+          "is_target": false,
+          "line_quality": "EQUAL",
+          "movement": {
+            "current_line": "4.5",
+            "current_price": "1.680",
+            "line_change": null,
+            "line_direction": null,
+            "opening_line": "4.5",
+            "opening_line_change": "0.0",
+            "opening_line_direction": "UNCHANGED",
+            "opening_line_equal": true,
+            "opening_price": "2.020",
+            "opening_to_current_price_change_percent": -16.83,
+            "previous_line": null,
+            "previous_price_displayed": "1.925",
+            "price_change_basis": null,
+            "price_change_percent": null,
+            "price_direction": "SHORTENED",
+            "price_direction_source": "arrow"
+          },
+          "price_quality": "FAVOURABLE",
+          "reference": {
+            "bookmaker": "Pinnacle",
+            "fair_odds": null,
+            "line": "4.5",
+            "odds": "1.680"
+          },
+          "selection_line": "4.5",
+          "selection_name": "Over",
+          "side": "OVER"
+        },
+        {
+          "bet_quality": "UNFAVOURABLE",
+          "comparison": {
+            "bet365_line": "4.5",
+            "bet365_price": "1.80",
+            "bookmaker": "Bet365",
+            "equal_line": true,
+            "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+            "line_advantage": "0.0",
+            "line_applicable": true,
+            "line_difference": "0.0",
+            "line_quality": "EQUAL",
+            "price_difference": "-0.240",
+            "price_quality": "UNFAVOURABLE",
+            "reference_line": "4.5",
+            "reference_price": "2.040",
+            "supplied_ev": null
+          },
+          "is_target": false,
+          "line_quality": "EQUAL",
+          "movement": {
+            "current_line": "4.5",
+            "current_price": "2.040",
+            "line_change": null,
+            "line_direction": null,
+            "opening_line": "4.5",
+            "opening_line_change": "0.0",
+            "opening_line_direction": "UNCHANGED",
+            "opening_line_equal": true,
+            "opening_price": "1.666",
+            "opening_to_current_price_change_percent": 22.45,
+            "previous_line": null,
+            "previous_price_displayed": "1.787",
+            "price_change_basis": null,
+            "price_change_percent": null,
+            "price_direction": "DRIFTED",
+            "price_direction_source": "arrow"
+          },
+          "price_quality": "UNFAVOURABLE",
+          "reference": {
+            "bookmaker": "Pinnacle",
+            "fair_odds": null,
+            "line": "4.5",
+            "odds": "2.040"
+          },
+          "selection_line": "4.5",
+          "selection_name": "Under",
+          "side": "UNDER"
+        }
+      ],
+      "source": "OddsNotifier",
+      "source_timestamp": "2026-09-27T17:56:00+00:00",
+      "sport": "football",
+      "target_line": null,
+      "target_price_source": null,
+      "target_side": null,
+      "telegram_channel_id": "1645770730",
+      "telegram_message_id": "71943",
+      "unresolved": [
+        "event_timezone_unspecified",
+        "parenthetical_price_meaning_unspecified",
+        "Bet365 link is an in-play page; pre-match identity cannot be verified, no executable target"
+      ]
+    },
+    "formatted_text": "New odds update on Pinnacle\n\nFootball - Brazil - Paulista U20\n[RB Bragantino vs Bandeirante](https://oddshub.io/football/brazil-u20-paulista-playoffs/74807778?market=Totals)\n27.09.2026 19:00\n\nTotals (4.5)\n1.680⬇️ (1.925) - 2.040⬆️ (1.787)\n\n🟢 Opening (4.5)\n2.020 - 1.666\n\n[Bet365 (Totals 4.5)](https://www.bet365.com/#/IP/EV151391536192C1)\n**2.00** - 1.80\n\n🎯 EV: 110.98%",
+    "entities": [
+      {
+        "length": 8,
+        "offset": 19,
+        "type": "bold"
+      },
+      {
+        "length": 32,
+        "offset": 29,
+        "type": "bold"
+      },
+      {
+        "length": 28,
+        "offset": 62,
+        "type": "text_url",
+        "url": "https://oddshub.io/football/brazil-u20-paulista-playoffs/74807778?market=Totals"
+      },
+      {
+        "length": 28,
+        "offset": 62,
+        "type": "bold"
+      },
+      {
+        "length": 17,
+        "offset": 90,
+        "type": "bold"
+      },
+      {
+        "length": 12,
+        "offset": 109,
+        "type": "bold"
+      },
+      {
+        "length": 13,
+        "offset": 160,
+        "type": "bold"
+      },
+      {
+        "length": 19,
+        "offset": 189,
+        "type": "text_url",
+        "url": "https://www.bet365.com/#/IP/EV151391536192C1"
+      },
+      {
+        "length": 19,
+        "offset": 189,
+        "type": "bold"
+      },
+      {
+        "length": 4,
+        "offset": 209,
+        "type": "bold"
+      },
+      {
+        "length": 4,
+        "offset": 209,
+        "type": "underline"
+      },
+      {
+        "length": 14,
+        "offset": 222,
+        "type": "bold"
+      }
+    ]
+  },
+  {
+    "id": 2583,
+    "chat_id": "1645770730",
+    "message_id": "71944",
+    "source_timestamp": "2026-09-27T17:56:02+00:00",
+    "received_at": "2026-09-27T17:56:02.680+00:00",
+    "processed_at": "2026-09-27T17:56:02.681+00:00",
+    "status": "PARSED_PARTIAL",
+    "reason": "Bet365 link is an in-play page; pre-match identity cannot be verified, no executable target",
+    "normalized": {
+      "alert_price": null,
+      "alternate_line": {
+        "comparison": false,
+        "current": true,
+        "opening": false
+      },
+      "away": "CSA",
+      "bet_quality": null,
+      "comparison": {
+        "bet365_line": "3",
+        "bet365_line_displayed": "3",
+        "bet365_odds": null,
+        "bet365_present": true,
+        "bookmaker": "Bet365",
+        "equal_line": true,
+        "ev_status": "SUPPLIED_EQUAL_LINE",
+        "line": "3",
+        "line_advantage": null,
+        "line_difference": "0",
+        "line_quality": null,
+        "price_quality": null,
+        "quotes": [
+          {
+            "line": "3",
+            "position": 1,
+            "price": "1.98",
+            "side": "OVER"
+          },
+          {
+            "line": "3",
+            "position": 2,
+            "price": "1.83",
+            "side": "UNDER"
+          }
+        ],
+        "reference_line_displayed": "3",
+        "site": "Bet365",
+        "supplied_ev": null
+      },
+      "comparison_url": "https://www.bet365.com/#/IP/EV151391717852C1",
+      "competition": "Alagoano U20",
+      "competition_full": "Brazil - Alagoano U20",
+      "country": "Brazil",
+      "displayed_ev_percent": null,
+      "displayed_line": "3",
+      "feed_displayed_ev_percent": "118.50",
+      "fixture": "CSE vs CSA",
+      "fixture_url": null,
+      "football": {
+        "in_play_link": true,
+        "line_candidate": null,
+        "price_candidate": "UNDER",
+        "profile": "oddsnotifier_football_two_sided_v1",
+        "signal_basis": "price_same_line",
+        "verdict": "NO_BET",
+        "verdict_reason": "Bet365 link is an in-play page (#/IP/): no scheduled kick-off or pre-match identity to verify"
+      },
+      "format_variant": "two_sided",
+      "highlighted_side": "UNDER",
+      "home": "CSE",
+      "implied_target": null,
+      "interpretation_notes": [
+        "Bet365 link is an in-play page; pre-match identity cannot be verified, no executable target"
+      ],
+      "interpretation_status": "PARSED_PARTIAL",
+      "interpretation_version": "sharp-money-football-1",
+      "limit": null,
+      "line_quality": null,
+      "market": "TOTALS",
+      "market_label": "Totals",
+      "market_label_source": "standalone_label",
+      "market_movement": {
+        "current_line": "3",
+        "current_price": null,
+        "line_change": null,
+        "line_direction": null,
+        "line_perspective": "TOTAL",
+        "opening_line": "3",
+        "opening_line_change": "0",
+        "opening_line_direction": "UNCHANGED",
+        "opening_line_equal": true,
+        "opening_price": null,
+        "opening_to_current_price_change_percent": null,
+        "previous_line": null,
+        "previous_price_displayed": null,
+        "price_change_basis": null,
+        "price_change_percent": null,
+        "price_direction": null,
+        "price_direction_source": null
+      },
+      "movement": {
+        "current_line": "3",
+        "current_price": null,
+        "line_change": null,
+        "line_direction": null,
+        "line_perspective": "TOTAL",
+        "opening_line": "3",
+        "opening_line_change": "0",
+        "opening_line_direction": "UNCHANGED",
+        "opening_line_equal": true,
+        "opening_price": null,
+        "opening_to_current_price_change_percent": null,
+        "previous_line": null,
+        "previous_price_displayed": null,
+        "price_change_basis": null,
+        "price_change_percent": null,
+        "price_direction": null,
+        "price_direction_source": null
+      },
+      "observation_id": "oddsnotifier:b908e878c1de4cd380d68bb11a8ff3f43d27dbaa5ef5ebf0a4f2afaf4304d00d",
+      "opening": {
+        "line": "3",
+        "outcome_count_matches_market": true,
+        "quotes": [
+          {
+            "line": "3",
+            "position": 1,
+            "price": "1.800",
+            "side": "OVER"
+          },
+          {
+            "line": "3",
+            "position": 2,
+            "price": "1.917",
+            "side": "UNDER"
+          }
+        ]
+      },
+      "opening_marker": "🟢",
+      "pinnacle": {
+        "line": "3",
+        "previous_line": null,
+        "quotes": [
+          {
+            "line": "3",
+            "movement": "UP",
+            "movement_marker": "⬆️",
+            "parenthetical_price": "2.130",
+            "position": 1,
+            "price": "2.480",
+            "side": "OVER"
+          },
+          {
+            "line": "3",
+            "movement": "DOWN",
+            "movement_marker": "⬇️",
+            "parenthetical_price": "1.645",
+            "position": 2,
+            "price": "1.460",
+            "side": "UNDER"
+          }
+        ]
+      },
+      "price_quality": null,
+      "quote_mapping": {
+        "confirmation_source": "Feed 1 corpus 26-27 Sep 2026 (37 real Totals alerts): OVER-UNDER; phone captures of Bet365 Goals Over/Under and Goal Line columns Over | Under (evidence/football/pages); docs/FOOTBALL_STRATEGY_SPEC.md",
+        "group_sides_by_position": {
+          "comparison": [
+            "OVER",
+            "UNDER"
+          ],
+          "opening": [
+            "OVER",
+            "UNDER"
+          ],
+          "pinnacle": [
+            "OVER",
+            "UNDER"
+          ]
+        },
+        "production_verified": true,
+        "profile": "oddsnotifier_football_two_sided_v1",
+        "sides_by_position": [
+          "OVER",
+          "UNDER"
+        ]
+      },
+      "raw_text": "New odds update on Pinnacle\n\nFootball - Brazil - Alagoano U20\nCSE vs CSA\n27.09.2026 19:00\n\nTotals (3) (alt. line)\n2.480⬆️ (2.130) - 1.460⬇️ (1.645)\n\n🟢 Opening (3)\n1.800 - 1.917\n\n[Bet365 (Totals 3)](https://www.bet365.com/#/IP/EV151391717852C1)\n1.98 - **1.83**\n\n🎯 EV: 118.50%",
+      "reference": {
+        "bookmaker": "Pinnacle",
+        "fair_odds": null,
+        "line": "3",
+        "line_perspective": "TOTAL",
+        "odds": null
+      },
+      "sample_provenance": "unspecified",
+      "scheduled_at_local": "2026-09-27T19:00",
+      "scheduled_timezone": null,
+      "schema_version": 6,
+      "selection_line": null,
+      "selection_name": null,
+      "selection_side": null,
+      "sharp_signal": {
+        "basis": "price_same_line",
+        "change": "-0.457",
+        "changes_by_side": {
+          "OVER": "0.680",
+          "UNDER": "-0.457"
+        },
+        "current_line": "3",
+        "current_prices": {
+          "OVER": "2.480",
+          "UNDER": "1.460"
+        },
+        "direction": "SHORTENED",
+        "highlight_agrees": true,
+        "line_candidate": null,
+        "magnitude": "0.457",
+        "magnitude_units": "decimal_odds",
+        "opening_line": "3",
+        "opening_prices": {
+          "OVER": "1.800",
+          "UNDER": "1.917"
+        },
+        "price_candidate": "UNDER",
+        "reason": "Pinnacle line 3 unchanged; UNDER 1.917 -> 1.460 shortens, OVER 1.800 -> 2.480 does not",
+        "recent_line_reversal": false,
+        "side": "UNDER",
+        "source": "pinnacle_opening_to_current",
+        "status": "IDENTIFIED"
+      },
+      "sides": [
+        {
+          "bet_quality": "UNFAVOURABLE",
+          "comparison": {
+            "bet365_line": "3",
+            "bet365_price": "1.98",
+            "bookmaker": "Bet365",
+            "equal_line": true,
+            "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+            "line_advantage": "0",
+            "line_applicable": true,
+            "line_difference": "0",
+            "line_quality": "EQUAL",
+            "price_difference": "-0.500",
+            "price_quality": "UNFAVOURABLE",
+            "reference_line": "3",
+            "reference_price": "2.480",
+            "supplied_ev": null
+          },
+          "is_target": false,
+          "line_quality": "EQUAL",
+          "movement": {
+            "current_line": "3",
+            "current_price": "2.480",
+            "line_change": null,
+            "line_direction": null,
+            "opening_line": "3",
+            "opening_line_change": "0",
+            "opening_line_direction": "UNCHANGED",
+            "opening_line_equal": true,
+            "opening_price": "1.800",
+            "opening_to_current_price_change_percent": 37.78,
+            "previous_line": null,
+            "previous_price_displayed": "2.130",
+            "price_change_basis": null,
+            "price_change_percent": null,
+            "price_direction": "DRIFTED",
+            "price_direction_source": "arrow"
+          },
+          "price_quality": "UNFAVOURABLE",
+          "reference": {
+            "bookmaker": "Pinnacle",
+            "fair_odds": null,
+            "line": "3",
+            "odds": "2.480"
+          },
+          "selection_line": "3",
+          "selection_name": "Over",
+          "side": "OVER"
+        },
+        {
+          "bet_quality": "POTENTIAL_VALUE",
+          "comparison": {
+            "bet365_line": "3",
+            "bet365_price": "1.83",
+            "bookmaker": "Bet365",
+            "equal_line": true,
+            "ev_status": "SUPPLIED_EQUAL_LINE",
+            "line_advantage": "0",
+            "line_applicable": true,
+            "line_difference": "0",
+            "line_quality": "EQUAL",
+            "price_difference": "0.370",
+            "price_quality": "FAVOURABLE",
+            "reference_line": "3",
+            "reference_price": "1.460",
+            "supplied_ev": "118.50"
+          },
+          "is_target": false,
+          "line_quality": "EQUAL",
+          "movement": {
+            "current_line": "3",
+            "current_price": "1.460",
+            "line_change": null,
+            "line_direction": null,
+            "opening_line": "3",
+            "opening_line_change": "0",
+            "opening_line_direction": "UNCHANGED",
+            "opening_line_equal": true,
+            "opening_price": "1.917",
+            "opening_to_current_price_change_percent": -23.84,
+            "previous_line": null,
+            "previous_price_displayed": "1.645",
+            "price_change_basis": null,
+            "price_change_percent": null,
+            "price_direction": "SHORTENED",
+            "price_direction_source": "arrow"
+          },
+          "price_quality": "FAVOURABLE",
+          "reference": {
+            "bookmaker": "Pinnacle",
+            "fair_odds": null,
+            "line": "3",
+            "odds": "1.460"
+          },
+          "selection_line": "3",
+          "selection_name": "Under",
+          "side": "UNDER"
+        }
+      ],
+      "source": "OddsNotifier",
+      "source_timestamp": "2026-09-27T17:56:02+00:00",
+      "sport": "football",
+      "target_line": null,
+      "target_price_source": null,
+      "target_side": null,
+      "telegram_channel_id": "1645770730",
+      "telegram_message_id": "71944",
+      "unresolved": [
+        "event_timezone_unspecified",
+        "parenthetical_price_meaning_unspecified",
+        "Bet365 link is an in-play page; pre-match identity cannot be verified, no executable target"
+      ]
+    },
+    "formatted_text": "New odds update on Pinnacle\n\nFootball - Brazil - Alagoano U20\nCSE vs CSA\n27.09.2026 19:00\n\nTotals (3) (alt. line)\n2.480⬆️ (2.130) - 1.460⬇️ (1.645)\n\n🟢 Opening (3)\n1.800 - 1.917\n\n[Bet365 (Totals 3)](https://www.bet365.com/#/IP/EV151391717852C1)\n1.98 - **1.83**\n\n🎯 EV: 118.50%",
+    "entities": [
+      {
+        "length": 8,
+        "offset": 19,
+        "type": "bold"
+      },
+      {
+        "length": 32,
+        "offset": 29,
+        "type": "bold"
+      },
+      {
+        "length": 27,
+        "offset": 62,
+        "type": "bold"
+      },
+      {
+        "length": 22,
+        "offset": 91,
+        "type": "bold"
+      },
+      {
+        "length": 11,
+        "offset": 152,
+        "type": "bold"
+      },
+      {
+        "length": 17,
+        "offset": 179,
+        "type": "text_url",
+        "url": "https://www.bet365.com/#/IP/EV151391717852C1"
+      },
+      {
+        "length": 17,
+        "offset": 179,
+        "type": "bold"
+      },
+      {
+        "length": 4,
+        "offset": 204,
+        "type": "bold"
+      },
+      {
+        "length": 4,
+        "offset": 204,
+        "type": "underline"
+      },
+      {
+        "length": 14,
+        "offset": 210,
+        "type": "bold"
+      }
+    ]
+  },
+  {
+    "id": 2584,
+    "chat_id": "1645770730",
+    "message_id": "71945",
+    "source_timestamp": "2026-09-27T17:56:05+00:00",
+    "received_at": "2026-09-27T17:56:05.718+00:00",
+    "processed_at": "2026-09-27T17:56:05.718+00:00",
+    "status": "PARSED_PARTIAL",
+    "reason": "Bet365 link is an in-play page; pre-match identity cannot be verified, no executable target",
+    "normalized": {
+      "alert_price": null,
+      "alternate_line": {
+        "comparison": false,
+        "current": true,
+        "opening": false
+      },
+      "away": "Lanus",
+      "bet_quality": null,
+      "comparison": {
+        "bet365_line": "2.5",
+        "bet365_line_displayed": "2.5",
+        "bet365_odds": null,
+        "bet365_present": true,
+        "bookmaker": "Bet365",
+        "equal_line": true,
+        "ev_status": "SUPPLIED_EQUAL_LINE",
+        "line": "2.5",
+        "line_advantage": null,
+        "line_difference": "0.0",
+        "line_quality": null,
+        "price_quality": null,
+        "quotes": [
+          {
+            "line": "2.5",
+            "position": 1,
+            "price": "1.93",
+            "side": "OVER"
+          },
+          {
+            "line": "2.5",
+            "position": 2,
+            "price": "1.88",
+            "side": "UNDER"
+          }
+        ],
+        "reference_line_displayed": "2.5",
+        "site": "Bet365",
+        "supplied_ev": null
+      },
+      "comparison_url": "https://www.bet365.com/#/IP/EV151391536162C1",
+      "competition": "Primera Division Women",
+      "competition_full": "Argentina - Primera Division Women",
+      "country": "Argentina",
+      "displayed_ev_percent": null,
+      "displayed_line": "2.5",
+      "feed_displayed_ev_percent": "111.39",
+      "fixture": "San Luis FC vs Lanus",
+      "fixture_url": "https://oddshub.io/football/argentina-primera-division-a-women-clausura/74949350?market=Totals",
+      "football": {
+        "in_play_link": true,
+        "line_candidate": null,
+        "price_candidate": "UNDER",
+        "profile": "oddsnotifier_football_two_sided_v1",
+        "signal_basis": "price_same_line",
+        "verdict": "NO_BET",
+        "verdict_reason": "Bet365 link is an in-play page (#/IP/): no scheduled kick-off or pre-match identity to verify"
+      },
+      "format_variant": "two_sided",
+      "highlighted_side": "UNDER",
+      "home": "San Luis FC",
+      "implied_target": null,
+      "interpretation_notes": [
+        "Bet365 link is an in-play page; pre-match identity cannot be verified, no executable target"
+      ],
+      "interpretation_status": "PARSED_PARTIAL",
+      "interpretation_version": "sharp-money-football-1",
+      "limit": null,
+      "line_quality": null,
+      "market": "TOTALS",
+      "market_label": "Totals",
+      "market_label_source": "label_and_fixture_url",
+      "market_movement": {
+        "current_line": "2.5",
+        "current_price": null,
+        "line_change": null,
+        "line_direction": null,
+        "line_perspective": "TOTAL",
+        "opening_line": "2.5",
+        "opening_line_change": "0.0",
+        "opening_line_direction": "UNCHANGED",
+        "opening_line_equal": true,
+        "opening_price": null,
+        "opening_to_current_price_change_percent": null,
+        "previous_line": null,
+        "previous_price_displayed": null,
+        "price_change_basis": null,
+        "price_change_percent": null,
+        "price_direction": null,
+        "price_direction_source": null
+      },
+      "movement": {
+        "current_line": "2.5",
+        "current_price": null,
+        "line_change": null,
+        "line_direction": null,
+        "line_perspective": "TOTAL",
+        "opening_line": "2.5",
+        "opening_line_change": "0.0",
+        "opening_line_direction": "UNCHANGED",
+        "opening_line_equal": true,
+        "opening_price": null,
+        "opening_to_current_price_change_percent": null,
+        "previous_line": null,
+        "previous_price_displayed": null,
+        "price_change_basis": null,
+        "price_change_percent": null,
+        "price_direction": null,
+        "price_direction_source": null
+      },
+      "observation_id": "oddsnotifier:f31477c492f50bca1a09499cd6c4c1a48ca8c54e146992594f265f904f031d32",
+      "opening": {
+        "line": "2.5",
+        "outcome_count_matches_market": true,
+        "quotes": [
+          {
+            "line": "2.5",
+            "position": 1,
+            "price": "2.230",
+            "side": "OVER"
+          },
+          {
+            "line": "2.5",
+            "position": 2,
+            "price": "1.621",
+            "side": "UNDER"
+          }
+        ]
+      },
+      "opening_marker": "🟢",
+      "pinnacle": {
+        "line": "2.5",
+        "previous_line": null,
+        "quotes": [
+          {
+            "line": "2.5",
+            "movement": "UP",
+            "movement_marker": "⬆️",
+            "parenthetical_price": "2.130",
+            "position": 1,
+            "price": "2.280",
+            "side": "OVER"
+          },
+          {
+            "line": "2.5",
+            "movement": "DOWN",
+            "movement_marker": "⬇️",
+            "parenthetical_price": "1.704",
+            "position": 2,
+            "price": "1.617",
+            "side": "UNDER"
+          }
+        ]
+      },
+      "price_quality": null,
+      "quote_mapping": {
+        "confirmation_source": "Feed 1 corpus 26-27 Sep 2026 (37 real Totals alerts): OVER-UNDER; phone captures of Bet365 Goals Over/Under and Goal Line columns Over | Under (evidence/football/pages); docs/FOOTBALL_STRATEGY_SPEC.md",
+        "group_sides_by_position": {
+          "comparison": [
+            "OVER",
+            "UNDER"
+          ],
+          "opening": [
+            "OVER",
+            "UNDER"
+          ],
+          "pinnacle": [
+            "OVER",
+            "UNDER"
+          ]
+        },
+        "production_verified": true,
+        "profile": "oddsnotifier_football_two_sided_v1",
+        "sides_by_position": [
+          "OVER",
+          "UNDER"
+        ]
+      },
+      "raw_text": "New odds update on Pinnacle\n\nFootball - Argentina - Primera Division Women\n[San Luis FC vs Lanus](https://oddshub.io/football/argentina-primera-division-a-women-clausura/74949350?market=Totals)\n27.09.2026 19:00\n\nTotals (2.5) (alt. line)\n2.280⬆️ (2.130) - 1.617⬇️ (1.704)\n\n🟢 Opening (2.5)\n2.230 - 1.621\n\n[Bet365 (Totals 2.5)](https://www.bet365.com/#/IP/EV151391536162C1)\n1.93 - **1.88**\n\n🎯 EV: 111.39%",
+      "reference": {
+        "bookmaker": "Pinnacle",
+        "fair_odds": null,
+        "line": "2.5",
+        "line_perspective": "TOTAL",
+        "odds": null
+      },
+      "sample_provenance": "unspecified",
+      "scheduled_at_local": "2026-09-27T19:00",
+      "scheduled_timezone": null,
+      "schema_version": 6,
+      "selection_line": null,
+      "selection_name": null,
+      "selection_side": null,
+      "sharp_signal": {
+        "basis": "price_same_line",
+        "change": "-0.004",
+        "changes_by_side": {
+          "OVER": "0.050",
+          "UNDER": "-0.004"
+        },
+        "current_line": "2.5",
+        "current_prices": {
+          "OVER": "2.280",
+          "UNDER": "1.617"
+        },
+        "direction": "SHORTENED",
+        "highlight_agrees": true,
+        "line_candidate": null,
+        "magnitude": "0.004",
+        "magnitude_units": "decimal_odds",
+        "opening_line": "2.5",
+        "opening_prices": {
+          "OVER": "2.230",
+          "UNDER": "1.621"
+        },
+        "price_candidate": "UNDER",
+        "reason": "Pinnacle line 2.5 unchanged; UNDER 1.621 -> 1.617 shortens, OVER 2.230 -> 2.280 does not",
+        "recent_line_reversal": false,
+        "side": "UNDER",
+        "source": "pinnacle_opening_to_current",
+        "status": "IDENTIFIED"
+      },
+      "sides": [
+        {
+          "bet_quality": "UNFAVOURABLE",
+          "comparison": {
+            "bet365_line": "2.5",
+            "bet365_price": "1.93",
+            "bookmaker": "Bet365",
+            "equal_line": true,
+            "ev_status": "SUPPLIED_FOR_OTHER_SIDE",
+            "line_advantage": "0.0",
+            "line_applicable": true,
+            "line_difference": "0.0",
+            "line_quality": "EQUAL",
+            "price_difference": "-0.350",
+            "price_quality": "UNFAVOURABLE",
+            "reference_line": "2.5",
+            "reference_price": "2.280",
+            "supplied_ev": null
+          },
+          "is_target": false,
+          "line_quality": "EQUAL",
+          "movement": {
+            "current_line": "2.5",
+            "current_price": "2.280",
+            "line_change": null,
+            "line_direction": null,
+            "opening_line": "2.5",
+            "opening_line_change": "0.0",
+            "opening_line_direction": "UNCHANGED",
+            "opening_line_equal": true,
+            "opening_price": "2.230",
+            "opening_to_current_price_change_percent": 2.24,
+            "previous_line": null,
+            "previous_price_displayed": "2.130",
+            "price_change_basis": null,
+            "price_change_percent": null,
+            "price_direction": "DRIFTED",
+            "price_direction_source": "arrow"
+          },
+          "price_quality": "UNFAVOURABLE",
+          "reference": {
+            "bookmaker": "Pinnacle",
+            "fair_odds": null,
+            "line": "2.5",
+            "odds": "2.280"
+          },
+          "selection_line": "2.5",
+          "selection_name": "Over",
+          "side": "OVER"
+        },
+        {
+          "bet_quality": "POTENTIAL_VALUE",
+          "comparison": {
+            "bet365_line": "2.5",
+            "bet365_price": "1.88",
+            "bookmaker": "Bet365",
+            "equal_line": true,
+            "ev_status": "SUPPLIED_EQUAL_LINE",
+            "line_advantage": "0.0",
+            "line_applicable": true,
+            "line_difference": "0.0",
+            "line_quality": "EQUAL",
+            "price_difference": "0.263",
+            "price_quality": "FAVOURABLE",
+            "reference_line": "2.5",
+            "reference_price": "1.617",
+            "supplied_ev": "111.39"
+          },
+          "is_target": false,
+          "line_quality": "EQUAL",
+          "movement": {
+            "current_line": "2.5",
+            "current_price": "1.617",
+            "line_change": null,
+            "line_direction": null,
+            "opening_line": "2.5",
+            "opening_line_change": "0.0",
+            "opening_line_direction": "UNCHANGED",
+            "opening_line_equal": true,
+            "opening_price": "1.621",
+            "opening_to_current_price_change_percent": -0.25,
+            "previous_line": null,
+            "previous_price_displayed": "1.704",
+            "price_change_basis": null,
+            "price_change_percent": null,
+            "price_direction": "SHORTENED",
+            "price_direction_source": "arrow"
+          },
+          "price_quality": "FAVOURABLE",
+          "reference": {
+            "bookmaker": "Pinnacle",
+            "fair_odds": null,
+            "line": "2.5",
+            "odds": "1.617"
+          },
+          "selection_line": "2.5",
+          "selection_name": "Under",
+          "side": "UNDER"
+        }
+      ],
+      "source": "OddsNotifier",
+      "source_timestamp": "2026-09-27T17:56:05+00:00",
+      "sport": "football",
+      "target_line": null,
+      "target_price_source": null,
+      "target_side": null,
+      "telegram_channel_id": "1645770730",
+      "telegram_message_id": "71945",
+      "unresolved": [
+        "event_timezone_unspecified",
+        "parenthetical_price_meaning_unspecified",
+        "Bet365 link is an in-play page; pre-match identity cannot be verified, no executable target"
+      ]
+    },
+    "formatted_text": "New odds update on Pinnacle\n\nFootball - Argentina - Primera Division Women\n[San Luis FC vs Lanus](https://oddshub.io/football/argentina-primera-division-a-women-clausura/74949350?market=Totals)\n27.09.2026 19:00\n\nTotals (2.5) (alt. line)\n2.280⬆️ (2.130) - 1.617⬇️ (1.704)\n\n🟢 Opening (2.5)\n2.230 - 1.621\n\n[Bet365 (Totals 2.5)](https://www.bet365.com/#/IP/EV151391536162C1)\n1.93 - **1.88**\n\n🎯 EV: 111.39%",
+    "entities": [
+      {
+        "length": 8,
+        "offset": 19,
+        "type": "bold"
+      },
+      {
+        "length": 45,
+        "offset": 29,
+        "type": "bold"
+      },
+      {
+        "length": 20,
+        "offset": 75,
+        "type": "text_url",
+        "url": "https://oddshub.io/football/argentina-primera-division-a-women-clausura/74949350?market=Totals"
+      },
+      {
+        "length": 20,
+        "offset": 75,
+        "type": "bold"
+      },
+      {
+        "length": 17,
+        "offset": 95,
+        "type": "bold"
+      },
+      {
+        "length": 24,
+        "offset": 114,
+        "type": "bold"
+      },
+      {
+        "length": 13,
+        "offset": 177,
+        "type": "bold"
+      },
+      {
+        "length": 19,
+        "offset": 206,
+        "type": "text_url",
+        "url": "https://www.bet365.com/#/IP/EV151391536162C1"
+      },
+      {
+        "length": 19,
+        "offset": 206,
+        "type": "bold"
+      },
+      {
+        "length": 4,
+        "offset": 233,
+        "type": "bold"
+      },
+      {
+        "length": 4,
+        "offset": 233,
+        "type": "underline"
+      },
+      {
+        "length": 14,
+        "offset": 239,
+        "type": "bold"
+      }
+    ]
+  }
+]

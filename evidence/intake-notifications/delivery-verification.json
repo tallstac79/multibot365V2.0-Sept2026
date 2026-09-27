@@ -1,0 +1,85 @@
+{
+  "notifications": [
+    {
+      "id": 831,
+      "instruction_id": "intake-2582",
+      "state": "INTAKE_MISSED",
+      "created_at": "2026-09-27T18:18:14.865+00:00",
+      "sent_at": "2026-09-27T18:18:20.250+00:00",
+      "attempts": 1,
+      "last_error": null
+    },
+    {
+      "id": 832,
+      "instruction_id": "intake-2583",
+      "state": "INTAKE_MISSED",
+      "created_at": "2026-09-27T18:18:14.865+00:00",
+      "sent_at": "2026-09-27T18:18:20.453+00:00",
+      "attempts": 1,
+      "last_error": null
+    },
+    {
+      "id": 833,
+      "instruction_id": "intake-2584",
+      "state": "INTAKE_MISSED",
+      "created_at": "2026-09-27T18:18:14.865+00:00",
+      "sent_at": "2026-09-27T18:18:20.683+00:00",
+      "attempts": 1,
+      "last_error": null
+    }
+  ],
+  "health": {
+    "heartbeat_at": "2026-09-27T18:18:31.429+00:00",
+    "dispatch_enabled": true,
+    "rules_engine": "rules-8-football",
+    "parser_version": "classifier-4-moneyline",
+    "event_timezone": "Europe/London",
+    "feed_timezone_verified": true,
+    "final_action_enabled": true,
+    "auto_approve": true,
+    "paused": false,
+    "intake": {
+      "state": "LISTENING",
+      "connected": true,
+      "last_event_at": "2026-09-27T18:18:21.219+00:00",
+      "last_error": null,
+      "reconnects": 0,
+      "chats": {
+        "1475314653": {
+          "title": "OddsNotifier Feed 2",
+          "username": "oddsnotifierfeed2bot",
+          "peer_id": "1475314653",
+          "configured_as": "oddsnotifierfeed2bot"
+        },
+        "1645770730": {
+          "title": "OddsNotifier Feed 1",
+          "username": "oddsnotifierfeed1bot",
+          "peer_id": "1645770730",
+          "configured_as": "oddsnotifierfeed1bot"
+        }
+      },
+      "last_catch_up_completed_at": "2026-09-27T18:16:28.337+00:00",
+      "last_reconcile_started_at": "2026-09-27T18:18:29.856+00:00",
+      "last_reconcile_completed_at": "2026-09-27T18:18:30.188+00:00",
+      "reconcile_count": 4,
+      "feed_checks": {
+        "1475314653": {
+          "checked_at": "2026-09-27T18:18:30.017+00:00",
+          "latest_message_id": 71956,
+          "messages_checked": 50
+        },
+        "1645770730": {
+          "checked_at": "2026-09-27T18:18:30.188+00:00",
+          "latest_message_id": 71950,
+          "messages_checked": 50
+        }
+      }
+    },
+    "notifications": "ENABLED",
+    "commands": "ENABLED",
+    "last_error": null
+  },
+  "pending_notifications": 0,
+  "active_instructions": 0,
+  "incomplete_reconciliations": 0
+}

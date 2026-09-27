@@ -203,7 +203,8 @@ class IntakeListenerTests(unittest.TestCase):
 
     def test_edited_message_event_is_recorded_not_executed(self):
         async def scenario():
-            intake = self.listener()
+            # Test the edit event in isolation; reconciliation/redelivery has its own test.
+            intake = self.listener(reconcile_seconds=30)
             task = asyncio.create_task(intake.run())
             await self.wait_for(lambda: intake.status['state'] == 'LISTENING')
             original = self.world.add(MELBOURNE['raw_text'], 20)

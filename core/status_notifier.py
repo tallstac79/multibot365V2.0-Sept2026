@@ -11,6 +11,7 @@ import urllib.parse
 import urllib.request
 
 from core.lifecycle import TERMINAL
+from core.intake_notifications import enqueue_misses, initialize_baseline
 from core.pipeline_store import iso, utcnow
 
 TERMINAL_NAMES = frozenset(s.value for s in TERMINAL)
@@ -201,6 +202,8 @@ class Notifier:
         self.store, self.sender, self.clock = store, sender, clock
         self.states = tuple(states)
         self.include_undispatched = include_undispatched
+        with self.store.tx() as db:
+            initialize_baseline(db, iso(self.clock()))
 
     def enqueue(self):
         """Create outbox rows for newly reached notifiable states. Returns count."""
@@ -214,6 +217,7 @@ class Notifier:
         insert = ('INSERT OR IGNORE INTO notifications(instruction_id,state,text,created_at,next_attempt_at) '
                   'VALUES (?,?,?,?,?)')
         with self.store.tx() as db:
+            created += enqueue_misses(self.store, db, now)
             for row in db.execute(query, self.states).fetchall():
                 bet = db.execute('SELECT * FROM bets WHERE instruction_id=?', (row['instruction_id'],)).fetchone() \
                     if row['state'] == 'COMPLETED' else None
