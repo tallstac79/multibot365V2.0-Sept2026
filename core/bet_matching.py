@@ -111,6 +111,42 @@ def stake_present(blob, stake):
 ODDS_TOKEN = re.compile(r'(?<![\d.:/])(\d+\.\d{2,3}|\d+/\d+)(?![\d.:])')
 
 
+# Two half-goal lines (at most one decimal each, odds have two or three) separated by a comma - or a space once _norm
+# has replaced the comma - exactly 0.5 apart: "0.0,-0.5" / "0.0 -0.5" = -0.25, "2.0,2.5" = 2.25.
+QUARTER_PAIR = re.compile(r'(?<![\d.])([+-]?\d{1,3}(?:\.\d)?)(?:\s*,\s*|\s+)([+-]?\d{1,3}(?:\.\d)?)(?![\d.])')
+
+
+def _quarter_pairs(segment):
+    out = []
+    for m in QUARTER_PAIR.finditer(segment):
+        try:
+            x, y = Decimal(m.group(1)), Decimal(m.group(2))
+        except InvalidOperation:
+            continue
+        if abs(x - y) == Decimal('0.5'):
+            out.append((m, (x + y) / 2))
+    return out
+
+
+def _quarter_lines(segment):
+    """Bet365's split quarter lines on a My Bets card ("Auto Esporte 0.0,-0.5 1.900" = -0.25, "Over 2.0,2.5" = 2.25)."""
+    return {value for _, value in _quarter_pairs(segment)}
+
+
+def _without_quarter_pairs(segment):
+    """The segment with split quarter pairs blanked, so "-0.5" inside "0.0,-0.5" is never read as a -0.5 line."""
+    for m, _ in reversed(_quarter_pairs(segment)):
+        segment = segment[:m.start()] + ' ' + segment[m.end():]
+    return segment
+
+
+def _line_value(line):
+    try:
+        return Decimal(str(line))
+    except (InvalidOperation, TypeError, ValueError):
+        return None
+
+
 def selection_present(blob, instruction):
     """The card's selection line: the side and its line/odds on ONE line ("Hapoel Tel Aviv 1.23",
     "Rytas Vilnius -18.5", "Over 190.5"). A fixture line such as "Bayern Munich 17:00" is not a
@@ -121,7 +157,9 @@ def selection_present(blob, instruction):
         if line is None:
             return False
         word = 'over' if side == 'OVER' else 'under'
-        return any(re.search(rf'\b{word}\b', seg) and re.search(rf'(?<![\d.]){re.escape(plain(line))}(?![\d])', seg)
+        value = _line_value(line)
+        return any(re.search(rf'\b{word}\b', seg) and (re.search(rf'(?<![\d.]){re.escape(plain(line))}(?![\d])', _without_quarter_pairs(seg))
+                                                      or (value is not None and value in _quarter_lines(seg)))
                    for seg in segments)
     if market == 'SPREAD':
         team, other = ((instruction.get('home'), instruction.get('away')) if side == 'HOME'
@@ -132,7 +170,8 @@ def selection_present(blob, instruction):
         text = plain(abs(value))
         signed = ('+' if value > 0 else '-' if value < 0 else '') + text
         pattern = (rf'(?<![\d.]){re.escape(signed)}(?![\d])' if value != 0 else r'(?<![\d.])0(?:\.0)?(?![\d])')
-        return any(team_present(seg, team, other) and re.search(pattern, seg) for seg in segments)
+        return any(team_present(seg, team, other) and (re.search(pattern, _without_quarter_pairs(seg)) or value in _quarter_lines(seg))
+                   for seg in segments)
     team, other = {'HOME': (instruction.get('home'), instruction.get('away')),
                    'AWAY': (instruction.get('away'), instruction.get('home'))}.get(side, (None, None))
     if not team:

@@ -55,5 +55,29 @@ class BookmakerNamesTests(unittest.TestCase):
         self.assertFalse(absent)                       # the bet is on the list: never "proven absent"
 
 
+class FootballQuarterLineTests(unittest.TestCase):
+    """27 Sep 2026 17:03Z on-51560286, the first automatic football bet (receipt CT4705359181W): Sao Paulo Crystal v
+    Auto Esporte AWAY -0.25 @1.900; My Bets shows "Auto Esporte 0.0,-0.5 1.900" and three checks failed."""
+    MY_BETS = json.loads((Path(__file__).parent / 'fixtures/mybets_crystal_quarter.json').read_text(encoding='utf-8'))
+    ROW = dict(home='Sao Paulo Crystal', away='Auto Esporte', market='SPREAD', selection='AWAY', selection_name='Auto Esporte',
+               line='-0.25', observed_price='1.900', stake='0.10')
+    BET = dict(line='-0.25', odds='1.900', stake='0.10', verified_line='-0.25', verified_odds='1.900', actual_line=None, actual_odds=None)
+
+    def test_split_quarter_line_on_my_bets_matches_the_decimal_line(self):
+        found = bet_matching.match(placed_terms(self.ROW, self.BET), self.MY_BETS)
+        self.assertTrue(found['found'], found)
+        self.assertEqual(found['confidence'], 'EXACT')
+
+    def test_other_quarter_lines_do_not_match(self):
+        for line in ('-0.75', '0.25', '-0.5', '0'):
+            self.assertFalse(bet_matching.match(placed_terms(dict(self.ROW, line=line), dict(self.BET, verified_line=line)), self.MY_BETS)['found'], line)
+
+    def test_totals_quarter_pairs(self):
+        blob = 'over 2.0,2.5 1.900 | goal line'
+        self.assertTrue(bet_matching.selection_present(blob, dict(market='TOTALS', selection='OVER', line='2.25')))
+        self.assertFalse(bet_matching.selection_present(blob, dict(market='TOTALS', selection='OVER', line='2.75')))
+        self.assertFalse(bet_matching.selection_present(blob, dict(market='TOTALS', selection='UNDER', line='2.25')))
+
+
 if __name__ == '__main__':
     unittest.main()
