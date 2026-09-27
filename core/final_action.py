@@ -88,7 +88,30 @@ def placed_terms(row, bet):
         terms['line'] = line
     terms['odds'] = pick('actual_odds', 'verified_odds', 'odds') or terms.get('odds')
     terms['stake'] = pick('actual_stake', 'stake') or terms.get('stake')
+    # My Bets shows Bet365's names, not the feed's: use the names the phone verified on the event and put in the Place Bet
+    # payload (27 Sep 2026 Elitzur Holon v Maccabi Ashdod: My Bets "Elitzur Holon (W) v Maccabi Bnot Ashdod (W)").
+    try:
+        payload = json.loads(terms.get('dispatch_payload') or '{}') if isinstance(terms.get('dispatch_payload'), str) \
+            else (terms.get('dispatch_payload') or {})
+    except ValueError:
+        payload = {}
+    if payload.get('action') == 'PLACE_HELD' and payload.get('home') and payload.get('away'):
+        terms['feed_home'], terms['feed_away'] = terms.get('home'), terms.get('away')
+        terms['home'], terms['away'] = payload['home'], payload['away']
+        if payload.get('selection_name'):
+            terms['selection_name'] = payload['selection_name']
     return terms
+
+
+def absence_under_every_name(terms, stake, my_bets, view):
+    """Absence may be concluded only if it holds under Bet365's names AND the feed's names (a naming difference must never
+    turn a present bet into a proven-absent one)."""
+    absent, reason = bet_matching.proves_absence(dict(terms, stake=stake), my_bets, view)
+    if absent and terms.get('feed_home'):
+        again, why = bet_matching.proves_absence(dict(terms, stake=stake, home=terms['feed_home'], away=terms['feed_away']), my_bets, view)
+        if not again:
+            return False, 'feed names: ' + str(why)
+    return absent, reason
 
 class FinalAction:
     def __init__(self, pipeline):
@@ -570,8 +593,8 @@ class FinalAction:
                 return 'FAILED'
             detail = dict(match=found, frames=my_bets.get('frames'))
             now = iso(self.p.clock())
-            absent, absence_reason = (False, None) if found['found'] else bet_matching.proves_absence(
-                dict(dict(row), stake=bet['stake']), my_bets, rec['view'] or 'OPEN')
+            absent, absence_reason = (False, None) if found['found'] else absence_under_every_name(
+                placed_terms(row, bet), bet['stake'], my_bets, rec['view'] or 'OPEN')
             detail['absence'] = absence_reason
             if not found['found'] and not absent:
                 # A collapsed card could be this bet: neither found nor absent. Retry; never infer NOT_PLACED.
@@ -620,7 +643,7 @@ class FinalAction:
         try:
             bet_matching.lines_of(my_bets)
             with self.p.store.connection() as db:
-                for bet in db.execute('SELECT b.*, i.home, i.away FROM bets b JOIN instructions i USING(instruction_id) '
+                for bet in db.execute('SELECT b.*, i.home, i.away, i.market, i.dispatch_payload FROM bets b JOIN instructions i USING(instruction_id) '
                                       'WHERE b.status=? LIMIT 1', (OPEN,)).fetchall():
                     bet_matching.match(placed_terms(bet, bet), my_bets)      # raises if the Settled view is not confirmed
         except ValueError as error:
@@ -630,7 +653,7 @@ class FinalAction:
             return
         with self.p.store.tx() as db:
             updated = []
-            for bet in db.execute('SELECT b.*, i.home, i.away FROM bets b JOIN instructions i USING(instruction_id) '
+            for bet in db.execute('SELECT b.*, i.home, i.away, i.market, i.dispatch_payload FROM bets b JOIN instructions i USING(instruction_id) '
                                   'WHERE b.status=?', (OPEN,)).fetchall():
                 found = bet_matching.match(placed_terms(bet, bet), my_bets)
                 if found['found'] and found['status'] in SETTLED_STATES:

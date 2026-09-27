@@ -31,5 +31,29 @@ class PlacedTermsTests(unittest.TestCase):
         self.assertFalse(bet_matching.match(placed_terms(ROW, dict(BET, actual_line='164.5')), MY_BETS)['found'])
 
 
+class BookmakerNamesTests(unittest.TestCase):
+    """27 Sep 2026 16:32Z on-44ef3e22: feed 'Elitzur Holon v Maccabi Ashdod', receipt LT1295027291W, My Bets
+    'Elitzur Holon (W) +3.0 1.83 ... Elitzur Holon (W) v Maccabi Bnot Ashdod (W)': three checks failed on the feed names."""
+    MY_BETS = json.loads((Path(__file__).parent / 'fixtures/mybets_holon_women.json').read_text(encoding='utf-8'))
+    ROW = dict(home='Elitzur Holon', away='Maccabi Ashdod', market='SPREAD', selection='HOME', selection_name='Elitzur Holon', line='3',
+               observed_price='1.83', stake='0.10',
+               dispatch_payload=json.dumps(dict(action='PLACE_HELD', home='Elitzur Holon (W)', away='Maccabi Bnot Ashdod (W)',
+                                                selection_name='Elitzur Holon (W)', line='+3.0', price='1.83')))
+    BET = dict(line='3', odds='1.83', stake='0.10', verified_line='+3.0', actual_line='+3.0', actual_odds='1.83', actual_stake='0.10')
+
+    def test_verification_uses_the_names_bet365_showed(self):
+        terms = placed_terms(self.ROW, self.BET)
+        self.assertEqual((terms['home'], terms['away']), ('Elitzur Holon (W)', 'Maccabi Bnot Ashdod (W)'))
+        found = bet_matching.match(terms, self.MY_BETS)
+        self.assertTrue(found['found'], found)
+        self.assertFalse(bet_matching.match(dict(self.ROW, line='+3.0', odds='1.83'), self.MY_BETS)['found'])   # the feed names did not
+
+    def test_absence_needs_both_namings(self):
+        from core.final_action import absence_under_every_name
+        terms = placed_terms(self.ROW, self.BET)
+        absent, _ = absence_under_every_name(terms, '0.10', self.MY_BETS, 'OPEN')
+        self.assertFalse(absent)                       # the bet is on the list: never "proven absent"
+
+
 if __name__ == '__main__':
     unittest.main()
