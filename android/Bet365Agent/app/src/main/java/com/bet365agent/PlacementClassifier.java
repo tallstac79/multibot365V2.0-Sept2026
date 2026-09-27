@@ -187,20 +187,41 @@ final class PlacementClassifier {
         if (!"SPREAD".equals(market) && !"TOTAL".equals(market)) return true;
         java.math.BigDecimal want;
         try { want = new java.math.BigDecimal(line); } catch (Exception e) { return false; }
-        String plain = want.abs().setScale(1, java.math.RoundingMode.UNNECESSARY).toPlainString();
-        for (String raw : lines) {
-            String t = " " + raw.toLowerCase(Locale.US).replace(',', '.') + " ";
-            if ("TOTAL".equals(market)) {
-                String word = "OVER".equals(side) ? "over" : "under";
-                if (t.contains(" " + word + " ") && t.matches(".*(?<![\\d.])" + java.util.regex.Pattern.quote(plain) + "(?![\\d]).*")) return true;
-            } else {
-                String team = name == null ? "" : name.trim().toLowerCase(Locale.US).split("\\s+")[0];
-                String signed = want.signum() > 0 ? "+" + plain : want.signum() < 0 ? "-" + plain : plain;
-                if (!team.isEmpty() && t.contains(team)
-                        && t.matches(".*(?<![\\d.+-])" + java.util.regex.Pattern.quote(signed) + "(?![\\d]).*")) return true;
+        // Basketball lines are x.0 / x.5. Football Asian lines also come in quarters (-1.75, +0.25), which Bet365 shows either
+        // as "1.75" or split as "1.5,2.0"; both spellings are accepted for the exact requested value only.
+        for (String pattern : linePatterns(want, "SPREAD".equals(market))) {
+            for (String raw : lines) {
+                String t = " " + raw.toLowerCase(Locale.US).replace(',', '.') + " ";
+                if ("TOTAL".equals(market)) {
+                    String word = "OVER".equals(side) ? "over" : "under";
+                    if (t.contains(" " + word + " ") && t.matches(".*(?<![\\d.])" + pattern + "(?![\\d]).*")) return true;
+                } else {
+                    String team = name == null ? "" : name.trim().toLowerCase(Locale.US).split("\\s+")[0];
+                    if (!team.isEmpty() && t.contains(team) && t.matches(".*(?<![\\d.+-])" + pattern + "(?![\\d]).*")) return true;
+                }
             }
         }
         return false;
+    }
+
+    /** Regex alternatives for a line as the slip may print it (commas already turned into dots by the caller). */
+    static List<String> linePatterns(java.math.BigDecimal want, boolean signed) {
+        List<String> out = new ArrayList<>();
+        java.math.BigDecimal magnitude = want.abs().stripTrailingZeros();
+        int scale = Math.max(1, magnitude.scale());
+        String plain = magnitude.setScale(scale, java.math.RoundingMode.UNNECESSARY).toPlainString();
+        String sign = !signed ? "" : want.signum() > 0 ? "+" : want.signum() < 0 ? "-" : "";
+        out.add(java.util.regex.Pattern.quote(sign + plain));
+        if (scale == 2) {
+            // quarter line: the two half lines it is made of ("1.75" = "1.5,2.0"; "0.25" = "0.0,0.5"), in Bet365's order
+            java.math.BigDecimal lo = magnitude.subtract(new java.math.BigDecimal("0.25")).setScale(1, java.math.RoundingMode.UNNECESSARY);
+            java.math.BigDecimal hi = magnitude.add(new java.math.BigDecimal("0.25")).setScale(1, java.math.RoundingMode.UNNECESSARY);
+            String a = lo.toPlainString(), b = hi.toPlainString();
+            String sa = sign.isEmpty() ? "" : (lo.signum() == 0 ? "[+-]?" : java.util.regex.Pattern.quote(sign));
+            String sb = sign.isEmpty() ? "" : java.util.regex.Pattern.quote(sign);
+            out.add(sa + java.util.regex.Pattern.quote(a) + "[.\\s]\\s*" + sb + java.util.regex.Pattern.quote(b));
+        }
+        return out;
     }
 
     /** True if a line is a control the reset may tap: never anything that could place or accept a bet. */

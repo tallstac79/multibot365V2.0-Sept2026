@@ -1,7 +1,7 @@
 {
  "before": {
-  "at": "2026-09-27T10:11:54Z",
-  "app_version": "0.9.25-ops",
+  "at": "2026-09-27T10:19:13Z",
+  "app_version": "0.9.26-ops",
   "state": "IDLE",
   "local_execution": {
    "enabled": true,
@@ -13,10 +13,10 @@
   },
   "session": "AUTHENTICATED"
  },
- "paused_at": "2026-09-27T10:11:54Z",
- "installed_at": "2026-09-27T10:12:02Z",
+ "paused_at": "2026-09-27T10:19:13Z",
+ "installed_at": "2026-09-27T10:19:21Z",
  "after_install": {
-  "at": "2026-09-27T10:12:08Z",
+  "at": "2026-09-27T10:19:27Z",
   "app_version": "0.9.26-ops",
   "version_code": 109,
   "state": "IDLE",
@@ -33,10 +33,10 @@
   },
   "session": {
    "state": "UNKNOWN",
-   "observed_at_ms": 1790503924659,
+   "observed_at_ms": 1790504363636,
    "detail": "not checked yet",
    "refresh_count": 1,
-   "last_refresh_at_ms": 1790503924690,
+   "last_refresh_at_ms": 1790504363665,
    "last_refresh_outcome": "probe started"
   }
  },
@@ -44,18 +44,18 @@
   "status": "PASS",
   "stage": "PASS",
   "detail": "SESSION_AUTHENTICATED",
-  "duration_ms": 6452,
-  "run_id": "c_GQo6T3lc6MGA4sd6WcQ7yrcQGbrXycNuDKNlJBVIrNI"
+  "duration_ms": 14293,
+  "run_id": "c_i_mFCxi8cyKiAZSMYnRTMZ13l2XGNuoVgPROH-2omnk"
  },
  "after_session_check": {
-  "at": "2026-09-27T10:12:18Z",
+  "at": "2026-09-27T10:19:43Z",
   "state": "IDLE",
   "session": {
    "state": "AUTHENTICATED",
-   "observed_at_ms": 1790503935703,
+   "observed_at_ms": 1790504381828,
    "detail": "workflow",
    "refresh_count": 1,
-   "last_refresh_at_ms": 1790503924690,
+   "last_refresh_at_ms": 1790504363665,
    "last_refresh_outcome": "probe started"
   },
   "local_execution": {
@@ -68,5 +68,5 @@
   },
   "app_version": "0.9.26-ops"
  },
- "resumed_at": "2026-09-27T10:12:18Z"
+ "resumed_at": "2026-09-27T10:19:44Z"
 }
