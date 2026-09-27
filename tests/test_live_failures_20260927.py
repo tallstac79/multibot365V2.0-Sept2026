@@ -46,6 +46,25 @@ class VerifiedMappingIsOneDecision(unittest.TestCase):
         self.assertFalse(mapping_verified('tennis', dict(profile='oddsnotifier_football_1x2_v1', production_verified=True)))
 
 
+class FootballOneXTwoTerms(unittest.TestCase):
+    """Found replaying the automatic path offline: a football 1X2 request vs the phone's MONEYLINE quote was 'market/side
+    changed', so every football 1X2 would have stopped at the alert-to-live comparison (no live 1X2 had reached it yet)."""
+    def test_1x2_request_compares_with_the_phones_moneyline_quote(self):
+        from core.execution_terms import compare
+        request = dict(market='1X2', side='AWAY', price='2.80', line=None)
+        ok = compare(request, dict(market='MONEYLINE', side='AWAY', price='2.80', line=''), net_percent=10)
+        self.assertTrue(ok['acceptable'], ok)
+        self.assertTrue(compare(dict(request, side='DRAW', price='3.40'), dict(market='MONEYLINE', side='DRAW', price='3.40', line=''),
+                                net_percent=10)['acceptable'])                   # the draw is a valid 1X2 side
+        low = compare(request, dict(market='MONEYLINE', side='AWAY', price='2.50', line=''), net_percent=10)
+        self.assertFalse(low['acceptable'])                                      # 2.50 is below the 10 % net-payout floor
+        self.assertEqual(low['reason'], 'deterioration exceeds tolerance')       # a genuine price reason, not identity
+        other = compare(request, dict(market='MONEYLINE', side='HOME', price='2.80', line=''), net_percent=10)
+        self.assertFalse(other['acceptable'])                                    # a different side never matches
+        spread = compare(request, dict(market='SPREAD', side='AWAY', price='2.80', line='0.0'), net_percent=10)
+        self.assertFalse(spread['acceptable'])
+
+
 class BusyIsNotAdmission(unittest.TestCase):
     def setUp(self):
         tmp = tempfile.TemporaryDirectory()

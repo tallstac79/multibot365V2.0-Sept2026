@@ -44,7 +44,10 @@ def compare(request, live, *, odds_tolerance=None, line_tolerance=None,
     out = dict(acceptable=False, requested=request, live=live)
     try:
         market = request['market'].replace('TOTALS','TOTAL')
-        if market != live['market'].replace('TOTALS','TOTAL') or request['side'] != live['side']:
+        live_market = live['market'].replace('TOTALS','TOTAL')
+        # football 1X2 is the phone's three-way MONEYLINE (the hold reports MONEYLINE for a 1X2 request): same market
+        same_market = market == live_market or {market, live_market} == {'1X2', 'MONEYLINE'}
+        if not same_market or request['side'] != live['side']:
             raise ValueError('market/side changed')
         if request['side'] not in {'SPREAD': ('HOME','AWAY'), 'TOTAL': ('OVER','UNDER'),
                                    'MONEYLINE': ('HOME','AWAY'), '1X2': ('HOME','DRAW','AWAY')}.get(market, ()):
