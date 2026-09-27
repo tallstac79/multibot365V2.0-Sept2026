@@ -61,6 +61,15 @@ class FormattingTests(unittest.TestCase):
         self.assertEqual(item.source_timestamp, T0.isoformat())
         self.assertIn({'type': 'bold', 'offset': item.entities[-1]['offset'], 'length': 4}, item.entities)
         self.assertIsNone(item.edit_date)
+        self.assertEqual(item.provenance['peer_id'], str(CHAT))
+
+    def test_source_message_keeps_the_feed_identity(self):
+        # 2026-09-27: two OddsNotifier feeds; every row must say which one it came from
+        feed = dict(title='OddsNotifier Feed 1', username='oddsnotifierfeed1bot', peer_id='1645770730')
+        item = to_source_message(Msg(71160, MELBOURNE['raw_text']), 1645770730, received_at=T0.isoformat(), feed=feed)
+        self.assertEqual((item.chat_id, item.message_id), ('1645770730', '71160'))
+        self.assertEqual((item.provenance['feed_title'], item.provenance['feed_username'], item.provenance['peer_id']),
+                         ('OddsNotifier Feed 1', 'oddsnotifierfeed1bot', '1645770730'))
 
 
 class FakeWorld:

@@ -113,18 +113,24 @@ def entity_dicts(entities):
     return out
 
 
-def to_source_message(message, chat_id, *, received_at=None, edited=False, origin='production'):
-    """Telethon Message -> SourceMessage (pure; unit-testable with simple stand-ins)."""
+def to_source_message(message, chat_id, *, received_at=None, edited=False, origin='production', feed=None):
+    """Telethon Message -> SourceMessage (pure; unit-testable with simple stand-ins).
+
+    feed: {'title', 'username', 'peer_id'} of the source dialog (OddsNotifier Feed 1 / Feed 2), kept on the intake row's
+    provenance next to the peer id (chat_id), message id, source timestamp and backend receipt timestamp."""
     entities = entity_dicts(getattr(message, 'entities', None))
     plain = message.message or ''
     stamp = message.date.astimezone(timezone.utc).isoformat() if message.date else None
     edit = getattr(message, 'edit_date', None) if edited else None
+    provenance = dict(producer='core.telegram_intake', has_media=bool(getattr(message, 'media', None)),
+                      post_author=getattr(message, 'post_author', None), peer_id=str(chat_id))
+    if feed:
+        provenance.update(feed_title=feed.get('title'), feed_username=feed.get('username'))
     return SourceMessage(chat_id=str(chat_id), message_id=str(message.id), text=render_oddsnotifier(plain, entities),
                          raw_text=plain, entities=entities, source_timestamp=stamp,
                          received_at=received_at or iso(utcnow()), origin=origin,
                          edit_date=edit.astimezone(timezone.utc).isoformat() if edit else None,
-                         provenance=dict(producer='core.telegram_intake', has_media=bool(getattr(message, 'media', None)),
-                                         post_author=getattr(message, 'post_author', None)))
+                         provenance=provenance)
 
 
 # ------------------------------------------------------------------ listener
@@ -144,7 +150,8 @@ class TelegramIntake:
         self.handle, self.store, self.origin = handle, store, origin
         self.client_factory = client_factory
         self.stopped = asyncio.Event()
-        self.status = dict(state='STARTING', connected=False, last_event_at=None, last_error=None, reconnects=0)
+        self.feeds = {}   # peer id -> {'title', 'username', 'peer_id', 'configured_as'} resolved at catch-up
+        self.status = dict(state='STARTING', connected=False, last_event_at=None, last_error=None, reconnects=0, chats={})
 
     def _session_path(self):
         path = Path(self.session)
@@ -179,7 +186,7 @@ class TelegramIntake:
         return await client.get_entity(chat)
 
     async def _store(self, message, chat_id, delivery, edited=False):
-        item = to_source_message(message, chat_id, edited=edited)
+        item = to_source_message(message, chat_id, edited=edited, feed=self.feeds.get(str(chat_id)))
         # SQLite work off the event loop; failures propagate so the message is retried by
         # reconciliation/catch-up instead of being dropped.
         await asyncio.to_thread(self.handle, item, delivery)
@@ -190,6 +197,11 @@ class TelegramIntake:
         for chat in self.chats:
             entity = await self._entity(client, chat)
             peer = utils.get_peer_id(entity)
+            # Which dialog this configured chat is: kept for every stored row and reported in the intake status, so the
+            # subscription is auditable (2026-09-27: only Feed 2 had been configured; Feed 1 alerts were never seen).
+            self.feeds[str(peer)] = dict(title=utils.get_display_name(entity), username=getattr(entity, 'username', None),
+                                         peer_id=str(peer), configured_as=str(chat))
+            self.status['chats'] = dict(self.feeds)
             last = await asyncio.to_thread(self.store.last_message_id, self.origin, str(peer))
             if last is None:
                 # First ever start: optionally backfill; otherwise begin at the newest message.
