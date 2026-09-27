@@ -3092,8 +3092,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
         // Collapse to unique home|away pairings (ignore competition duplicates).
         LinkedHashMap<String, Fixture> pairings = new LinkedHashMap<>();
         for (Fixture f : matches) {
-            String key = f.home.toLowerCase(Locale.US) + "|" + f.away.toLowerCase(Locale.US);
-            pairings.putIfAbsent(key, f);
+            // normalised names: a result heading's chevron read as ")" is the same event as the row under it (SearchPairing)
+            String key = SearchPairing.key(f.home, f.away);
+            Fixture seen = pairings.get(key);
+            if (seen == null || SearchPairing.cleaner(f.home, f.away, seen.home, seen.away)) pairings.put(key, f);
         }
         require(pairings.size() == 1, "AMBIGUOUS_FIXTURE",
                 "Multiple plausible fixtures for query '" + q + "'"

@@ -1,0 +1,101 @@
+{
+ "case": "search_vellaznimi",
+ "payload": {
+  "instruction_id": "mx-search-154851",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+5.5",
+  "max_line_deterioration": "1.0",
+  "minimum_price": "1.01",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "kickoff_utc": "2026-09-27T15:00",
+  "competition": "Superliga",
+  "country": "Kosovo",
+  "period": "FULL_GAME",
+  "query": "Vellaznimi||KB Prishtina"
+ },
+ "paused": "PAUSED",
+ "hold": {
+  "status": "FAIL",
+  "stage": "AMBIGUOUS_FIXTURE",
+  "detail": "Multiple plausible fixtures for query 'Vellaznimi' vs 'KB Prishtina': [vellaznimi|kb prishtina), vellaznimi|kb prishtina]",
+  "route": "search",
+  "verdict": null,
+  "fixture": null,
+  "selection": {},
+  "context": null,
+  "wall": 30.8,
+  "identity": null,
+  "stages": [
+   [
+    "SPORTS_HOME",
+    0.01
+   ],
+   [
+    "OPEN_HOME",
+    4.36
+   ],
+   [
+    "SESSION_CHECK",
+    0.7
+   ],
+   [
+    "OPEN_HOME",
+    10.25
+   ],
+   [
+    "OPEN_SEARCH",
+    0.01
+   ],
+   [
+    "SPORTS_CONTEXT",
+    0.41
+   ],
+   [
+    "OPEN_SEARCH",
+    4.07
+   ],
+   [
+    "ENTER_QUERY",
+    0.01
+   ],
+   [
+    "FOCUS",
+    0.02
+   ],
+   [
+    "ENTER_QUERY",
+    7.46
+   ],
+   [
+    "QUERY_VERIFY",
+    1.84
+   ],
+   [
+    "RESULTS_WAIT",
+    0.94
+   ]
+  ],
+  "place_bet_target": null,
+  "stake_check": null
+ },
+ "reset": {
+  "status": "PASS",
+  "detail": {
+   "tapped": false,
+   "detail": "No safe reset control visible"
+  }
+ },
+ "resumed": "RESUMED",
+ "phone_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.32-ops"
+ }
+}

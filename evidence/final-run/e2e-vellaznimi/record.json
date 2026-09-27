@@ -1,0 +1,408 @@
+{
+ "instruction": {
+  "instruction_id": "on-839129ce81cd4db27f9ca45c",
+  "origin": "production",
+  "intake_id": 2478,
+  "chat_id": "1475314653",
+  "message_id": "71726",
+  "selection_key": "7411d879c56a06d9a8224c99",
+  "state": "COMPLETED",
+  "terminal": 1,
+  "failure_reason": null,
+  "device_stage": "PASS",
+  "sport": "basketball",
+  "competition": "Superliga",
+  "fixture": "Vellaznimi vs KB Prishtina",
+  "home": "Vellaznimi",
+  "away": "KB Prishtina",
+  "event_time": "2026-09-27T16:00",
+  "market": "SPREAD",
+  "selection": "AWAY",
+  "selection_name": "KB Prishtina",
+  "line": "+5.5",
+  "alternate_line": 0,
+  "alert_price": "1.83",
+  "minimum_price": "1.75",
+  "observed_price": "1.83",
+  "stake": "0.10",
+  "displayed_ev": null,
+  "device_id": "galaxy-a13-5g",
+  "session_state": "AUTHENTICATED",
+  "raw_alert": "New odds update on Pinnacle\n\nBasketball - Kosovo - Superliga\n[Vellaznimi vs KB Prishtina](https://oddshub.io/basketball/kosovo-superliga/74248028?market=Spread)\n27.09.2026 16:00\n\nSpread (-5 -> -4.5)\n1.877⬆️ (1.840) - 1.793⬇️ (1.826)\n\n🔵 Opening (-7)\n1.847 - 1.757\n\n[Bet365 (Spread -5.5)](https://www.bet365.com/#/AC/B18/C21168211/D19/E26749656/F19/I0/)\n1.83 - 1.83\n\n🎯 EV: None (not equal lines)",
+  "normalized_alert": "{\"alert_price\": \"1.83\", \"alternate_line\": {\"comparison\": false, \"current\": false, \"opening\": false}, \"away\": \"KB Prishtina\", \"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"comparison\": {\"bet365_line\": \"+5.5\", \"bet365_line_displayed\": \"-5.5\", \"bet365_odds\": \"1.83\", \"bet365_present\": true, \"bookmaker\": \"Bet365\", \"equal_line\": false, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"line\": \"-5.5\", \"line_advantage\": \"1.0\", \"line_difference\": \"-1.0\", \"line_quality\": \"FAVOURABLE\", \"price_quality\": \"NOT_COMPARABLE\", \"quotes\": [{\"line\": \"-5.5\", \"position\": 1, \"price\": \"1.83\", \"side\": \"HOME\"}, {\"line\": \"+5.5\", \"position\": 2, \"price\": \"1.83\", \"side\": \"AWAY\"}], \"reference_line_displayed\": \"-4.5\", \"site\": \"Bet365\", \"supplied_ev\": null}, \"comparison_url\": \"https://www.bet365.com/#/AC/B18/C21168211/D19/E26749656/F19/I0/\", \"competition\": \"Superliga\", \"competition_full\": \"Kosovo - Superliga\", \"country\": \"Kosovo\", \"displayed_ev_percent\": null, \"displayed_line\": \"-4.5\", \"feed_displayed_ev_percent\": null, \"fixture\": \"Vellaznimi vs KB Prishtina\", \"fixture_url\": \"https://oddshub.io/basketball/kosovo-superliga/74248028?market=Spread\", \"format_variant\": \"two_sided\", \"highlighted_side\": null, \"home\": \"Vellaznimi\", \"implied_target\": null, \"interpretation_notes\": [], \"interpretation_status\": \"PARSED\", \"interpretation_version\": \"sharp-money-1\", \"limit\": null, \"line_quality\": \"FAVOURABLE\", \"market\": \"SPREAD\", \"market_label\": \"Spread\", \"market_label_source\": \"label_and_fixture_url\", \"market_movement\": {\"current_line\": \"-4.5\", \"current_price\": null, \"line_change\": \"0.5\", \"line_direction\": \"UP\", \"line_perspective\": \"HOME\", \"opening_line\": \"-7\", \"opening_line_change\": \"2.5\", \"opening_line_direction\": \"UP\", \"opening_line_equal\": false, \"opening_price\": null, \"opening_to_current_price_change_percent\": null, \"previous_line\": \"-5\", \"previous_price_displayed\": null, \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": null, \"price_direction_source\": null}, \"movement\": {\"current_line\": \"+4.5\", \"current_price\": \"1.793\", \"line_change\": \"-0.5\", \"line_direction\": \"DOWN\", \"opening_line\": \"+7\", \"opening_line_change\": \"-2.5\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": \"1.757\", \"opening_to_current_price_change_percent\": 2.05, \"previous_line\": \"+5\", \"previous_price_displayed\": \"1.826\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"SHORTENED\", \"price_direction_source\": \"arrow\"}, \"observation_id\": \"oddsnotifier:de6faae22062be77b4611d73b62fdff865443cc96c78caf141efd9c78601c52f\", \"opening\": {\"line\": \"-7\", \"outcome_count_matches_market\": true, \"quotes\": [{\"line\": \"-7\", \"position\": 1, \"price\": \"1.847\", \"side\": \"HOME\"}, {\"line\": \"+7\", \"position\": 2, \"price\": \"1.757\", \"side\": \"AWAY\"}]}, \"opening_marker\": \"\\ud83d\\udd35\", \"pinnacle\": {\"line\": \"-4.5\", \"previous_line\": \"-5\", \"quotes\": [{\"line\": \"-4.5\", \"movement\": \"UP\", \"movement_marker\": \"\\u2b06\\ufe0f\", \"parenthetical_price\": \"1.840\", \"position\": 1, \"price\": \"1.877\", \"side\": \"HOME\"}, {\"line\": \"+4.5\", \"movement\": \"DOWN\", \"movement_marker\": \"\\u2b07\\ufe0f\", \"parenthetical_price\": \"1.826\", \"position\": 2, \"price\": \"1.793\", \"side\": \"AWAY\"}]}, \"price_quality\": \"NOT_COMPARABLE\", \"quote_mapping\": {\"confirmation_source\": \"User confirmation 2026-09-23: production basketball Totals first=OVER, second=UNDER; Spread first=HOME at displayed line, second=AWAY at inverse line (all groups)\", \"group_sides_by_position\": {\"comparison\": [\"HOME\", \"AWAY\"], \"opening\": [\"HOME\", \"AWAY\"], \"pinnacle\": [\"HOME\", \"AWAY\"]}, \"production_verified\": true, \"profile\": \"oddsnotifier_basketball_v1\", \"sides_by_position\": [\"HOME\", \"AWAY\"]}, \"raw_text\": \"New odds update on Pinnacle\\n\\nBasketball - Kosovo - Superliga\\n[Vellaznimi vs KB Prishtina](https://oddshub.io/basketball/kosovo-superliga/74248028?market=Spread)\\n27.09.2026 16:00\\n\\nSpread (-5 -> -4.5)\\n1.877\\u2b06\\ufe0f (1.840) - 1.793\\u2b07\\ufe0f (1.826)\\n\\n\\ud83d\\udd35 Opening (-7)\\n1.847 - 1.757\\n\\n[Bet365 (Spread -5.5)](https://www.bet365.com/#/AC/B18/C21168211/D19/E26749656/F19/I0/)\\n1.83 - 1.83\\n\\n\\ud83c\\udfaf EV: None (not equal lines)\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"+4.5\", \"odds\": \"1.793\"}, \"sample_provenance\": \"unspecified\", \"scheduled_at_local\": \"2026-09-27T16:00\", \"scheduled_timezone\": null, \"schema_version\": 6, \"selection_line\": \"+5.5\", \"selection_name\": \"KB Prishtina\", \"selection_side\": \"AWAY\", \"sharp_signal\": {\"change\": \"2.5\", \"current_line\": \"-4.5\", \"direction\": \"UP\", \"highlight_agrees\": null, \"magnitude\": \"2.5\", \"opening_line\": \"-7\", \"reason\": \"Pinnacle opening -7 -> current -4.5 (HOME) selects AWAY\", \"recent_line_reversal\": false, \"side\": \"AWAY\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"sides\": [{\"bet_quality\": \"UNFAVOURABLE\", \"comparison\": {\"bet365_line\": \"-5.5\", \"bet365_price\": \"1.83\", \"bookmaker\": \"Bet365\", \"equal_line\": false, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"line_advantage\": \"-1.0\", \"line_applicable\": true, \"line_difference\": \"-1.0\", \"line_quality\": \"UNFAVOURABLE\", \"price_difference\": null, \"price_quality\": \"NOT_COMPARABLE\", \"reference_line\": \"-4.5\", \"reference_price\": \"1.877\", \"supplied_ev\": null}, \"is_target\": false, \"line_quality\": \"UNFAVOURABLE\", \"movement\": {\"current_line\": \"-4.5\", \"current_price\": \"1.877\", \"line_change\": \"0.5\", \"line_direction\": \"UP\", \"opening_line\": \"-7\", \"opening_line_change\": \"2.5\", \"opening_line_direction\": \"UP\", \"opening_line_equal\": false, \"opening_price\": \"1.847\", \"opening_to_current_price_change_percent\": 1.62, \"previous_line\": \"-5\", \"previous_price_displayed\": \"1.840\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"DRIFTED\", \"price_direction_source\": \"arrow\"}, \"price_quality\": \"NOT_COMPARABLE\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"-4.5\", \"odds\": \"1.877\"}, \"selection_line\": \"-5.5\", \"selection_name\": \"Vellaznimi\", \"side\": \"HOME\"}, {\"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"comparison\": {\"bet365_line\": \"+5.5\", \"bet365_price\": \"1.83\", \"bookmaker\": \"Bet365\", \"equal_line\": false, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"line_advantage\": \"1.0\", \"line_applicable\": true, \"line_difference\": \"1.0\", \"line_quality\": \"FAVOURABLE\", \"price_difference\": null, \"price_quality\": \"NOT_COMPARABLE\", \"reference_line\": \"+4.5\", \"reference_price\": \"1.793\", \"supplied_ev\": null}, \"is_target\": true, \"line_quality\": \"FAVOURABLE\", \"movement\": {\"current_line\": \"+4.5\", \"current_price\": \"1.793\", \"line_change\": \"-0.5\", \"line_direction\": \"DOWN\", \"opening_line\": \"+7\", \"opening_line_change\": \"-2.5\", \"opening_line_direction\": \"DOWN\", \"opening_line_equal\": false, \"opening_price\": \"1.757\", \"opening_to_current_price_change_percent\": 2.05, \"previous_line\": \"+5\", \"previous_price_displayed\": \"1.826\", \"price_change_basis\": null, \"price_change_percent\": null, \"price_direction\": \"SHORTENED\", \"price_direction_source\": \"arrow\"}, \"price_quality\": \"NOT_COMPARABLE\", \"reference\": {\"bookmaker\": \"Pinnacle\", \"fair_odds\": null, \"line\": \"+4.5\", \"odds\": \"1.793\"}, \"selection_line\": \"+5.5\", \"selection_name\": \"KB Prishtina\", \"side\": \"AWAY\"}], \"source\": \"OddsNotifier\", \"source_timestamp\": \"2026-09-27T14:45:58+00:00\", \"sport\": \"basketball\", \"target_line\": \"+5.5\", \"target_price_source\": \"pinnacle_opening_to_current\", \"target_side\": \"AWAY\", \"telegram_channel_id\": \"1475314653\", \"telegram_message_id\": \"71726\", \"unresolved\": [\"event_timezone_unspecified\", \"parenthetical_price_meaning_unspecified\"]}",
+  "rules_result": "{\"checks\": [{\"detail\": \"production-verified quote mapping\", \"name\": \"verified_mapping\", \"passed\": true}, {\"detail\": \"Pinnacle opening -7 -> current -4.5 (HOME) selects AWAY\", \"name\": \"sharp_target\", \"passed\": true}, {\"detail\": \"target AWAY @ 1.83 (Pinnacle opening-to-current movement)\", \"name\": \"explicit_target\", \"passed\": true}, {\"detail\": \"FAVOURABLE_LINE_SIGNAL (line FAVOURABLE, price NOT_COMPARABLE, EV NOT_AVAILABLE_UNEQUAL_LINES)\", \"name\": \"bet_quality\", \"passed\": true}, {\"detail\": \"Bet365 line advantage 1.0 points vs minimum 1.0\", \"name\": \"line_advantage\", \"passed\": true}, {\"detail\": \"Feed-qualified signal; genuine nonzero opening-to-current movement required; no duplicate movement floor\", \"name\": \"sharp_movement\", \"passed\": true}, {\"detail\": \"basketball SPREAD\", \"name\": \"known_market\", \"passed\": true}, {\"detail\": \"global rules enabled\", \"name\": \"global_enabled\", \"passed\": true}, {\"detail\": \"basketball SPREAD enabled\", \"name\": \"market_enabled\", \"passed\": true}, {\"detail\": \"0s old (limit 300s)\", \"name\": \"alert_age\", \"passed\": true}, {\"detail\": \"Source/receipt times must not exceed the current clock by more than 30 seconds\", \"name\": \"timestamp_consistency\", \"passed\": true}, {\"detail\": \"Feed timezone Europe/London is operator verified\", \"name\": \"feed_timezone_verified\", \"passed\": true}, {\"detail\": \"event starts 2026-09-27T15:00:00+00:00\", \"name\": \"event_not_started\", \"passed\": true}, {\"detail\": \"alert price 1.83\", \"name\": \"valid_price\", \"passed\": true}, {\"detail\": \"basketball SPREAD: net payout tolerance 10%, legacy decimal tolerance None, absolute line cap 1.0, spread cap 10% of original handicap; price and line policies require explicit configuration\", \"name\": \"execution_tolerances\", \"passed\": true}, {\"detail\": \"stake 0.10 (max 10.00)\", \"name\": \"stake\", \"passed\": true}], \"config_hash\": \"b0123d7b5e648ee4\", \"decision\": \"ACCEPT\", \"engine\": \"rules-8-football\", \"evaluated_at\": \"2026-09-27T14:45:58.302291+00:00\", \"event_time_assumptions\": {\"Europe/London\": {\"event_not_started\": true, \"event_start_utc\": \"2026-09-27T15:00:00+00:00\"}, \"UTC\": {\"event_not_started\": true, \"event_start_utc\": \"2026-09-27T16:00:00+00:00\"}}, \"event_timezone\": \"Europe/London\", \"feed_timezone_verified\": true, \"instruction\": {\"alert_price\": \"1.83\", \"alternate_line\": {\"comparison\": false, \"current\": false, \"opening\": false}, \"away\": \"KB Prishtina\", \"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"competition\": \"Superliga\", \"configured_line_absolute_cap\": 1.0, \"displayed_ev_percent\": null, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"event_start_utc\": \"2026-09-27T15:00:00+00:00\", \"event_time_local\": \"2026-09-27T16:00\", \"event_timezone\": \"Europe/London\", \"fixture\": \"Vellaznimi vs KB Prishtina\", \"highlighted_side\": null, \"home\": \"Vellaznimi\", \"implied_target\": null, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"line\": \"+5.5\", \"line_advantage\": \"1.0\", \"line_quality\": \"FAVOURABLE\", \"market\": \"SPREAD\", \"max_line_deterioration\": \"0.55\", \"max_line_deterioration_percent\": 10, \"max_net_payout_deterioration_percent\": 10, \"max_odds_deterioration\": null, \"minimum_price\": \"1.75\", \"price_quality\": \"NOT_COMPARABLE\", \"reference_odds\": \"1.793\", \"selection_name\": \"KB Prishtina\", \"sharp_signal\": {\"change\": \"2.5\", \"current_line\": \"-4.5\", \"direction\": \"UP\", \"magnitude\": \"2.5\", \"opening_line\": \"-7\", \"reason\": \"Pinnacle opening -7 -> current -4.5 (HOME) selects AWAY\", \"side\": \"AWAY\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"side\": \"AWAY\", \"signal_reason\": \"FAVOURABLE_LINE_SIGNAL\", \"sport\": \"basketball\", \"stake\": \"0.10\", \"target_source\": \"pinnacle_opening_to_current\"}, \"reason\": \"All rules passed\", \"timezone_eligibility_uncertain\": false}",
+  "dispatch_payload": "{\"action\": \"PLACE_HELD\", \"adapter\": \"live_bet365\", \"away\": \"KB Prishtina\", \"competition\": \"kosovo superliga\", \"confirmation_status\": \"APPROVED\", \"execution_mode\": \"dispatch\", \"held_instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"home\": \"Vellaznimi\", \"instruction_id\": \"on-839129ce81cd4db27f9ca45c-place\", \"kickoff_utc\": \"2026-09-27T15:00\", \"line\": \"+5.5\", \"market\": \"SPREAD\", \"minimum_price\": \"1.75\", \"period\": \"FULL_GAME\", \"price\": \"1.83\", \"scenario\": \"live\", \"selection_name\": \"KB Prishtina\", \"side\": \"AWAY\", \"sport\": \"basketball\", \"stake\": \"0.10\", \"timeout_ms\": 90000}",
+  "result_payload": "{\"away\": null, \"bet_reference_fast\": \"AT3003000811W\", \"bet_reference_legacy\": \"AT3003000811W\", \"betslip_reset\": {\"bounds\": [667, 1013, 688, 1034], \"control\": \"receipt X\", \"method\": \"ocr_x\", \"receipt_still_visible\": false, \"tapped\": true}, \"competition\": null, \"detail\": \"PLACED\", \"device_stage\": \"OPEN_HOME\", \"duration_ms\": 12947, \"execution_comparison\": {\"acceptable\": true, \"device_outcome\": \"PASS\", \"device_reason\": \"PLACED\", \"effective_line_allowance\": \"0.55\", \"identity_verified\": true, \"line_acceptable\": true, \"line_deterioration\": \"0\", \"live\": {\"availability\": \"OPEN\", \"bounds\": [20, 1320, 604, 1346], \"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"selection_name\": \"KB Prishtina\", \"selection_role\": \"AWAY\", \"side\": \"AWAY\"}, \"minimum_live_price\": \"1.75\", \"net_payout_deterioration_percent\": \"0E+2\", \"observed_at_ms\": 1790520379045, \"odds_deterioration\": \"0\", \"policy\": {\"alert_price\": \"1.83\", \"alternate_line\": {\"comparison\": false, \"current\": false, \"opening\": false}, \"away\": \"KB Prishtina\", \"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"competition\": \"Superliga\", \"configured_line_absolute_cap\": 1.0, \"displayed_ev_percent\": null, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"event_start_utc\": \"2026-09-27T15:00:00+00:00\", \"event_time_local\": \"2026-09-27T16:00\", \"event_timezone\": \"Europe/London\", \"fixture\": \"Vellaznimi vs KB Prishtina\", \"highlighted_side\": null, \"home\": \"Vellaznimi\", \"implied_target\": null, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"line\": \"+5.5\", \"line_advantage\": \"1.0\", \"line_quality\": \"FAVOURABLE\", \"market\": \"SPREAD\", \"max_line_deterioration\": \"0.55\", \"max_line_deterioration_percent\": 10, \"max_net_payout_deterioration_percent\": 10, \"max_odds_deterioration\": null, \"minimum_price\": \"1.75\", \"price_quality\": \"NOT_COMPARABLE\", \"reference_odds\": \"1.793\", \"selection_name\": \"KB Prishtina\", \"sharp_signal\": {\"change\": \"2.5\", \"current_line\": \"-4.5\", \"direction\": \"UP\", \"magnitude\": \"2.5\", \"opening_line\": \"-7\", \"reason\": \"Pinnacle opening -7 -> current -4.5 (HOME) selects AWAY\", \"side\": \"AWAY\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"side\": \"AWAY\", \"signal_reason\": \"FAVOURABLE_LINE_SIGNAL\", \"sport\": \"basketball\", \"stake\": \"0.10\", \"target_source\": \"pinnacle_opening_to_current\"}, \"price_acceptable\": true, \"reason\": \"within configured tolerances\", \"requested\": {\"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"side\": \"AWAY\"}, \"stage\": \"pretap\"}, \"execution_comparisons\": [{\"acceptable\": true, \"device_outcome\": \"PASS\", \"device_reason\": \"PLACED\", \"effective_line_allowance\": \"0.55\", \"identity_verified\": true, \"line_acceptable\": true, \"line_deterioration\": \"0\", \"live\": {\"availability\": \"OPEN\", \"bounds\": [20, 1320, 604, 1346], \"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"selection_name\": \"KB Prishtina\", \"selection_role\": \"AWAY\", \"side\": \"AWAY\"}, \"minimum_live_price\": \"1.75\", \"net_payout_deterioration_percent\": \"0E+2\", \"observed_at_ms\": 1790520379045, \"odds_deterioration\": \"0\", \"policy\": {\"alert_price\": \"1.83\", \"alternate_line\": {\"comparison\": false, \"current\": false, \"opening\": false}, \"away\": \"KB Prishtina\", \"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"competition\": \"Superliga\", \"configured_line_absolute_cap\": 1.0, \"displayed_ev_percent\": null, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"event_start_utc\": \"2026-09-27T15:00:00+00:00\", \"event_time_local\": \"2026-09-27T16:00\", \"event_timezone\": \"Europe/London\", \"fixture\": \"Vellaznimi vs KB Prishtina\", \"highlighted_side\": null, \"home\": \"Vellaznimi\", \"implied_target\": null, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"line\": \"+5.5\", \"line_advantage\": \"1.0\", \"line_quality\": \"FAVOURABLE\", \"market\": \"SPREAD\", \"max_line_deterioration\": \"0.55\", \"max_line_deterioration_percent\": 10, \"max_net_payout_deterioration_percent\": 10, \"max_odds_deterioration\": null, \"minimum_price\": \"1.75\", \"price_quality\": \"NOT_COMPARABLE\", \"reference_odds\": \"1.793\", \"selection_name\": \"KB Prishtina\", \"sharp_signal\": {\"change\": \"2.5\", \"current_line\": \"-4.5\", \"direction\": \"UP\", \"magnitude\": \"2.5\", \"opening_line\": \"-7\", \"reason\": \"Pinnacle opening -7 -> current -4.5 (HOME) selects AWAY\", \"side\": \"AWAY\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"side\": \"AWAY\", \"signal_reason\": \"FAVOURABLE_LINE_SIGNAL\", \"sport\": \"basketball\", \"stake\": \"0.10\", \"target_source\": \"pinnacle_opening_to_current\"}, \"price_acceptable\": true, \"reason\": \"within configured tolerances\", \"requested\": {\"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"side\": \"AWAY\"}, \"stage\": \"pretap\"}], \"execution_count\": 1, \"execution_observations\": [{\"identity_verified\": true, \"observed\": {\"availability\": \"OPEN\", \"bounds\": [20, 1320, 604, 1346], \"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"selection_name\": \"KB Prishtina\", \"selection_role\": \"AWAY\", \"side\": \"AWAY\"}, \"observed_at_ms\": 1790520379045, \"stage\": \"pretap\"}], \"fixture_name\": null, \"home\": null, \"home_verified\": true, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c-place\", \"place_bet_detail\": \"Bet365 receipt visible\", \"place_bet_result\": \"PLACED\", \"place_bet_tapped\": true, \"placement\": {\"actual_terms\": {\"line\": \"+5.5\", \"odds\": \"1.83\", \"stake\": \"0.10\"}, \"bet_reference\": \"AT3003000811W\", \"classified_at_ms\": 1790520384853, \"detail\": \"Bet365 receipt visible\", \"frames\": [\"s002_place_bet_after.png\", \"s003_place_bet_after.png\"], \"odds\": \"1.83\", \"outcome\": \"PLACED\", \"potential_return\": \"0.18\", \"receipt_lines\": [\"15:46 Ca al 100%\", \"o bet365.com/#/AC/B1 + 21\", \"bet365 \\u00a33.97\", \"Kosovo Superliga \\u2022 27 Sep 16:00\", \"Vellaznimi vs KB Prishtina\", \"Popular Bet Builder Game Team Quarter\", \"Game Lines BB\", \"Spread Total Money Li...\", \"-5.5 O 158.5\", \"Vellaznimi 1.43\", \"1.83 1.83\", \"+5.5 U 158.5\", \"KB Prishtina 2.65\", \"1.83 1.83\", \"1st Half BB\", \"Spread Total Money Li.\", \"Bet Placed\", \"rh Share X X\", \"Bet Ref AT3003000811 W\", \"A Live Alerts Reuse Selections\", \"KB Prishtina +5.5 1.83\", \"Point Spread\", \"Vellaznimi vs KB Prishtina\", \"Stake To Return\", \"\\u00a30.10 \\u00a30.18\", \"(o)\", \"Home All Sports In-Play My Bets Casino\"], \"stake\": \"0.10\", \"tapped\": true, \"terms_source\": \"actual_terms contains parsed receipt facts only; legacy odds may be pre-tap\"}, \"pretap\": {\"line\": \"+5.5\", \"market\": \"SPREAD\", \"ok\": true, \"place_bet_bounds\": [461, 1310, 620, 1360], \"price\": \"1.83\", \"selection\": \"KB Prishtina\", \"side\": \"AWAY\", \"stake\": \"0.10\"}, \"progress\": {\"elapsed_ms\": 12860, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c-place\", \"last_progress_at_ms\": 1790520387839, \"stage\": \"OPEN_HOME\", \"stages\": [{\"at_ms\": 1790520378218, \"elapsed_ms\": 0, \"stage\": \"STARTED\"}, {\"at_ms\": 1790520378240, \"elapsed_ms\": 38, \"stage\": \"PRETAP_CHECK\"}, {\"at_ms\": 1790520378240, \"elapsed_ms\": 43, \"stage\": \"PRETAP_CHECK\"}, {\"at_ms\": 1790520378240, \"elapsed_ms\": 759, \"stage\": \"PRETAP_CHECK\"}, {\"at_ms\": 1790520379318, \"elapsed_ms\": 1115, \"stage\": \"PLACE_BET\", \"timing\": {\"duration_ms\": 2070, \"end_elapsed_ms\": 3185, \"end_ts_ms\": 1790520381384, \"retries\": 0, \"stage\": \"PLACE_BET\", \"start_elapsed_ms\": 1115, \"start_ts_ms\": 1790520379314, \"status\": \"ok\"}}, {\"at_ms\": 1790520379318, \"elapsed_ms\": 1122, \"stage\": \"PLACE_BET\"}, {\"at_ms\": 1790520381408, \"elapsed_ms\": 3185, \"stage\": \"PLACE_BET_OUTCOME\", \"timing\": {\"duration_ms\": 3475, \"end_elapsed_ms\": 6660, \"end_ts_ms\": 1790520384858, \"retries\": 0, \"stage\": \"PLACE_BET_OUTCOME\", \"start_elapsed_ms\": 3185, \"start_ts_ms\": 1790520381384, \"status\": \"ok\"}}, {\"at_ms\": 1790520381408, \"elapsed_ms\": 3213, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520381408, \"elapsed_ms\": 3698, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 5267, \"stage\": \"PLACE_BET_OUTCOME\", \"timing\": {\"duration_ms\": 3475, \"end_elapsed_ms\": 6660, \"end_ts_ms\": 1790520384858, \"retries\": 0, \"stage\": \"PLACE_BET_OUTCOME\", \"start_elapsed_ms\": 3185, \"start_ts_ms\": 1790520381384, \"status\": \"ok\"}}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 5302, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 5804, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 5907, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 6648, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 6660, \"stage\": \"RESET_BETSLIP\", \"timing\": {\"duration_ms\": 2961, \"end_elapsed_ms\": 9621, \"end_ts_ms\": 1790520387819, \"retries\": 0, \"stage\": \"RESET_BETSLIP\", \"start_elapsed_ms\": 6660, \"start_ts_ms\": 1790520384858, \"status\": \"ok\"}}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 6677, \"stage\": \"RESET_BETSLIP\"}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 7187, \"stage\": \"RESET_BETSLIP\"}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 7214, \"stage\": \"RESET_BETSLIP\"}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 8980, \"stage\": \"RESET_BETSLIP\"}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 9567, \"stage\": \"RESET_BETSLIP\"}, {\"at_ms\": 1790520387818, \"elapsed_ms\": 9612, \"stage\": \"RETURN_HOME\"}, {\"at_ms\": 1790520387839, \"elapsed_ms\": 9621, \"stage\": \"OPEN_HOME\", \"timing\": {\"duration_ms\": 3239, \"end_elapsed_ms\": 12860, \"end_ts_ms\": 1790520391058, \"retries\": 0, \"stage\": \"OPEN_HOME\", \"start_elapsed_ms\": 9621, \"start_ts_ms\": 1790520387819, \"status\": \"ok\"}}, {\"at_ms\": 1790520387839, \"elapsed_ms\": 12374, \"stage\": \"OPEN_HOME\"}, {\"at_ms\": 1790520387839, \"elapsed_ms\": 12821, \"stage\": \"OPEN_HOME\"}, {\"at_ms\": 1790520387839, \"elapsed_ms\": 12860, \"stage\": \"OPEN_HOME\"}]}, \"returned_home\": true, \"run_id\": \"c__HyfMrFSa-Fb1pZXsawcxf5sbxzjbpGpGChptscSN5c\", \"stage\": \"PASS\", \"stage_timings\": [{\"duration_ms\": 2070, \"end_elapsed_ms\": 3185, \"end_ts_ms\": 1790520381384, \"retries\": 0, \"stage\": \"PLACE_BET\", \"start_elapsed_ms\": 1115, \"start_ts_ms\": 1790520379314, \"status\": \"ok\"}, {\"duration_ms\": 3475, \"end_elapsed_ms\": 6660, \"end_ts_ms\": 1790520384858, \"retries\": 0, \"stage\": \"PLACE_BET_OUTCOME\", \"start_elapsed_ms\": 3185, \"start_ts_ms\": 1790520381384, \"status\": \"ok\"}, {\"duration_ms\": 2961, \"end_elapsed_ms\": 9621, \"end_ts_ms\": 1790520387819, \"retries\": 0, \"stage\": \"RESET_BETSLIP\", \"start_elapsed_ms\": 6660, \"start_ts_ms\": 1790520384858, \"status\": \"ok\"}, {\"duration_ms\": 3239, \"end_elapsed_ms\": 12860, \"end_ts_ms\": 1790520391058, \"retries\": 0, \"stage\": \"OPEN_HOME\", \"start_elapsed_ms\": 9621, \"start_ts_ms\": 1790520387819, \"status\": \"ok\"}], \"status\": \"PASS\", \"t_home_ms\": 1790520391058, \"t_pretap_done_ms\": 1790520379168, \"t_receipt_ms\": 1790520384858, \"t_start_ms\": 1790520378236, \"t_tap_ms\": 1790520379318, \"verification_detail\": \"PLACE_HELD: pre-tap check passed; outcome=PLACED\", \"wager_submitted\": true}",
+  "evidence": null,
+  "received_at": "2026-09-27T14:45:58.301+00:00",
+  "parsed_at": "2026-09-27T14:45:58.302+00:00",
+  "rules_applied_at": "2026-09-27T14:45:58.302+00:00",
+  "queued_at": "2026-09-27T14:45:58.302+00:00",
+  "dispatched_at": "2026-09-27T14:46:17.628+00:00",
+  "device_active_at": "2026-09-27T14:46:18.149+00:00",
+  "ready_at": "2026-09-27T14:46:17.542+00:00",
+  "completed_at": "2026-09-27T14:46:33.547+00:00",
+  "duration_ms": 35246,
+  "dispatch_attempts": 2,
+  "updated_at": "2026-09-27T14:47:25.097+00:00",
+  "execution_mode": "dispatch",
+  "approval_requested_at": null,
+  "approved_at": "2026-09-27T14:46:17.582+00:00",
+  "approved_by": "automatic-policy",
+  "placement_unknown_at": null,
+  "placement": "{\"actual_terms\": {\"line\": \"+5.5\", \"odds\": \"1.83\", \"stake\": \"0.10\"}, \"bet_reference\": \"AT3003000811W\", \"classified_at_ms\": 1790520384853, \"detail\": \"Bet365 receipt visible\", \"frames\": [\"s002_place_bet_after.png\", \"s003_place_bet_after.png\"], \"odds\": \"1.83\", \"outcome\": \"PLACED\", \"potential_return\": \"0.18\", \"receipt_lines\": [\"15:46 Ca al 100%\", \"o bet365.com/#/AC/B1 + 21\", \"bet365 \\u00a33.97\", \"Kosovo Superliga \\u2022 27 Sep 16:00\", \"Vellaznimi vs KB Prishtina\", \"Popular Bet Builder Game Team Quarter\", \"Game Lines BB\", \"Spread Total Money Li...\", \"-5.5 O 158.5\", \"Vellaznimi 1.43\", \"1.83 1.83\", \"+5.5 U 158.5\", \"KB Prishtina 2.65\", \"1.83 1.83\", \"1st Half BB\", \"Spread Total Money Li.\", \"Bet Placed\", \"rh Share X X\", \"Bet Ref AT3003000811 W\", \"A Live Alerts Reuse Selections\", \"KB Prishtina +5.5 1.83\", \"Point Spread\", \"Vellaznimi vs KB Prishtina\", \"Stake To Return\", \"\\u00a30.10 \\u00a30.18\", \"(o)\", \"Home All Sports In-Play My Bets Casino\"], \"stake\": \"0.10\", \"tapped\": true, \"terms_source\": \"actual_terms contains parsed receipt facts only; legacy odds may be pre-tap\"}",
+  "bet_reference": "AT3003000811W",
+  "device_started_at": "2026-09-27T14:46:03.056+00:00",
+  "terminal_at": "2026-09-27T14:46:33.547+00:00",
+  "queue_wait_ms": 4754,
+  "device_execution_ms": 29884,
+  "approval_mode": "automatic",
+  "auto_approved_at": "2026-09-27T14:46:17.580+00:00",
+  "execution_job_id": "on-839129ce81cd4db27f9ca45c-place",
+  "strategy_version": "sharp-money-1",
+  "rules_version": "rules-8-football",
+  "intent_at": "2026-09-27T14:46:19.318+00:00",
+  "reconciliation_result": "FOUND_IN_MY_BETS"
+ },
+ "bet": {
+  "id": 5,
+  "instruction_id": "on-839129ce81cd4db27f9ca45c",
+  "status": "OPEN",
+  "bet_reference": "AT3003000811W",
+  "fixture": "Vellaznimi vs KB Prishtina",
+  "market": "SPREAD",
+  "selection": "AWAY",
+  "line": "+5.5",
+  "stake": "0.10",
+  "odds": "1.83",
+  "potential_return": "0.18",
+  "returns": null,
+  "placed_at": "2026-09-27T14:46:33.551+00:00",
+  "verified_at": "2026-09-27T14:47:25.097+00:00",
+  "settled_at": null,
+  "source": "device",
+  "evidence": "{\"frames\": [\"s002_place_bet_after.png\", \"s003_place_bet_after.png\"], \"receipt_lines\": [\"15:46 Ca al 100%\", \"o bet365.com/#/AC/B1 + 21\", \"bet365 \\u00a33.97\", \"Kosovo Superliga \\u2022 27 Sep 16:00\", \"Vellaznimi vs KB Prishtina\", \"Popular Bet Builder Game Team Quarter\", \"Game Lines BB\", \"Spread Total Money Li...\", \"-5.5 O 158.5\", \"Vellaznimi 1.43\", \"1.83 1.83\", \"+5.5 U 158.5\", \"KB Prishtina 2.65\", \"1.83 1.83\", \"1st Half BB\", \"Spread Total Money Li.\", \"Bet Placed\", \"rh Share X X\", \"Bet Ref AT3003000811 W\", \"A Live Alerts Reuse Selections\", \"KB Prishtina +5.5 1.83\", \"Point Spread\", \"Vellaznimi vs KB Prishtina\", \"Stake To Return\", \"\\u00a30.10 \\u00a30.18\", \"(o)\", \"Home All Sports In-Play My Bets Casino\"]}",
+  "updated_at": "2026-09-27T14:47:25.097+00:00",
+  "requested_line": "+5.5",
+  "requested_odds": "1.83",
+  "requested_stake": "0.10",
+  "verified_line": "+5.5",
+  "verified_odds": "1.83",
+  "verified_stake": "0.10",
+  "actual_line": "+5.5",
+  "actual_odds": "1.83",
+  "actual_stake": "0.10",
+  "terms_provenance": "{\"requested\": \"alert/instruction\", \"verified\": \"phone pre-tap observation\", \"actual\": \"receipt fields only; missing values unknown\", \"legacy_display\": \"may contain requested/pre-tap fallback\"}"
+ },
+ "transitions": [
+  {
+   "id": 4967,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "from_state": null,
+   "to_state": "RECEIVED",
+   "at": "2026-09-27T14:45:58.301+00:00",
+   "actor": "intake",
+   "reason": "Source message received",
+   "detail": null
+  },
+  {
+   "id": 4968,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "from_state": "RECEIVED",
+   "to_state": "PARSED",
+   "at": "2026-09-27T14:45:58.302+00:00",
+   "actor": "parser",
+   "reason": "oddsnotifier_basketball_v1 / classifier-4-moneyline",
+   "detail": null
+  },
+  {
+   "id": 4969,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "from_state": "PARSED",
+   "to_state": "RULES_APPLIED",
+   "at": "2026-09-27T14:45:58.302+00:00",
+   "actor": "rules",
+   "reason": "All rules passed",
+   "detail": null
+  },
+  {
+   "id": 4970,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "from_state": "RULES_APPLIED",
+   "to_state": "QUEUED",
+   "at": "2026-09-27T14:45:58.302+00:00",
+   "actor": "rules",
+   "reason": "Queued for device",
+   "detail": null
+  },
+  {
+   "id": 4971,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "from_state": "QUEUED",
+   "to_state": "DISPATCHED",
+   "at": "2026-09-27T14:46:02.923+00:00",
+   "actor": "dispatcher",
+   "reason": "Sent to coordinator",
+   "detail": null
+  },
+  {
+   "id": 4972,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "from_state": "DISPATCHED",
+   "to_state": "DEVICE_ACTIVE",
+   "at": "2026-09-27T14:46:03.056+00:00",
+   "actor": "coordinator",
+   "reason": "Coordinator durably accepted instruction",
+   "detail": null
+  },
+  {
+   "id": 4973,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "from_state": "DEVICE_ACTIVE",
+   "to_state": "READY",
+   "at": "2026-09-27T14:46:17.542+00:00",
+   "actor": "coordinator",
+   "reason": "PASS: COMPLETE_EXECUTION_READY",
+   "detail": null
+  },
+  {
+   "id": 4974,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "from_state": "READY",
+   "to_state": "APPROVED",
+   "at": "2026-09-27T14:46:17.582+00:00",
+   "actor": "automatic-policy",
+   "reason": "AUTO_APPROVED by automatic-policy: 20 checks passed; execution job on-839129ce81cd4db27f9ca45c-place",
+   "detail": null
+  },
+  {
+   "id": 4975,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "from_state": "APPROVED",
+   "to_state": "DISPATCHED",
+   "at": "2026-09-27T14:46:17.628+00:00",
+   "actor": "dispatcher",
+   "reason": "Sent to coordinator (FINAL ACTION: Place Bet approved)",
+   "detail": null
+  },
+  {
+   "id": 4976,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "from_state": "DISPATCHED",
+   "to_state": "DEVICE_ACTIVE",
+   "at": "2026-09-27T14:46:18.149+00:00",
+   "actor": "coordinator",
+   "reason": "Coordinator durably accepted instruction",
+   "detail": null
+  },
+  {
+   "id": 4977,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "from_state": "DEVICE_ACTIVE",
+   "to_state": "COMPLETED",
+   "at": "2026-09-27T14:46:33.547+00:00",
+   "actor": "coordinator",
+   "reason": "PLACED: Bet365 receipt visible",
+   "detail": null
+  }
+ ],
+ "reconciliations": [
+  {
+   "id": 146,
+   "device_instruction_id": "rc-2493fd690926700a-1",
+   "purpose": "VERIFY_PLACEMENT",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "view": "OPEN",
+   "attempt": 1,
+   "requested_at": "2026-09-27T14:46:48.661+00:00",
+   "submitted_at": "2026-09-27T14:46:48.723+00:00",
+   "completed_at": "2026-09-27T14:47:25.097+00:00",
+   "outcome": "FOUND",
+   "detail": "{\"match\": {\"found\": true, \"confidence\": \"EXACT\", \"window\": \"\\u00a30.10 Single | 3 Reuse Selections Share | O KB Prishtina +5.5 1.83 | Point Spread | I Vellaznimi Sun 27 Sep | I KB Prishtina 16:00 | Stake To Return | \\u00a30.10 \\u00a30.18\", \"checks\": {\"fixture\": true, \"selection\": true, \"stake\": true, \"odds\": true}, \"bet_reference\": null, \"status\": null, \"returns\": null}, \"frames\": [\"s009_my_bets_1.png\", \"s010_my_bets_2.png\", \"s011_my_bets_3.png\", \"s012_my_bets_4.png\"], \"absence\": null}"
+  }
+ ],
+ "audit": [
+  {
+   "id": 960,
+   "at": "2026-09-27T14:46:03.056+00:00",
+   "kind": "COORDINATOR_ACK",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": "galaxy-a13-5g",
+   "detail": "{\"acknowledged\": true, \"execution_count\": 0, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"received_at_ms\": 1790520363008, \"result_url\": \"/instructions/on-839129ce81cd4db27f9ca45c\", \"state\": \"ACCEPTED\"}"
+  },
+  {
+   "id": 961,
+   "at": "2026-09-27T14:46:05.264+00:00",
+   "kind": "DEVICE_PROGRESS",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": "galaxy-a13-5g",
+   "detail": "{\"progress\": {\"elapsed_ms\": 23, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"last_progress_at_ms\": 1790520363189, \"stage\": \"OPEN_HOME\", \"stages\": [{\"at_ms\": 1790520363171, \"elapsed_ms\": 0, \"stage\": \"STARTED\"}, {\"at_ms\": 1790520363177, \"elapsed_ms\": 16, \"stage\": \"OPEN_EVENT\"}, {\"at_ms\": 1790520363189, \"elapsed_ms\": 23, \"stage\": \"OPEN_HOME\", \"timing\": {\"duration_ms\": null, \"end_elapsed_ms\": null, \"end_ts_ms\": null, \"retries\": 0, \"stage\": \"OPEN_HOME\", \"start_elapsed_ms\": 23, \"start_ts_ms\": 1790520363179, \"status\": \"running\"}}]}}"
+  },
+  {
+   "id": 962,
+   "at": "2026-09-27T14:46:10.181+00:00",
+   "kind": "DEVICE_PROGRESS",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": "galaxy-a13-5g",
+   "detail": "{\"progress\": {\"elapsed_ms\": 6815, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"last_progress_at_ms\": 1790520369971, \"stage\": \"ENTER_STAKE\", \"stages\": [{\"at_ms\": 1790520363171, \"elapsed_ms\": 0, \"stage\": \"STARTED\"}, {\"at_ms\": 1790520363177, \"elapsed_ms\": 16, \"stage\": \"OPEN_EVENT\"}, {\"at_ms\": 1790520363189, \"elapsed_ms\": 23, \"stage\": \"OPEN_HOME\", \"timing\": {\"duration_ms\": 5347, \"end_elapsed_ms\": 5370, \"end_ts_ms\": 1790520368527, \"retries\": 0, \"stage\": \"OPEN_HOME\", \"start_elapsed_ms\": 23, \"start_ts_ms\": 1790520363179, \"status\": \"ok\"}}, {\"at_ms\": 1790520363189, \"elapsed_ms\": 3469, \"stage\": \"OPEN_HOME\"}, {\"at_ms\": 1790520363189, \"elapsed_ms\": 3711, \"stage\": \"OPEN_HOME\"}, {\"at_ms\": 1790520363189, \"elapsed_ms\": 4628, \"stage\": \"OPEN_HOME\"}, {\"at_ms\": 1790520363189, \"elapsed_ms\": 5182, \"stage\": \"OPEN_HOME\"}, {\"at_ms\": 1790520368534, \"elapsed_ms\": 5370, \"stage\": \"MARKET_NAV\", \"timing\": {\"duration_ms\": 614, \"end_elapsed_ms\": 5984, \"end_ts_ms\": 1790520369140, \"retries\": 0, \"stage\": \"MARKET_NAV\", \"start_elapsed_ms\": 5370, \"start_ts_ms\": 1790520368527, \"status\": \"ok\"}}, {\"at_ms\": 1790520368534, \"elapsed_ms\": 5379, \"stage\": \"MARKET_NAV\"}, {\"at_ms\": 1790520368534, \"elapsed_ms\": 5955, \"stage\": \"MARKET_NAV\"}, {\"at_ms\": 1790520369151, \"elapsed_ms\": 5984, \"stage\": \"READ_SELECTION\", \"timing\": {\"duration_ms\": 11, \"end_elapsed_ms\": 5995, \"end_ts_ms\": 1790520369152, \"retries\": 0, \"stage\": \"READ_SELECTION\", \"start_elapsed_ms\": 5984, \"start_ts_ms\": 1790520369140, \"status\": \"ok\"}}, {\"at_ms\": 1790520369163, \"elapsed_ms\": 5995, \"stage\": \"READ_LINE\", \"timing\": {\"duration_ms\": 12, \"end_elapsed_ms\": 6007, \"end_ts_ms\": 1790520369164, \"retries\": 0, \"stage\": \"READ_LINE\", \"start_elapsed_ms\": 5995, \"start_ts_ms\": 1790520369152, \"status\": \"ok\"}}, {\"at_ms\": 1790520369176, \"elapsed_ms\": 6007, \"stage\": \"READ_PRICE\", \"timing\": {\"duration_ms\": 13, \"end_elapsed_ms\": 6020, \"end_ts_ms\": 1790520369176, \"retries\": 0, \"stage\": \"READ_PRICE\", \"start_elapsed_ms\": 6007, \"start_ts_ms\": 1790520369164, \"status\": \"ok\"}}, {\"at_ms\": 1790520369190, \"elapsed_ms\": 6020, \"stage\": \"OPEN_SELECTION\", \"timing\": {\"duration_ms\": 781, \"end_elapsed_ms\": 6801, \"end_ts_ms\": 1790520369958, \"retries\": 0, \"stage\": \"OPEN_SELECTION\", \"start_elapsed_ms\": 6020, \"start_ts_ms\": 1790520369176, \"status\": \"ok\"}}, {\"at_ms\": 1790520369190, \"elapsed_ms\": 6034, \"stage\": \"OPEN_SELECTION\"}, {\"at_ms\": 1790520369971, \"elapsed_ms\": 6801, \"stage\": \"ENTER_STAKE\", \"timing\": {\"duration_ms\": null, \"end_elapsed_ms\": null, \"end_ts_ms\": null, \"retries\": 0, \"stage\": \"ENTER_STAKE\", \"start_elapsed_ms\": 6801, \"start_ts_ms\": 1790520369958, \"status\": \"running\"}}, {\"at_ms\": 1790520369971, \"elapsed_ms\": 6815, \"stage\": \"ENTER_STAKE\"}]}}"
+  },
+  {
+   "id": 963,
+   "at": "2026-09-27T14:46:17.544+00:00",
+   "kind": "ALERT_TO_LIVE_COMPARISON",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": null,
+   "detail": "{\"acceptable\": true, \"device_outcome\": \"PASS\", \"device_reason\": \"COMPLETE_EXECUTION_READY\", \"effective_line_allowance\": \"0.55\", \"identity_verified\": false, \"line_acceptable\": true, \"line_deterioration\": \"0\", \"live\": {\"availability\": \"OPEN\", \"bounds\": [301, 740, 345, 790], \"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"selection_name\": \"KB Prishtina\", \"selection_role\": \"AWAY\", \"side\": \"AWAY\"}, \"minimum_live_price\": \"1.75\", \"net_payout_deterioration_percent\": \"0E+2\", \"observed_at_ms\": 1790520369151, \"odds_deterioration\": \"0\", \"policy\": {\"alert_price\": \"1.83\", \"alternate_line\": {\"comparison\": false, \"current\": false, \"opening\": false}, \"away\": \"KB Prishtina\", \"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"competition\": \"Superliga\", \"configured_line_absolute_cap\": 1.0, \"displayed_ev_percent\": null, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"event_start_utc\": \"2026-09-27T15:00:00+00:00\", \"event_time_local\": \"2026-09-27T16:00\", \"event_timezone\": \"Europe/London\", \"fixture\": \"Vellaznimi vs KB Prishtina\", \"highlighted_side\": null, \"home\": \"Vellaznimi\", \"implied_target\": null, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"line\": \"+5.5\", \"line_advantage\": \"1.0\", \"line_quality\": \"FAVOURABLE\", \"market\": \"SPREAD\", \"max_line_deterioration\": \"0.55\", \"max_line_deterioration_percent\": 10, \"max_net_payout_deterioration_percent\": 10, \"max_odds_deterioration\": null, \"minimum_price\": \"1.75\", \"price_quality\": \"NOT_COMPARABLE\", \"reference_odds\": \"1.793\", \"selection_name\": \"KB Prishtina\", \"sharp_signal\": {\"change\": \"2.5\", \"current_line\": \"-4.5\", \"direction\": \"UP\", \"magnitude\": \"2.5\", \"opening_line\": \"-7\", \"reason\": \"Pinnacle opening -7 -> current -4.5 (HOME) selects AWAY\", \"side\": \"AWAY\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"side\": \"AWAY\", \"signal_reason\": \"FAVOURABLE_LINE_SIGNAL\", \"sport\": \"basketball\", \"stake\": \"0.10\", \"target_source\": \"pinnacle_opening_to_current\"}, \"price_acceptable\": true, \"reason\": \"within configured tolerances\", \"requested\": {\"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"side\": \"AWAY\"}, \"stage\": \"grid\"}"
+  },
+  {
+   "id": 964,
+   "at": "2026-09-27T14:46:17.544+00:00",
+   "kind": "ALERT_TO_LIVE_COMPARISON",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": null,
+   "detail": "{\"acceptable\": true, \"device_outcome\": \"PASS\", \"device_reason\": \"COMPLETE_EXECUTION_READY\", \"effective_line_allowance\": \"0.55\", \"identity_verified\": true, \"line_acceptable\": true, \"line_deterioration\": \"0\", \"live\": {\"availability\": \"OPEN\", \"bounds\": [301, 740, 345, 790], \"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"selection_name\": \"KB Prishtina\", \"selection_role\": \"AWAY\", \"side\": \"AWAY\"}, \"minimum_live_price\": \"1.75\", \"net_payout_deterioration_percent\": \"0E+2\", \"observed_at_ms\": 1790520369151, \"odds_deterioration\": \"0\", \"policy\": {\"alert_price\": \"1.83\", \"alternate_line\": {\"comparison\": false, \"current\": false, \"opening\": false}, \"away\": \"KB Prishtina\", \"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"competition\": \"Superliga\", \"configured_line_absolute_cap\": 1.0, \"displayed_ev_percent\": null, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"event_start_utc\": \"2026-09-27T15:00:00+00:00\", \"event_time_local\": \"2026-09-27T16:00\", \"event_timezone\": \"Europe/London\", \"fixture\": \"Vellaznimi vs KB Prishtina\", \"highlighted_side\": null, \"home\": \"Vellaznimi\", \"implied_target\": null, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"line\": \"+5.5\", \"line_advantage\": \"1.0\", \"line_quality\": \"FAVOURABLE\", \"market\": \"SPREAD\", \"max_line_deterioration\": \"0.55\", \"max_line_deterioration_percent\": 10, \"max_net_payout_deterioration_percent\": 10, \"max_odds_deterioration\": null, \"minimum_price\": \"1.75\", \"price_quality\": \"NOT_COMPARABLE\", \"reference_odds\": \"1.793\", \"selection_name\": \"KB Prishtina\", \"sharp_signal\": {\"change\": \"2.5\", \"current_line\": \"-4.5\", \"direction\": \"UP\", \"magnitude\": \"2.5\", \"opening_line\": \"-7\", \"reason\": \"Pinnacle opening -7 -> current -4.5 (HOME) selects AWAY\", \"side\": \"AWAY\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"side\": \"AWAY\", \"signal_reason\": \"FAVOURABLE_LINE_SIGNAL\", \"sport\": \"basketball\", \"stake\": \"0.10\", \"target_source\": \"pinnacle_opening_to_current\"}, \"price_acceptable\": true, \"reason\": \"within configured tolerances\", \"requested\": {\"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"side\": \"AWAY\"}, \"stage\": \"selection\"}"
+  },
+  {
+   "id": 965,
+   "at": "2026-09-27T14:46:17.544+00:00",
+   "kind": "ALERT_TO_LIVE_COMPARISON",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": null,
+   "detail": "{\"acceptable\": true, \"device_outcome\": \"PASS\", \"device_reason\": \"COMPLETE_EXECUTION_READY\", \"effective_line_allowance\": \"0.55\", \"identity_verified\": false, \"line_acceptable\": true, \"line_deterioration\": \"0\", \"live\": {\"availability\": \"OPEN\", \"bounds\": [301, 740, 345, 790], \"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"selection_name\": \"KB Prishtina\", \"selection_role\": \"AWAY\", \"side\": \"AWAY\"}, \"minimum_live_price\": \"1.75\", \"net_payout_deterioration_percent\": \"0E+2\", \"observed_at_ms\": 1790520373273, \"odds_deterioration\": \"0\", \"policy\": {\"alert_price\": \"1.83\", \"alternate_line\": {\"comparison\": false, \"current\": false, \"opening\": false}, \"away\": \"KB Prishtina\", \"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"competition\": \"Superliga\", \"configured_line_absolute_cap\": 1.0, \"displayed_ev_percent\": null, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"event_start_utc\": \"2026-09-27T15:00:00+00:00\", \"event_time_local\": \"2026-09-27T16:00\", \"event_timezone\": \"Europe/London\", \"fixture\": \"Vellaznimi vs KB Prishtina\", \"highlighted_side\": null, \"home\": \"Vellaznimi\", \"implied_target\": null, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"line\": \"+5.5\", \"line_advantage\": \"1.0\", \"line_quality\": \"FAVOURABLE\", \"market\": \"SPREAD\", \"max_line_deterioration\": \"0.55\", \"max_line_deterioration_percent\": 10, \"max_net_payout_deterioration_percent\": 10, \"max_odds_deterioration\": null, \"minimum_price\": \"1.75\", \"price_quality\": \"NOT_COMPARABLE\", \"reference_odds\": \"1.793\", \"selection_name\": \"KB Prishtina\", \"sharp_signal\": {\"change\": \"2.5\", \"current_line\": \"-4.5\", \"direction\": \"UP\", \"magnitude\": \"2.5\", \"opening_line\": \"-7\", \"reason\": \"Pinnacle opening -7 -> current -4.5 (HOME) selects AWAY\", \"side\": \"AWAY\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"side\": \"AWAY\", \"signal_reason\": \"FAVOURABLE_LINE_SIGNAL\", \"sport\": \"basketball\", \"stake\": \"0.10\", \"target_source\": \"pinnacle_opening_to_current\"}, \"price_acceptable\": true, \"reason\": \"within configured tolerances\", \"requested\": {\"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"side\": \"AWAY\"}, \"stage\": \"stake\"}"
+  },
+  {
+   "id": 966,
+   "at": "2026-09-27T14:46:17.544+00:00",
+   "kind": "ALERT_TO_LIVE_COMPARISON",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": null,
+   "detail": "{\"acceptable\": true, \"device_outcome\": \"PASS\", \"device_reason\": \"COMPLETE_EXECUTION_READY\", \"effective_line_allowance\": \"0.55\", \"identity_verified\": false, \"line_acceptable\": true, \"line_deterioration\": \"0\", \"live\": {\"availability\": \"OPEN\", \"bounds\": [301, 740, 345, 790], \"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"selection_name\": \"KB Prishtina\", \"selection_role\": \"AWAY\", \"side\": \"AWAY\"}, \"minimum_live_price\": \"1.75\", \"net_payout_deterioration_percent\": \"0E+2\", \"observed_at_ms\": 1790520373293, \"odds_deterioration\": \"0\", \"policy\": {\"alert_price\": \"1.83\", \"alternate_line\": {\"comparison\": false, \"current\": false, \"opening\": false}, \"away\": \"KB Prishtina\", \"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"competition\": \"Superliga\", \"configured_line_absolute_cap\": 1.0, \"displayed_ev_percent\": null, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"event_start_utc\": \"2026-09-27T15:00:00+00:00\", \"event_time_local\": \"2026-09-27T16:00\", \"event_timezone\": \"Europe/London\", \"fixture\": \"Vellaznimi vs KB Prishtina\", \"highlighted_side\": null, \"home\": \"Vellaznimi\", \"implied_target\": null, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"line\": \"+5.5\", \"line_advantage\": \"1.0\", \"line_quality\": \"FAVOURABLE\", \"market\": \"SPREAD\", \"max_line_deterioration\": \"0.55\", \"max_line_deterioration_percent\": 10, \"max_net_payout_deterioration_percent\": 10, \"max_odds_deterioration\": null, \"minimum_price\": \"1.75\", \"price_quality\": \"NOT_COMPARABLE\", \"reference_odds\": \"1.793\", \"selection_name\": \"KB Prishtina\", \"sharp_signal\": {\"change\": \"2.5\", \"current_line\": \"-4.5\", \"direction\": \"UP\", \"magnitude\": \"2.5\", \"opening_line\": \"-7\", \"reason\": \"Pinnacle opening -7 -> current -4.5 (HOME) selects AWAY\", \"side\": \"AWAY\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"side\": \"AWAY\", \"signal_reason\": \"FAVOURABLE_LINE_SIGNAL\", \"sport\": \"basketball\", \"stake\": \"0.10\", \"target_source\": \"pinnacle_opening_to_current\"}, \"price_acceptable\": true, \"reason\": \"within configured tolerances\", \"requested\": {\"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"side\": \"AWAY\"}, \"stage\": \"stake\"}"
+  },
+  {
+   "id": 967,
+   "at": "2026-09-27T14:46:17.544+00:00",
+   "kind": "ALERT_TO_LIVE_COMPARISON",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": null,
+   "detail": "{\"acceptable\": true, \"device_outcome\": \"PASS\", \"device_reason\": \"COMPLETE_EXECUTION_READY\", \"effective_line_allowance\": \"0.55\", \"identity_verified\": true, \"line_acceptable\": true, \"line_deterioration\": \"0\", \"live\": {\"availability\": \"OPEN\", \"bounds\": [301, 740, 345, 790], \"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"selection_name\": \"KB Prishtina\", \"selection_role\": \"AWAY\", \"side\": \"AWAY\"}, \"minimum_live_price\": \"1.75\", \"net_payout_deterioration_percent\": \"0E+2\", \"observed_at_ms\": 1790520374262, \"odds_deterioration\": \"0\", \"policy\": {\"alert_price\": \"1.83\", \"alternate_line\": {\"comparison\": false, \"current\": false, \"opening\": false}, \"away\": \"KB Prishtina\", \"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"competition\": \"Superliga\", \"configured_line_absolute_cap\": 1.0, \"displayed_ev_percent\": null, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"event_start_utc\": \"2026-09-27T15:00:00+00:00\", \"event_time_local\": \"2026-09-27T16:00\", \"event_timezone\": \"Europe/London\", \"fixture\": \"Vellaznimi vs KB Prishtina\", \"highlighted_side\": null, \"home\": \"Vellaznimi\", \"implied_target\": null, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"line\": \"+5.5\", \"line_advantage\": \"1.0\", \"line_quality\": \"FAVOURABLE\", \"market\": \"SPREAD\", \"max_line_deterioration\": \"0.55\", \"max_line_deterioration_percent\": 10, \"max_net_payout_deterioration_percent\": 10, \"max_odds_deterioration\": null, \"minimum_price\": \"1.75\", \"price_quality\": \"NOT_COMPARABLE\", \"reference_odds\": \"1.793\", \"selection_name\": \"KB Prishtina\", \"sharp_signal\": {\"change\": \"2.5\", \"current_line\": \"-4.5\", \"direction\": \"UP\", \"magnitude\": \"2.5\", \"opening_line\": \"-7\", \"reason\": \"Pinnacle opening -7 -> current -4.5 (HOME) selects AWAY\", \"side\": \"AWAY\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"side\": \"AWAY\", \"signal_reason\": \"FAVOURABLE_LINE_SIGNAL\", \"sport\": \"basketball\", \"stake\": \"0.10\", \"target_source\": \"pinnacle_opening_to_current\"}, \"price_acceptable\": true, \"reason\": \"within configured tolerances\", \"requested\": {\"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"side\": \"AWAY\"}, \"stage\": \"final\"}"
+  },
+  {
+   "id": 968,
+   "at": "2026-09-27T14:46:17.544+00:00",
+   "kind": "ALERT_TO_LIVE_COMPARISON",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": null,
+   "detail": "{\"acceptable\": true, \"device_outcome\": \"PASS\", \"device_reason\": \"COMPLETE_EXECUTION_READY\", \"effective_line_allowance\": \"0.55\", \"identity_verified\": true, \"line_acceptable\": true, \"line_deterioration\": \"0\", \"live\": {\"availability\": \"OPEN\", \"bounds\": [301, 740, 345, 790], \"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"selection_name\": \"KB Prishtina\", \"selection_role\": \"AWAY\", \"side\": \"AWAY\"}, \"minimum_live_price\": \"1.75\", \"net_payout_deterioration_percent\": \"0E+2\", \"observed_at_ms\": 1790520374338, \"odds_deterioration\": \"0\", \"policy\": {\"alert_price\": \"1.83\", \"alternate_line\": {\"comparison\": false, \"current\": false, \"opening\": false}, \"away\": \"KB Prishtina\", \"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"competition\": \"Superliga\", \"configured_line_absolute_cap\": 1.0, \"displayed_ev_percent\": null, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"event_start_utc\": \"2026-09-27T15:00:00+00:00\", \"event_time_local\": \"2026-09-27T16:00\", \"event_timezone\": \"Europe/London\", \"fixture\": \"Vellaznimi vs KB Prishtina\", \"highlighted_side\": null, \"home\": \"Vellaznimi\", \"implied_target\": null, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"line\": \"+5.5\", \"line_advantage\": \"1.0\", \"line_quality\": \"FAVOURABLE\", \"market\": \"SPREAD\", \"max_line_deterioration\": \"0.55\", \"max_line_deterioration_percent\": 10, \"max_net_payout_deterioration_percent\": 10, \"max_odds_deterioration\": null, \"minimum_price\": \"1.75\", \"price_quality\": \"NOT_COMPARABLE\", \"reference_odds\": \"1.793\", \"selection_name\": \"KB Prishtina\", \"sharp_signal\": {\"change\": \"2.5\", \"current_line\": \"-4.5\", \"direction\": \"UP\", \"magnitude\": \"2.5\", \"opening_line\": \"-7\", \"reason\": \"Pinnacle opening -7 -> current -4.5 (HOME) selects AWAY\", \"side\": \"AWAY\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"side\": \"AWAY\", \"signal_reason\": \"FAVOURABLE_LINE_SIGNAL\", \"sport\": \"basketball\", \"stake\": \"0.10\", \"target_source\": \"pinnacle_opening_to_current\"}, \"price_acceptable\": true, \"reason\": \"within configured tolerances\", \"requested\": {\"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"side\": \"AWAY\"}, \"stage\": \"prepare\"}"
+  },
+  {
+   "id": 969,
+   "at": "2026-09-27T14:46:17.582+00:00",
+   "kind": "AUTO_APPROVED",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": "galaxy-a13-5g",
+   "detail": "{\"account\": \"1457f6e497f3\", \"approval_mode\": \"automatic\", \"approval_reason\": \"AUTO_APPROVED by automatic-policy: 20 checks passed; execution job on-839129ce81cd4db27f9ca45c-place\", \"auto_approved_at\": \"2026-09-27T14:46:17.580+00:00\", \"checks\": [{\"check\": \"authorised_source\", \"detail\": \"origin=production chat=1475314653\", \"ok\": true}, {\"check\": \"sharp_signal\", \"detail\": \"IDENTIFIED side=AWAY vs selection=AWAY\", \"ok\": true}, {\"check\": \"verified_market_mapping\", \"detail\": \"sport=basketball profile=oddsnotifier_basketball_v1\", \"ok\": true}, {\"check\": \"rules_recheck\", \"detail\": \"All rules passed\", \"ok\": true}, {\"check\": \"device_verified_hold\", \"detail\": \"status=PASS held=True\", \"ok\": true}, {\"check\": \"event_identity\", \"detail\": \"verdict=EXACT context=['away', 'competition', 'home', 'kickoff_utc', 'period']\", \"ok\": true}, {\"check\": \"period_full_game\", \"detail\": \"FULL_GAME\", \"ok\": true}, {\"check\": \"market_and_side\", \"detail\": \"SPREAD/AWAY vs SPREAD/AWAY\", \"ok\": true}, {\"check\": \"terms_within_tolerance\", \"detail\": \"within configured tolerances\", \"ok\": true}, {\"check\": \"stake_verified\", \"detail\": \"slip 0.10 vs 0.10\", \"ok\": true}, {\"check\": \"session_authenticated\", \"detail\": \"AUTHENTICATED\", \"ok\": true}, {\"check\": \"worker_healthy\", \"detail\": \"ONLINE\", \"ok\": true}, {\"check\": \"worker_identity\", \"detail\": \"phone worker_id=w-d131ef8769de expected=w-d131ef8769de\", \"ok\": true}, {\"check\": \"account_identity\", \"detail\": \"phone account=1457f6e497f3 expected=1457f6e497f3\", \"ok\": true}, {\"check\": \"phone_final_action_permission\", \"detail\": \"phone_final_action_armed=True\", \"ok\": true}, {\"check\": \"kill_switch_off\", \"detail\": \"running\", \"ok\": true}, {\"check\": \"dispatch_and_final_action_enabled\", \"detail\": \"dispatch=True final_action=True\", \"ok\": true}, {\"check\": \"stake_and_daily_limits\", \"detail\": \"within limits\", \"ok\": true}, {\"check\": \"no_duplicate_execution\", \"detail\": \"none\", \"ok\": true}, {\"check\": \"no_unresolved_prior_placement\", \"detail\": \"blocking=[] quarantined=[] in_flight=0\", \"ok\": true}], \"decided_by\": \"automatic-policy\", \"device_verified\": {\"at\": \"2026-09-27T14:46:17.542+00:00\", \"line\": \"+5.5\", \"odds\": \"1.83\"}, \"execution_job_id\": \"on-839129ce81cd4db27f9ca45c-place\", \"instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"parser_version\": \"classifier-4-moneyline\", \"requested\": {\"line\": \"+5.5\", \"minimum_price\": \"1.75\", \"odds\": \"1.83\"}, \"rules_version\": \"rules-8-football\", \"stake\": \"0.10\", \"strategy_version\": \"sharp-money-1\", \"worker\": {\"device_id\": \"galaxy-a13-5g\", \"worker_id\": \"w-d131ef8769de\"}}"
+  },
+  {
+   "id": 970,
+   "at": "2026-09-27T14:46:18.149+00:00",
+   "kind": "COORDINATOR_ACK",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": "galaxy-a13-5g",
+   "detail": "{\"acknowledged\": true, \"execution_count\": 0, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c-place\", \"received_at_ms\": 1790520378144, \"result_url\": \"/instructions/on-839129ce81cd4db27f9ca45c-place\", \"state\": \"ACCEPTED\"}"
+  },
+  {
+   "id": 971,
+   "at": "2026-09-27T14:46:20.445+00:00",
+   "kind": "DEVICE_PROGRESS",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": "galaxy-a13-5g",
+   "detail": "{\"progress\": {\"elapsed_ms\": 1122, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c-place\", \"last_progress_at_ms\": 1790520379318, \"stage\": \"PLACE_BET\", \"stages\": [{\"at_ms\": 1790520378218, \"elapsed_ms\": 0, \"stage\": \"STARTED\"}, {\"at_ms\": 1790520378240, \"elapsed_ms\": 38, \"stage\": \"PRETAP_CHECK\"}, {\"at_ms\": 1790520378240, \"elapsed_ms\": 43, \"stage\": \"PRETAP_CHECK\"}, {\"at_ms\": 1790520378240, \"elapsed_ms\": 759, \"stage\": \"PRETAP_CHECK\"}, {\"at_ms\": 1790520379318, \"elapsed_ms\": 1115, \"stage\": \"PLACE_BET\", \"timing\": {\"duration_ms\": null, \"end_elapsed_ms\": null, \"end_ts_ms\": null, \"retries\": 0, \"stage\": \"PLACE_BET\", \"start_elapsed_ms\": 1115, \"start_ts_ms\": 1790520379314, \"status\": \"running\"}}, {\"at_ms\": 1790520379318, \"elapsed_ms\": 1122, \"stage\": \"PLACE_BET\"}]}}"
+  },
+  {
+   "id": 972,
+   "at": "2026-09-27T14:46:25.821+00:00",
+   "kind": "DEVICE_PROGRESS",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": "galaxy-a13-5g",
+   "detail": "{\"progress\": {\"elapsed_ms\": 7214, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c-place\", \"last_progress_at_ms\": 1790520384874, \"stage\": \"RESET_BETSLIP\", \"stages\": [{\"at_ms\": 1790520378218, \"elapsed_ms\": 0, \"stage\": \"STARTED\"}, {\"at_ms\": 1790520378240, \"elapsed_ms\": 38, \"stage\": \"PRETAP_CHECK\"}, {\"at_ms\": 1790520378240, \"elapsed_ms\": 43, \"stage\": \"PRETAP_CHECK\"}, {\"at_ms\": 1790520378240, \"elapsed_ms\": 759, \"stage\": \"PRETAP_CHECK\"}, {\"at_ms\": 1790520379318, \"elapsed_ms\": 1115, \"stage\": \"PLACE_BET\", \"timing\": {\"duration_ms\": 2070, \"end_elapsed_ms\": 3185, \"end_ts_ms\": 1790520381384, \"retries\": 0, \"stage\": \"PLACE_BET\", \"start_elapsed_ms\": 1115, \"start_ts_ms\": 1790520379314, \"status\": \"ok\"}}, {\"at_ms\": 1790520379318, \"elapsed_ms\": 1122, \"stage\": \"PLACE_BET\"}, {\"at_ms\": 1790520381408, \"elapsed_ms\": 3185, \"stage\": \"PLACE_BET_OUTCOME\", \"timing\": {\"duration_ms\": 3475, \"end_elapsed_ms\": 6660, \"end_ts_ms\": 1790520384858, \"retries\": 0, \"stage\": \"PLACE_BET_OUTCOME\", \"start_elapsed_ms\": 3185, \"start_ts_ms\": 1790520381384, \"status\": \"ok\"}}, {\"at_ms\": 1790520381408, \"elapsed_ms\": 3213, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520381408, \"elapsed_ms\": 3698, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 5267, \"stage\": \"PLACE_BET_OUTCOME\", \"timing\": {\"duration_ms\": 3475, \"end_elapsed_ms\": 6660, \"end_ts_ms\": 1790520384858, \"retries\": 0, \"stage\": \"PLACE_BET_OUTCOME\", \"start_elapsed_ms\": 3185, \"start_ts_ms\": 1790520381384, \"status\": \"ok\"}}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 5302, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 5804, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 5907, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 6648, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 6660, \"stage\": \"RESET_BETSLIP\", \"timing\": {\"duration_ms\": null, \"end_elapsed_ms\": null, \"end_ts_ms\": null, \"retries\": 0, \"stage\": \"RESET_BETSLIP\", \"start_elapsed_ms\": 6660, \"start_ts_ms\": 1790520384858, \"status\": \"running\"}}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 6677, \"stage\": \"RESET_BETSLIP\"}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 7187, \"stage\": \"RESET_BETSLIP\"}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 7214, \"stage\": \"RESET_BETSLIP\"}]}}"
+  },
+  {
+   "id": 973,
+   "at": "2026-09-27T14:46:28.225+00:00",
+   "kind": "DEVICE_PROGRESS",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": "galaxy-a13-5g",
+   "detail": "{\"progress\": {\"elapsed_ms\": 9621, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c-place\", \"last_progress_at_ms\": 1790520387839, \"stage\": \"OPEN_HOME\", \"stages\": [{\"at_ms\": 1790520378218, \"elapsed_ms\": 0, \"stage\": \"STARTED\"}, {\"at_ms\": 1790520378240, \"elapsed_ms\": 38, \"stage\": \"PRETAP_CHECK\"}, {\"at_ms\": 1790520378240, \"elapsed_ms\": 43, \"stage\": \"PRETAP_CHECK\"}, {\"at_ms\": 1790520378240, \"elapsed_ms\": 759, \"stage\": \"PRETAP_CHECK\"}, {\"at_ms\": 1790520379318, \"elapsed_ms\": 1115, \"stage\": \"PLACE_BET\", \"timing\": {\"duration_ms\": 2070, \"end_elapsed_ms\": 3185, \"end_ts_ms\": 1790520381384, \"retries\": 0, \"stage\": \"PLACE_BET\", \"start_elapsed_ms\": 1115, \"start_ts_ms\": 1790520379314, \"status\": \"ok\"}}, {\"at_ms\": 1790520379318, \"elapsed_ms\": 1122, \"stage\": \"PLACE_BET\"}, {\"at_ms\": 1790520381408, \"elapsed_ms\": 3185, \"stage\": \"PLACE_BET_OUTCOME\", \"timing\": {\"duration_ms\": 3475, \"end_elapsed_ms\": 6660, \"end_ts_ms\": 1790520384858, \"retries\": 0, \"stage\": \"PLACE_BET_OUTCOME\", \"start_elapsed_ms\": 3185, \"start_ts_ms\": 1790520381384, \"status\": \"ok\"}}, {\"at_ms\": 1790520381408, \"elapsed_ms\": 3213, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520381408, \"elapsed_ms\": 3698, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 5267, \"stage\": \"PLACE_BET_OUTCOME\", \"timing\": {\"duration_ms\": 3475, \"end_elapsed_ms\": 6660, \"end_ts_ms\": 1790520384858, \"retries\": 0, \"stage\": \"PLACE_BET_OUTCOME\", \"start_elapsed_ms\": 3185, \"start_ts_ms\": 1790520381384, \"status\": \"ok\"}}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 5302, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 5804, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 5907, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520383499, \"elapsed_ms\": 6648, \"stage\": \"PLACE_BET_OUTCOME\"}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 6660, \"stage\": \"RESET_BETSLIP\", \"timing\": {\"duration_ms\": 2961, \"end_elapsed_ms\": 9621, \"end_ts_ms\": 1790520387819, \"retries\": 0, \"stage\": \"RESET_BETSLIP\", \"start_elapsed_ms\": 6660, \"start_ts_ms\": 1790520384858, \"status\": \"ok\"}}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 6677, \"stage\": \"RESET_BETSLIP\"}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 7187, \"stage\": \"RESET_BETSLIP\"}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 7214, \"stage\": \"RESET_BETSLIP\"}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 8980, \"stage\": \"RESET_BETSLIP\"}, {\"at_ms\": 1790520384874, \"elapsed_ms\": 9567, \"stage\": \"RESET_BETSLIP\"}, {\"at_ms\": 1790520387818, \"elapsed_ms\": 9612, \"stage\": \"RETURN_HOME\"}, {\"at_ms\": 1790520387839, \"elapsed_ms\": 9621, \"stage\": \"OPEN_HOME\", \"timing\": {\"duration_ms\": null, \"end_elapsed_ms\": null, \"end_ts_ms\": null, \"retries\": 0, \"stage\": \"OPEN_HOME\", \"start_elapsed_ms\": 9621, \"start_ts_ms\": 1790520387819, \"status\": \"running\"}}]}}"
+  },
+  {
+   "id": 974,
+   "at": "2026-09-27T14:46:33.549+00:00",
+   "kind": "ALERT_TO_LIVE_COMPARISON",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": null,
+   "detail": "{\"acceptable\": true, \"device_outcome\": \"PASS\", \"device_reason\": \"PLACED\", \"effective_line_allowance\": \"0.55\", \"identity_verified\": true, \"line_acceptable\": true, \"line_deterioration\": \"0\", \"live\": {\"availability\": \"OPEN\", \"bounds\": [20, 1320, 604, 1346], \"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"selection_name\": \"KB Prishtina\", \"selection_role\": \"AWAY\", \"side\": \"AWAY\"}, \"minimum_live_price\": \"1.75\", \"net_payout_deterioration_percent\": \"0E+2\", \"observed_at_ms\": 1790520379045, \"odds_deterioration\": \"0\", \"policy\": {\"alert_price\": \"1.83\", \"alternate_line\": {\"comparison\": false, \"current\": false, \"opening\": false}, \"away\": \"KB Prishtina\", \"bet_quality\": \"FAVOURABLE_LINE_SIGNAL\", \"competition\": \"Superliga\", \"configured_line_absolute_cap\": 1.0, \"displayed_ev_percent\": null, \"ev_status\": \"NOT_AVAILABLE_UNEQUAL_LINES\", \"event_start_utc\": \"2026-09-27T15:00:00+00:00\", \"event_time_local\": \"2026-09-27T16:00\", \"event_timezone\": \"Europe/London\", \"fixture\": \"Vellaznimi vs KB Prishtina\", \"highlighted_side\": null, \"home\": \"Vellaznimi\", \"implied_target\": null, \"instruction_id\": \"on-839129ce81cd4db27f9ca45c\", \"line\": \"+5.5\", \"line_advantage\": \"1.0\", \"line_quality\": \"FAVOURABLE\", \"market\": \"SPREAD\", \"max_line_deterioration\": \"0.55\", \"max_line_deterioration_percent\": 10, \"max_net_payout_deterioration_percent\": 10, \"max_odds_deterioration\": null, \"minimum_price\": \"1.75\", \"price_quality\": \"NOT_COMPARABLE\", \"reference_odds\": \"1.793\", \"selection_name\": \"KB Prishtina\", \"sharp_signal\": {\"change\": \"2.5\", \"current_line\": \"-4.5\", \"direction\": \"UP\", \"magnitude\": \"2.5\", \"opening_line\": \"-7\", \"reason\": \"Pinnacle opening -7 -> current -4.5 (HOME) selects AWAY\", \"side\": \"AWAY\", \"source\": \"pinnacle_opening_to_current\", \"status\": \"IDENTIFIED\"}, \"side\": \"AWAY\", \"signal_reason\": \"FAVOURABLE_LINE_SIGNAL\", \"sport\": \"basketball\", \"stake\": \"0.10\", \"target_source\": \"pinnacle_opening_to_current\"}, \"price_acceptable\": true, \"reason\": \"within configured tolerances\", \"requested\": {\"line\": \"+5.5\", \"market\": \"SPREAD\", \"price\": \"1.83\", \"side\": \"AWAY\"}, \"stage\": \"pretap\"}"
+  },
+  {
+   "id": 975,
+   "at": "2026-09-27T14:46:33.550+00:00",
+   "kind": "PLACED",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": "galaxy-a13-5g",
+   "detail": "{\"approval_mode\": \"automatic\", \"approved_by\": \"automatic-policy\", \"bet_reference\": \"AT3003000811W\", \"execution_job_id\": \"on-839129ce81cd4db27f9ca45c-place\", \"intent_at\": \"2026-09-27T14:46:19.318+00:00\", \"pretap\": {\"line\": \"+5.5\", \"market\": \"SPREAD\", \"ok\": true, \"place_bet_bounds\": [461, 1310, 620, 1360], \"price\": \"1.83\", \"selection\": \"KB Prishtina\", \"side\": \"AWAY\", \"stake\": \"0.10\"}, \"receipt\": {\"line\": \"+5.5\", \"odds\": \"1.83\", \"potential_return\": \"0.18\", \"stake\": \"0.10\"}}"
+  },
+  {
+   "id": 977,
+   "at": "2026-09-27T14:47:25.098+00:00",
+   "kind": "RECONCILED",
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "device_id": null,
+   "detail": "{\"attempt\": 1, \"bet_reference\": \"AT3003000811W\", \"match\": {\"bet_reference\": null, \"checks\": {\"fixture\": true, \"odds\": true, \"selection\": true, \"stake\": true}, \"confidence\": \"EXACT\", \"found\": true, \"returns\": null, \"status\": null, \"window\": \"\\u00a30.10 Single | 3 Reuse Selections Share | O KB Prishtina +5.5 1.83 | Point Spread | I Vellaznimi Sun 27 Sep | I KB Prishtina 16:00 | Stake To Return | \\u00a30.10 \\u00a30.18\"}, \"result\": \"FOUND_IN_MY_BETS\"}"
+  }
+ ],
+ "notifications": [
+  {
+   "id": 716,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "state": "QUEUED",
+   "text": "MultiBot365 - QUALIFIED\n\nEvent: Vellaznimi vs KB Prishtina\nBet: SPREAD KB Prishtina +5.5 @ 1.83 (alert 1.83, min 1.75) stake £0.10\nSignal: Pinnacle opening -7 -> current -4.5: AWAY; same-side Bet365 advantage 1.0 pts; EV NOT_AVAILABLE_UNEQUAL_LINES\nId: on-839129c",
+   "created_at": "2026-09-27T14:46:03.059+00:00",
+   "sent_at": "2026-09-27T14:46:03.271+00:00",
+   "attempts": 1,
+   "last_error": null,
+   "next_attempt_at": "2026-09-27T14:46:33.104+00:00"
+  },
+  {
+   "id": 717,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "state": "APPROVED",
+   "text": "MultiBot365 - AUTO APPROVED\n\nEvent: Vellaznimi vs KB Prishtina\nBet: SPREAD KB Prishtina +5.5 @ 1.83 (alert 1.83, min 1.75) stake £0.10\nSignal: Pinnacle opening -7 -> current -4.5: AWAY; same-side Bet365 advantage 1.0 pts; EV NOT_AVAILABLE_UNEQUAL_LINES\nDecided by automatic policy at 2026-09-27T14:46:17.580+00:00; strategy sharp-money-1, rules rules-8-football; job on-839129ce81cd4db27f9ca45c-place. Fresh pre-tap check next; nothing placed yet.\nId: on-839129c",
+   "created_at": "2026-09-27T14:46:18.152+00:00",
+   "sent_at": "2026-09-27T14:46:18.336+00:00",
+   "attempts": 1,
+   "last_error": null,
+   "next_attempt_at": "2026-09-27T14:46:48.192+00:00"
+  },
+  {
+   "id": 718,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "state": "COMPLETED",
+   "text": "MultiBot365 - BET PLACED\n\nEvent: Vellaznimi vs KB Prishtina\nBet: SPREAD KB Prishtina +5.5 @ 1.83 (alert 1.83, min 1.75) stake £0.10\nBet ref: AT3003000811W; receipt line +5.5 odds 1.83 stake £0.10; approved by automatic-policy (automatic). My Bets verification follows.\nId: on-839129c | stage PASS",
+   "created_at": "2026-09-27T14:46:33.591+00:00",
+   "sent_at": "2026-09-27T14:46:33.777+00:00",
+   "attempts": 1,
+   "last_error": null,
+   "next_attempt_at": "2026-09-27T14:47:03.623+00:00"
+  },
+  {
+   "id": 719,
+   "instruction_id": "on-839129ce81cd4db27f9ca45c",
+   "state": "RECONCILED",
+   "text": "MultiBot365 - RECONCILED\n\nEvent: Vellaznimi vs KB Prishtina\nSelection: AWAY +5.5 @ 1.83 stake £0.10\nMy Bets: found (ref AT3003000811W); status OPEN\nId: on-839129c",
+   "created_at": "2026-09-27T14:47:25.122+00:00",
+   "sent_at": "2026-09-27T14:47:25.295+00:00",
+   "attempts": 1,
+   "last_error": null,
+   "next_attempt_at": "2026-09-27T14:47:55.152+00:00"
+  }
+ ]
+}

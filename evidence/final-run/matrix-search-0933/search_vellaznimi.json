@@ -1,0 +1,246 @@
+{
+ "case": "search_vellaznimi",
+ "payload": {
+  "instruction_id": "mx-search-155211",
+  "action": "ADAPTER_WORKFLOW",
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "+5.5",
+  "max_line_deterioration": "1.0",
+  "minimum_price": "1.01",
+  "stake": "0.10",
+  "timeout_ms": 240000,
+  "execution_mode": "hold",
+  "kickoff_utc": "2026-09-27T15:00",
+  "competition": "Superliga",
+  "country": "Kosovo",
+  "period": "FULL_GAME",
+  "query": "Vellaznimi||KB Prishtina"
+ },
+ "paused": "PAUSED",
+ "hold": {
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "route": "search",
+  "verdict": "EXACT",
+  "fixture": "Vellaznimi v KB Prishtina",
+  "selection": {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+5.5",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "KB Prishtina",
+   "bounds": [
+    301,
+    740,
+    345,
+    790
+   ]
+  },
+  "context": {
+   "home": "Vellaznimi",
+   "away": "KB Prishtina",
+   "competition": "kosovo superliga",
+   "kickoff_utc": "2026-09-27T15:00",
+   "period": "FULL_GAME"
+  },
+  "wall": 40.3,
+  "identity": {
+   "event_id_match": false,
+   "event_anchor": "none (search result or unanchored page)",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "country_prefixed",
+   "competing_event": "not excluded: no event anchor",
+   "home_similarity": {
+    "feed": "Vellaznimi",
+    "bookmaker": "Vellaznimi",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact"
+   },
+   "away_similarity": {
+    "feed": "KB Prishtina",
+    "bookmaker": "KB Prishtina",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact"
+   },
+   "protected_markers": "agree",
+   "orientation": "agree",
+   "policy": "both_exact",
+   "verdict": "EXACT"
+  },
+  "stages": [
+   [
+    "SPORTS_HOME",
+    0.02
+   ],
+   [
+    "OPEN_HOME",
+    4.75
+   ],
+   [
+    "SESSION_CHECK",
+    1.0
+   ],
+   [
+    "OPEN_HOME",
+    8.17
+   ],
+   [
+    "OPEN_SEARCH",
+    0.02
+   ],
+   [
+    "SPORTS_CONTEXT",
+    0.59
+   ],
+   [
+    "OPEN_SEARCH",
+    2.9
+   ],
+   [
+    "ENTER_QUERY",
+    0.03
+   ],
+   [
+    "FOCUS",
+    0.03
+   ],
+   [
+    "ENTER_QUERY",
+    7.12
+   ],
+   [
+    "QUERY_VERIFY",
+    1.88
+   ],
+   [
+    "RESULTS_WAIT",
+    1.12
+   ],
+   [
+    "FIXTURE_VERIFY",
+    0.5
+   ],
+   [
+    "SELECT_FIXTURE",
+    1.03
+   ],
+   [
+    "VERIFY_EVENT",
+    2.15
+   ],
+   [
+    "MARKET_NAV",
+    0.76
+   ],
+   [
+    "READ_SELECTION",
+    0.05
+   ],
+   [
+    "READ_LINE",
+    0.05
+   ],
+   [
+    "READ_PRICE",
+    0.06
+   ],
+   [
+    "OPEN_SELECTION",
+    0.86
+   ],
+   [
+    "ENTER_STAKE",
+    4.49
+   ],
+   [
+    "VERIFY_FINAL_STATE",
+    0.83
+   ],
+   [
+    "PREPARE_COMPLETE_EXECUTION",
+    0.26
+   ]
+  ],
+  "place_bet_target": {
+   "bounds": [
+    461,
+    1305,
+    620,
+    1355
+   ],
+   "source": "place_bet_words"
+  },
+  "stake_check": null
+ },
+ "pretap": {
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "PRETAP_READY",
+  "tapped": null,
+  "pretap": {
+   "ok": true,
+   "market": "SPREAD",
+   "side": "AWAY",
+   "selection": "KB Prishtina",
+   "line": "+5.5",
+   "price": "1.83",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    461,
+    1310,
+    620,
+    1360
+   ]
+  },
+  "stake_check": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "018",
+   "stake": "0.10",
+   "price": "1.83"
+  },
+  "place_bet_target": {
+   "bounds": [
+    461,
+    1310,
+    620,
+    1360
+   ],
+   "source": "place_bet_words"
+  },
+  "wall": 2.1
+ },
+ "reset": {
+  "status": "PASS",
+  "detail": {
+   "tapped": true,
+   "control": "remove selection X",
+   "bounds": [
+    21,
+    1180,
+    42,
+    1202
+   ],
+   "place_bet_still_visible": false
+  }
+ },
+ "resumed": "RESUMED",
+ "phone_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.33-ops"
+ }
+}

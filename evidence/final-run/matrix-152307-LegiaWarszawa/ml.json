@@ -1,0 +1,189 @@
+{
+ "case": "ml",
+ "payload": {
+  "adapter": "live_bet365",
+  "scenario": "live",
+  "sport": "basketball",
+  "event_url": "https://www.bet365.com/#/AC/B18/C21172633/D19/E26837198/F19/I0/",
+  "kickoff_utc": "2026-09-27T15:30",
+  "competition": "Super Cup",
+  "country": "Poland",
+  "period": "FULL_GAME",
+  "query": "Legia Warszawa||Zielona Gora",
+  "stake": "0.10",
+  "action": "ADAPTER_WORKFLOW",
+  "execution_mode": "hold",
+  "timeout_ms": 240000,
+  "minimum_price": "1.01",
+  "instruction_id": "mx-ml-152307",
+  "market": "MONEYLINE",
+  "side": "HOME"
+ },
+ "paused": "PAUSED",
+ "hold": {
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "route": "event_link",
+  "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+  "fixture": "Legia Warsaw v Zielona Gora",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "line": "",
+   "price": "1.47",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Legia Warsaw",
+   "bounds": [
+    604,
+    672,
+    648,
+    689
+   ]
+  },
+  "context": {
+   "home": "Legia Warsaw",
+   "away": "Zielona Gora",
+   "competition": "poland super cup",
+   "kickoff_utc": "2026-09-27T15:30",
+   "period": "FULL_GAME"
+  },
+  "wall": 11.0,
+  "identity": {
+   "event_id_match": true,
+   "event_anchor": "page opened from the alert's own Bet365 event link",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "country_prefixed",
+   "competing_event": "none: a single event page reached through the alert's own link",
+   "home_similarity": {
+    "feed": "Legia Warszawa",
+    "bookmaker": "Legia Warsaw",
+    "level": "VARIANT",
+    "kind": "shared_core",
+    "score": 0.7,
+    "note": "naming variant 0.70: shared core [legia]; [warszawa] vs [warsaw] unexplained on each side (event-scoped only)"
+   },
+   "away_similarity": {
+    "feed": "Zielona Gora",
+    "bookmaker": "Zielona Gora",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1,
+    "note": "exact"
+   },
+   "protected_markers": "agree",
+   "orientation": "agree",
+   "policy": "one_sure_team_plus_variant",
+   "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+  },
+  "stages": [
+   [
+    "OPEN_HOME",
+    4.12
+   ],
+   [
+    "MARKET_NAV",
+    0.58
+   ],
+   [
+    "READ_SELECTION",
+    0.01
+   ],
+   [
+    "READ_LINE",
+    0.01
+   ],
+   [
+    "READ_PRICE",
+    0.02
+   ],
+   [
+    "OPEN_SELECTION",
+    0.79
+   ],
+   [
+    "ENTER_STAKE",
+    3.79
+   ],
+   [
+    "VERIFY_FINAL_STATE",
+    0.67
+   ],
+   [
+    "PREPARE_COMPLETE_EXECUTION",
+    0.17
+   ]
+  ],
+  "place_bet_target": {
+   "bounds": [
+    462,
+    1185,
+    620,
+    1235
+   ],
+   "source": "place_bet_words"
+  },
+  "stake_check": null
+ },
+ "pretap": {
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "PRETAP_READY",
+  "tapped": null,
+  "pretap": {
+   "ok": true,
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "selection": "Legia Warsaw",
+   "line": "",
+   "price": "1.47",
+   "stake": "0.10",
+   "place_bet_bounds": [
+    460,
+    1309,
+    618,
+    1360
+   ]
+  },
+  "stake_check": {
+   "ok": true,
+   "detail": "stake 0.10 and return agree",
+   "stake_digits": "010",
+   "return_digits": "014",
+   "stake": "0.10",
+   "price": "1.47"
+  },
+  "place_bet_target": {
+   "bounds": [
+    460,
+    1309,
+    618,
+    1360
+   ],
+   "source": "place_bet_words"
+  },
+  "wall": 1.1
+ },
+ "reset": {
+  "status": "PASS",
+  "detail": {
+   "tapped": true,
+   "control": "remove selection X",
+   "bounds": [
+    21,
+    1180,
+    42,
+    1206
+   ],
+   "place_bet_still_visible": false
+  }
+ },
+ "resumed": "RESUMED",
+ "phone_after": {
+  "state": "IDLE",
+  "session": "AUTHENTICATED",
+  "app_version": "0.9.32-ops"
+ }
+}
