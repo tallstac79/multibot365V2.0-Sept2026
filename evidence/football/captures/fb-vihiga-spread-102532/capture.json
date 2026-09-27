@@ -1,0 +1,309 @@
+{
+ "case": {
+  "tag": "fb-vihiga-spread",
+  "query": "Vihiga Queens||Ulinzi Starlets",
+  "market": "SPREAD",
+  "side": "AWAY",
+  "line": "0",
+  "minimum_price": "1.68",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201829714/F3/I1/",
+  "kickoff_utc": "2026-09-27T10:00",
+  "competition": "Premier League Women",
+  "country": "Kenya"
+ },
+ "tag": "fb-vihiga-spread-102532",
+ "paused_at": "2026-09-27T09:25:33Z",
+ "result": {
+  "instruction_id": "fb-vihiga-spread-102532",
+  "status": "FAIL",
+  "stage": "WRONG_EVENT",
+  "detail": "Event link shows 'Vihiga Queens FC (W) v Ulinzi Starlets (W)'; alert says 'Vihiga Queens v Ulinzi Starlets': 'Vihiga Queens' vs 'Vihiga Queens FC (W)': protected markers differ [] vs [women]",
+  "duration_ms": 5461,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 5218,
+   "last_progress_at_ms": 1790501134193,
+   "instruction_id": "fb-vihiga-spread-102532",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790501134177
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 18,
+     "at_ms": 1790501134184
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 25,
+     "at_ms": 1790501134193,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 25,
+      "start_ts_ms": 1790501134185,
+      "end_elapsed_ms": 5218,
+      "end_ts_ms": 1790501139377,
+      "duration_ms": 5193,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3466,
+     "at_ms": 1790501134193
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3691,
+     "at_ms": 1790501134193
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4621,
+     "at_ms": 1790501134193
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5085,
+     "at_ms": 1790501134193
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 5218,
+     "at_ms": 1790501134193
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c__JFbnp-CFK2FaMj-SJUghTCbYUgKvtrmmnTb23pNzIY",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'Vihiga Queens FC (W) v Ulinzi Starlets (W)'; alert says 'Vihiga Queens v Ulinzi Starlets': 'Vihiga Queens' vs 'Vihiga Queens FC (W)': protected markers differ [] vs [women]",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 25,
+    "start_ts_ms": 1790501134185,
+    "end_elapsed_ms": 5218,
+    "end_ts_ms": 1790501139377,
+    "duration_ms": 5193,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: 'Vihiga Queens' vs 'Vihiga Queens FC (W)': protected markers differ [] vs [women]",
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "'Vihiga Queens' vs 'Vihiga Queens FC (W)': protected markers differ [] vs [women]",
+   "home": {
+    "feed": "Vihiga Queens",
+    "bookmaker": "Vihiga Queens FC (W)",
+    "level": "NONE",
+    "kind": "markers_conflict",
+    "score": 0,
+    "note": "protected markers differ [] vs [women]",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Ulinzi Starlets",
+    "bookmaker": "Ulinzi Starlets (W)",
+    "level": "NONE",
+    "kind": "markers_conflict",
+    "score": 0,
+    "note": "protected markers differ [] vs [women]",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "mismatch (feed 'premier league women' vs page 'kenya league women')",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Vihiga Queens",
+     "bookmaker": "Vihiga Queens FC (W)",
+     "level": "NONE",
+     "kind": "markers_conflict",
+     "score": 0,
+     "note": "protected markers differ [] vs [women]"
+    },
+    "away_similarity": {
+     "feed": "Ulinzi Starlets",
+     "bookmaker": "Ulinzi Starlets (W)",
+     "level": "NONE",
+     "kind": "markers_conflict",
+     "score": 0,
+     "note": "protected markers differ [] vs [women]"
+    },
+    "protected_markers": "conflict: protected markers differ [] vs [women]",
+    "orientation": "not established",
+    "policy": "protected_markers",
+    "verdict": "MISMATCH"
+   }
+  },
+  "identity_verdict": "MISMATCH",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201829714/F3/I1/"
+ },
+ "run": {
+  "run_id": "c__JFbnp-CFK2FaMj-SJUghTCbYUgKvtrmmnTb23pNzIY",
+  "adapter": "live_bet365",
+  "status": "WRONG_EVENT",
+  "phase": "FINISHED",
+  "started_at_ms": 1790501134159,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790501134159
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 18,
+    "wall_ts_ms": 1790501134178
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 25,
+    "wall_ts_ms": 1790501134185
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3466,
+    "wall_ts_ms": 1790501137626
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 3691,
+    "wall_ts_ms": 1790501137850
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 4621,
+    "wall_ts_ms": 1790501138781
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 5085,
+    "wall_ts_ms": 1790501139245
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 5218,
+    "wall_ts_ms": 1790501139377
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png",
+   "s002_event_direct.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 25,
+    "start_ts_ms": 1790501134185,
+    "end_elapsed_ms": 5218,
+    "end_ts_ms": 1790501139377,
+    "duration_ms": 5193,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Vihiga Queens",
+  "identity_home": "Vihiga Queens",
+  "expected_away": "Ulinzi Starlets",
+  "identity_away": "Ulinzi Starlets",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201829714/F3/I1/",
+  "current_stage": "OPEN_HOME",
+  "event_direct_wait": 1,
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Kenya League Women 27 Sep 11:00",
+   "Vihiga Queens FC (W) v Ulinzi Starlets (W) v",
+   "Popular Bet Builder Result Goals Half Asiat A"
+  ],
+  "competition_check": {
+   "feed": "Premier League Women",
+   "country": "Kenya",
+   "page": "Kenya League Women 27 Sep 11:00",
+   "matches": false
+  },
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "'Vihiga Queens' vs 'Vihiga Queens FC (W)': protected markers differ [] vs [women]",
+   "home": {
+    "feed": "Vihiga Queens",
+    "bookmaker": "Vihiga Queens FC (W)",
+    "level": "NONE",
+    "kind": "markers_conflict",
+    "score": 0,
+    "note": "protected markers differ [] vs [women]",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Ulinzi Starlets",
+    "bookmaker": "Ulinzi Starlets (W)",
+    "level": "NONE",
+    "kind": "markers_conflict",
+    "score": 0,
+    "note": "protected markers differ [] vs [women]",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "mismatch (feed 'premier league women' vs page 'kenya league women')",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Vihiga Queens",
+     "bookmaker": "Vihiga Queens FC (W)",
+     "level": "NONE",
+     "kind": "markers_conflict",
+     "score": 0,
+     "note": "protected markers differ [] vs [women]"
+    },
+    "away_similarity": {
+     "feed": "Ulinzi Starlets",
+     "bookmaker": "Ulinzi Starlets (W)",
+     "level": "NONE",
+     "kind": "markers_conflict",
+     "score": 0,
+     "note": "protected markers differ [] vs [women]"
+    },
+    "protected_markers": "conflict: protected markers differ [] vs [women]",
+    "orientation": "not established",
+    "policy": "protected_markers",
+    "verdict": "MISMATCH"
+   }
+  },
+  "identity_verdict": "MISMATCH",
+  "route": "event_link",
+  "direct_event_rejected": "identity: 'Vihiga Queens' vs 'Vihiga Queens FC (W)': protected markers differ [] vs [women]",
+  "detail": "Event link shows 'Vihiga Queens FC (W) v Ulinzi Starlets (W)'; alert says 'Vihiga Queens v Ulinzi Starlets': 'Vihiga Queens' vs 'Vihiga Queens FC (W)': protected markers differ [] vs [women]",
+  "duration_ms": 5218
+ },
+ "wall": 5.8,
+ "frames": [
+  "s001_event_direct.png",
+  "s001_event_direct.txt",
+  "s002_event_direct.png",
+  "s002_event_direct.txt"
+ ],
+ "resumed_at": "2026-09-27T09:25:40Z"
+}

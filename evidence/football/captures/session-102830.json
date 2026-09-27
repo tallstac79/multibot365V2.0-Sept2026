@@ -1,0 +1,1312 @@
+[
+ {
+  "case": {
+   "tag": "fb-japs-totals",
+   "query": "JaPS||PPJ",
+   "market": "TOTALS",
+   "side": "OVER",
+   "line": "2.5",
+   "minimum_price": "1.20",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201845402/F3/I1/",
+   "kickoff_utc": "2026-09-27T10:00",
+   "competition": "U21 League",
+   "country": "Finland"
+  },
+  "tag": "fb-japs-totals-102753",
+  "paused_at": "2026-09-27T09:27:54Z",
+  "result": {
+   "instruction_id": "fb-japs-totals-102753",
+   "status": "FAIL",
+   "stage": "WRONG_EVENT",
+   "detail": "Event link shows 'JaPS U21 v PPJ U21'; alert says 'JaPS v PPJ': 'JaPS' vs 'JaPS U21': protected markers differ [] vs [u21]",
+   "duration_ms": 5404,
+   "progress": {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 5193,
+    "last_progress_at_ms": 1790501275452,
+    "instruction_id": "fb-japs-totals-102753",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790501275433
+     },
+     {
+      "stage": "OPEN_EVENT",
+      "elapsed_ms": 24,
+      "at_ms": 1790501275440
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 32,
+      "at_ms": 1790501275452,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 32,
+       "start_ts_ms": 1790501275441,
+       "end_elapsed_ms": 5193,
+       "end_ts_ms": 1790501280603,
+       "duration_ms": 5161,
+       "status": "fail",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3478,
+      "at_ms": 1790501275452
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3714,
+      "at_ms": 1790501275452
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4634,
+      "at_ms": 1790501275452
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 5091,
+      "at_ms": 1790501275452
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 5193,
+      "at_ms": 1790501275452
+     }
+    ]
+   },
+   "device_stage": "OPEN_HOME",
+   "execution_count": 1,
+   "run_id": "c_SODyaH1jdRensYo0Y9aABtxhQ7NjGkEw4M6vy35CX8Q",
+   "fixture_name": null,
+   "home": null,
+   "away": null,
+   "competition": null,
+   "verification_detail": "Event link shows 'JaPS U21 v PPJ U21'; alert says 'JaPS v PPJ': 'JaPS' vs 'JaPS U21': protected markers differ [] vs [u21]",
+   "route": "event_link",
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 32,
+     "start_ts_ms": 1790501275441,
+     "end_elapsed_ms": 5193,
+     "end_ts_ms": 1790501280603,
+     "duration_ms": 5161,
+     "status": "fail",
+     "retries": 0
+    }
+   ],
+   "direct_event_rejected": "identity: 'JaPS' vs 'JaPS U21': protected markers differ [] vs [u21]",
+   "identity": {
+    "verdict": "MISMATCH",
+    "reason": "'JaPS' vs 'JaPS U21': protected markers differ [] vs [u21]",
+    "home": {
+     "feed": "JaPS",
+     "bookmaker": "JaPS U21",
+     "level": "NONE",
+     "kind": "markers_conflict",
+     "score": 0,
+     "note": "protected markers differ [] vs [u21]",
+     "alias_safe": true
+    },
+    "away": {
+     "feed": "PPJ",
+     "bookmaker": "PPJ U21",
+     "level": "NONE",
+     "kind": "markers_conflict",
+     "score": 0,
+     "note": "protected markers differ [] vs [u21]",
+     "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+     "event_id_match": true,
+     "event_anchor": "page opened from the alert's own Bet365 event link",
+     "sport_match": "equal",
+     "kickoff_match": "exact",
+     "competition_match": "country_prefixed",
+     "competing_event": "none: a single event page reached through the alert's own link",
+     "home_similarity": {
+      "feed": "JaPS",
+      "bookmaker": "JaPS U21",
+      "level": "NONE",
+      "kind": "markers_conflict",
+      "score": 0,
+      "note": "protected markers differ [] vs [u21]"
+     },
+     "away_similarity": {
+      "feed": "PPJ",
+      "bookmaker": "PPJ U21",
+      "level": "NONE",
+      "kind": "markers_conflict",
+      "score": 0,
+      "note": "protected markers differ [] vs [u21]"
+     },
+     "protected_markers": "conflict: protected markers differ [] vs [u21]",
+     "orientation": "not established",
+     "policy": "protected_markers",
+     "verdict": "MISMATCH"
+    }
+   },
+   "identity_verdict": "MISMATCH",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201845402/F3/I1/"
+  },
+  "run": {
+   "run_id": "c_SODyaH1jdRensYo0Y9aABtxhQ7NjGkEw4M6vy35CX8Q",
+   "adapter": "live_bet365",
+   "status": "WRONG_EVENT",
+   "phase": "FINISHED",
+   "started_at_ms": 1790501275410,
+   "events": [
+    {
+     "phase": "STARTED",
+     "elapsed_ms": 1,
+     "wall_ts_ms": 1790501275410
+    },
+    {
+     "phase": "OPEN_EVENT",
+     "elapsed_ms": 24,
+     "wall_ts_ms": 1790501275433
+    },
+    {
+     "phase": "OPEN_HOME",
+     "elapsed_ms": 32,
+     "wall_ts_ms": 1790501275442
+    },
+    {
+     "phase": "CAPTURE_event_direct",
+     "elapsed_ms": 3478,
+     "wall_ts_ms": 1790501278888
+    },
+    {
+     "phase": "CAPTURED_event_direct",
+     "elapsed_ms": 3714,
+     "wall_ts_ms": 1790501279124
+    },
+    {
+     "phase": "CAPTURE_event_direct",
+     "elapsed_ms": 4634,
+     "wall_ts_ms": 1790501280044
+    },
+    {
+     "phase": "CAPTURED_event_direct",
+     "elapsed_ms": 5091,
+     "wall_ts_ms": 1790501280501
+    },
+    {
+     "phase": "FINISHED",
+     "elapsed_ms": 5193,
+     "wall_ts_ms": 1790501280603
+    }
+   ],
+   "screenshots": [
+    "s001_event_direct.png",
+    "s002_event_direct.png"
+   ],
+   "gesture_attempts": 0,
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 32,
+     "start_ts_ms": 1790501275441,
+     "end_elapsed_ms": 5193,
+     "end_ts_ms": 1790501280603,
+     "duration_ms": 5161,
+     "status": "fail",
+     "retries": 0
+    }
+   ],
+   "search_query": "JaPS",
+   "identity_home": "JaPS",
+   "expected_away": "PPJ",
+   "identity_away": "PPJ",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201845402/F3/I1/",
+   "current_stage": "OPEN_HOME",
+   "event_direct_wait": 1,
+   "session": "AUTHENTICATED",
+   "direct_event_header": [
+    "Finland U21 League• 27 Sep 11:00",
+    "JaPS U21 v PPJ U21 V",
+    "Popular Bet Builder Result Goals Half Asial"
+   ],
+   "competition_check": {
+    "feed": "U21 League",
+    "country": "Finland",
+    "page": "Finland U21 League• 27 Sep 11:00",
+    "matches": true
+   },
+   "identity": {
+    "verdict": "MISMATCH",
+    "reason": "'JaPS' vs 'JaPS U21': protected markers differ [] vs [u21]",
+    "home": {
+     "feed": "JaPS",
+     "bookmaker": "JaPS U21",
+     "level": "NONE",
+     "kind": "markers_conflict",
+     "score": 0,
+     "note": "protected markers differ [] vs [u21]",
+     "alias_safe": true
+    },
+    "away": {
+     "feed": "PPJ",
+     "bookmaker": "PPJ U21",
+     "level": "NONE",
+     "kind": "markers_conflict",
+     "score": 0,
+     "note": "protected markers differ [] vs [u21]",
+     "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+     "event_id_match": true,
+     "event_anchor": "page opened from the alert's own Bet365 event link",
+     "sport_match": "equal",
+     "kickoff_match": "exact",
+     "competition_match": "country_prefixed",
+     "competing_event": "none: a single event page reached through the alert's own link",
+     "home_similarity": {
+      "feed": "JaPS",
+      "bookmaker": "JaPS U21",
+      "level": "NONE",
+      "kind": "markers_conflict",
+      "score": 0,
+      "note": "protected markers differ [] vs [u21]"
+     },
+     "away_similarity": {
+      "feed": "PPJ",
+      "bookmaker": "PPJ U21",
+      "level": "NONE",
+      "kind": "markers_conflict",
+      "score": 0,
+      "note": "protected markers differ [] vs [u21]"
+     },
+     "protected_markers": "conflict: protected markers differ [] vs [u21]",
+     "orientation": "not established",
+     "policy": "protected_markers",
+     "verdict": "MISMATCH"
+    }
+   },
+   "identity_verdict": "MISMATCH",
+   "route": "event_link",
+   "direct_event_rejected": "identity: 'JaPS' vs 'JaPS U21': protected markers differ [] vs [u21]",
+   "detail": "Event link shows 'JaPS U21 v PPJ U21'; alert says 'JaPS v PPJ': 'JaPS' vs 'JaPS U21': protected markers differ [] vs [u21]",
+   "duration_ms": 5193
+  },
+  "wall": 6.8,
+  "frames": [
+   "s001_event_direct.png",
+   "s001_event_direct.txt",
+   "s002_event_direct.png",
+   "s002_event_direct.txt"
+  ],
+  "resumed_at": "2026-09-27T09:28:01Z"
+ },
+ {
+  "case": {
+   "tag": "fb-salzburg-totals",
+   "query": "ASV Salzburg||Union Woerle Henndorf",
+   "market": "TOTALS",
+   "side": "OVER",
+   "line": "2.5",
+   "minimum_price": "1.25",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201867454/F3/I1/",
+   "kickoff_utc": "2026-09-27T10:00",
+   "competition": "Landesliga",
+   "country": "Austria"
+  },
+  "tag": "fb-salzburg-totals-102801",
+  "paused_at": "2026-09-27T09:28:03Z",
+  "result": {
+   "instruction_id": "fb-salzburg-totals-102801",
+   "status": "FAIL",
+   "stage": "LOGIN_FAILED",
+   "detail": "Bet365 session state unclear: no account, login or challenge markers on screen",
+   "duration_ms": 10427,
+   "progress": {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 10302,
+    "last_progress_at_ms": 1790501288582,
+    "instruction_id": "fb-salzburg-totals-102801",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790501283923
+     },
+     {
+      "stage": "OPEN_EVENT",
+      "elapsed_ms": 13,
+      "at_ms": 1790501283927
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 17,
+      "at_ms": 1790501283931,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 17,
+       "start_ts_ms": 1790501283928,
+       "end_elapsed_ms": 10302,
+       "end_ts_ms": 1790501294212,
+       "duration_ms": 10285,
+       "status": "fail",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3475,
+      "at_ms": 1790501283931
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3903,
+      "at_ms": 1790501283931
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3934,
+      "at_ms": 1790501283931
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4449,
+      "at_ms": 1790501283931
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4665,
+      "at_ms": 1790501288582,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 17,
+       "start_ts_ms": 1790501283928,
+       "end_elapsed_ms": 10302,
+       "end_ts_ms": 1790501294212,
+       "duration_ms": 10285,
+       "status": "fail",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 7400,
+      "at_ms": 1790501288582
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 7864,
+      "at_ms": 1790501288582
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 9612,
+      "at_ms": 1790501288582
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 10088,
+      "at_ms": 1790501288582
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 10302,
+      "at_ms": 1790501288582
+     }
+    ]
+   },
+   "device_stage": "OPEN_HOME",
+   "execution_count": 1,
+   "run_id": "c_vkr3uMrtuSvLZMPnt6qkmp0noiLtY37etdbznBqWgtA",
+   "fixture_name": null,
+   "home": null,
+   "away": null,
+   "competition": null,
+   "verification_detail": "Bet365 session state unclear: no account, login or challenge markers on screen",
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 17,
+     "start_ts_ms": 1790501283928,
+     "end_elapsed_ms": 10302,
+     "end_ts_ms": 1790501294212,
+     "duration_ms": 10285,
+     "status": "fail",
+     "retries": 0
+    }
+   ],
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201867454/F3/I1/",
+   "session_path": [
+    {
+     "saw": "UNKNOWN",
+     "state": "UNOBSERVED",
+     "attempts": 0
+    },
+    {
+     "saw": "UNKNOWN",
+     "state": "UNOBSERVED",
+     "attempts": 0
+    },
+    {
+     "saw": "UNKNOWN",
+     "state": "UNOBSERVED",
+     "attempts": 0
+    }
+   ],
+   "session_machine": "UNOBSERVED"
+  },
+  "run": {
+   "run_id": "c_vkr3uMrtuSvLZMPnt6qkmp0noiLtY37etdbznBqWgtA",
+   "adapter": "live_bet365",
+   "status": "LOGIN_FAILED",
+   "phase": "FINISHED",
+   "started_at_ms": 1790501283911,
+   "events": [
+    {
+     "phase": "STARTED",
+     "elapsed_ms": 1,
+     "wall_ts_ms": 1790501283911
+    },
+    {
+     "phase": "OPEN_EVENT",
+     "elapsed_ms": 13,
+     "wall_ts_ms": 1790501283924
+    },
+    {
+     "phase": "OPEN_HOME",
+     "elapsed_ms": 17,
+     "wall_ts_ms": 1790501283928
+    },
+    {
+     "phase": "CAPTURE_event_direct",
+     "elapsed_ms": 3475,
+     "wall_ts_ms": 1790501287385
+    },
+    {
+     "phase": "CAPTURED_event_direct",
+     "elapsed_ms": 3903,
+     "wall_ts_ms": 1790501287814
+    },
+    {
+     "phase": "CAPTURE_session",
+     "elapsed_ms": 3934,
+     "wall_ts_ms": 1790501287844
+    },
+    {
+     "phase": "CAPTURED_session",
+     "elapsed_ms": 4449,
+     "wall_ts_ms": 1790501288361
+    },
+    {
+     "phase": "OPEN_HOME",
+     "elapsed_ms": 4665,
+     "wall_ts_ms": 1790501288575
+    },
+    {
+     "phase": "CAPTURE_session_relook",
+     "elapsed_ms": 7400,
+     "wall_ts_ms": 1790501291311
+    },
+    {
+     "phase": "CAPTURED_session_relook",
+     "elapsed_ms": 7864,
+     "wall_ts_ms": 1790501291775
+    },
+    {
+     "phase": "CAPTURE_session_relook_relook",
+     "elapsed_ms": 9612,
+     "wall_ts_ms": 1790501293522
+    },
+    {
+     "phase": "CAPTURED_session_relook_relook",
+     "elapsed_ms": 10088,
+     "wall_ts_ms": 1790501294000
+    },
+    {
+     "phase": "FINISHED",
+     "elapsed_ms": 10302,
+     "wall_ts_ms": 1790501294212
+    }
+   ],
+   "screenshots": [
+    "s001_event_direct.png",
+    "s002_session.png",
+    "s003_session_relook.png",
+    "s004_session_relook_relook.png"
+   ],
+   "gesture_attempts": 0,
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 17,
+     "start_ts_ms": 1790501283928,
+     "end_elapsed_ms": 10302,
+     "end_ts_ms": 1790501294212,
+     "duration_ms": 10285,
+     "status": "fail",
+     "retries": 0
+    }
+   ],
+   "search_query": "ASV Salzburg",
+   "identity_home": "ASV Salzburg",
+   "expected_away": "Union Woerle Henndorf",
+   "identity_away": "Union Woerle Henndorf",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201867454/F3/I1/",
+   "current_stage": "OPEN_HOME",
+   "session_path": [
+    {
+     "saw": "UNKNOWN",
+     "state": "UNOBSERVED",
+     "attempts": 0
+    },
+    {
+     "saw": "UNKNOWN",
+     "state": "UNOBSERVED",
+     "attempts": 0
+    },
+    {
+     "saw": "UNKNOWN",
+     "state": "UNOBSERVED",
+     "attempts": 0
+    }
+   ],
+   "session_machine": "UNOBSERVED",
+   "session": "UNKNOWN",
+   "detail": "Bet365 session state unclear: no account, login or challenge markers on screen",
+   "duration_ms": 10302
+  },
+  "wall": 11.4,
+  "frames": [
+   "s001_event_direct.png",
+   "s001_event_direct.txt",
+   "s002_session.png",
+   "s002_session.txt",
+   "s003_session_relook.png",
+   "s003_session_relook.txt",
+   "s004_session_relook_relook.png",
+   "s004_session_relook_relook.txt"
+  ],
+  "resumed_at": "2026-09-27T09:28:15Z"
+ },
+ {
+  "case": {
+   "tag": "fb-vihiga-spread-w",
+   "query": "Vihiga Queens||Ulinzi Starlets",
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "0",
+   "minimum_price": "1.68",
+   "women": true,
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201829714/F3/I1/",
+   "kickoff_utc": "2026-09-27T10:00",
+   "competition": "Premier League Women",
+   "country": "Kenya"
+  },
+  "tag": "fb-vihiga-spread-w-102815",
+  "paused_at": "2026-09-27T09:28:17Z",
+  "result": {
+   "instruction_id": "fb-vihiga-spread-w-102815",
+   "status": "FAIL",
+   "stage": "ALIAS_REQUIRED",
+   "detail": "Event link shows 'Vihiga Queens FC (W) v Ulinzi Starlets (W)'; alert says 'Vihiga Queens v Ulinzi Starlets': Known matching kick-off and competition required (competition mismatch (feed 'premier league women' vs page 'kenya league women'))",
+   "duration_ms": 4487,
+   "progress": {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 4197,
+    "last_progress_at_ms": 1790501297890,
+    "instruction_id": "fb-vihiga-spread-w-102815",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790501297861
+     },
+     {
+      "stage": "OPEN_EVENT",
+      "elapsed_ms": 114,
+      "at_ms": 1790501297875
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 129,
+      "at_ms": 1790501297890,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 129,
+       "start_ts_ms": 1790501297876,
+       "end_elapsed_ms": 4197,
+       "end_ts_ms": 1790501301945,
+       "duration_ms": 4068,
+       "status": "fail",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3598,
+      "at_ms": 1790501297890
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4119,
+      "at_ms": 1790501297890
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4197,
+      "at_ms": 1790501297890
+     }
+    ]
+   },
+   "device_stage": "OPEN_HOME",
+   "execution_count": 1,
+   "run_id": "c_3ApI6SSi0c2m2RE2pkv5SxpwaNBPfuCIWX_AM8cgC5Q",
+   "fixture_name": null,
+   "home": null,
+   "away": null,
+   "competition": null,
+   "verification_detail": "Event link shows 'Vihiga Queens FC (W) v Ulinzi Starlets (W)'; alert says 'Vihiga Queens v Ulinzi Starlets': Known matching kick-off and competition required (competition mismatch (feed 'premier league women' vs page 'kenya league women'))",
+   "route": "event_link",
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 129,
+     "start_ts_ms": 1790501297876,
+     "end_elapsed_ms": 4197,
+     "end_ts_ms": 1790501301945,
+     "duration_ms": 4068,
+     "status": "fail",
+     "retries": 0
+    }
+   ],
+   "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed 'premier league women' vs page 'kenya league women'))",
+   "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "Known matching kick-off and competition required (competition mismatch (feed 'premier league women' vs page 'kenya league women'))",
+    "home": {
+     "feed": "Vihiga Queens",
+     "bookmaker": "Vihiga Queens FC (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "women's marker supplied by the competition; names agree 1.00",
+     "alias_safe": true
+    },
+    "away": {
+     "feed": "Ulinzi Starlets",
+     "bookmaker": "Ulinzi Starlets (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "women's marker supplied by the competition; names agree 1.00",
+     "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+     "event_id_match": true,
+     "event_anchor": "page opened from the alert's own Bet365 event link",
+     "sport_match": "equal",
+     "kickoff_match": "exact",
+     "competition_match": "mismatch (feed 'premier league women' vs page 'kenya league women')",
+     "competing_event": "none: a single event page reached through the alert's own link",
+     "home_similarity": {
+      "feed": "Vihiga Queens",
+      "bookmaker": "Vihiga Queens FC (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "women's marker supplied by the competition; names agree 1.00"
+     },
+     "away_similarity": {
+      "feed": "Ulinzi Starlets",
+      "bookmaker": "Ulinzi Starlets (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "women's marker supplied by the competition; names agree 1.00"
+     },
+     "protected_markers": "agree",
+     "orientation": "agree",
+     "policy": "verified_gate_failed",
+     "verdict": "AMBIGUOUS"
+    }
+   },
+   "identity_verdict": "AMBIGUOUS",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201829714/F3/I1/"
+  },
+  "run": {
+   "run_id": "c_3ApI6SSi0c2m2RE2pkv5SxpwaNBPfuCIWX_AM8cgC5Q",
+   "adapter": "live_bet365",
+   "status": "ALIAS_REQUIRED",
+   "phase": "FINISHED",
+   "started_at_ms": 1790501297748,
+   "events": [
+    {
+     "phase": "STARTED",
+     "elapsed_ms": 0,
+     "wall_ts_ms": 1790501297748
+    },
+    {
+     "phase": "OPEN_EVENT",
+     "elapsed_ms": 114,
+     "wall_ts_ms": 1790501297861
+    },
+    {
+     "phase": "OPEN_HOME",
+     "elapsed_ms": 129,
+     "wall_ts_ms": 1790501297876
+    },
+    {
+     "phase": "CAPTURE_event_direct",
+     "elapsed_ms": 3598,
+     "wall_ts_ms": 1790501301346
+    },
+    {
+     "phase": "CAPTURED_event_direct",
+     "elapsed_ms": 4119,
+     "wall_ts_ms": 1790501301866
+    },
+    {
+     "phase": "FINISHED",
+     "elapsed_ms": 4197,
+     "wall_ts_ms": 1790501301945
+    }
+   ],
+   "screenshots": [
+    "s001_event_direct.png"
+   ],
+   "gesture_attempts": 0,
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 129,
+     "start_ts_ms": 1790501297876,
+     "end_elapsed_ms": 4197,
+     "end_ts_ms": 1790501301945,
+     "duration_ms": 4068,
+     "status": "fail",
+     "retries": 0
+    }
+   ],
+   "search_query": "Vihiga Queens",
+   "identity_home": "Vihiga Queens",
+   "expected_away": "Ulinzi Starlets",
+   "identity_away": "Ulinzi Starlets",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201829714/F3/I1/",
+   "current_stage": "OPEN_HOME",
+   "session": "AUTHENTICATED",
+   "direct_event_header": [
+    "Kenya League Women 27 Sep 11:00",
+    "Vihiga Queens FC (W) v Ulinzi Starlets (W) v",
+    "Popular Bet Builder Result Goals Half Asian Lines"
+   ],
+   "competition_check": {
+    "feed": "Premier League Women",
+    "country": "Kenya",
+    "page": "Kenya League Women 27 Sep 11:00",
+    "matches": false
+   },
+   "identity": {
+    "verdict": "AMBIGUOUS",
+    "reason": "Known matching kick-off and competition required (competition mismatch (feed 'premier league women' vs page 'kenya league women'))",
+    "home": {
+     "feed": "Vihiga Queens",
+     "bookmaker": "Vihiga Queens FC (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "women's marker supplied by the competition; names agree 1.00",
+     "alias_safe": true
+    },
+    "away": {
+     "feed": "Ulinzi Starlets",
+     "bookmaker": "Ulinzi Starlets (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "women's marker supplied by the competition; names agree 1.00",
+     "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+     "event_id_match": true,
+     "event_anchor": "page opened from the alert's own Bet365 event link",
+     "sport_match": "equal",
+     "kickoff_match": "exact",
+     "competition_match": "mismatch (feed 'premier league women' vs page 'kenya league women')",
+     "competing_event": "none: a single event page reached through the alert's own link",
+     "home_similarity": {
+      "feed": "Vihiga Queens",
+      "bookmaker": "Vihiga Queens FC (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "women's marker supplied by the competition; names agree 1.00"
+     },
+     "away_similarity": {
+      "feed": "Ulinzi Starlets",
+      "bookmaker": "Ulinzi Starlets (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "women's marker supplied by the competition; names agree 1.00"
+     },
+     "protected_markers": "agree",
+     "orientation": "agree",
+     "policy": "verified_gate_failed",
+     "verdict": "AMBIGUOUS"
+    }
+   },
+   "identity_verdict": "AMBIGUOUS",
+   "route": "event_link",
+   "direct_event_rejected": "identity: Known matching kick-off and competition required (competition mismatch (feed 'premier league women' vs page 'kenya league women'))",
+   "detail": "Event link shows 'Vihiga Queens FC (W) v Ulinzi Starlets (W)'; alert says 'Vihiga Queens v Ulinzi Starlets': Known matching kick-off and competition required (competition mismatch (feed 'premier league women' vs page 'kenya league women'))",
+   "duration_ms": 4197
+  },
+  "wall": 5.2,
+  "frames": [
+   "s001_event_direct.png",
+   "s001_event_direct.txt"
+  ],
+  "resumed_at": "2026-09-27T09:28:22Z"
+ },
+ {
+  "case": {
+   "tag": "fb-farul-spread-w",
+   "query": "Farul Constanta||Csikszereda Miercurea Ciuc",
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-1",
+   "minimum_price": "1.75",
+   "women": true,
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201820591/F3/I1/",
+   "kickoff_utc": "2026-09-27T10:00",
+   "competition": "Liga 1 Women",
+   "country": "Romania"
+  },
+  "tag": "fb-farul-spread-w-102822",
+  "paused_at": "2026-09-27T09:28:24Z",
+  "result": {
+   "instruction_id": "fb-farul-spread-w-102822",
+   "status": "FAIL",
+   "stage": "EVENT_NOT_VERIFIED",
+   "detail": "selection_role=HOME but selection_name='' != fixture_home='Farul Constanta (W)'",
+   "duration_ms": 4916,
+   "progress": {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 4698,
+    "last_progress_at_ms": 1790501308864,
+    "instruction_id": "fb-farul-spread-w-102822",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790501304790
+     },
+     {
+      "stage": "OPEN_EVENT",
+      "elapsed_ms": 17,
+      "at_ms": 1790501304797
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 23,
+      "at_ms": 1790501304805,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 23,
+       "start_ts_ms": 1790501304798,
+       "end_elapsed_ms": 4083,
+       "end_ts_ms": 1790501308858,
+       "duration_ms": 4060,
+       "status": "ok",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3469,
+      "at_ms": 1790501304805
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4017,
+      "at_ms": 1790501304805
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 4083,
+      "at_ms": 1790501308864,
+      "timing": {
+       "stage": "MARKET_NAV",
+       "start_elapsed_ms": 4083,
+       "start_ts_ms": 1790501308858,
+       "end_elapsed_ms": 4698,
+       "end_ts_ms": 1790501309472,
+       "duration_ms": 615,
+       "status": "fail",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 4091,
+      "at_ms": 1790501308864
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 4670,
+      "at_ms": 1790501308864
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 4698,
+      "at_ms": 1790501308864
+     }
+    ]
+   },
+   "device_stage": "MARKET_NAV",
+   "execution_count": 1,
+   "run_id": "c_89j9u-DNEUHsgI8voQNbCaT1xd94oDs7VEU6TiroJEE",
+   "fixture_name": "Farul Constanta (W) v FK Csikszereda Miercurea",
+   "home": "Farul Constanta (W)",
+   "away": "FK Csikszereda Miercurea",
+   "competition": "Romania Liga 1 Women 27 Sep 11:00",
+   "verification_detail": "selection_role=HOME but selection_name='' != fixture_home='Farul Constanta (W)'",
+   "event_context": {
+    "home": "Farul Constanta (W)",
+    "away": "FK Csikszereda Miercurea",
+    "competition": "romania liga 1 women",
+    "kickoff_utc": "2026-09-27T10:00",
+    "period": "FULL_GAME"
+   },
+   "route": "event_link",
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 23,
+     "start_ts_ms": 1790501304798,
+     "end_elapsed_ms": 4083,
+     "end_ts_ms": 1790501308858,
+     "duration_ms": 4060,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "MARKET_NAV",
+     "start_elapsed_ms": 4083,
+     "start_ts_ms": 1790501308858,
+     "end_elapsed_ms": 4698,
+     "end_ts_ms": 1790501309472,
+     "duration_ms": 615,
+     "status": "fail",
+     "retries": 0
+    }
+   ],
+   "alias_candidate": {
+    "feed_home": "Farul Constanta",
+    "feed_away": "Csikszereda Miercurea Ciuc",
+    "bet365_home": "Farul Constanta (W)",
+    "bet365_away": "FK Csikszereda Miercurea",
+    "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201820591/F3/I1/",
+    "kickoff_shown": "27 Sep 11:00",
+    "kickoff_expected": "27 Sep 11:00",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+    "confidence": "deterministic",
+    "candidates": {
+     "Farul Constanta": "Farul Constanta (W)",
+     "Csikszereda Miercurea Ciuc": "FK Csikszereda Miercurea"
+    },
+    "sport": "football"
+   },
+   "identity": {
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+    "reason": "event link + kick-off 27 Sep 11:00 + women's competition supplies Bet365's (W) + both names compatible: 'Farul Constanta' ~ 'Farul Constanta (W)' (women_marker_from_competition 1.00); 'Csikszereda Miercurea Ciuc' ~ 'FK Csikszereda Miercurea' (token_containment 1.00)",
+    "home": {
+     "feed": "Farul Constanta",
+     "bookmaker": "Farul Constanta (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "women's marker supplied by the competition; names agree 1.00",
+     "alias_safe": true
+    },
+    "away": {
+     "feed": "Csikszereda Miercurea Ciuc",
+     "bookmaker": "FK Csikszereda Miercurea",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [csikszereda, miercurea] contained; extra [ciuc]",
+     "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+     "event_id_match": true,
+     "event_anchor": "page opened from the alert's own Bet365 event link",
+     "sport_match": "equal",
+     "kickoff_match": "exact",
+     "competition_match": "country_prefixed",
+     "competing_event": "none: a single event page reached through the alert's own link",
+     "home_similarity": {
+      "feed": "Farul Constanta",
+      "bookmaker": "Farul Constanta (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "women's marker supplied by the competition; names agree 1.00"
+     },
+     "away_similarity": {
+      "feed": "Csikszereda Miercurea Ciuc",
+      "bookmaker": "FK Csikszereda Miercurea",
+      "level": "VARIANT",
+      "kind": "token_containment",
+      "score": 1,
+      "note": "naming variant 1.00: distinctive tokens [csikszereda, miercurea] contained; extra [ciuc]"
+     },
+     "protected_markers": "agree",
+     "orientation": "agree",
+     "policy": "event_evidence_both_variants",
+     "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+    }
+   },
+   "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201820591/F3/I1/"
+  },
+  "run": {
+   "run_id": "c_89j9u-DNEUHsgI8voQNbCaT1xd94oDs7VEU6TiroJEE",
+   "adapter": "live_bet365",
+   "status": "EVENT_NOT_VERIFIED",
+   "phase": "FINISHED",
+   "started_at_ms": 1790501304775,
+   "events": [
+    {
+     "phase": "STARTED",
+     "elapsed_ms": 1,
+     "wall_ts_ms": 1790501304775
+    },
+    {
+     "phase": "OPEN_EVENT",
+     "elapsed_ms": 17,
+     "wall_ts_ms": 1790501304791
+    },
+    {
+     "phase": "OPEN_HOME",
+     "elapsed_ms": 23,
+     "wall_ts_ms": 1790501304798
+    },
+    {
+     "phase": "CAPTURE_event_direct",
+     "elapsed_ms": 3469,
+     "wall_ts_ms": 1790501308244
+    },
+    {
+     "phase": "CAPTURED_event_direct",
+     "elapsed_ms": 4017,
+     "wall_ts_ms": 1790501308792
+    },
+    {
+     "phase": "MARKET_NAV",
+     "elapsed_ms": 4083,
+     "wall_ts_ms": 1790501308858
+    },
+    {
+     "phase": "CAPTURE_markets",
+     "elapsed_ms": 4091,
+     "wall_ts_ms": 1790501308865
+    },
+    {
+     "phase": "CAPTURED_markets",
+     "elapsed_ms": 4670,
+     "wall_ts_ms": 1790501309445
+    },
+    {
+     "phase": "FINISHED",
+     "elapsed_ms": 4698,
+     "wall_ts_ms": 1790501309473
+    }
+   ],
+   "screenshots": [
+    "s001_event_direct.png",
+    "s002_markets.png"
+   ],
+   "gesture_attempts": 0,
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 23,
+     "start_ts_ms": 1790501304798,
+     "end_elapsed_ms": 4083,
+     "end_ts_ms": 1790501308858,
+     "duration_ms": 4060,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "MARKET_NAV",
+     "start_elapsed_ms": 4083,
+     "start_ts_ms": 1790501308858,
+     "end_elapsed_ms": 4698,
+     "end_ts_ms": 1790501309472,
+     "duration_ms": 615,
+     "status": "fail",
+     "retries": 0
+    }
+   ],
+   "search_query": "Farul Constanta",
+   "identity_home": "Farul Constanta",
+   "expected_away": "Csikszereda Miercurea Ciuc",
+   "identity_away": "Csikszereda Miercurea Ciuc",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201820591/F3/I1/",
+   "current_stage": "MARKET_NAV",
+   "session": "AUTHENTICATED",
+   "direct_event_header": [
+    "Romania Liga 1 Women 27 Sep 11:00",
+    "Farul Constanta (W) v FK Csikszereda Miercurea",
+    "Ciuc (W)",
+    "Popular Bet Builder Result Goals Half Asian Lines"
+   ],
+   "competition_check": {
+    "feed": "Liga 1 Women",
+    "country": "Romania",
+    "page": "Romania Liga 1 Women 27 Sep 11:00",
+    "matches": true
+   },
+   "identity": {
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+    "reason": "event link + kick-off 27 Sep 11:00 + women's competition supplies Bet365's (W) + both names compatible: 'Farul Constanta' ~ 'Farul Constanta (W)' (women_marker_from_competition 1.00); 'Csikszereda Miercurea Ciuc' ~ 'FK Csikszereda Miercurea' (token_containment 1.00)",
+    "home": {
+     "feed": "Farul Constanta",
+     "bookmaker": "Farul Constanta (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "women's marker supplied by the competition; names agree 1.00",
+     "alias_safe": true
+    },
+    "away": {
+     "feed": "Csikszereda Miercurea Ciuc",
+     "bookmaker": "FK Csikszereda Miercurea",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [csikszereda, miercurea] contained; extra [ciuc]",
+     "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+     "event_id_match": true,
+     "event_anchor": "page opened from the alert's own Bet365 event link",
+     "sport_match": "equal",
+     "kickoff_match": "exact",
+     "competition_match": "country_prefixed",
+     "competing_event": "none: a single event page reached through the alert's own link",
+     "home_similarity": {
+      "feed": "Farul Constanta",
+      "bookmaker": "Farul Constanta (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "women's marker supplied by the competition; names agree 1.00"
+     },
+     "away_similarity": {
+      "feed": "Csikszereda Miercurea Ciuc",
+      "bookmaker": "FK Csikszereda Miercurea",
+      "level": "VARIANT",
+      "kind": "token_containment",
+      "score": 1,
+      "note": "naming variant 1.00: distinctive tokens [csikszereda, miercurea] contained; extra [ciuc]"
+     },
+     "protected_markers": "agree",
+     "orientation": "agree",
+     "policy": "event_evidence_both_variants",
+     "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+    }
+   },
+   "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "route": "event_link",
+   "alias_candidate": {
+    "feed_home": "Farul Constanta",
+    "feed_away": "Csikszereda Miercurea Ciuc",
+    "bet365_home": "Farul Constanta (W)",
+    "bet365_away": "FK Csikszereda Miercurea",
+    "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201820591/F3/I1/",
+    "kickoff_shown": "27 Sep 11:00",
+    "kickoff_expected": "27 Sep 11:00",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+    "confidence": "deterministic",
+    "candidates": {
+     "Farul Constanta": "Farul Constanta (W)",
+     "Csikszereda Miercurea Ciuc": "FK Csikszereda Miercurea"
+    },
+    "sport": "football"
+   },
+   "kickoff_verified": "27 Sep 11:00",
+   "verified_fixture": {
+    "code": "8ef1b66b",
+    "home": "Farul Constanta (W)",
+    "away": "FK Csikszereda Miercurea",
+    "fixture_name": "Farul Constanta (W) v FK Csikszereda Miercurea",
+    "exact_fixture_text": "Home Farul Constanta (W)\nAway FK Csikszereda Miercurea",
+    "competition": "Romania Liga 1 Women 27 Sep 11:00",
+    "bounds": [
+     19,
+     266,
+     701,
+     473
+    ]
+   },
+   "fixture_home": "Farul Constanta (W)",
+   "fixture_away": "FK Csikszereda Miercurea",
+   "identity_verified_home": "Farul Constanta",
+   "identity_verified_away": "Csikszereda Miercurea Ciuc",
+   "event_verified": true,
+   "event_context": {
+    "home": "Farul Constanta (W)",
+    "away": "FK Csikszereda Miercurea",
+    "competition": "romania liga 1 women",
+    "kickoff_utc": "2026-09-27T10:00",
+    "period": "FULL_GAME"
+   },
+   "fixture": {
+    "code": "8ef1b66b",
+    "home": "Farul Constanta (W)",
+    "away": "FK Csikszereda Miercurea",
+    "fixture_name": "Farul Constanta (W) v FK Csikszereda Miercurea",
+    "exact_fixture_text": "Home Farul Constanta (W)\nAway FK Csikszereda Miercurea",
+    "competition": "Romania Liga 1 Women 27 Sep 11:00",
+    "bounds": [
+     19,
+     266,
+     701,
+     473
+    ]
+   },
+   "detail": "selection_role=HOME but selection_name='' != fixture_home='Farul Constanta (W)'",
+   "duration_ms": 4698
+  },
+  "wall": 5.8,
+  "frames": [
+   "s001_event_direct.png",
+   "s001_event_direct.txt",
+   "s002_markets.png",
+   "s002_markets.txt"
+  ],
+  "resumed_at": "2026-09-27T09:28:30Z"
+ }
+]

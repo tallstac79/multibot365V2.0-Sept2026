@@ -44,8 +44,9 @@ Hapoel Tel Aviv 1.23 and Bayern Munich 3.75 in the stored Game Lines OCR fixture
 A silent provider reversal of otherwise identical unlabelled pairs cannot be
 deduced from prices alone. Unknown formats, wrong outcome counts, duplicated or
 inconsistent named ordering, mixed markets and malformed prices fail closed.
-This profile does not infer a two-way mapping for football three-way 1X2. Those
-records remain retained with their existing verification requirements.
+This profile does not infer a two-way mapping for football three-way 1X2. Football
+1X2 has its own verified profile since 27 Sep 2026 (`core/football.py`,
+[FOOTBALL_STRATEGY_SPEC.md](FOOTBALL_STRATEGY_SPEC.md)).
 
 ## Minimum evidence and side selection
 

@@ -1,0 +1,32 @@
+FOOTBALL FEED 1 REPLAY: 72 alerts
+supported by market type: 1X2 7, SPREAD 28, TOTALS 37
+executable 43 | rejected (NO BET) 24 | ambiguous 5 | invalid 0
+verdicts: AMBIGUOUS 5, EXECUTABLE_AWAY 6, EXECUTABLE_HOME 19, EXECUTABLE_OVER 5, EXECUTABLE_UNDER 13, NO_BET 24
+by market and verdict: 1X2/EXECUTABLE_AWAY 2, 1X2/EXECUTABLE_HOME 5, SPREAD/AMBIGUOUS 4, SPREAD/EXECUTABLE_AWAY 4, SPREAD/EXECUTABLE_HOME 14, SPREAD/NO_BET 6, TOTALS/AMBIGUOUS 1, TOTALS/EXECUTABLE_OVER 5, TOTALS/EXECUTABLE_UNDER 13, TOTALS/NO_BET 18
+NO BET / AMBIGUOUS reasons:
+   11  TOTALS  POTENTIAL_VALUE for OVER (line FAVOURABLE, price NOT_COMPARABLE, EV NO
+    7  TOTALS  Bet365 link is an in-play page (#/IP/): no scheduled kick-off or pre-m
+    3  SPREAD  Bet365 link is an in-play page (#/IP/): no scheduled kick-off or pre-m
+    2  SPREAD  POTENTIAL_VALUE for AWAY (line FAVOURABLE, price NOT_COMPARABLE, EV NO
+    2  SPREAD  Current row is an alternate line (0 vs opening 0.25): the main-line mo
+    1  SPREAD  POTENTIAL_VALUE for HOME (line FAVOURABLE, price NOT_COMPARABLE, EV NO
+    1  TOTALS  Line unchanged and no unique net price shortener (both sides shortened
+    1  SPREAD  Line unchanged and no unique net price shortener (both sides shortened
+    1  SPREAD  Current row is an alternate line (0 vs opening 0.5): the main-line mov
+rules engine at historical receipt time with the audit football terms (10% net payout, 0.25 goal line, min_line_advantage 1.0): {'STALE': 5, 'REJECT': 14, 'ACCEPT': 38}
+   14  bet_quality: POTENTIAL_VALUE (line FAVOURABLE, price NOT_COMPARABLE, EV NOT_AVAI
+    1  alert_age: 1567s old (limit 300s)
+    1  alert_age: 1401s old (limit 300s)
+    1  alert_age: 1099s old (limit 300s)
+    1  alert_age: 1043s old (limit 300s)
+    1  alert_age: 675s old (limit 300s)
+examples:
+  HOME: intake 2081 Halcones Negros vs Club Calor | SPREAD -1 | Bet365 1.80 vs Pinnacle 1.330 | CLEAR_VALUE_SIGNAL | EV 128.97 | rules STALE
+  HOME: intake 2083 Universitario de Vinto vs Oriente Petrolero | 1X2  | Bet365 2.88 vs Pinnacle 2.090 | CLEAR_VALUE_SIGNAL | EV 127.07 | rules STALE
+  DRAW: none in corpus (draw opening price is never supplied by the feed; DRAW requires a three-price opening row)
+  AWAY: intake 2098 Tadotsu FC vs MSP Yashima FC | SPREAD +1.5 | Bet365 1.90 vs Pinnacle 1.578 | CLEAR_VALUE_SIGNAL | EV 110.88 | rules ACCEPT
+  AWAY: intake 2100 Tadotsu FC vs MSP Yashima FC | SPREAD +1.5 | Bet365 1.90 vs Pinnacle 1.543 | CLEAR_VALUE_SIGNAL | EV 113.68 | rules ACCEPT
+  OVER: intake 2138 Udon United vs Pitchaya Bundit College | TOTALS 3 | Bet365 1.93 vs Pinnacle 1.568 | CLEAR_VALUE_SIGNAL | EV 115.61 | rules ACCEPT
+  OVER: intake 2144 Udon United vs Pitchaya Bundit College | TOTALS 3.25 | Bet365 2.00 vs Pinnacle 1.689 | CLEAR_VALUE_SIGNAL | EV 110.15 | rules ACCEPT
+  UNDER: intake 2087 Guaynabo Gol SC vs Taurinos | TOTALS 2.5 | Bet365 2.50 vs Pinnacle 1.909 | CLEAR_VALUE_SIGNAL | EV 119.57 | rules STALE
+  UNDER: intake 2088 Guaynabo Gol SC vs Taurinos | TOTALS 2.5 | Bet365 2.50 vs Pinnacle 1.900 | CLEAR_VALUE_SIGNAL | EV 117.19 | rules STALE

@@ -1,0 +1,286 @@
+{
+ "case": {
+  "tag": "fb-farul-spread",
+  "query": "Farul Constanta||Csikszereda Miercurea Ciuc",
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "-1",
+  "minimum_price": "1.75",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201820591/F3/I1/",
+  "kickoff_utc": "2026-09-27T10:00",
+  "competition": "Liga 1 Women",
+  "country": "Romania"
+ },
+ "tag": "fb-farul-spread-102524",
+ "paused_at": "2026-09-27T09:25:26Z",
+ "result": {
+  "instruction_id": "fb-farul-spread-102524",
+  "status": "FAIL",
+  "stage": "WRONG_EVENT",
+  "detail": "Event link shows 'Farul Constanta (W) v FK Csikszereda'; alert says 'Farul Constanta v Csikszereda Miercurea Ciuc': 'Farul Constanta' vs 'Farul Constanta (W)': protected markers differ [] vs [women]",
+  "duration_ms": 4425,
+  "progress": {
+   "stage": "OPEN_HOME",
+   "elapsed_ms": 4162,
+   "last_progress_at_ms": 1790501126546,
+   "instruction_id": "fb-farul-spread-102524",
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790501126524
+    },
+    {
+     "stage": "OPEN_EVENT",
+     "elapsed_ms": 25,
+     "at_ms": 1790501126538
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 34,
+     "at_ms": 1790501126546,
+     "timing": {
+      "stage": "OPEN_HOME",
+      "start_elapsed_ms": 34,
+      "start_ts_ms": 1790501126539,
+      "end_elapsed_ms": 4161,
+      "end_ts_ms": 1790501130667,
+      "duration_ms": 4127,
+      "status": "fail",
+      "retries": 0
+     }
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 3502,
+     "at_ms": 1790501126546
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4027,
+     "at_ms": 1790501126546
+    },
+    {
+     "stage": "OPEN_HOME",
+     "elapsed_ms": 4162,
+     "at_ms": 1790501126546
+    }
+   ]
+  },
+  "device_stage": "OPEN_HOME",
+  "execution_count": 1,
+  "run_id": "c_gR0euvZSiHnpIc0ArMFhuEoVjw5d3odpPi8KFHtD11U",
+  "fixture_name": null,
+  "home": null,
+  "away": null,
+  "competition": null,
+  "verification_detail": "Event link shows 'Farul Constanta (W) v FK Csikszereda'; alert says 'Farul Constanta v Csikszereda Miercurea Ciuc': 'Farul Constanta' vs 'Farul Constanta (W)': protected markers differ [] vs [women]",
+  "route": "event_link",
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 34,
+    "start_ts_ms": 1790501126539,
+    "end_elapsed_ms": 4161,
+    "end_ts_ms": 1790501130667,
+    "duration_ms": 4127,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "direct_event_rejected": "identity: 'Farul Constanta' vs 'Farul Constanta (W)': protected markers differ [] vs [women]",
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "'Farul Constanta' vs 'Farul Constanta (W)': protected markers differ [] vs [women]",
+   "home": {
+    "feed": "Farul Constanta",
+    "bookmaker": "Farul Constanta (W)",
+    "level": "NONE",
+    "kind": "markers_conflict",
+    "score": 0,
+    "note": "protected markers differ [] vs [women]",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Csikszereda Miercurea Ciuc",
+    "bookmaker": "FK Csikszereda",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [csikszereda] contained; extra [miercurea, ciuc]",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Farul Constanta",
+     "bookmaker": "Farul Constanta (W)",
+     "level": "NONE",
+     "kind": "markers_conflict",
+     "score": 0,
+     "note": "protected markers differ [] vs [women]"
+    },
+    "away_similarity": {
+     "feed": "Csikszereda Miercurea Ciuc",
+     "bookmaker": "FK Csikszereda",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [csikszereda] contained; extra [miercurea, ciuc]"
+    },
+    "protected_markers": "conflict: protected markers differ [] vs [women]",
+    "orientation": "not established",
+    "policy": "protected_markers",
+    "verdict": "MISMATCH"
+   }
+  },
+  "identity_verdict": "MISMATCH",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201820591/F3/I1/"
+ },
+ "run": {
+  "run_id": "c_gR0euvZSiHnpIc0ArMFhuEoVjw5d3odpPi8KFHtD11U",
+  "adapter": "live_bet365",
+  "status": "WRONG_EVENT",
+  "phase": "FINISHED",
+  "started_at_ms": 1790501126506,
+  "events": [
+   {
+    "phase": "STARTED",
+    "elapsed_ms": 0,
+    "wall_ts_ms": 1790501126506
+   },
+   {
+    "phase": "OPEN_EVENT",
+    "elapsed_ms": 25,
+    "wall_ts_ms": 1790501126531
+   },
+   {
+    "phase": "OPEN_HOME",
+    "elapsed_ms": 34,
+    "wall_ts_ms": 1790501126540
+   },
+   {
+    "phase": "CAPTURE_event_direct",
+    "elapsed_ms": 3502,
+    "wall_ts_ms": 1790501130008
+   },
+   {
+    "phase": "CAPTURED_event_direct",
+    "elapsed_ms": 4027,
+    "wall_ts_ms": 1790501130532
+   },
+   {
+    "phase": "FINISHED",
+    "elapsed_ms": 4162,
+    "wall_ts_ms": 1790501130667
+   }
+  ],
+  "screenshots": [
+   "s001_event_direct.png"
+  ],
+  "gesture_attempts": 0,
+  "stage_timings": [
+   {
+    "stage": "OPEN_HOME",
+    "start_elapsed_ms": 34,
+    "start_ts_ms": 1790501126539,
+    "end_elapsed_ms": 4161,
+    "end_ts_ms": 1790501130667,
+    "duration_ms": 4127,
+    "status": "fail",
+    "retries": 0
+   }
+  ],
+  "search_query": "Farul Constanta",
+  "identity_home": "Farul Constanta",
+  "expected_away": "Csikszereda Miercurea Ciuc",
+  "identity_away": "Csikszereda Miercurea Ciuc",
+  "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201820591/F3/I1/",
+  "current_stage": "OPEN_HOME",
+  "session": "AUTHENTICATED",
+  "direct_event_header": [
+   "Romania Liga 1 Women 27 Sep 11:00",
+   "Farul Constanta (W) v FK Csikszereda",
+   "Miercurea Ciuc (W)",
+   "Popular Bet Builder Result Goals Half Asian Lines"
+  ],
+  "competition_check": {
+   "feed": "Liga 1 Women",
+   "country": "Romania",
+   "page": "Romania Liga 1 Women 27 Sep 11:00",
+   "matches": true
+  },
+  "identity": {
+   "verdict": "MISMATCH",
+   "reason": "'Farul Constanta' vs 'Farul Constanta (W)': protected markers differ [] vs [women]",
+   "home": {
+    "feed": "Farul Constanta",
+    "bookmaker": "Farul Constanta (W)",
+    "level": "NONE",
+    "kind": "markers_conflict",
+    "score": 0,
+    "note": "protected markers differ [] vs [women]",
+    "alias_safe": true
+   },
+   "away": {
+    "feed": "Csikszereda Miercurea Ciuc",
+    "bookmaker": "FK Csikszereda",
+    "level": "VARIANT",
+    "kind": "token_containment",
+    "score": 1,
+    "note": "naming variant 1.00: distinctive tokens [csikszereda] contained; extra [miercurea, ciuc]",
+    "alias_safe": true
+   },
+   "kickoff_known": true,
+   "kickoff_agrees": true,
+   "reversed": false,
+   "evidence": {
+    "event_id_match": true,
+    "event_anchor": "page opened from the alert's own Bet365 event link",
+    "sport_match": "equal",
+    "kickoff_match": "exact",
+    "competition_match": "country_prefixed",
+    "competing_event": "none: a single event page reached through the alert's own link",
+    "home_similarity": {
+     "feed": "Farul Constanta",
+     "bookmaker": "Farul Constanta (W)",
+     "level": "NONE",
+     "kind": "markers_conflict",
+     "score": 0,
+     "note": "protected markers differ [] vs [women]"
+    },
+    "away_similarity": {
+     "feed": "Csikszereda Miercurea Ciuc",
+     "bookmaker": "FK Csikszereda",
+     "level": "VARIANT",
+     "kind": "token_containment",
+     "score": 1,
+     "note": "naming variant 1.00: distinctive tokens [csikszereda] contained; extra [miercurea, ciuc]"
+    },
+    "protected_markers": "conflict: protected markers differ [] vs [women]",
+    "orientation": "not established",
+    "policy": "protected_markers",
+    "verdict": "MISMATCH"
+   }
+  },
+  "identity_verdict": "MISMATCH",
+  "route": "event_link",
+  "direct_event_rejected": "identity: 'Farul Constanta' vs 'Farul Constanta (W)': protected markers differ [] vs [women]",
+  "detail": "Event link shows 'Farul Constanta (W) v FK Csikszereda'; alert says 'Farul Constanta v Csikszereda Miercurea Ciuc': 'Farul Constanta' vs 'Farul Constanta (W)': protected markers differ [] vs [women]",
+  "duration_ms": 4162
+ },
+ "wall": 5.3,
+ "frames": [
+  "s001_event_direct.png",
+  "s001_event_direct.txt"
+ ],
+ "resumed_at": "2026-09-27T09:25:32Z"
+}

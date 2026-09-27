@@ -78,8 +78,10 @@ Local evidence and interpretation:
 6. Basketball MONEYLINE is supported by the separate [ML audit and contract](MONEYLINE_AUDIT.md):
    a unique Pinnacle opening-to-current price shortener selects HOME or AWAY;
    only its Bet365 offer and its own EV can qualify it. That audit supersedes
-   the initial ML exclusion. Football 1X2 remains AMBIGUOUS; the basketball
-   profile does not establish missing three-way opening outcomes or ordering.
+   the initial ML exclusion. Football (Feed 1: 1X2, Asian-handicap Spread, Totals) has
+   its own verified profiles and price-based equal-line rule since 27 Sep 2026:
+   [FOOTBALL_STRATEGY_SPEC.md](FOOTBALL_STRATEGY_SPEC.md). Nothing in this
+   basketball specification changed for it.
 7. Evaluate Bet365 for the selected side only. Spread advantage = Bet365 signed
    handicap − current Pinnacle signed handicap. OVER advantage = Pinnacle total
    − Bet365 total. UNDER advantage = Bet365 total − Pinnacle total.
