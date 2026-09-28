@@ -1,0 +1,97 @@
+{
+ "instruction": {
+  "instruction_id": "on-81f1b0d16ea82d9687c8cc70",
+  "state": "SESSION_REQUIRED",
+  "device_id": "desktop-chrome",
+  "fixture": "Genesis vs Olancho",
+  "market": "TOTALS",
+  "selection": "UNDER",
+  "stake": "0.10"
+ },
+ "bet": null,
+ "device": {
+  "device_id": "desktop-chrome",
+  "kind": "desktop_chrome",
+  "worker_id": "dw-bde27aa2fe41",
+  "account_fingerprint": "f210d5f9dde5",
+  "registered_at": "2026-09-28T20:36:38.941+00:00",
+  "updated_at": "2026-09-28T20:36:38.941+00:00",
+  "source": "pipeline settings"
+ },
+ "decision": {
+  "instruction_id": "on-81f1b0d16ea82d9687c8cc70",
+  "state": "SESSION_REQUIRED",
+  "approval_mode": null,
+  "approved_by": null,
+  "approved_at": null,
+  "auto_approved_at": null,
+  "execution_job_id": null,
+  "strategy_version": null,
+  "rules_version": null,
+  "worker": {
+   "device_id": "desktop-chrome"
+  },
+  "requested": {
+   "line": "2.75",
+   "odds": "1.90",
+   "stake": "0.10"
+  },
+  "observed_pretap": null,
+  "intent_at": null,
+  "receipt": null,
+  "reconciliation_result": null,
+  "reconciliations": [],
+  "events": [],
+  "transitions": [
+   {
+    "at": "2026-09-28T21:20:04.534+00:00",
+    "from_state": null,
+    "to_state": "RECEIVED",
+    "actor": "intake",
+    "reason": "Source message received"
+   },
+   {
+    "at": "2026-09-28T21:20:04.534+00:00",
+    "from_state": "RECEIVED",
+    "to_state": "PARSED",
+    "actor": "parser",
+    "reason": "oddsnotifier_football_two_sided_v1 / classifier-4-moneyline"
+   },
+   {
+    "at": "2026-09-28T21:20:04.534+00:00",
+    "from_state": "PARSED",
+    "to_state": "RULES_APPLIED",
+    "actor": "rules",
+    "reason": "All rules passed"
+   },
+   {
+    "at": "2026-09-28T21:20:04.534+00:00",
+    "from_state": "RULES_APPLIED",
+    "to_state": "QUEUED",
+    "actor": "rules",
+    "reason": "Queued for device"
+   },
+   {
+    "at": "2026-09-28T21:20:06.183+00:00",
+    "from_state": "QUEUED",
+    "to_state": "DISPATCHED",
+    "actor": "dispatcher",
+    "reason": "Sent to coordinator [desktop worker desktop-chrome]"
+   },
+   {
+    "at": "2026-09-28T21:20:06.216+00:00",
+    "from_state": "DISPATCHED",
+    "to_state": "DEVICE_ACTIVE",
+    "actor": "coordinator",
+    "reason": "Coordinator durably accepted instruction"
+   },
+   {
+    "at": "2026-09-28T21:20:12.765+00:00",
+    "from_state": "DEVICE_ACTIVE",
+    "to_state": "SESSION_REQUIRED",
+    "actor": "coordinator",
+    "reason": "SESSION_EXPIRED: Bet365 Reality Check is open; answer it on the mini PC to continue (desktop worker stopped at 2026-09-28 22:20:09+01:00; it never answers the dialog). Bet365 'Reality Check' dialog is open: answer it by hand in the worker's Chrome window (the worker never answers it)"
+   }
+  ]
+ }
+}

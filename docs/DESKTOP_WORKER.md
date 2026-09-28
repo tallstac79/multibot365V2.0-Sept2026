@@ -246,10 +246,81 @@ The ledger snapshot is in `e2e/ledger_snapshot.json`. The worker screenshots for
 
 A Telegram TEST alert (clearly labelled "TEST ONLY") was sent at 20:36 BST (`telegram_test.txt`).
 
-### Remaining before enabling normal desktop routing
+### Remaining before enabling normal desktop routing (as of 21:00; superseded by the section below)
 - **Per-row device binding in the pipeline:** `Store` records `settings.device_id` (the phone) for every instruction, and the PLACE_HELD pre-tap check compares `row.device_id` with `settings.device_id`. Rows sent to the desktop need their own device and worker binding before the flag is turned on. `RoutingGateway` already keeps the per-instruction target.
 - **Approval policy for the desktop:** decide whether automatic approval may cover `desktop-chrome`. Its health keeps `phone_final_action_armed=false`, so today only a manual approval path would reach it.
 - **Live click:** a supervised live PLACE_HELD at £0.10 with both live flags set (only with David's go-ahead), then turn them off again.
 - **Settlement and reconcile via the pipeline:** the pipeline's MY_BETS/settlement jobs should target the desktop for desktop bets. The desktop result still lacks the `status` (OPEN/SETTLED) parsing that the phone's cards give.
 - **Configuration:** set `desktop_expected_worker_id=dw-bde27aa2fe41` and `desktop_expected_account_fingerprint=f210d5f9dde5` in `pipeline.json` when enabling.
 - **Reality Check cadence:** it appears every 60 minutes and stays manual, so the desktop is not routable until David answers it. Expect roughly 1 blocked episode per hour.
+
+## Desktop as its own backend device, supervised target, Reality Check auto-recovery (28 Sep 2026, 21:21-23:00 BST)
+
+Evidence: `evidence/desktop-worker-backend-placement/`.
+
+### Backend device identity
+- `devices` table (additive, `core/pipeline_store.py`): `desktop-chrome` / kind `desktop_chrome` / worker `dw-bde27aa2fe41` /
+  account `f210d5f9dde5`, registered from `pipeline.json` (`desktop_expected_worker_id`, `desktop_expected_account_fingerprint`).
+  A changed identity is updated and audited (`DEVICE_IDENTITY_CHANGED`). Phone records are not touched.
+- The pipeline polls the desktop's `/health` every tick (only when that identity is configured) and records it in
+  `device_state` / `session_state` under `desktop-chrome`, never under the phone's device ID.
+- An instruction sent to the desktop is bound to it (`instructions.device_id = desktop-chrome`, audit `DEVICE_TARGET`). From then
+  on everything for that row uses the desktop: result polling, the held-slip release, PLACE_HELD, the automatic checks, the bet's
+  worker/account binding and My Bets.
+
+### Choosing the target (`Pipeline._choose_target`)
+- `desktop_routing_enabled` stays **OFF**. With it OFF, a new instruction goes to the desktop only through the **supervised
+  target**: `py -3.11 tools/desktop_route.py target --minutes M --lead L`. This arms the control `desktop_target_next` for ONE
+  instruction. That instruction must be pre-match football, received after arming, with kick-off at least L minutes ahead.
+  The target expires, and it is consumed atomically when the instruction is dispatched. `untarget` cancels it.
+- Even when armed, the desktop is chosen only while it is routable: healthy, ready, IDLE, no `blocked_reason`, bound to the expected
+  worker and account. Its backend session must also be AUTHENTICATED within the 120 s gate, and no desktop My Bets check may be running.
+  Otherwise the instruction runs on the phone as before.
+- With the flag ON (not enabled), the same routable test sends new work to the desktop without a target.
+- `tools.pipeline_service.gateway_for` returns the phone gateway. `desktop_gateway_for` attaches the `DesktopGateway` when the
+  identity is configured.
+
+### Automatic approval for desktop instructions
+The same `FinalAction.automatic_checks` apply, with the same rules, limits and tolerances. Only the identity checks are bound to
+the row's device:
+- **Session and health:** from `desktop-chrome`.
+- **Identity:** `worker_identity` and `account_identity` are checked against the desktop's expected values.
+- **Arming:** `desktop_final_action_permission` replaces `phone_final_action_permission`. It requires the desktop health
+  `final_action_armed=true` (which the worker reports only while BOTH `live_click_enabled` and `DESKTOP_LIVE_CLICK=1` are set),
+  `phone_final_action_armed` not true, and `kind=desktop_chrome`.
+
+The desktop worker's own guards (hold age 115 s, £0.10 cap, £0.50 daily live cap, durable intent, PLACEMENT_UNKNOWN on an unclear
+receipt) still run on PLACE_HELD.
+
+### Reconciliation routing
+- `FinalAction.schedule(..., scope)`, `poll(gateway, desktop)`, `device_busy(scope)` and `next_reconciliation(..., scope)` route each
+  My Bets check by the bet's `worker_id`. Bets placed on the desktop worker/account are verified and settled on the desktop.
+  Phone bets are checked on the phone. A check never runs on the other device's account.
+- The bet row's `binding_source` says `desktop worker desktop-chrome health at the placement result`.
+
+### Reality Check auto-recovery (worker)
+- **Probe cadence:** the idle probe runs every 60 s (it was 120 s), so the backend's 120 s session gate sees fresh reports. While
+  `blocked_reason` is REALITY_CHECK, LOGGED_OUT or SESSION_UNKNOWN, the probe runs every `BLOCKED_PROBE_S=12` s. The probe is
+  screenshot-only (a CDP `Page.captureScreenshot`); the dialog is never clicked, answered or dismissed.
+- **Blocked:** health goes `healthy=false`, `ready=false`, `blocked_reason=REALITY_CHECK`, so `device_routing.routable` and the
+  backend selector say not routable. One Telegram BLOCKED message is sent per episode.
+- **Recovery:** when David clears the dialog, the next 12 s probe reads LOGGED_IN. Health returns to ready/IDLE by itself, with no
+  restart and no worker action, and one Telegram RESUMED message is sent.
+- **Before each result:** a screenshot-only session read runs before each instruction's result is published, so the backend judges
+  that result against a session report taken after the run.
+- **Tests:** `tests/test_desktop_reality_check.py`. It drives the real `_probe` -> `lifecycle.session_state` path on the captured
+  fixtures, with a page that fails the test on anything other than a CDP screenshot.
+
+### Live Reality Check, 28 Sep 2026 22:06 BST onwards (`evidence/desktop-worker-backend-placement/reality_check/`)
+- **22:06:37:** a real Reality Check opened. Health went REALITY_CHECK / not routable at once, one Telegram BLOCKED message was sent,
+  and the probe switched to 12 s (`probe_cadence.txt`: 22:10:37, :49, 22:11:01, :13). The dialog was never touched.
+- **22:19-22:25 flapping:** the block flapped. Some probe frames were classified LOGGED_IN while the dialog was still open, because
+  the OCR had the title and text but missed the "Remain Logged In" / "Log out" buttons. Each such frame resumed routing and sent a
+  RESUMED message. Two supervised desktop targets (`on-81f1b0d1...`, `on-a75935e5...`, Genesis v Olancho) were dispatched in those
+  windows. The worker met the dialog on the event page and stopped: SESSION_REQUIRED, **no click**, no bet.
+- **Fixes, both live since 22:36:**
+  - A dialog title plus any of its own phrases now reads REALITY_CHECK (56f2701). All 7 misread frames in `probe/hist` now read
+    REALITY_CHECK.
+  - A block clears only after 2 consecutive LOGGED_IN reads (b3ef231).
+  - Frames around a block are kept in `.local/desktop-evidence/probe/hist`.
+- **Still open:** no genuine clearance by David has been observed yet. The earlier "recoveries" were those misreads.

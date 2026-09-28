@@ -1,0 +1,12 @@
+Probe history of 22:27:52-22:32:27 BST (12 s cadence, dialog open throughout; pre-fix classifier):
+222752 RC, 222803 RC, 222815 RC, 222827 RC, 222839 LOGGED_IN, 222851 RC, 222903 RC, 222915 LOGGED_IN, 222927 RC, 222939 LOGGED_IN, 222951 RC, 223003 RC, 223015 RC, 223027 RC, 223039 LOGGED_IN, 223051 RC, 223103 RC, 223115 RC, 223127 RC, 223139 LOGGED_IN, 223151 RC, 223203 RC, 223215 RC, 223227 RC
+
+Re-classified with the fix (56f2701), run at ~22:35 BST on the kept frames:
+222839 -> REALITY_CHECK
+222915 -> REALITY_CHECK
+222939 -> REALITY_CHECK
+223039 -> REALITY_CHECK
+223139 -> REALITY_CHECK
+223239 -> REALITY_CHECK
+223339 -> REALITY_CHECK
+(the frames themselves rotated out of the 60-frame history; 223139 is kept as tests/fixtures/desktop/session/reality_check_buttons_unread.png)

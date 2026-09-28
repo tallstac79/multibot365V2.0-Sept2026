@@ -1,0 +1,54 @@
+{
+ "flags": {
+  "desktop_routing_enabled": false,
+  "desktop_device_id": "desktop-chrome",
+  "desktop_expected_worker_id": "dw-bde27aa2fe41",
+  "desktop_expected_account_fingerprint": "f210d5f9dde5"
+ },
+ "verdict": {
+  "manual_target_routable": false,
+  "manual_reason": "not healthy (REALITY_CHECK)",
+  "normal_routing": false,
+  "normal_reason": "desktop routing disabled (flag OFF)"
+ },
+ "health": {
+  "healthy": false,
+  "ready": false,
+  "blocked_reason": "REALITY_CHECK",
+  "state": "IDLE",
+  "current_instruction": null,
+  "device_id": "desktop-chrome",
+  "worker_id": "dw-bde27aa2fe41",
+  "account_fingerprint": "f210d5f9dde5",
+  "phone_final_action_armed": false,
+  "final_action_armed": true,
+  "probe_interval_s": 12,
+  "desktop_final_action": {
+   "live_click_enabled": true,
+   "dry_run": false,
+   "max_stake_per_bet": "0.10",
+   "hold_max_age_seconds": 115,
+   "max_daily_live_stake": "0.50"
+  },
+  "operator_alert": {
+   "code": "REALITY_CHECK_OPEN",
+   "severity": "ERROR",
+   "stage": "SESSION_EXPIRED",
+   "at": "2026-09-28T22:06:37+01:00",
+   "at_ms": 1790629597375,
+   "instruction_id": null,
+   "run_id": null,
+   "message": "Bet365 Reality Check is open in the desktop worker's Chrome: answer it by hand on the mini PC; the worker never answers it (desktop worker stopped at 2026-09-28 22:06:37+01:00)"
+  },
+  "chrome": {
+   "state": "UP",
+   "cdp_up": true,
+   "checked_at_ms": 1790629825416,
+   "last_recovery": null,
+   "last_cdp_status": "UP"
+  },
+  "session": "{\"state\": \"UNKNOWN\", \"visual_state\": \"REALITY_CHECK\", \"observed_at_ms\": 1790629825416, \"detail\": \"Reality Check dialog open\", \"source\": \"probe\"}",
+  "pid": 11892,
+  "uptime_ms": 1854546
+ }
+}
