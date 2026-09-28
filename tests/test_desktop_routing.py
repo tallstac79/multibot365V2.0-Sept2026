@@ -149,6 +149,10 @@ class ServerHoldPlace(unittest.TestCase):
         self.env = mock.patch.dict('os.environ', {}, clear=False)
         self.env.start()
         self.addCleanup(self.env.stop)
+        # a note_probe(REALITY_CHECK) writes an operator notice: keep it out of the real logs/desktop_worker.log
+        self.log = mock.patch('desktop_worker.workflow.OPERATOR_LOG', Path(self.tmp.name) / 'op.log')
+        self.log.start()
+        self.addCleanup(self.log.stop)
 
     def worker(self, **cfg):
         from desktop_worker.server import Worker
