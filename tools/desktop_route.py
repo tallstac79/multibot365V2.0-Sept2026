@@ -8,6 +8,12 @@ pipeline's routing or the phone. Prints results without the token.
     py -3.11 -m tools.desktop_route approve HOLD_ID [--out DIR] build the approved PLACE_HELD from the hold's result with
                                                                 the backend's own Pipeline.place_held_payload, submit it
                                                                 (the worker dry-runs it: no physical click) and wait
+    py -3.11 -m tools.desktop_route target [--minutes 60]       SUPERVISED backend target: the running pipeline sends the
+                                                                NEXT eligible new instruction (pre-match football, received
+                                                                after arming) to the desktop worker instead of the phone -
+                                                                one instruction, expires; normal routing stays OFF
+    py -3.11 -m tools.desktop_route untarget                    cancel an unconsumed target
+    py -3.11 -m tools.desktop_route record INSTRUCTION_ID       the backend decision record + bet row + device identity
 """
 import argparse
 import json
@@ -36,7 +42,7 @@ def flags():
 
 def slim_health(h):
     keys = ('healthy', 'ready', 'blocked_reason', 'state', 'current_instruction', 'device_id', 'worker_id', 'account_fingerprint',
-            'phone_final_action_armed', 'desktop_final_action', 'operator_alert', 'chrome', 'session', 'pid', 'uptime_ms')
+            'phone_final_action_armed', 'final_action_armed', 'probe_interval_s', 'desktop_final_action', 'operator_alert', 'chrome', 'session', 'pid', 'uptime_ms')
     return {k: h.get(k) for k in keys}
 
 
@@ -77,7 +83,8 @@ def approved_place_held(hold_body, hold_result, instruction_id=None):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('command', choices=['health', 'send', 'approve'])
+    ap.add_argument('command', choices=['health', 'send', 'approve', 'target', 'untarget', 'record'])
+    ap.add_argument('--minutes', type=int, default=60)
     ap.add_argument('arg', nargs='?')
     ap.add_argument('--out')
     ap.add_argument('--hold-file', help='the hold instruction JSON (for approve; default OUT/hold_instruction.json)')
@@ -90,6 +97,28 @@ def main():
     verdict = dict(manual_target_routable=ok, manual_reason=why,
                    normal_routing=bool(s.desktop_routing_enabled and normal_ok),
                    normal_reason='desktop routing disabled (flag OFF)' if not s.desktop_routing_enabled else normal_why)
+    if a.command in ('target', 'untarget', 'record'):
+        from tools.pipeline_service import load_settings, build
+        store, pipeline = build(load_settings(ROOT / '.local' / 'pipeline.json'))
+        if a.command == 'target':
+            if not ok:
+                print(json.dumps(dict(refused='desktop worker not routable', verdict=verdict, health=slim_health(h)), indent=1, default=str))
+                sys.exit(2)
+            print(json.dumps(dict(armed=pipeline.arm_desktop_target('operator:desktop_route', minutes=a.minutes),
+                                  identity=store.device_identity(s.desktop_device_id), flags=f), indent=1, default=str))
+        elif a.command == 'untarget':
+            print(json.dumps(dict(target=pipeline.cancel_desktop_target('operator:desktop_route')), indent=1, default=str))
+        else:
+            with store.connection() as db:
+                bet = db.execute('SELECT * FROM bets WHERE instruction_id=?', (a.arg,)).fetchone()
+                row = store.get_instruction(db, a.arg)
+            out = dict(instruction=dict(instruction_id=a.arg, state=row['state'], device_id=row['device_id'], fixture=row['fixture'],
+                                        market=row['market'], selection=row['selection'], stake=row['stake']) if row else None,
+                       bet=dict(bet) if bet else None, device=store.device_identity(row['device_id']) if row else None,
+                       decision=pipeline.final.decision_record(a.arg) if row else None)
+            save(a.out, f'backend_record_{a.arg}.json', out)
+            print(json.dumps(out, indent=1, default=str, ensure_ascii=False)[:6000])
+        return
     if a.command == 'health':
         out = dict(flags=f, verdict=verdict, health=slim_health(h))
         save(a.out, f'health_{time.strftime("%H%M%S")}.json', out)

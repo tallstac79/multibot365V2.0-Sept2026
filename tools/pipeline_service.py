@@ -94,15 +94,24 @@ def build(settings):
 
 
 def gateway_for(settings):
+    """The phone's coordinator gateway (unchanged). Desktop targeting - supervised or, with desktop_routing_enabled, normal -
+    is decided per instruction inside Pipeline (core.pipeline._choose_target) using desktop_gateway_for, so every
+    desktop instruction is recorded under its own device/worker/account instead of the phone's."""
     if not settings['coordinator_config'].exists():
         return UnconfiguredGateway()
     from core.device_gateway import CoordinatorGateway
-    phone = CoordinatorGateway(config_path=settings['coordinator_config'])
+    return CoordinatorGateway(config_path=settings['coordinator_config'])
+
+
+def desktop_gateway_for(settings, config_path=None):
+    """DesktopGateway when the desktop worker's identity is configured (pipeline.desktop_expected_worker_id and
+    desktop_expected_account_fingerprint) and its config exists; else None (the pipeline is then phone-only as before)."""
     cfg = Settings.from_dict(settings['pipeline'])
-    if not cfg.desktop_routing_enabled:          # default: the phone alone, unchanged
-        return phone
-    from core.device_routing import gateway, DesktopGateway
-    return gateway(phone, cfg, lambda: DesktopGateway(config_path=ROOT / '.local' / 'desktop_worker.json'))
+    path = Path(config_path) if config_path else ROOT / '.local' / 'desktop_worker.json'
+    if not (cfg.desktop_expected_worker_id and cfg.desktop_expected_account_fingerprint) or not path.exists():
+        return None
+    from core.device_routing import DesktopGateway
+    return DesktopGateway(config_path=path)
 
 
 NOTIFY_BATCH = 10   # outbox rows sent per Telegram pass (a backlog never starves operator commands)
@@ -148,6 +157,8 @@ async def run(settings):
     open_count = pipeline.recover()
     log.info('Pipeline started; %s open instruction(s) will be polled, never resent', open_count)
     gateway = gateway_for(settings)
+    pipeline.desktop = desktop_gateway_for(settings)
+    log.info('Desktop worker gateway: %s', 'attached (%s)' % pipeline.settings.desktop_device_id if pipeline.desktop else 'not configured')
     notify = settings['notifications'] or {}
     sender = TelegramBotSender(notify['bot_token'], notify['chat_id']) if notify.get('enabled') else None
     default_states = AUTOMATIC_STATES if pipeline.settings.automatic else DEFAULT_STATES
