@@ -272,6 +272,30 @@ class FinalAction:
         self.p.store.transition(db, row['instruction_id'], State.AWAITING_APPROVAL, actor='dispatcher',
                                 reason=f'Device verified; operator approval required within {self.s.approval_timeout_seconds}s')
 
+    # ------------------------------------------------------------------ devices (phone / desktop worker)
+    def profile(self, device_id):
+        """The identity an instruction on `device_id` must execute under: the phone (expected_* settings,
+        phone_final_action_armed) or the desktop worker (desktop_expected_* settings, its own final_action_armed)."""
+        s = self.s
+        if self.p.is_desktop(device_id):
+            return dict(scope='desktop', device_id=s.desktop_device_id, worker=s.desktop_expected_worker_id,
+                        account=s.desktop_expected_account_fingerprint, armed='final_action_armed')
+        return dict(scope='phone', device_id=s.device_id, worker=s.expected_worker_id, account=s.expected_account_fingerprint,
+                    armed='phone_final_action_armed')
+
+    def scope_of_worker(self, worker_id):
+        s = self.s
+        return 'desktop' if self.p.desktop_configured() and worker_id and worker_id == s.desktop_expected_worker_id else 'phone'
+
+    def binding(self, device_id):
+        """(worker_id, account_fingerprint) the device reports now (device_state health), or (None, None)."""
+        device = self.p.store.device(device_id)
+        try:
+            health = json.loads(device['health']) if device and device['health'] else {}
+        except (ValueError, TypeError):
+            health = {}
+        return health.get('worker_id') or None, health.get('account_fingerprint') or None
+
     # ------------------------------------------------------------------ automatic policy
     def automatic_checks(self, db, row):
         """Every condition the automatic policy requires, evaluated only from persisted records.
@@ -321,22 +345,29 @@ class FinalAction:
               comparison.get('reason') or 'no alert-to-live comparison recorded')
         check('stake_verified', str((result.get('ready_state') or {}).get('stake') or '') == str(row['stake']),
               f"slip {((result.get('ready_state') or {}).get('stake'))} vs {row['stake']}")
-        # 4. session, worker, account, health
-        session = self.p.store.session(self.s.device_id)
+        # 4. session, worker, account, health - of the device this instruction is bound to (phone or desktop worker),
+        # each against its own expected identity and its own final-action arming; nothing is shared or relaxed.
+        prof = self.profile(row['device_id'])
+        who = prof['scope']
+        session = self.p.store.session(prof['device_id'])
         permitted, why = session_gate(session, self.p.clock(), self.s.session_max_age_seconds)
         check('session_authenticated', permitted, why)
-        device = self.p.store.device(self.s.device_id)
+        device = self.p.store.device(prof['device_id'])
         health = json.loads(device['health']) if device and device['health'] else {}
         check('worker_healthy', bool(device) and device['status'] == 'ONLINE' and health.get('healthy') is True,
               f"{device['status'] if device else 'no device record'}")
-        check('worker_identity', bool(self.s.expected_worker_id) and health.get('worker_id') == self.s.expected_worker_id
-              and (row['device_id'] in (None, '', self.s.device_id)),
-              f"phone worker_id={health.get('worker_id')} expected={self.s.expected_worker_id or '(unset)'}")
-        check('account_identity', bool(self.s.expected_account_fingerprint)
-              and health.get('account_fingerprint') == self.s.expected_account_fingerprint,
-              f"phone account={health.get('account_fingerprint')} expected={self.s.expected_account_fingerprint or '(unset)'}")
-        check('phone_final_action_permission', health.get('phone_final_action_armed') is True,
-              f"phone_final_action_armed={health.get('phone_final_action_armed')}")
+        bound = (row['device_id'] in (None, '', self.s.device_id)) if who == 'phone' else row['device_id'] == prof['device_id']
+        check('worker_identity', bool(prof['worker']) and health.get('worker_id') == prof['worker'] and bound,
+              f"{who} worker_id={health.get('worker_id')} expected={prof['worker'] or '(unset)'}")
+        check('account_identity', bool(prof['account']) and health.get('account_fingerprint') == prof['account'],
+              f"{who} account={health.get('account_fingerprint')} expected={prof['account'] or '(unset)'}")
+        if who == 'phone':
+            check('phone_final_action_permission', health.get('phone_final_action_armed') is True,
+                  f"phone_final_action_armed={health.get('phone_final_action_armed')}")
+        else:
+            check('desktop_final_action_permission', health.get('final_action_armed') is True
+                  and health.get('phone_final_action_armed') is not True and health.get('kind') == 'desktop_chrome',
+                  f"final_action_armed={health.get('final_action_armed')} kind={health.get('kind')}")
         # 5. switches and limits
         check('kill_switch_off', not self.paused(), 'paused' if self.paused() else 'running')
         check('dispatch_and_final_action_enabled', self.s.dispatch_enabled and self.s.final_action_enabled,
@@ -391,7 +422,8 @@ class FinalAction:
         result = json.loads(row['result_payload'] or '{}') or {}
         selection = result.get('selection') if isinstance(result.get('selection'), dict) else {}
         now = iso(self.p.clock())
-        device = self.p.store.device(self.s.device_id)
+        prof = self.profile(row['device_id'])
+        device = self.p.store.device(prof['device_id'])
         health = json.loads(device['health']) if device and device['health'] else {}
         job = f"{row['instruction_id']}-place"
         from core.football import VERSION as FOOTBALL_VERSION
@@ -399,20 +431,20 @@ class FinalAction:
         record = dict(approval_mode='automatic', decided_by=AUTOMATIC_ACTOR, auto_approved_at=now,
                       strategy_version=strategy, rules_version=ENGINE_VERSION, parser_version=PARSER_VERSION,
                       instruction_id=row['instruction_id'], execution_job_id=job,
-                      worker=dict(device_id=self.s.device_id, worker_id=health.get('worker_id')),
+                      worker=dict(device_id=prof['device_id'], worker_id=health.get('worker_id')),
                       account=health.get('account_fingerprint'),
                       requested=dict(line=row['line'], odds=row['alert_price'], minimum_price=row['minimum_price']),
                       device_verified=dict(line=selection.get('line'), odds=selection.get('price'), at=row['ready_at']),
                       stake=row['stake'], checks=checks)
         if failed:
             reason = 'AUTO_APPROVAL_REFUSED: ' + '; '.join(f"{c['check']} ({c['detail']})" for c in failed)[:400]
-            self.p.store.audit(db, 'AUTO_APPROVAL_REFUSED', dict(record, reason=reason), row['instruction_id'], self.s.device_id)
+            self.p.store.audit(db, 'AUTO_APPROVAL_REFUSED', dict(record, reason=reason), row['instruction_id'], prof['device_id'])
             self.p.store.transition(db, row['instruction_id'], State.REJECTED, actor=AUTOMATIC_ACTOR, reason=reason,
                                     approval_mode='automatic', strategy_version=strategy, rules_version=ENGINE_VERSION)
             return False
         reason = f'AUTO_APPROVED by {AUTOMATIC_ACTOR}: {len(checks)} checks passed; execution job {job}'
         record['approval_reason'] = reason
-        self.p.store.audit(db, 'AUTO_APPROVED', record, row['instruction_id'], self.s.device_id)
+        self.p.store.audit(db, 'AUTO_APPROVED', record, row['instruction_id'], prof['device_id'])
         self.p.store.transition(db, row['instruction_id'], State.APPROVED, actor=AUTOMATIC_ACTOR, reason=reason,
                                 approved_by=AUTOMATIC_ACTOR, approval_mode='automatic', auto_approved_at=now,
                                 execution_job_id=job, strategy_version=strategy, rules_version=ENGINE_VERSION)
@@ -513,9 +545,11 @@ class FinalAction:
             status = UNKNOWN
         else:
             status = NOT_PLACED_CLAIMED
-        worker, account = self.phone_binding()
+        prof = self.profile(row['device_id'])
+        worker, account = self.binding(prof['device_id'])
         if worker and account:
-            common.update(worker_id=worker, account_fingerprint=account, binding_source='phone health at the placement result')
+            source = 'phone' if prof['scope'] == 'phone' else 'desktop worker ' + prof['device_id']
+            common.update(worker_id=worker, account_fingerprint=account, binding_source=f'{source} health at the placement result')
         self.p.store.upsert_bet(db, row['instruction_id'], status=status, source='device', **common)
         if common['bet_reference']:
             self.p.store.update_fields(db, row['instruction_id'], bet_reference=common['bet_reference'])
@@ -523,16 +557,15 @@ class FinalAction:
     # ------------------------------------------------------------------ reconciliation
     def phone_binding(self):
         """(worker_id, account_fingerprint) the phone reports now (device_state health), or (None, None)."""
-        device = self.p.store.device(self.s.device_id)
-        try:
-            health = json.loads(device['health']) if device and device['health'] else {}
-        except (ValueError, TypeError):
-            health = {}
-        return health.get('worker_id') or None, health.get('account_fingerprint') or None
+        return self.binding(self.s.device_id)
 
-    def device_busy(self):
+    def device_busy(self, scope=None):
+        """An open My Bets check (any, or only those bound to the phone's / the desktop worker's account)."""
         with self.p.store.connection() as db:
-            return db.execute('SELECT 1 FROM reconciliations WHERE completed_at IS NULL').fetchone() is not None
+            rows = db.execute('SELECT worker_id FROM reconciliations WHERE completed_at IS NULL').fetchall()
+        if scope is None:
+            return bool(rows)
+        return any(self.scope_of_worker(r['worker_id']) == scope for r in rows)
 
     def _device_id(self, instruction_id, purpose, attempt):
         digest = hashlib.sha256(f'{purpose}|{instruction_id}'.encode()).hexdigest()[:16]
@@ -544,7 +577,7 @@ class FinalAction:
 
     LATE_RECHECKS, LATE_RECHECK_SECONDS = 6, 600
 
-    def next_reconciliation(self, urgent_only=False, binding=None):
+    def next_reconciliation(self, urgent_only=False, binding=None, scope='phone'):
         """(purpose, instruction_id or None, view, attempt) that is due now, most urgent first.
 
         urgent_only (A2): live placement work is waiting, so only a PLACEMENT_UNKNOWN resolution (bet status
@@ -584,20 +617,25 @@ class FinalAction:
                                     (OPEN, *(binding or (None, None)))).fetchone() if binding is not None else \
                 db.execute("SELECT 1 FROM bets WHERE status=?", (OPEN,)).fetchone()
             if not urgent_only and open_bound:
-                last = db.execute("SELECT MAX(requested_at) FROM reconciliations WHERE purpose=?", (SETTLE,)).fetchone()[0]
+                last = max((r['requested_at'] for r in db.execute("SELECT requested_at, worker_id FROM reconciliations WHERE purpose=?",
+                                                                  (SETTLE,)) if self.scope_of_worker(r['worker_id']) == scope), default=None)
                 if last is None or (now - datetime.fromisoformat(last)).total_seconds() >= self.s.settlement_poll_minutes * 60:
                     count = db.execute("SELECT COUNT(*) FROM reconciliations WHERE purpose=?", (SETTLE,)).fetchone()[0]
                     return SETTLE, None, 'SETTLED', count + 1
         return None
 
-    def schedule(self, gateway, health, device_free, urgent_only=False):
-        """Submit one due My Bets check if the phone is free. Returns True if submitted."""
+    def schedule(self, gateway, health, device_free, urgent_only=False, scope='phone'):
+        """Submit one due My Bets check if the device (the phone, or scope='desktop': the desktop worker) is free.
+        Only bets bound to the worker/account that device reports are due, so each bet is checked where it was placed.
+        Returns True if submitted."""
         if not device_free or health is None or health.get('healthy') is not True or health.get('current_instruction'):
             return False
         binding = (health.get('worker_id') or None, health.get('account_fingerprint') or None)
         if not all(binding):
             return False   # the phone does not say which worker/account it is: no account's My Bets is read
-        due = self.next_reconciliation(urgent_only, binding=binding)
+        if self.scope_of_worker(binding[0]) != scope:
+            return False   # the device reports the other device's worker: never read one account's My Bets for the other
+        due = self.next_reconciliation(urgent_only, binding=binding, scope=scope)
         if due is None:
             return False
         purpose, instruction_id, view, attempt = due
@@ -623,12 +661,16 @@ class FinalAction:
             db.execute('UPDATE reconciliations SET submitted_at=? WHERE device_instruction_id=?', (iso(self.p.clock()), device_id))
         return True
 
-    def poll(self, gateway):
+    def poll(self, gateway, desktop=None):
+        """Results of open My Bets checks, each from the device that ran it (desktop-bound checks from `desktop`)."""
         with self.p.store.connection() as db:
             open_rows = db.execute('SELECT * FROM reconciliations WHERE completed_at IS NULL').fetchall()
         for rec in open_rows:
             try:
-                result = gateway.result(rec['device_instruction_id'])
+                gw = desktop if self.scope_of_worker(rec['worker_id']) == 'desktop' else gateway
+                if gw is None:
+                    raise ConnectionError('desktop gateway not attached')
+                result = gw.result(rec['device_instruction_id'])
             except Exception as error:
                 result = None
                 with self.p.store.tx() as db:
@@ -677,9 +719,11 @@ class FinalAction:
 
     def _apply(self, rec, result):
         bound = (rec['worker_id'], rec['account_fingerprint']) if 'worker_id' in rec.keys() else (None, None)
-        if all(bound) and self.phone_binding() != tuple(bound):
-            # The phone now reports another worker/account: this My Bets read cannot be attributed to the bet's account.
-            self._complete(rec, 'FAILED', dict(error=f'account/worker changed: check bound to {bound}, phone now {self.phone_binding()}'))
+        scope = self.scope_of_worker(bound[0])
+        now_bound = self.binding(self.s.desktop_device_id if scope == 'desktop' else self.s.device_id)
+        if all(bound) and now_bound != tuple(bound):
+            # The device now reports another worker/account: this My Bets read cannot be attributed to the bet's account.
+            self._complete(rec, 'FAILED', dict(error=f'account/worker changed: check bound to {bound}, {scope} now {now_bound}'))
             return
         my_bets = result.get('my_bets') if isinstance(result, dict) else None
         if not isinstance(result, dict) or result.get('status') != 'PASS' or not isinstance(my_bets, dict):

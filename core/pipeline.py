@@ -125,6 +125,10 @@ EVENT_URL = re.compile(r'^https://www\.bet365\.com/#/AC/B(\d{1,3})(/[A-Z]\d{1,12
 KICKOFF = re.compile(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$')
 SELECTION_NAME = re.compile(r"^[A-Za-z0-9 ./'&()-]{2,64}$")
 HELD_KEY = 'held_slip'
+# Supervised desktop target (28 Sep 2026): an operator arms "the next eligible new instruction runs on the desktop worker"
+# (tools/desktop_route.py target). One instruction, with an expiry; consumed atomically when that instruction is
+# dispatched. Independent of desktop_routing_enabled (normal routing), which stays OFF.
+DESKTOP_TARGET_KEY = 'desktop_target_next'
 
 
 BARE_HOST = 'https://bet365.com/#/'
@@ -234,6 +238,108 @@ class Pipeline:
         self.identity = IdentityRegistry(self.store)
         self.armed_at = iso(clock())    # one-shot: only Place Bet runs dispatched after this count
         self.disarmed = None            # set when the one-shot fired (the service persists it)
+        # Desktop worker (desktop-chrome): its own device/worker/account identity. The service attaches its gateway
+        # (DesktopGateway) only when that identity is configured; phone behaviour is unchanged either way.
+        self.desktop = None
+        self.desktop_health = None
+        if self.desktop_configured():
+            self.store.register_device(self.settings.desktop_device_id, 'desktop_chrome', self.settings.desktop_expected_worker_id,
+                                       self.settings.desktop_expected_account_fingerprint, source='pipeline settings')
+
+    # ================================================================== devices
+    def desktop_configured(self):
+        s = self.settings
+        return bool(s.desktop_device_id and s.desktop_expected_worker_id and s.desktop_expected_account_fingerprint)
+
+    def is_desktop(self, device_id):
+        return bool(device_id) and device_id == self.settings.desktop_device_id and self.desktop_configured()
+
+    def device_of(self, row):
+        """The device an instruction is bound to (the phone unless it was dispatched to the desktop)."""
+        return self.settings.desktop_device_id if self.is_desktop(row['device_id']) else self.settings.device_id
+
+    def gateway_of(self, device_id, phone_gateway):
+        return self.desktop if self.is_desktop(device_id) else phone_gateway
+
+    def health_of(self, device_id, phone_health):
+        return self.desktop_health if self.is_desktop(device_id) else phone_health
+
+    def refresh_desktop(self):
+        """Desktop health/session into device_state/session_state under desktop-chrome (never the phone's records)."""
+        if self.desktop is None or not self.desktop_configured():
+            self.desktop_health = None
+            return None
+        self.desktop_health = self.refresh_device(self.desktop, device_id=self.settings.desktop_device_id)
+        return self.desktop_health
+
+    def desktop_target(self):
+        t = self.store.control(DESKTOP_TARGET_KEY)
+        if not isinstance(t, dict) or t.get('consumed_by') or t.get('cancelled_at'):
+            return None
+        if (t.get('expires_at') or '') <= iso(self.clock()):
+            return None
+        return t
+
+    def arm_desktop_target(self, by, minutes=60, sport='football', min_lead_minutes=10):
+        now = self.clock()
+        from datetime import timedelta
+        value = dict(armed_at=iso(now), expires_at=iso(now + timedelta(minutes=minutes)), by=by, sport=sport,
+                     pre_match=True, min_lead_minutes=min_lead_minutes, consumed_by=None)
+        self.store.set_control(DESKTOP_TARGET_KEY, value, by=by)
+        with self.store.tx() as db:
+            self.store.audit(db, 'DESKTOP_TARGET_ARMED', value, device_id=self.settings.desktop_device_id)
+        return value
+
+    def cancel_desktop_target(self, by):
+        t = self.store.control(DESKTOP_TARGET_KEY)
+        if isinstance(t, dict) and not t.get('consumed_by'):
+            t['cancelled_at'] = iso(self.clock())
+            self.store.set_control(DESKTOP_TARGET_KEY, t, by=by)
+        return t
+
+    def _target_eligible(self, row, target):
+        """A new, pre-match instruction of the armed sport received after arming."""
+        from datetime import timedelta
+        if target.get('sport') and row['sport'] != target['sport']:
+            return False
+        try:
+            received = datetime.fromisoformat((row['received_at'] or '').replace('Z', '+00:00'))
+            if received < datetime.fromisoformat(target['armed_at']):
+                return False                  # only alerts received after arming
+        except (ValueError, TypeError):
+            return False
+        start = (json.loads(row['rules_result'] or '{}').get('instruction') or {}).get('event_start_utc')
+        if not start:
+            return False
+        try:
+            begins = datetime.fromisoformat(start)
+            begins = begins if begins.tzinfo else begins.replace(tzinfo=timezone.utc)
+        except (ValueError, TypeError):
+            return False
+        return begins - self.clock() >= timedelta(minutes=target.get('min_lead_minutes') or 0)
+
+    def _choose_target(self, row):
+        """(device_id, reason). A row already bound to the desktop stays there (its hold is on the desktop slip). A new
+        QUEUED row goes to the desktop only while it is routable AND bound to its expected worker/account AND its backend
+        session is authenticated, and only when normal routing is ON or a supervised target is armed; otherwise the phone."""
+        s = self.settings
+        if self.is_desktop(row['device_id']):
+            return s.desktop_device_id, 'bound to the desktop'
+        if row['state'] != State.QUEUED.value or self.desktop is None or not self.desktop_configured():
+            return s.device_id, 'phone'
+        armed = self.desktop_target()
+        if not s.desktop_routing_enabled and not (armed and self._target_eligible(row, armed)):
+            return s.device_id, 'phone'
+        from core.device_routing import routable
+        ok, why = routable(self.desktop_health, s.desktop_device_id, s.desktop_expected_worker_id, s.desktop_expected_account_fingerprint)
+        if not ok:
+            return s.device_id, f'desktop not routable: {why}'
+        permitted, why = session_gate(self.store.session(s.desktop_device_id), self.clock(), s.session_max_age_seconds)
+        if not permitted:
+            return s.device_id, f'desktop session: {why}'
+        if self.final.device_busy('desktop'):
+            return s.device_id, 'desktop My Bets check running'
+        return s.desktop_device_id, 'normal routing' if s.desktop_routing_enabled else 'supervised desktop target'
 
     # ================================================================== intake
     def ingest(self, message, delivery='event'):
@@ -394,9 +500,9 @@ class Pipeline:
         return target.value
 
     # ================================================================== device side
-    def refresh_device(self, gateway):
+    def refresh_device(self, gateway, device_id=None):
         """Poll coordinator health; record device and session state. Returns health or None."""
-        device_id, now = self.settings.device_id, self.clock()
+        device_id, now = device_id or self.settings.device_id, self.clock()
         try:
             health = gateway.health()
             if not isinstance(health, dict) or 'healthy' not in health:
@@ -406,18 +512,21 @@ class Pipeline:
             return None
         status = 'ONLINE' if health.get('healthy') is True else 'DEGRADED'
         self.store.record_device(device_id, status, health=health, at=iso(now))
-        self._record_session(health.get('session'), 'health', now)
+        self._record_session(health.get('session'), 'health', now, device_id)
         return health
 
-    def _record_session(self, payload, source, now):
+    def _record_session(self, payload, source, now, device_id=None):
         if payload is None:
             return
+        device_id = device_id or self.settings.device_id
         try:
-            self.store.record_session(parse_report(self.settings.device_id, payload, source), iso(now))
+            if isinstance(payload, str) and self.is_desktop(device_id):
+                payload = json.loads(payload)       # the desktop worker's health carries its session as a JSON string
+            self.store.record_session(parse_report(device_id, payload, source), iso(now))
         except (ValueError, TypeError) as error:
             with self.store.tx() as db:
                 self.store.audit(db, 'MALFORMED_SESSION_REPORT', dict(error=str(error), payload=payload, source=source),
-                                 device_id=self.settings.device_id, at=iso(now))
+                                 device_id=device_id, at=iso(now))
 
     def build_payload(self, row, final_action=False):
         """Coordinator request for the live adapter.
@@ -521,8 +630,9 @@ class Pipeline:
             # Place Bet was (or may have been) tapped: that run closed the receipt and returned home itself.
             self.store.set_control(HELD_KEY, dict(held, released='placement run'), by='dispatcher')
             return
-        if health is None or health.get('healthy') is not True or health.get('current_instruction'):
-            return  # phone busy/offline: retry next tick
+        gateway, health = self.gateway_of(row['device_id'], gateway), self.health_of(row['device_id'], health)
+        if gateway is None or health is None or health.get('healthy') is not True or health.get('current_instruction'):
+            return  # phone (or the desktop holding it) busy/offline: retry next tick
         device_id = 'rs-' + hashlib.sha256(row['instruction_id'].encode()).hexdigest()[:24]
         try:
             gateway.submit(dict(instruction_id=device_id, action='RESET_BETSLIP', adapter=self.settings.adapter,
@@ -543,6 +653,7 @@ class Pipeline:
     def tick(self, gateway):
         """One dispatcher cycle. Safe to call repeatedly and after any restart."""
         health = self.refresh_device(gateway)
+        desktop_health = self.refresh_desktop()
         if health and health.get('diagnostics_active'):
             self._poll_in_flight(gateway)
             return  # lease suppresses reset, warmup, reconciliation and dispatch; polling remains safe
@@ -551,7 +662,7 @@ class Pipeline:
         self._one_shot()
         if self._release_hold(gateway, health):
             return  # the phone is now running RESET_BETSLIP; this tick's health snapshot is stale (27 Sep 2026 BUSY race)
-        self.final.poll(gateway)
+        self.final.poll(gateway, desktop=self.desktop if self.desktop_configured() else None)
         self._expire_ready()
         self.final.expire_approvals()
         # Placement verification outranks new work: an unresolved tap blocks nothing else
@@ -560,10 +671,14 @@ class Pipeline:
         held = self.held_instruction()
         # A held bet owns the phone: no My Bets checks (they navigate away) until it is placed or released.
         # A2: live placement work outranks routine My Bets checks; only PLACEMENT_UNKNOWN resolution is urgent.
-        if not held and self.final.schedule(gateway, health, device_free and not self.final.device_busy(),
+        if not held and self.final.schedule(gateway, health, device_free and not self.final.device_busy('phone'),
                                             urgent_only=self._live_work_pending()):
             return
-        if not self.final.device_busy():
+        if not held and self.desktop is not None and self.desktop_configured():
+            # My Bets checks for bets placed on the desktop worker/account run on the desktop (never on the phone)
+            self.final.schedule(self.desktop, desktop_health, device_free and not self.final.device_busy('desktop'),
+                                urgent_only=self._live_work_pending(), scope='desktop')
+        if not self.final.device_busy('phone'):
             self._dispatch_queued(gateway, health)
 
     def _live_work_pending(self):
@@ -598,7 +713,10 @@ class Pipeline:
     def _poll_in_flight(self, gateway):
         for row in self.store.instructions_in([State.DISPATCHED, State.DEVICE_ACTIVE]):
             try:
-                result = gateway.result(device_instruction_id(row['instruction_id'], row['execution_mode']))
+                gw = self.gateway_of(row['device_id'], gateway)
+                if gw is None:
+                    raise ConnectionError('desktop gateway not attached')
+                result = gw.result(device_instruction_id(row['instruction_id'], row['execution_mode']))
             except Exception as error:
                 result = None
                 with self.store.tx() as db:
@@ -651,9 +769,13 @@ class Pipeline:
         warmup_for = None
         held = self.held_instruction()
         activation = self.store.control(self.ACTIVATION_KEY)
+        phone_gateway, phone_health = gateway, health
         for row in candidates:
             if held and row['instruction_id'] != held:
                 continue  # the phone holds another verified bet on its slip; wait (may age out as STALE)
+            target, target_reason = self._choose_target(row)
+            desktop = target != self.settings.device_id
+            gateway, health = (self.desktop, self.desktop_health) if desktop else (phone_gateway, phone_health)
             now = self.clock()
             if activation and (row['received_at'] or '') < activation:
                 # Clean cut-off (2026-09-27): only alerts received after the operator's activation timestamp may
@@ -690,10 +812,11 @@ class Pipeline:
                     self.store.transition(db, row['instruction_id'], State.DEVICE_OFFLINE, actor='dispatcher',
                                           reason='DEVICE_OFFLINE: coordinator reports unhealthy')
                     continue
-                session = self.store.session(self.settings.device_id)
+                session = self.store.session(target)
                 permitted, why = session_gate(session, now, self.settings.session_max_age_seconds)
                 if not permitted:
-                    decision = self._warmup_decision(row, session, health, bool(in_flight))
+                    # the desktop has no warm-up: a desktop-bound row fails closed (a new row only targets it when authenticated)
+                    decision = 'FAIL' if desktop else self._warmup_decision(row, session, health, bool(in_flight))
                     if decision == 'WAIT':
                         continue
                     if decision == 'START':
@@ -715,7 +838,7 @@ class Pipeline:
                         continue
                     # The final action may only consume the hold on the worker that verified it, and only while
                     # that hold is fresh (the phone refuses an older hold; do not send a doomed final action).
-                    if row['device_id'] not in (None, '', self.settings.device_id):
+                    if row['device_id'] not in (None, '', self.settings.device_id) and not self.is_desktop(row['device_id']):
                         self.store.transition(db, row['instruction_id'], State.REJECTED, actor='dispatcher',
                                               reason=f"PRE_TAP_REJECTED: hold verified on worker {row['device_id']}, "
                                                      f"final action bound to {self.settings.device_id}")
@@ -728,19 +851,36 @@ class Pipeline:
                         continue
                 if in_flight or health.get('current_instruction'):
                     continue  # One instruction at a time; wait (it may later go STALE).
+                if desktop and self.final.device_busy('desktop'):
+                    continue  # a desktop My Bets check is running
                 payload = self.build_payload(row, final_action=final_action and row['state'] == State.APPROVED.value)
+                extra = {}
+                if desktop and not self.is_desktop(row['device_id']):
+                    # bind the instruction to the desktop device (its own worker/account); consume a supervised target
+                    extra['device_id'] = target
+                    armed = self.desktop_target()
+                    if not self.settings.desktop_routing_enabled:
+                        if not armed:
+                            continue
+                        self.store.set_control(DESKTOP_TARGET_KEY, dict(armed, consumed_by=row['instruction_id'], consumed_at=iso(now)),
+                                               by='dispatcher', db=db)
+                    self.store.audit(db, 'DEVICE_TARGET', dict(device_id=target, reason=target_reason,
+                                                               worker_id=self.settings.desktop_expected_worker_id,
+                                                               account_fingerprint=self.settings.desktop_expected_account_fingerprint),
+                                     row['instruction_id'], target)
                 # Commit DISPATCHED before sending: a crash after this point can never resend.
                 if not self.store.transition(db, row['instruction_id'], State.DISPATCHED, actor='dispatcher',
                                              reason='Sent to coordinator' + (' (FINAL ACTION: Place Bet approved)'
-                                                                             if payload['execution_mode'] == 'dispatch' else ''),
+                                                                             if payload['execution_mode'] == 'dispatch' else '')
+                                                    + (f' [desktop worker {target}]' if desktop else ''),
                                              dispatch_payload=payload, execution_mode=payload['execution_mode'],
                                              dispatch_attempts=row['dispatch_attempts'] + 1,
-                                             session_state=session['state']):
+                                             session_state=session['state'], **extra):
                     continue
             in_flight = [row]
             with self.store.tx() as db:
                 record_request_stage(self.store, db, row, payload)
-            self._send(gateway, row['instruction_id'], payload)
+            self._send(gateway, row['instruction_id'], payload, device_id=target)
         if warmup_for is not None:
             self._start_warmup(gateway, warmup_for)
 
@@ -798,7 +938,8 @@ class Pipeline:
             warm.update(done_at=iso(self.clock()), outcome=outcome[:300])
             self.store.set_control(self.WARMUP_KEY, warm, by='dispatcher')
 
-    def _send(self, gateway, instruction_id, payload):
+    def _send(self, gateway, instruction_id, payload, device_id=None):
+        device_id = device_id or self.settings.device_id
         try:
             ack = gateway.submit(payload)
         except ValueError as error:
@@ -806,12 +947,12 @@ class Pipeline:
             if isinstance(reply, dict) and reply.get('stage') == 'INVALID_INSTRUCTION':
                 # The phone refused admission (schema, stake cap, disarmed phone): definitively nothing executed.
                 with self.store.tx() as db:
-                    self.store.audit(db, 'COORDINATOR_REFUSED', reply, instruction_id, self.settings.device_id)
+                    self.store.audit(db, 'COORDINATOR_REFUSED', reply, instruction_id, device_id)
                     prefix = 'PRE_TAP_REJECTED: ' if payload.get('action') == 'PLACE_HELD' else ''
                     if prefix:
                         self.store.audit(db, 'PRE_TAP_REJECTED', dict(stage='admission', reason=reply.get('detail'),
                                                                      execution_job_id=payload.get('instruction_id')),
-                                         instruction_id, self.settings.device_id)
+                                         instruction_id, device_id)
                     self.store.transition(db, instruction_id, State.REJECTED, actor='coordinator',
                                           reason=f"{prefix}Coordinator refused admission: {reply.get('detail')}")
                 return
@@ -821,22 +962,22 @@ class Pipeline:
                 back = State.APPROVED if payload.get('execution_mode') == 'dispatch' else State.QUEUED
                 with self.store.tx() as db:
                     self.store.audit(db, 'SUBMIT_NOT_ADMITTED_BUSY', dict(reply=reply if isinstance(reply, dict) else str(reply)[:200]),
-                                     instruction_id, self.settings.device_id)
+                                     instruction_id, device_id)
                     self.store.requeue_not_admitted(db, instruction_id, back,
                                                     reason='Phone busy: ID not consumed, nothing admitted; resent when the phone is free')
                 return
             with self.store.tx() as db:
                 self.store.audit(db, 'SUBMIT_UNCERTAIN', dict(error=f'{type(error).__name__}: {error}'[:300]),
-                                 instruction_id, self.settings.device_id)
+                                 instruction_id, device_id)
             return
         except Exception as error:
             # Uncertain delivery: keep DISPATCHED and poll the same ID; never resend a new ID.
             with self.store.tx() as db:
                 self.store.audit(db, 'SUBMIT_UNCERTAIN', dict(error=f'{type(error).__name__}: {error}'[:300]),
-                                 instruction_id, self.settings.device_id)
+                                 instruction_id, device_id)
             return
         with self.store.tx() as db:
-            self.store.audit(db, 'COORDINATOR_ACK', ack, instruction_id, self.settings.device_id)
+            self.store.audit(db, 'COORDINATOR_ACK', ack, instruction_id, device_id)
             if isinstance(ack, dict) and ack.get('status') == 'FAIL' and ack.get('stage') not in ('DUPLICATE', None):
                 self.store.transition(db, instruction_id, State.REJECTED, actor='coordinator',
                                       reason=f"Coordinator refused admission: {ack.get('stage')}: {ack.get('detail')}")
