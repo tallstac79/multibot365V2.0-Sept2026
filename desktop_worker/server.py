@@ -11,11 +11,14 @@ GET /instructions/ID/evidence, GET /instructions/ID/artifacts/NAME. Bearer token
 Scope: SESSION_CHECK, RESET_BETSLIP, ADAPTER_WORKFLOW (hold / ready, supervised-only 'discover'), and (desktop routing
 work, 28 Sep 2026; see desktop_worker/held.py) HOLD records, PLACE_HELD and MY_BETS. PLACE_HELD is a DRY RUN (everything
 except the physical click) unless BOTH live_click_enabled=true in .local/desktop_worker.json AND DESKTOP_LIVE_CLICK=1 are
-set; health keeps phone_final_action_armed=False, so the backend's automatic policy never approves for this worker.
+set. Health reports final_action_armed=True only while that live click is enabled (phone_final_action_armed is always
+False: this is not the phone); the backend's automatic policy requires final_action_armed for a desktop instruction.
 
 Health is fail-closed: healthy=false / ready=false with blocked_reason CHROME_DOWN / LOGGED_OUT / REALITY_CHECK /
 SESSION_UNKNOWN (incl. no session read yet, or a read older than SESSION_MAX_AGE_S) / RECOVERING. The session is read from
-a screenshot every PROBE_S while idle (no navigation). Blocking episodes are sent to Telegram once (desktop_worker.alerts).
+a screenshot every PROBE_S while idle (no navigation), every BLOCKED_PROBE_S while a Reality Check / logout / unknown session
+blocks it, so it returns to READY/IDLE by itself seconds after David clears the dialog (never clicked by the worker).
+Blocking episodes are sent to Telegram once, with one recovery message when they clear (desktop_worker.alerts).
 """
 import argparse
 import asyncio
@@ -40,6 +43,9 @@ LEDGER = ROOT / '.local' / 'desktop_worker.sqlite3'
 VERSION = 'desktop-0.1.0'
 WATCH_S = 30                                   # Chrome watchdog period (CDP /json/version probe)
 PROBE_S = 120                                  # visual session probe period while idle (screenshot only)
+BLOCKED_PROBE_S = 12                           # faster read-only probe while a manual block (Reality Check/logout) is open
+TICK_S = 3                                     # watchdog loop granularity
+FAST_PROBE_REASONS = ('REALITY_CHECK', 'LOGGED_OUT', 'SESSION_UNKNOWN')
 SESSION_MAX_AGE_S = 300                        # an older session read is not trusted (SESSION_UNKNOWN)
 ID = re.compile(r'^[A-Za-z0-9_-]{1,64}$')
 ACTIONS = {'ADAPTER_WORKFLOW', 'SESSION_CHECK', 'RESET_BETSLIP', 'PLACE_HELD', 'MY_BETS'}
@@ -108,14 +114,34 @@ class Worker:
                 return 'RECOVER_QUEUED'
         return 'UP' if up else 'DOWN'
 
+    def probe_interval(self):
+        """PROBE_S while routable; BLOCKED_PROBE_S while a manual block is open, so the worker returns to READY/IDLE within
+        seconds of David clearing the dialog (screenshot only: the dialog is never clicked, answered or dismissed)."""
+        return BLOCKED_PROBE_S if self.blocked_reason() in FAST_PROBE_REASONS else PROBE_S
+
+    def watch_step(self, now, marks, probe=None):
+        """One watchdog tick at monotonic `now`. marks = {'watch': t, 'probe': t}. The CDP check runs every WATCH_S; a
+        visual probe is queued when Chrome is up and probe_interval() has elapsed. Returns (cdp_status, probe_queued)."""
+        status = None
+        if now - marks['watch'] >= WATCH_S:
+            marks['watch'] = now
+            status = self.watch_once(probe)
+            self.chrome['last_cdp_status'] = status
+        up = self.chrome.get('state') == 'UP' if status is None else status == 'UP'
+        queued = False
+        if up and now - marks['probe'] >= self.probe_interval():
+            queued = self.queue_probe()
+            if queued:
+                marks['probe'] = now
+        return status, queued
+
     def _watchdog(self):
-        last_probe = time.monotonic()
+        start = time.monotonic()
+        marks = dict(watch=start, probe=start)
         while True:
-            time.sleep(WATCH_S)
+            time.sleep(TICK_S)
             try:
-                if self.watch_once() == 'UP' and time.monotonic() - last_probe >= PROBE_S:
-                    last_probe = time.monotonic()
-                    self.queue_probe()
+                self.watch_step(time.monotonic(), marks)
             except Exception as e:            # the watchdog never stops the worker
                 self.chrome['watch_error'] = f'{type(e).__name__}: {e}'
 
@@ -192,8 +218,8 @@ class Worker:
                     state=state, current_instruction=self.current, app_version=VERSION,
                     version_code=1, kind='desktop_chrome', device_id='desktop-chrome', worker_id=self.cfg['worker_id'],
                     account_fingerprint=self.cfg.get('account_fingerprint'), session=json.dumps(self.session),
-                    phone_final_action_armed=False, final_action_armed=False,
-                    local_execution=dict(enabled=False, worker_id=self.cfg['worker_id'],
+                    phone_final_action_armed=False, final_action_armed=live, probe_interval_s=self.probe_interval(),
+                    local_execution=dict(enabled=live, worker_id=self.cfg['worker_id'],
                                          authorised_account_fingerprint=self.cfg.get('account_fingerprint'),
                                          last_reason='desktop PLACE_HELD is a dry run unless live_click_enabled and DESKTOP_LIVE_CLICK=1'),
                     desktop_final_action=dict(live_click_enabled=live, dry_run=not live, max_stake_per_bet=lim['max_stake_per_bet'],
