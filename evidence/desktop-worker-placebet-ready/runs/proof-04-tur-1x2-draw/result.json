@@ -1,0 +1,379 @@
+{
+ "instruction_id": "proof-04-tur-1x2-draw",
+ "run_id": "d_5da724c602c244be8325",
+ "worker": "desktop",
+ "wager_submitted": false,
+ "device_stage": "READ_SELECTION",
+ "route": "event_link",
+ "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201150138/F3/I1/",
+ "session": "AUTHENTICATED",
+ "betslip_clear": {
+  "cleared": true,
+  "removed": 1,
+  "method": "visual: screenshot check, visible remove control"
+ },
+ "direct_event_header": [
+  "UEFA Nations League A • 28 Sep 19:45",
+  "Türkiye v Italy"
+ ],
+ "competition_check": {
+  "feed": "UEFA Nations League A",
+  "country": null,
+  "page": "UEFA Nations League A • 28 Sep 19:45",
+  "matches": true
+ },
+ "identity": {
+  "verdict": "EXACT",
+  "reason": "both teams exact",
+  "home": {
+   "feed": "Türkiye",
+   "bookmaker": "Turkiye",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "away": {
+   "feed": "Italy",
+   "bookmaker": "Italy",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "kickoff_known": true,
+  "kickoff_agrees": true,
+  "reversed": false,
+  "evidence": {
+   "event_id_match": true,
+   "event_anchor": "page opened from the alert's own Bet365 event link",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "equal",
+   "competing_event": "none: a single event page reached through the alert's own link",
+   "home_similarity": {
+    "feed": "Türkiye",
+    "bookmaker": "Turkiye",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "away_similarity": {
+    "feed": "Italy",
+    "bookmaker": "Italy",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "protected_markers": "agree",
+   "orientation": "agree",
+   "policy": "both_exact",
+   "verdict": "EXACT"
+  }
+ },
+ "identity_verdict": "EXACT",
+ "home": "Turkiye",
+ "away": "Italy",
+ "competition": "UEFA Nations League A • 28 Sep 19:45",
+ "fixture_name": "Turkiye v Italy",
+ "event_context": {
+  "home": "Turkiye",
+  "away": "Italy",
+  "competition": "uefa nations league a",
+  "kickoff_utc": "2026-09-28T18:45",
+  "period": "FULL_GAME"
+ },
+ "markets": [
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "2.5",
+   "price": "1.61",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    1895,
+    769,
+    1912
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "2.5",
+   "price": "2.25",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    1895,
+    1161,
+    1912
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "0.5",
+   "price": "1.03",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2027,
+    769,
+    2044
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "0.5",
+   "price": "15.00",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2027,
+    1164,
+    2044
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "1.5",
+   "price": "1.18",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2072,
+    769,
+    2089
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "1.5",
+   "price": "4.50",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2072,
+    1161,
+    2089
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "3.5",
+   "price": "2.50",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2117,
+    769,
+    2134
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "3.5",
+   "price": "1.50",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2117,
+    1161,
+    2134
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "4.5",
+   "price": "4.33",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2162,
+    769,
+    2179
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "4.5",
+   "price": "1.20",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2162,
+    1161,
+    2179
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "5.5",
+   "price": "9.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2207,
+    769,
+    2224
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "5.5",
+   "price": "1.071",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2207,
+    1164,
+    2224
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "6.5",
+   "price": "19.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2252,
+    773,
+    2269
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "6.5",
+   "price": "1.02",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2252,
+    1161,
+    2269
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "7.5",
+   "price": "34.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2297,
+    773,
+    2314
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "7.5",
+   "price": "1.005",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2297,
+    1164,
+    2314
+   ]
+  }
+ ],
+ "status": "FAIL",
+ "stage": "TARGET_NOT_FOUND",
+ "detail": "No live selection for MONEYLINE/DRAW",
+ "duration_ms": 21360,
+ "stage_timings": [],
+ "progress": {
+  "stage": "READ_SELECTION",
+  "elapsed_ms": 21360,
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790603171449
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 0,
+    "at_ms": 1790603171449
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 6890,
+    "at_ms": 1790603178345
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 14422,
+    "at_ms": 1790603185865
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 21343,
+    "at_ms": 1790603192789
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 21343,
+    "at_ms": 1790603192789
+   },
+   {
+    "stage": "READ_SELECTION",
+    "elapsed_ms": 21360,
+    "at_ms": 1790603192805
+   }
+  ]
+ },
+ "execution_count": 1
+}

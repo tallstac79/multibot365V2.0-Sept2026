@@ -1,0 +1,1139 @@
+{
+ "instruction_id": "proof-09-swe-ah-home-0",
+ "run_id": "d_c40c36cb50fa4e28bf50",
+ "worker": "desktop",
+ "wager_submitted": false,
+ "device_stage": "ENTER_STAKE",
+ "route": "event_link",
+ "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201150132/F3/I1/",
+ "session": "AUTHENTICATED",
+ "betslip_clear": {
+  "cleared": true,
+  "removed": 1,
+  "method": "visual: screenshot check, visible remove control"
+ },
+ "direct_event_header": [
+  "UEFA Nations League B • 28 Sep 19:45",
+  "Sweden v Poland"
+ ],
+ "competition_check": {
+  "feed": "UEFA Nations League B",
+  "country": null,
+  "page": "UEFA Nations League B • 28 Sep 19:45",
+  "matches": true
+ },
+ "identity": {
+  "verdict": "EXACT",
+  "reason": "both teams exact",
+  "home": {
+   "feed": "Sweden",
+   "bookmaker": "Sweden",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "away": {
+   "feed": "Poland",
+   "bookmaker": "Poland",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "kickoff_known": true,
+  "kickoff_agrees": true,
+  "reversed": false,
+  "evidence": {
+   "event_id_match": true,
+   "event_anchor": "page opened from the alert's own Bet365 event link",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "equal",
+   "competing_event": "none: a single event page reached through the alert's own link",
+   "home_similarity": {
+    "feed": "Sweden",
+    "bookmaker": "Sweden",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "away_similarity": {
+    "feed": "Poland",
+    "bookmaker": "Poland",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "protected_markers": "agree",
+   "orientation": "agree",
+   "policy": "both_exact",
+   "verdict": "EXACT"
+  }
+ },
+ "identity_verdict": "EXACT",
+ "home": "Sweden",
+ "away": "Poland",
+ "competition": "UEFA Nations League B • 28 Sep 19:45",
+ "fixture_name": "Sweden v Poland",
+ "event_context": {
+  "home": "Sweden",
+  "away": "Poland",
+  "competition": "uefa nations league b",
+  "kickoff_utc": "2026-09-28T18:45",
+  "period": "FULL_GAME"
+ },
+ "markets": [
+  {
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "line": "",
+   "price": "1.90",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Sweden",
+   "bounds": [
+    361,
+    341,
+    385,
+    358
+   ]
+  },
+  {
+   "market": "MONEYLINE",
+   "side": "DRAW",
+   "line": "",
+   "price": "3.90",
+   "availability": "OPEN",
+   "selection_role": "DRAW",
+   "selection_name": "Draw",
+   "bounds": [
+    695,
+    341,
+    718,
+    358
+   ]
+  },
+  {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "",
+   "price": "3.60",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Poland",
+   "bounds": [
+    1052,
+    341,
+    1076,
+    358
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "2.5",
+   "price": "1.61",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    1895,
+    769,
+    1912
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "2.5",
+   "price": "2.25",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    1895,
+    1161,
+    1912
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "0.5",
+   "price": "1.03",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2027,
+    769,
+    2044
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "0.5",
+   "price": "15.00",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2027,
+    1164,
+    2044
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "1.5",
+   "price": "1.18",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2072,
+    769,
+    2089
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "1.5",
+   "price": "4.50",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2072,
+    1161,
+    2089
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "3.5",
+   "price": "2.50",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2117,
+    769,
+    2134
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "3.5",
+   "price": "1.50",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2117,
+    1161,
+    2134
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "4.5",
+   "price": "4.50",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2162,
+    769,
+    2179
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "4.5",
+   "price": "1.18",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2162,
+    1161,
+    2179
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "5.5",
+   "price": "10.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2207,
+    773,
+    2224
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "5.5",
+   "price": "1.062",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2207,
+    1164,
+    2224
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "6.5",
+   "price": "19.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2252,
+    773,
+    2269
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "6.5",
+   "price": "1.02",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2252,
+    1161,
+    2269
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "7.5",
+   "price": "41.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2297,
+    773,
+    2314
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "7.5",
+   "price": "1.004",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2297,
+    1164,
+    2314
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-0.5",
+   "price": "1.900",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Sweden",
+   "bounds": [
+    567,
+    370,
+    598,
+    387
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+0.5",
+   "price": "1.900",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Poland",
+   "bounds": [
+    1090,
+    370,
+    1120,
+    387
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-0.5",
+   "price": "1.900",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Sweden",
+   "bounds": [
+    567,
+    370,
+    598,
+    387
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+0.5",
+   "price": "1.900",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Poland",
+   "bounds": [
+    1090,
+    370,
+    1120,
+    387
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-2.5",
+   "price": "6.600",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Sweden",
+   "bounds": [
+    567,
+    634,
+    598,
+    651
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+2.5",
+   "price": "1.110",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Poland",
+   "bounds": [
+    1090,
+    634,
+    1120,
+    651
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-2.0",
+   "price": "5.750",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Sweden",
+   "bounds": [
+    567,
+    724,
+    598,
+    741
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+2.0",
+   "price": "1.140",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Poland",
+   "bounds": [
+    1090,
+    724,
+    1120,
+    741
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-1.5",
+   "price": "3.300",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Sweden",
+   "bounds": [
+    567,
+    814,
+    598,
+    831
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+1.5",
+   "price": "1.325",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Poland",
+   "bounds": [
+    1090,
+    814,
+    1120,
+    831
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "-1.0",
+   "price": "2.600",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Sweden",
+   "bounds": [
+    567,
+    904,
+    598,
+    921
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "+1.0",
+   "price": "1.475",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Poland",
+   "bounds": [
+    1090,
+    904,
+    1120,
+    921
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "0.0",
+   "price": "1.450",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Sweden",
+   "bounds": [
+    567,
+    1039,
+    598,
+    1056
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "0.0",
+   "price": "2.675",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Poland",
+   "bounds": [
+    1090,
+    1039,
+    1120,
+    1056
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "+0.5",
+   "price": "1.275",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Sweden",
+   "bounds": [
+    567,
+    1129,
+    598,
+    1146
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "-0.5",
+   "price": "3.550",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Poland",
+   "bounds": [
+    1090,
+    1129,
+    1120,
+    1146
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "+1.0",
+   "price": "1.110",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Sweden",
+   "bounds": [
+    567,
+    1219,
+    598,
+    1236
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "-1.0",
+   "price": "6.600",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Poland",
+   "bounds": [
+    1090,
+    1219,
+    1120,
+    1236
+   ]
+  }
+ ],
+ "execution_observations": [
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603375599,
+   "observed": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-0.5",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     567,
+     370,
+     598,
+     387
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603375599,
+   "observed": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-0.5",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     567,
+     370,
+     598,
+     387
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603375599,
+   "observed": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-2.5",
+    "price": "6.600",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     567,
+     634,
+     598,
+     651
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603375599,
+   "observed": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-2.0",
+    "price": "5.750",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     567,
+     724,
+     598,
+     741
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603375599,
+   "observed": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-1.5",
+    "price": "3.300",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     567,
+     814,
+     598,
+     831
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603375599,
+   "observed": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-1.0",
+    "price": "2.600",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     567,
+     904,
+     598,
+     921
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603375599,
+   "observed": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "0.0",
+    "price": "1.450",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     567,
+     1039,
+     598,
+     1056
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603375599,
+   "observed": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "+0.5",
+    "price": "1.275",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     567,
+     1129,
+     598,
+     1146
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603375599,
+   "observed": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "+1.0",
+    "price": "1.110",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     567,
+     1219,
+     598,
+     1236
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "selection",
+   "observed_at_ms": 1790603375599,
+   "observed": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "0.0",
+    "price": "1.450",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     567,
+     1039,
+     598,
+     1056
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "selection_preflight",
+   "observed_at_ms": 1790603376566,
+   "observed": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "0.0",
+    "price": "1.450",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     567,
+     1039,
+     598,
+     1056
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790603381001,
+   "observed": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "0.0",
+    "price": "1.450",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     567,
+     1039,
+     598,
+     1056
+    ]
+   },
+   "identity_verified": true
+  }
+ ],
+ "selection": {
+  "market": "SPREAD",
+  "side": "HOME",
+  "line": "0.0",
+  "price": "1.450",
+  "availability": "OPEN",
+  "selection_role": "HOME",
+  "selection_name": "Sweden",
+  "bounds": [
+   567,
+   1039,
+   598,
+   1056
+  ]
+ },
+ "selection_role": "HOME",
+ "selection_name": "Sweden",
+ "click_at_ms": 32672,
+ "addbet": {
+  "accepted": true,
+  "cs": 1,
+  "sr": 0,
+  "bets": [
+   {
+    "fixture": "Sweden v Poland",
+    "selection": "Sweden",
+    "handicap": "0.0",
+    "market": "Asian Handicap",
+    "odds": "9/20",
+    "decimal": 1.45,
+    "sr": 0,
+    "cs": 0
+   }
+  ],
+  "at_ms": 32859,
+  "status": 200,
+  "response": {
+   "bg": "<redacted>",
+   "at": 0,
+   "cs": 1,
+   "bs": [],
+   "pc": "<redacted>",
+   "cc": "<redacted>",
+   "ir": false,
+   "mr": false,
+   "bt": [
+    {
+     "bt": 1,
+     "cl": 1,
+     "fd": "Sweden v Poland",
+     "fi": 201150133,
+     "ir": false,
+     "mt": 13,
+     "mr": false,
+     "ns": 0,
+     "od": "9/20",
+     "sa": "<redacted>",
+     "oo": 2,
+     "nf": 201150132,
+     "pf": "N",
+     "pt": [
+      {
+       "bd": "Sweden",
+       "ha": "0",
+       "ho": "",
+       "hd": "0.0",
+       "hf": "0.0",
+       "pi": 47880980,
+       "pk": "201150132|ASHC|14|Sweden|0-0",
+       "md": "Asian Handicap"
+      }
+     ],
+     "cs": 0,
+     "cr": false,
+     "sr": 0,
+     "tp": "BS201150133-47880980x2x3",
+     "ox": "",
+     "pl": "50138",
+     "lk": "UEFA-NAT-LGE-B",
+     "mf": ""
+    }
+   ],
+   "sr": 0,
+   "lm": "PAPI",
+   "vm": "PAPI",
+   "st": 99,
+   "ab": true,
+   "vr": "342",
+   "je": true
+  }
+ },
+ "betslip": {
+  "present": true,
+  "panel": [
+   468,
+   573,
+   916,
+   773
+  ],
+  "items": 1,
+  "title": "Sweden",
+  "handicap": "0.0",
+  "price": "1.450",
+  "title_row": [
+   468,
+   583,
+   916,
+   603
+  ],
+  "remove_x": [
+   486,
+   593
+  ],
+  "market": "Asian Handicap",
+  "fixture": "Sweden v Poland",
+  "notices": []
+ },
+ "betslip_api": [
+  {
+   "url": "https://www.bet365.com/BetsWebAPI/addbet",
+   "status": 200,
+   "at_ms": 32859,
+   "response": {
+    "bg": "<redacted>",
+    "at": 0,
+    "cs": 1,
+    "bs": [],
+    "pc": "<redacted>",
+    "cc": "<redacted>",
+    "ir": false,
+    "mr": false,
+    "bt": [
+     {
+      "bt": 1,
+      "cl": 1,
+      "fd": "Sweden v Poland",
+      "fi": 201150133,
+      "ir": false,
+      "mt": 13,
+      "mr": false,
+      "ns": 0,
+      "od": "9/20",
+      "sa": "<redacted>",
+      "oo": 2,
+      "nf": 201150132,
+      "pf": "N",
+      "pt": [
+       {
+        "bd": "Sweden",
+        "ha": "0",
+        "ho": "",
+        "hd": "0.0",
+        "hf": "0.0",
+        "pi": 47880980,
+        "pk": "201150132|ASHC|14|Sweden|0-0",
+        "md": "Asian Handicap"
+       }
+      ],
+      "cs": 0,
+      "cr": false,
+      "sr": 0,
+      "tp": "BS201150133-47880980x2x3",
+      "ox": "",
+      "pl": "50138",
+      "lk": "UEFA-NAT-LGE-B",
+      "mf": ""
+     }
+    ],
+    "sr": 0,
+    "lm": "PAPI",
+    "vm": "PAPI",
+    "st": 99,
+    "ab": true,
+    "vr": "342",
+    "je": true
+   }
+  }
+ ],
+ "status": "FAIL",
+ "stage": "TARGET_NOT_FOUND",
+ "detail": "Stake control not located on the slip screenshot",
+ "duration_ms": 37031,
+ "stage_timings": [],
+ "progress": {
+  "stage": "ENTER_STAKE",
+  "elapsed_ms": 37031,
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790603343965
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 0,
+    "at_ms": 1790603343965
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 5734,
+    "at_ms": 1790603349708
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 14422,
+    "at_ms": 1790603358391
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 22609,
+    "at_ms": 1790603366573
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 22625,
+    "at_ms": 1790603366589
+   },
+   {
+    "stage": "READ_SELECTION",
+    "elapsed_ms": 31640,
+    "at_ms": 1790603375599
+   },
+   {
+    "stage": "READ_PRICE",
+    "elapsed_ms": 31640,
+    "at_ms": 1790603375599
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 31640,
+    "at_ms": 1790603375599
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 32547,
+    "at_ms": 1790603376519
+   },
+   {
+    "stage": "VERIFY_SLIP",
+    "elapsed_ms": 37031,
+    "at_ms": 1790603380999
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 37031,
+    "at_ms": 1790603381001
+   }
+  ]
+ },
+ "execution_count": 1
+}

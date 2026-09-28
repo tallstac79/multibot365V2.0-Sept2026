@@ -1,0 +1,132 @@
+{
+ "instruction_id": "final-11-swe-ah-home-0",
+ "run_id": "d_8c645bf74aef4c5eb005",
+ "worker": "desktop",
+ "wager_submitted": false,
+ "device_stage": "MARKET_NAV",
+ "route": "event_link",
+ "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201150132/F3/I1/",
+ "session": "AUTHENTICATED",
+ "betslip_clear": {
+  "cleared": true,
+  "removed": 1,
+  "method": "visual: screenshot check, visible remove control"
+ },
+ "direct_event_header": [
+  "UEFA Nations League B • 28 Sep 19:45",
+  "Sweden v Poland"
+ ],
+ "competition_check": {
+  "feed": "UEFA Nations League B",
+  "country": null,
+  "page": "UEFA Nations League B • 28 Sep 19:45",
+  "matches": true
+ },
+ "identity": {
+  "verdict": "EXACT",
+  "reason": "both teams exact",
+  "home": {
+   "feed": "Sweden",
+   "bookmaker": "Sweden",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "away": {
+   "feed": "Poland",
+   "bookmaker": "Poland",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "kickoff_known": true,
+  "kickoff_agrees": true,
+  "reversed": false,
+  "evidence": {
+   "event_id_match": true,
+   "event_anchor": "page opened from the alert's own Bet365 event link",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "equal",
+   "competing_event": "none: a single event page reached through the alert's own link",
+   "home_similarity": {
+    "feed": "Sweden",
+    "bookmaker": "Sweden",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "away_similarity": {
+    "feed": "Poland",
+    "bookmaker": "Poland",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "protected_markers": "agree",
+   "orientation": "agree",
+   "policy": "both_exact",
+   "verdict": "EXACT"
+  }
+ },
+ "identity_verdict": "EXACT",
+ "home": "Sweden",
+ "away": "Poland",
+ "competition": "UEFA Nations League B • 28 Sep 19:45",
+ "fixture_name": "Sweden v Poland",
+ "event_context": {
+  "home": "Sweden",
+  "away": "Poland",
+  "competition": "uefa nations league b",
+  "kickoff_utc": "2026-09-28T18:45",
+  "period": "FULL_GAME"
+ },
+ "status": "FAIL",
+ "stage": "LINE_CHANGED",
+ "detail": "Bet365 SPREAD HOME shows -0.5 @ 1.900; alert line 0.0: no line within 0.25 of the alert line",
+ "duration_ms": 30718,
+ "stage_timings": [],
+ "progress": {
+  "stage": "MARKET_NAV",
+  "elapsed_ms": 30718,
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790604210275
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 0,
+    "at_ms": 1790604210275
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 5780,
+    "at_ms": 1790604216060
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 14812,
+    "at_ms": 1790604225097
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 21843,
+    "at_ms": 1790604232123
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 21843,
+    "at_ms": 1790604232123
+   }
+  ]
+ },
+ "execution_count": 1
+}

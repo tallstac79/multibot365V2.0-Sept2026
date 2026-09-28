@@ -1,0 +1,34 @@
+{
+ "instruction_id": "cleanup",
+ "run_id": "d_616def81a4c44ed6a2ce",
+ "worker": "desktop",
+ "wager_submitted": false,
+ "device_stage": "CLEAR_BETSLIP",
+ "betslip_clear": {
+  "cleared": true,
+  "removed": 1,
+  "method": "visual: screenshot check, visible remove control"
+ },
+ "status": "PASS",
+ "stage": "PASS",
+ "detail": "BETSLIP_CLEARED (1 removed)",
+ "duration_ms": 17453,
+ "stage_timings": [],
+ "progress": {
+  "stage": "CLEAR_BETSLIP",
+  "elapsed_ms": 17453,
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790604788423
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 0,
+    "at_ms": 1790604788423
+   }
+  ]
+ },
+ "execution_count": 1
+}

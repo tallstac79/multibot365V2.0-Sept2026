@@ -1,0 +1,1400 @@
+{
+ "instruction_id": "proof-11-nir-tot-over-2",
+ "run_id": "d_42806c48d5c94dd18c78",
+ "worker": "desktop",
+ "wager_submitted": false,
+ "device_stage": "PREPARE_COMPLETE_EXECUTION",
+ "route": "event_link",
+ "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201150134/F3/I1/",
+ "session": "AUTHENTICATED",
+ "betslip_clear": {
+  "cleared": true,
+  "removed": 1,
+  "method": "visual: screenshot check, visible remove control"
+ },
+ "direct_event_header": [
+  "UEFA Nations League B • 28 Sep 19:45",
+  "Northern Ireland v Hungary"
+ ],
+ "competition_check": {
+  "feed": "UEFA Nations League B",
+  "country": null,
+  "page": "UEFA Nations League B • 28 Sep 19:45",
+  "matches": true
+ },
+ "identity": {
+  "verdict": "EXACT",
+  "reason": "both teams exact",
+  "home": {
+   "feed": "Northern Ireland",
+   "bookmaker": "Northern Ireland",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "away": {
+   "feed": "Hungary",
+   "bookmaker": "Hungary",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "kickoff_known": true,
+  "kickoff_agrees": true,
+  "reversed": false,
+  "evidence": {
+   "event_id_match": true,
+   "event_anchor": "page opened from the alert's own Bet365 event link",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "equal",
+   "competing_event": "none: a single event page reached through the alert's own link",
+   "home_similarity": {
+    "feed": "Northern Ireland",
+    "bookmaker": "Northern Ireland",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "away_similarity": {
+    "feed": "Hungary",
+    "bookmaker": "Hungary",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "protected_markers": "agree",
+   "orientation": "agree",
+   "policy": "both_exact",
+   "verdict": "EXACT"
+  }
+ },
+ "identity_verdict": "EXACT",
+ "home": "Northern Ireland",
+ "away": "Hungary",
+ "competition": "UEFA Nations League B • 28 Sep 19:45",
+ "fixture_name": "Northern Ireland v Hungary",
+ "event_context": {
+  "home": "Northern Ireland",
+  "away": "Hungary",
+  "competition": "uefa nations league b",
+  "kickoff_utc": "2026-09-28T18:45",
+  "period": "FULL_GAME"
+ },
+ "markets": [
+  {
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "line": "",
+   "price": "2.90",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Northern Ireland",
+   "bounds": [
+    411,
+    341,
+    435,
+    358
+   ]
+  },
+  {
+   "market": "MONEYLINE",
+   "side": "DRAW",
+   "line": "",
+   "price": "3.00",
+   "availability": "OPEN",
+   "selection_role": "DRAW",
+   "selection_name": "Draw",
+   "bounds": [
+    695,
+    341,
+    718,
+    358
+   ]
+  },
+  {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "",
+   "price": "2.62",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Hungary",
+   "bounds": [
+    1062,
+    341,
+    1086,
+    358
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "2.5",
+   "price": "2.50",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    1895,
+    769,
+    1912
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "2.5",
+   "price": "1.50",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    1895,
+    1161,
+    1912
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "0.5",
+   "price": "1.11",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2027,
+    769,
+    2044
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "0.5",
+   "price": "6.50",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2027,
+    1161,
+    2044
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "1.5",
+   "price": "1.50",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2072,
+    769,
+    2089
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "1.5",
+   "price": "2.50",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2072,
+    1161,
+    2089
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "3.5",
+   "price": "5.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2117,
+    769,
+    2134
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "3.5",
+   "price": "1.16",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2117,
+    1161,
+    2134
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "4.5",
+   "price": "11.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2162,
+    773,
+    2179
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "4.5",
+   "price": "1.05",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2162,
+    1161,
+    2179
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "5.5",
+   "price": "26.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2207,
+    773,
+    2224
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "5.5",
+   "price": "1.01",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2207,
+    1161,
+    2224
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "6.5",
+   "price": "51.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2252,
+    773,
+    2269
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "6.5",
+   "price": "1.002",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2252,
+    1164,
+    2269
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "2.5",
+   "price": "2.50",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    370,
+    769,
+    387
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "2.5",
+   "price": "1.50",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    370,
+    1161,
+    387
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "0.5",
+   "price": "1.11",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    502,
+    769,
+    519
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "0.5",
+   "price": "6.50",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    502,
+    1161,
+    519
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "1.5",
+   "price": "1.50",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    547,
+    769,
+    564
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "1.5",
+   "price": "2.50",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    547,
+    1161,
+    564
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "3.5",
+   "price": "5.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    592,
+    769,
+    609
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "3.5",
+   "price": "1.16",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    592,
+    1161,
+    609
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "4.5",
+   "price": "11.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    637,
+    773,
+    654
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "4.5",
+   "price": "1.05",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    637,
+    1161,
+    654
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "5.5",
+   "price": "26.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    682,
+    773,
+    699
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "5.5",
+   "price": "1.01",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    682,
+    1161,
+    699
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "6.5",
+   "price": "51.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    727,
+    773,
+    744
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "6.5",
+   "price": "1.002",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    727,
+    1164,
+    744
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "0.0",
+   "price": "2.000",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Northern Ireland",
+   "bounds": [
+    567,
+    370,
+    598,
+    387
+   ]
+  },
+  {
+   "market": "SPREAD",
+   "side": "AWAY",
+   "line": "0.0",
+   "price": "1.800",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Hungary",
+   "bounds": [
+    1090,
+    370,
+    1120,
+    387
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "2.0",
+   "price": "1.900",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    502,
+    773,
+    519
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "2.0",
+   "price": "1.900",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    502,
+    1164,
+    519
+   ]
+  }
+ ],
+ "execution_observations": [
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.5",
+    "price": "2.50",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     745,
+     1895,
+     769,
+     1912
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "0.5",
+    "price": "1.11",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     745,
+     2027,
+     769,
+     2044
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "1.5",
+    "price": "1.50",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     745,
+     2072,
+     769,
+     2089
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "3.5",
+    "price": "5.00",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     745,
+     2117,
+     769,
+     2134
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "4.5",
+    "price": "11.00",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     742,
+     2162,
+     773,
+     2179
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "5.5",
+    "price": "26.00",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     742,
+     2207,
+     773,
+     2224
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "6.5",
+    "price": "51.00",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     742,
+     2252,
+     773,
+     2269
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.5",
+    "price": "2.50",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     745,
+     370,
+     769,
+     387
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "0.5",
+    "price": "1.11",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     745,
+     502,
+     769,
+     519
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "1.5",
+    "price": "1.50",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     745,
+     547,
+     769,
+     564
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "3.5",
+    "price": "5.00",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     745,
+     592,
+     769,
+     609
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "4.5",
+    "price": "11.00",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     742,
+     637,
+     773,
+     654
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "5.5",
+    "price": "26.00",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     742,
+     682,
+     773,
+     699
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "6.5",
+    "price": "51.00",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     742,
+     727,
+     773,
+     744
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.0",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     742,
+     502,
+     773,
+     519
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "selection",
+   "observed_at_ms": 1790603461682,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.0",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     742,
+     502,
+     773,
+     519
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "selection_preflight",
+   "observed_at_ms": 1790603462950,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.0",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     742,
+     502,
+     773,
+     519
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790603465618,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.0",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     742,
+     502,
+     773,
+     519
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790603472072,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.0",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     742,
+     502,
+     773,
+     519
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790603484647,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.0",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     742,
+     502,
+     773,
+     519
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "final",
+   "observed_at_ms": 1790603484649,
+   "observed": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.0",
+    "price": "1.900",
+    "availability": "OPEN",
+    "selection_role": "OVER",
+    "selection_name": "Over",
+    "bounds": [
+     742,
+     502,
+     773,
+     519
+    ]
+   },
+   "identity_verified": true
+  }
+ ],
+ "selection": {
+  "market": "TOTAL",
+  "side": "OVER",
+  "line": "2.0",
+  "price": "1.900",
+  "availability": "OPEN",
+  "selection_role": "OVER",
+  "selection_name": "Over",
+  "bounds": [
+   742,
+   502,
+   773,
+   519
+  ]
+ },
+ "selection_role": "OVER",
+ "selection_name": "Over",
+ "click_at_ms": 32640,
+ "addbet": {
+  "accepted": true,
+  "cs": 1,
+  "sr": 0,
+  "bets": [
+   {
+    "fixture": "Northern Ireland v Hungary",
+    "selection": "Over",
+    "handicap": "2.0",
+    "market": "Goal Line",
+    "odds": "9/10",
+    "decimal": 1.9,
+    "sr": 0,
+    "cs": 0
+   }
+  ],
+  "at_ms": 32875,
+  "status": 200,
+  "response": {
+   "bg": "<redacted>",
+   "at": 0,
+   "cs": 1,
+   "bs": [],
+   "pc": "<redacted>",
+   "cc": "<redacted>",
+   "ir": false,
+   "mr": false,
+   "bt": [
+    {
+     "bt": 1,
+     "cl": 1,
+     "fd": "Northern Ireland v Hungary",
+     "fi": 201150135,
+     "ir": false,
+     "mt": 13,
+     "mr": false,
+     "ns": 0,
+     "od": "9/10",
+     "sa": "<redacted>",
+     "oo": 2,
+     "nf": 201150134,
+     "pf": "N",
+     "pt": [
+      {
+       "bd": "Over",
+       "ha": "2",
+       "ho": "",
+       "hd": "2.0",
+       "hf": "0.0",
+       "pi": 2127237671,
+       "pk": "201150134|ASGL|12|Over",
+       "md": "Goal Line"
+      }
+     ],
+     "cs": 0,
+     "cr": false,
+     "sr": 0,
+     "tp": "BS201150135-2127237671x2x3",
+     "ox": "",
+     "pl": "10143",
+     "lk": "UEFA-NAT-LGE-B",
+     "mf": ""
+    }
+   ],
+   "sr": 0,
+   "lm": "PAPI",
+   "vm": "PAPI",
+   "st": 99,
+   "ab": true,
+   "vr": "342",
+   "je": true
+  }
+ },
+ "betslip": {
+  "present": true,
+  "panel": [
+   468,
+   573,
+   916,
+   773
+  ],
+  "items": 1,
+  "title": "Over",
+  "handicap": "2.0",
+  "price": "1.900",
+  "title_row": [
+   468,
+   584,
+   916,
+   604
+  ],
+  "remove_x": [
+   486,
+   594
+  ],
+  "market": "Goal Line",
+  "fixture": "Northern Ireland v Hungary",
+  "stake_control": {
+   "kind": "stake_box",
+   "bounds": [
+    469,
+    727,
+    637,
+    767
+   ],
+   "click": [
+    517,
+    753
+   ]
+  },
+  "stake": "0.10",
+  "place_bet": {
+   "text": "Place Bet",
+   "bounds": [
+    769,
+    735,
+    841,
+    747
+   ],
+   "centre": [
+    805,
+    741
+   ],
+   "colour": [
+    74,
+    255,
+    183
+   ],
+   "enabled": true
+  },
+  "to_return": "0.19",
+  "notices": []
+ },
+ "stake_entry": {
+  "control": "set_stake",
+  "click": [
+   516,
+   749
+  ],
+  "typed": "0.10",
+  "method": "mouse click + keyboard"
+ },
+ "betslip_api": [
+  {
+   "url": "https://www.bet365.com/BetsWebAPI/addbet",
+   "status": 200,
+   "at_ms": 32875,
+   "response": {
+    "bg": "<redacted>",
+    "at": 0,
+    "cs": 1,
+    "bs": [],
+    "pc": "<redacted>",
+    "cc": "<redacted>",
+    "ir": false,
+    "mr": false,
+    "bt": [
+     {
+      "bt": 1,
+      "cl": 1,
+      "fd": "Northern Ireland v Hungary",
+      "fi": 201150135,
+      "ir": false,
+      "mt": 13,
+      "mr": false,
+      "ns": 0,
+      "od": "9/10",
+      "sa": "<redacted>",
+      "oo": 2,
+      "nf": 201150134,
+      "pf": "N",
+      "pt": [
+       {
+        "bd": "Over",
+        "ha": "2",
+        "ho": "",
+        "hd": "2.0",
+        "hf": "0.0",
+        "pi": 2127237671,
+        "pk": "201150134|ASGL|12|Over",
+        "md": "Goal Line"
+       }
+      ],
+      "cs": 0,
+      "cr": false,
+      "sr": 0,
+      "tp": "BS201150135-2127237671x2x3",
+      "ox": "",
+      "pl": "10143",
+      "lk": "UEFA-NAT-LGE-B",
+      "mf": ""
+     }
+    ],
+    "sr": 0,
+    "lm": "PAPI",
+    "vm": "PAPI",
+    "st": 99,
+    "ab": true,
+    "vr": "342",
+    "je": true
+   }
+  }
+ ],
+ "stake_field_state": "ENTERED",
+ "ready_state": {
+  "fixture_home": "Northern Ireland",
+  "fixture_away": "Hungary",
+  "selection_role": "OVER",
+  "selection_name": "Over",
+  "session": "LOGGED_IN",
+  "state": "READY",
+  "minimum_price_ok": true,
+  "place_bet_visible": true,
+  "wager_submitted": false,
+  "stop_before_wager": true,
+  "market": "TOTAL",
+  "line": "2.0",
+  "price": "1.900",
+  "stake": "0.10"
+ },
+ "final_state": {
+  "home": "Northern Ireland",
+  "away": "Hungary",
+  "side": "OVER",
+  "state": "READY",
+  "place_bet_visible": true,
+  "wager_submitted": false,
+  "market": "TOTAL",
+  "line": "2.0",
+  "price": "1.900",
+  "stake": "0.10"
+ },
+ "complete_execution_ready": {
+  "state": "COMPLETE_EXECUTION_READY",
+  "fixture": "Northern Ireland v Hungary",
+  "fixture_home": "Northern Ireland",
+  "fixture_away": "Hungary",
+  "selection_role": "OVER",
+  "selection_name": "Over",
+  "minimum_price": "1.50",
+  "final_control": "Place Bet",
+  "final_control_bounds": [
+   769,
+   735,
+   841,
+   747
+  ],
+  "final_control_enabled": true,
+  "final_control_actionable": true,
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "to_return": "0.19",
+  "verified_by": "screenshot+OCR, addbet response",
+  "timestamp_ms": 1790603484649,
+  "market": "TOTAL",
+  "line": "2.0",
+  "price": "1.900",
+  "stake": "0.10"
+ },
+ "held": true,
+ "verification_detail": "HELD: verified bet on the slip (screenshot + OCR, cross-checked with Bet365 addbet), stake + To Return verified, Place Bet visible and enabled; NOT pressed, slip kept",
+ "status": "PASS",
+ "stage": "PASS",
+ "detail": "COMPLETE_EXECUTION_READY",
+ "duration_ms": 54281,
+ "stage_timings": [],
+ "progress": {
+  "stage": "PREPARE_COMPLETE_EXECUTION",
+  "elapsed_ms": 54281,
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790603430371
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 0,
+    "at_ms": 1790603430371
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 5796,
+    "at_ms": 1790603436173
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 14468,
+    "at_ms": 1790603444846
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 21484,
+    "at_ms": 1790603451851
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 21500,
+    "at_ms": 1790603451867
+   },
+   {
+    "stage": "READ_SELECTION",
+    "elapsed_ms": 31313,
+    "at_ms": 1790603461682
+   },
+   {
+    "stage": "READ_PRICE",
+    "elapsed_ms": 31313,
+    "at_ms": 1790603461682
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 31313,
+    "at_ms": 1790603461682
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 32546,
+    "at_ms": 1790603462914
+   },
+   {
+    "stage": "VERIFY_SLIP",
+    "elapsed_ms": 35250,
+    "at_ms": 1790603465616
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 35250,
+    "at_ms": 1790603465618
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 37609,
+    "at_ms": 1790603467987
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 54281,
+    "at_ms": 1790603484649
+   }
+  ]
+ },
+ "execution_count": 1
+}

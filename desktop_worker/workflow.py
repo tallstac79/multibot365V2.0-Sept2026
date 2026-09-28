@@ -10,6 +10,11 @@ Desktop-only supervised mode 'discover' stops after the selection decision (noth
 accepted only from the supervised tool, never from the pipeline (the pipeline only sends 'hold' / 'ready').
 
 PLACE_HELD and MY_BETS are refused: final action is not enabled on the desktop worker.
+
+Betslip flow (28 Sep 2026): from the empty-slip check to the Place Bet check NO script runs in the page and the slip is
+never queried through the DOM (visual_slip.py): screenshots + OCR, ordinary mouse clicks and keyboard input, and
+Bet365's own BetsWebAPI responses read passively. A main-world class-selector query before the selection click made
+Bet365 refuse the addbet (evidence/desktop-worker-addbet/); the old DOM slip reader that did it is gone.
 """
 import asyncio
 import json
@@ -20,6 +25,7 @@ from pathlib import Path
 
 from desktop_worker import bet365_page as bp
 from desktop_worker import betslip
+from desktop_worker import visual_slip as vs
 from desktop_worker.layout import as_text, read_words
 
 EVENT_URL = re.compile(r'^https://www\.bet365\.com/#/AC/B(\d{1,3})(/[A-Z]\d{1,12}){2,8}/?$')
@@ -91,6 +97,17 @@ class Run:
             self.record.setdefault('evidence_errors', []).append(f'{name}: {e}')
         return words
 
+    def save_look(self, name, png, state):
+        """Evidence for a visual step: the screenshot, the OCR words and the slip state read from them."""
+        self.n += 1
+        base = self.dir / f's{self.n:03d}_{name}'
+        base.with_suffix('.png').write_bytes(png)
+        words = state.get('words') or []
+        (self.dir / f'{base.name}.ocr.txt').write_text(vs.as_text(words), encoding='utf-8')
+        slim = {k: v for k, v in state.items() if k != 'words'}
+        (self.dir / f'{base.name}.slip.json').write_text(json.dumps(slim, indent=1), encoding='utf-8')
+        return slim
+
     def finish(self, status, stage, detail):
         self.record.update(status=status, stage=stage, detail=detail, duration_ms=self.ms(), stage_timings=self.timings,
                            progress=dict(stage=self.record.get('device_stage'), elapsed_ms=self.ms(), stages=self.stages),
@@ -119,6 +136,10 @@ class DesktopBet365:
         for attempt in range(14):                 # the event header renders after the shell
             await self.page.wait_for_timeout(700 if attempt else 1800)
             words = await self.words()
+            if _reality_check(words):
+                await run.capture(self.page, 'reality_check', words)
+                raise Failure('SESSION_EXPIRED', "Bet365 'Reality Check' dialog is open: answer it by hand in the worker's Chrome window "
+                                                 '(the worker never answers it)')
             if self.d.call('teams', bp.header(words)) is not None and bp.logged_in(words) is not None:
                 break
             if any(CLOSED in w['text'] for w in words):
@@ -200,6 +221,11 @@ class DesktopBet365:
         run.put('session', 'AUTHENTICATED' if logged else 'LOGGED_OUT' if logged is False else 'UNKNOWN')
         if mode != 'discover':
             require(logged is True, 'SESSION_EXPIRED', 'Not logged in on the desktop worker (log in by hand in its Chrome window)')
+            # start from an empty slip, judged from the screen; if a selection had to be removed, load the page afresh
+            if await self.empty_slip(run):
+                words = await self.open_event(run, url)
+                require(not (await self.look(run, 'slip_after_reload'))['present'], 'BETSLIP_NOT_SINGLE',
+                        'Betslip still shows a selection after removing it and reloading')
 
         # --- event identity: the phone's own decision
         run.stage('VERIFY_EVENT')
@@ -253,10 +279,46 @@ class DesktopBet365:
         return await self.slip(run, sport, pick, teams, requested, allowance, minimum, i['stake'], mode)
 
     # ------------------------------------------------------------------ betslip (never presses Place Bet)
+    # No script in the page and no DOM query of the slip from here on: screenshots + OCR, ordinary clicks and typing,
+    # and Bet365's own BetsWebAPI responses read passively (visual_slip.py).
+    async def look(self, run, name):
+        img, png = await vs.screenshot(self.page)
+        state = vs.read_slip(img)
+        if not state['present'] and vs.reality_check(img):
+            run.save_look(name, png, state)
+            raise Failure('SESSION_EXPIRED', "Bet365 'Reality Check' dialog is open: answer it by hand in the worker's Chrome window")
+        return run.save_look(name, png, state)
+
+    async def empty_slip(self, run):
+        """Remove whatever the slip shows with its own visible remove (X) control; number of selections removed."""
+        run.stage('CLEAR_BETSLIP')
+        state = await self.look(run, 'slip_check')
+        removed = 0
+        while state['present']:
+            require(removed < 6, 'BETSLIP_NOT_SINGLE', 'Betslip could not be cleared before the selection')
+            require(state.get('remove_x'), 'BETSLIP_NOT_SINGLE', 'Betslip shown but its remove control was not located on the screen')
+            await vs.click(self.page, *state['remove_x'])
+            await self.page.wait_for_timeout(1200)
+            removed += 1
+            state = await self.look(run, 'slip_after_remove')
+        run.put('betslip_clear', dict(cleared=True, removed=removed, method='visual: screenshot check, visible remove control'))
+        return removed
+
+    async def look_until(self, run, name, ok, tries=6, gap_ms=400):
+        """Screenshots until `ok(state)` holds (a slip still animating in, the stake box's blinking caret hiding a digit, a
+        single bad OCR frame); the last state. Nothing is accepted from a frame that does not read cleanly."""
+        state = None
+        for k in range(tries):
+            state = await self.look(run, name if k == 0 else f'{name}_reread{k}')
+            if ok(state):
+                break
+            await self.page.wait_for_timeout(gap_ms)
+        return state
+
     async def slip(self, run, sport, pick, teams, requested, allowance, minimum, stake, mode):
         run.stage('CLEAR_BETSLIP')
-        require(await betslip.clear(self.page), 'BETSLIP_NOT_SINGLE', 'Betslip could not be cleared before the selection')
-        run.put('betslip_clear', True)
+        before = await self.look(run, 'slip_before_click')
+        require(not before['present'], 'BETSLIP_NOT_SINGLE', 'Betslip is not empty before the selection')
         # fresh read of the chosen cell immediately before the click: same element, same line, terms still acceptable
         run.stage('OPEN_SELECTION')
         words = await self.words()
@@ -266,47 +328,64 @@ class DesktopBet365:
         require(fresh is not None and fresh['q'] is not None, 'LINE_CHANGED',
                 f"{pick['market']} {pick['side']} {pick['line']} no longer shown before selecting it")
         run.observe('selection_preflight', fresh, False)
+        run.put('selection_group', fresh['group'])
         self._terms(sport, fresh, requested, allowance, minimum)
         cell = await self.element_for(fresh)
         require(cell is not None, 'PRICE_CHANGED', 'Selection cell changed between the read and the click')
-        # evidence: Bet365's own betslip API exchange for this click (request payload, status, response head)
+        # Bet365's own betslip API exchanges from the click to the end, read passively (never altered)
         api = []
 
         async def record(resp):
             if 'BetsWebAPI' in resp.url:
                 try:
-                    body = (await resp.text())[:1500]
+                    body = await resp.text()
                 except Exception as e:
                     body = f'<{type(e).__name__}>'
-                api.append(dict(url=resp.url[:160], status=resp.status, post=(resp.request.post_data or '')[:600], body=body,
-                                at_ms=run.ms()))
+                api.append(dict(url=resp.url.split('?')[0][:120], status=resp.status, body=body, at_ms=run.ms()))
         handler = lambda r: asyncio.ensure_future(record(r))
         self.page.on('response', handler)
-        run.put('click_at_ms', run.ms())
         try:
+            run.put('click_at_ms', run.ms())
             await cell.click()
-            state = await betslip.wait_items(self.page, 1)
-            await self.page.wait_for_timeout(300)
+            for _ in range(40):                                    # Bet365's addbet answer to this click
+                await self.page.wait_for_timeout(200)
+                if any('addbet' in a['url'] for a in api):
+                    break
+            add = next((a for a in api if 'addbet' in a['url']), None)
+            net = vs.addbet_terms(add['body']) if add else dict(accepted=False, missing=True)
+            run.put('addbet', dict(net, at_ms=add and add['at_ms'], status=add and add['status'],
+                                   response=vs.redacted(add['body']) if add else None))
+            if not net.get('accepted'):
+                await self.look(run, 'slip_refused')
+                raise Failure('BETSLIP_ERROR', 'Bet365 did not answer the selection click with addbet' if add is None else
+                              f"Bet365 addbet refused the selection: cs={net.get('cs')} sr={net.get('sr')}")
+            state = await self.look_until(run, 'slip_selection', lambda st: st['present'] and st.get('price') and st.get('fixture')
+                                          and st.get('stake_control') and st.get('place_bet'))
+            run.stage('VERIFY_SLIP')
+            actual = await self._verify_visual(run, 'slip_selection', state, net, sport, fresh, teams, requested, allowance, minimum)
+            run.stage('ENTER_STAKE')
+            control = state.get('stake_control')
+            require(control, 'TARGET_NOT_FOUND', 'Stake control not located on the slip screenshot')
+            await vs.type_stake(self.page, control, stake)
+            run.put('stake_entry', dict(control=control['kind'], click=control['click'], typed=stake, method='mouse click + keyboard'))
+            run.stage('VERIFY_FINAL_STATE')
+            want = betslip.money(stake)
+            state = await self.look_until(run, 'slip_stake', lambda st: st['present'] and betslip.money(st.get('stake')) == want
+                                          and st.get('to_return') and (st.get('place_bet') or {}).get('enabled'))
+            actual = await self._verify_visual(run, 'slip_stake', state, net, sport, actual, teams, requested, allowance, minimum)
+            self._verify_stake(state, stake, actual)
+            await self.page.wait_for_timeout(800)                 # still the same a moment later (no late notice)
+            final = await self.look_until(run, 'slip_final', lambda st: st['present'] and betslip.money(st.get('stake')) == want
+                                          and (st.get('place_bet') or {}).get('enabled'))
+            actual = await self._verify_visual(run, 'slip_final', final, net, sport, actual, teams, requested, allowance, minimum)
+            self._verify_stake(final, stake, actual)
         finally:
             self.page.remove_listener('response', handler)
-        run.put('betslip_api', api)
-        await run.capture(self.page, 'slip_selection')
-        run.stage('VERIFY_SLIP')
-        actual = self._verify_slip(run, state, sport, fresh, teams, requested, allowance, minimum)
-        run.stage('ENTER_STAKE')
-        state = await betslip.enter_stake(self.page, stake)
-        await run.capture(self.page, 'slip_stake')
-        run.stage('VERIFY_FINAL_STATE')
-        actual = self._verify_slip(run, state, sport, actual, teams, requested, allowance, minimum)
-        require(betslip.money(state.get('stake')) == betslip.money(stake), 'STAKE_REJECTED',
-                f"Slip stake {state.get('stake')!r} is not {stake}")
-        returned, expected = betslip.money(state.get('to_return')), betslip.money(stake) * float(actual['price'])
-        require(returned is not None and abs(returned - expected) <= 0.011, 'STAKE_REJECTED',
-                f"To Return {state.get('to_return')!r} does not agree with {stake} x {actual['price']}")
-        pb = state.get('place_bet') or {}
-        require(pb and (pb.get('text') or '').strip() == 'Place Bet' and not pb.get('disabled'), 'TARGET_NOT_FOUND',
-                f"Place Bet not ready on the slip ({pb.get('text')!r}, disabled={pb.get('disabled')})")
-        require(not state.get('messages'), 'PRICE_CHANGED', f"Betslip notice: {state.get('messages')}")
+            run.put('betslip_api', [dict(url=a['url'], status=a['status'], at_ms=a['at_ms'],
+                                         response=vs.redacted(a['body'])) for a in api])
+        refusals = [a['url'] for a in api if '"sr":-1' in (a['body'] or '')]
+        require(not refusals, 'BETSLIP_ERROR', f'Bet365 betslip API refused a later step: {refusals}')
+        pb = final['place_bet']
         run.stage('PREPARE_COMPLETE_EXECUTION')
         run.observe('final', actual, True)
         run.put('selection', observed(actual))
@@ -321,9 +400,11 @@ class DesktopBet365:
                                                  selection_role=actual['side'], selection_name=actual['name'], minimum_price=minimum,
                                                  final_control='Place Bet', final_control_bounds=pb.get('bounds'), final_control_enabled=True,
                                                  final_control_actionable=True, gesture_dispatched=False, wager_submitted=False,
+                                                 to_return=final.get('to_return'), verified_by='screenshot+OCR, addbet response',
                                                  timestamp_ms=int(time.time() * 1000), **common))
         run.put('held', mode == 'hold')
-        run.put('verification_detail', 'HELD: verified bet on the slip, stake + To Return verified, Place Bet located; NOT pressed, slip kept')
+        run.put('verification_detail', 'HELD: verified bet on the slip (screenshot + OCR, cross-checked with Bet365 addbet), '
+                                       'stake + To Return verified, Place Bet visible and enabled; NOT pressed, slip kept')
         return 'PASS', 'COMPLETE_EXECUTION_READY'
 
     def _terms(self, sport, q, requested, allowance, minimum):
@@ -340,30 +421,69 @@ class DesktopBet365:
                     'Line deterioration exceeds original alert allowance')
         require(self.d.price_ok(q['price'], minimum), 'BELOW_MINIMUM', f"Price {q['price']} below original alert minimum {minimum}")
 
-    def _verify_slip(self, run, state, sport, expected, teams, requested, allowance, minimum):
-        """Exactly one bet on the slip, for this fixture, market, selection and line; its price judged by the tolerances."""
+    async def _verify_visual(self, run, name, state, net, sport, expected, teams, requested, allowance, minimum):
+        """The slip's terms from the screen, re-read on a fresh screenshot up to twice if one OCR frame disagrees (the
+        phone's readback rule); a real difference fails every read and is reported as it is."""
+        for k in range(3):
+            try:
+                return self._check_slip(run, state, net, sport, expected, teams, requested, allowance, minimum)
+            except Failure as f:
+                if k == 2 or f.stage not in REREAD_STAGES:
+                    raise
+                run.record.setdefault('readback_rereads', []).append(dict(frame=name, stage=f.stage, detail=f.detail))
+                await self.page.wait_for_timeout(500)
+                state = await self.look(run, f'{name}_verify{k + 1}')
+
+    def _check_slip(self, run, state, net, sport, expected, teams, requested, allowance, minimum):
+        """Exactly one bet on the slip, for this fixture, market, selection and line, shown on the screen AND in
+        Bet365's addbet answer; the price shown judged by the tolerances. Accept Change is never pressed."""
         run.put('betslip', state)
-        require(not state.get('error'), 'BETSLIP_ERROR', f"Bet365 betslip error: {state.get('text')!r}")
-        items = state.get('items') or []
-        require(len(items) == 1, 'BETSLIP_NOT_SINGLE', f'Betslip holds {len(items)} selections')
-        item = items[0]
-        fixture = (item.get('fixture') or '').split(' v ')
-        require(len(fixture) == 2 and self.d.same_slip_name(teams[0], fixture[0]) and self.d.same_slip_name(teams[1], fixture[1]),
-                'WRONG_EVENT', f"Slip fixture {item.get('fixture')!r} is not '{teams[0]} v {teams[1]}'")
-        labels = betslip.LABELS.get((sport, expected['market']), set())
-        require((item.get('market') or '').strip().lower() in labels, 'WRONG_EVENT',
-                f"Slip market {item.get('market')!r} is not {expected['market']} ({sorted(labels)})")
-        title = (item.get('title') or '').strip()
-        require(self.d.same_slip_name(expected['name'], title), 'SELECTION_CHANGED', f"Slip selection {title!r} is not {expected['name']!r}")
+        require(state.get('present'), 'BETSLIP_ERROR', 'Betslip not visible on the screen after the selection click')
+        notices = state.get('notices') or []
+        require(not any('accept' in n.lower() for n in notices), 'PRICE_CHANGED',
+                f'Bet365 asks to accept a change on the slip; Accept Change is never pressed: {notices}')
+        require(not notices, 'PRICE_CHANGED', f'Betslip notice: {notices}')
+        bets = net.get('bets') or []
+        require(len(bets) == 1 and state.get('items') == 1, 'BETSLIP_NOT_SINGLE',
+                f"Betslip holds {len(bets)} selection(s) per Bet365 and {state.get('items')} on the screen")
+        bet = bets[0]
+        for source, fixture in (('addbet', bet.get('fixture')), ('screen', state.get('fixture'))):
+            parts = (fixture or '').split(' v ')
+            require(len(parts) == 2 and self.d.same_slip_name(teams[0], parts[0]) and self.d.same_slip_name(teams[1], parts[1]),
+                    'WRONG_EVENT', f"Slip fixture ({source}) {fixture!r} is not '{teams[0]} v {teams[1]}'")
+        labels = betslip.LABELS.get((sport, expected['market']), set()) | betslip.GROUP_LABELS.get((sport, expected.get('group')), set())
+        for source, market in (('addbet', bet.get('market')), ('screen', state.get('market'))):
+            require((market or '').strip().lower() in labels, 'WRONG_EVENT',
+                    f"Slip market ({source}) {market!r} is not {expected['market']} ({sorted(labels)})")
+        for source, title in (('addbet', bet.get('selection')), ('screen', state.get('title'))):
+            require(self.d.same_slip_name(expected['name'], (title or '').strip()), 'SELECTION_CHANGED',
+                    f"Slip selection ({source}) {title!r} is not {expected['name']!r}")
         line = expected['line']
         if expected['market'] != 'MONEYLINE':
-            shown = self.d.norm_line(item.get('handicap') or '') if item.get('handicap') else None
-            require(shown is not None, 'PRICE_CHANGED', f"Slip line unreadable ({item.get('handicap')!r})")
+            net_line = self.d.norm_line(bet.get('handicap') or '') if bet.get('handicap') else None
+            shown = self.d.norm_line(state.get('handicap') or '') if state.get('handicap') else None
+            require(shown is not None and net_line is not None, 'PRICE_CHANGED',
+                    f"Slip line unreadable (screen {state.get('handicap')!r}, addbet {bet.get('handicap')!r})")
+            require(_same(shown, net_line), 'LINE_CHANGED', f'Slip line on the screen {shown} is not the addbet line {net_line}')
             line = shown.lstrip('+') if expected['market'] == 'TOTAL' else shown
-        actual = dict(expected, line=line, price=item.get('price'), raw_price=item.get('price'))
+        price = state.get('price')
+        require(price and vs.DECIMAL.match(price), 'PRICE_CHANGED', f'Slip price unreadable ({price!r})')
+        require(bet.get('decimal') is not None and abs(float(price) - bet['decimal']) <= 0.011, 'PRICE_CHANGED',
+                f"Slip price on the screen {price} does not agree with Bet365's addbet odds {bet.get('odds')}")
+        actual = dict(expected, line=line, price=price, raw_price=price)
         run.observe('slip', actual, True)
         self._terms(sport, actual, requested, allowance, minimum)
         return actual
+
+    def _verify_stake(self, state, stake, actual):
+        require(betslip.money(state.get('stake')) == betslip.money(stake), 'STAKE_REJECTED',
+                f"Slip stake {state.get('stake')!r} is not {stake}")
+        returned, expected = betslip.money(state.get('to_return')), betslip.money(stake) * float(actual['price'])
+        require(returned is not None and abs(returned - expected) <= 0.011, 'STAKE_REJECTED',
+                f"To Return {state.get('to_return')!r} does not agree with {stake} x {actual['price']}")
+        pb = state.get('place_bet') or {}
+        require(pb.get('text') == 'Place Bet' and pb.get('enabled'), 'TARGET_NOT_FOUND',
+                f"Place Bet not ready on the slip (seen={bool(pb)}, colour={pb.get('colour')})")
 
     async def discover(self, run, words, sport, market, side, requested, allowance, teams):
         """(quote to use or None, all quotes read). Basketball: the Game Lines row, one-sided rule (unchanged). Football:
@@ -423,6 +543,15 @@ class DesktopBet365:
         again = next((q for q in fresh if q['market'] == market and q['side'] == side and _same(q['line'], chosen['line'])
                       and q['group'] == chosen['group']), None)
         return again, seen
+
+
+REREAD_STAGES = {'LINE_CHANGED', 'PRICE_CHANGED', 'STAKE_REJECTED', 'SELECTION_CHANGED', 'WRONG_EVENT', 'TARGET_NOT_FOUND',
+                 'BETSLIP_NOT_SINGLE', 'BETSLIP_ERROR'}
+
+
+def _reality_check(words):
+    texts = {w['text'] for w in words}
+    return 'Reality Check' in texts and 'Remain Logged In' in texts
 
 
 def _same(a, b):

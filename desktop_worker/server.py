@@ -188,13 +188,10 @@ class Worker:
                     return run.finish('PASS', 'PASS', 'SESSION_AUTHENTICATED')
                 return run.finish('FAIL', 'SESSION_REQUIRED', 'Not logged in on the desktop worker: log in by hand in its Chrome window')
             if action == 'RESET_BETSLIP':
-                from desktop_worker import betslip
+                # visual: screenshot check + the slip's visible remove control (no script in the page)
                 run.stage('RESET_BETSLIP')
-                cleared = await betslip.clear(page)
-                await run.capture(page, 'betslip_reset')
-                if cleared:
-                    return run.finish('PASS', 'PASS', 'BETSLIP_CLEARED')
-                return run.finish('FAIL', 'BETSLIP_NOT_SINGLE', 'Betslip could not be cleared')
+                removed = await site.empty_slip(run)
+                return run.finish('PASS', 'PASS', f'BETSLIP_CLEARED ({removed} removed)')
             stage, detail = await site.hold(run, body.get('execution_mode', 'hold'))
             return run.finish('PASS', 'PASS', detail if stage != 'DISCOVERED' else f'DISCOVERED: {detail}')
         except Failure as f:

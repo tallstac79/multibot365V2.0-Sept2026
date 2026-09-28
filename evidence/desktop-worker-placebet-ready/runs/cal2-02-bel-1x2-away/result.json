@@ -1,0 +1,884 @@
+{
+ "instruction_id": "cal2-02-bel-1x2-away",
+ "run_id": "d_154e5645ceef4a04b86c",
+ "worker": "desktop",
+ "wager_submitted": false,
+ "device_stage": "PREPARE_COMPLETE_EXECUTION",
+ "route": "event_link",
+ "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201150136/F3/I1/",
+ "session": "AUTHENTICATED",
+ "betslip_clear": {
+  "cleared": true,
+  "removed": 1,
+  "method": "visual: screenshot check, visible remove control"
+ },
+ "direct_event_header": [
+  "UEFA Nations League A • 28 Sep 19:45",
+  "Belgium v France"
+ ],
+ "competition_check": {
+  "feed": "UEFA Nations League A",
+  "country": null,
+  "page": "UEFA Nations League A • 28 Sep 19:45",
+  "matches": true
+ },
+ "identity": {
+  "verdict": "EXACT",
+  "reason": "both teams exact",
+  "home": {
+   "feed": "Belgium",
+   "bookmaker": "Belgium",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "away": {
+   "feed": "France",
+   "bookmaker": "France",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "kickoff_known": true,
+  "kickoff_agrees": true,
+  "reversed": false,
+  "evidence": {
+   "event_id_match": true,
+   "event_anchor": "page opened from the alert's own Bet365 event link",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "equal",
+   "competing_event": "none: a single event page reached through the alert's own link",
+   "home_similarity": {
+    "feed": "Belgium",
+    "bookmaker": "Belgium",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "away_similarity": {
+    "feed": "France",
+    "bookmaker": "France",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "protected_markers": "agree",
+   "orientation": "agree",
+   "policy": "both_exact",
+   "verdict": "EXACT"
+  }
+ },
+ "identity_verdict": "EXACT",
+ "home": "Belgium",
+ "away": "France",
+ "competition": "UEFA Nations League A • 28 Sep 19:45",
+ "fixture_name": "Belgium v France",
+ "event_context": {
+  "home": "Belgium",
+  "away": "France",
+  "competition": "uefa nations league a",
+  "kickoff_utc": "2026-09-28T18:45",
+  "period": "FULL_GAME"
+ },
+ "markets": [
+  {
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "line": "",
+   "price": "4.00",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Belgium",
+   "bounds": [
+    363,
+    341,
+    387,
+    358
+   ]
+  },
+  {
+   "market": "MONEYLINE",
+   "side": "DRAW",
+   "line": "",
+   "price": "3.90",
+   "availability": "OPEN",
+   "selection_role": "DRAW",
+   "selection_name": "Draw",
+   "bounds": [
+    695,
+    341,
+    718,
+    358
+   ]
+  },
+  {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "France",
+   "bounds": [
+    1051,
+    341,
+    1074,
+    358
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "2.5",
+   "price": "1.57",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    1895,
+    769,
+    1912
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "2.5",
+   "price": "2.35",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    1895,
+    1161,
+    1912
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "0.5",
+   "price": "1.03",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2027,
+    769,
+    2044
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "0.5",
+   "price": "15.00",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2027,
+    1164,
+    2044
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "1.5",
+   "price": "1.16",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2072,
+    769,
+    2089
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "1.5",
+   "price": "5.00",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2072,
+    1161,
+    2089
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "3.5",
+   "price": "2.37",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2117,
+    769,
+    2134
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "3.5",
+   "price": "1.53",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2117,
+    1161,
+    2134
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "4.5",
+   "price": "4.33",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2162,
+    769,
+    2179
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "4.5",
+   "price": "1.20",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2162,
+    1161,
+    2179
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "5.5",
+   "price": "9.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2207,
+    769,
+    2224
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "5.5",
+   "price": "1.071",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2207,
+    1164,
+    2224
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "6.5",
+   "price": "19.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2252,
+    773,
+    2269
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "6.5",
+   "price": "1.02",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2252,
+    1161,
+    2269
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "7.5",
+   "price": "34.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2297,
+    773,
+    2314
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "7.5",
+   "price": "1.005",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2297,
+    1164,
+    2314
+   ]
+  }
+ ],
+ "execution_observations": [
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790602998162,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "France",
+    "bounds": [
+     1051,
+     341,
+     1074,
+     358
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "selection",
+   "observed_at_ms": 1790602998162,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "France",
+    "bounds": [
+     1051,
+     341,
+     1074,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "selection_preflight",
+   "observed_at_ms": 1790602999290,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "France",
+    "bounds": [
+     1051,
+     341,
+     1074,
+     358
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790603002756,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "France",
+    "bounds": [
+     1051,
+     341,
+     1074,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790603010159,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "France",
+    "bounds": [
+     1051,
+     341,
+     1074,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790603018618,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "France",
+    "bounds": [
+     1051,
+     341,
+     1074,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "final",
+   "observed_at_ms": 1790603018621,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "AWAY",
+    "selection_name": "France",
+    "bounds": [
+     1051,
+     341,
+     1074,
+     358
+    ]
+   },
+   "identity_verified": true
+  }
+ ],
+ "selection": {
+  "market": "MONEYLINE",
+  "side": "AWAY",
+  "line": "",
+  "price": "1.83",
+  "availability": "OPEN",
+  "selection_role": "AWAY",
+  "selection_name": "France",
+  "bounds": [
+   1051,
+   341,
+   1074,
+   358
+  ]
+ },
+ "selection_role": "AWAY",
+ "selection_name": "France",
+ "click_at_ms": 26640,
+ "addbet": {
+  "accepted": true,
+  "cs": 1,
+  "sr": 0,
+  "bets": [
+   {
+    "fixture": "Belgium v France",
+    "selection": "France",
+    "handicap": null,
+    "market": "Full Time Result",
+    "odds": "5/6",
+    "decimal": 1.8333333333333333,
+    "sr": 0,
+    "cs": 0
+   }
+  ],
+  "at_ms": 26797,
+  "status": 200,
+  "response": {
+   "bg": "<redacted>",
+   "at": 0,
+   "cs": 1,
+   "bs": [],
+   "pc": "<redacted>",
+   "cc": "<redacted>",
+   "ir": false,
+   "mr": false,
+   "bt": [
+    {
+     "bt": 1,
+     "cl": 1,
+     "fd": "Belgium v France",
+     "fi": 201150136,
+     "ir": false,
+     "mt": 13,
+     "mr": false,
+     "ns": 0,
+     "od": "5/6",
+     "sa": "<redacted>",
+     "ob": [
+      {
+       "oc": "PSSOCCER",
+       "ot": 3
+      }
+     ],
+     "nf": 201150136,
+     "pf": "N",
+     "pt": [
+      {
+       "bd": "France",
+       "ho": "",
+       "pi": 2127237884,
+       "pk": "201150136|FTRS|1|Team2",
+       "md": "Full Time Result"
+      }
+     ],
+     "cs": 0,
+     "cr": false,
+     "sr": 0,
+     "tp": "BS201150136-2127237884",
+     "ox": "",
+     "pl": "40",
+     "lk": "UEFA-NAT-LGE-A",
+     "mf": ""
+    }
+   ],
+   "sr": 0,
+   "lm": "PAPI",
+   "vm": "PAPI",
+   "st": 99,
+   "ab": true,
+   "vr": "342",
+   "je": true
+  }
+ },
+ "betslip": {
+  "present": true,
+  "panel": [
+   468,
+   573,
+   916,
+   773
+  ],
+  "items": 1,
+  "title": "France",
+  "handicap": null,
+  "price": "1.83",
+  "title_row": [
+   468,
+   584,
+   916,
+   604
+  ],
+  "remove_x": [
+   486,
+   594
+  ],
+  "market": "Full Time Result",
+  "fixture": "Belgium v France",
+  "stake_control": {
+   "kind": "stake_box",
+   "bounds": [
+    469,
+    727,
+    637,
+    767
+   ],
+   "click": [
+    517,
+    753
+   ]
+  },
+  "stake": "0.10",
+  "place_bet": {
+   "text": "Place Bet",
+   "bounds": [
+    769,
+    735,
+    841,
+    747
+   ],
+   "centre": [
+    805,
+    741
+   ],
+   "colour": [
+    74,
+    255,
+    183
+   ],
+   "enabled": true
+  },
+  "to_return": "0.18",
+  "notices": []
+ },
+ "stake_entry": {
+  "control": "set_stake",
+  "click": [
+   516,
+   749
+  ],
+  "typed": "0.10",
+  "method": "mouse click + keyboard"
+ },
+ "betslip_api": [
+  {
+   "url": "https://www.bet365.com/BetsWebAPI/addbet",
+   "status": 200,
+   "at_ms": 26797,
+   "response": {
+    "bg": "<redacted>",
+    "at": 0,
+    "cs": 1,
+    "bs": [],
+    "pc": "<redacted>",
+    "cc": "<redacted>",
+    "ir": false,
+    "mr": false,
+    "bt": [
+     {
+      "bt": 1,
+      "cl": 1,
+      "fd": "Belgium v France",
+      "fi": 201150136,
+      "ir": false,
+      "mt": 13,
+      "mr": false,
+      "ns": 0,
+      "od": "5/6",
+      "sa": "<redacted>",
+      "ob": [
+       {
+        "oc": "PSSOCCER",
+        "ot": 3
+       }
+      ],
+      "nf": 201150136,
+      "pf": "N",
+      "pt": [
+       {
+        "bd": "France",
+        "ho": "",
+        "pi": 2127237884,
+        "pk": "201150136|FTRS|1|Team2",
+        "md": "Full Time Result"
+       }
+      ],
+      "cs": 0,
+      "cr": false,
+      "sr": 0,
+      "tp": "BS201150136-2127237884",
+      "ox": "",
+      "pl": "40",
+      "lk": "UEFA-NAT-LGE-A",
+      "mf": ""
+     }
+    ],
+    "sr": 0,
+    "lm": "PAPI",
+    "vm": "PAPI",
+    "st": 99,
+    "ab": true,
+    "vr": "342",
+    "je": true
+   }
+  }
+ ],
+ "stake_field_state": "ENTERED",
+ "ready_state": {
+  "fixture_home": "Belgium",
+  "fixture_away": "France",
+  "selection_role": "AWAY",
+  "selection_name": "France",
+  "session": "LOGGED_IN",
+  "state": "READY",
+  "minimum_price_ok": true,
+  "place_bet_visible": true,
+  "wager_submitted": false,
+  "stop_before_wager": true,
+  "market": "MONEYLINE",
+  "line": "",
+  "price": "1.83",
+  "stake": "0.10"
+ },
+ "final_state": {
+  "home": "Belgium",
+  "away": "France",
+  "side": "AWAY",
+  "state": "READY",
+  "place_bet_visible": true,
+  "wager_submitted": false,
+  "market": "MONEYLINE",
+  "line": "",
+  "price": "1.83",
+  "stake": "0.10"
+ },
+ "complete_execution_ready": {
+  "state": "COMPLETE_EXECUTION_READY",
+  "fixture": "Belgium v France",
+  "fixture_home": "Belgium",
+  "fixture_away": "France",
+  "selection_role": "AWAY",
+  "selection_name": "France",
+  "minimum_price": "1.50",
+  "final_control": "Place Bet",
+  "final_control_bounds": [
+   769,
+   735,
+   841,
+   747
+  ],
+  "final_control_enabled": true,
+  "final_control_actionable": true,
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "to_return": "0.18",
+  "verified_by": "screenshot+OCR, addbet response",
+  "timestamp_ms": 1790603018621,
+  "market": "MONEYLINE",
+  "line": "",
+  "price": "1.83",
+  "stake": "0.10"
+ },
+ "held": true,
+ "verification_detail": "HELD: verified bet on the slip (screenshot + OCR, cross-checked with Bet365 addbet), stake + To Return verified, Place Bet visible and enabled; NOT pressed, slip kept",
+ "status": "PASS",
+ "stage": "PASS",
+ "detail": "COMPLETE_EXECUTION_READY",
+ "duration_ms": 45890,
+ "stage_timings": [],
+ "progress": {
+  "stage": "PREPARE_COMPLETE_EXECUTION",
+  "elapsed_ms": 45890,
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790602972738
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 0,
+    "at_ms": 1790602972738
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 6656,
+    "at_ms": 1790602979395
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 18436,
+    "at_ms": 1790602991168
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 25422,
+    "at_ms": 1790602998147
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 25422,
+    "at_ms": 1790602998147
+   },
+   {
+    "stage": "READ_SELECTION",
+    "elapsed_ms": 25436,
+    "at_ms": 1790602998162
+   },
+   {
+    "stage": "READ_PRICE",
+    "elapsed_ms": 25436,
+    "at_ms": 1790602998162
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 25436,
+    "at_ms": 1790602998162
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 26436,
+    "at_ms": 1790602999165
+   },
+   {
+    "stage": "VERIFY_SLIP",
+    "elapsed_ms": 30015,
+    "at_ms": 1790603002754
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 30031,
+    "at_ms": 1790603002756
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 32422,
+    "at_ms": 1790603005156
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 45890,
+    "at_ms": 1790603018621
+   }
+  ]
+ },
+ "execution_count": 1
+}

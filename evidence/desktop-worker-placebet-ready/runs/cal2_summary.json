@@ -1,0 +1,314 @@
+[
+ {
+  "instruction_id": "cal2-01-nir-tot-over-2",
+  "run_id": "d_a69f0d8ec05a4cbeb56d",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 44936,
+  "fixture_name": "Northern Ireland v Hungary",
+  "selection": {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "2.0",
+   "price": "1.900",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    502,
+    773,
+    519
+   ]
+  },
+  "addbet": {
+   "accepted": true,
+   "cs": 1,
+   "sr": 0,
+   "bets": [
+    {
+     "fixture": "Northern Ireland v Hungary",
+     "selection": "Over",
+     "handicap": "2.0",
+     "market": "Goal Line",
+     "odds": "9/10",
+     "decimal": 1.9,
+     "sr": 0,
+     "cs": 0
+    }
+   ],
+   "at_ms": 31000,
+   "status": 200,
+   "response": {
+    "bg": "<redacted>",
+    "at": 0,
+    "cs": 1,
+    "bs": [],
+    "pc": "<redacted>",
+    "cc": "<redacted>",
+    "ir": false,
+    "mr": false,
+    "bt": [
+     {
+      "bt": 1,
+      "cl": 1,
+      "fd": "Northern Ireland v Hungary",
+      "fi": 201150135,
+      "ir": false,
+      "mt": 13,
+      "mr": false,
+      "ns": 0,
+      "od": "9/10",
+      "sa": "<redacted>",
+      "oo": 2,
+      "nf": 201150134,
+      "pf": "N",
+      "pt": [
+       {
+        "bd": "Over",
+        "ha": "2",
+        "ho": "",
+        "hd": "2.0",
+        "hf": "0.0",
+        "pi": 2127237671,
+        "pk": "201150134|ASGL|12|Over",
+        "md": "Goal Line"
+       }
+      ],
+      "cs": 0,
+      "cr": false,
+      "sr": 0,
+      "tp": "BS201150135-2127237671x2x3",
+      "ox": "",
+      "pl": "10143",
+      "lk": "UEFA-NAT-LGE-B",
+      "mf": ""
+     }
+    ],
+    "sr": 0,
+    "lm": "PAPI",
+    "vm": "PAPI",
+    "st": 99,
+    "ab": true,
+    "vr": "342",
+    "je": true
+   }
+  },
+  "stake_entry": {
+   "control": "set_stake",
+   "click": [
+    516,
+    749
+   ],
+   "typed": "0.10",
+   "method": "mouse click + keyboard"
+  },
+  "betslip_clear": {
+   "cleared": true,
+   "removed": 1,
+   "method": "visual: screenshot check, visible remove control"
+  },
+  "ready_state": {
+   "fixture_home": "Northern Ireland",
+   "fixture_away": "Hungary",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true,
+   "market": "TOTAL",
+   "line": "2.0",
+   "price": "1.900",
+   "stake": "0.10"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Northern Ireland v Hungary",
+   "fixture_home": "Northern Ireland",
+   "fixture_away": "Hungary",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "minimum_price": "1.50",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    769,
+    735,
+    841,
+    747
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "to_return": "0.19",
+   "verified_by": "screenshot+OCR, addbet response",
+   "timestamp_ms": 1790602970966,
+   "market": "TOTAL",
+   "line": "2.0",
+   "price": "1.900",
+   "stake": "0.10"
+  },
+  "wager_submitted": false
+ },
+ {
+  "instruction_id": "cal2-02-bel-1x2-away",
+  "run_id": "d_154e5645ceef4a04b86c",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 45890,
+  "fixture_name": "Belgium v France",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "",
+   "price": "1.83",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "France",
+   "bounds": [
+    1051,
+    341,
+    1074,
+    358
+   ]
+  },
+  "addbet": {
+   "accepted": true,
+   "cs": 1,
+   "sr": 0,
+   "bets": [
+    {
+     "fixture": "Belgium v France",
+     "selection": "France",
+     "handicap": null,
+     "market": "Full Time Result",
+     "odds": "5/6",
+     "decimal": 1.8333333333333333,
+     "sr": 0,
+     "cs": 0
+    }
+   ],
+   "at_ms": 26797,
+   "status": 200,
+   "response": {
+    "bg": "<redacted>",
+    "at": 0,
+    "cs": 1,
+    "bs": [],
+    "pc": "<redacted>",
+    "cc": "<redacted>",
+    "ir": false,
+    "mr": false,
+    "bt": [
+     {
+      "bt": 1,
+      "cl": 1,
+      "fd": "Belgium v France",
+      "fi": 201150136,
+      "ir": false,
+      "mt": 13,
+      "mr": false,
+      "ns": 0,
+      "od": "5/6",
+      "sa": "<redacted>",
+      "ob": [
+       {
+        "oc": "PSSOCCER",
+        "ot": 3
+       }
+      ],
+      "nf": 201150136,
+      "pf": "N",
+      "pt": [
+       {
+        "bd": "France",
+        "ho": "",
+        "pi": 2127237884,
+        "pk": "201150136|FTRS|1|Team2",
+        "md": "Full Time Result"
+       }
+      ],
+      "cs": 0,
+      "cr": false,
+      "sr": 0,
+      "tp": "BS201150136-2127237884",
+      "ox": "",
+      "pl": "40",
+      "lk": "UEFA-NAT-LGE-A",
+      "mf": ""
+     }
+    ],
+    "sr": 0,
+    "lm": "PAPI",
+    "vm": "PAPI",
+    "st": 99,
+    "ab": true,
+    "vr": "342",
+    "je": true
+   }
+  },
+  "stake_entry": {
+   "control": "set_stake",
+   "click": [
+    516,
+    749
+   ],
+   "typed": "0.10",
+   "method": "mouse click + keyboard"
+  },
+  "betslip_clear": {
+   "cleared": true,
+   "removed": 1,
+   "method": "visual: screenshot check, visible remove control"
+  },
+  "ready_state": {
+   "fixture_home": "Belgium",
+   "fixture_away": "France",
+   "selection_role": "AWAY",
+   "selection_name": "France",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true,
+   "market": "MONEYLINE",
+   "line": "",
+   "price": "1.83",
+   "stake": "0.10"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Belgium v France",
+   "fixture_home": "Belgium",
+   "fixture_away": "France",
+   "selection_role": "AWAY",
+   "selection_name": "France",
+   "minimum_price": "1.50",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    769,
+    735,
+    841,
+    747
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "to_return": "0.18",
+   "verified_by": "screenshot+OCR, addbet response",
+   "timestamp_ms": 1790603018621,
+   "market": "MONEYLINE",
+   "line": "",
+   "price": "1.83",
+   "stake": "0.10"
+  },
+  "wager_submitted": false
+ }
+]

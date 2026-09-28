@@ -1,0 +1,157 @@
+[
+ {
+  "instruction_id": "cal1-01-manual-nir-ah",
+  "run_id": "d_6945cc1acd2541208ca2",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 39047,
+  "fixture_name": "Northern Ireland v Hungary",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "0.0",
+   "price": "2.000",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Northern Ireland",
+   "bounds": [
+    567,
+    370,
+    598,
+    387
+   ]
+  },
+  "addbet": {
+   "accepted": true,
+   "cs": 1,
+   "sr": 0,
+   "bets": [
+    {
+     "fixture": "Northern Ireland v Hungary",
+     "selection": "Northern Ireland",
+     "handicap": "0.0",
+     "market": "Asian Handicap",
+     "odds": "1/1",
+     "decimal": 2.0,
+     "sr": 0,
+     "cs": 0
+    }
+   ],
+   "at_ms": 15625,
+   "status": 200,
+   "response": {
+    "bg": "<redacted>",
+    "at": 0,
+    "cs": 1,
+    "bs": [],
+    "pc": "<redacted>",
+    "cc": "<redacted>",
+    "ir": false,
+    "mr": false,
+    "bt": [
+     {
+      "bt": 1,
+      "cl": 1,
+      "fd": "Northern Ireland v Hungary",
+      "fi": 201150135,
+      "ir": false,
+      "mt": 13,
+      "mr": false,
+      "ns": 0,
+      "od": "1/1",
+      "sa": "<redacted>",
+      "oo": 2,
+      "nf": 201150134,
+      "pf": "N",
+      "pt": [
+       {
+        "bd": "Northern Ireland",
+        "ha": "0",
+        "ho": "",
+        "hd": "0.0",
+        "hf": "0.0",
+        "pi": 2127237660,
+        "pk": "201150134|ASHC|14|NorthernIreland|0-0",
+        "md": "Asian Handicap"
+       }
+      ],
+      "cs": 0,
+      "cr": false,
+      "sr": 0,
+      "tp": "BS201150135-2127237660x2x3",
+      "ox": "",
+      "pl": "938",
+      "lk": "UEFA-NAT-LGE-B",
+      "mf": ""
+     }
+    ],
+    "sr": 0,
+    "lm": "PAPI",
+    "vm": "PAPI",
+    "st": 99,
+    "ab": true,
+    "vr": "342",
+    "je": true
+   }
+  },
+  "stake_entry": {
+   "control": "set_stake",
+   "click": [
+    516,
+    749
+   ],
+   "typed": "0.10",
+   "method": "mouse click + keyboard"
+  },
+  "betslip_clear": {
+   "cleared": true,
+   "removed": 0,
+   "method": "visual: screenshot check, visible remove control"
+  },
+  "ready_state": {
+   "fixture_home": "Northern Ireland",
+   "fixture_away": "Hungary",
+   "selection_role": "HOME",
+   "selection_name": "Northern Ireland",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true,
+   "market": "SPREAD",
+   "line": "0.0",
+   "price": "2.000",
+   "stake": "0.10"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Northern Ireland v Hungary",
+   "fixture_home": "Northern Ireland",
+   "fixture_away": "Hungary",
+   "selection_role": "HOME",
+   "selection_name": "Northern Ireland",
+   "minimum_price": "1.86",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    769,
+    735,
+    841,
+    747
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "to_return": "0.20",
+   "verified_by": "screenshot+OCR, addbet response",
+   "timestamp_ms": 1790602768656,
+   "market": "SPREAD",
+   "line": "0.0",
+   "price": "2.000",
+   "stake": "0.10"
+  },
+  "wager_submitted": false
+ }
+]

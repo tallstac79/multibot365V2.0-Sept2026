@@ -1,0 +1,140 @@
+{
+ "trials": [
+  {
+   "trial": "01_A_plain",
+   "variant": "A_plain",
+   "addbet_ok": true,
+   "slip_error_shown": false,
+   "page_ready_ms": 7844,
+   "query_to_click_ms": 0,
+   "click_to_addbet_ms": 172,
+   "response": "cs:1 sr:0 (bet item returned)"
+  },
+  {
+   "trial": "03_A_plain",
+   "variant": "A_plain",
+   "addbet_ok": true,
+   "slip_error_shown": false,
+   "page_ready_ms": 6734,
+   "query_to_click_ms": 0,
+   "click_to_addbet_ms": 142,
+   "response": "cs:1 sr:0 (bet item returned)"
+  },
+  {
+   "trial": "05_D_locator_bss",
+   "variant": "D_locator_bss",
+   "addbet_ok": true,
+   "slip_error_shown": false,
+   "page_ready_ms": 6922,
+   "query_to_click_ms": 16,
+   "click_to_addbet_ms": 187,
+   "response": "cs:1 sr:0 (bet item returned)"
+  },
+  {
+   "trial": "06_E_eval_div",
+   "variant": "E_eval_div",
+   "addbet_ok": true,
+   "slip_error_shown": false,
+   "page_ready_ms": 6797,
+   "query_to_click_ms": 14,
+   "click_to_addbet_ms": 142,
+   "response": "cs:1 sr:0 (bet item returned)"
+  },
+  {
+   "trial": "08_A_plain",
+   "variant": "A_plain",
+   "addbet_ok": true,
+   "slip_error_shown": false,
+   "page_ready_ms": 6780,
+   "query_to_click_ms": 0,
+   "click_to_addbet_ms": 219,
+   "response": "cs:1 sr:0 (bet item returned)"
+  },
+  {
+   "trial": "10_B_eval_bss",
+   "variant": "B_eval_bss",
+   "addbet_ok": false,
+   "slip_error_shown": true,
+   "page_ready_ms": 6859,
+   "query_to_click_ms": 0,
+   "click_to_addbet_ms": 1125,
+   "response": "{\"cs\":2,\"sr\":-1}"
+  },
+  {
+   "trial": "11_C_eval_other",
+   "variant": "C_eval_other",
+   "addbet_ok": false,
+   "slip_error_shown": true,
+   "page_ready_ms": 6781,
+   "query_to_click_ms": 16,
+   "click_to_addbet_ms": 2219,
+   "response": "{\"cs\":2,\"sr\":-1}"
+  },
+  {
+   "trial": "12_A_plain",
+   "variant": "A_plain",
+   "addbet_ok": true,
+   "slip_error_shown": false,
+   "page_ready_ms": 6750,
+   "query_to_click_ms": 0,
+   "click_to_addbet_ms": 2048,
+   "response": "cs:1 sr:0 (bet item returned)"
+  },
+  {
+   "trial": "13_B_eval_bss",
+   "variant": "B_eval_bss",
+   "addbet_ok": false,
+   "slip_error_shown": true,
+   "page_ready_ms": 6797,
+   "query_to_click_ms": 0,
+   "click_to_addbet_ms": 2297,
+   "response": "{\"cs\":2,\"sr\":-1}"
+  }
+ ],
+ "addbet_post_bodies_distinct": 1,
+ "addbet_header_name_sets_distinct": 1,
+ "cookie_name_sets_distinct": 1,
+ "addbet_post": "&ns=pt%3DN%23o%3D39%2F40%23f%3D201150135%23fp%3D2127237660%23so%3D%23c%3D1%23ln%3D0%23pv%3D39%2F40%23mt%3D13%23id%3D201150135-2127237660Y%23oto%3D2%23%7CTP%3DBS201150135-2127237660x2x3%23av%3D1%23%7C%7C&rbp=undefined&betsource=FlashInPLay&bs=99&cr=1&xb=1",
+ "header_names": [
+  ":authority",
+  ":method",
+  ":path",
+  ":scheme",
+  "accept",
+  "accept-encoding",
+  "accept-language",
+  "content-length",
+  "content-type",
+  "cookie",
+  "origin",
+  "priority",
+  "referer",
+  "sec-ch-ua",
+  "sec-ch-ua-mobile",
+  "sec-ch-ua-platform",
+  "sec-fetch-dest",
+  "sec-fetch-mode",
+  "sec-fetch-site",
+  "user-agent",
+  "x-net-sync-term",
+  "x-request-id"
+ ],
+ "cookie_names_sent": [
+  "__cf_bm",
+  "aaat",
+  "ab.storage.deviceId.2ad39307-f3fc-4a54-88d0-8225baf0bb1c",
+  "ab.storage.sessionId.2ad39307-f3fc-4a54-88d0-8225baf0bb1c",
+  "ab.storage.userId.2ad39307-f3fc-4a54-88d0-8225baf0bb1c",
+  "aps03",
+  "cc",
+  "cc2",
+  "ctc",
+  "pers",
+  "pstk",
+  "rmbs",
+  "session",
+  "swt",
+  "usdi"
+ ],
+ "note": "Header values differing per request: x-net-sync-term, x-request-id (always differ, pass or fail; values redacted). cookie header redacted. No cookie value and no localStorage key changed during any trial."
+}

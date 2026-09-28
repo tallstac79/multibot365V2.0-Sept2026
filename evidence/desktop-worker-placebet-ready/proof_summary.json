@@ -1,0 +1,424 @@
+{
+ "label": "proof",
+ "runs": 12,
+ "passed": 6,
+ "pass_rate": "6/12",
+ "rows": [
+  {
+   "run": "proof-01-nir-ah-home-0",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "COMPLETE_EXECUTION_READY",
+   "secs": 49.1,
+   "fixture": "Northern Ireland v Hungary",
+   "group": null,
+   "addbet": {
+    "cs": 1,
+    "sr": 0,
+    "accepted": true,
+    "bets": 1
+   },
+   "betsweb_calls": [
+    "addbet"
+   ],
+   "removed_before": 1,
+   "screen": {
+    "title": "Northern Ireland",
+    "line": "0.0",
+    "price": "2.000",
+    "market": "Asian Handicap",
+    "fixture": "Northern Ireland v Hungary",
+    "stake": "0.10",
+    "to_return": "0.20",
+    "place_bet_enabled": true,
+    "notices": []
+   },
+   "ready": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "0.0",
+    "price": "2.000",
+    "stake": "0.10",
+    "to_return": "0.20"
+   },
+   "rereads": 0,
+   "wager_submitted": false,
+   "place_bet_clicked": false
+  },
+  {
+   "run": "proof-02-swe-1x2-home",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "COMPLETE_EXECUTION_READY",
+   "secs": 37.8,
+   "fixture": "Sweden v Poland",
+   "group": null,
+   "addbet": {
+    "cs": 1,
+    "sr": 0,
+    "accepted": true,
+    "bets": 1
+   },
+   "betsweb_calls": [
+    "addbet"
+   ],
+   "removed_before": 1,
+   "screen": {
+    "title": "Sweden",
+    "line": null,
+    "price": "1.95",
+    "market": "Full Time Result",
+    "fixture": "Sweden v Poland",
+    "stake": "0.10",
+    "to_return": "0.19",
+    "place_bet_enabled": true,
+    "notices": []
+   },
+   "ready": {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "",
+    "price": "1.95",
+    "stake": "0.10",
+    "to_return": "0.19"
+   },
+   "rereads": 0,
+   "wager_submitted": false,
+   "place_bet_clicked": false
+  },
+  {
+   "run": "proof-03-bel-tot-under-25",
+   "status": "FAIL",
+   "stage": "WRONG_EVENT",
+   "detail": "Slip market (addbet) 'Total Goals' is not TOTAL (['alternative goal line', 'alternative total goals', 'goal line', 'goals over/under'])",
+   "secs": 35.9,
+   "fixture": "Belgium v France",
+   "group": null,
+   "addbet": {
+    "cs": 1,
+    "sr": 0,
+    "accepted": true,
+    "bets": 1
+   },
+   "betsweb_calls": [
+    "addbet"
+   ],
+   "removed_before": 1,
+   "screen": {
+    "title": "Under",
+    "line": "2.5",
+    "price": "2.35",
+    "market": "Total Goals",
+    "fixture": "Belgium v France",
+    "stake": null,
+    "to_return": null,
+    "place_bet_enabled": false,
+    "notices": []
+   },
+   "ready": null,
+   "rereads": 2,
+   "wager_submitted": false,
+   "place_bet_clicked": false
+  },
+  {
+   "run": "proof-04-tur-1x2-draw",
+   "status": "FAIL",
+   "stage": "TARGET_NOT_FOUND",
+   "detail": "No live selection for MONEYLINE/DRAW",
+   "secs": 21.4,
+   "fixture": "Turkiye v Italy",
+   "group": null,
+   "addbet": null,
+   "betsweb_calls": [],
+   "removed_before": 1,
+   "screen": null,
+   "ready": null,
+   "rereads": 0,
+   "wager_submitted": false,
+   "place_bet_clicked": false
+  },
+  {
+   "run": "proof-05-nir-ah-away-0",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "COMPLETE_EXECUTION_READY",
+   "secs": 32.5,
+   "fixture": "Northern Ireland v Hungary",
+   "group": null,
+   "addbet": {
+    "cs": 1,
+    "sr": 0,
+    "accepted": true,
+    "bets": 1
+   },
+   "betsweb_calls": [
+    "addbet"
+   ],
+   "removed_before": 0,
+   "screen": {
+    "title": "Hungary",
+    "line": "-0.0",
+    "price": "1.800",
+    "market": "Asian Handicap",
+    "fixture": "Northern Ireland v Hungary",
+    "stake": "0.10",
+    "to_return": "0.18",
+    "place_bet_enabled": true,
+    "notices": []
+   },
+   "ready": {
+    "market": "SPREAD",
+    "side": "AWAY",
+    "line": "0.0",
+    "price": "1.800",
+    "stake": "0.10",
+    "to_return": "0.18"
+   },
+   "rereads": 0,
+   "wager_submitted": false,
+   "place_bet_clicked": false
+  },
+  {
+   "run": "proof-06-swe-tot-under-25",
+   "status": "FAIL",
+   "stage": "WRONG_EVENT",
+   "detail": "Slip market (addbet) 'Total Goals' is not TOTAL (['alternative goal line', 'alternative total goals', 'goal line', 'goals over/under'])",
+   "secs": 32.2,
+   "fixture": "Sweden v Poland",
+   "group": null,
+   "addbet": {
+    "cs": 1,
+    "sr": 0,
+    "accepted": true,
+    "bets": 1
+   },
+   "betsweb_calls": [
+    "addbet"
+   ],
+   "removed_before": 1,
+   "screen": {
+    "title": "Under",
+    "line": "2.5",
+    "price": "2.25",
+    "market": "Total Goals",
+    "fixture": "Sweden v Poland",
+    "stake": null,
+    "to_return": null,
+    "place_bet_enabled": false,
+    "notices": []
+   },
+   "ready": null,
+   "rereads": 2,
+   "wager_submitted": false,
+   "place_bet_clicked": false
+  },
+  {
+   "run": "proof-07-tur-tot-over-25",
+   "status": "FAIL",
+   "stage": "WRONG_EVENT",
+   "detail": "Slip market (addbet) 'Total Goals' is not TOTAL (['alternative goal line', 'alternative total goals', 'goal line', 'goals over/under'])",
+   "secs": 34.0,
+   "fixture": "Turkiye v Italy",
+   "group": null,
+   "addbet": {
+    "cs": 1,
+    "sr": 0,
+    "accepted": true,
+    "bets": 1
+   },
+   "betsweb_calls": [
+    "addbet"
+   ],
+   "removed_before": 1,
+   "screen": {
+    "title": "Over",
+    "line": "2.5",
+    "price": "1.61",
+    "market": "Total Goals",
+    "fixture": "Turkiye v Italy",
+    "stake": null,
+    "to_return": null,
+    "place_bet_enabled": false,
+    "notices": []
+   },
+   "ready": null,
+   "rereads": 2,
+   "wager_submitted": false,
+   "place_bet_clicked": false
+  },
+  {
+   "run": "proof-08-nir-1x2-away",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "COMPLETE_EXECUTION_READY",
+   "secs": 43.9,
+   "fixture": "Northern Ireland v Hungary",
+   "group": null,
+   "addbet": {
+    "cs": 1,
+    "sr": 0,
+    "accepted": true,
+    "bets": 1
+   },
+   "betsweb_calls": [
+    "addbet"
+   ],
+   "removed_before": 1,
+   "screen": {
+    "title": "Hungary",
+    "line": null,
+    "price": "2.62",
+    "market": "Full Time Result",
+    "fixture": "Northern Ireland v Hungary",
+    "stake": "0.10",
+    "to_return": "0.26",
+    "place_bet_enabled": true,
+    "notices": []
+   },
+   "ready": {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "",
+    "price": "2.62",
+    "stake": "0.10",
+    "to_return": "0.26"
+   },
+   "rereads": 0,
+   "wager_submitted": false,
+   "place_bet_clicked": false
+  },
+  {
+   "run": "proof-09-swe-ah-home-0",
+   "status": "FAIL",
+   "stage": "TARGET_NOT_FOUND",
+   "detail": "Stake control not located on the slip screenshot",
+   "secs": 37.0,
+   "fixture": "Sweden v Poland",
+   "group": null,
+   "addbet": {
+    "cs": 1,
+    "sr": 0,
+    "accepted": true,
+    "bets": 1
+   },
+   "betsweb_calls": [
+    "addbet"
+   ],
+   "removed_before": 1,
+   "screen": {
+    "title": "Sweden",
+    "line": "0.0",
+    "price": "1.450",
+    "market": "Asian Handicap",
+    "fixture": "Sweden v Poland",
+    "stake": null,
+    "to_return": null,
+    "place_bet_enabled": null,
+    "notices": []
+   },
+   "ready": null,
+   "rereads": 0,
+   "wager_submitted": false,
+   "place_bet_clicked": false
+  },
+  {
+   "run": "proof-10-bel-1x2-away",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "COMPLETE_EXECUTION_READY",
+   "secs": 45.9,
+   "fixture": "Belgium v France",
+   "group": null,
+   "addbet": {
+    "cs": 1,
+    "sr": 0,
+    "accepted": true,
+    "bets": 1
+   },
+   "betsweb_calls": [
+    "addbet"
+   ],
+   "removed_before": 1,
+   "screen": {
+    "title": "France",
+    "line": null,
+    "price": "1.83",
+    "market": "Full Time Result",
+    "fixture": "Belgium v France",
+    "stake": "0.10",
+    "to_return": "0.18",
+    "place_bet_enabled": true,
+    "notices": []
+   },
+   "ready": {
+    "market": "MONEYLINE",
+    "side": "AWAY",
+    "line": "",
+    "price": "1.83",
+    "stake": "0.10",
+    "to_return": "0.18"
+   },
+   "rereads": 0,
+   "wager_submitted": false,
+   "place_bet_clicked": false
+  },
+  {
+   "run": "proof-11-nir-tot-over-2",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "COMPLETE_EXECUTION_READY",
+   "secs": 54.3,
+   "fixture": "Northern Ireland v Hungary",
+   "group": null,
+   "addbet": {
+    "cs": 1,
+    "sr": 0,
+    "accepted": true,
+    "bets": 1
+   },
+   "betsweb_calls": [
+    "addbet"
+   ],
+   "removed_before": 1,
+   "screen": {
+    "title": "Over",
+    "line": "2.0",
+    "price": "1.900",
+    "market": "Goal Line",
+    "fixture": "Northern Ireland v Hungary",
+    "stake": "0.10",
+    "to_return": "0.19",
+    "place_bet_enabled": true,
+    "notices": []
+   },
+   "ready": {
+    "market": "TOTAL",
+    "side": "OVER",
+    "line": "2.0",
+    "price": "1.900",
+    "stake": "0.10",
+    "to_return": "0.19"
+   },
+   "rereads": 0,
+   "wager_submitted": false,
+   "place_bet_clicked": false
+  },
+  {
+   "run": "proof-12-tur-1x2-draw",
+   "status": "FAIL",
+   "stage": "TARGET_NOT_FOUND",
+   "detail": "No live selection for MONEYLINE/DRAW",
+   "secs": 26.3,
+   "fixture": "Turkiye v Italy",
+   "group": null,
+   "addbet": null,
+   "betsweb_calls": [],
+   "removed_before": 1,
+   "screen": null,
+   "ready": null,
+   "rereads": 0,
+   "wager_submitted": false,
+   "place_bet_clicked": false
+  }
+ ]
+}

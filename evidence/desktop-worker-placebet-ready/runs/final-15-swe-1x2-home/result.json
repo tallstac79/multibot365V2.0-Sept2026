@@ -1,0 +1,885 @@
+{
+ "instruction_id": "final-15-swe-1x2-home",
+ "run_id": "d_6dd868001aa4440580a0",
+ "worker": "desktop",
+ "wager_submitted": false,
+ "device_stage": "PREPARE_COMPLETE_EXECUTION",
+ "route": "event_link",
+ "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201150132/F3/I1/",
+ "session": "AUTHENTICATED",
+ "betslip_clear": {
+  "cleared": true,
+  "removed": 1,
+  "method": "visual: screenshot check, visible remove control"
+ },
+ "direct_event_header": [
+  "UEFA Nations League B • 28 Sep 19:45",
+  "Sweden v Poland"
+ ],
+ "competition_check": {
+  "feed": "UEFA Nations League B",
+  "country": null,
+  "page": "UEFA Nations League B • 28 Sep 19:45",
+  "matches": true
+ },
+ "identity": {
+  "verdict": "EXACT",
+  "reason": "both teams exact",
+  "home": {
+   "feed": "Sweden",
+   "bookmaker": "Sweden",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "away": {
+   "feed": "Poland",
+   "bookmaker": "Poland",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "kickoff_known": true,
+  "kickoff_agrees": true,
+  "reversed": false,
+  "evidence": {
+   "event_id_match": true,
+   "event_anchor": "page opened from the alert's own Bet365 event link",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "equal",
+   "competing_event": "none: a single event page reached through the alert's own link",
+   "home_similarity": {
+    "feed": "Sweden",
+    "bookmaker": "Sweden",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "away_similarity": {
+    "feed": "Poland",
+    "bookmaker": "Poland",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "protected_markers": "agree",
+   "orientation": "agree",
+   "policy": "both_exact",
+   "verdict": "EXACT"
+  }
+ },
+ "identity_verdict": "EXACT",
+ "home": "Sweden",
+ "away": "Poland",
+ "competition": "UEFA Nations League B • 28 Sep 19:45",
+ "fixture_name": "Sweden v Poland",
+ "event_context": {
+  "home": "Sweden",
+  "away": "Poland",
+  "competition": "uefa nations league b",
+  "kickoff_utc": "2026-09-28T18:45",
+  "period": "FULL_GAME"
+ },
+ "markets": [
+  {
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "line": "",
+   "price": "1.90",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Sweden",
+   "bounds": [
+    361,
+    341,
+    385,
+    358
+   ]
+  },
+  {
+   "market": "MONEYLINE",
+   "side": "DRAW",
+   "line": "",
+   "price": "4.00",
+   "availability": "OPEN",
+   "selection_role": "DRAW",
+   "selection_name": "Draw",
+   "bounds": [
+    695,
+    341,
+    718,
+    358
+   ]
+  },
+  {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "",
+   "price": "3.60",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Poland",
+   "bounds": [
+    1052,
+    341,
+    1076,
+    358
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "2.5",
+   "price": "1.57",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    1895,
+    769,
+    1912
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "2.5",
+   "price": "2.35",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    1895,
+    1161,
+    1912
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "0.5",
+   "price": "1.025",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2027,
+    773,
+    2044
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "0.5",
+   "price": "17.00",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2027,
+    1164,
+    2044
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "1.5",
+   "price": "1.16",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2072,
+    769,
+    2089
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "1.5",
+   "price": "5.00",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2072,
+    1161,
+    2089
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "3.5",
+   "price": "2.37",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2117,
+    769,
+    2134
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "3.5",
+   "price": "1.53",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2117,
+    1161,
+    2134
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "4.5",
+   "price": "4.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2162,
+    769,
+    2179
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "4.5",
+   "price": "1.22",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2162,
+    1161,
+    2179
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "5.5",
+   "price": "8.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2207,
+    769,
+    2224
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "5.5",
+   "price": "1.083",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2207,
+    1164,
+    2224
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "6.5",
+   "price": "17.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2252,
+    773,
+    2269
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "6.5",
+   "price": "1.025",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2252,
+    1164,
+    2269
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "7.5",
+   "price": "29.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2297,
+    773,
+    2314
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "7.5",
+   "price": "1.006",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2297,
+    1164,
+    2314
+   ]
+  }
+ ],
+ "execution_observations": [
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790604437376,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "",
+    "price": "1.90",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     361,
+     341,
+     385,
+     358
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "selection",
+   "observed_at_ms": 1790604437376,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "",
+    "price": "1.90",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     361,
+     341,
+     385,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "selection_preflight",
+   "observed_at_ms": 1790604438427,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "",
+    "price": "1.90",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     361,
+     341,
+     385,
+     358
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790604443676,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "",
+    "price": "1.90",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     361,
+     341,
+     385,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790604457325,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "",
+    "price": "1.90",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     361,
+     341,
+     385,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790604479576,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "",
+    "price": "1.90",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     361,
+     341,
+     385,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "final",
+   "observed_at_ms": 1790604479579,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "",
+    "price": "1.90",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Sweden",
+    "bounds": [
+     361,
+     341,
+     385,
+     358
+    ]
+   },
+   "identity_verified": true
+  }
+ ],
+ "selection": {
+  "market": "MONEYLINE",
+  "side": "HOME",
+  "line": "",
+  "price": "1.90",
+  "availability": "OPEN",
+  "selection_role": "HOME",
+  "selection_name": "Sweden",
+  "bounds": [
+   361,
+   341,
+   385,
+   358
+  ]
+ },
+ "selection_role": "HOME",
+ "selection_name": "Sweden",
+ "selection_group": "Full Time Result",
+ "click_at_ms": 29139,
+ "addbet": {
+  "accepted": true,
+  "cs": 1,
+  "sr": 0,
+  "bets": [
+   {
+    "fixture": "Sweden v Poland",
+    "selection": "Sweden",
+    "handicap": null,
+    "market": "Full Time Result",
+    "odds": "10/11",
+    "decimal": 1.9090909090909092,
+    "sr": 0,
+    "cs": 0
+   }
+  ],
+  "at_ms": 29420,
+  "status": 200,
+  "response": {
+   "bg": "<redacted>",
+   "at": 0,
+   "cs": 1,
+   "bs": [],
+   "pc": "<redacted>",
+   "cc": "<redacted>",
+   "ir": false,
+   "mr": false,
+   "bt": [
+    {
+     "bt": 1,
+     "cl": 1,
+     "fd": "Sweden v Poland",
+     "fi": 201150132,
+     "ir": false,
+     "mt": 13,
+     "mr": false,
+     "ns": 0,
+     "od": "10/11",
+     "sa": "<redacted>",
+     "ob": [
+      {
+       "oc": "PSSOCCER",
+       "ot": 3
+      }
+     ],
+     "nf": 201150132,
+     "pf": "N",
+     "pt": [
+      {
+       "bd": "Sweden",
+       "ho": "",
+       "pi": 2127237290,
+       "pk": "201150132|FTRS|1|Team1",
+       "md": "Full Time Result"
+      }
+     ],
+     "cs": 0,
+     "cr": false,
+     "sr": 0,
+     "tp": "BS201150132-2127237290",
+     "ox": "",
+     "pl": "40",
+     "lk": "UEFA-NAT-LGE-B",
+     "mf": ""
+    }
+   ],
+   "sr": 0,
+   "lm": "PAPI",
+   "vm": "PAPI",
+   "st": 99,
+   "ab": true,
+   "vr": "342",
+   "je": true
+  }
+ },
+ "betslip": {
+  "present": true,
+  "panel": [
+   468,
+   573,
+   916,
+   773
+  ],
+  "items": 1,
+  "title": "Sweden",
+  "handicap": null,
+  "price": "1.90",
+  "title_row": [
+   468,
+   584,
+   916,
+   604
+  ],
+  "remove_x": [
+   486,
+   594
+  ],
+  "market": "Full Time Result",
+  "fixture": "Sweden v Poland",
+  "stake_control": {
+   "kind": "stake_box",
+   "bounds": [
+    469,
+    727,
+    637,
+    767
+   ],
+   "click": [
+    517,
+    753
+   ]
+  },
+  "stake": "0.10",
+  "place_bet": {
+   "text": "Place Bet",
+   "bounds": [
+    769,
+    735,
+    841,
+    747
+   ],
+   "centre": [
+    805,
+    741
+   ],
+   "colour": [
+    74,
+    255,
+    183
+   ],
+   "enabled": true
+  },
+  "to_return": "0.19",
+  "notices": []
+ },
+ "stake_entry": {
+  "control": "set_stake",
+  "click": [
+   516,
+   749
+  ],
+  "typed": "0.10",
+  "method": "mouse click + keyboard"
+ },
+ "betslip_api": [
+  {
+   "url": "https://www.bet365.com/BetsWebAPI/addbet",
+   "status": 200,
+   "at_ms": 29420,
+   "response": {
+    "bg": "<redacted>",
+    "at": 0,
+    "cs": 1,
+    "bs": [],
+    "pc": "<redacted>",
+    "cc": "<redacted>",
+    "ir": false,
+    "mr": false,
+    "bt": [
+     {
+      "bt": 1,
+      "cl": 1,
+      "fd": "Sweden v Poland",
+      "fi": 201150132,
+      "ir": false,
+      "mt": 13,
+      "mr": false,
+      "ns": 0,
+      "od": "10/11",
+      "sa": "<redacted>",
+      "ob": [
+       {
+        "oc": "PSSOCCER",
+        "ot": 3
+       }
+      ],
+      "nf": 201150132,
+      "pf": "N",
+      "pt": [
+       {
+        "bd": "Sweden",
+        "ho": "",
+        "pi": 2127237290,
+        "pk": "201150132|FTRS|1|Team1",
+        "md": "Full Time Result"
+       }
+      ],
+      "cs": 0,
+      "cr": false,
+      "sr": 0,
+      "tp": "BS201150132-2127237290",
+      "ox": "",
+      "pl": "40",
+      "lk": "UEFA-NAT-LGE-B",
+      "mf": ""
+     }
+    ],
+    "sr": 0,
+    "lm": "PAPI",
+    "vm": "PAPI",
+    "st": 99,
+    "ab": true,
+    "vr": "342",
+    "je": true
+   }
+  }
+ ],
+ "stake_field_state": "ENTERED",
+ "ready_state": {
+  "fixture_home": "Sweden",
+  "fixture_away": "Poland",
+  "selection_role": "HOME",
+  "selection_name": "Sweden",
+  "session": "LOGGED_IN",
+  "state": "READY",
+  "minimum_price_ok": true,
+  "place_bet_visible": true,
+  "wager_submitted": false,
+  "stop_before_wager": true,
+  "market": "MONEYLINE",
+  "line": "",
+  "price": "1.90",
+  "stake": "0.10"
+ },
+ "final_state": {
+  "home": "Sweden",
+  "away": "Poland",
+  "side": "HOME",
+  "state": "READY",
+  "place_bet_visible": true,
+  "wager_submitted": false,
+  "market": "MONEYLINE",
+  "line": "",
+  "price": "1.90",
+  "stake": "0.10"
+ },
+ "complete_execution_ready": {
+  "state": "COMPLETE_EXECUTION_READY",
+  "fixture": "Sweden v Poland",
+  "fixture_home": "Sweden",
+  "fixture_away": "Poland",
+  "selection_role": "HOME",
+  "selection_name": "Sweden",
+  "minimum_price": "1.50",
+  "final_control": "Place Bet",
+  "final_control_bounds": [
+   769,
+   735,
+   841,
+   747
+  ],
+  "final_control_enabled": true,
+  "final_control_actionable": true,
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "to_return": "0.19",
+  "verified_by": "screenshot+OCR, addbet response",
+  "timestamp_ms": 1790604479579,
+  "market": "MONEYLINE",
+  "line": "",
+  "price": "1.90",
+  "stake": "0.10"
+ },
+ "held": true,
+ "verification_detail": "HELD: verified bet on the slip (screenshot + OCR, cross-checked with Bet365 addbet), stake + To Return verified, Place Bet visible and enabled; NOT pressed, slip kept",
+ "status": "PASS",
+ "stage": "PASS",
+ "detail": "COMPLETE_EXECUTION_READY",
+ "duration_ms": 70170,
+ "stage_timings": [],
+ "progress": {
+  "stage": "PREPARE_COMPLETE_EXECUTION",
+  "elapsed_ms": 70170,
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790604409398
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 0,
+    "at_ms": 1790604409398
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 5812,
+    "at_ms": 1790604415216
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 20968,
+    "at_ms": 1790604430367
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 27968,
+    "at_ms": 1790604437372
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 27968,
+    "at_ms": 1790604437376
+   },
+   {
+    "stage": "READ_SELECTION",
+    "elapsed_ms": 27968,
+    "at_ms": 1790604437376
+   },
+   {
+    "stage": "READ_PRICE",
+    "elapsed_ms": 27968,
+    "at_ms": 1790604437376
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 27968,
+    "at_ms": 1790604437376
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 28937,
+    "at_ms": 1790604438349
+   },
+   {
+    "stage": "VERIFY_SLIP",
+    "elapsed_ms": 34264,
+    "at_ms": 1790604443675
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 34264,
+    "at_ms": 1790604443676
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 42500,
+    "at_ms": 1790604451910
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 70170,
+    "at_ms": 1790604479579
+   }
+  ]
+ },
+ "execution_count": 1
+}
