@@ -207,8 +207,18 @@ async def place_held(worker, body, page, decisions, run, clock=None, placement_f
 
 
 # ------------------------------------------------------------------------------------------------ MY_BETS
+def _strip_ocr(img, box, scale=3, thr=150):
+    import pytesseract
+    from PIL import Image, ImageOps
+    g = ImageOps.invert(img.crop(box).convert('L')).point(lambda v: 255 if v > thr else 0)
+    g = g.resize((g.width * scale, g.height * scale), Image.LANCZOS)
+    return ' '.join(pytesseract.image_to_string(g, config='--psm 7').split())
+
+
 def card_lines(img, frame=1, top_offset=0, box=None):
-    """Thresholded OCR of the dark My Bets cards (grayscale -> invert -> threshold 150 -> x2 -> psm 6), one entry per line."""
+    """Thresholded OCR of the dark My Bets cards (grayscale -> invert -> threshold 150 -> x2 -> psm 6), one entry per line.
+    A line that starts with an icon (a team flag / radio mark read as '@', '©)', '®') is re-read from just right of the
+    icon on its own (psm 7): the flag next to a capital 'I' made 'Italy' read as 'ttay' (28 Sep 2026)."""
     import pytesseract
     from PIL import Image, ImageOps
     from desktop_worker import visual_slip  # noqa: F401  (sets the tesseract path)
@@ -222,12 +232,40 @@ def card_lines(img, frame=1, top_offset=0, box=None):
         if not text:
             continue
         key = (d['block_num'][i], d['par_num'][i], d['line_num'][i])
-        r = rows.setdefault(key, dict(words=[], top=d['top'][i], left=d['left'][i]))
-        r['words'].append(text)
+        r = rows.setdefault(key, dict(words=[], top=d['top'][i], left=d['left'][i], bottom=0))
+        r['words'].append(dict(text=text, left=d['left'][i]))
         r['top'], r['left'] = min(r['top'], d['top'][i]), min(r['left'], d['left'][i])
+        r['bottom'] = max(r['bottom'], d['top'][i] + d['height'][i])
     ox, oy = (box[0], box[1]) if box else (0, 0)
-    out = [dict(text=' '.join(r['words']), frame=frame, top=oy + r['top'] // 2 + top_offset, left=ox + r['left'] // 2) for r in rows.values()]
+    out = []
+    for r in rows.values():
+        words = r['words']
+        text = ' '.join(w['text'] for w in words)
+        if len(words) >= 2 and not any(ch.isalnum() for ch in words[0]['text']):
+            x0 = ox + words[1]['left'] // 2 - 3
+            y0, y1 = oy + r['top'] // 2 - 4, oy + r['bottom'] // 2 + 4
+            try:
+                again = _strip_ocr(img, (max(x0, 0), max(y0, 0), img.width, min(y1, img.height)))
+            except Exception:
+                again = ''
+            if again:
+                text = again
+        out.append(dict(text=text, frame=frame, top=oy + r['top'] // 2 + top_offset, left=ox + r['left'] // 2))
     return sorted(out, key=lambda r: (r['top'], r['left']))
+
+
+def match_terms(body):
+    """bet_matching terms from a MY_BETS instruction; team/selection names folded to ASCII like the OCR ('Türkiye' is read
+    'Turkiye' from the card)."""
+    import unicodedata
+
+    def fold(v):
+        return unicodedata.normalize('NFKD', v).encode('ascii', 'ignore').decode() if isinstance(v, str) else v
+    terms = {k: body.get(k) for k in ('home', 'away', 'market', 'selection', 'line', 'stake', 'bet_reference', 'selection_name', 'kickoff_utc')}
+    for k in ('home', 'away', 'selection_name'):
+        terms[k] = fold(terms[k])
+    terms['odds'] = body.get('price')
+    return terms
 
 
 async def my_bets(worker, body, page, run):
@@ -267,8 +305,7 @@ async def my_bets(worker, body, page, run):
                detail=f'My Bets read: {len(lines) - 1} OCR lines (read-only; nothing on a bet was clicked)')
     if body.get('home') and body.get('away'):
         from core import bet_matching
-        terms = {k: body.get(k) for k in ('home', 'away', 'market', 'selection', 'line', 'stake', 'bet_reference', 'selection_name', 'kickoff_utc')}
-        terms['odds'] = body.get('price')
+        terms = match_terms(body)
         try:
             out['match'] = bet_matching.match(terms, data)
         except ValueError as e:

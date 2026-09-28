@@ -398,6 +398,27 @@ class MyBetsShape(unittest.TestCase):
         with self.assertRaises(ValueError):                               # the view must be confirmed by the address line
             bet_matching.match(terms, dict(data, lines=lines[1:]))
 
+    def test_real_my_bets_screenshot_reads_and_matches_the_live_bet(self):
+        """28 Sep 2026 20:33 BST My Bets (Open) screenshot with the one open bet (BT7071586031I): the flag-adjacent 'Italy'
+        is re-read without the icon and the accented feed name is folded, so bet_matching finds it EXACT."""
+        from core import bet_matching
+        png = Path(__file__).parent / 'fixtures' / 'desktop' / 'my_bets_open_tur_ita.png'
+        try:
+            from PIL import Image
+            from desktop_worker import visual_slip
+            if not visual_slip.TESSERACT.exists():
+                raise unittest.SkipTest('Tesseract not installed')
+        except ImportError as e:
+            raise unittest.SkipTest(str(e))
+        img = Image.open(png).convert('RGB')
+        lines = [dict(text='bet365.com/#/MB/UB', frame=1, top=0, left=0)] + held.card_lines(img, box=(0, 60, img.width, img.height))
+        texts = [l['text'].lower() for l in lines]
+        self.assertTrue(any(t.startswith('italy') for t in texts), texts)
+        terms = held.match_terms(dict(home='Türkiye', away='Italy', market='1X2', selection='DRAW', selection_name='Draw', stake='0.10', price='3.50'))
+        self.assertEqual(terms['home'], 'Turkiye')
+        got = bet_matching.match(terms, dict(view='OPEN', lines=lines))
+        self.assertEqual((got['found'], got['confidence']), (True, 'EXACT'))
+
 
 if __name__ == '__main__':
     unittest.main()
