@@ -148,7 +148,10 @@ final class CompetitionStructure {
                 || (pl.isEmpty() && feed.letters.isEmpty() && !feed.tiers.isEmpty());
         if (!fl.equals(pl) && !gluedQualifierOnly) out.add("tier letter " + fl + " vs " + pl);
         if (feed.cup != page.cup) out.add("cup vs league");
-        if (feed.friendly != page.friendly) out.add("friendly vs competitive");
+        // Friendly on one side only conflicts when the other side NAMES a competition. A bare generic label ("U19
+        // International", 28 Sep 2026 Slovakia U19 v Poland U19, feed "Friendlies U19") says nothing either way: missing
+        // evidence, not a contradiction. Age, gender, tier and country are still compared above/below.
+        if (feed.friendly != page.friendly && !genericOnly(feed.friendly ? page : feed)) out.add("friendly vs competitive");
         if (feed.federation != page.federation) out.add("federation (RFEF) qualifier on one side only");
         String expected = country(alertCountry);
         for (Facts x : Arrays.asList(feed, page))
@@ -159,6 +162,13 @@ final class CompetitionStructure {
 
     static String describe(String feedCompetition, String pageCompetition) {
         return "feed {" + facts(feedCompetition).describe() + "} page {" + facts(pageCompetition).describe() + "}";
+    }
+
+    private static final Set<String> GENERIC_LABEL = new HashSet<>(Arrays.asList("international", "internationals", "national", "teams", "club", "clubs"));
+
+    /** The name carries no competition of its own: only generic labels (after country, age, tier and level facts). */
+    private static boolean genericOnly(Facts f) {
+        return !f.cup && !f.federation && GENERIC_LABEL.containsAll(f.core);
     }
 
     private static String tier(Facts f) { return f.tiers.isEmpty() ? "top" : f.tiers.toString(); }

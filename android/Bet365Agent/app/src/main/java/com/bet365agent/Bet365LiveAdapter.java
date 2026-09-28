@@ -784,7 +784,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     private CompletableFuture<VisualScreen> directEventLoaded(int attempt) {
         return ui.delay(attempt == 1 ? 2200 : 900).thenCompose(v -> ui.capture("event_direct")).thenCompose(s -> {
-            if (EventPage.teams(headerLines(s)) != null || EventPage.closed(texts(s)) || attempt >= 5)
+            if (headerTeams(headerLines(s)) != null || EventPage.closed(texts(s)) || attempt >= 5)
                 return CompletableFuture.completedFuture(s);
             ui.put("event_direct_wait", attempt);
             return directEventLoaded(attempt + 1);
@@ -798,6 +798,12 @@ final class Bet365LiveAdapter implements SiteAdapter {
      */
     private static List<String> headerLines(VisualScreen s) {
         return EventHeader.header(wordsOf(s));   // one extraction for the wait loop, the identity decision and PLACE_HELD
+    }
+
+    /** Header teams with the alert's own names as the only hints (EventPage.teams(header, homeHints, awayHints)): the
+     *  same parse on the direct link, the Search return and the replay. */
+    private String[] headerTeams(List<String> header) {
+        return EventPage.teams(header, EventPage.hints(identityHome, instructionAliases), EventPage.hints(expectedAway, instructionAliases));
     }
 
     private static boolean headerLine(VisualScreen.Line line) {
@@ -816,14 +822,14 @@ final class Bet365LiveAdapter implements SiteAdapter {
         // through this exact decision (EventPage.decide, EventIdentityV2ReplayTest).
         List<String> header = EventHeader.header(wordsOf(s));
         ui.put("direct_event_header", new JSONArray(header));
-        if (EventPage.teams(header) == null) { ui.put("direct_event_rejected", "header teams not read"); return null; }
+        if (headerTeams(header) == null) { ui.put("direct_event_rejected", "header teams not read"); return null; }
         // Milestone B: the event identity resolver decides (sport, both teams, pairing, kick-off). The page was
         // opened from the alert's own link, so it is the anchor; the resolver's verdict is authoritative (A1).
         String want = kickoffUtc == null || kickoffUtc.isEmpty() ? null : EventPage.ukDisplay(kickoffUtc);
         require(!expectedAway.isEmpty(), "WRONG_EVENT", "Alert opponent is required");
         require("FULL_GAME".equals(contextPeriod), "WRONG_EVENT", "Full-game period required");
         String feedAway = expectedAway;
-        EventPage.Direct direct = EventPage.decide(header, rereadTeams != null ? rereadTeams : EventPage.teams(header), sport, identityHome, feedAway, want,
+        EventPage.Direct direct = EventPage.decide(header, rereadTeams != null ? rereadTeams : headerTeams(header), sport, identityHome, feedAway, want,
                 contextCompetition, contextCountry, !ui.record.optString("event_url").isEmpty(), instructionAliases, womensCompetition);
         String[] teams = direct.teams;
         String shown = direct.shown;
@@ -1586,7 +1592,56 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
 
+    /** Stake entry, with ONE bounded recovery from Bet365's changed-price slip state (football; SlipChange): the stake
+     *  was erased, the fresh slip is judged by the instruction's own tolerances, only the standalone "Accept Change" is
+     *  tapped, the slip is re-verified at the decided terms and the whole normal stake entry runs again. */
     public CompletableFuture<Void> enter_stake(String stake) {
+        return enterStakeOnce(stake).handle((v, e) -> e).thenCompose(e -> {
+            if (e == null) return CompletableFuture.<Void>completedFuture(null);
+            Throwable cause = e instanceof java.util.concurrent.CompletionException && e.getCause() != null ? e.getCause() : e;
+            boolean changed = cause instanceof Failure && PRICE_CHANGED_ON_SLIP.equals(cause.getMessage());
+            if (!changed || !"football".equals(sport) || priceChangeAccepted || latestSelection == null || liveFixture == null) {
+                CompletableFuture<Void> f = new CompletableFuture<>();
+                f.completeExceptionally(cause);
+                return f;
+            }
+            priceChangeAccepted = true;
+            return acceptChangedPrice().thenCompose(v -> enterStakeOnce(stake));
+        });
+    }
+
+    static final String PRICE_CHANGED_ON_SLIP = "Bet365 asks to accept a changed price on the slip; stake erased, nothing accepted";
+    private boolean priceChangeAccepted;
+
+    private CompletableFuture<Void> acceptChangedPrice() {
+        Selection held = latestSelection;
+        return ui.delay(500).thenCompose(v -> ui.capture("price_change")).thenCompose(s -> {
+            SlipChange.Decision d = SlipChange.decide(wordsOf(s), liveFixture.home, liveFixture.away, held.name, held.market, held.side,
+                    requestedLine, lineTolerance, executionMinimum);
+            ui.put("price_change", CoordinatorAgent.object("action", d.action, "stage", d.stage == null ? org.json.JSONObject.NULL : d.stage,
+                    "detail", d.detail, "line", d.line == null ? org.json.JSONObject.NULL : d.line, "price", d.price == null ? org.json.JSONObject.NULL : d.price));
+            if (!"ACCEPT".equals(d.action)) throw new Failure(d.stage == null ? "PRICE_CHANGED" : d.stage, d.detail);
+            Selection fresh = new Selection(held.market, held.side, "MONEYLINE".equals(held.market) ? held.line : d.line, d.price, "OPEN", held.bounds, held.name);
+            observeExecution("price_change", fresh, true);
+            android.graphics.Rect box = new android.graphics.Rect(d.acceptBounds[0], d.acceptBounds[1], d.acceptBounds[2], d.acceptBounds[3]);
+            return ui.tap(box, "Accept Change (fresh terms inside the tolerances)", 700)
+                    .thenCompose(v -> ui.capture("price_change_accepted"))
+                    .thenApply(after -> {
+                        require(!visible(after, "Accept Change", "Accept Changes"), "PRICE_CHANGED", "Changed-price state still shown after Accept Change");
+                        VisualScreen.Line place = findPlaceBetLine(after);
+                        HeldSlipQuote q = place == null ? null : HeldSlipQuote.read(wordsOf(after), held.name, held.market, place.bounds.top, "football");
+                        String line = q == null ? null : "MONEYLINE".equals(held.market) ? held.line : q.line;
+                        require(q != null && q.price.equals(d.price) && ("MONEYLINE".equals(held.market) || line.equals(d.line)), "PRICE_CHANGED",
+                                "Slip after Accept Change does not show the verified terms " + d.line + " @ " + d.price);
+                        latestSelection = fresh;
+                        openedPrice = fresh.price;
+                        if (!"MONEYLINE".equals(fresh.market)) targetLine = fresh.line;
+                        return (Void) null;
+                    });
+        });
+    }
+
+    private CompletableFuture<Void> enterStakeOnce(String stake) {
         String amount = (stake == null || stake.isEmpty()) ? "0.00" : stake.trim();
         // Task 1: state-driven waits. Each poll re-captures until the same condition the require() below checks is
         // visibly present; the require() itself is unchanged, so a state that never appears fails exactly as before.
@@ -1668,7 +1723,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
                         // (Panionios v Zakynthos, 27 Sep 2026): that is a price change, never accepted here.
                         boolean priceChanged = visible(second, "Accept Change", "Accept Changes") || visible(first, "Accept Change", "Accept Changes");
                         return erase(keys, 10).<VisualScreen>thenCompose(v -> {
-                            if (priceChanged) throw new Failure("PRICE_CHANGED", "Bet365 asks to accept a changed price on the slip; stake erased, nothing accepted");
+                            if (priceChanged) throw new Failure("PRICE_CHANGED", PRICE_CHANGED_ON_SLIP);
                             throw new Failure("STAKE_REJECTED", "Typed stake did not read back as " + amount + " after one retype; field erased");
                         });
                     });
@@ -1901,6 +1956,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     require(slipPriceShown(s, selection.price), "PRICE_CHANGED", "Selection price not visible on betslip: " + selection.price);
                     require(PlacementClassifier.slipShowsLine(texts(s), selection.market, selection.side, selection.name, selection.line),
                             "LINE_CHANGED", "Betslip does not show " + selection.side + " " + selection.line);
+                    // READY always carries one explicit fresh final observation: the terms just confirmed on this slip, with
+                    // identity from a fresh slip identity check on the same frame (never an earlier observation's result).
+                    boolean slipIdentity = place != null && HeldSlipIdentity.matches(slipWords, fixture.home, fixture.away, selection.market,
+                            place.bounds.top, "football");
+                    observeExecution("final", selection, slipIdentity);
                 }
             }
             require(stakeVerified(s, stake, actual.price, "stake_check_final"), "STAKE_REJECTED", "Stake not verified on betslip: " + stake);

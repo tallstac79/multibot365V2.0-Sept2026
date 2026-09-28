@@ -878,7 +878,11 @@ class Pipeline:
                                             result, policy, sport=row['sport'])
             for quote in quotes:
                 self.store.audit(db, 'ALERT_TO_LIVE_COMPARISON', quote, instruction_id)
-            quote = quotes[-1]
+            # A verified hold is judged on its fresh final slip verification (the phone records one before every READY),
+            # never on an earlier grid/preflight observation that happened to be recorded last (28 Sep 2026, Al Kharaitiyat:
+            # the identity-unverified preflight read was judged and the acceptable slip refused). Without a final one: last.
+            finals = [q for q in quotes if q.get('stage') == 'final']
+            quote = finals[-1] if finals and state == State.READY else quotes[-1]
             result = dict(result, execution_comparison=quote, execution_comparisons=quotes)
             if state == State.READY and not final_action:
                 if not quote['acceptable']:

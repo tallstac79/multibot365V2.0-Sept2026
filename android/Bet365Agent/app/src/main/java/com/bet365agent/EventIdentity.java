@@ -257,6 +257,21 @@ final class EventIdentity {
         return j == shortWord.length();
     }
 
+    /** Two tokens that differ only by OCR glyphs for a capital I (read 'l' or '1'), at least 3 letters and the same length;
+     *  or a hyphen before a capital I read as an extra leading 'l' ("Al-Ittihad" -> "Al lIttihad" -> "littihad"). */
+    private static boolean ocrGlyph(String t, String u) {
+        if (t.equals(u) || t.length() < 3 || u.length() < 3) return false;
+        if (t.length() == u.length()) {
+            int differ = 0;                          // exactly ONE glyph position may differ ("lves" / "ives"; not "lives" / "ilves")
+            for (int k = 0; k < t.length(); k++) if (t.charAt(k) != u.charAt(k)) differ++;
+            return differ == 1 && glyphFold(t).equals(glyphFold(u));
+        }
+        String longer = t.length() > u.length() ? t : u, shorter = longer == t ? u : t;
+        return longer.length() == shorter.length() + 1 && longer.charAt(0) == 'l' && shorter.charAt(0) == 'i' && longer.substring(1).equals(shorter);
+    }
+
+    private static String glyphFold(String s) { return s.replace('l', 'i').replace('1', 'i'); }
+
     /** Inflected stem: one is a prefix of the other and nearly all of it ("sopron" / "soproni" 0.86). Returns the ratio or 0. */
     private static double stem(String t, String u) {
         String s = t.length() <= u.length() ? t : u, l = t.length() <= u.length() ? u : t;
@@ -352,7 +367,7 @@ final class EventIdentity {
         Set<String> ds = new HashSet<>(feedIsShort ? da : db), dl = new HashSet<>(feedIsShort ? db : da);
         boolean[] usedS = new boolean[s.size()], usedL = new boolean[l.size()];
         List<String> shared = new ArrayList<>(), unexplained = new ArrayList<>(), fullShared = new ArrayList<>();
-        int full = 0, abbrev = 0, sharedLetters = 0; boolean split = false, fuzzyPrefix = false, stemmed = false, lettered = false; double fuzzy = 1;
+        int full = 0, abbrev = 0, sharedLetters = 0; boolean split = false, fuzzyPrefix = false, stemmed = false, lettered = false, glyph = false; double fuzzy = 1;
         for (int i = 0; i < s.size(); i++) {
             String t = s.get(i);
             if (usedS[i] || !ds.contains(t)) continue;
@@ -360,6 +375,8 @@ final class EventIdentity {
             int j = -1;
             for (int k = 0; k < l.size() && j < 0; k++) if (!usedL[k] && (l.get(k).equals(t) || plural(t, l.get(k)))) j = k;
             if (j >= 0) { usedL[j] = true; full++; shared.add(t); fullShared.add(t); sharedLetters += t.length(); continue; }
+            for (int k = 0; k < l.size() && j < 0; k++) if (!usedL[k] && dl.contains(l.get(k)) && ocrGlyph(t, l.get(k))) j = k;
+            if (j >= 0) { usedL[j] = true; full++; glyph = true; shared.add(t); sharedLetters += t.length(); continue; }
             int[] run = concatRun(l, usedL, t);
             if (run != null) { for (int k = run[0]; k <= run[1]; k++) usedL[k] = true; full++; split = true; shared.add(t); sharedLetters += t.length(); continue; }
             // reverse split: one token of l is this token joined with the following tokens of s ("Val de Seine" -> "Valdeseine")
@@ -435,7 +452,13 @@ final class EventIdentity {
         }
         if (abbrev > 0)
             return new TokenEvidence("abbreviation", 0.85, Level.VARIANT, "abbreviated tokens " + shared + (extra.isEmpty() ? "" : "; extra " + extra),
-                    shared, unexplained, extra, extraOnSecond);
+                    shared, unexplained, extra, extraOnSecond || glyph);
+        if (glyph)
+            // Every token agrees once the OCR glyphs I / l / 1 are read alike ("St lves" / "St Ives", "Al lIttihad" /
+            // "Al-Ittihad", 28 Sep 2026). Event-scoped evidence only: never an alias; needs a sure opponent under the alert's
+            // own link with an agreeing kick-off (resolve), like any other naming variant.
+            return new TokenEvidence("ocr_glyph", sharedLetters >= 4 ? 1.0 : 0.75, Level.VARIANT, "tokens " + shared + " equal up to OCR glyphs I/l/1"
+                    + (extra.isEmpty() ? "" : "; extra " + extra), shared, unexplained, extra, true);
         double score = sharedLetters >= 4 ? 1.0 : 0.75;
         String kind = split ? "token_split" : (extra.isEmpty() && fa.equals(fb) ? "tokens_equal" : "token_containment");
         String note = extra.isEmpty() ? "distinctive tokens equal " + shared : "distinctive tokens " + shared + " contained; extra " + extra;
@@ -498,6 +521,11 @@ final class EventIdentity {
         int at = bt.indexOf(UNREAD_TIER.toLowerCase(Locale.US));
         String raw = at >= 0 ? "unread glyph" : null;
         if (at < 0 && feedTier != null && !bt.contains(feedTier)) { at = bt.indexOf("i"); raw = at >= 0 ? "'I'" : null; }
+        // "Polissya Zhytomyr Il" (28 Sep 2026): the stored image shows II; OCR read the second stroke as 'l'. A 2-3 stroke
+        // glyph run after the name where the feed says II/III is the same unread numeral: compared provisionally and sent
+        // to the enhanced reread, which counts the strokes (EventPage.patchNumeral). It can never accept on the glyph.
+        for (int k = 1; at < 0 && feedTier != null && !bt.contains(feedTier) && k < bt.size(); k++)
+            if (bt.get(k).matches("[il1]{2,3}") && bt.get(k).matches(".*[l1].*")) { at = k; raw = "'" + bt.get(k) + "'"; }   // "iii" is a real III
         if (at < 0) return null;
         if (feedTier != null) bt.set(at, feedTier); else bt.remove(at);
         Side provisional = matchSideRead(feed, String.join(" ", bt), extraAliases, womensCompetition, competitionMarkers);

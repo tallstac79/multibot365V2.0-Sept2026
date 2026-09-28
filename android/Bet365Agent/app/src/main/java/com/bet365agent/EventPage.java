@@ -101,20 +101,81 @@ final class EventPage {
                 String next = headerLines.get(index + 1).trim();
                 if (continuation(next)) raw = raw + " " + next;
             }
-            // OCR glyph runs containing '|' inside a name ("KS Basket 25 I| Bydgoszcz", "||") are an unread squad numeral:
-            // kept as an explicit placeholder so the resolver asks for a reread instead of silently dropping it.
-            raw = raw.replaceAll("(?<=^|\\s)[|Il1!]*\\|[|Il1!]*(?=\\s|$)", EventIdentity.UNREAD_TIER);
-            // Accented letters are transliterated, not dropped: "FC Arlanda v Enköping" read as "Enk ping" (27 Sep 2026,
-            // live football proof) can never match the feed's "Enkopings"; "Enkoping" can.
-            String ascii = java.text.Normalizer.normalize(OcrText.normalize(raw), java.text.Normalizer.Form.NFD).replaceAll("\\p{M}+", "")
-                    .replace('ø', 'o').replace('Ø', 'O').replace('ł', 'l').replace('Ł', 'L').replace('ß', 's').replace('æ', 'a').replace('Æ', 'A').replace('đ', 'd').replace('Đ', 'D');
-            String t = ascii.replaceAll("[^A-Za-z0-9/ .'&()-]", " ").replaceAll("\\s+", " ").trim();
+            String t = headerText(raw);
             Matcher m = VS.matcher(t);
             if (!m.matches()) continue;
             String home = tidy(m.group(1)), away = tidy(m.group(2));
             if (home.length() >= 2 && away.length() >= 2) return new String[] {home, away};
         }
         return null;
+    }
+
+    /** One header line as the resolver reads it: unread squad numerals as a placeholder, letters transliterated, only
+     *  name characters kept. Shared by every header parse (plain, hint-aware, numeral reread). */
+    private static String headerText(String raw) {
+        // OCR glyph runs containing '|' inside a name ("KS Basket 25 I| Bydgoszcz", "||") are an unread squad numeral:
+        // kept as an explicit placeholder so the resolver asks for a reread instead of silently dropping it.
+        raw = raw.replaceAll("(?<=^|\\s)[|Il1!]*\\|[|Il1!]*(?=\\s|$)", EventIdentity.UNREAD_TIER);
+        // Accented letters are transliterated, not dropped: "FC Arlanda v Enköping" read as "Enk ping" (27 Sep 2026,
+        // live football proof) can never match the feed's "Enkopings"; "Enkoping" can. The ligatures take their
+        // two-letter spelling (28 Sep 2026: page "Rælingen" became "Ralingen" and never equalled the feed's "Raelingen").
+        String ascii = java.text.Normalizer.normalize(OcrText.normalize(raw), java.text.Normalizer.Form.NFD).replaceAll("\\p{M}+", "")
+                .replace('ø', 'o').replace('Ø', 'O').replace('ł', 'l').replace('Ł', 'L').replace("ß", "ss").replace("æ", "ae").replace("Æ", "Ae")
+                .replace("œ", "oe").replace("Œ", "Oe").replace('đ', 'd').replace('Đ', 'D');
+        return ascii.replaceAll("[^A-Za-z0-9/ .'&()-]", " ").replaceAll("\\s+", " ").trim();
+    }
+
+    /**
+     * teams() with the alert's own names as the only evidence for two OCR defects of the header line (28 Sep 2026, Codex
+     * daily audit):
+     *  - a separator glued to the home name ("Georgiav Ukraine v", "Belgiumv France"): no " v " exists, so teams() is null;
+     *    the line is split at the one word ending in a glued 'v' ONLY when the text before it is exactly the alert's home
+     *    name or its supplied bookmaker alias. The resolver then still has to accept both teams.
+     *  - the header's dropdown chevron glued to the away name ("Eng Tat Hornets Vs SG Basketballv"): the trailing 'v' is
+     *    dropped ONLY when the result is exactly the alert's away name or its alias ("SG Basketball"), so the held name the
+     *    slip is later checked against is the clean one.
+     * Any other shape is left as teams() reads it.
+     */
+    static String[] teams(List<String> headerLines, java.util.Collection<String> homeHints, java.util.Collection<String> awayHints) {
+        String[] plain = teams(headerLines);
+        if (plain != null) return new String[] {unglue(plain[0], homeHints), unglue(plain[1], awayHints)};
+        if (homeHints == null || homeHints.isEmpty()) return null;
+        for (String raw : headerLines) {
+            String[] w = tidy(headerText(raw)).split(" ");
+            int at = -1, count = 0;
+            for (int k = 0; k < w.length - 1; k++)
+                if (w[k].length() >= 3 && w[k].endsWith("v") && Character.isLetter(w[k].charAt(w[k].length() - 2))) { at = k; count++; }
+            if (count != 1) continue;
+            StringBuilder home = new StringBuilder();
+            for (int k = 0; k <= at; k++) home.append(k == 0 ? "" : " ").append(k == at ? w[k].substring(0, w[k].length() - 1) : w[k]);
+            StringBuilder away = new StringBuilder();
+            for (int k = at + 1; k < w.length; k++) away.append(k == at + 1 ? "" : " ").append(w[k]);
+            String h = home.toString(), a = tidy(away.toString());
+            if (a.length() >= 2 && hinted(h, homeHints)) return new String[] {h, unglue(a, awayHints)};
+        }
+        return null;
+    }
+
+    private static String unglue(String name, java.util.Collection<String> hints) {
+        if (name == null || !name.endsWith("v") || name.length() < 4 || !Character.isLetter(name.charAt(name.length() - 2))) return name;
+        String cut = name.substring(0, name.length() - 1);
+        return hinted(name, hints) ? name : hinted(cut, hints) ? cut : name;
+    }
+
+    private static boolean hinted(String name, java.util.Collection<String> hints) {
+        if (hints == null) return false;
+        String n = EventIdentity.normalise(name);
+        for (String hint : hints) if (hint != null && !hint.isEmpty() && !n.isEmpty() && n.equals(EventIdentity.normalise(hint))) return true;
+        return false;
+    }
+
+    /** The alert's own names for one side: the feed name and the bookmaker alias the instruction supplies for it. */
+    static java.util.List<String> hints(String feedName, java.util.Map<String, String> aliases) {
+        java.util.List<String> out = new java.util.ArrayList<>();
+        if (feedName != null && !feedName.isEmpty()) out.add(feedName);
+        String alias = aliases == null || feedName == null ? null : aliases.get(EventIdentity.plain(feedName));
+        if (alias != null && !alias.isEmpty()) out.add(alias);
+        return out;
     }
 
     private static final Pattern STROKES = Pattern.compile("^[IiLl1|!]{1,3}$");
@@ -135,7 +196,10 @@ final class EventPage {
             String[] f = first[side].split("\s+");
             java.util.List<String> r = java.util.Arrays.asList(again[side].split("\s+"));
             for (int k = 0; k < f.length; k++) {
-                if (!f[k].equals(EventIdentity.UNREAD_TIER) && !f[k].equals("I")) continue;
+                // placeholders: the unread-glyph token, a lone "I", or a stroke run with an OCR glyph in it ("Il"; a clean II/III is read)
+                if (!f[k].equals(EventIdentity.UNREAD_TIER) && !f[k].equals("I")
+                        && !(k > 0 && f[k].length() >= 2 && STROKES.matcher(f[k]).matches() && f[k].matches(".*[Ll1|!].*")))
+                    continue;
                 String prev = k > 0 ? f[k - 1] : null, next = k + 1 < f.length ? f[k + 1] : null;
                 String numeral = null;
                 for (int j = 0; j < r.size(); j++) {
@@ -179,7 +243,8 @@ final class EventPage {
     /** teams == null / result == null when the header has no readable "A v B" line. wantUk: the alert kick-off in UK display. */
     static Direct decide(List<String> header, String sport, String feedHome, String feedAway, String wantUk, String feedCompetition,
                          String country, boolean anchored, java.util.Map<String, String> aliases, boolean womensCompetition) {
-        return decide(header, teams(header), sport, feedHome, feedAway, wantUk, feedCompetition, country, anchored, aliases, womensCompetition);
+        return decide(header, teams(header, hints(feedHome, aliases), hints(feedAway, aliases)), sport, feedHome, feedAway, wantUk,
+                feedCompetition, country, anchored, aliases, womensCompetition);
     }
 
     static Direct decide(List<String> header, String[] teams, String sport, String feedHome, String feedAway, String wantUk, String feedCompetition,

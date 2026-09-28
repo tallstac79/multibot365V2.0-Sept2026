@@ -30,7 +30,7 @@ final class HeldSlipQuote {
         String number = "[+-]?\\d+(?:\\.\\d+)?";
         String part = moneyline ? "" : football ? "(" + number + "(?:,\\s?" + number + ")?)\\s+" : "(" + number + ")\\s+";
         String priceRe = football ? "(\\d+\\.\\d{2,3})" : "(\\d+\\.\\d{2})";
-        Pattern p = Pattern.compile("(?i)^(?:[x><×]+\\s*)?"+Pattern.quote(name)+"\\s+"+part+priceRe+"$");
+        Pattern p = Pattern.compile("(?i)^(?:[x><×]+\\s*)?"+glyphTolerant(name)+"\\s+"+part+priceRe+"$");
         HeldSlipQuote found = null;
         for (GameLinesParser.Word l : lines) if (l.top >= y-65 && l.bottom <= y+5) {
             Matcher m=p.matcher(OcrText.normalize(l.text).trim());
@@ -43,6 +43,15 @@ final class HeldSlipQuote {
             }
         }
         return found;
+    }
+
+    /** The selection name as a pattern in which each I / l / j / 1 matches any of those glyphs (HeldSlipIdentity's fold, so
+     *  the quote reader and the identity check read the same slip alike). Real case 28 Sep 2026 (Al Kharaitiyat v Al Wakrah,
+     *  on-5438c5ae): the slip row read "X AI Kharaitiyat SC 2.80"; the identity check passed but this reader found no row. */
+    static String glyphTolerant(String name) {
+        StringBuilder sb = new StringBuilder();
+        for (char c : name.toCharArray()) sb.append("IilLjJ1".indexOf(c) >= 0 ? "[IiLlJj1|]" : Pattern.quote(String.valueOf(c)));
+        return sb.toString();
     }
 
     /** "0.0,+0.5" -> "0.25", "-1.5,-2.0" -> "-1.75", "2.0,2.5" -> "2.25"; null unless the halves are 0.5 apart. */
