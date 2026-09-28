@@ -1,7 +1,7 @@
 """Supervised one-shot final action on the desktop worker (28 Sep 2026): ONE live Place Bet click, hard GBP 0.10 cap.
 
-Explicitly invoked from the command line only; NOT wired into server.py or any production routing (the worker still
-refuses PLACE_HELD / MY_BETS and reports final_action_armed=False):
+Explicitly invoked from the command line only (superseded for routing by the server's PLACE_HELD, which reuses
+Placement.verify_preclick / click_and_watch with the SQLite per-instruction intent guard instead of the day marker):
 
     py -3.11 -m desktop_worker.final_action INSTRUCTION.json --confirm-one-live-bet [--key KEY]
 
@@ -291,20 +291,11 @@ class Placement:
         verdict, ref = my_bets_match(text, home, away, selection)
         return verdict, ref, text[:3000]
 
-    # --- orchestration
-    async def execute(self):
-        rec = dict(key=self.guard.path.stem, clicks=0, outcome=None)
-        stake = self.i.get('stake')
-        check_stake(stake)                          # the cap, before anything touches the page
-        if self.guard.used():
-            raise Refused(f'Place Bet already clicked once for {self.guard.path.stem}; refusing')
-        self.run = Run(dict(self.i, execution_mode='hold'), lambda *a: None)
-        rec['run_id'] = self.run.run_id
-        ready = await self.hold()                   # raises Failure unless COMPLETE_EXECUTION_READY
-        rec['ready'] = self.run.record.get('complete_execution_ready')
-        if not ready or (rec['ready'] or {}).get('state') != 'COMPLETE_EXECUTION_READY':
-            raise Refused('hold did not reach COMPLETE_EXECUTION_READY')
-        home, away = ready['teams']
+    # --- orchestration (verify-before-click and click-and-watch are separate so the server's PLACE_HELD reuses them)
+    async def verify_preclick(self, ready, stake, rec):
+        """Stop-prompt scan + a FRESH screenshot re-verified against the held terms (the _check_slip rules against Bet365's
+        addbet answer and the minimum, exactly one selection, no notice, stake, To Return on the button, Jackpot OFF).
+        Returns (actual, state) of the last screenshot; raises Refused when it may not be clicked. Never clicks."""
         prompt = await self.scan_prompts('preclick_prompt_scan')
         if prompt:
             raise Refused(f'stop prompt on the screen before the click: {prompt!r}')
@@ -326,9 +317,15 @@ class Placement:
                                to_return=state and state.get('to_return'), items=state and state.get('items'),
                                jackpot=jackpot_toggle(img, state)[1] if state and state.get('present') else None,
                                fixture=state and state.get('fixture'), market=state and state.get('market'),
-                               selection=state and state.get('title'), line=state and state.get('handicap'))
+                               selection=state and state.get('title'), line=state and state.get('handicap'),
+                               place_bet=(state or {}).get('place_bet'))
         if problems:
             raise Refused(f'pre-click verification failed: {problems}')
+        return actual, state
+
+    async def click_and_watch(self, state, actual, stake, rec, clicker):
+        """ONE click on Place Bet through `clicker(x, y)` (its guard is recorded before it clicks), then the receipt from
+        screenshots + the passive placebet response. Returns the classify() verdict merged into rec."""
         pb = state['place_bet']
 
         async def record(resp):
@@ -343,8 +340,7 @@ class Placement:
         try:
             rec['click'] = dict(at=datetime.now().astimezone().isoformat(timespec='seconds'), x=pb['centre'][0], y=pb['centre'][1])
             self.clicked = True                     # from here on the outcome is never NOT_PLACED without My Bets
-            await self.guard.click(self.page, pb['centre'][0], pb['centre'][1],
-                                   dict(instruction_id=self.i.get('instruction_id'), price=actual['price'], stake=stake))
+            await clicker(pb['centre'][0], pb['centre'][1])
             rec['clicks'] = 1
             self.run.put('wager_submitted', True)
             text, frames = await self.watch_receipt()
@@ -356,8 +352,29 @@ class Placement:
         rec['network'] = nets
         verdict = classify(text, [n['terms'] for n in nets if 'placebet' in n['url'].lower()])
         rec.update(receipt_text=text, receipt_frames=len(frames), **verdict)
-        rec['selection'] = dict(fixture=f'{home} v {away}', market=actual['market'], selection=actual['name'], line=actual['line'],
-                                odds_verified=actual['price'], stake=stake, to_return=state.get('to_return'))
+        rec['selection'] = dict(fixture=' v '.join(self.site.ready['teams']) if self.site.ready else None, market=actual['market'],
+                                selection=actual['name'], line=actual['line'], odds_verified=actual['price'], stake=stake,
+                                to_return=state.get('to_return'))
+        return verdict
+
+    async def execute(self):
+        rec = dict(key=self.guard.path.stem, clicks=0, outcome=None)
+        stake = self.i.get('stake')
+        check_stake(stake)                          # the cap, before anything touches the page
+        if self.guard.used():
+            raise Refused(f'Place Bet already clicked once for {self.guard.path.stem}; refusing')
+        self.run = Run(dict(self.i, execution_mode='hold'), lambda *a: None)
+        rec['run_id'] = self.run.run_id
+        ready = await self.hold()                   # raises Failure unless COMPLETE_EXECUTION_READY
+        rec['ready'] = self.run.record.get('complete_execution_ready')
+        if not ready or (rec['ready'] or {}).get('state') != 'COMPLETE_EXECUTION_READY':
+            raise Refused('hold did not reach COMPLETE_EXECUTION_READY')
+        home, away = ready['teams']
+        actual, state = await self.verify_preclick(ready, stake, rec)
+
+        async def clicker(x, y):
+            await self.guard.click(self.page, x, y, dict(instruction_id=self.i.get('instruction_id'), price=actual['price'], stake=stake))
+        verdict = await self.click_and_watch(state, actual, stake, rec, clicker)
         if verdict['outcome'] != 'PLACED':
             rec['reconciliation'] = dict(start=datetime.now().astimezone().isoformat(timespec='seconds'))
             got, ref, detail = await self.reconcile(home, away, actual['name'])
