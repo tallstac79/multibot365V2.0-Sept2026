@@ -1,0 +1,70 @@
+﻿BEFORE 2026-09-28T20:18:50.0542319+01:00
+
+ProcessId ParentProcessId CreationDate       
+--------- --------------- ------------       
+     2316            8828 28/09/2026 20:04:35
+
+
+
+
+
+ProcessId       : 11480
+ParentProcessId : 1984
+Name            : pythonw.exe
+CommandLine     : "C:\Users\WINDOWS11\AppData\Local\Programs\Python\Python311\pythonw.exe" -m 
+                  desktop_worker.supervisor run
+
+ProcessId       : 3600
+ParentProcessId : 11480
+Name            : python.exe
+CommandLine     : C:\Users\WINDOWS11\AppData\Local\Programs\Python\Python311\python.exe -m desktop_worker.server
+
+
+
+
+KILL server 3600 at 2026-09-28T20:18:50.2935199+01:00
+AFTER 2026-09-28T20:18:58.3105255+01:00
+{
+ "task": "MultiBot365DesktopWorker",
+ "task_status": "Running",
+ "supervisor": {
+  "supervisor_pid": 11480,
+  "server_pid": 6812,
+  "restarts": 1,
+  "server_started": "2026-09-28T20:18:54+01:00",
+  "updated": "2026-09-28T20:18:54+01:00"
+ },
+ "port_served": true,
+ "server": {
+  "healthy": true,
+  "ready": null,
+  "blocked_reason": null,
+  "state": "IDLE",
+  "pid": 6812,
+  "uptime_ms": 4078,
+  "error": null
+ },
+ "chrome": {
+  "state": "UNKNOWN",
+  "cdp_up": null,
+  "checked_at_ms": 0,
+  "last_recovery": null
+ },
+ "logs": [
+  "C:\\Users\\WINDOWS11\\Desktop\\MultiBotV2.0\\MultiBot365\\logs\\desktop_worker_supervisor.log",
+  "C:\\Users\\WINDOWS11\\Desktop\\MultiBotV2.0\\MultiBot365\\logs\\desktop_worker_server.log"
+ ]
+}
+
+
+ProcessId ParentProcessId CreationDate       
+--------- --------------- ------------       
+     2316            8828 28/09/2026 20:04:35
+
+
+
+2026-09-28T20:18:29+01:00 pid=11480 server started pid=3600 (restart #0)
+2026-09-28T20:18:51+01:00 pid=11480 server pid=3600 exited code=4294967295 after 22s
+2026-09-28T20:18:51+01:00 pid=11480 restarting in 2s
+2026-09-28T20:18:54+01:00 pid=11480 server started pid=6812 (restart #1)
+
