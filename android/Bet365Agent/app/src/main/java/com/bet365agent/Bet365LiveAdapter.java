@@ -98,7 +98,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     private void requireExecutionTerms(Selection quote) {
-        require("MONEYLINE".equals(quote.market) || ExecutionTolerance.line(quote.market, quote.side, requestedLine, quote.line, lineTolerance),
+        require("MONEYLINE".equals(quote.market) || ExecutionTolerance.lineForSport(sport, quote.market, quote.side, requestedLine, quote.line, lineTolerance),
                 "LINE_CHANGED", "Line deterioration exceeds original alert allowance");
         require(ExecutionTolerance.price(quote.price, executionMinimum), "BELOW_MINIMUM", "Price below original alert minimum " + executionMinimum);
     }
@@ -1272,13 +1272,31 @@ final class Bet365LiveAdapter implements SiteAdapter {
     // ------------------------------------------------------------------ football markets (0.9.26)
     /** The requested market/side is on this frame at the requested line or within the configured line allowance (the same
      *  test read_selection applies): Ossese v Sarnese, 27 Sep 2026, requested HOME 0.5, page 0.25 within the 0.25 cap. */
+    /** The requested market/side at a line inside the +/- allowance of the alert line (FootballLineCheck.withinAllowance). */
     private boolean footballTargetIn(List<Selection> found) {
         for (Selection s : found) {
             if (!s.market.equals(targetMarket) || !s.side.equals(targetSide)) continue;
-            if ("MONEYLINE".equals(targetMarket) || requestedLine == null || requestedLine.isEmpty() || requestedLine.equalsIgnoreCase("NONE")
-                    || lineEquals(s.line, requestedLine) || ExecutionTolerance.line(targetMarket, targetSide, requestedLine, s.line, lineTolerance)) return true;
+            if (FootballLineCheck.withinAllowance(targetMarket, targetSide, requestedLine, s.line, lineTolerance)) return true;
         }
         return false;
+    }
+
+    /** The requested market/side at exactly the alert line (or a market without a line). Discovery stops early only on this. */
+    private boolean footballExactIn(List<Selection> found) {
+        for (Selection s : found) {
+            if (!s.market.equals(targetMarket) || !s.side.equals(targetSide)) continue;
+            if ("MONEYLINE".equals(targetMarket) || requestedLine == null || requestedLine.isEmpty() || requestedLine.equalsIgnoreCase("NONE")
+                    || lineEquals(s.line, requestedLine)) return true;
+        }
+        return false;
+    }
+
+    /** First view that showed the requested market/side inside the band but not at the exact line: "popular" or a tab
+     *  prefix, "+scroll" when it was the scrolled frame. Revisited when no view shows the exact line. */
+    private String footballBandView;
+
+    private void noteBand(List<Selection> found, String view) {
+        if (footballBandView == null && footballTargetIn(found)) footballBandView = view;
     }
 
     private List<Selection> footballSelections(FootballMarkets.Result r) {
@@ -1326,9 +1344,13 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     /** Football event page (Popular tab: Full Time Result and the main Goals Over/Under line; Goals tab: every total
      *  line; Asian Lines tab: Asian Handicap and Goal Line). The requested market decides which tabs are opened and
-     *  only the frame that shows it supplies the selections, so every returned tap target is on the current screen. */
+     *  only the frame that shows it supplies the selections, so every returned tap target is on the current screen.
+     *  The EXACT alert line is hunted first on every view; only when no view shows it is the first view that showed a line
+     *  inside the +/- allowance opened again (Wenzhou Yincai v Qingdao Red Lions U20, 28 Sep 2026: the Popular tab's main
+     *  Over 2.5 ended discovery for Over 4.25 / 4.5 alerts and the Goals tab was never opened). */
     private CompletableFuture<List<Selection>> discoverFootballMarkets() {
         footballSeen.clear();
+        footballBandView = null;
         ui.put("fixture_home", liveFixture.home);
         ui.put("fixture_away", liveFixture.away);
         List<String> tabs = new ArrayList<>();
@@ -1336,7 +1358,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
         else if ("TOTAL".equals(targetMarket)) { tabs.add("goals"); tabs.add("asia"); }
         return ui.captureTable("markets").thenCompose(s -> {
             List<Selection> found = footballSelections(footballParse(s, "popular"));
-            if (footballTargetIn(found)) return CompletableFuture.completedFuture(found);
+            if (footballExactIn(found)) return CompletableFuture.completedFuture(found);
+            noteBand(found, "popular");
             return footballTabs(tabs, 0, found);
         }).thenApply(found -> {
             requireFootballLineWithinAllowance(found);
@@ -1355,19 +1378,44 @@ final class Bet365LiveAdapter implements SiteAdapter {
             // Last resort on the current view: one scroll for further lines of the same market. Whatever this frame shows is
             // what is returned: tap targets from an earlier frame would be stale after the scrolls (fail closed instead).
             return ui.swipe(360, 1200, 600, 400).thenCompose(v -> ui.delay(900)).thenCompose(v -> ui.captureTable("markets_scroll"))
-                    .thenApply(s -> footballSelections(footballParse(s, "scroll")));
+                    .thenCompose(s -> {
+                        List<Selection> last = footballSelections(footballParse(s, "scroll"));
+                        if (footballExactIn(last) || footballTargetIn(last) || footballBandView == null) return CompletableFuture.completedFuture(last);
+                        return footballRevisitBand();
+                    });
         }
         String prefix = tabs.get(index);
         return footballOpenTab(prefix, 0).thenCompose(v -> ui.captureTable("markets_" + prefix)).thenCompose(s -> {
             List<Selection> found = footballSelections(footballParse(s, prefix));
-            if (footballTargetIn(found)) return CompletableFuture.completedFuture(found);
+            if (footballExactIn(found)) return CompletableFuture.completedFuture(found);
+            noteBand(found, prefix);
             return ui.swipe(360, 1200, 600, 400).thenCompose(v -> ui.delay(900)).thenCompose(v -> ui.captureTable("markets_" + prefix + "_scroll")).thenCompose(s2 -> {
                 List<Selection> more = footballSelections(footballParse(s2, prefix + "_scroll"));
-                if (footballTargetIn(more)) return CompletableFuture.completedFuture(more);
+                if (footballExactIn(more)) return CompletableFuture.completedFuture(more);
+                noteBand(more, prefix + "+scroll");
                 return ui.swipe(360, 500, 1300, 300).thenCompose(v -> ui.delay(700))   // back to the top: the tab strip must be visible again
                         .thenCompose(v -> footballTabs(tabs, index + 1, more.isEmpty() ? found : more));
             });
         });
+    }
+
+    /** No view showed the exact alert line: open again the first view that showed a line inside the band, so the returned
+     *  tap targets are on the current screen. Whatever that frame shows is returned (a line gone by now fails closed). */
+    private CompletableFuture<List<Selection>> footballRevisitBand() {
+        String view = footballBandView;
+        boolean scrolled = view.endsWith("+scroll");
+        String prefix = scrolled ? view.substring(0, view.length() - "+scroll".length()) : view;
+        ui.put("football_band_revisit", view);
+        return ui.swipe(360, 500, 1300, 300).thenCompose(v -> ui.delay(700))
+                .thenCompose(v -> footballOpenTab(prefix, 0))
+                .thenCompose(v -> ui.captureTable("markets_" + prefix + "_revisit"))
+                .thenCompose(s -> {
+                    List<Selection> found = footballSelections(footballParse(s, prefix + "_revisit"));
+                    if (!scrolled || footballTargetIn(found)) return CompletableFuture.completedFuture(found);
+                    return ui.swipe(360, 1200, 600, 400).thenCompose(v -> ui.delay(900))
+                            .thenCompose(v -> ui.captureTable("markets_" + prefix + "_revisit_scroll"))
+                            .thenApply(s2 -> footballSelections(footballParse(s2, prefix + "_revisit_scroll")));
+                });
     }
 
     /** Tap the market tab whose label starts with `prefix`; the strip scrolls horizontally, so swipe it once or twice when the tab is off-screen. */
@@ -1428,6 +1476,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     public CompletableFuture<Selection> read_selection(List<Selection> all, String market, String side, String line) {
+        if ("football".equals(sport) && liveFixture != null) return readFootballSelection(all, market, side, line);
         List<Selection> matches = new ArrayList<>();
         for (Selection s : all) {
             if (!s.market.equals(market) || !s.side.equals(side)) continue;
@@ -1453,6 +1502,35 @@ final class Bet365LiveAdapter implements SiteAdapter {
         ui.put("selection_name", pick.name);
         return CompletableFuture.completedFuture(pick);
     }
+    /** Football: the exact alert line, else the line nearest it inside the +/- allowance (FootballLineCheck.nearest); a
+     *  line further away is never selected, so its price is never judged against this alert's minimum. */
+    private CompletableFuture<Selection> readFootballSelection(List<Selection> all, String market, String side, String line) {
+        List<String[]> quotes = new ArrayList<>();
+        for (Selection s : all) {
+            quotes.add(FootballLineCheck.quote(s.market, s.side, s.line, s.price));
+            if (s.market.equals(market) && s.side.equals(side)) observeExecution("grid", s, false);
+        }
+        int i = FootballLineCheck.nearest(quotes, market, side, line, lineTolerance);
+        if (i < 0) {
+            List<String[]> seen = new ArrayList<>();
+            for (Selection q : footballSeen) seen.add(FootballLineCheck.quote(q.market, q.side, q.line, q.price));
+            String refusal = FootballLineCheck.lineRefusal(seen, market, side, line, lineTolerance);
+            require(refusal == null, "LINE_CHANGED", refusal);
+            require(false, "TARGET_NOT_FOUND", "No live selection for " + market + "/" + side
+                    + (line == null || line.isEmpty() ? "" : ("/" + line)) + " (exact, or nearest within " + lineTolerance + ")");
+        }
+        Selection pick = all.get(i);
+        targetLine = pick.line;
+        require(!"SUSPENDED".equals(pick.availability), "SUSPENDED", "Selection suspended");
+        require(!"UNAVAILABLE".equals(pick.availability), "UNAVAILABLE", "Selection unavailable");
+        validateOneIdentity(pick);
+        latestSelection = pick;
+        observeExecution("selection", pick, true);
+        ui.put("selection_role", pick.side);
+        ui.put("selection_name", pick.name);
+        return CompletableFuture.completedFuture(pick);
+    }
+
     private static boolean lineEquals(String a, String b) {
         if (a == null || b == null) return a == b;
         if (a.equals(b)) return true;
@@ -2103,7 +2181,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
             observeExecution("pretap", quote == null ? null : new Selection(market, side, quote.line, quote.price, "OPEN", place.bounds, name), identity);
             require(identity, "WRONG_EVENT", "Both approved teams and full-game market must be inside this slip");
             require(quote != null, "PRICE_CHANGED", "Current slip selection line and price unreadable");
-            require("MONEYLINE".equals(market) || ExecutionTolerance.line(market, side, heldContext.optString("requested_line"),
+            require("MONEYLINE".equals(market) || ExecutionTolerance.lineForSport(sport, market, side, heldContext.optString("requested_line"),
                     quote.line, heldContext.optString("max_line_deterioration")), "LINE_CHANGED", "Alert-to-live line deterioration exceeds tolerance");
             require(ExecutionTolerance.price(quote.price, minimumPrice),
                     "BELOW_MINIMUM", "Current slip price below alert-to-live minimum");

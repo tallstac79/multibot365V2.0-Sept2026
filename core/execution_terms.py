@@ -40,7 +40,7 @@ def line_allowance(market, alert_line, absolute, percent=None):
 
 
 def compare(request, live, *, odds_tolerance=None, line_tolerance=None,
-            net_percent=None, line_percent=None):
+            net_percent=None, line_percent=None, sport=None):
     out = dict(acceptable=False, requested=request, live=live)
     try:
         market = request['market'].replace('TOTALS','TOTAL')
@@ -67,7 +67,13 @@ def compare(request, live, *, odds_tolerance=None, line_tolerance=None,
         if market in ('SPREAD','TOTAL'):
             rl, ll = Decimal(str(request['line'])), Decimal(str(live['line']))
             if not rl.is_finite() or not ll.is_finite(): raise ValueError('invalid line')
-            line_loss = max(Decimal(0), ll-rl if market=='TOTAL' and request['side']=='OVER' else rl-ll)
+            if (sport or request.get('sport')) == 'football':
+                # Football Asian Handicap / Totals (operator, 28 Sep 2026): the allowance is a band around the alert line in
+                # BOTH directions; a line further away (Over 2.5 for an Over 4.5 alert, Wenzhou Yincai v Qingdao Red Lions)
+                # is another price, never an improvement of this one. Basketball keeps one-sided deterioration.
+                line_loss = abs(ll - rl)
+            else:
+                line_loss = max(Decimal(0), ll-rl if market=='TOTAL' and request['side']=='OVER' else rl-ll)
         acceptable = lp >= floor and line_loss <= line_limit
         out.update(acceptable=acceptable, minimum_live_price=str(floor), effective_line_allowance=str(line_limit),
                    net_payout_deterioration_percent=str(100 * odds_loss / (rp-1)),
@@ -79,7 +85,7 @@ def compare(request, live, *, odds_tolerance=None, line_tolerance=None,
     return out
 
 
-def comparisons_for_result(request, result, policy):
+def comparisons_for_result(request, result, policy, sport=None):
     """Retain every observed quote, including failures; missing fresh terms stay unknown.
 
     Effective cap and minimum are bound to the original alert at evaluation time.
@@ -104,7 +110,7 @@ def comparisons_for_result(request, result, policy):
         quote = compare(request, observation.get('observed'),
                         odds_tolerance=policy.get('max_odds_deterioration'),
                         net_percent=policy.get('max_net_payout_deterioration_percent'),
-                        line_tolerance=policy.get('max_line_deterioration'))
+                        line_tolerance=policy.get('max_line_deterioration'), sport=sport)
         quote.update(stage=observation.get('stage'), observed_at_ms=observation.get('observed_at_ms'),
                      device_outcome=result.get('status'), device_reason=result.get('detail'),
                      policy=policy, identity_verified=observation.get('identity_verified'))

@@ -20,7 +20,26 @@ final class FootballLineCheck {
         if ("MONEYLINE".equals(market) || requested == null || requested.isEmpty() || requested.equalsIgnoreCase("NONE")) return true;
         if (live != null && live.equals(requested)) return true;
         try { if (live != null && new BigDecimal(live).compareTo(new BigDecimal(requested)) == 0) return true; } catch (Exception ignored) { }
-        return ExecutionTolerance.line(market, side, requested, live, allowance);
+        return ExecutionTolerance.footballLine(market, side, requested, live, allowance);
+    }
+
+    /** Index of the quote to use for the requested market/side: the exact alert line if shown, else the line NEAREST the
+     *  alert line inside the +/- allowance; -1 when none, or when two different lines are equally near (no implicit choice). */
+    static int nearest(List<String[]> quotes, String market, String side, String requested, String allowance) {
+        int best = -1;
+        BigDecimal bestDistance = null;
+        boolean tie = false;
+        for (int i = 0; i < quotes.size(); i++) {
+            String[] q = quotes.get(i);
+            if (!q[0].equals(market) || !q[1].equals(side)) continue;
+            if ("MONEYLINE".equals(market) || requested == null || requested.isEmpty() || requested.equalsIgnoreCase("NONE")) return i;
+            if (!withinAllowance(market, side, requested, q[2], allowance)) continue;
+            BigDecimal d;
+            try { d = new BigDecimal(q[2]).subtract(new BigDecimal(requested)).abs(); } catch (Exception e) { continue; }
+            if (best < 0 || d.compareTo(bestDistance) < 0) { best = i; bestDistance = d; tie = false; }
+            else if (d.compareTo(bestDistance) == 0 && !sameLine(q[2], quotes.get(best)[2])) tie = true;
+        }
+        return tie ? -1 : best;
     }
 
     /** The configured tolerances applied to a FRESH football quote (the pre-selection re-read and the slip): null when
@@ -32,24 +51,22 @@ final class FootballLineCheck {
                                String allowance, String minimum) {
         if (!withinAllowance(market, side, requestedLine, liveLine, allowance))
             return new String[] {"LINE_CHANGED", "Fresh " + market + " " + side + " " + liveLine + " @ " + livePrice + "; alert line "
-                    + requestedLine + " with allowance " + allowance + ": line deterioration exceeds the original alert allowance"};
+                    + requestedLine + ": the line is more than " + allowance + " from the alert line"};
         if (!ExecutionTolerance.price(livePrice, minimum))
             return new String[] {"BELOW_MINIMUM", "Fresh price " + livePrice + " (" + market + " " + side + " " + liveLine
                     + ") is below minimum " + minimum};
         return null;
     }
 
-    /** Index of the fresh quote for a re-read: the same market/side at the same line if shown, else the first at a line
-     *  inside the allowance; -1 when none (a moved line outside the allowance is never substituted). */
+    /** Index of the fresh quote for a re-read: the same market/side at the same line if shown, else the line nearest the
+     *  alert line inside the +/- allowance (nearest); -1 when none (a line outside the allowance is never substituted). */
     static int pick(List<String[]> quotes, String market, String side, String currentLine, String requestedLine, String allowance) {
-        int within = -1;
         for (int i = 0; i < quotes.size(); i++) {
             String[] q = quotes.get(i);
             if (!q[0].equals(market) || !q[1].equals(side)) continue;
             if ("MONEYLINE".equals(market) || sameLine(q[2], currentLine)) return i;
-            if (within < 0 && withinAllowance(market, side, requestedLine, q[2], allowance)) within = i;
         }
-        return within;
+        return nearest(quotes, market, side, requestedLine, allowance);
     }
 
     private static boolean sameLine(String a, String b) {
@@ -71,7 +88,7 @@ final class FootballLineCheck {
             if (!lines.contains(t)) lines.add(t);
         }
         if (!any) return null;
-        return "Bet365 " + market + " " + side + " shows " + String.join(", ", lines) + "; alert line " + requested + " with allowance "
-                + allowance + ": line deterioration exceeds the original alert allowance";
+        return "Bet365 " + market + " " + side + " shows " + String.join(", ", lines) + "; alert line " + requested
+                + ": no line within " + allowance + " of the alert line";
     }
 }

@@ -1,5 +1,6 @@
 package com.bet365agent;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -20,7 +21,7 @@ public class FootballLineCheckTest {
 
     @Test public void alertAwayPlusHalfIsAGenuineLineRefusal() {
         String r = FootballLineCheck.lineRefusal(SANTA_CRUZ, "SPREAD", "AWAY", "+0.5", "0.25");
-        assertTrue(r, r != null && r.contains("AWAY shows 0.0 @ 2.050") && r.contains("exceeds the original alert allowance"));
+        assertTrue(r, r != null && r.contains("AWAY shows 0.0 @ 2.050") && r.contains("no line within 0.25 of the alert line"));
     }
 
     @Test public void theNextAlertAtPlusQuarterIsWithinAllowance() {
@@ -32,7 +33,8 @@ public class FootballLineCheckTest {
         assertNull(FootballLineCheck.lineRefusal(Collections.emptyList(), "SPREAD", "AWAY", "+0.5", "0.25"));
         assertNull(FootballLineCheck.lineRefusal(SANTA_CRUZ, "SPREAD", "AWAY", "", "0.25"));
         assertNull(FootballLineCheck.lineRefusal(SANTA_CRUZ, "MONEYLINE", "AWAY", "NONE", "0.25"));
-        // an improvement is always acceptable
-        assertNull(FootballLineCheck.lineRefusal(SANTA_CRUZ, "SPREAD", "HOME", "-0.5", "0.25"));
+        // a line 0.5 away is refused in either direction since 28 Sep 2026 (two-sided football band), a 0.25 move is not
+        assertNotNull(FootballLineCheck.lineRefusal(SANTA_CRUZ, "SPREAD", "HOME", "-0.5", "0.25"));
+        assertNull(FootballLineCheck.lineRefusal(SANTA_CRUZ, "SPREAD", "HOME", "-0.25", "0.25"));
     }
 }

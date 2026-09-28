@@ -868,7 +868,7 @@ class Pipeline:
             from core.execution_terms import comparisons_for_result
             policy = (json.loads(row['rules_result'] or '{}').get('instruction') or {})
             quotes = comparisons_for_result(dict(market=row['market'],side=row['selection'],line=row['line'],price=row['alert_price']),
-                                            result, policy)
+                                            result, policy, sport=row['sport'])
             for quote in quotes:
                 self.store.audit(db, 'ALERT_TO_LIVE_COMPARISON', quote, instruction_id)
             quote = quotes[-1]
