@@ -1,0 +1,58 @@
+{
+ "hold": {
+  "instruction_id": "rt-e2e-sco-sui-draw",
+  "run_id": "d_1c8f37ce00f440ecace7",
+  "terms": {
+   "event_context": {
+    "away": "Switzerland",
+    "competition": "uefa nations league b",
+    "home": "Scotland",
+    "kickoff_utc": "2026-09-29T18:45",
+    "period": "FULL_GAME"
+   },
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201150290/F3/I1/",
+   "line": "",
+   "market": "1X2",
+   "minimum_price": "3.00",
+   "price": "3.50",
+   "selection_name": "Draw",
+   "side": "DRAW",
+   "sport": "football",
+   "stake": "0.10"
+  },
+  "terms_hash": "2c58a97d7f9d6b11a60cecdb035da89bc89fbb149d517a1a1c714ce1f17e1e0d",
+  "held_at_ms": 1790623990870,
+  "consumed_by": "rt-e2e-sco-sui-draw-place",
+  "consumed_at_ms": 1790623997291
+ },
+ "intents": [
+  {
+   "instruction_id": "final-tur-1x2-draw",
+   "held_instruction_id": "final-tur-1x2-draw",
+   "terms_hash": null,
+   "live": 1,
+   "stake": "0.10",
+   "price": "3.50",
+   "intent_at_ms": 1790616718000,
+   "outcome": "PLACED",
+   "reference": "BT7071586031I",
+   "receipt_at_ms": 1790616718000,
+   "detail": "imported from marker final-action-20260928.clicked (kept)",
+   "source": "marker"
+  },
+  {
+   "instruction_id": "rt-e2e-sco-sui-draw-place",
+   "held_instruction_id": "rt-e2e-sco-sui-draw",
+   "terms_hash": "2c58a97d7f9d6b11a60cecdb035da89bc89fbb149d517a1a1c714ce1f17e1e0d",
+   "live": 0,
+   "stake": "0.10",
+   "price": "3.50",
+   "intent_at_ms": 1790623997284,
+   "outcome": "DRY_RUN",
+   "reference": null,
+   "receipt_at_ms": null,
+   "detail": "dry run: everything except the physical click",
+   "source": "server-dry-run"
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "flags": {
+  "desktop_routing_enabled": false,
+  "desktop_device_id": "desktop-chrome",
+  "desktop_expected_worker_id": null,
+  "desktop_expected_account_fingerprint": null
+ },
+ "verdict": {
+  "manual_target_routable": true,
+  "manual_reason": "routable",
+  "normal_routing": false,
+  "normal_reason": "desktop routing disabled (flag OFF)"
+ },
+ "health": {
+  "healthy": true,
+  "ready": true,
+  "blocked_reason": null,
+  "state": "IDLE",
+  "current_instruction": null,
+  "device_id": "desktop-chrome",
+  "worker_id": "dw-bde27aa2fe41",
+  "account_fingerprint": "f210d5f9dde5",
+  "phone_final_action_armed": false,
+  "desktop_final_action": {
+   "live_click_enabled": false,
+   "dry_run": true,
+   "max_stake_per_bet": "0.10",
+   "hold_max_age_seconds": 115,
+   "max_daily_live_stake": "0.50"
+  },
+  "operator_alert": null,
+  "chrome": {
+   "state": "UP",
+   "cdp_up": true,
+   "checked_at_ms": 1790623967206,
+   "last_recovery": null
+  },
+  "session": "{\"state\": \"AUTHENTICATED\", \"visual_state\": \"LOGGED_IN\", \"observed_at_ms\": 1790623967206, \"detail\": \"top bar shows 'My Bets' / the balance\", \"source\": \"probe\"}",
+  "pid": 15028,
+  "uptime_ms": 361983
+ }
+}

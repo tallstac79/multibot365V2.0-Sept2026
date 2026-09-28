@@ -189,3 +189,67 @@ exceeded 08:26:31"), so the state is `REALITY_CHECK`, fail-closed, with alert `R
 Evidence: `evidence/desktop-worker-lifecycle/20260928-200423/`. At 20:08 the Reality Check had been
 cleared by the operator (state LOGGED_IN, `check-20260928-200800/`). A read-only My Bets check then found the placed bet
 OPEN (`evidence/desktop-worker-final-action/d_9b2dbdeb76e94924a752/reconciliation/`). Tests: `tests/test_desktop_lifecycle.py`.
+
+## Persistent supervisor and minimum safe routing (28 Sep 2026, 20:13-21:00 BST)
+
+No live bet was placed in this work. Place Bet was never clicked: PLACE_HELD ran as a dry run only.
+
+### Supervisor (Scheduled Task, interactive user session)
+
+`desktop_worker.server` runs under `desktop_worker/supervisor.py`, which is started by the Windows Scheduled Task
+**`MultiBot365DesktopWorker`**. It does not belong to any app.
+- **Triggers:** at log on of `DESKTOP-IVUNJ9J\WINDOWS11`, plus a time trigger that repeats every 5 minutes as a backup. `MultiplePolicy=IgnoreNew`, so the 5-minute trigger does nothing while an instance is running.
+- **Session:** `InteractiveToken` with least privilege. Chrome needs the desktop session. The NSSM services on this PC run as LocalSystem in session 0, which cannot reach that session.
+- **Recovery and limits:** restart on failure 999 times at 1-minute intervals; no execution time limit.
+- **Behaviour:** the supervisor takes a single-instance lock (`.local/desktop_supervisor.lock`). It starts `python -m desktop_worker.server` with no console window and restarts it when it exits, with backoff (2 s doubling to 60 s, reset after 5 minutes up).
+- **Existing server:** it never starts a second server while port 8768 is already served.
+- **Logs:** `logs/desktop_worker_supervisor.log` and `logs/desktop_worker_server.log` (rotated at 5 MB).
+- **Chrome:** Chrome is launched through WMI, so it is not a child of the server or the supervisor. A server restart leaves Chrome running.
+
+    py -3.11 -m desktop_worker.supervisor status     # task status, supervisor/server PIDs, health (no secrets)
+    py -3.11 -m desktop_worker.supervisor start      # enable the task and run it now
+    py -3.11 -m desktop_worker.supervisor stop       # disable the task, stop the supervisor and its server (Chrome stays)
+    py -3.11 -m desktop_worker.supervisor install    # (re-)register the task from desktop_worker/supervisor.py, start it
+    schtasks /Query /TN MultiBot365DesktopWorker /V /FO LIST
+
+Proof (`evidence/desktop-worker-routing/supervisor/`):
+- **Server killed (20:18:50):** the supervisor restarted it in about 3 s (new PID, `restarts: 1`). Chrome PID 2316 was unchanged.
+- **Code reloads:** killing the server was also used twice to load new code. Each time it came back healthy.
+- **Supervisor killed:** `supervisor_crash_proof.txt` shows the task starting a new supervisor. That supervisor adopted the orphaned server while it still served the port, and started a fresh server once the orphan was killed.
+
+### Routing pieces (all behind flags, all OFF)
+
+| Piece | Where | Commit |
+|---|---|---|
+| a. `desktop-chrome` routing target behind `desktop_routing_enabled` (default **false**). While it is false, `gateway_for` returns the phone `CoordinatorGateway` unchanged. When it is true, work goes to the desktop only if it is routable (healthy, ready, IDLE, no `blocked_reason`) **and** bound to `desktop_expected_worker_id` and `desktop_expected_account_fingerprint` (both empty, so never routed). A PLACE_HELD always goes to the device that holds its hold. Manual supervised path: `tools/desktop_route.py` | `core/device_routing.py`, `core/pipeline.py` Settings, `tools/pipeline_service.py`, `tools/desktop_route.py` | 914cb34 |
+| b. HOLD stores the verified terms plus a sha256 (`holds`). Approval reuses the backend's own `Pipeline.place_held_payload` (`confirmation_status=APPROVED`). PLACE_HELD checks, in order: APPROVED, the hold exists / is unused / is no older than `hold_max_age_seconds` (115), the terms equal the hold, the caps, the intent guard and the session. It then runs a fresh visual re-verify (`final_action.Placement.verify_preclick`), checks the age again and records the intent. It is a **DRY RUN** unless `live_click_enabled=true` in `.local/desktop_worker.json` **and** env `DESKTOP_LIVE_CLICK=1`. MY_BETS is a read-only header navigation plus thresholded OCR, in the `bet_matching` shape, with a match verdict | `desktop_worker/held.py`, `server.py` | d42bc60, ecd0e78 |
+| c. Per-bet cap `max_stake_per_bet` (default **0.10**), applied before the page is touched (also refuses a hold above the cap). Daily live cap `max_daily_live_stake` (0.50) counts every live intent. The backend limits (max_daily_loss etc.) still apply before any approval | `held.precheck` | d42bc60 |
+| d. Durable per-instruction guard, `final_intents` in `.local/desktop_worker.sqlite3`. The intent is committed before a click. If a live intent has no confirmed receipt, it is never clicked again: `PLACEMENT_UNKNOWN`, `next_step MY_BETS`. This holds after a restart too (`reconcile_restart` no longer reports NOT_TAPPED for it). The 28 Sep day marker was imported as PLACED `BT7071586031I`; the marker file is kept | `desktop_worker/ledger.py` | d78f921 |
+| e. `/health`: `healthy` / `ready` / `blocked_reason`. The reasons are `CHROME_DOWN`, `LOGGED_OUT`, `REALITY_CHECK`, `SESSION_UNKNOWN` (nothing read yet, or the read is older than 300 s) and `RECOVERING`. A visual session probe runs every 120 s while idle and after every instruction (screenshot only, no navigation). The coordinator treats anything but healthy+ready as not routable | `server.py` | d42bc60 |
+| f. Telegram via `core.status_notifier.TelegramBotSender` and the `.local/pipeline.json` notifications config. One message per blocking episode (the state persists in `.local/desktop_alerts.json`, so a restart does not repeat it). A different block gets its own message; a recovery message is sent when the block clears. SESSION_UNKNOWN only alerts after 5 minutes. The token is never printed or stored, and errors are sanitised. Reality Check and login stay manual | `desktop_worker/alerts.py` | f4790d0 |
+
+Flags now: `desktop_routing_enabled` **false** (absent from `pipeline.json`, so the default applies); `live_click_enabled`
+**false** in `.local/desktop_worker.json`; `DESKTOP_LIVE_CLICK` **unset**; `max_stake_per_bet` 0.10; `hold_max_age_seconds` 115.
+The phone and pipeline behaviour is unchanged. The running pipeline service was not restarted.
+
+### Supervised E2E (20:32-20:36 BST, `evidence/desktop-worker-routing/e2e/`)
+
+Sequence: manual target health → HOLD → approval → PLACE_HELD dry run → RESET_BETSLIP → MY_BETS.
+1. **Health (manual target):** routable. Normal routing is false because the flag is OFF.
+2. **HOLD** `rt-e2e-sco-sui-draw`: Scotland v Switzerland (UEFA Nations League B, Tue 29 Sep 19:45 BST, pre-match), Full Time Result, Draw @3.50, stake 0.10. Result: `COMPLETE_EXECUTION_READY` in 24 s, `terms_hash 2c58a97d...`.
+3. **Approval:** `Pipeline.place_held_payload` gave `PLACE_HELD rt-e2e-sco-sui-draw-place`, APPROVED.
+4. **PLACE_HELD:** the fresh re-verify passed. Result: `DRY_RUN`, `tapped=false`, `would_click (805,802)`, To Return 0.35. The intent was recorded as `DRY_RUN` and the hold consumed. **No click.**
+5. **RESET_BETSLIP:** the held selection was removed from the slip.
+6. **MY_BETS reconcile of BT7071586031I:** the first read was PARTIAL, because OCR read "Italy" as "ttay". After the fix (ecd0e78), `found=true`, `confidence=EXACT` (Draw 3.50, Full Time Result, Turkiye v Italy, £0.10, To Return £0.35).
+
+The ledger snapshot is in `e2e/ledger_snapshot.json`. The worker screenshots for each step are in `e2e/runs/`.
+
+A Telegram TEST alert (clearly labelled "TEST ONLY") was sent at 20:36 BST (`telegram_test.txt`).
+
+### Remaining before enabling normal desktop routing
+- **Per-row device binding in the pipeline:** `Store` records `settings.device_id` (the phone) for every instruction, and the PLACE_HELD pre-tap check compares `row.device_id` with `settings.device_id`. Rows sent to the desktop need their own device and worker binding before the flag is turned on. `RoutingGateway` already keeps the per-instruction target.
+- **Approval policy for the desktop:** decide whether automatic approval may cover `desktop-chrome`. Its health keeps `phone_final_action_armed=false`, so today only a manual approval path would reach it.
+- **Live click:** a supervised live PLACE_HELD at £0.10 with both live flags set (only with David's go-ahead), then turn them off again.
+- **Settlement and reconcile via the pipeline:** the pipeline's MY_BETS/settlement jobs should target the desktop for desktop bets. The desktop result still lacks the `status` (OPEN/SETTLED) parsing that the phone's cards give.
+- **Configuration:** set `desktop_expected_worker_id=dw-bde27aa2fe41` and `desktop_expected_account_fingerprint=f210d5f9dde5` in `pipeline.json` when enabling.
+- **Reality Check cadence:** it appears every 60 minutes and stays manual, so the desktop is not routable until David answers it. Expect roughly 1 blocked episode per hour.

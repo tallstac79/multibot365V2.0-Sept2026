@@ -1,3 +1,37 @@
+# Desktop worker: persistent supervisor + minimum safe routing (28 Sep 2026, 20:13-21:00 BST) - NO LIVE BET, flags OFF
+
+**No bet was placed and Place Bet was never clicked.**
+
+**Supervisor.** Scheduled Task `MultiBot365DesktopWorker`:
+- Runs at log on of WINDOWS11, in the interactive session, with least privilege.
+- Restarts on failure, and a 5-minute trigger (IgnoreNew) acts as a backup.
+- Runs `desktop_worker.supervisor`, which keeps `desktop_worker.server` alive with backoff and logs to `logs/desktop_worker_{supervisor,server}.log`.
+
+Proofs:
+- Server killed: restarted in about 3 s, and Chrome (PID 2316) was untouched.
+- Supervisor killed: the task started a new one, which adopted the orphaned server and started a fresh server once the orphan was killed.
+
+**Routing pieces**, all OFF by default:
+- `desktop_routing_enabled=false`: the phone gateway is unchanged. Manual targeting is `tools/desktop_route.py` (914cb34).
+- HOLD terms and hash; approval via `Pipeline.place_held_payload`; PLACE_HELD as a DRY RUN unless `live_click_enabled` AND `DESKTOP_LIVE_CLICK=1` (both OFF); MY_BETS read (d42bc60, ecd0e78).
+- £0.10 per-bet cap before the page is touched, plus a daily live cap (d42bc60).
+- SQLite `final_intents` guard: an intent without a receipt becomes PLACEMENT_UNKNOWN (then MY_BETS) and survives a restart. The marker import gives BT7071586031I = PLACED (d78f921).
+- Fail-closed `/health` with `blocked_reason`, and an idle visual probe (d42bc60).
+- Telegram alert once per episode, plus a recovery message (f4790d0).
+
+**Tests.** Desktop suite 83/83 OK (21 new in `tests/test_desktop_routing.py`). Backend `test_pipeline`, `test_pipeline_io` and `test_final_action`: 106/106 OK.
+
+**Supervised E2E.** Scotland v Switzerland (Tue 19:45 BST), Draw @3.50, £0.10:
+- HOLD: COMPLETE_EXECUTION_READY.
+- APPROVED, then PLACE_HELD DRY_RUN: fresh re-verify, would_click (805,802), no click.
+- Slip reset.
+- MY_BETS found BT7071586031I's card EXACT.
+
+A Telegram TEST alert was sent at 20:36 BST.
+
+Docs: `docs/DESKTOP_WORKER.md`. Evidence: `evidence/desktop-worker-routing/`.
+
+---
 # Desktop worker: Chrome lifecycle and recovery (28 Sep 2026) - ROOT CAUSE FOUND, RELAUNCH PROVEN, REALITY CHECK OPEN
 
 The dedicated Chrome died at 19:16 BST. It had been launched from the Claude desktop app's shell, so it was inside that

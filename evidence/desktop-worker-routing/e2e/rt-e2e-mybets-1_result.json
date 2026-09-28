@@ -1,0 +1,122 @@
+{
+ "instruction_id": "rt-e2e-mybets-1",
+ "run_id": "d_f52d351b51e544d081cb",
+ "worker": "desktop",
+ "wager_submitted": false,
+ "device_stage": "READ_MY_BETS",
+ "status": "PASS",
+ "stage": "MY_BETS_READ",
+ "my_bets": {
+  "view": "OPEN",
+  "url": "https://www.bet365.com/#/MB/UB",
+  "lines": [
+   {
+    "text": "bet365.com/#/MB/UB",
+    "frame": 1,
+    "top": 0,
+    "left": 0
+   },
+   {
+    "text": "lve Seed",
+    "frame": 1,
+    "top": 91,
+    "left": 93
+   },
+   {
+    "text": "£0.10 Single",
+    "frame": 1,
+    "top": 144,
+    "left": 48
+   },
+   {
+    "text": "%) Reuse Selections",
+    "frame": 1,
+    "top": 185,
+    "left": 632
+   },
+   {
+    "text": "® Draw 3.50",
+    "frame": 1,
+    "top": 227,
+    "left": 51
+   },
+   {
+    "text": "Full Time Result",
+    "frame": 1,
+    "top": 247,
+    "left": 70
+   },
+   {
+    "text": "©) Turkiye fi)",
+    "frame": 1,
+    "top": 281,
+    "left": 47
+   },
+   {
+    "text": "@ ttay Halftime 3",
+    "frame": 1,
+    "top": 306,
+    "left": 47
+   },
+   {
+    "text": "45:00 bed",
+    "frame": 1,
+    "top": 329,
+    "left": 47
+   },
+   {
+    "text": "Stake To Retum",
+    "frame": 1,
+    "top": 382,
+    "left": 47
+   },
+   {
+    "text": "£0.10 £0.35",
+    "frame": 1,
+    "top": 402,
+    "left": 48
+   }
+  ],
+  "frames": 1
+ },
+ "detail": "My Bets read: 10 OCR lines (read-only; nothing on a bet was clicked)",
+ "match": {
+  "found": false,
+  "confidence": "PARTIAL",
+  "window": "£0.10 Single | %) Reuse Selections | ® Draw 3.50 | Full Time Result | ©) Turkiye fi) | @ ttay Halftime 3 | 45:00 bed | Stake To Retum | £0.10 £0.35",
+  "checks": {
+   "fixture": false,
+   "selection": true,
+   "stake": true,
+   "odds": true
+  },
+  "bet_reference": null,
+  "status": null,
+  "returns": null,
+  "card_key": null
+ },
+ "duration_ms": 7047,
+ "stage_timings": [],
+ "progress": {
+  "stage": "READ_MY_BETS",
+  "elapsed_ms": 7047,
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790624005130
+   },
+   {
+    "stage": "OPEN_MY_BETS",
+    "elapsed_ms": 16,
+    "at_ms": 1790624005158
+   },
+   {
+    "stage": "READ_MY_BETS",
+    "elapsed_ms": 4609,
+    "at_ms": 1790624009744
+   }
+  ]
+ },
+ "execution_count": 1
+}

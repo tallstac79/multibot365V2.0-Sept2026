@@ -1,0 +1,61 @@
+desktop suite 2026-09-28T20:41:45.8372113+01:00
+py : test_states (tests.test_desktop_routing.HealthStates.test_states) ... ok
+At C:\Users\WINDOWS11\AppData\Local\Temp\ps-script-122f078b-9596-497a-99c5-f8c3f7e0339c.ps1:97 char:201
++ ... Content $t; py -3.11 -m unittest -v tests.test_desktop_routing 2>&1 | ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (test_states (te..._states) ... ok:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+test_desktop_lines_feed_bet_matching (tests.test_desktop_routing.MyBetsShape.test_desktop_lines_feed_bet_matching) ... 
+ok
+test_real_my_bets_screenshot_reads_and_matches_the_live_bet 
+(tests.test_desktop_routing.MyBetsShape.test_real_my_bets_screenshot_reads_and_matches_the_live_bet)
+28 Sep 2026 20:33 BST My Bets (Open) screenshot with the one open bet (BT7071586031I): the flag-adjacent 'Italy' ... ok
+test_flag_is_off_by_default_and_gateway_is_the_phone 
+(tests.test_desktop_routing.RoutingFlag.test_flag_is_off_by_default_and_gateway_is_the_phone) ... ok
+test_flag_off_never_sends_to_the_desktop_even_when_it_is_routable 
+(tests.test_desktop_routing.RoutingFlag.test_flag_off_never_sends_to_the_desktop_even_when_it_is_routable) ... ok
+test_flag_on_routes_only_when_routable_and_bound 
+(tests.test_desktop_routing.RoutingFlag.test_flag_on_routes_only_when_routable_and_bound) ... ok
+test_pipeline_service_gateway_for_flag_off_is_the_plain_phone_gateway 
+(tests.test_desktop_routing.RoutingFlag.test_pipeline_service_gateway_for_flag_off_is_the_plain_phone_gateway) ... ok
+test_routable_reasons (tests.test_desktop_routing.RoutingFlag.test_routable_reasons) ... ok
+test_hold_ageing_during_the_reverify_is_refused_without_intent 
+(tests.test_desktop_routing.ServerHoldPlace.test_hold_ageing_during_the_reverify_is_refused_without_intent) ... ok
+test_hold_approve_place_dry_run (tests.test_desktop_routing.ServerHoldPlace.test_hold_approve_place_dry_run) ... ok
+test_intent_without_receipt_survives_a_restart_as_placement_unknown 
+(tests.test_desktop_routing.ServerHoldPlace.test_intent_without_receipt_survives_a_restart_as_placement_unknown) ... ok
+test_live_click_needs_both_flags (tests.test_desktop_routing.ServerHoldPlace.test_live_click_needs_both_flags) ... ok
+test_marker_migration_keeps_the_marker_and_is_idempotent 
+(tests.test_desktop_routing.ServerHoldPlace.test_marker_migration_keeps_the_marker_and_is_idempotent) ... ok
+test_not_approved_mismatch_and_missing_hold 
+(tests.test_desktop_routing.ServerHoldPlace.test_not_approved_mismatch_and_missing_hold) ... ok
+test_restart_without_intent_is_not_tapped 
+(tests.test_desktop_routing.ServerHoldPlace.test_restart_without_intent_is_not_tapped) ... ok
+test_stake_cap_refuses_before_the_page 
+(tests.test_desktop_routing.ServerHoldPlace.test_stake_cap_refuses_before_the_page) ... ok
+test_stale_hold_is_refused_before_the_page 
+(tests.test_desktop_routing.ServerHoldPlace.test_stale_hold_is_refused_before_the_page) ... ok
+test_failed_send_is_retried_throttled_and_token_never_kept 
+(tests.test_desktop_routing.TelegramDedup.test_failed_send_is_retried_throttled_and_token_never_kept) ... ok
+test_once_per_episode_and_a_recovery (tests.test_desktop_routing.TelegramDedup.test_once_per_episode_and_a_recovery) 
+... ok
+test_unconfigured_sender_never_raises (tests.test_desktop_routing.TelegramDedup.test_unconfigured_sender_never_raises) 
+... ok
+test_unknown_waits_five_minutes_and_chrome_down_alerts 
+(tests.test_desktop_routing.TelegramDedup.test_unknown_waits_five_minutes_and_chrome_down_alerts) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 2.550s
+
+OK
+
+Ran 83 tests in 24.940s
+
+OK
+
+backend
+Ran 106 tests in 23.208s
+
+OK
+

@@ -1,0 +1,840 @@
+{
+ "instruction_id": "rt-e2e-sco-sui-draw",
+ "run_id": "d_1c8f37ce00f440ecace7",
+ "worker": "desktop",
+ "wager_submitted": false,
+ "device_stage": "PREPARE_COMPLETE_EXECUTION",
+ "route": "event_link",
+ "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201150290/F3/I1/",
+ "session": "AUTHENTICATED",
+ "betslip_clear": {
+  "cleared": true,
+  "removed": 0,
+  "method": "visual: screenshot check, visible remove control"
+ },
+ "direct_event_header": [
+  "UEFA Nations League B • 29 Sep 19:45",
+  "Scotland v Switzerland"
+ ],
+ "competition_check": {
+  "feed": "UEFA Nations League B",
+  "country": null,
+  "page": "UEFA Nations League B • 29 Sep 19:45",
+  "matches": true
+ },
+ "identity": {
+  "verdict": "EXACT",
+  "reason": "both teams exact",
+  "home": {
+   "feed": "Scotland",
+   "bookmaker": "Scotland",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "away": {
+   "feed": "Switzerland",
+   "bookmaker": "Switzerland",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "kickoff_known": true,
+  "kickoff_agrees": true,
+  "reversed": false,
+  "evidence": {
+   "event_id_match": true,
+   "event_anchor": "page opened from the alert's own Bet365 event link",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "equal",
+   "competing_event": "none: a single event page reached through the alert's own link",
+   "home_similarity": {
+    "feed": "Scotland",
+    "bookmaker": "Scotland",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "away_similarity": {
+    "feed": "Switzerland",
+    "bookmaker": "Switzerland",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "protected_markers": "agree",
+   "orientation": "agree",
+   "policy": "both_exact",
+   "verdict": "EXACT"
+  }
+ },
+ "identity_verdict": "EXACT",
+ "home": "Scotland",
+ "away": "Switzerland",
+ "competition": "UEFA Nations League B • 29 Sep 19:45",
+ "fixture_name": "Scotland v Switzerland",
+ "event_context": {
+  "home": "Scotland",
+  "away": "Switzerland",
+  "competition": "uefa nations league b",
+  "kickoff_utc": "2026-09-29T18:45",
+  "period": "FULL_GAME"
+ },
+ "markets": [
+  {
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "line": "",
+   "price": "4.33",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Scotland",
+   "bounds": [
+    366,
+    341,
+    390,
+    358
+   ]
+  },
+  {
+   "market": "MONEYLINE",
+   "side": "DRAW",
+   "line": "",
+   "price": "3.50",
+   "availability": "OPEN",
+   "selection_role": "DRAW",
+   "selection_name": "Draw",
+   "bounds": [
+    695,
+    341,
+    718,
+    358
+   ]
+  },
+  {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "",
+   "price": "1.80",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Switzerland",
+   "bounds": [
+    1079,
+    341,
+    1102,
+    358
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "2.5",
+   "price": "2.15",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    1895,
+    769,
+    1912
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "2.5",
+   "price": "1.66",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    1895,
+    1161,
+    1912
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "0.5",
+   "price": "1.071",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2027,
+    773,
+    2044
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "0.5",
+   "price": "8.50",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2027,
+    1161,
+    2044
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "1.5",
+   "price": "1.36",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2072,
+    769,
+    2089
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "1.5",
+   "price": "3.00",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2072,
+    1161,
+    2089
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "3.5",
+   "price": "3.75",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2117,
+    769,
+    2134
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "3.5",
+   "price": "1.25",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2117,
+    1161,
+    2134
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "4.5",
+   "price": "9.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2162,
+    769,
+    2179
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "4.5",
+   "price": "1.071",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2162,
+    1164,
+    2179
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "5.5",
+   "price": "19.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2207,
+    773,
+    2224
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "5.5",
+   "price": "1.02",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2207,
+    1161,
+    2224
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "6.5",
+   "price": "41.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2252,
+    773,
+    2269
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "6.5",
+   "price": "1.004",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2252,
+    1164,
+    2269
+   ]
+  }
+ ],
+ "execution_observations": [
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790623972834,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "selection",
+   "observed_at_ms": 1790623972834,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "selection_preflight",
+   "observed_at_ms": 1790623973942,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790623976669,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790623985866,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790623990846,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "final",
+   "observed_at_ms": 1790623990869,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": true
+  }
+ ],
+ "selection": {
+  "market": "MONEYLINE",
+  "side": "DRAW",
+  "line": "",
+  "price": "3.50",
+  "availability": "OPEN",
+  "selection_role": "DRAW",
+  "selection_name": "Draw",
+  "bounds": [
+   695,
+   341,
+   718,
+   358
+  ]
+ },
+ "selection_role": "DRAW",
+ "selection_name": "Draw",
+ "selection_group": "Full Time Result",
+ "click_at_ms": 6250,
+ "addbet": {
+  "accepted": true,
+  "cs": 1,
+  "sr": 0,
+  "bets": [
+   {
+    "fixture": "Scotland v Switzerland",
+    "selection": "Draw",
+    "handicap": null,
+    "market": "Full Time Result",
+    "odds": "5/2",
+    "decimal": 3.5,
+    "sr": 0,
+    "cs": 0
+   }
+  ],
+  "at_ms": 6625,
+  "status": 200,
+  "response": {
+   "bg": "<redacted>",
+   "at": 0,
+   "cs": 1,
+   "bs": [],
+   "pc": "<redacted>",
+   "cc": "<redacted>",
+   "ir": false,
+   "mr": false,
+   "bt": [
+    {
+     "bt": 1,
+     "cl": 1,
+     "fd": "Scotland v Switzerland",
+     "fi": 201150290,
+     "ir": false,
+     "mt": 13,
+     "mr": false,
+     "ns": 0,
+     "od": "5/2",
+     "sa": "<redacted>",
+     "nf": 201150290,
+     "pf": "N",
+     "pt": [
+      {
+       "bd": "Draw",
+       "ho": "",
+       "pi": 2127260782,
+       "pk": "201150290|FTRS|1|Draw",
+       "md": "Full Time Result"
+      }
+     ],
+     "cs": 0,
+     "cr": false,
+     "sr": 0,
+     "tp": "BS201150290-2127260782",
+     "ox": "",
+     "pl": "40",
+     "lk": "UEFA-NAT-LGE-B",
+     "mf": ""
+    }
+   ],
+   "sr": 0,
+   "lm": "PAPI",
+   "vm": "PAPI",
+   "st": 99,
+   "ab": true,
+   "vr": "343",
+   "je": true
+  }
+ },
+ "betslip": {
+  "present": true,
+  "panel": [
+   468,
+   634,
+   916,
+   834
+  ],
+  "items": 1,
+  "title": "Draw",
+  "handicap": null,
+  "price": "3.50",
+  "title_row": [
+   468,
+   644,
+   916,
+   664
+  ],
+  "remove_x": [
+   486,
+   654
+  ],
+  "market": "Full Time Result",
+  "fixture": "Scotland v Switzerland",
+  "stake_control": {
+   "kind": "stake_box",
+   "bounds": [
+    469,
+    788,
+    637,
+    828
+   ],
+   "click": [
+    517,
+    814
+   ]
+  },
+  "stake": "0.10",
+  "place_bet": {
+   "text": "Place Bet",
+   "bounds": [
+    769,
+    796,
+    841,
+    808
+   ],
+   "centre": [
+    805,
+    802
+   ],
+   "colour": [
+    74,
+    255,
+    183
+   ],
+   "enabled": true
+  },
+  "to_return": "0.35",
+  "notices": []
+ },
+ "stake_entry": {
+  "control": "set_stake",
+  "click": [
+   516,
+   810
+  ],
+  "typed": "0.10",
+  "method": "mouse click + keyboard"
+ },
+ "betslip_api": [
+  {
+   "url": "https://www.bet365.com/BetsWebAPI/addbet",
+   "status": 200,
+   "at_ms": 6625,
+   "response": {
+    "bg": "<redacted>",
+    "at": 0,
+    "cs": 1,
+    "bs": [],
+    "pc": "<redacted>",
+    "cc": "<redacted>",
+    "ir": false,
+    "mr": false,
+    "bt": [
+     {
+      "bt": 1,
+      "cl": 1,
+      "fd": "Scotland v Switzerland",
+      "fi": 201150290,
+      "ir": false,
+      "mt": 13,
+      "mr": false,
+      "ns": 0,
+      "od": "5/2",
+      "sa": "<redacted>",
+      "nf": 201150290,
+      "pf": "N",
+      "pt": [
+       {
+        "bd": "Draw",
+        "ho": "",
+        "pi": 2127260782,
+        "pk": "201150290|FTRS|1|Draw",
+        "md": "Full Time Result"
+       }
+      ],
+      "cs": 0,
+      "cr": false,
+      "sr": 0,
+      "tp": "BS201150290-2127260782",
+      "ox": "",
+      "pl": "40",
+      "lk": "UEFA-NAT-LGE-B",
+      "mf": ""
+     }
+    ],
+    "sr": 0,
+    "lm": "PAPI",
+    "vm": "PAPI",
+    "st": 99,
+    "ab": true,
+    "vr": "343",
+    "je": true
+   }
+  }
+ ],
+ "stake_field_state": "ENTERED",
+ "ready_state": {
+  "fixture_home": "Scotland",
+  "fixture_away": "Switzerland",
+  "selection_role": "DRAW",
+  "selection_name": "Draw",
+  "session": "LOGGED_IN",
+  "state": "READY",
+  "minimum_price_ok": true,
+  "place_bet_visible": true,
+  "wager_submitted": false,
+  "stop_before_wager": true,
+  "market": "MONEYLINE",
+  "line": "",
+  "price": "3.50",
+  "stake": "0.10"
+ },
+ "final_state": {
+  "home": "Scotland",
+  "away": "Switzerland",
+  "side": "DRAW",
+  "state": "READY",
+  "place_bet_visible": true,
+  "wager_submitted": false,
+  "market": "MONEYLINE",
+  "line": "",
+  "price": "3.50",
+  "stake": "0.10"
+ },
+ "complete_execution_ready": {
+  "state": "COMPLETE_EXECUTION_READY",
+  "fixture": "Scotland v Switzerland",
+  "fixture_home": "Scotland",
+  "fixture_away": "Switzerland",
+  "selection_role": "DRAW",
+  "selection_name": "Draw",
+  "minimum_price": "3.00",
+  "final_control": "Place Bet",
+  "final_control_bounds": [
+   769,
+   796,
+   841,
+   808
+  ],
+  "final_control_enabled": true,
+  "final_control_actionable": true,
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "to_return": "0.35",
+  "verified_by": "screenshot+OCR, addbet response",
+  "timestamp_ms": 1790623990869,
+  "market": "MONEYLINE",
+  "line": "",
+  "price": "3.50",
+  "stake": "0.10"
+ },
+ "held": true,
+ "verification_detail": "HELD: verified bet on the slip (screenshot + OCR, cross-checked with Bet365 addbet), stake + To Return verified, Place Bet visible and enabled; NOT pressed, slip kept",
+ "terms_hash": "2c58a97d7f9d6b11a60cecdb035da89bc89fbb149d517a1a1c714ce1f17e1e0d",
+ "hold_max_age_seconds": 115,
+ "status": "PASS",
+ "stage": "PASS",
+ "detail": "COMPLETE_EXECUTION_READY",
+ "duration_ms": 23031,
+ "stage_timings": [],
+ "progress": {
+  "stage": "PREPARE_COMPLETE_EXECUTION",
+  "elapsed_ms": 23031,
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790623967837
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 0,
+    "at_ms": 1790623967842
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 3875,
+    "at_ms": 1790623971717
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 4906,
+    "at_ms": 1790623972746
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 4969,
+    "at_ms": 1790623972814
+   },
+   {
+    "stage": "READ_SELECTION",
+    "elapsed_ms": 4984,
+    "at_ms": 1790623972827
+   },
+   {
+    "stage": "READ_PRICE",
+    "elapsed_ms": 5000,
+    "at_ms": 1790623972834
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 5000,
+    "at_ms": 1790623972842
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 5953,
+    "at_ms": 1790623973799
+   },
+   {
+    "stage": "VERIFY_SLIP",
+    "elapsed_ms": 8813,
+    "at_ms": 1790623976655
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 8828,
+    "at_ms": 1790623976670
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 11296,
+    "at_ms": 1790623979130
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 23016,
+    "at_ms": 1790623990862
+   }
+  ]
+ },
+ "execution_count": 1
+}

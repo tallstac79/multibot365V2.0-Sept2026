@@ -1,0 +1,39 @@
+{
+ "instruction_id": "rt-e2e-reset-1",
+ "run_id": "d_e821fa147c384dad92cc",
+ "worker": "desktop",
+ "wager_submitted": false,
+ "device_stage": "CLEAR_BETSLIP",
+ "betslip_clear": {
+  "cleared": true,
+  "removed": 1,
+  "method": "visual: screenshot check, visible remove control"
+ },
+ "status": "PASS",
+ "stage": "PASS",
+ "detail": "BETSLIP_CLEARED (1 removed)",
+ "duration_ms": 4516,
+ "stage_timings": [],
+ "progress": {
+  "stage": "CLEAR_BETSLIP",
+  "elapsed_ms": 4516,
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790623999010
+   },
+   {
+    "stage": "RESET_BETSLIP",
+    "elapsed_ms": 0,
+    "at_ms": 1790623999017
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 16,
+    "at_ms": 1790623999024
+   }
+  ]
+ },
+ "execution_count": 1
+}
