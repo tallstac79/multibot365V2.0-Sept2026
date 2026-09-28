@@ -8,7 +8,7 @@ pipeline's routing or the phone. Prints results without the token.
     py -3.11 -m tools.desktop_route approve HOLD_ID [--out DIR] build the approved PLACE_HELD from the hold's result with
                                                                 the backend's own Pipeline.place_held_payload, submit it
                                                                 (the worker dry-runs it: no physical click) and wait
-    py -3.11 -m tools.desktop_route target [--minutes 60]       SUPERVISED backend target: the running pipeline sends the
+    py -3.11 -m tools.desktop_route target [--minutes 60 --lead 10]SUPERVISED backend target: the running pipeline sends the
                                                                 NEXT eligible new instruction (pre-match football, received
                                                                 after arming) to the desktop worker instead of the phone -
                                                                 one instruction, expires; normal routing stays OFF
@@ -85,6 +85,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('command', choices=['health', 'send', 'approve', 'target', 'untarget', 'record'])
     ap.add_argument('--minutes', type=int, default=60)
+    ap.add_argument('--lead', type=int, default=10, help='target: minimum minutes before kick-off (pre-match only)')
     ap.add_argument('arg', nargs='?')
     ap.add_argument('--out')
     ap.add_argument('--hold-file', help='the hold instruction JSON (for approve; default OUT/hold_instruction.json)')
@@ -104,7 +105,8 @@ def main():
             if not ok:
                 print(json.dumps(dict(refused='desktop worker not routable', verdict=verdict, health=slim_health(h)), indent=1, default=str))
                 sys.exit(2)
-            print(json.dumps(dict(armed=pipeline.arm_desktop_target('operator:desktop_route', minutes=a.minutes),
+            print(json.dumps(dict(armed=pipeline.arm_desktop_target('operator:desktop_route', minutes=a.minutes,
+                                                                          min_lead_minutes=a.lead),
                                   identity=store.device_identity(s.desktop_device_id), flags=f), indent=1, default=str))
         elif a.command == 'untarget':
             print(json.dumps(dict(target=pipeline.cancel_desktop_target('operator:desktop_route')), indent=1, default=str))
