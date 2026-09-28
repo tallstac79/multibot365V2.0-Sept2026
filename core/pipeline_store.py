@@ -144,6 +144,7 @@ CREATE TABLE IF NOT EXISTS execution_stages (
     recorded_at TEXT NOT NULL,
     route TEXT, market TEXT, side TEXT, line TEXT, price TEXT, stake TEXT, selection_name TEXT,
     bet_reference TEXT, outcome TEXT, source TEXT NOT NULL, detail TEXT,
+    requested_price TEXT, minimum_price TEXT,
     UNIQUE (instruction_id, stage)
 );
 CREATE TABLE IF NOT EXISTS controls (
@@ -242,6 +243,7 @@ class Store:
         cls._migrate_v3(db)
         cls._migrate_v4(db)
         cls._migrate_v7(db)
+        cls._migrate_stage_prices(db)
         if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='bets'").fetchone():
             present = {r[1] for r in db.execute('PRAGMA table_info(bets)')}
             with db:
@@ -268,6 +270,29 @@ class Store:
                 with db:
                     for c in ('account_fingerprint', 'worker_id'):
                         if c not in present: db.execute(f'ALTER TABLE reconciliations ADD COLUMN {c} TEXT')
+
+    @staticmethod
+    def _migrate_stage_prices(db):
+        """execution_stages: requested and minimum price in their own columns (28 Sep 2026). Request rows written before
+        this stored the MINIMUM in `price` when the hold payload had no price: move it to minimum_price, add the alert's
+        requested price, and clear `price` for hold requests (a PLACE_HELD request keeps its held price there)."""
+        if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='execution_stages'").fetchone() is None:
+            return
+        present = {r[1] for r in db.execute('PRAGMA table_info(execution_stages)')}
+        with db:
+            for c in ('requested_price', 'minimum_price'):
+                if c not in present:
+                    db.execute(f'ALTER TABLE execution_stages ADD COLUMN {c} TEXT')
+            for row in db.execute("SELECT id, instruction_id, stage, price, detail FROM execution_stages WHERE stage IN "
+                                  "('hold_request','place_request') AND requested_price IS NULL AND minimum_price IS NULL").fetchall():
+                try:
+                    payload = json.loads(row[4]) if row[4] else {}
+                except ValueError:
+                    payload = {}
+                alert = db.execute('SELECT alert_price FROM instructions WHERE instruction_id=?', (row[1],)).fetchone()
+                price = payload.get('price') if row[2] == 'place_request' else None
+                db.execute('UPDATE execution_stages SET requested_price=?, minimum_price=?, price=? WHERE id=?',
+                           (alert[0] if alert else None, payload.get('minimum_price'), price, row[0]))
 
     @staticmethod
     def _migrate_v7(db):
@@ -569,8 +594,10 @@ class Store:
             tx.execute(sql, values)
             self.audit(tx, 'CONTROL_CHANGED', dict(key=key, value=value, by=by))
 
+    # price: a price actually observed/carried at that stage (quote, held price, receipt odds) - never the floor.
+    # requested_price: the alert's price; minimum_price: the minimum acceptable price sent to the phone.
     STAGE_FIELDS = ('device_instruction_id', 'route', 'market', 'side', 'line', 'price', 'stake', 'selection_name',
-                    'bet_reference', 'outcome', 'source', 'detail')
+                    'bet_reference', 'outcome', 'source', 'detail', 'requested_price', 'minimum_price')
 
     def record_stage(self, db, instruction_id, stage, *, source, at=None, **fields):
         """Append-only execution evidence: the FIRST record of a stage wins (INSERT OR IGNORE); nothing here is ever

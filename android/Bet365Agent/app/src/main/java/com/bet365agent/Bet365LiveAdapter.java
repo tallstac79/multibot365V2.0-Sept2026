@@ -1489,7 +1489,18 @@ final class Bet365LiveAdapter implements SiteAdapter {
         }
         return ui.captureTable("selection_preflight").thenCompose(s -> {
             Selection current = refind(s, selection);
-            require(current.price.equals(selection.price), "PRICE_CHANGED", "Price changed before selecting live quote");
+            if ("football".equals(sport)) {
+                // The configured line/price tolerances decide on the FRESH quote; a better price or an in-allowance move is
+                // taken, never refused for merely differing from the discovery read (on-f4d9aa2d, 28 Sep 2026).
+                observeExecution("selection_preflight", current, false);
+                String[] refusal = FootballLineCheck.freshTerms(current.market, current.side, requestedLine, current.line, current.price,
+                        lineTolerance, executionMinimum);
+                if (refusal != null) throw new Failure(refusal[0], refusal[1]);
+                latestSelection = current;
+                if (!"MONEYLINE".equals(current.market)) targetLine = current.line;
+            } else {
+                require(current.price.equals(selection.price), "PRICE_CHANGED", "Price changed before selecting live quote");
+            }
             require("OPEN".equals(current.availability), current.availability.equals("SUSPENDED") ? "SUSPENDED" : "UNAVAILABLE", "Selection not open");
             openedPrice = current.price;
             return ui.tap(current.bounds, current.market + " / " + current.side + " / " + current.line + " / " + current.price, 650);
@@ -1795,9 +1806,24 @@ final class Bet365LiveAdapter implements SiteAdapter {
             if ("basketball".equals(sport)) {
                 actual = readExecutionSlip(s, fixture, selection, "final");
             } else {
-                require(slipPriceShown(s, selection.price), "PRICE_CHANGED", "Selection price not visible on betslip: " + selection.price);
-                require(PlacementClassifier.slipShowsLine(texts(s), selection.market, selection.side, selection.name, selection.line),
-                        "LINE_CHANGED", "Betslip does not show " + selection.side + " " + selection.line);
+                VisualScreen.Line place = findPlaceBetLine(s);
+                List<GameLinesParser.Word> slipWords = new ArrayList<>();
+                for (VisualScreen.Line l : s.lines) slipWords.add(new GameLinesParser.Word(l.text, l.bounds.left, l.bounds.top, l.bounds.right, l.bounds.bottom));
+                HeldSlipQuote quote = place == null ? null : HeldSlipQuote.read(slipWords, selection.name, selection.market, place.bounds.top, "football");
+                if (quote != null) {
+                    // Football slip: the configured tolerances on the slip's own terms (as the pre-tap check does).
+                    actual = new Selection(selection.market, selection.side, "MONEYLINE".equals(selection.market) ? selection.line : quote.line,
+                            quote.price, "OPEN", selection.bounds, selection.name);
+                    observeExecution("final", actual, true);
+                    String[] refusal = FootballLineCheck.freshTerms(actual.market, actual.side, requestedLine, actual.line, actual.price,
+                            lineTolerance, executionMinimum);
+                    if (refusal != null) throw new Failure(refusal[0], refusal[1]);
+                    latestSelection = actual;
+                } else {
+                    require(slipPriceShown(s, selection.price), "PRICE_CHANGED", "Selection price not visible on betslip: " + selection.price);
+                    require(PlacementClassifier.slipShowsLine(texts(s), selection.market, selection.side, selection.name, selection.line),
+                            "LINE_CHANGED", "Betslip does not show " + selection.side + " " + selection.line);
+                }
             }
             require(stakeVerified(s, stake, actual.price, "stake_check_final"), "STAKE_REJECTED", "Stake not verified on betslip: " + stake);
             boolean hasPlace = visible(s, "Place Bet", "Place bet");
@@ -2483,9 +2509,13 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     private Selection refind(VisualScreen screen, Selection expected) {
         if ("football".equals(sport) && liveFixture != null) {
-            for (Selection s : footballSelections(footballParse(screen, "refind")))
-                if (s.market.equals(expected.market) && s.side.equals(expected.side) && ("MONEYLINE".equals(s.market) || lineEquals(s.line, expected.line))) return s;
-            throw new Failure("LINE_CHANGED", "Football market re-read has no " + expected.market + "/" + expected.side + "/" + expected.line);
+            List<Selection> fresh = footballSelections(footballParse(screen, "refind"));
+            List<String[]> quotes = new ArrayList<>();
+            for (Selection s : fresh) quotes.add(FootballLineCheck.quote(s.market, s.side, s.line, s.price));
+            int i = FootballLineCheck.pick(quotes, expected.market, expected.side, expected.line, requestedLine, lineTolerance);
+            if (i >= 0) return fresh.get(i);
+            throw new Failure("LINE_CHANGED", "Football market re-read has no " + expected.market + "/" + expected.side + " at "
+                    + expected.line + " or another line inside the allowance " + lineTolerance + " of the alert line " + requestedLine);
         }
         List<Selection> grid = parseGameLines(screen, false);
         if (!grid.isEmpty()) {

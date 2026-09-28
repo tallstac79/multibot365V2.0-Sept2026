@@ -46,6 +46,13 @@ class ExecutionStages(unittest.TestCase):
         s = self.stages(iid)                                          # ...but every stage is kept
         self.assertEqual(set(s), {'hold_request', 'first_quote', 'hold_result', 'place_request', 'pretap', 'receipt'})
         self.assertEqual((s['hold_request']['route'], s['hold_request']['device_instruction_id']), ('event_link', iid))
+        # requested (alert) and minimum acceptable prices are separate; `price` is never the floor
+        with self.p.store.connection() as db:
+            alert, minimum = db.execute('SELECT alert_price, minimum_price FROM instructions WHERE instruction_id=?', (iid,)).fetchone()
+        self.assertEqual((s['hold_request']['requested_price'], s['hold_request']['minimum_price'], s['hold_request']['price']),
+                         (alert, minimum, None))
+        self.assertEqual((s['place_request']['requested_price'], s['place_request']['minimum_price'], s['place_request']['price']),
+                         (alert, minimum, '2.20'))
         self.assertEqual((s['first_quote']['route'], s['first_quote']['side'], s['first_quote']['line'], s['first_quote']['price']),
                          ('event_link', 'OVER', '190.5', '2.25'))    # the FIRST quote (grid), not the later slip quote
         self.assertEqual(s['hold_result']['price'], '2.20')
@@ -65,6 +72,19 @@ class ExecutionStages(unittest.TestCase):
         self.assertTrue(s['hold_result']['outcome'].startswith('PRICE_CHANGED'))
         self.assertNotIn('pretap', s)
         self.assertNotIn('receipt', s)
+
+    def test_old_request_rows_are_relabelled(self):
+        """Rows recorded before the fix held the minimum in `price` (on-f4d9aa2d: 'requested @1.77' was the floor)."""
+        import json, sqlite3
+        iid = self.p.ingest(message(MELBOURNE))['instruction_id']
+        with self.p.store.connection() as db:
+            alert, minimum = db.execute('SELECT alert_price, minimum_price FROM instructions WHERE instruction_id=?', (iid,)).fetchone()
+        raw = sqlite3.connect(self.path)
+        raw.execute("INSERT INTO execution_stages(instruction_id, stage, recorded_at, price, source, detail) VALUES (?,?,?,?,?,?)",
+                    (iid, 'hold_request', '2026-09-28T06:30:00', minimum, 'dispatcher', json.dumps(dict(minimum_price=minimum))))
+        raw.commit(); raw.close()
+        s = self.stages(iid)['hold_request']                         # a fresh Store runs the migration
+        self.assertEqual((s['requested_price'], s['minimum_price'], s['price']), (alert, minimum, None))
 
     def test_a_stage_is_written_once(self):
         iid = self.p.ingest(message(MELBOURNE))['instruction_id']

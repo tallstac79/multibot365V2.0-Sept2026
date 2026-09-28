@@ -155,15 +155,18 @@ def _quote(observed):
                 line=observed.get('line'), price=observed.get('price'), selection_name=observed.get('selection_name') or observed.get('selection'))
 
 
-def record_request_stage(store, db, instruction_id, payload):
+def record_request_stage(store, db, row, payload):
     """hold_request / place_request: what was sent to the phone, before the send (a later dispatch overwrites
-    instructions.dispatch_payload, not this). The route the request points the phone to: its own event link or Search."""
+    instructions.dispatch_payload, not this). The route the request points the phone to: its own event link or Search.
+    requested_price = the alert's price, minimum_price = the minimum acceptable price sent to the phone; `price` is only
+    a price the request itself carries (the held price of a PLACE_HELD), never the floor."""
     place = payload.get('action') == 'PLACE_HELD'
-    store.record_stage(db, instruction_id, 'place_request' if place else 'hold_request', source='dispatcher',
+    store.record_stage(db, row['instruction_id'], 'place_request' if place else 'hold_request', source='dispatcher',
                        device_instruction_id=payload.get('instruction_id'),
                        route=None if place else ('event_link' if payload.get('event_url') else 'search'),
                        market=payload.get('market'), side=payload.get('side'), line=payload.get('line'),
-                       price=payload.get('price') or payload.get('minimum_price'), stake=payload.get('stake'),
+                       price=payload.get('price') if place else None, requested_price=row['alert_price'],
+                       minimum_price=payload.get('minimum_price'), stake=payload.get('stake'),
                        selection_name=payload.get('selection_name'), detail=payload)
 
 
@@ -729,7 +732,7 @@ class Pipeline:
                     continue
             in_flight = [row]
             with self.store.tx() as db:
-                record_request_stage(self.store, db, row['instruction_id'], payload)
+                record_request_stage(self.store, db, row, payload)
             self._send(gateway, row['instruction_id'], payload)
         if warmup_for is not None:
             self._start_warmup(gateway, warmup_for)

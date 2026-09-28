@@ -53,8 +53,9 @@ def backfill(store):
                                               device_instruction_id=payload.get('instruction_id'),
                                               route=None if stage == 'place_request' else ('event_link' if payload.get('event_url') else 'search'),
                                               market=payload.get('market'), side=payload.get('side'), line=payload.get('line'),
-                                              price=payload.get('price') or payload.get('minimum_price'), stake=payload.get('stake'),
-                                              selection_name=payload.get('selection_name'), detail=payload)
+                                              price=payload.get('price') if stage == 'place_request' else None,
+                                              requested_price=row['alert_price'], minimum_price=payload.get('minimum_price'),
+                                              stake=payload.get('stake'), selection_name=payload.get('selection_name'), detail=payload)
             comparisons = [(at, d) for k, at, d in audits if k == 'ALERT_TO_LIVE_COMPARISON' and isinstance(d.get('live'), dict)]
             first = next(((at, d) for at, d in comparisons if d.get('stage') != 'pretap'), None)
             if first:
