@@ -1,3 +1,18 @@
+# Desktop worker: supervised one-shot final action (28 Sep 2026) - PLACED, 1 click, ref BT7071586031I
+
+The rerun supervised checks (`recheck3`, 18:25 BST) both reached `COMPLETE_EXECUTION_READY`: Turkiye v Italy 1X2
+Draw @3.50 and Sweden v Poland AH home 0.0 @1.475. (`recheck2` at 18:11 had stopped at `SESSION_EXPIRED`: Reality
+Check still open, not answered by the worker.) Then one live placement went through the new hand-invoked
+`desktop_worker/final_action.py`: Turkiye v Italy Draw, 3.50 (5/2), GBP 0.10, exactly one Place Bet click at 18:31:58
+BST. Receipt 'Bet Placed', Bet Ref BT7071586031I, To Return GBP 0.35; placebet `sr:0`. Outcome PLACED, no
+reconciliation needed. The pre-click checks cover: one selection, stake box 0.10, To Return = 0.10 x odds on the button,
+Jackpot 365 toggle OFF, no notice or Accept Changes, and no Reality Check / login prompt. Hard GBP 0.10 cap; a one-click
+marker is written before the click; no receipt -> PLACEMENT_UNKNOWN + My Bets reconciliation. Not wired into
+production routing. Tests: desktop suite 50/50 OK (13 new in `tests/test_desktop_final_action.py`). Evidence:
+`evidence/desktop-worker-final-action/`, `evidence/desktop-worker-placebet-ready/runs/recheck3-*`. Docs:
+`docs/DESKTOP_WORKER.md`.
+
+---
 # Desktop worker: supervised Place Bet-ready, visual slip flow (28 Sep 2026) - PASS 14/15, 26/26 addbet accepted
 
 The betslip part of the desktop worker no longer runs any script in the Bet365 page and never queries the slip's DOM.

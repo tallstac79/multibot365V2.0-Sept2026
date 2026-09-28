@@ -125,6 +125,7 @@ class Run:
 class DesktopBet365:
     def __init__(self, page, decisions):
         self.page, self.d = page, decisions
+        self.ready = None                          # the verified slip context (read by the supervised final_action.py)
 
     # ------------------------------------------------------------------ page helpers
     async def words(self):
@@ -425,6 +426,8 @@ class DesktopBet365:
                                                  final_control_actionable=True, gesture_dispatched=False, wager_submitted=False,
                                                  to_return=final.get('to_return'), verified_by='screenshot+OCR, addbet response',
                                                  timestamp_ms=int(time.time() * 1000), **common))
+        self.ready = dict(actual=actual, net=net, sport=sport, teams=teams, requested=requested, allowance=allowance,
+                          minimum=minimum, stake=stake)
         run.put('held', mode == 'hold')
         run.put('verification_detail', 'HELD: verified bet on the slip (screenshot + OCR, cross-checked with Bet365 addbet), '
                                        'stake + To Return verified, Place Bet visible and enabled; NOT pressed, slip kept')

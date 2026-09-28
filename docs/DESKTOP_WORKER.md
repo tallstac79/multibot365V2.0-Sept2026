@@ -16,6 +16,7 @@ The backend remains the only source of truth. The worker receives the same instr
 | `desktop_worker/server.py` | HTTP on 127.0.0.1:8768 with a bearer token (`.local/desktop_worker.json`). Endpoints: `/health`, `POST /instructions` (202; 409 DUPLICATE; 409 BUSY "ID not consumed"), `GET /instructions/ID` (202 pending / 200), `/evidence`, `/artifacts/NAME`. |
 | `desktop_worker/workflow.py` | SESSION_CHECK, and ADAPTER_WORKFLOW hold/ready plus the supervised-only `discover`. The betslip part (empty-slip check to Place Bet check) is visual only. |
 | `desktop_worker/visual_slip.py` | The betslip as a person sees it: CDP `Page.captureScreenshot`, Tesseract OCR (`C:\Program Files\Tesseract-OCR`), ordinary mouse clicks / keyboard typing at coordinates read from the screenshot, and Bet365's own `BetsWebAPI/addbet` answer read passively. No script in the page, no DOM query of the slip. It has no function that presses Place Bet. |
+| `desktop_worker/final_action.py` | Supervised one-shot final action, invoked by hand only (`py -3.11 -m desktop_worker.final_action INSTRUCTION.json --confirm-one-live-bet`). Hard GBP 0.10 cap, one Place Bet click at most per key (a marker in `.local/final-action/` is written before the click). Not wired into `server.py` or any routing. See 'Supervised final action' below. |
 | `desktop_worker/betslip.py` | Slip market-label vocabulary (`LABELS`, plus `GROUP_LABELS`: 'Total Goals' only for a quote from the Goals Over/Under group) and `money()`. The old DOM slip reader is removed. |
 | `tools/desktop_supervised.py` | Sends one run to the desktop worker: either a payload built by `Pipeline.build_payload` from a private copy of the production row (fresh `sup-` ID), or a manual payload. It then judges the result with `execution_terms.comparisons_for_result`. |
 
@@ -23,6 +24,7 @@ The backend remains the only source of truth. The worker receives the same instr
 
 - `health.phone_final_action_armed` and `local_execution.enabled` are always false, so the automatic policy's `phone_final_action_permission` check can never pass for this worker.
 - PLACE_HELD and MY_BETS are refused with `placement {tapped: false, outcome: NOT_TAPPED}`.
+- The only code that clicks Place Bet is `desktop_worker/final_action.py`. It runs from the command line with `--confirm-one-live-bet`, is capped at GBP 0.10 and clicks once per key. The HTTP worker, coordinator, backend and phone paths never call it.
 - Only the alert's own pre-match `#/AC/` link is used. The Search route is not implemented and fails closed.
 - Prices must be decimal. Fractional odds, which a logged-out session shows, are never used as a price.
 - Every step saves a text layout (`sNNN_name.txt`, the phone's OCR format) and a screenshot under `.local/desktop-evidence/<run_id>/`.
@@ -93,7 +95,7 @@ isolated-world reads). It works the way a person does:
 | slip terms | OCR of the slip panel: selection + handicap, price, market, fixture | each checked on the screen AND in the addbet answer (fixture, market label, selection, line, odds within 0.011), one selection on both; the price is then judged by the phone's tolerances (`fresh` / `price_ok` / `line_ok`) |
 | stake | click the slip's own stake control ('Set Stake' or the Stake box) found on the screenshot, then Ctrl+A, Backspace and type the stake | OCR: the stake equals the instruction; To Return = stake x price (±0.011) |
 | Place Bet | located from the 'Place' 'Bet' words; enabled = the button face is Bet365's active green (grey when disabled) | OCR + pixel colour on two frames (`slip_stake`, `slip_final`), no notice on the slip |
-| stop | READY / `COMPLETE_EXECUTION_READY` in the existing result schema; `gesture_dispatched: false`, `wager_submitted: false` | Place Bet is never clicked; the code has no path that clicks it |
+| stop | READY / `COMPLETE_EXECUTION_READY` in the existing result schema; `gesture_dispatched: false`, `wager_submitted: false` | the hold never clicks Place Bet; only the hand-invoked `final_action.py` can (below) |
 
 A read that does not come out cleanly is retaken (up to 6 frames, 400 ms apart; the stake box's blinking caret can hide
 a digit), and nothing is accepted from a frame that does not read cleanly. The term checks use the phone's readback
@@ -124,3 +126,31 @@ not itself cause refusals. First-batch failures, fixed before `final`:
 Also seen and left unchanged (existing event / market logic): Turkiye 1X2 is never found, because the decision bridge
 returns the folded name 'Turkiye' while the page shows 'Türkiye', so the Full Time Result row does not match. It fails
 closed with `TARGET_NOT_FOUND`, and no click is made.
+
+## Supervised final action (28 Sep 2026)
+
+`desktop_worker/final_action.py` places ONE live bet under supervision. It is explicitly invoked, not part of production
+routing (`/health` still reports `final_action_armed: false`, and PLACE_HELD is still refused).
+
+1. The worker's own hold (`DesktopBet365.hold`) must reach `COMPLETE_EXECUTION_READY`. It clears the slip, adds the
+   selection, types the stake and verifies. `hold` now keeps its verified context in `DesktopBet365.ready`; that is
+   the only workflow change.
+2. Stop-prompt scan: OCR of the centre of a fresh screenshot for Reality Check, login, verification, captcha or
+   limit prompts. Any hit refuses.
+3. Fresh screenshot + OCR immediately before the click. The existing `_check_slip` checks fixture, market, selection
+   and line against Bet365's addbet answer, and the price against the minimum with the existing tolerances.
+   `pre_click_problems` then requires: exactly one selection; no slip notice ('Accept Changes' refuses at once and is
+   never pressed); stake box = 0.10 (never above the cap); 'To Return' on the Place Bet button = 0.10 x odds (within
+   1p); the Place Bet button enabled; no 'Total Stake' line; and the Jackpot 365 toggle OFF (from pixels: grey track,
+   white knob on the left; anything else refuses). If a mismatch persists over 3 fresh frames, it refuses.
+4. ONE click through `OneClick`. The marker file is written before the click; there is no retry and no double click.
+5. Receipt: screenshots + OCR of the slip panel for up to 25 s, plus Bet365's `BetsWebAPI/placebet` answer read
+   passively (tokens redacted). The outcome is `PLACED` only when the screen shows 'Bet Placed' and a reference is
+   read (from the screen or placebet). Anything else is `PLACEMENT_UNKNOWN`, which is reconciled on My Bets through
+   ordinary clicks (header 'My Bets', then 'Unsettled') read by OCR: `PLACED` / `NOT_PLACED` / unresolved. Place Bet
+   is never clicked again.
+
+Live run, 28 Sep 2026 18:31 BST (after `recheck3`: Turkiye v Italy Draw and Sweden v Poland AH home 0.0 both
+`COMPLETE_EXECUTION_READY`): Turkiye v Italy, Full Time Result, Draw at 3.50 (5/2), stake GBP 0.10, 1 click, receipt
+'Bet Placed', Bet Ref BT7071586031I, To Return GBP 0.35, balance GBP 5.00 -> 4.90. Outcome `PLACED`. Evidence:
+`evidence/desktop-worker-final-action/`. Tests: `tests/test_desktop_final_action.py`.

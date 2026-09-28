@@ -1,0 +1,308 @@
+[
+ {
+  "instruction_id": "recheck3-01-tur-1x2-draw",
+  "run_id": "d_9c25e4c491aa4b1ea8d7",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 28514,
+  "fixture_name": "Turkiye v Italy",
+  "selection": {
+   "market": "MONEYLINE",
+   "side": "DRAW",
+   "line": "",
+   "price": "3.50",
+   "availability": "OPEN",
+   "selection_role": "DRAW",
+   "selection_name": "Draw",
+   "bounds": [
+    695,
+    341,
+    718,
+    358
+   ]
+  },
+  "addbet": {
+   "accepted": true,
+   "cs": 1,
+   "sr": 0,
+   "bets": [
+    {
+     "fixture": "Türkiye v Italy",
+     "selection": "Draw",
+     "handicap": null,
+     "market": "Full Time Result",
+     "odds": "5/2",
+     "decimal": 3.5,
+     "sr": 0,
+     "cs": 0
+    }
+   ],
+   "at_ms": 7953,
+   "status": 200,
+   "response": {
+    "bg": "<redacted>",
+    "at": 0,
+    "cs": 1,
+    "bs": [],
+    "pc": "<redacted>",
+    "cc": "<redacted>",
+    "ir": false,
+    "mr": false,
+    "bt": [
+     {
+      "bt": 1,
+      "cl": 1,
+      "fd": "Türkiye v Italy",
+      "fi": 201150138,
+      "ir": false,
+      "mt": 13,
+      "mr": false,
+      "ns": 0,
+      "od": "5/2",
+      "sa": "<redacted>",
+      "nf": 201150138,
+      "pf": "N",
+      "pt": [
+       {
+        "bd": "Draw",
+        "ho": "",
+        "pi": 2127238184,
+        "pk": "201150138|FTRS|1|Draw",
+        "md": "Full Time Result"
+       }
+      ],
+      "cs": 0,
+      "cr": false,
+      "sr": 0,
+      "tp": "BS201150138-2127238184",
+      "ox": "",
+      "pl": "40",
+      "lk": "UEFA-NAT-LGE-A",
+      "mf": ""
+     }
+    ],
+    "sr": 0,
+    "lm": "PAPI",
+    "vm": "PAPI",
+    "st": 99,
+    "ab": true,
+    "vr": "343",
+    "je": true
+   }
+  },
+  "stake_entry": {
+   "control": "set_stake",
+   "click": [
+    516,
+    749
+   ],
+   "typed": "0.10",
+   "method": "mouse click + keyboard"
+  },
+  "betslip_clear": {
+   "cleared": true,
+   "removed": 0,
+   "method": "visual: screenshot check, visible remove control"
+  },
+  "ready_state": {
+   "fixture_home": "Turkiye",
+   "fixture_away": "Italy",
+   "selection_role": "DRAW",
+   "selection_name": "Draw",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true,
+   "market": "MONEYLINE",
+   "line": "",
+   "price": "3.50",
+   "stake": "0.10"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Turkiye v Italy",
+   "fixture_home": "Turkiye",
+   "fixture_away": "Italy",
+   "selection_role": "DRAW",
+   "selection_name": "Draw",
+   "minimum_price": "1.50",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    769,
+    735,
+    841,
+    747
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "to_return": "0.35",
+   "verified_by": "screenshot+OCR, addbet response",
+   "timestamp_ms": 1790616332288,
+   "market": "MONEYLINE",
+   "line": "",
+   "price": "3.50",
+   "stake": "0.10"
+  },
+  "wager_submitted": false
+ },
+ {
+  "instruction_id": "recheck3-02-swe-ah-home-0",
+  "run_id": "d_3b64e31bd5574a418cd1",
+  "status": "PASS",
+  "stage": "PASS",
+  "detail": "COMPLETE_EXECUTION_READY",
+  "duration_ms": 34719,
+  "fixture_name": "Sweden v Poland",
+  "selection": {
+   "market": "SPREAD",
+   "side": "HOME",
+   "line": "0.0",
+   "price": "1.475",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Sweden",
+   "bounds": [
+    567,
+    1039,
+    598,
+    1056
+   ]
+  },
+  "addbet": {
+   "accepted": true,
+   "cs": 1,
+   "sr": 0,
+   "bets": [
+    {
+     "fixture": "Sweden v Poland",
+     "selection": "Sweden",
+     "handicap": "0.0",
+     "market": "Asian Handicap",
+     "odds": "19/40",
+     "decimal": 1.475,
+     "sr": 0,
+     "cs": 0
+    }
+   ],
+   "at_ms": 18735,
+   "status": 200,
+   "response": {
+    "bg": "<redacted>",
+    "at": 0,
+    "cs": 1,
+    "bs": [],
+    "pc": "<redacted>",
+    "cc": "<redacted>",
+    "ir": false,
+    "mr": false,
+    "bt": [
+     {
+      "bt": 1,
+      "cl": 1,
+      "fd": "Sweden v Poland",
+      "fi": 201150133,
+      "ir": false,
+      "mt": 13,
+      "mr": false,
+      "ns": 0,
+      "od": "19/40",
+      "sa": "<redacted>",
+      "oo": 2,
+      "nf": 201150132,
+      "pf": "N",
+      "pt": [
+       {
+        "bd": "Sweden",
+        "ha": "0",
+        "ho": "",
+        "hd": "0.0",
+        "hf": "0.0",
+        "pi": 47880980,
+        "pk": "201150132|ASHC|14|Sweden|0-0",
+        "md": "Asian Handicap"
+       }
+      ],
+      "cs": 0,
+      "cr": false,
+      "sr": 0,
+      "tp": "BS201150133-47880980x2x3",
+      "ox": "",
+      "pl": "50138",
+      "lk": "UEFA-NAT-LGE-B",
+      "mf": ""
+     }
+    ],
+    "sr": 0,
+    "lm": "PAPI",
+    "vm": "PAPI",
+    "st": 99,
+    "ab": true,
+    "vr": "343",
+    "je": true
+   }
+  },
+  "stake_entry": {
+   "control": "set_stake",
+   "click": [
+    516,
+    749
+   ],
+   "typed": "0.10",
+   "method": "mouse click + keyboard"
+  },
+  "betslip_clear": {
+   "cleared": true,
+   "removed": 1,
+   "method": "visual: screenshot check, visible remove control"
+  },
+  "ready_state": {
+   "fixture_home": "Sweden",
+   "fixture_away": "Poland",
+   "selection_role": "HOME",
+   "selection_name": "Sweden",
+   "session": "LOGGED_IN",
+   "state": "READY",
+   "minimum_price_ok": true,
+   "place_bet_visible": true,
+   "wager_submitted": false,
+   "stop_before_wager": true,
+   "market": "SPREAD",
+   "line": "0.0",
+   "price": "1.475",
+   "stake": "0.10"
+  },
+  "complete_execution_ready": {
+   "state": "COMPLETE_EXECUTION_READY",
+   "fixture": "Sweden v Poland",
+   "fixture_home": "Sweden",
+   "fixture_away": "Poland",
+   "selection_role": "HOME",
+   "selection_name": "Sweden",
+   "minimum_price": "1.30",
+   "final_control": "Place Bet",
+   "final_control_bounds": [
+    769,
+    735,
+    841,
+    747
+   ],
+   "final_control_enabled": true,
+   "final_control_actionable": true,
+   "gesture_dispatched": false,
+   "wager_submitted": false,
+   "to_return": "0.14",
+   "verified_by": "screenshot+OCR, addbet response",
+   "timestamp_ms": 1790616368788,
+   "market": "SPREAD",
+   "line": "0.0",
+   "price": "1.475",
+   "stake": "0.10"
+  },
+  "wager_submitted": false
+ }
+]

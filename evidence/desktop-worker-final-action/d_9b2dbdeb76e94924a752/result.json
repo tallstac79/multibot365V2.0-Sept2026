@@ -1,0 +1,1095 @@
+{
+ "instruction_id": "final-tur-1x2-draw",
+ "run_id": "d_9b2dbdeb76e94924a752",
+ "worker": "desktop",
+ "wager_submitted": true,
+ "device_stage": "PREPARE_COMPLETE_EXECUTION",
+ "route": "event_link",
+ "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201150138/F3/I1/",
+ "session": "AUTHENTICATED",
+ "betslip_clear": {
+  "cleared": true,
+  "removed": 1,
+  "method": "visual: screenshot check, visible remove control"
+ },
+ "direct_event_header": [
+  "UEFA Nations League A • 28 Sep 19:45",
+  "Türkiye v Italy"
+ ],
+ "competition_check": {
+  "feed": "UEFA Nations League A",
+  "country": null,
+  "page": "UEFA Nations League A • 28 Sep 19:45",
+  "matches": true
+ },
+ "identity": {
+  "verdict": "EXACT",
+  "reason": "both teams exact",
+  "home": {
+   "feed": "Türkiye",
+   "bookmaker": "Turkiye",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "away": {
+   "feed": "Italy",
+   "bookmaker": "Italy",
+   "level": "EXACT",
+   "kind": "exact",
+   "score": 1.0,
+   "note": "exact",
+   "alias_safe": true
+  },
+  "kickoff_known": true,
+  "kickoff_agrees": true,
+  "reversed": false,
+  "evidence": {
+   "event_id_match": true,
+   "event_anchor": "page opened from the alert's own Bet365 event link",
+   "sport_match": "equal",
+   "kickoff_match": "exact",
+   "competition_match": "equal",
+   "competing_event": "none: a single event page reached through the alert's own link",
+   "home_similarity": {
+    "feed": "Türkiye",
+    "bookmaker": "Turkiye",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "away_similarity": {
+    "feed": "Italy",
+    "bookmaker": "Italy",
+    "level": "EXACT",
+    "kind": "exact",
+    "score": 1.0,
+    "note": "exact"
+   },
+   "protected_markers": "agree",
+   "orientation": "agree",
+   "policy": "both_exact",
+   "verdict": "EXACT"
+  }
+ },
+ "identity_verdict": "EXACT",
+ "home": "Turkiye",
+ "away": "Italy",
+ "competition": "UEFA Nations League A • 28 Sep 19:45",
+ "fixture_name": "Turkiye v Italy",
+ "event_context": {
+  "home": "Turkiye",
+  "away": "Italy",
+  "competition": "uefa nations league a",
+  "kickoff_utc": "2026-09-28T18:45",
+  "period": "FULL_GAME"
+ },
+ "markets": [
+  {
+   "market": "MONEYLINE",
+   "side": "HOME",
+   "line": "",
+   "price": "2.80",
+   "availability": "OPEN",
+   "selection_role": "HOME",
+   "selection_name": "Türkiye",
+   "bounds": [
+    357,
+    341,
+    381,
+    358
+   ]
+  },
+  {
+   "market": "MONEYLINE",
+   "side": "DRAW",
+   "line": "",
+   "price": "3.50",
+   "availability": "OPEN",
+   "selection_role": "DRAW",
+   "selection_name": "Draw",
+   "bounds": [
+    695,
+    341,
+    718,
+    358
+   ]
+  },
+  {
+   "market": "MONEYLINE",
+   "side": "AWAY",
+   "line": "",
+   "price": "2.45",
+   "availability": "OPEN",
+   "selection_role": "AWAY",
+   "selection_name": "Italy",
+   "bounds": [
+    1037,
+    341,
+    1061,
+    358
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "2.5",
+   "price": "1.61",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    1895,
+    769,
+    1912
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "2.5",
+   "price": "2.25",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    1895,
+    1161,
+    1912
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "0.5",
+   "price": "1.03",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2027,
+    769,
+    2044
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "0.5",
+   "price": "15.00",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2027,
+    1164,
+    2044
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "1.5",
+   "price": "1.18",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2072,
+    769,
+    2089
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "1.5",
+   "price": "4.50",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2072,
+    1161,
+    2089
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "3.5",
+   "price": "2.50",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2117,
+    769,
+    2134
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "3.5",
+   "price": "1.50",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2117,
+    1161,
+    2134
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "4.5",
+   "price": "4.50",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2162,
+    769,
+    2179
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "4.5",
+   "price": "1.18",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2162,
+    1161,
+    2179
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "5.5",
+   "price": "9.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    745,
+    2207,
+    769,
+    2224
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "5.5",
+   "price": "1.071",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2207,
+    1164,
+    2224
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "6.5",
+   "price": "19.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2252,
+    773,
+    2269
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "6.5",
+   "price": "1.02",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1137,
+    2252,
+    1161,
+    2269
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "OVER",
+   "line": "7.5",
+   "price": "34.00",
+   "availability": "OPEN",
+   "selection_role": "OVER",
+   "selection_name": "Over",
+   "bounds": [
+    742,
+    2297,
+    773,
+    2314
+   ]
+  },
+  {
+   "market": "TOTAL",
+   "side": "UNDER",
+   "line": "7.5",
+   "price": "1.005",
+   "availability": "OPEN",
+   "selection_role": "UNDER",
+   "selection_name": "Under",
+   "bounds": [
+    1133,
+    2297,
+    1164,
+    2314
+   ]
+  }
+ ],
+ "execution_observations": [
+  {
+   "stage": "grid",
+   "observed_at_ms": 1790616693660,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "selection",
+   "observed_at_ms": 1790616693660,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "selection_preflight",
+   "observed_at_ms": 1790616694728,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": false
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790616697222,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790616706108,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790616713564,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "final",
+   "observed_at_ms": 1790616713569,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": true
+  },
+  {
+   "stage": "slip",
+   "observed_at_ms": 1790616718117,
+   "observed": {
+    "market": "MONEYLINE",
+    "side": "DRAW",
+    "line": "",
+    "price": "3.50",
+    "availability": "OPEN",
+    "selection_role": "DRAW",
+    "selection_name": "Draw",
+    "bounds": [
+     695,
+     341,
+     718,
+     358
+    ]
+   },
+   "identity_verified": true
+  }
+ ],
+ "selection": {
+  "market": "MONEYLINE",
+  "side": "DRAW",
+  "line": "",
+  "price": "3.50",
+  "availability": "OPEN",
+  "selection_role": "DRAW",
+  "selection_name": "Draw",
+  "bounds": [
+   695,
+   341,
+   718,
+   358
+  ]
+ },
+ "selection_role": "DRAW",
+ "selection_name": "Draw",
+ "selection_group": "Full Time Result",
+ "click_at_ms": 15015,
+ "addbet": {
+  "accepted": true,
+  "cs": 1,
+  "sr": 0,
+  "bets": [
+   {
+    "fixture": "Türkiye v Italy",
+    "selection": "Draw",
+    "handicap": null,
+    "market": "Full Time Result",
+    "odds": "5/2",
+    "decimal": 3.5,
+    "sr": 0,
+    "cs": 0
+   }
+  ],
+  "at_ms": 15281,
+  "status": 200,
+  "response": {
+   "bg": "<redacted>",
+   "at": 0,
+   "cs": 1,
+   "bs": [],
+   "pc": "<redacted>",
+   "cc": "<redacted>",
+   "ir": false,
+   "mr": false,
+   "bt": [
+    {
+     "bt": 1,
+     "cl": 1,
+     "fd": "Türkiye v Italy",
+     "fi": 201150138,
+     "ir": false,
+     "mt": 13,
+     "mr": false,
+     "ns": 0,
+     "od": "5/2",
+     "sa": "<redacted>",
+     "nf": 201150138,
+     "pf": "N",
+     "pt": [
+      {
+       "bd": "Draw",
+       "ho": "",
+       "pi": 2127238184,
+       "pk": "201150138|FTRS|1|Draw",
+       "md": "Full Time Result"
+      }
+     ],
+     "cs": 0,
+     "cr": false,
+     "sr": 0,
+     "tp": "BS201150138-2127238184",
+     "ox": "",
+     "pl": "40",
+     "lk": "UEFA-NAT-LGE-A",
+     "mf": ""
+    }
+   ],
+   "sr": 0,
+   "lm": "PAPI",
+   "vm": "PAPI",
+   "st": 99,
+   "ab": true,
+   "vr": "343",
+   "je": true
+  }
+ },
+ "betslip": {
+  "present": true,
+  "panel": [
+   468,
+   573,
+   916,
+   773
+  ],
+  "words": [
+   {
+    "text": "Draw",
+    "l": 499,
+    "t": 588,
+    "r": 537,
+    "b": 599,
+    "conf": 96.0
+   },
+   {
+    "text": "3.50",
+    "l": 874,
+    "t": 588,
+    "r": 902,
+    "b": 599,
+    "conf": 95.0
+   },
+   {
+    "text": "Full",
+    "l": 499,
+    "t": 608,
+    "r": 519,
+    "b": 618,
+    "conf": 96.0
+   },
+   {
+    "text": "Time",
+    "l": 524,
+    "t": 608,
+    "r": 554,
+    "b": 618,
+    "conf": 95.0
+   },
+   {
+    "text": "Result",
+    "l": 559,
+    "t": 608,
+    "r": 595,
+    "b": 618,
+    "conf": 96.0
+   },
+   {
+    "text": "v",
+    "l": 537,
+    "t": 625,
+    "r": 542,
+    "b": 639,
+    "conf": 93.0
+   },
+   {
+    "text": "Turkiye",
+    "l": 498,
+    "t": 626,
+    "r": 536,
+    "b": 638,
+    "conf": 42.0
+   },
+   {
+    "text": "Italy",
+    "l": 550,
+    "t": 626,
+    "r": 571,
+    "b": 638,
+    "conf": 85.0
+   },
+   {
+    "text": "sy",
+    "l": 485,
+    "t": 674,
+    "r": 492,
+    "b": 685,
+    "conf": 45.0
+   },
+   {
+    "text": "Platinum",
+    "l": 555,
+    "t": 674,
+    "r": 600,
+    "b": 682,
+    "conf": 88.0
+   },
+   {
+    "text": "£82,389.14",
+    "l": 606,
+    "t": 674,
+    "r": 662,
+    "b": 683,
+    "conf": 88.0
+   },
+   {
+    "text": "£0.50",
+    "l": 829,
+    "t": 682,
+    "r": 854,
+    "b": 689,
+    "conf": 96.0
+   },
+   {
+    "text": "Last",
+    "l": 555,
+    "t": 691,
+    "r": 572,
+    "b": 698,
+    "conf": 96.0
+   },
+   {
+    "text": "00:02:36",
+    "l": 600,
+    "t": 691,
+    "r": 637,
+    "b": 698,
+    "conf": 96.0
+   },
+   {
+    "text": "won:",
+    "l": 575,
+    "t": 693,
+    "r": 593,
+    "b": 698,
+    "conf": 96.0
+   },
+   {
+    "text": "@®",
+    "l": 480,
+    "t": 697,
+    "r": 490,
+    "b": 707,
+    "conf": 38.0
+   },
+   {
+    "text": "Remember",
+    "l": 630,
+    "t": 732,
+    "r": 682,
+    "b": 740,
+    "conf": 95.0
+   },
+   {
+    "text": "Stake",
+    "l": 477,
+    "t": 733,
+    "r": 503,
+    "b": 741,
+    "conf": 96.0
+   },
+   {
+    "text": "Place",
+    "l": 769,
+    "t": 735,
+    "r": 809,
+    "b": 747,
+    "conf": 96.0
+   },
+   {
+    "text": "Bet",
+    "l": 815,
+    "t": 736,
+    "r": 841,
+    "b": 747,
+    "conf": 96.0
+   },
+   {
+    "text": "®",
+    "l": 644,
+    "t": 748,
+    "r": 658,
+    "b": 762,
+    "conf": 37.0
+   },
+   {
+    "text": "£0.10",
+    "l": 478,
+    "t": 750,
+    "r": 526,
+    "b": 763,
+    "conf": 96.0
+   },
+   {
+    "text": "To",
+    "l": 763,
+    "t": 756,
+    "r": 775,
+    "b": 764,
+    "conf": 97.0
+   },
+   {
+    "text": "Return",
+    "l": 779,
+    "t": 756,
+    "r": 813,
+    "b": 764,
+    "conf": 96.0
+   },
+   {
+    "text": "£0.35",
+    "l": 817,
+    "t": 756,
+    "r": 844,
+    "b": 764,
+    "conf": 96.0
+   }
+  ],
+  "items": 1,
+  "title": "Draw",
+  "handicap": null,
+  "price": "3.50",
+  "title_row": [
+   468,
+   584,
+   916,
+   604
+  ],
+  "remove_x": [
+   486,
+   594
+  ],
+  "market": "Full Time Result",
+  "fixture": "Turkiye v Italy",
+  "stake_control": {
+   "kind": "stake_box",
+   "bounds": [
+    469,
+    727,
+    637,
+    767
+   ],
+   "click": [
+    517,
+    753
+   ]
+  },
+  "stake": "0.10",
+  "place_bet": {
+   "text": "Place Bet",
+   "bounds": [
+    769,
+    735,
+    841,
+    747
+   ],
+   "centre": [
+    805,
+    741
+   ],
+   "colour": [
+    74,
+    255,
+    183
+   ],
+   "enabled": true
+  },
+  "to_return": "0.35",
+  "notices": []
+ },
+ "stake_entry": {
+  "control": "set_stake",
+  "click": [
+   516,
+   749
+  ],
+  "typed": "0.10",
+  "method": "mouse click + keyboard"
+ },
+ "betslip_api": [
+  {
+   "url": "https://www.bet365.com/BetsWebAPI/addbet",
+   "status": 200,
+   "at_ms": 15281,
+   "response": {
+    "bg": "<redacted>",
+    "at": 0,
+    "cs": 1,
+    "bs": [],
+    "pc": "<redacted>",
+    "cc": "<redacted>",
+    "ir": false,
+    "mr": false,
+    "bt": [
+     {
+      "bt": 1,
+      "cl": 1,
+      "fd": "Türkiye v Italy",
+      "fi": 201150138,
+      "ir": false,
+      "mt": 13,
+      "mr": false,
+      "ns": 0,
+      "od": "5/2",
+      "sa": "<redacted>",
+      "nf": 201150138,
+      "pf": "N",
+      "pt": [
+       {
+        "bd": "Draw",
+        "ho": "",
+        "pi": 2127238184,
+        "pk": "201150138|FTRS|1|Draw",
+        "md": "Full Time Result"
+       }
+      ],
+      "cs": 0,
+      "cr": false,
+      "sr": 0,
+      "tp": "BS201150138-2127238184",
+      "ox": "",
+      "pl": "40",
+      "lk": "UEFA-NAT-LGE-A",
+      "mf": ""
+     }
+    ],
+    "sr": 0,
+    "lm": "PAPI",
+    "vm": "PAPI",
+    "st": 99,
+    "ab": true,
+    "vr": "343",
+    "je": true
+   }
+  }
+ ],
+ "stake_field_state": "ENTERED",
+ "ready_state": {
+  "fixture_home": "Turkiye",
+  "fixture_away": "Italy",
+  "selection_role": "DRAW",
+  "selection_name": "Draw",
+  "session": "LOGGED_IN",
+  "state": "READY",
+  "minimum_price_ok": true,
+  "place_bet_visible": true,
+  "wager_submitted": false,
+  "stop_before_wager": true,
+  "market": "MONEYLINE",
+  "line": "",
+  "price": "3.50",
+  "stake": "0.10"
+ },
+ "final_state": {
+  "home": "Turkiye",
+  "away": "Italy",
+  "side": "DRAW",
+  "state": "READY",
+  "place_bet_visible": true,
+  "wager_submitted": false,
+  "market": "MONEYLINE",
+  "line": "",
+  "price": "3.50",
+  "stake": "0.10"
+ },
+ "complete_execution_ready": {
+  "state": "COMPLETE_EXECUTION_READY",
+  "fixture": "Turkiye v Italy",
+  "fixture_home": "Turkiye",
+  "fixture_away": "Italy",
+  "selection_role": "DRAW",
+  "selection_name": "Draw",
+  "minimum_price": "1.50",
+  "final_control": "Place Bet",
+  "final_control_bounds": [
+   769,
+   735,
+   841,
+   747
+  ],
+  "final_control_enabled": true,
+  "final_control_actionable": true,
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "to_return": "0.35",
+  "verified_by": "screenshot+OCR, addbet response",
+  "timestamp_ms": 1790616713569,
+  "market": "MONEYLINE",
+  "line": "",
+  "price": "3.50",
+  "stake": "0.10"
+ },
+ "held": true,
+ "verification_detail": "HELD: verified bet on the slip (screenshot + OCR, cross-checked with Bet365 addbet), stake + To Return verified, Place Bet visible and enabled; NOT pressed, slip kept",
+ "status": "PASS",
+ "stage": "PLACED",
+ "detail": "\"PLACED\"",
+ "duration_ms": 43719,
+ "stage_timings": [],
+ "progress": {
+  "stage": "PREPARE_COMPLETE_EXECUTION",
+  "elapsed_ms": 43719,
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790616679879
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 0,
+    "at_ms": 1790616679879
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 4687,
+    "at_ms": 1790616684561
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 8952,
+    "at_ms": 1790616688823
+   },
+   {
+    "stage": "VERIFY_EVENT",
+    "elapsed_ms": 13719,
+    "at_ms": 1790616693591
+   },
+   {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 13781,
+    "at_ms": 1790616693653
+   },
+   {
+    "stage": "READ_SELECTION",
+    "elapsed_ms": 13781,
+    "at_ms": 1790616693660
+   },
+   {
+    "stage": "READ_PRICE",
+    "elapsed_ms": 13781,
+    "at_ms": 1790616693660
+   },
+   {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 13781,
+    "at_ms": 1790616693661
+   },
+   {
+    "stage": "OPEN_SELECTION",
+    "elapsed_ms": 14765,
+    "at_ms": 1790616694642
+   },
+   {
+    "stage": "VERIFY_SLIP",
+    "elapsed_ms": 17344,
+    "at_ms": 1790616697218
+   },
+   {
+    "stage": "ENTER_STAKE",
+    "elapsed_ms": 17344,
+    "at_ms": 1790616697222
+   },
+   {
+    "stage": "VERIFY_FINAL_STATE",
+    "elapsed_ms": 19687,
+    "at_ms": 1790616699556
+   },
+   {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 33702,
+    "at_ms": 1790616713569
+   }
+  ]
+ },
+ "execution_count": 1
+}

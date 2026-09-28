@@ -1,0 +1,133 @@
+{
+ "key": "final-action-20260928",
+ "clicks": 1,
+ "outcome": "PLACED",
+ "run_id": "d_9b2dbdeb76e94924a752",
+ "ready": {
+  "state": "COMPLETE_EXECUTION_READY",
+  "fixture": "Turkiye v Italy",
+  "fixture_home": "Turkiye",
+  "fixture_away": "Italy",
+  "selection_role": "DRAW",
+  "selection_name": "Draw",
+  "minimum_price": "1.50",
+  "final_control": "Place Bet",
+  "final_control_bounds": [
+   769,
+   735,
+   841,
+   747
+  ],
+  "final_control_enabled": true,
+  "final_control_actionable": true,
+  "gesture_dispatched": false,
+  "wager_submitted": false,
+  "to_return": "0.35",
+  "verified_by": "screenshot+OCR, addbet response",
+  "timestamp_ms": 1790616713569,
+  "market": "MONEYLINE",
+  "line": "",
+  "price": "3.50",
+  "stake": "0.10"
+ },
+ "preclick": {
+  "problems": [],
+  "price": "3.50",
+  "stake": "0.10",
+  "to_return": "0.35",
+  "items": 1,
+  "jackpot": "OFF (grey track, knob left; strip amount £0.50 not added)",
+  "fixture": "Turkiye v Italy",
+  "market": "Full Time Result",
+  "selection": "Draw",
+  "line": null
+ },
+ "click": {
+  "at": "2026-09-28T18:31:58+01:00",
+  "x": 805,
+  "y": 741
+ },
+ "network": [
+  {
+   "url": "https://www.bet365.com/BetsWebAPI/placebet",
+   "status": 200,
+   "at_ms": 40610,
+   "terms": {
+    "parsed": true,
+    "sr": 0,
+    "cs": 3,
+    "reference": "BT7071586031I",
+    "odds": "5/2"
+   },
+   "response": {
+    "ts": 0.1,
+    "tu": 0.1,
+    "br": "BT7071586031I",
+    "la": [
+     {
+      "cl": 1,
+      "fi": 201150138,
+      "ak": "UEFA-NAT-LGE-A",
+      "fd": "Türkiye v Italy",
+      "t1": "221282",
+      "t2": "100717"
+     }
+    ],
+    "re": 0.35,
+    "th": false,
+    "tr": "",
+    "pm": "BWAPI",
+    "vm": "BWAPI",
+    "ab": true,
+    "vr": "1685",
+    "cs": 3,
+    "sr": 0,
+    "st": 1,
+    "bt": [
+     {
+      "tk": "2576102692449054521",
+      "fx": "20260928194500",
+      "ob": [],
+      "ms": 40.0,
+      "er": false,
+      "ra": 0.0,
+      "rp": 0.0,
+      "br": "BT7071586031I",
+      "tr": 2576102692449054521,
+      "nf": 201150138,
+      "mf": "",
+      "ir": "2576102692449054521",
+      "bt": 1,
+      "od": "5/2",
+      "go": "5/2",
+      "fi": 201150138,
+      "pt": [
+       {
+        "pm": {},
+        "pi": 2127238184,
+        "ho": ""
+       }
+      ],
+      "re": 0.35,
+      "sr": 0,
+      "ox": "",
+      "px": ""
+     }
+    ]
+   }
+  }
+ ],
+ "receipt_text": "Bet Placed Bet Ref BT70715 2OUS 26N2 LX Live Alerts Reuse Selections Draw 3.50 Full Time Result Turkiye v Italy Stake To Return £0.10 £0.35 Bet Placed Bet Ref BT70715 2OUS 26Nn2 £ Live Alerts Reuse Selections Draw 3.50 Full Time Result Turkiye v Italy Stake To Return £0.10 £0.35",
+ "receipt_frames": 2,
+ "reference": "BT7071586031I",
+ "reference_source": "placebet response",
+ "selection": {
+  "fixture": "Turkiye v Italy",
+  "market": "MONEYLINE",
+  "selection": "Draw",
+  "line": "",
+  "odds_verified": "3.50",
+  "stake": "0.10",
+  "to_return": "0.35"
+ }
+}
