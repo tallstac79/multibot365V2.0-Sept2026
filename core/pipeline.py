@@ -149,6 +149,70 @@ def device_instruction_id(instruction_id, execution_mode):
     return f'{instruction_id}-place' if execution_mode == 'dispatch' else instruction_id
 
 
+def _quote(observed):
+    observed = observed if isinstance(observed, dict) else {}
+    return dict(market=observed.get('market'), side=observed.get('side') or observed.get('selection_role'),
+                line=observed.get('line'), price=observed.get('price'), selection_name=observed.get('selection_name') or observed.get('selection'))
+
+
+def record_request_stage(store, db, instruction_id, payload):
+    """hold_request / place_request: what was sent to the phone, before the send (a later dispatch overwrites
+    instructions.dispatch_payload, not this). The route the request points the phone to: its own event link or Search."""
+    place = payload.get('action') == 'PLACE_HELD'
+    store.record_stage(db, instruction_id, 'place_request' if place else 'hold_request', source='dispatcher',
+                       device_instruction_id=payload.get('instruction_id'),
+                       route=None if place else ('event_link' if payload.get('event_url') else 'search'),
+                       market=payload.get('market'), side=payload.get('side'), line=payload.get('line'),
+                       price=payload.get('price') or payload.get('minimum_price'), stake=payload.get('stake'),
+                       selection_name=payload.get('selection_name'), detail=payload)
+
+
+def record_result_stages(store, db, instruction_id, result, final_action, state, at=None):
+    """Per-stage evidence from a phone result, written once each (analysis only; nothing here affects execution).
+    hold run   -> first_quote (the first live quote the phone read, and the route it actually used) + hold_result;
+    place run  -> pretap (the fresh pre-tap quote) + receipt (outcome and receipt terms)."""
+    if not isinstance(result, dict):
+        return
+    observations = [o for o in (result.get('execution_observations') or []) if isinstance(o, dict) and isinstance(o.get('observed'), dict)]
+    job = result.get('instruction_id')
+    if not final_action:
+        route = result.get('route')
+        first = observations[0] if observations else None
+        if first is None and isinstance(result.get('selection'), dict):
+            first = dict(stage='selection', observed=result['selection'])
+        if first is not None:
+            store.record_stage(db, instruction_id, 'first_quote', source='phone hold result', at=at, device_instruction_id=job,
+                               route=route, **_quote(first['observed']),
+                               detail=dict(observation_stage=first.get('stage'), observed_at_ms=first.get('observed_at_ms'),
+                                           identity_verified=first.get('identity_verified')))
+        held = result.get('selection') if isinstance(result.get('selection'), dict) else {}
+        store.record_stage(db, instruction_id, 'hold_result', source='phone hold result', at=at, device_instruction_id=job,
+                           route=route, outcome=f"{state} ({result.get('status')}/{result.get('stage')})", **_quote(held),
+                           stake=(result.get('ready_state') or {}).get('stake') if isinstance(result.get('ready_state'), dict) else None,
+                           detail=dict(event_url=result.get('event_url'), identity_verdict=result.get('identity_verdict'),
+                                       event_context=result.get('event_context'), fixture_name=result.get('fixture_name'),
+                                       detail=result.get('detail'), run_id=result.get('run_id')))
+        return
+    pretap = result.get('pretap') if isinstance(result.get('pretap'), dict) else None
+    if pretap is None:
+        pre = [o for o in observations if o.get('stage') == 'pretap']
+        pretap = pre[0]['observed'] if pre else None
+    if pretap:
+        store.record_stage(db, instruction_id, 'pretap', source='phone place result', at=at, device_instruction_id=job,
+                           **_quote(pretap), stake=pretap.get('stake'), detail=pretap)
+    placement = result.get('placement') if isinstance(result.get('placement'), dict) else None
+    if placement is not None:
+        actual = placement.get('actual_terms') if isinstance(placement.get('actual_terms'), dict) else {}
+        store.record_stage(db, instruction_id, 'receipt', source='phone place result', at=at, device_instruction_id=job,
+                           market=(pretap or {}).get('market'), side=(pretap or {}).get('side'),
+                           line=actual.get('line'), price=actual.get('odds') or placement.get('odds'),
+                           stake=actual.get('stake') or placement.get('stake'), bet_reference=placement.get('bet_reference'),
+                           outcome=f"{placement.get('outcome')} (tapped={placement.get('tapped')})",
+                           detail=dict(actual_terms=actual, potential_return=placement.get('potential_return'),
+                                       receipt_lines=placement.get('receipt_lines'), frames=placement.get('frames'),
+                                       terms_source=placement.get('terms_source')))
+
+
 class Pipeline:
     def __init__(self, store, config_provider, settings=None, clock=utcnow):
         self.store = store if isinstance(store, Store) else Store(store, clock)
@@ -664,6 +728,8 @@ class Pipeline:
                                              session_state=session['state']):
                     continue
             in_flight = [row]
+            with self.store.tx() as db:
+                record_request_stage(self.store, db, row['instruction_id'], payload)
             self._send(gateway, row['instruction_id'], payload)
         if warmup_for is not None:
             self._start_warmup(gateway, warmup_for)
@@ -832,6 +898,7 @@ class Pipeline:
                 if tapped is not False and result.get('t_tap_ms'):
                     fields['intent_at'] = datetime.fromtimestamp(result['t_tap_ms'] / 1000, tz=timezone.utc).isoformat(timespec='milliseconds')
             applied = self.store.transition(db, instruction_id, state, actor=source, at=iso(now), reason=reason, **fields)
+            record_result_stages(self.store, db, instruction_id, result, final_action, state.value, at=iso(now))
             if applied and pre_tap_rejected:
                 self.store.audit(db, 'PRE_TAP_REJECTED', dict(stage=result.get('stage'), reason=reason, state=state.value,
                                                              pretap=result.get('pretap'), comparison=quote,

@@ -133,6 +133,19 @@ CREATE TABLE IF NOT EXISTS reconciliations (
     submitted_at TEXT, completed_at TEXT, outcome TEXT, detail TEXT,
     account_fingerprint TEXT, worker_id TEXT
 );
+-- Per-stage execution evidence (analysis only; 28 Sep 2026). One row per (instruction, stage), written once and never
+-- updated, so the final phone result can no longer replace the hold route / first quote (instructions.result_payload and
+-- dispatch_payload keep only the latest). Stages: hold_request, first_quote, hold_result, place_request, pretap, receipt.
+CREATE TABLE IF NOT EXISTS execution_stages (
+    id INTEGER PRIMARY KEY,
+    instruction_id TEXT NOT NULL,
+    stage TEXT NOT NULL,
+    device_instruction_id TEXT,
+    recorded_at TEXT NOT NULL,
+    route TEXT, market TEXT, side TEXT, line TEXT, price TEXT, stake TEXT, selection_name TEXT,
+    bet_reference TEXT, outcome TEXT, source TEXT NOT NULL, detail TEXT,
+    UNIQUE (instruction_id, stage)
+);
 CREATE TABLE IF NOT EXISTS controls (
     key TEXT PRIMARY KEY, value TEXT NOT NULL, updated_at TEXT NOT NULL, updated_by TEXT
 );
@@ -555,6 +568,25 @@ class Store:
         with self.tx() as tx:
             tx.execute(sql, values)
             self.audit(tx, 'CONTROL_CHANGED', dict(key=key, value=value, by=by))
+
+    STAGE_FIELDS = ('device_instruction_id', 'route', 'market', 'side', 'line', 'price', 'stake', 'selection_name',
+                    'bet_reference', 'outcome', 'source', 'detail')
+
+    def record_stage(self, db, instruction_id, stage, *, source, at=None, **fields):
+        """Append-only execution evidence: the FIRST record of a stage wins (INSERT OR IGNORE); nothing here is ever
+        updated or deleted. Returns True if written."""
+        unknown = set(fields) - set(self.STAGE_FIELDS)
+        if unknown:
+            raise ValueError(f'Unknown stage fields: {sorted(unknown)}')
+        values = {k: (None if v is None else (_dump(v) if k == 'detail' else str(v))) for k, v in fields.items()}
+        values.update(instruction_id=instruction_id, stage=stage, source=source, recorded_at=at or iso(self.clock()))
+        cursor = db.execute(f"INSERT OR IGNORE INTO execution_stages({','.join(values)}) VALUES ({','.join('?' * len(values))})",
+                            tuple(values.values()))
+        return cursor.rowcount == 1
+
+    def execution_stages(self, instruction_id):
+        with self.connection() as db:
+            return [dict(r) for r in db.execute('SELECT * FROM execution_stages WHERE instruction_id=? ORDER BY id', (instruction_id,))]
 
     def upsert_bet(self, db, instruction_id, **fields):
         fields = {k: (_dump(v) if k == 'evidence' else v) for k, v in fields.items()}
