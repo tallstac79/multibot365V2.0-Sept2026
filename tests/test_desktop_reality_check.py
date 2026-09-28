@@ -74,7 +74,7 @@ class RealityCheckRecovery(unittest.TestCase):
 
     def test_detect_block_poll_fast_and_resume_by_itself(self):
         w = self.w
-        page = FakePage(['logged_in.png', 'reality_check.png', 'reality_check.png', 'reality_check.png', 'logged_in.png'])
+        page = FakePage(['logged_in.png', 'reality_check.png', 'reality_check.png', 'reality_check.png', 'logged_in.png', 'logged_in.png'])
         marks = dict(watch=0.0, probe=0.0)
         up = lambda port: True
         # routable and idle: the probe runs every PROBE_S (120 s)
@@ -100,8 +100,13 @@ class RealityCheckRecovery(unittest.TestCase):
             self.probe(page)
             self.assertEqual(self.routable()[3], 'REALITY_CHECK')
         self.assertEqual(len(self.sent), 1)
-        # David clears the dialog: the very next fast probe sees Bet365 logged in -> READY/IDLE, one recovery message
+        # David clears the dialog: the next fast probe sees Bet365 logged in (1 of RECOVERY_CONFIRM_READS, still blocked),
+        # the one after confirms it -> READY/IDLE by itself, one recovery message
+        self.assertEqual(server.RECOVERY_CONFIRM_READS, 2)
         self.assertEqual(w.watch_step(base + 3 * server.BLOCKED_PROBE_S, marks, up)[1], True)
+        self.probe(page)
+        self.assertEqual(self.routable()[3:], ('REALITY_CHECK', False))
+        self.assertEqual(w.watch_step(base + 4 * server.BLOCKED_PROBE_S, marks, up)[1], True)
         self.probe(page)
         self.assertEqual(self.routable(), (True, True, 'IDLE', None, True))
         self.assertIsNone(w.health()['operator_alert'])
@@ -110,7 +115,9 @@ class RealityCheckRecovery(unittest.TestCase):
         self.assertEqual(w.health()['probe_interval_s'], server.PROBE_S)               # back to the slow idle probe
         # the dialog was never touched: every browser call was a CDP screenshot
         self.assertEqual(set(page.cdp_calls), {'Page.captureScreenshot'})
-        self.assertEqual(len(page.cdp_calls), 5)
+        self.assertEqual(len(page.cdp_calls), 6)
+        hist = sorted(p.name for p in (Path(self.tmp.name) / '.local' / 'desktop-evidence' / 'probe' / 'hist').glob('*.png'))
+        self.assertTrue(hist and any('REALITY_CHECK' in n for n in hist))          # frames around the block are kept
 
     def test_fast_poll_for_each_manual_block_and_slow_otherwise(self):
         w = self.w
@@ -129,12 +136,27 @@ class RealityCheckRecovery(unittest.TestCase):
         w.alert_update()
         self.assertEqual(self.routable()[3:], ('REALITY_CHECK', False))
         self.assertEqual(w.probe_interval(), server.BLOCKED_PROBE_S)
-        self.assertTrue(w.queue_probe())
-        self.probe(FakePage(['logged_in.png']))
+        page = FakePage(['logged_in.png', 'logged_in.png'])
+        for _ in range(2):
+            self.assertTrue(w.queue_probe())
+            self.probe(page)
         self.assertEqual(self.routable(), (True, True, 'IDLE', None, True))
         self.assertEqual(len(self.sent), 2)
         self.assertTrue(self.sent[0].startswith('[MultiBot365 desktop worker] BLOCKED (Reality Check open'))
         self.assertIn('RESUMED', self.sent[1])
+
+    def test_a_single_frame_without_the_dialog_does_not_resume(self):
+        """28 Sep 2026 22:19-22:25 BST: the live Reality Check alternated with LOGGED_IN reads; one such read must not
+        make the worker routable (nor send RESUMED) while the dialog is still there."""
+        w = self.w
+        w.note_probe(dict(state='LOGGED_IN')); w.alert_update()
+        page = FakePage(['reality_check.png', 'logged_in.png', 'reality_check.png', 'logged_in.png', 'reality_check.png'])
+        for _ in range(5):
+            self.assertTrue(w.queue_probe())
+            self.probe(page)
+            self.assertEqual(self.routable()[3:], ('REALITY_CHECK', False))
+        self.assertEqual(len(self.sent), 1)                                    # one BLOCKED, no RESUMED/BLOCKED flapping
+        self.assertIn('BLOCKED', self.sent[0])
 
     def test_no_probe_while_executing_or_chrome_down(self):
         w = self.w

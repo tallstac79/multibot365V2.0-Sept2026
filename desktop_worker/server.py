@@ -47,6 +47,8 @@ PROBE_S = 60                                   # visual session probe period whi
 BLOCKED_PROBE_S = 12                           # faster read-only probe while a manual block (Reality Check/logout) is open
 TICK_S = 3                                     # watchdog loop granularity
 FAST_PROBE_REASONS = ('REALITY_CHECK', 'LOGGED_OUT', 'SESSION_UNKNOWN')
+RECOVERY_CONFIRM_READS = 2                     # consecutive LOGGED_IN reads that clear a Reality Check / logout block
+PROBE_HISTORY = 60                             # probe frames kept around a block (.local/desktop-evidence/probe/hist)
 SESSION_MAX_AGE_S = 300                        # an older session read is not trusted (SESSION_UNKNOWN)
 ID = re.compile(r'^[A-Za-z0-9_-]{1,64}$')
 ACTIONS = {'ADAPTER_WORKFLOW', 'SESSION_CHECK', 'RESET_BETSLIP', 'PLACE_HELD', 'MY_BETS'}
@@ -92,6 +94,7 @@ class Worker:
         self.recover_queued = False
         self.lock = threading.Lock()
         self.probe_queued = False
+        self.clear_reads = 0                  # consecutive LOGGED_IN reads while a manual block is open
         if alerter is None:
             from desktop_worker.alerts import Alerter, NullAlerter
             alerter = Alerter.from_config() if start_executor else NullAlerter()
@@ -159,6 +162,17 @@ class Worker:
         """Record a visual session read: session state and the matching operator alert (cleared when LOGGED_IN)."""
         from desktop_worker import lifecycle
         visual = (session or {}).get('state', 'UNKNOWN')
+        held = self.session.get('visual_state') if self.session.get('visual_state') in ('REALITY_CHECK', 'LOGGED_OUT') else None
+        if held and visual == 'LOGGED_IN':
+            # hysteresis: a Reality Check / logout clears only after RECOVERY_CONFIRM_READS consecutive LOGGED_IN reads
+            # (one frame without the dialog - an animation, a re-render, a transient overlay - must not resume routing)
+            self.clear_reads += 1
+            if self.clear_reads < RECOVERY_CONFIRM_READS:
+                self.session = dict(self.session, detail=f'LOGGED_IN read {self.clear_reads}/{RECOVERY_CONFIRM_READS} while '
+                                    f'{held}: confirming before resuming', confirm_at_ms=now_ms())
+                self.chrome.update(state='UP' if chrome_up else 'DOWN', cdp_up=chrome_up, checked_at_ms=now_ms())
+                return held
+        self.clear_reads = 0
         self.session = dict(state={'LOGGED_IN': 'AUTHENTICATED', 'LOGGED_OUT': 'LOGGED_OUT'}.get(visual, 'UNKNOWN'), visual_state=visual,
                             observed_at_ms=(session or {}).get('observed_at_ms') or now_ms(), detail=(session or {}).get('detail'), source='probe')
         self.chrome.update(state='UP' if chrome_up else 'DOWN', cdp_up=chrome_up, checked_at_ms=now_ms())
@@ -348,6 +362,24 @@ class Worker:
                     self.current = None
                 self.queue_probe()                     # re-read the session after every instruction
 
+    @staticmethod
+    def _keep_probe(out, state):
+        """Keep a timestamped copy of a probe frame taken around a block (evidence of what each read saw)."""
+        try:
+            hist = Path(out) / 'hist'
+            hist.mkdir(parents=True, exist_ok=True)
+            name = time.strftime('%H%M%S') + f'_{state}'
+            for ext in ('png', 'ocr.txt'):
+                src = Path(out) / f'last.{ext}'
+                if src.exists():
+                    (hist / f'{name}.{ext}').write_bytes(src.read_bytes())
+            frames = sorted(hist.glob('*.png'))
+            for old in frames[:-PROBE_HISTORY]:
+                old.unlink(missing_ok=True)
+                old.with_suffix('').with_suffix('.ocr.txt').unlink(missing_ok=True)
+        except OSError:
+            pass
+
     async def _probe(self, pw, browser, page, connect, chrome_up):
         """Screenshot-only session read (no navigation, nothing clicked)."""
         from desktop_worker import lifecycle
@@ -357,8 +389,12 @@ class Worker:
                 return None, None
             if browser is None or not browser.is_connected():
                 browser, context, page = await connect(pw)
-            session = await lifecycle.session_state(page, ROOT / '.local' / 'desktop-evidence' / 'probe', name='last')
+            out = ROOT / '.local' / 'desktop-evidence' / 'probe'
+            session = await lifecycle.session_state(page, out, name='last')
+            around_block = self.blocked_reason() in FAST_PROBE_REASONS or session.get('state') != 'LOGGED_IN'
             self.note_probe(session)
+            if around_block:
+                self._keep_probe(out, session.get('state'))
         except Exception as e:
             self.note_probe(dict(state='UNKNOWN', detail=f'probe failed: {type(e).__name__}: {e}'[:200]))
             browser = None
