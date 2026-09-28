@@ -1,3 +1,16 @@
+# Desktop worker: Chrome lifecycle and recovery (28 Sep 2026) - ROOT CAUSE FOUND, RELAUNCH PROVEN, REALITY CHECK OPEN
+
+The dedicated Chrome died at 19:16 BST. It had been launched from the Claude desktop app's shell, so it was inside that
+MSIX package's process tree and job, and the package update killed it (AppX `TerminateApplications`, 19:16:08).
+Chrome is now launched outside any caller tree or job (WMI `Win32_Process.Create`, then breakaway), with the same
+profile and flags. A 30 s CDP watchdog and a pre-run check trigger recovery. The session is classified visually as
+LOGGED_IN / LOGGED_OUT / REALITY_CHECK / UNKNOWN; anything but LOGGED_IN stays fail-closed with an `operator_alert`, and
+the worker identity is untouched. Live at 20:04: relaunched (parent WmiPrvSE.exe), still logged in (GBP 4.90), but a
+Reality Check was open, so the state is REALITY_CHECK and nothing was clicked. After the operator cleared the Reality Check (20:08: LOGGED_IN), a read-only My Bets check
+found the bet OPEN: GBP 0.10 single, Draw 3.50, Full Time Result, T?rkiye v Italy, To Return GBP 0.35. Tests: desktop suite 62/62 OK (12 new in `tests/test_desktop_lifecycle.py`).
+Docs: `docs/DESKTOP_WORKER.md`. Evidence: `evidence/desktop-worker-lifecycle/`.
+
+---
 # Desktop worker: supervised one-shot final action (28 Sep 2026) - PLACED, 1 click, ref BT7071586031I
 
 The rerun supervised checks (`recheck3`, 18:25 BST) both reached `COMPLETE_EXECUTION_READY`: Turkiye v Italy 1X2

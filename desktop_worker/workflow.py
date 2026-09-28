@@ -575,23 +575,32 @@ REREAD_STAGES = {'LINE_CHANGED', 'PRICE_CHANGED', 'STAKE_REJECTED', 'SELECTION_C
                  'BETSLIP_NOT_SINGLE', 'BETSLIP_ERROR'}
 
 
-def reality_check_failure(run, detail):
-    """SESSION_EXPIRED for an open Reality Check (never answered by the worker) plus the operator notice: a structured
-    `operator_alert` on the result (and so on /health) and an ERROR line in logs/desktop_worker.log (dashboard logs)."""
+def operator_notice(code, stage, message, instruction_id=None, run_id=None, suffix=''):
+    """An operator notice: a structured alert (for the result and /health) plus an ERROR line in logs/desktop_worker.log
+    (the dashboard's Technical logs page tails logs/*.log). Used for Reality Check, logged out and Chrome down."""
     at = datetime.now().astimezone()
-    alert = dict(code='REALITY_CHECK_OPEN', severity='ERROR', stage='SESSION_EXPIRED', at=at.isoformat(timespec='seconds'),
-                 at_ms=int(at.timestamp() * 1000), instruction_id=run.i.get('instruction_id'), run_id=run.run_id,
-                 message=f"Bet365 Reality Check is open; answer it on the mini PC to continue "
-                         f"(desktop worker stopped at {at.isoformat(sep=' ', timespec='seconds')}; it never answers the dialog)")
-    run.put('operator_alert', alert)
+    alert = dict(code=code, severity='ERROR', stage=stage, at=at.isoformat(timespec='seconds'), at_ms=int(at.timestamp() * 1000),
+                 instruction_id=instruction_id, run_id=run_id,
+                 message=f"{message} (desktop worker stopped at {at.isoformat(sep=' ', timespec='seconds')}{suffix})")
     try:
         OPERATOR_LOG.parent.mkdir(parents=True, exist_ok=True)
         with OPERATOR_LOG.open('a', encoding='utf-8') as f:
             f.write(json.dumps(dict(timestamp=alert['at'], component='desktop_worker', severity='ERROR', device_id='desktop-chrome',
-                                    instruction_id=alert['instruction_id'], run_id=alert['run_id'], code=alert['code'],
-                                    stage=alert['stage'], message=alert['message']), ensure_ascii=False) + '\n')
+                                    instruction_id=instruction_id, run_id=run_id, code=code, stage=stage,
+                                    message=alert['message']), ensure_ascii=False) + '\n')
     except OSError as e:                      # the result still carries the alert
-        run.record.setdefault('evidence_errors', []).append(f'operator log: {e}')
+        alert['log_error'] = str(e)
+    return alert
+
+
+def reality_check_failure(run, detail):
+    """SESSION_EXPIRED for an open Reality Check (never answered by the worker) plus the operator notice: a structured
+    `operator_alert` on the result (and so on /health) and an ERROR line in logs/desktop_worker.log (dashboard logs)."""
+    alert = operator_notice('REALITY_CHECK_OPEN', 'SESSION_EXPIRED', 'Bet365 Reality Check is open; answer it on the mini PC to continue',
+                            instruction_id=run.i.get('instruction_id'), run_id=run.run_id, suffix='; it never answers the dialog')
+    if 'log_error' in alert:
+        run.record.setdefault('evidence_errors', []).append(f"operator log: {alert.pop('log_error')}")
+    run.put('operator_alert', alert)
     return Failure('SESSION_EXPIRED', f"{alert['message']}. {detail}")
 
 

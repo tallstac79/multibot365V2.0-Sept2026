@@ -189,12 +189,13 @@ def classify(screen_text, net):
 def my_bets_match(text, home, away, selection, stake='0.10'):
     """My Bets (Unsettled) page text -> PLACED / NOT_PLACED / None (cannot tell)."""
     t = fold(text)
-    page_seen = any(k in t for k in ('unsettled', 'settled', 'cash out', 'my bets'))
     teams = fold(home) in t and fold(away) in t
     if teams and fold(selection) in t and stake in t:
         m = REF.search(text or '')
         return 'PLACED', (m.group(1) if m else None)
-    if page_seen and not (fold(home) in t or fold(away) in t):
+    # NOT_PLACED only on Bet365's explicit empty-list message: an unreadable page (OCR noise) is never 'absent'
+    # (28 Sep 2026: a real open bet OCR'd as noise on the dark My Bets card).
+    if re.search(r'no (open|unsettled|current)? ?bets|you have no', t) and not (fold(home) in t or fold(away) in t):
         return 'NOT_PLACED', None
     return None, None
 
@@ -267,7 +268,7 @@ class Placement:
         self.run.save_look('mybets_pre', png, dict(present=False, words=hw))
         if stop_prompt(htext) in ('reality check', 'log in'):
             return None, None, f'stop prompt before My Bets: {stop_prompt(htext)}'
-        pair = next(((a, b) for a in hw for b in hw if a['text'] == 'My' and b['text'] == 'Bets' and abs(a['t'] - b['t']) <= 4
+        pair = next(((a, b) for a in hw for b in hw if a['text'] == 'My' and b['text'] == 'Bets' and abs((a['t'] + a['b']) - (b['t'] + b['b'])) <= 16
                      and 0 < b['l'] - a['r'] <= 14), None)
         if not pair:
             return None, None, "header 'My Bets' not found on the screen"

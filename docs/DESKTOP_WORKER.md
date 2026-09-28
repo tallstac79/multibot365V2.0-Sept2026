@@ -8,7 +8,8 @@ The backend remains the only source of truth. The worker receives the same instr
 
 | File | Role |
 | --- | --- |
-| `desktop_worker/chrome.py` | Installed Google Chrome with a dedicated profile (`.local/desktop-chrome-profile`) and a CDP port on 127.0.0.1:9333. Playwright uses `connect_over_cdp`. There is no Multilogin or antidetect layer. The operator signs in by hand, and the code never types or reads credentials. |
+| `desktop_worker/chrome.py` | Installed Google Chrome with a dedicated profile (`.local/desktop-chrome-profile`) and a CDP port on 127.0.0.1:9333. Playwright uses `connect_over_cdp`. There is no Multilogin or antidetect layer. The operator signs in by hand, and the code never types or reads credentials. Chrome is started outside the caller's process tree and job object (WMI `Win32_Process.Create`, then `CREATE_BREAKAWAY_FROM_JOB`, then the old detached start), with the same flags. |
+| `desktop_worker/lifecycle.py` | Chrome status (CDP probe + process list: UP / HUNG / DOWN), relaunch of the same profile, and the visual Bet365 session state (screenshot + OCR: LOGGED_IN / LOGGED_OUT / REALITY_CHECK / UNKNOWN). Never logs in and never answers Reality Check; anything but LOGGED_IN raises an `operator_alert` through `workflow.operator_notice`. CLI: `py -3.11 -m desktop_worker.lifecycle`. |
 | `desktop_worker/layout.py` | Visible page text plus geometry from the DOM (a TreeWalker over text nodes; it calls none of the page's wrapped query APIs), in the phone's OCR word format. Used on the event / market pages only, before the selection click. Read-only: the page is never tagged or modified. |
 | `desktop_worker/bet365_page.py` | Pure functions that turn the page into the phone's header lines and quotes. Group titles are found by font (15px bold) and columns by bold headers. |
 | `desktop_worker/jvm/DesktopDecisions.java` + `decisions.py` | Decision bridge. The phone's own Java classes (EventPage / EventIdentity / CompetitionStructure / FootballLineCheck / ExecutionTolerance / FootballMarkets / HeldSlipIdentity) are compiled unchanged from `android/` into `.local/desktop-decisions/decisions.jar`. One JVM answers over stdin/stdout, and the jar is rebuilt whenever a source is newer. Identity, competition, kick-off, the football ±0.25 line band and the price/line tolerances are therefore identical to the phone's. |
@@ -154,3 +155,37 @@ Live run, 28 Sep 2026 18:31 BST (after `recheck3`: Turkiye v Italy Draw and Swed
 `COMPLETE_EXECUTION_READY`): Turkiye v Italy, Full Time Result, Draw at 3.50 (5/2), stake GBP 0.10, 1 click, receipt
 'Bet Placed', Bet Ref BT7071586031I, To Return GBP 0.35, balance GBP 5.00 -> 4.90. Outcome `PLACED`. Evidence:
 `evidence/desktop-worker-final-action/`. Tests: `tests/test_desktop_final_action.py`.
+
+## Chrome lifecycle and recovery (28 Sep 2026)
+
+**Incident.** The dedicated Chrome stopped between 19:14 and 19:16 BST, about 45 minutes after the supervised
+placement. Root cause: it had been started at 11:11 BST by a probe script run from the Claude desktop app's shell. That
+app is an MSIX package, so Chrome was inside the package's process tree and job object (`DETACHED_PROCESS` only detaches
+the console). At 19:16:08 Windows updated the package (Claude 2.9939.2.0 -> 2.9939.4.0). The AppXDeploymentServer log
+shows `TerminateApplications successful`, and every process in the package was killed, Chrome included. Evidence:
+the profile's `exit_type` is `Crashed` (not a clean exit), there are no Crashpad reports (not a crash), the last profile
+writes were at 19:14:54, Chrome's `browser_last_live_timestamp` was 19:11:37 BST, and there were no shutdown or sleep
+events. Nothing in `final_action.py` / `run_ready.py` closes the browser: Playwright's `connect_over_cdp` only disconnects.
+
+**Fix.**
+- Launch: `chrome.launch` starts Chrome through WMI `Win32_Process.Create` (the parent is `WmiPrvSE.exe`, so no caller's
+  tree or job). The fallbacks are `CREATE_BREAKAWAY_FROM_JOB`, then the old detached start. The flags and profile are
+  unchanged (`chrome.launch_args`).
+- Detection: `server.Worker.watch_once` probes CDP every 30 s. When Chrome is down and the worker is idle, it queues
+  one internal recovery. Every instruction also checks CDP first, and if Chrome is down it recovers before running.
+- Recovery (`lifecycle.recover`): relaunch, open Bet365 home only if no Bet365 tab is open, then read the session
+  state from screenshots. LOGGED_IN leaves the worker back at IDLE. LOGGED_OUT / REALITY_CHECK / UNKNOWN / CHROME_DOWN
+  keep it fail-closed. `/health` carries `operator_alert` (codes `SESSION_LOGGED_OUT`, `REALITY_CHECK_OPEN`,
+  `SESSION_UNKNOWN`, `CHROME_DOWN`), the alert is logged to `logs/desktop_worker.log`, and the instruction fails
+  `SESSION_REQUIRED` / `SESSION_EXPIRED` without touching the page.
+- Health: new `chrome` block (`state`, `cdp_up`, `last_recovery`), `session.visual_state`, and `state: RECOVERING`
+  while a recovery runs.
+- Identity: `device_id` desktop-chrome, `worker_id`, the account fingerprint, the token and the ledger are never
+  touched by recovery.
+
+**Live check (20:04 BST).** Chrome was down. It was relaunched via WMI (pid 2316, parent `WmiPrvSE.exe`) with the same
+profile, and the Bet365 session survived: logged in, GBP 4.90, My Bets badge 1. A Reality Check was open ("session
+exceeded 08:26:31"), so the state is `REALITY_CHECK`, fail-closed, with alert `REALITY_CHECK_OPEN`. Nothing was clicked.
+Evidence: `evidence/desktop-worker-lifecycle/20260928-200423/`. At 20:08 the Reality Check had been
+cleared by the operator (state LOGGED_IN, `check-20260928-200800/`). A read-only My Bets check then found the placed bet
+OPEN (`evidence/desktop-worker-final-action/d_9b2dbdeb76e94924a752/reconciliation/`). Tests: `tests/test_desktop_lifecycle.py`.

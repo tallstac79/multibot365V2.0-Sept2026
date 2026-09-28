@@ -32,6 +32,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / '.local' / 'desktop_worker.json'
 LEDGER = ROOT / '.local' / 'desktop_worker.sqlite3'
 VERSION = 'desktop-0.1.0'
+WATCH_S = 30                                   # Chrome watchdog period (CDP /json/version probe)
 ID = re.compile(r'^[A-Za-z0-9_-]{1,64}$')
 ACTIONS = {'ADAPTER_WORKFLOW', 'SESSION_CHECK', 'RESET_BETSLIP', 'PLACE_HELD', 'MY_BETS'}
 REFUSED = {'PLACE_HELD', 'MY_BETS'}
@@ -69,14 +70,52 @@ class Worker:
         self.started = time.monotonic()
         self.session = dict(state='UNKNOWN', observed_at_ms=0, detail='no session check yet')
         self.operator_alert = None            # e.g. Bet365 Reality Check open: the operator must answer it on the mini PC
+        self.chrome = dict(state='UNKNOWN', cdp_up=None, checked_at_ms=0, last_recovery=None)
+        self.recovering = False
+        self.recover_queued = False
         self.lock = threading.Lock()
         if start_executor:
             threading.Thread(target=self._executor, daemon=True).start()
+            threading.Thread(target=self._watchdog, daemon=True).start()
+
+    # ------------------------------------------------------------------ Chrome watchdog
+    def watch_once(self, probe=None):
+        """One Chrome check (the CDP port on 9333). Down while idle -> queue a recovery (relaunch the same profile
+        detached, then a visual session check). Never touches the worker identity or the ledger."""
+        from desktop_worker import chrome
+        up = (probe or chrome._listening)(chrome.PORT)
+        self.chrome.update(cdp_up=up, state='UP' if up else 'DOWN', checked_at_ms=now_ms())
+        with self.lock:
+            if not up and not self.current and not self.recovering and not self.recover_queued:
+                self.recover_queued = True
+                self.queue.put(dict(_internal='RECOVER_CHROME'))
+                return 'RECOVER_QUEUED'
+        return 'UP' if up else 'DOWN'
+
+    def _watchdog(self):
+        while True:
+            time.sleep(WATCH_S)
+            try:
+                self.watch_once()
+            except Exception as e:            # the watchdog never stops the worker
+                self.chrome['watch_error'] = f'{type(e).__name__}: {e}'
+
+    def note_recovery(self, r):
+        """Record a recovery / session check (chrome state, visual session state, operator alert); identity untouched."""
+        session = r.get('session') or {}
+        visual = session.get('state', 'UNKNOWN')
+        self.session = dict(state={'LOGGED_IN': 'AUTHENTICATED', 'LOGGED_OUT': 'LOGGED_OUT'}.get(visual, 'UNKNOWN'), visual_state=visual,
+                            observed_at_ms=session.get('observed_at_ms') or now_ms(), detail=session.get('detail'))
+        self.chrome.update(state='UP' if r.get('page') is not None or visual != 'UNKNOWN' else 'DOWN',
+                           last_recovery=dict(at_ms=now_ms(), relaunched=r.get('relaunched'),
+                                              method=(r.get('launch') or {}).get('method'), session=visual))
+        self.operator_alert = r.get('alert')
+        return visual
 
     # ------------------------------------------------------------------ admission
     def health(self):
         return dict(healthy=True, heartbeat_ms=now_ms(), uptime_ms=int((time.monotonic() - self.started) * 1000),
-                    state='EXECUTING' if self.current else 'IDLE', current_instruction=self.current, app_version=VERSION,
+                    state='EXECUTING' if self.current else 'RECOVERING' if self.recovering else 'IDLE', current_instruction=self.current, app_version=VERSION,
                     version_code=1, kind='desktop_chrome', device_id='desktop-chrome', worker_id=self.cfg['worker_id'],
                     account_fingerprint=self.cfg.get('account_fingerprint'), session=json.dumps(self.session),
                     phone_final_action_armed=False, final_action_armed=False,
@@ -84,7 +123,7 @@ class Worker:
                                          authorised_account_fingerprint=self.cfg.get('account_fingerprint'),
                                          last_reason='final action is not enabled on the desktop worker (supervised build)'),
                     last_result=self.ledger.last_result(), restarted_pending=self.closed_at_start, pid=os.getpid(),
-                    operator_alert=self.operator_alert)
+                    operator_alert=self.operator_alert, chrome=self.chrome)
 
     def note_result(self, result):
         """The latest result's operator alert (None clears it: a later run got past the dialog)."""
@@ -152,18 +191,28 @@ class Worker:
 
     async def _loop(self):
         from playwright.async_api import async_playwright
-        from desktop_worker.chrome import connect
+        from desktop_worker.chrome import connect, _listening as chrome_up
         from desktop_worker.decisions import Decisions
         decisions = Decisions()
         async with async_playwright() as pw:
             browser = page = None
             while True:
                 body = await asyncio.get_running_loop().run_in_executor(None, self.queue.get)
+                if body.get('_internal') == 'RECOVER_CHROME':
+                    browser, page = await self._recover(pw, browser, page)
+                    continue
                 iid = body['instruction_id']
                 try:
+                    if not chrome_up():                # Chrome stopped: relaunch the same profile, then check the session
+                        browser, page = await self._recover(pw, None, None)
+                        refusal = self.recovery_refusal(iid)
+                        if refusal:
+                            raise _Refusal(refusal)
                     if browser is None or not browser.is_connected():
                         browser, context, page = await connect(pw)
                     result = await asyncio.wait_for(self._run(body, page, decisions), timeout=body.get('timeout_ms', 300000) / 1000)
+                except _Refusal as r:
+                    result = r.result
                 except asyncio.TimeoutError:
                     result = dict(instruction_id=iid, status='FAIL', stage='TIMEOUT', detail='instruction deadline reached', wager_submitted=False)
                 except Exception as e:
@@ -176,6 +225,29 @@ class Worker:
                 self.note_result(result)
                 with self.lock:
                     self.current = None
+
+    async def _recover(self, pw, browser, page):
+        """Relaunch (if down) + visual session check; returns (browser, page) to use, (None, None) if Chrome is down."""
+        from desktop_worker import lifecycle
+        self.recovering = True
+        try:
+            r = await lifecycle.recover(pw, out_dir=ROOT / '.local' / 'desktop-evidence' / ('recovery-' + time.strftime('%Y%m%d-%H%M%S')))
+        except Exception as e:
+            r = dict(session=dict(state='UNKNOWN', detail=f'{type(e).__name__}: {e}'), alert=lifecycle.alert_for('CHROME_DOWN'))
+        finally:
+            self.recovering = False
+            self.recover_queued = False
+        self.note_recovery(r)
+        return r.get('browser') or browser, r.get('page') or page
+
+    def recovery_refusal(self, iid):
+        """A fail-closed result when the session is not LOGGED_IN after a recovery (the alert says what to do)."""
+        visual = self.session.get('visual_state')
+        if visual == 'LOGGED_IN':
+            return None
+        alert = dict(self.operator_alert or {}, instruction_id=iid)
+        return dict(instruction_id=iid, status='FAIL', stage=alert.get('stage') or 'SESSION_REQUIRED', wager_submitted=False,
+                    detail=alert.get('message') or f'Bet365 session {visual} after a Chrome restart', operator_alert=alert)
 
     async def _run(self, body, page, decisions):
         from desktop_worker.workflow import DesktopBet365, Failure, Run
@@ -203,6 +275,12 @@ class Worker:
             return run.finish('PASS', 'PASS', detail if stage != 'DISCOVERED' else f'DISCOVERED: {detail}')
         except Failure as f:
             return run.finish('FAIL', f.stage, f.detail)
+
+
+class _Refusal(Exception):
+    def __init__(self, result):
+        super().__init__(result.get('detail'))
+        self.result = result
 
 
 def serve(worker, host='127.0.0.1'):

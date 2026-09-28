@@ -1,0 +1,70 @@
+{
+ "note": "Derived 28 Sep 2026 ~20:10 BST from final_action.json, result.json and the click marker, in the phone placement shape (docs/FINAL_ACTION.md, core/final_action.record_outcome). Original files untouched.",
+ "placement": {
+  "tapped": true,
+  "taps": 1,
+  "outcome": "PLACED",
+  "bet_reference": "BT7071586031I",
+  "bet_reference_source": "placebet response",
+  "bet_reference_screen_ocr": "BT70715 2OUS 26N2 (OCR split/mangled; the screenshot shows BT7071586031I)",
+  "stake": 0.1,
+  "odds": "5/2",
+  "odds_decimal": "3.50",
+  "potential_return": 0.35,
+  "placebet_sr": 0,
+  "receipt_lines": "Bet Placed Bet Ref BT70715 2OUS 26N2 LX Live Alerts Reuse Selections Draw 3.50 Full Time Result Turkiye v Italy Stake To Return £0.10 £0.35 Bet Placed Bet Ref BT70715 2OUS 26Nn2 £ Live Alerts Reuse Selections Draw 3.50 Full Time Result Turkiye v Italy Stake To Return £0.10 £0.35",
+  "frames": [
+   "s015_preclick_verify.png",
+   "s016_receipt_01.png",
+   "s017_receipt_02.png"
+  ],
+  "actual_terms": {
+   "fixture": "Türkiye v Italy",
+   "selection": "Draw",
+   "market": "Full Time Result",
+   "odds": "5/2",
+   "stake": 0.1,
+   "potential_return": 0.35,
+   "source": "placebet response + receipt screenshot"
+  }
+ },
+ "requested": {
+  "fixture": "Türkiye v Italy",
+  "market": "1X2",
+  "side": "DRAW",
+  "minimum_price": "1.50",
+  "stake": "0.10"
+ },
+ "verified": {
+  "problems": [],
+  "price": "3.50",
+  "stake": "0.10",
+  "to_return": "0.35",
+  "items": 1,
+  "jackpot": "OFF (grey track, knob left; strip amount £0.50 not added)",
+  "fixture": "Turkiye v Italy",
+  "market": "Full Time Result",
+  "selection": "Draw",
+  "line": null
+ },
+ "intent_marker": {
+  "at": "2026-09-28T18:31:58+01:00",
+  "x": 805,
+  "y": 741,
+  "instruction_id": "final-tur-1x2-draw",
+  "price": "3.50",
+  "stake": "0.10"
+ },
+ "binding": {
+  "device_id": "desktop-chrome",
+  "worker_id": "dw-bde27aa2fe41",
+  "account_fingerprint": "f210d5f9dde5",
+  "source": ".local/desktop_worker.json at ~20:10 BST (not captured at placement time)"
+ },
+ "stage_times_bst": {
+  "ready": "18:31:53 (complete_execution_ready.timestamp_ms)",
+  "click": "18:31:58",
+  "receipt": "frames 1-2, within ~3 s of the click"
+ },
+ "my_bets_verification": "VERIFIED 20:09 BST: open ?0.10 single, Draw 3.50, Full Time Result, T?rkiye v Italy, To Return ?0.35 (reconciliation/)"
+}

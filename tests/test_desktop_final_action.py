@@ -183,6 +183,7 @@ class Outcome(unittest.TestCase):
                          ('PLACED', 'AB1234567890C'))
         self.assertEqual(fa.my_bets_match('My Bets Unsettled You have no unsettled bets', 'Turkiye', 'Italy', 'Draw'), ('NOT_PLACED', None))
         self.assertEqual(fa.my_bets_match('loading', 'Turkiye', 'Italy', 'Draw'), (None, None))
+        self.assertEqual(fa.my_bets_match('Open Live Settled ?? ulnsye Vo 20 td fg', 'Turkiye', 'Italy', 'Draw'), (None, None))
 
 
 class RefuseOnMismatch(unittest.TestCase):

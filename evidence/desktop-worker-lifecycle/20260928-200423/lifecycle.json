@@ -1,0 +1,42 @@
+{
+ "chrome_before": {
+  "cdp_up": false,
+  "running": false,
+  "pids": [],
+  "state": "DOWN",
+  "checked_at_ms": 1790622268284
+ },
+ "relaunched": true,
+ "launch": {
+  "method": "wmi_win32_process_create",
+  "pid": 2316,
+  "args": [
+   "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+   "--remote-debugging-port=9333",
+   "--remote-debugging-address=127.0.0.1",
+   "--user-data-dir=C:\\Users\\WINDOWS11\\Desktop\\MultiBotV2.0\\MultiBot365\\.local\\desktop-chrome-profile",
+   "--no-first-run",
+   "--no-default-browser-check",
+   "--window-size=1400,1000",
+   "about:blank"
+  ],
+  "errors": []
+ },
+ "session": {
+  "state": "REALITY_CHECK",
+  "detail": "Reality Check dialog open",
+  "url": "https://www.bet365.com/#/HO/",
+  "screenshot": "C:\\Users\\WINDOWS11\\Desktop\\MultiBotV2.0\\MultiBot365\\evidence\\desktop-worker-lifecycle\\20260928-200423\\session_02.png",
+  "observed_at_ms": 1790622312011
+ },
+ "alert": {
+  "code": "REALITY_CHECK_OPEN",
+  "severity": "ERROR",
+  "stage": "SESSION_EXPIRED",
+  "at": "2026-09-28T20:05:12+01:00",
+  "at_ms": 1790622312025,
+  "instruction_id": null,
+  "run_id": null,
+  "message": "Bet365 Reality Check is open in the desktop worker's Chrome: answer it by hand on the mini PC (the worker never answers it) (desktop worker stopped at 2026-09-28 20:05:12+01:00)"
+ }
+}

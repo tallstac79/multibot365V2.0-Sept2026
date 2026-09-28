@@ -1,0 +1,22 @@
+{
+ "checked_at_bst": "2026-09-28 20:09",
+ "session_before": "LOGGED_IN (reconciliation/r01_before.png; the Reality Check seen at 20:05 had been cleared by the operator, not by the worker)",
+ "method": "one click on the header 'My Bets' link (navigation), then screenshot + OCR only; nothing on the bet was clicked (no cash out, no expand, no Reuse Selections)",
+ "url": "https://www.bet365.com/#/MB/UB",
+ "tab": "Open (default tab)",
+ "screenshot": "reconciliation/r02_my_bets.png",
+ "card_ocr": "£0.10 Single\nfy Reuse Selections\n\n® Draw 35.50\n\nFull Time Result\n©) Turkiye EElmali In Possession 0\n@ ttay 2\n23:13 ET\nStake To Retum\n£0.10 £0.35\n",
+ "ocr_note": "thresholded OCR of the card; OCR errors 'ttay' = Italy, '35.50' = 3.50 (the screenshot reads 3.50)",
+ "found": {
+  "type": "?0.10 Single",
+  "selection": "Draw",
+  "odds": "3.50",
+  "market": "Full Time Result",
+  "fixture": "T?rkiye v Italy",
+  "stake": "0.10",
+  "to_return": "0.35",
+  "status": "OPEN (in play: T?rkiye 0-2 Italy at 23:13)"
+ },
+ "reference": "not shown on the collapsed My Bets card (expanding the bet was not allowed); the receipt screenshot and the placebet response give BT7071586031I; it is the only open bet (My Bets badge 1)",
+ "verdict": "PLACED - present and open in My Bets, terms match the receipt"
+}
