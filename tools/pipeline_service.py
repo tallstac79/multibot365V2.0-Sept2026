@@ -97,7 +97,12 @@ def gateway_for(settings):
     if not settings['coordinator_config'].exists():
         return UnconfiguredGateway()
     from core.device_gateway import CoordinatorGateway
-    return CoordinatorGateway(config_path=settings['coordinator_config'])
+    phone = CoordinatorGateway(config_path=settings['coordinator_config'])
+    cfg = Settings.from_dict(settings['pipeline'])
+    if not cfg.desktop_routing_enabled:          # default: the phone alone, unchanged
+        return phone
+    from core.device_routing import gateway, DesktopGateway
+    return gateway(phone, cfg, lambda: DesktopGateway(config_path=ROOT / '.local' / 'desktop_worker.json'))
 
 
 NOTIFY_BATCH = 10   # outbox rows sent per Telegram pass (a backlog never starves operator commands)

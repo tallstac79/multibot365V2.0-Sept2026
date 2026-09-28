@@ -92,6 +92,13 @@ class Settings:
     # needed) and wait for it instead of failing SESSION_REQUIRED straight away.
     session_warmup: bool = True
     session_warmup_timeout_seconds: int = 120
+    # Desktop worker (desktop-chrome) as a routing target: OFF by default; see core/device_routing.py. With it OFF the
+    # service uses the phone gateway alone, exactly as before. ON routes new work to the desktop only while it is
+    # routable (healthy/ready/IDLE, no blocked_reason) AND bound to both expected values below (empty = never routed).
+    desktop_routing_enabled: bool = False
+    desktop_device_id: str = 'desktop-chrome'
+    desktop_expected_worker_id: str = ''
+    desktop_expected_account_fingerprint: str = ''
 
     APPROVAL_MODES = ('manual', 'automatic')
 
