@@ -42,7 +42,8 @@ CONFIG = ROOT / '.local' / 'desktop_worker.json'
 LEDGER = ROOT / '.local' / 'desktop_worker.sqlite3'
 VERSION = 'desktop-0.1.0'
 WATCH_S = 30                                   # Chrome watchdog period (CDP /json/version probe)
-PROBE_S = 120                                  # visual session probe period while idle (screenshot only)
+PROBE_S = 60                                   # visual session probe period while idle (screenshot only); keeps the
+                                               # backend's session report inside its 120 s gate (session_contract)
 BLOCKED_PROBE_S = 12                           # faster read-only probe while a manual block (Reality Check/logout) is open
 TICK_S = 3                                     # watchdog loop granularity
 FAST_PROBE_REASONS = ('REALITY_CHECK', 'LOGGED_OUT', 'SESSION_UNKNOWN')
@@ -335,6 +336,12 @@ class Worker:
                     browser = None
                 if body['action'] == 'PLACE_HELD':
                     result.setdefault('placement', dict(tapped=False, outcome='NOT_TAPPED', detail=result.get('detail')))
+                # a fresh screenshot-only session read BEFORE the result is published, so the backend judges this result
+                # (e.g. the automatic policy on a verified hold) against a session report taken after the run
+                try:
+                    browser, page = await self._probe(pw, browser, page, connect, chrome_up)
+                except Exception:
+                    pass
                 self.ledger.complete(iid, result)
                 self.note_result(result)
                 with self.lock:
