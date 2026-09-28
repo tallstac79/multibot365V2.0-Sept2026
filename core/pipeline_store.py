@@ -92,6 +92,13 @@ CREATE TABLE IF NOT EXISTS device_state (
     device_id TEXT PRIMARY KEY, status TEXT NOT NULL, checked_at TEXT NOT NULL,
     last_online_at TEXT, error TEXT, health TEXT
 );
+-- Durable execution-device identities (28 Sep 2026): which worker and Bet365 account each device ID is. Additive: the
+-- phone's existing records (device_state/session_state keyed by its device_id, bets bound to its worker/account) are not
+-- touched; the desktop worker (desktop-chrome) is registered with its own worker_id and account fingerprint.
+CREATE TABLE IF NOT EXISTS devices (
+    device_id TEXT PRIMARY KEY, kind TEXT NOT NULL, worker_id TEXT, account_fingerprint TEXT,
+    registered_at TEXT NOT NULL, updated_at TEXT NOT NULL, source TEXT
+);
 CREATE TABLE IF NOT EXISTS session_state (
     device_id TEXT PRIMARY KEY, state TEXT NOT NULL, observed_at TEXT NOT NULL,
     reported_at TEXT NOT NULL, source TEXT NOT NULL, detail TEXT
@@ -555,6 +562,32 @@ class Store:
     def device(self, device_id):
         with self.connection() as db:
             return db.execute('SELECT * FROM device_state WHERE device_id=?', (device_id,)).fetchone()
+
+    def register_device(self, device_id, kind, worker_id, account_fingerprint, source='settings'):
+        """Record (or confirm) a device's durable identity. A changed worker/account is updated and audited, never silent.
+        Returns 'REGISTERED', 'UNCHANGED' or 'CHANGED'."""
+        at = iso(self.clock())
+        with self.tx() as db:
+            row = db.execute('SELECT * FROM devices WHERE device_id=?', (device_id,)).fetchone()
+            if row is None:
+                db.execute('INSERT INTO devices VALUES (?,?,?,?,?,?,?)', (device_id, kind, worker_id, account_fingerprint, at, at, source))
+                self.audit(db, 'DEVICE_REGISTERED', dict(kind=kind, worker_id=worker_id, account_fingerprint=account_fingerprint,
+                                                         source=source), device_id=device_id, at=at)
+                return 'REGISTERED'
+            if (row['kind'], row['worker_id'], row['account_fingerprint']) == (kind, worker_id, account_fingerprint):
+                return 'UNCHANGED'
+            db.execute('UPDATE devices SET kind=?, worker_id=?, account_fingerprint=?, updated_at=?, source=? WHERE device_id=?',
+                       (kind, worker_id, account_fingerprint, at, source, device_id))
+            self.audit(db, 'DEVICE_IDENTITY_CHANGED', dict(before=dict(kind=row['kind'], worker_id=row['worker_id'],
+                                                                       account_fingerprint=row['account_fingerprint']),
+                                                           after=dict(kind=kind, worker_id=worker_id, account_fingerprint=account_fingerprint),
+                                                           source=source), device_id=device_id, at=at)
+            return 'CHANGED'
+
+    def device_identity(self, device_id):
+        with self.connection() as db:
+            row = db.execute('SELECT * FROM devices WHERE device_id=?', (device_id,)).fetchone()
+        return dict(row) if row else None
 
     def record_session(self, report, reported_at=None):
         reported_at = reported_at or iso(self.clock())
