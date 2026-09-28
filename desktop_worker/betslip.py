@@ -15,9 +15,12 @@ READ_JS = r"""
   const slip = [...document.querySelectorAll('.bss-StandardBetslip')].find(vis) || null;
   if (!slip) return {present: false, items: []};
   const items = [...slip.querySelectorAll('.bss-NormalBetItem_Title')].filter(vis).map(title => {
-    let item = title; for (let i = 0; i < 6 && item.parentElement && !item.querySelector('.bss-NormalBetItem_Market'); i++) item = item.parentElement;
+    let item = title; for (let i = 0; i < 8 && item.parentElement && !(item.querySelector('.bss-NormalBetItem_Market') && item.querySelector('.bss-NormalBetItem_FixtureDescription')); i++) item = item.parentElement;
+    // the title element also holds the handicap ('Northern Ireland' + '0.0'): the selection is the title's own text
+    const clone = title.cloneNode(true); clone.querySelectorAll('.bss-NormalBetItem_Handicap').forEach(e => e.remove());
+    const own = txt(clone);
     const prices = [...item.querySelectorAll('span, div')].filter(e => vis(e) && e.childElementCount === 0 && /^\d+\.\d{2,3}$/.test(txt(e)));
-    return {title: txt(title), handicap: txt(item.querySelector('.bss-NormalBetItem_Handicap')), market: txt(item.querySelector('.bss-NormalBetItem_Market')),
+    return {title: own || txt(title), handicap: txt(item.querySelector('.bss-NormalBetItem_Handicap')), market: txt(item.querySelector('.bss-NormalBetItem_Market')),
             fixture: txt(item.querySelector('.bss-NormalBetItem_FixtureDescription')), price: prices.length ? txt(prices[0]) : null,
             prices: prices.map(txt), text: txt(item).slice(0, 300)};
   });

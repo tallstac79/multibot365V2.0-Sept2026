@@ -11,6 +11,7 @@ accepted only from the supervised tool, never from the pipeline (the pipeline on
 
 PLACE_HELD and MY_BETS are refused: final action is not enabled on the desktop worker.
 """
+import asyncio
 import json
 import re
 import time
@@ -108,6 +109,10 @@ class DesktopBet365:
 
     async def open_event(self, run, url):
         run.stage('OPEN_EVENT')
+        # A fresh document load, as the phone opens the link in Chrome. A hash-only change inside the running Bet365 app
+        # leaves its state stale: the event showed "no longer available" and the slip answered "Sorry, there has been
+        # an error" (28 Sep 2026), while the same clicks after a full load worked.
+        await self.page.goto('about:blank')
         await self.page.goto(url, wait_until='domcontentloaded', timeout=30000)
         words = []
         reloaded = False
@@ -140,6 +145,19 @@ class DesktopBet365:
                 await self.page.wait_for_timeout(1800)
                 return await run.capture(self.page, 'markets_' + label.lower().replace(' ', '_'))
         return None
+
+    async def element_for(self, quote):
+        """The element showing exactly this quote's price at its read position (document coordinates, +/-3 px), or None.
+        Read-only: the page is never tagged or modified."""
+        sx, sy = await self.page.evaluate('[window.scrollX, window.scrollY]')
+        cx, cy = (quote['bounds'][0] + quote['bounds'][2]) / 2, (quote['bounds'][1] + quote['bounds'][3]) / 2
+        cells = self.page.get_by_text(quote['raw_price'], exact=True)
+        matches = []
+        for i in range(await cells.count()):
+            box = await cells.nth(i).bounding_box()      # the element box contains the centre of the text read
+            if box and box['x'] + sx <= cx <= box['x'] + sx + box['width'] and box['y'] + sy <= cy <= box['y'] + sy + box['height']:
+                matches.append(cells.nth(i))
+        return matches[0] if len(matches) == 1 else None
 
     async def expand(self, run, words, titles):
         """Open collapsed alternative-line groups (Alternative Asian Handicap / Alternative Goal Line) once."""
@@ -249,11 +267,29 @@ class DesktopBet365:
                 f"{pick['market']} {pick['side']} {pick['line']} no longer shown before selecting it")
         run.observe('selection_preflight', fresh, False)
         self._terms(sport, fresh, requested, allowance, minimum)
-        cell = self.page.locator(f'[data-mbq="{fresh["q"]}"]')
-        require(await cell.count() == 1 and (await cell.inner_text()).strip() == fresh['raw_price'], 'PRICE_CHANGED',
-                'Selection cell changed between the read and the click')
-        await cell.click()
-        state = await betslip.wait_items(self.page, 1)
+        cell = await self.element_for(fresh)
+        require(cell is not None, 'PRICE_CHANGED', 'Selection cell changed between the read and the click')
+        # evidence: Bet365's own betslip API exchange for this click (request payload, status, response head)
+        api = []
+
+        async def record(resp):
+            if 'BetsWebAPI' in resp.url:
+                try:
+                    body = (await resp.text())[:1500]
+                except Exception as e:
+                    body = f'<{type(e).__name__}>'
+                api.append(dict(url=resp.url[:160], status=resp.status, post=(resp.request.post_data or '')[:600], body=body,
+                                at_ms=run.ms()))
+        handler = lambda r: asyncio.ensure_future(record(r))
+        self.page.on('response', handler)
+        run.put('click_at_ms', run.ms())
+        try:
+            await cell.click()
+            state = await betslip.wait_items(self.page, 1)
+            await self.page.wait_for_timeout(300)
+        finally:
+            self.page.remove_listener('response', handler)
+        run.put('betslip_api', api)
         await run.capture(self.page, 'slip_selection')
         run.stage('VERIFY_SLIP')
         actual = self._verify_slip(run, state, sport, fresh, teams, requested, allowance, minimum)

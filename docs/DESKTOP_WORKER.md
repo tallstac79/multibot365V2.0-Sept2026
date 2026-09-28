@@ -41,7 +41,19 @@ python -m tools.desktop_supervised --instruction on-xxxxxxxx --mode hold
   the phone's `nearest`, minimum price check, a fresh re-read of the cell before clicking, and slip reading (title,
   handicap, price, market, fixture, stake, To Return, Place Bet). One manual slip capture: AH HOME 0.0 @1.950, stake
   0.10, To Return £0.19, Place Bet enabled, removed again.
-- Stopped: after several automated add/remove cycles, Bet365's slip answered an automated selection click with
-  "Sorry, there has been an error. Please contact us…". The operator reads this as the account being flagged as a
-  bot. The worker fails closed (`BETSLIP_ERROR`). No measures to evade detection are built. The desktop route cannot
-  be treated as a production worker while Bet365 treats it this way.
+- Stopped, cause identified (bisected 28 Sep 2026, every run recording Bet365's own `BetsWebAPI/addbet` exchange):
+  the `addbet` request is byte-identical in passing and failing runs. What decides is whether a script has queried
+  Bet365's betslip elements beforehand:
+
+  | evaluated in the page before the selection click | `addbet` |
+  | --- | --- |
+  | nothing, a 300 ms wait, reading the page text (`layout.read_words`) | accepted |
+  | `document.querySelectorAll('div')` | accepted |
+  | `querySelectorAll('.bss-StandardBetslip')`, even followed by a 3 s wait | `{"cs":2,"sr":-1}`: "Sorry, there has been an error" |
+  | `querySelectorAll('.bss-NormalBetItem_Market')` | the same |
+
+  A plain DOM query has no side effects, so this is Bet365 watching for scripts that inspect its betslip and refusing
+  the next bet-slip addition: an anti-automation check. Reworking the worker so the check does not fire would be
+  designing around Bet365's bot detection, and that is not done. The worker fails closed (`BETSLIP_ERROR`, with the
+  `addbet` exchange in its evidence). Everything before the slip (event, identity, market, line, price, the click
+  target found by text and geometry without modifying the page) works and stays useful for replay and verification.
