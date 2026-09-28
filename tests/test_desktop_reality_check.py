@@ -158,6 +158,18 @@ class RealityCheckRecovery(unittest.TestCase):
         self.assertEqual(len(self.sent), 1)                                    # one BLOCKED, no RESUMED/BLOCKED flapping
         self.assertIn('BLOCKED', self.sent[0])
 
+    def test_dialog_read_without_its_buttons_is_still_a_reality_check(self):
+        """The live frame of 22:31:39 BST: the OCR has the title and text but not the buttons; it was read LOGGED_IN."""
+        from PIL import Image
+        from desktop_worker import lifecycle
+        text = ('Genesis de Comayagua Reserves v Olancho FC Reserves ) Bet Builder Result Goals Half Asian Lines Reality Check '
+                'ime Result Your session has now exceeded 10:53:10 S$ age LO ma Rese ese anc le Chance Oo ; Over/Under You have '
+                'requested a Reality Check after every 60 minutes of play.')
+        header = 'bet365 All Sports In-Play My Bets Casino \u00a34.90'
+        self.assertEqual(lifecycle.classify(header, text)[0], 'REALITY_CHECK')
+        img = Image.open(FIX / 'reality_check_buttons_unread.png').convert('RGB')
+        self.assertEqual(lifecycle.read_state(img)[0], 'REALITY_CHECK')
+
     def test_no_probe_while_executing_or_chrome_down(self):
         w = self.w
         w.note_probe(dict(state='REALITY_CHECK'))

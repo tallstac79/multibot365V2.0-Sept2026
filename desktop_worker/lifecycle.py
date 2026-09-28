@@ -65,7 +65,9 @@ def status(port=chrome.PORT, probe=None, pids=None):
 def classify(header_text, centre_text):
     """Session state from the OCR of the top bar and of the centre of the viewport."""
     h, c = ' '.join((header_text or '').split()), ' '.join((centre_text or '').split())
-    if 'Reality Check' in c and re.search(r'Remain Logged In|Log ?out', c):
+    # any of the dialog's own phrases with its title (28 Sep 2026 22:28-22:32 BST: OCR sometimes misses the buttons while
+    # the dialog is open; the frame was then read as LOGGED_IN from the top bar)
+    if 'Reality Check' in c and re.search(r'Remain Logged In|Log ?out|session has now exceeded|requested a Reality Check|Review Your Account History', c):
         return 'REALITY_CHECK', 'Reality Check dialog open'
     if re.search(r'\bLog In\b', h) or re.search(r'\bJoin\b', h):
         return 'LOGGED_OUT', "top bar shows 'Log In' / 'Join'"
