@@ -36,12 +36,15 @@ final class CompetitionStructure {
 
     static final class Facts {
         boolean women, cup, friendly, federation;
-        final Set<String> level = new TreeSet<>(), letters = new TreeSet<>();
+        /** letters: standalone tier letters ("Serie A", "Primera B"); gluedLetters: a letter glued to the tier number
+         *  ("A3" in "Campeonato Paraense A3"), a qualifier of that numbered tier. */
+        final Set<String> level = new TreeSet<>(), letters = new TreeSet<>(), gluedLetters = new TreeSet<>();
         final Set<Integer> tiers = new TreeSet<>();
         String country;          // a known country named by the text itself (normalised), or null
         final List<String> core = new ArrayList<>();
         String describe() {
             return "women=" + women + " level=" + level + " tier=" + (tiers.isEmpty() ? "top" : tiers.toString()) + " letters=" + letters
+                    + (gluedLetters.isEmpty() ? "" : " glued=" + gluedLetters)
                     + " cup=" + cup + " friendly=" + friendly + " federation=" + federation + (country == null ? "" : " country=" + country);
         }
     }
@@ -116,7 +119,7 @@ final class CompetitionStructure {
             Matcher glued = Pattern.compile("^([a-z]{1,3})([1-9])$").matcher(t);   // "b2", "nb1"
             if (glued.matches() && !t.startsWith("u")) {
                 f.tiers.add(Integer.parseInt(glued.group(2)));
-                if (glued.group(1).matches("[a-e]")) f.letters.add(glued.group(1)); else f.core.add(glued.group(1));
+                if (glued.group(1).matches("[a-e]")) f.gluedLetters.add(glued.group(1)); else f.core.add(glued.group(1));
                 continue;
             }
             if (t.matches("[a-e]")) { f.letters.add(t); continue; }
@@ -135,7 +138,15 @@ final class CompetitionStructure {
         if (feed.women != page.women) out.add("gender (women's " + (feed.women ? "feed only" : "page only") + ")");
         if (!feed.level.equals(page.level)) out.add("age/reserve level " + feed.level + " vs " + page.level);
         if (!feed.tiers.equals(page.tiers)) out.add("tier " + tier(feed) + " vs " + tier(page));
-        if (!feed.letters.equals(page.letters)) out.add("tier letter " + feed.letters + " vs " + page.letters);
+        // Tier letters: any two different letters conflict, and a standalone letter on one side only conflicts (Serie A /
+        // Serie B / Serie). A letter glued to the tier number on one side only is that tier's qualifier and, with the same
+        // tier number on both sides, not a contradiction: real case 27 Sep 2026 (Tesla v Pedreira EC, on-4f6bf84b) feed
+        // "Paraense 3" / page "Brazil Campeonato Paraense A3".
+        Set<String> fl = new TreeSet<>(feed.letters), pl = new TreeSet<>(page.letters);
+        fl.addAll(feed.gluedLetters); pl.addAll(page.gluedLetters);
+        boolean gluedQualifierOnly = (fl.isEmpty() && page.letters.isEmpty() && !page.tiers.isEmpty())
+                || (pl.isEmpty() && feed.letters.isEmpty() && !feed.tiers.isEmpty());
+        if (!fl.equals(pl) && !gluedQualifierOnly) out.add("tier letter " + fl + " vs " + pl);
         if (feed.cup != page.cup) out.add("cup vs league");
         if (feed.friendly != page.friendly) out.add("friendly vs competitive");
         if (feed.federation != page.federation) out.add("federation (RFEF) qualifier on one side only");

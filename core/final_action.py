@@ -93,6 +93,24 @@ def _team(value):
     return ' '.join(str(value or '').lower().split())
 
 
+def proven_not_placed(db, other):
+    """True only when an earlier attempt is PROVEN never to have produced a bet: its bets row says NOT_PLACED /
+    NOT_PLACED_CLAIMED, or (no bets row) it ended outside every tap state with the phone's own placement record saying the
+    Place Bet control was never tapped (outcome NOT_TAPPED, tapped false). Anything uncertain is not proven.
+    Real case 28 Sep 2026 (Goianesia): on-ca9b37ac8 failed the pre-tap check (NOT_TAPPED) and the fresh alert on-63771575
+    for the same selection was refused as a duplicate."""
+    bet = db.execute('SELECT status FROM bets WHERE instruction_id=?', (other['instruction_id'],)).fetchone()
+    if bet is not None:
+        return bet['status'] in NOT_PLACED_STATUSES
+    if other['state'] in TAP_STATES or other['state'] == 'COMPLETED':
+        return False
+    try:
+        placement = json.loads(other['placement'] or 'null')
+    except (TypeError, ValueError):
+        return False
+    return isinstance(placement, dict) and placement.get('tapped') is False and placement.get('outcome') == 'NOT_TAPPED'
+
+
 def market_already_bet(db, row):
     """None, or why `row` must not be bet: a bet on the SAME market of the SAME game was already taken - placed, possibly
     placed (UNKNOWN / unresolved), or a tap in flight. An attempt proven not placed (NOT_PLACED / NOT_PLACED_CLAIMED, or
@@ -326,9 +344,10 @@ class FinalAction:
         breach = self.limit_breach(db, row)
         check('stake_and_daily_limits', breach is None, breach or 'within limits')
         # 6. duplicates and unresolved placements
-        dup = db.execute("SELECT instruction_id, state FROM instructions WHERE selection_key=? AND instruction_id!=? "
-                         "AND (execution_mode='dispatch' OR state IN ('COMPLETED','PLACEMENT_UNKNOWN','APPROVED'))",
-                         (row['selection_key'], row['instruction_id'])).fetchall()
+        dup = [d for d in db.execute("SELECT instruction_id, state, placement FROM instructions WHERE selection_key=? AND instruction_id!=? "
+                                     "AND (execution_mode='dispatch' OR state IN ('COMPLETED','PLACEMENT_UNKNOWN','APPROVED'))",
+                                     (row['selection_key'], row['instruction_id'])).fetchall()
+               if not proven_not_placed(db, d)]      # an attempt proven never tapped is not a duplicate execution
         check('no_duplicate_execution', not dup, ', '.join(f"{d['instruction_id'][:12]}={d['state']}" for d in dup) or 'none')
         blocking, quarantined = self.unresolved_placements(db, row)
         in_flight = db.execute("SELECT instruction_id FROM instructions WHERE state IN ('APPROVED','DISPATCHED','DEVICE_ACTIVE') "

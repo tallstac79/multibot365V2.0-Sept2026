@@ -17,9 +17,9 @@ from core.execution_terms import minimum_price, line_allowance
 from core.market_interpretation import ACTIONABLE_SIGNALS, SHARP_SOURCE, VERSION, sharp_signal, dec
 from core.moneyline import VERSION as ML_VERSION, PROFILE as ML_PROFILE, sharp_signal as moneyline_sharp_signal
 from core.football import (VERSION as FOOTBALL_VERSION, PROFILE_1X2 as FOOTBALL_1X2_PROFILE, PROFILE_TWO_SIDED as FOOTBALL_TWO_SIDED_PROFILE,
-                           SIDES as FOOTBALL_SIDES, sharp_signal_for_alert as football_sharp_signal)
+                           SIDES as FOOTBALL_SIDES, sharp_signal_for_alert as football_sharp_signal, in_play_link)
 
-ENGINE_VERSION = 'rules-8-football'
+ENGINE_VERSION = 'rules-9-prematch-link'
 ACCEPT, REJECT, STALE = 'ACCEPT', 'REJECT', 'STALE'
 
 
@@ -175,6 +175,15 @@ def evaluate(alert, config, *, instruction_id, received_at, now=None):
     sport, market = alert.get('sport'), alert.get('market')
     rule = config['sports'].get(sport, {}).get('markets', {}).get(market)
     check('known_market', rule is not None, f'{sport} {market}' if rule else f'unsupported sport/market {sport} {market}')
+    if not football:
+        # An in-play Bet365 link (#/IP/EV...) is not an event page the phone can open (only #/AC/ links are), so it used to
+        # be dropped and the run fell into Search, which cannot verify a live event (27 Sep 2026 Shahrdari Gorgan v
+        # Sagesse, on-f91b5ce9: WRONG_EVENT "Search event context not verified" after a full Search run). Refused here,
+        # before dispatch. Football already refuses it in football_same_side_offer. No link at all still uses Search.
+        in_play = in_play_link(alert.get('comparison_url'))
+        check('pre_match_link', not in_play,
+              'Bet365 link is an in-play page (#/IP/): no pre-match event page to open; not sent to Search' if in_play
+              else 'no in-play Bet365 link')
     check('global_enabled', g['enabled'], 'global rules enabled' if g['enabled'] else 'global rules disabled')
     if rule is not None:
         check('market_enabled', rule['enabled'], f'{sport} {market} ' + ('enabled' if rule['enabled'] else 'disabled'))

@@ -247,6 +247,16 @@ final class EventIdentity {
         return j == s.length();
     }
 
+    /** short (2-3 letters) is an initialism of word (>= 4 letters): same initial, every letter in order inside word, and
+     *  not a plain prefix ("mu" / "mapua"; not "ma" / "mapua"). */
+    private static boolean initialism(String shortWord, String word) {
+        if (!shortWord.matches("[a-z]{2,3}") || !word.matches("[a-z]{4,}") || shortWord.charAt(0) != word.charAt(0) || word.startsWith(shortWord))
+            return false;
+        int j = 0;
+        for (int i = 0; i < word.length() && j < shortWord.length(); i++) if (word.charAt(i) == shortWord.charAt(j)) j++;
+        return j == shortWord.length();
+    }
+
     /** Inflected stem: one is a prefix of the other and nearly all of it ("sopron" / "soproni" 0.86). Returns the ratio or 0. */
     private static double stem(String t, String u) {
         String s = t.length() <= u.length() ? t : u, l = t.length() <= u.length() ? u : t;
@@ -399,6 +409,16 @@ final class EventIdentity {
             if (core != null && wordsBothSides && full >= 1)
                 return new TokenEvidence("shared_core", STRONG, Level.VARIANT, "shared core [" + core + "]; " + unexplained + " vs " + extra
                         + " unexplained on each side (event-scoped only)", shared, unexplained, extra, true);
+            // Bookmaker initialism of one feed word next to a shared core ("Mapua Cardinals" / "MU Cardinals", NCAA
+            // Philippines, 28 Sep 2026 on-8fc5bdf9): exactly one word left on each side, the bookmaker's is 2-3 letters with
+            // the feed word's initial, in order inside it and not a plain prefix of it. Event-scoped evidence only (never an
+            // alias), usable only next to a sure opponent under the alert's own link with an agreeing kick-off (resolve).
+            if (core != null && full >= 1 && unexplained.size() == 1 && extra.size() == 1) {
+                String bookWord = feedIsShort ? extra.get(0) : unexplained.get(0), feedWord = feedIsShort ? unexplained.get(0) : extra.get(0);
+                if (initialism(bookWord, feedWord))
+                    return new TokenEvidence("initialism", STRONG, Level.VARIANT, "shared core [" + core + "]; '" + bookWord
+                            + "' is the initialism of '" + feedWord + "' (event-scoped only)", shared, unexplained, extra, true);
+            }
             if (full >= 1 && ds.size() >= 2)
                 return new TokenEvidence("partial", Math.min(0.5, (double) full / ds.size()), Level.WEAK,
                         "shared " + shared + " but " + unexplained + " has no counterpart", shared, unexplained, extra, extraOnSecond);

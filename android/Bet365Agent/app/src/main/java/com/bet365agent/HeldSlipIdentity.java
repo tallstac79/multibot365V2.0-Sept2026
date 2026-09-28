@@ -27,12 +27,29 @@ final class HeldSlipIdentity {
             if (line.top <= marketY || line.top > marketY + 90 || line.bottom >= placeTop) continue;
             String[] pair = EventPage.teams(java.util.Collections.singletonList(line.text));
             if (pair != null) {
-                if (!EventIdentity.normalise(home).equals(EventIdentity.normalise(pair[0])) ||
-                    !EventIdentity.normalise(away).equals(EventIdentity.normalise(pair[1]))) return false;
+                if (!sameSlipName(home, pair[0]) || !sameSlipName(away, pair[1])) return false;
                 fixtures++;
             }
         }
         return fixtures == 1;
+    }
+
+    /** The slip's team name is the page's held name, read again by OCR. Equal after normalisation, or equal once the glyphs
+     *  OCR swaps in this font are folded on BOTH sides (capital I / lower-case l / j / 1, and 0 / O): real case 28 Sep 2026
+     *  (Brujos de Izalco BC v Santa Ana, on-d5a1b6dd): the held page name was "Brujos Izalco", the slip line read
+     *  "Brujos lzalco vs Santa Ana", and the slip check refused the correct slip three times; 27 Sep 2026 Goianesia v
+     *  Mineiros (on-ca9b37ac8): the pre-tap slip read "Gojanesia v Mineiros" and the run reported "line and price unreadable"
+     *  instead of the real reason (the slip price had dropped to 1.775, below the 1.86 minimum). Only the character shapes are
+     *  folded: token count, order and every other letter must still agree, so a different team is still refused. */
+    static boolean sameSlipName(String held, String slip) {
+        String a = EventIdentity.normalise(held), b = EventIdentity.normalise(slip);
+        return a.equals(b) || (a.length() == b.length() && glyphs(a).equals(glyphs(b)));
+    }
+
+    private static String glyphs(String normalised) {
+        StringBuilder sb = new StringBuilder(normalised.length());
+        for (char c : normalised.toCharArray()) sb.append(c == 'l' || c == 'j' || c == '1' ? 'i' : c == '0' ? 'o' : c);
+        return sb.toString();
     }
 
     /** Slip market labels (EventIdentity.plain form) for a wire market; 1X2 is the phone's three-way MONEYLINE. */
