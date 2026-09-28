@@ -1,0 +1,41 @@
+{
+ "instruction_id": "recheck-02-swe-ah-home-0",
+ "run_id": "d_7de4729c53b947a88e00",
+ "worker": "desktop",
+ "wager_submitted": false,
+ "device_stage": "OPEN_EVENT",
+ "route": "event_link",
+ "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201150132/F3/I1/",
+ "operator_alert": {
+  "code": "REALITY_CHECK_OPEN",
+  "severity": "ERROR",
+  "stage": "SESSION_EXPIRED",
+  "at": "2026-09-28T16:38:42+01:00",
+  "at_ms": 1790609922133,
+  "instruction_id": "recheck-02-swe-ah-home-0",
+  "run_id": "d_7de4729c53b947a88e00",
+  "message": "Bet365 Reality Check is open; answer it on the mini PC to continue (desktop worker stopped at 2026-09-28 16:38:42+01:00; it never answers the dialog)"
+ },
+ "status": "FAIL",
+ "stage": "SESSION_EXPIRED",
+ "detail": "Bet365 Reality Check is open; answer it on the mini PC to continue (desktop worker stopped at 2026-09-28 16:38:42+01:00; it never answers the dialog). Bet365 'Reality Check' dialog is open: answer it by hand in the worker's Chrome window (the worker never answers it)",
+ "duration_ms": 6796,
+ "stage_timings": [],
+ "progress": {
+  "stage": "OPEN_EVENT",
+  "elapsed_ms": 6796,
+  "stages": [
+   {
+    "stage": "STARTED",
+    "elapsed_ms": 0,
+    "at_ms": 1790609915349
+   },
+   {
+    "stage": "OPEN_EVENT",
+    "elapsed_ms": 0,
+    "at_ms": 1790609915349
+   }
+  ]
+ },
+ "execution_count": 1
+}

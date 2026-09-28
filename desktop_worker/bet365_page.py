@@ -7,6 +7,7 @@ line as the phone writes it) so the phone's own decisions (decisions.py) and the
 Anything that does not read cleanly is left out; the caller fails closed when the requested quote is missing.
 """
 import re
+import unicodedata
 
 from desktop_worker.layout import lines
 
@@ -22,6 +23,24 @@ FOOTBALL_1X2 = ('Full Time Result',)
 FOOTBALL_TOTALS = ('Goals Over/Under', 'Alternative Total Goals', 'Goal Line', 'Alternative Goal Line')
 FOOTBALL_AH = ('Asian Handicap', 'Alternative Asian Handicap')
 BASKETBALL_LINES = ('Game Lines',)
+
+
+# The phone's header transliteration (EventPage.teams): the event's teams arrive folded ("Turkiye") while the market rows
+# show the page's own spelling ("T\u00fcrkiye"), so team names are compared with the same folding applied to BOTH sides.
+_TRANSLIT = str.maketrans({'\u00f8': 'o', '\u00d8': 'O', '\u0142': 'l', '\u0141': 'L', '\u00df': 's', '\u00e6': 'a', '\u00c6': 'A',
+                           '\u0111': 'd', '\u0110': 'D'})
+
+
+def fold_name(text):
+    """A team name as the phone's EventPage.teams writes it: accents transliterated, other symbols dropped."""
+    s = unicodedata.normalize('NFD', unicodedata.normalize('NFKC', text or ''))
+    s = ''.join(c for c in s if not unicodedata.category(c).startswith('M')).translate(_TRANSLIT)
+    return re.sub(r'\s+', ' ', re.sub(r"[^A-Za-z0-9/ .'&()-]", ' ', s)).strip()
+
+
+def same_team(page_text, team):
+    """The page's team label is the event's team (the phone's folding on both sides; otherwise exact)."""
+    return page_text == team or (bool(fold_name(team)) and fold_name(page_text) == fold_name(team))
 
 
 def center(words):
@@ -168,7 +187,7 @@ def football_quotes(words, home, away, norm_line):
                 prices = [i for i, w in enumerate(ws) if is_price(w['text'])]
                 if len(prices) == 3 and all(i > 0 and not is_price(ws[i - 1]['text']) for i in prices):
                     names = [ws[i - 1]['text'] for i in prices]
-                    if names == [home, 'Draw', away]:
+                    if same_team(names[0], home) and names[1] == 'Draw' and same_team(names[2], away):
                         for i, side in zip(prices, ('HOME', 'DRAW', 'AWAY')):
                             out.append(_quote('MONEYLINE', side, '', ws[i], ws[i - 1]['text'], title))
                     break
@@ -187,7 +206,7 @@ def football_quotes(words, home, away, norm_line):
                     out.append(_quote('TOTAL', 'OVER', line, ws[1], 'Over', title))
                     out.append(_quote('TOTAL', 'UNDER', line, ws[2], 'Under', title))
         elif title in FOOTBALL_AH:
-            head = next(((t, ws) for t, ws in rows if [w['text'] for w in ws] == [home, away]), None)
+            head = next(((t, ws) for t, ws in rows if len(ws) == 2 and same_team(ws[0]['text'], home) and same_team(ws[1]['text'], away)), None)
             if head is None:
                 continue
             for t, ws in rows:
@@ -212,6 +231,15 @@ def collapsed(words, titles):
                     out.append((title, ws[0]))
                     break
     return out
+
+
+def layout_signature(words):
+    """The market area's layout below the tab strip: every word's text and box, prices masked (a price tick is not a
+    layout change). Two consecutive reads with the same signature = the layout has settled."""
+    strip = tab_strip(words)
+    below = strip[0] if strip else 0
+    return tuple((('#' if is_price(w['text']) else w['text']), w['l'], w['t'], w['r'], w['b'])
+                 for w in sorted(center(words), key=lambda w: (w['t'], w['l'], w['text'])) if w['t'] > below)
 
 
 def logged_in(words):

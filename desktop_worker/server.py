@@ -68,6 +68,7 @@ class Worker:
         self.current = None
         self.started = time.monotonic()
         self.session = dict(state='UNKNOWN', observed_at_ms=0, detail='no session check yet')
+        self.operator_alert = None            # e.g. Bet365 Reality Check open: the operator must answer it on the mini PC
         self.lock = threading.Lock()
         if start_executor:
             threading.Thread(target=self._executor, daemon=True).start()
@@ -82,7 +83,12 @@ class Worker:
                     local_execution=dict(enabled=False, worker_id=self.cfg['worker_id'],
                                          authorised_account_fingerprint=self.cfg.get('account_fingerprint'),
                                          last_reason='final action is not enabled on the desktop worker (supervised build)'),
-                    last_result=self.ledger.last_result(), restarted_pending=self.closed_at_start, pid=os.getpid())
+                    last_result=self.ledger.last_result(), restarted_pending=self.closed_at_start, pid=os.getpid(),
+                    operator_alert=self.operator_alert)
+
+    def note_result(self, result):
+        """The latest result's operator alert (None clears it: a later run got past the dialog)."""
+        self.operator_alert = result.get('operator_alert') if isinstance(result, dict) else None
 
     def validate(self, body):
         if not isinstance(body, dict):
@@ -167,6 +173,7 @@ class Worker:
                 if body['action'] == 'PLACE_HELD':
                     result.setdefault('placement', dict(tapped=False, outcome='NOT_TAPPED', detail=result.get('detail')))
                 self.ledger.complete(iid, result)
+                self.note_result(result)
                 with self.lock:
                     self.current = None
 

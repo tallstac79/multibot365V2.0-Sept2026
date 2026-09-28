@@ -21,6 +21,7 @@ import json
 import re
 import time
 import uuid
+from datetime import datetime
 from pathlib import Path
 
 from desktop_worker import bet365_page as bp
@@ -32,6 +33,11 @@ EVENT_URL = re.compile(r'^https://www\.bet365\.com/#/AC/B(\d{1,3})(/[A-Z]\d{1,12
 SPORT_CODES = {'1': 'football', '18': 'basketball'}
 EVIDENCE = Path(__file__).resolve().parents[1] / '.local' / 'desktop-evidence'
 CLOSED = 'Sorry, this page is no longer available'
+# Operator notices go to a JSON-lines file under logs/: the dashboard's Technical logs page tails logs/*.log.
+OPERATOR_LOG = Path(__file__).resolve().parents[1] / 'logs' / 'desktop_worker.log'
+# An expanded alternative-line group is read only once two consecutive layout reads agree (the rows render before the
+# groups below it move down: 28 Sep 2026, final-11, the 0.0 line was filed under the next group's title).
+SETTLE_GAP_MS, SETTLE_READS = 400, 15
 
 
 class Failure(Exception):
@@ -138,7 +144,7 @@ class DesktopBet365:
             words = await self.words()
             if _reality_check(words):
                 await run.capture(self.page, 'reality_check', words)
-                raise Failure('SESSION_EXPIRED', "Bet365 'Reality Check' dialog is open: answer it by hand in the worker's Chrome window "
+                raise reality_check_failure(run, "Bet365 'Reality Check' dialog is open: answer it by hand in the worker's Chrome window "
                                                  '(the worker never answers it)')
             if self.d.call('teams', bp.header(words)) is not None and bp.logged_in(words) is not None:
                 break
@@ -190,7 +196,24 @@ class DesktopBet365:
                 if not any(t == title for t, _ in bp.collapsed(await self.words(), (title,))):
                     break
             opened = True
-        return await run.capture(self.page, 'markets_expanded') if opened else words
+            words = await self.settled(run, title)
+        return await run.capture(self.page, 'markets_expanded', words) if opened else words
+
+    async def settled(self, run, title):
+        """The page layout once two consecutive reads (the same read-only layout read) agree; fails closed if it keeps
+        moving. Stops the rows of an expanding group being filed under the titles of the groups below it."""
+        previous = None
+        for k in range(SETTLE_READS):
+            await self.page.wait_for_timeout(SETTLE_GAP_MS)
+            words = await self.words()
+            signature = bp.layout_signature(words)
+            if signature == previous:
+                run.put('expand_settle', dict(group=title, reads=k + 1))
+                return words
+            previous = signature
+        await run.capture(self.page, 'markets_unsettled', words)
+        raise Failure('EVENT_NOT_VERIFIED', f"'{title}' layout still changing after {SETTLE_READS} reads "
+                                            f'({SETTLE_READS * SETTLE_GAP_MS} ms): nothing read from it')
 
     # ------------------------------------------------------------------ session
     async def session(self, run):
@@ -286,7 +309,7 @@ class DesktopBet365:
         state = vs.read_slip(img)
         if not state['present'] and vs.reality_check(img):
             run.save_look(name, png, state)
-            raise Failure('SESSION_EXPIRED', "Bet365 'Reality Check' dialog is open: answer it by hand in the worker's Chrome window")
+            raise reality_check_failure(run, "Bet365 'Reality Check' dialog is open: answer it by hand in the worker's Chrome window")
         return run.save_look(name, png, state)
 
     async def empty_slip(self, run):
@@ -547,6 +570,26 @@ class DesktopBet365:
 
 REREAD_STAGES = {'LINE_CHANGED', 'PRICE_CHANGED', 'STAKE_REJECTED', 'SELECTION_CHANGED', 'WRONG_EVENT', 'TARGET_NOT_FOUND',
                  'BETSLIP_NOT_SINGLE', 'BETSLIP_ERROR'}
+
+
+def reality_check_failure(run, detail):
+    """SESSION_EXPIRED for an open Reality Check (never answered by the worker) plus the operator notice: a structured
+    `operator_alert` on the result (and so on /health) and an ERROR line in logs/desktop_worker.log (dashboard logs)."""
+    at = datetime.now().astimezone()
+    alert = dict(code='REALITY_CHECK_OPEN', severity='ERROR', stage='SESSION_EXPIRED', at=at.isoformat(timespec='seconds'),
+                 at_ms=int(at.timestamp() * 1000), instruction_id=run.i.get('instruction_id'), run_id=run.run_id,
+                 message=f"Bet365 Reality Check is open; answer it on the mini PC to continue "
+                         f"(desktop worker stopped at {at.isoformat(sep=' ', timespec='seconds')}; it never answers the dialog)")
+    run.put('operator_alert', alert)
+    try:
+        OPERATOR_LOG.parent.mkdir(parents=True, exist_ok=True)
+        with OPERATOR_LOG.open('a', encoding='utf-8') as f:
+            f.write(json.dumps(dict(timestamp=alert['at'], component='desktop_worker', severity='ERROR', device_id='desktop-chrome',
+                                    instruction_id=alert['instruction_id'], run_id=alert['run_id'], code=alert['code'],
+                                    stage=alert['stage'], message=alert['message']), ensure_ascii=False) + '\n')
+    except OSError as e:                      # the result still carries the alert
+        run.record.setdefault('evidence_errors', []).append(f'operator log: {e}')
+    return Failure('SESSION_EXPIRED', f"{alert['message']}. {detail}")
 
 
 def _reality_check(words):
