@@ -1,0 +1,162 @@
+{
+ "healthy": true,
+ "ready": true,
+ "blocked_reason": null,
+ "heartbeat_ms": 1790624578028,
+ "uptime_ms": 155108,
+ "state": "IDLE",
+ "current_instruction": null,
+ "app_version": "desktop-0.1.0",
+ "version_code": 1,
+ "kind": "desktop_chrome",
+ "device_id": "desktop-chrome",
+ "worker_id": "dw-bde27aa2fe41",
+ "account_fingerprint": "f210d5f9dde5",
+ "session": "{\"state\": \"AUTHENTICATED\", \"visual_state\": \"LOGGED_IN\", \"observed_at_ms\": 1790624544567, \"detail\": \"top bar shows 'My Bets' / the balance\", \"source\": \"probe\"}",
+ "phone_final_action_armed": false,
+ "final_action_armed": false,
+ "local_execution": {
+  "enabled": false,
+  "worker_id": "dw-bde27aa2fe41",
+  "authorised_account_fingerprint": "f210d5f9dde5",
+  "last_reason": "desktop PLACE_HELD is a dry run unless live_click_enabled and DESKTOP_LIVE_CLICK=1"
+ },
+ "desktop_final_action": {
+  "live_click_enabled": false,
+  "dry_run": true,
+  "max_stake_per_bet": "0.10",
+  "hold_max_age_seconds": 115,
+  "max_daily_live_stake": "0.50"
+ },
+ "last_result": {
+  "instruction_id": "rt-e2e-mybets-2",
+  "run_id": "d_d302d10d9ec145a8907f",
+  "worker": "desktop",
+  "wager_submitted": false,
+  "device_stage": "READ_MY_BETS",
+  "status": "PASS",
+  "stage": "MY_BETS_READ",
+  "my_bets": {
+   "view": "OPEN",
+   "url": "https://www.bet365.com/#/MB/UB",
+   "lines": [
+    {
+     "text": "bet365.com/#/MB/UB",
+     "frame": 1,
+     "top": 0,
+     "left": 0
+    },
+    {
+     "text": "lve Seed",
+     "frame": 1,
+     "top": 91,
+     "left": 93
+    },
+    {
+     "text": "\u00a30.10 Single",
+     "frame": 1,
+     "top": 144,
+     "left": 48
+    },
+    {
+     "text": "Reuse Selections",
+     "frame": 1,
+     "top": 185,
+     "left": 632
+    },
+    {
+     "text": "Draw 3.50",
+     "frame": 1,
+     "top": 227,
+     "left": 51
+    },
+    {
+     "text": "Full Time Result",
+     "frame": 1,
+     "top": 247,
+     "left": 70
+    },
+    {
+     "text": "Turkiye 0",
+     "frame": 1,
+     "top": 281,
+     "left": 47
+    },
+    {
+     "text": "italy HalfTame 3",
+     "frame": 1,
+     "top": 306,
+     "left": 47
+    },
+    {
+     "text": "45:00 bed",
+     "frame": 1,
+     "top": 329,
+     "left": 47
+    },
+    {
+     "text": "Stake To Retum",
+     "frame": 1,
+     "top": 382,
+     "left": 47
+    },
+    {
+     "text": "\u00a30.10 \u00a30.35",
+     "frame": 1,
+     "top": 402,
+     "left": 48
+    }
+   ],
+   "frames": 1
+  },
+  "detail": "My Bets read: 10 OCR lines (read-only; nothing on a bet was clicked)",
+  "match": {
+   "found": true,
+   "confidence": "EXACT",
+   "window": "\u00a30.10 Single | Reuse Selections | Draw 3.50 | Full Time Result | Turkiye 0 | italy HalfTame 3 | 45:00 bed | Stake To Retum | \u00a30.10 \u00a30.35",
+   "checks": {
+    "fixture": true,
+    "selection": true,
+    "stake": true,
+    "odds": true
+   },
+   "bet_reference": null,
+   "status": null,
+   "returns": null,
+   "card_key": "\u00a30.10 single | draw 3.50 | \u00a30.10 \u00a30.35"
+  },
+  "duration_ms": 4389,
+  "stage_timings": [],
+  "progress": {
+   "stage": "READ_MY_BETS",
+   "elapsed_ms": 4389,
+   "stages": [
+    {
+     "stage": "STARTED",
+     "elapsed_ms": 0,
+     "at_ms": 1790624148232
+    },
+    {
+     "stage": "OPEN_MY_BETS",
+     "elapsed_ms": 14,
+     "at_ms": 1790624148239
+    },
+    {
+     "stage": "READ_MY_BETS",
+     "elapsed_ms": 1125,
+     "at_ms": 1790624149346
+    }
+   ]
+  },
+  "execution_count": 1
+ },
+ "restarted_pending": [],
+ "pid": 11204,
+ "operator_alert": null,
+ "chrome": {
+  "state": "UP",
+  "cdp_up": true,
+  "checked_at_ms": 1790624572965,
+  "last_recovery": null
+ }
+}
