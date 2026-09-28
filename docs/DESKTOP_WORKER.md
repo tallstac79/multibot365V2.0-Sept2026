@@ -32,3 +32,16 @@ python -m desktop_worker.server
 python -m tools.desktop_supervised --manual evidence/desktop-worker/manual_nir_ah_home.json --mode discover
 python -m tools.desktop_supervised --instruction on-xxxxxxxx --mode hold
 ```
+
+## Status, 28 Sep 2026 (supervised trials on a separate account)
+
+- Proven: loopback worker contract, session check, event link opened (a hash-only navigation can show a stale "no
+  longer available" page, so the worker reloads once), EXACT identity from the phone's decision code, market discovery
+  (Popular, then Goals / Asian Lines, then the market's own alternative group), exact line first, the ±0.25 band via
+  the phone's `nearest`, minimum price check, a fresh re-read of the cell before clicking, and slip reading (title,
+  handicap, price, market, fixture, stake, To Return, Place Bet). One manual slip capture: AH HOME 0.0 @1.950, stake
+  0.10, To Return £0.19, Place Bet enabled, removed again.
+- Stopped: after several automated add/remove cycles, Bet365's slip answered an automated selection click with
+  "Sorry, there has been an error. Please contact us…". The operator reads this as the account being flagged as a
+  bot. The worker fails closed (`BETSLIP_ERROR`). No measures to evade detection are built. The desktop route cannot
+  be treated as a production worker while Bet365 treats it this way.

@@ -18,11 +18,13 @@ import uuid
 from pathlib import Path
 
 from desktop_worker import bet365_page as bp
+from desktop_worker import betslip
 from desktop_worker.layout import as_text, read_words
 
 EVENT_URL = re.compile(r'^https://www\.bet365\.com/#/AC/B(\d{1,3})(/[A-Z]\d{1,12}){2,8}/?$')
 SPORT_CODES = {'1': 'football', '18': 'basketball'}
 EVIDENCE = Path(__file__).resolve().parents[1] / '.local' / 'desktop-evidence'
+CLOSED = 'Sorry, this page is no longer available'
 
 
 class Failure(Exception):
@@ -108,11 +110,21 @@ class DesktopBet365:
         run.stage('OPEN_EVENT')
         await self.page.goto(url, wait_until='domcontentloaded', timeout=30000)
         words = []
-        for attempt in range(12):                 # the event header renders after the shell
+        reloaded = False
+        for attempt in range(14):                 # the event header renders after the shell
             await self.page.wait_for_timeout(700 if attempt else 1800)
             words = await self.words()
-            if self.d.call('teams', bp.header(words)) is not None:
+            if self.d.call('teams', bp.header(words)) is not None and bp.logged_in(words) is not None:
                 break
+            if any(CLOSED in w['text'] for w in words):
+                # A hash-only navigation can leave Bet365's page state stale and show the closed notice for an open
+                # event (28 Sep 2026: NIR v Hungary / BC Dubai v Barcelona); one full reload decides.
+                if reloaded:
+                    await run.capture(self.page, 'event_closed', words)
+                    raise Failure('SUSPENDED', 'Bet365 event page: betting has closed or been suspended (no search fallback)')
+                reloaded = True
+                run.put('event_reloaded', True)
+                await self.page.reload(wait_until='domcontentloaded', timeout=30000)
         return await run.capture(self.page, 'event_direct', words)
 
     async def open_tab(self, run, label):
@@ -134,7 +146,10 @@ class DesktopBet365:
         opened = False
         for title, _ in bp.collapsed(words, titles):
             await self.page.get_by_text(title, exact=True).first.click()
-            await self.page.wait_for_timeout(900)
+            for _ in range(10):                   # until its rows render (they load after the click)
+                await self.page.wait_for_timeout(400)
+                if not any(t == title for t, _ in bp.collapsed(await self.words(), (title,))):
+                    break
             opened = True
         return await run.capture(self.page, 'markets_expanded') if opened else words
 
@@ -217,7 +232,102 @@ class DesktopBet365:
             raise Failure('BELOW_MINIMUM', f"Visible price {pick['price']} is below minimum {minimum}")
         if mode == 'discover':
             return 'DISCOVERED', f"{pick['market']} {pick['side']} {pick['line']} @ {pick['price']} (supervised discovery; nothing added to the slip)"
-        raise Failure('INTERNAL_ERROR', 'Betslip stage not implemented yet on the desktop worker')
+        return await self.slip(run, sport, pick, teams, requested, allowance, minimum, i['stake'], mode)
+
+    # ------------------------------------------------------------------ betslip (never presses Place Bet)
+    async def slip(self, run, sport, pick, teams, requested, allowance, minimum, stake, mode):
+        run.stage('CLEAR_BETSLIP')
+        require(await betslip.clear(self.page), 'BETSLIP_NOT_SINGLE', 'Betslip could not be cleared before the selection')
+        run.put('betslip_clear', True)
+        # fresh read of the chosen cell immediately before the click: same element, same line, terms still acceptable
+        run.stage('OPEN_SELECTION')
+        words = await self.words()
+        quotes = bp.basketball_quotes(words, *teams) if sport == 'basketball' else bp.football_quotes(words, *teams, self.d.norm_line)
+        fresh = next((q for q in quotes if q['market'] == pick['market'] and q['side'] == pick['side'] and _same(q['line'], pick['line'])
+                      and q['group'] == pick['group']), None)
+        require(fresh is not None and fresh['q'] is not None, 'LINE_CHANGED',
+                f"{pick['market']} {pick['side']} {pick['line']} no longer shown before selecting it")
+        run.observe('selection_preflight', fresh, False)
+        self._terms(sport, fresh, requested, allowance, minimum)
+        cell = self.page.locator(f'[data-mbq="{fresh["q"]}"]')
+        require(await cell.count() == 1 and (await cell.inner_text()).strip() == fresh['raw_price'], 'PRICE_CHANGED',
+                'Selection cell changed between the read and the click')
+        await cell.click()
+        state = await betslip.wait_items(self.page, 1)
+        await run.capture(self.page, 'slip_selection')
+        run.stage('VERIFY_SLIP')
+        actual = self._verify_slip(run, state, sport, fresh, teams, requested, allowance, minimum)
+        run.stage('ENTER_STAKE')
+        state = await betslip.enter_stake(self.page, stake)
+        await run.capture(self.page, 'slip_stake')
+        run.stage('VERIFY_FINAL_STATE')
+        actual = self._verify_slip(run, state, sport, actual, teams, requested, allowance, minimum)
+        require(betslip.money(state.get('stake')) == betslip.money(stake), 'STAKE_REJECTED',
+                f"Slip stake {state.get('stake')!r} is not {stake}")
+        returned, expected = betslip.money(state.get('to_return')), betslip.money(stake) * float(actual['price'])
+        require(returned is not None and abs(returned - expected) <= 0.011, 'STAKE_REJECTED',
+                f"To Return {state.get('to_return')!r} does not agree with {stake} x {actual['price']}")
+        pb = state.get('place_bet') or {}
+        require(pb and (pb.get('text') or '').strip() == 'Place Bet' and not pb.get('disabled'), 'TARGET_NOT_FOUND',
+                f"Place Bet not ready on the slip ({pb.get('text')!r}, disabled={pb.get('disabled')})")
+        require(not state.get('messages'), 'PRICE_CHANGED', f"Betslip notice: {state.get('messages')}")
+        run.stage('PREPARE_COMPLETE_EXECUTION')
+        run.observe('final', actual, True)
+        run.put('selection', observed(actual))
+        home, away = teams
+        common = dict(market=actual['market'], line=actual['line'], price=actual['price'], stake=stake)
+        run.put('stake_field_state', 'ENTERED')
+        run.put('ready_state', dict(fixture_home=home, fixture_away=away, selection_role=actual['side'], selection_name=actual['name'],
+                                    session='LOGGED_IN', state='READY', minimum_price_ok=True, place_bet_visible=True,
+                                    wager_submitted=False, stop_before_wager=True, **common))
+        run.put('final_state', dict(home=home, away=away, side=actual['side'], state='READY', place_bet_visible=True, wager_submitted=False, **common))
+        run.put('complete_execution_ready', dict(state='COMPLETE_EXECUTION_READY', fixture=f'{home} v {away}', fixture_home=home, fixture_away=away,
+                                                 selection_role=actual['side'], selection_name=actual['name'], minimum_price=minimum,
+                                                 final_control='Place Bet', final_control_bounds=pb.get('bounds'), final_control_enabled=True,
+                                                 final_control_actionable=True, gesture_dispatched=False, wager_submitted=False,
+                                                 timestamp_ms=int(time.time() * 1000), **common))
+        run.put('held', mode == 'hold')
+        run.put('verification_detail', 'HELD: verified bet on the slip, stake + To Return verified, Place Bet located; NOT pressed, slip kept')
+        return 'PASS', 'COMPLETE_EXECUTION_READY'
+
+    def _terms(self, sport, q, requested, allowance, minimum):
+        """The configured tolerances on a fresh quote (football: FootballLineCheck.freshTerms; basketball: the
+        one-sided line rule and the minimum), exactly as the phone applies them."""
+        require(q.get('price') is not None, 'EVENT_NOT_VERIFIED', f"Price shown as '{q.get('raw_price')}': decimal odds display required")
+        if sport == 'football':
+            refusal = self.d.fresh(q['market'], q['side'], requested, q['line'], q['price'], allowance, minimum)
+            if refusal:
+                raise Failure(refusal[0], refusal[1])
+            return
+        if q['market'] != 'MONEYLINE' and requested:
+            require(self.d.line_ok(sport, q['market'], q['side'], requested, q['line'], allowance), 'LINE_CHANGED',
+                    'Line deterioration exceeds original alert allowance')
+        require(self.d.price_ok(q['price'], minimum), 'BELOW_MINIMUM', f"Price {q['price']} below original alert minimum {minimum}")
+
+    def _verify_slip(self, run, state, sport, expected, teams, requested, allowance, minimum):
+        """Exactly one bet on the slip, for this fixture, market, selection and line; its price judged by the tolerances."""
+        run.put('betslip', state)
+        require(not state.get('error'), 'BETSLIP_ERROR', f"Bet365 betslip error: {state.get('text')!r}")
+        items = state.get('items') or []
+        require(len(items) == 1, 'BETSLIP_NOT_SINGLE', f'Betslip holds {len(items)} selections')
+        item = items[0]
+        fixture = (item.get('fixture') or '').split(' v ')
+        require(len(fixture) == 2 and self.d.same_slip_name(teams[0], fixture[0]) and self.d.same_slip_name(teams[1], fixture[1]),
+                'WRONG_EVENT', f"Slip fixture {item.get('fixture')!r} is not '{teams[0]} v {teams[1]}'")
+        labels = betslip.LABELS.get((sport, expected['market']), set())
+        require((item.get('market') or '').strip().lower() in labels, 'WRONG_EVENT',
+                f"Slip market {item.get('market')!r} is not {expected['market']} ({sorted(labels)})")
+        title = (item.get('title') or '').strip()
+        require(self.d.same_slip_name(expected['name'], title), 'SELECTION_CHANGED', f"Slip selection {title!r} is not {expected['name']!r}")
+        line = expected['line']
+        if expected['market'] != 'MONEYLINE':
+            shown = self.d.norm_line(item.get('handicap') or '') if item.get('handicap') else None
+            require(shown is not None, 'PRICE_CHANGED', f"Slip line unreadable ({item.get('handicap')!r})")
+            line = shown.lstrip('+') if expected['market'] == 'TOTAL' else shown
+        actual = dict(expected, line=line, price=item.get('price'), raw_price=item.get('price'))
+        run.observe('slip', actual, True)
+        self._terms(sport, actual, requested, allowance, minimum)
+        return actual
 
     async def discover(self, run, words, sport, market, side, requested, allowance, teams):
         """(quote to use or None, all quotes read). Basketball: the Game Lines row, one-sided rule (unchanged). Football:
@@ -231,7 +341,8 @@ class DesktopBet365:
             require(len(pool) <= 1, 'TARGET_NOT_FOUND', 'Multiple executable lines; no implicit alternate-line choice')
             return (pool[0] if pool else None), quotes
         norm = self.d.norm_line
-        seen, views = [], []
+        alt = {'SPREAD': 'Alternative Asian Handicap', 'TOTAL': 'Alternative Goal Line'}.get(market)
+        seen, views = [], []           # views: [((tab, expanded group or None), quotes)]
 
         def exact(qs):
             for q in qs:
@@ -239,22 +350,27 @@ class DesktopBet365:
                     return q
             return None
 
-        quotes = bp.football_quotes(words, home, away, norm)
-        seen += quotes; views.append(('Popular', quotes))
-        hit = exact(quotes)
-        tabs = {'SPREAD': ['Asian Lines'], 'TOTAL': ['Goals', 'Asian Lines']}.get(market, [])
-        for tab in ([] if hit else tabs):
+        def note(view, qs):
+            seen.extend(qs); views.append((view, qs))
+            return exact(qs)
+
+        # 1. every view as it opens, then its own alternative group - the exact alert line ends the hunt
+        hit = note(('Popular', None), bp.football_quotes(words, home, away, norm))
+        for tab in ([] if hit else {'SPREAD': ['Asian Lines'], 'TOTAL': ['Goals', 'Asian Lines']}.get(market, [])):
             tw = await self.open_tab(run, tab)
             if tw is None:
                 continue
-            tw = await self.expand(run, tw, ('Alternative Asian Handicap', 'Alternative Goal Line'))
-            quotes = bp.football_quotes(tw, home, away, norm)
-            seen += quotes; views.append((tab, quotes))
-            hit = exact(quotes)
+            hit = note((tab, None), bp.football_quotes(tw, home, away, norm))
             if hit:
                 break
+            if alt and any(t == alt for t, _ in bp.collapsed(tw, (alt,))):
+                tw = await self.expand(run, tw, (alt,))
+                hit = note((tab, alt), bp.football_quotes(tw, home, away, norm))
+                if hit:
+                    break
         if hit:
             return hit, seen
+        # 2. no view shows it: the nearest line inside the band (the phone's FootballLineCheck.nearest), re-read on its view
         index = self.d.nearest(seen, market, side, requested, allowance)
         if index < 0:
             refusal = self.d.refusal(seen, market, side, requested, allowance)
@@ -262,14 +378,14 @@ class DesktopBet365:
             return None, seen
         chosen = seen[index]
         run.put('football_band_choice', observed(chosen))
-        # re-open the view that showed it and read it again (fresh click target)
-        view = next(tab for tab, qs in views if chosen in qs)
-        tw = await self.open_tab(run, view) if view != 'Popular' else None
-        if tw is None:
-            tw = await self.words()
-        tw = await self.expand(run, tw, ('Alternative Asian Handicap', 'Alternative Goal Line'))
+        tab, group = next(view for view, qs in views if any(q is chosen for q in qs))
+        tw = await self.open_tab(run, tab)
+        require(tw is not None, 'EVENT_NOT_VERIFIED', f'Football market tab {tab!r} not found again')
+        if group and any(t == group for t, _ in bp.collapsed(tw, (group,))):
+            tw = await self.expand(run, tw, (group,))
         fresh = bp.football_quotes(tw, home, away, norm)
-        again = next((q for q in fresh if q['market'] == market and q['side'] == side and _same(q['line'], chosen['line'])), None)
+        again = next((q for q in fresh if q['market'] == market and q['side'] == side and _same(q['line'], chosen['line'])
+                      and q['group'] == chosen['group']), None)
         return again, seen
 
 

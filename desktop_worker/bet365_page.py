@@ -219,6 +219,7 @@ def logged_in(words):
     top = [w['text'] for w in words if w['t'] < 70]
     if 'Log In' in top or 'Join' in top:
         return False
-    if any(re.match(r'^£\d', t) for t in top) or 'My Bets' in top:
+    # the balance widget exists only for a signed-in account; '£--.--' is it still loading
+    if any(re.match(r'^£(\d|--)', t) for t in top) or 'My Bets' in top:
         return True
     return None

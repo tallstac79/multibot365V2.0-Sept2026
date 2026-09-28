@@ -188,7 +188,13 @@ class Worker:
                     return run.finish('PASS', 'PASS', 'SESSION_AUTHENTICATED')
                 return run.finish('FAIL', 'SESSION_REQUIRED', 'Not logged in on the desktop worker: log in by hand in its Chrome window')
             if action == 'RESET_BETSLIP':
-                raise Failure('INTERNAL_ERROR', 'RESET_BETSLIP not implemented yet on the desktop worker')
+                from desktop_worker import betslip
+                run.stage('RESET_BETSLIP')
+                cleared = await betslip.clear(page)
+                await run.capture(page, 'betslip_reset')
+                if cleared:
+                    return run.finish('PASS', 'PASS', 'BETSLIP_CLEARED')
+                return run.finish('FAIL', 'BETSLIP_NOT_SINGLE', 'Betslip could not be cleared')
             stage, detail = await site.hold(run, body.get('execution_mode', 'hold'))
             return run.finish('PASS', 'PASS', detail if stage != 'DISCOVERED' else f'DISCOVERED: {detail}')
         except Failure as f:
