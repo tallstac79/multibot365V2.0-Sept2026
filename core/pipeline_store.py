@@ -553,6 +553,19 @@ class Store:
     def record_device(self, device_id, status, *, health=None, error=None, at=None):
         at = at or iso(self.clock())
         with self.tx() as db:
+            # Keep the exact previous healthy check before mutable device_state is overwritten.
+            # Compact allowlisted evidence: no credentials, current instruction, receipt, or session payloads.
+            from core.device_diagnostics import snapshot, power_key
+            previous = db.execute('SELECT * FROM device_state WHERE device_id=?', (device_id,)).fetchone()
+            if not previous or previous['status'] != status:
+                self.audit(db, 'DEVICE_AVAILABILITY', dict(
+                    previous_status=previous['status'] if previous else None, status=status, error=error,
+                    previous_last_online_at=previous['last_online_at'] if previous else None,
+                    last_healthy=snapshot(previous['health']) if previous and previous['status'] == 'ONLINE' else None,
+                    observed=snapshot(health)), device_id=device_id, at=at)
+            if status == 'ONLINE' and snapshot(health).get('worker_health') and (
+                    not previous or previous['status'] != 'ONLINE' or power_key(previous['health']) != power_key(health)):
+                self.audit(db, 'DEVICE_POWER', snapshot(health), device_id=device_id, at=at)
             db.execute('INSERT INTO device_state(device_id,status,checked_at,last_online_at,error,health) VALUES (?,?,?,?,?,?) '
                        'ON CONFLICT(device_id) DO UPDATE SET status=excluded.status, checked_at=excluded.checked_at, '
                        'last_online_at=COALESCE(excluded.last_online_at, device_state.last_online_at), '

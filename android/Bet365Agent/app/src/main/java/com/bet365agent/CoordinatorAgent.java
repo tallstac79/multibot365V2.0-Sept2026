@@ -24,6 +24,7 @@ final class CoordinatorAgent implements AutoCloseable {
     private final CoordinatorStore store;
     private final Handler main = new Handler(Looper.getMainLooper());
     private final CoordinatorHttp http;
+    private final WorkerHealth workerHealth;
     private final long boot = SystemClock.elapsedRealtime();
     private volatile boolean closed;
     private static final String DEVICE_ID = "galaxy-a13-5g";
@@ -54,6 +55,7 @@ final class CoordinatorAgent implements AutoCloseable {
 
     CoordinatorAgent(AccessibilityService service, VisualControlRunner runner) {
         this.service = service; this.runner = runner;
+        workerHealth = new WorkerHealth(service);
         runner.warmFastEngine();   // no-op under legacy; otherwise the model is loaded before the first live capture
         sessionThread.start();
         sessionHandler = new Handler(sessionThread.getLooper());
@@ -437,7 +439,8 @@ final class CoordinatorAgent implements AutoCloseable {
                     ? WorkerIdentity.fingerprint(CoordinatorConfig.bet365Username(service)) : JSONObject.NULL)
             // Persistent local execution permission (LocalExecution): readable here, never settable over HTTP.
             .put("local_execution", LocalExecution.state(service))
-            .put("session_recovery", selfHealStatus());
+            .put("session_recovery", selfHealStatus())
+            .put("worker_health", workerHealth.snapshot());
         if (active != null) {
             put(health, "progress", progressSnapshot());
             put(health, "device_stage", progressStage);
