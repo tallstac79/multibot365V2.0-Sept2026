@@ -795,7 +795,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
             long waited = android.os.SystemClock.elapsedRealtime() - openedAt;
             List<String> header = headerLines(s);
             boolean ready = PageReady.eventReady(header, headerTeams(header), EventPage.hints(identityHome, instructionAliases),
-                    EventPage.hints(expectedAway, instructionAliases), wantUk, waited);
+                    EventPage.hints(expectedAway, instructionAliases), wantUk, waited) && sessionKnown(s) && marketsDrawn(s);
             if (ready || EventPage.closed(texts(s)) || loginWall(s) || waited >= EVENT_LOAD_CAP_MS) {
                 ui.put("event_load_ms", waited);
                 return CompletableFuture.completedFuture(s);
@@ -803,6 +803,24 @@ final class Bet365LiveAdapter implements SiteAdapter {
             ui.put("event_direct_wait", ui.record.optInt("event_direct_wait") + 1);
             return directEventReady(openedAt, wantUk);
         });
+    }
+
+    /** The event page's own market section is on screen, not just its header. Opening a link to the event the phone is
+     *  ALREADY showing (a failed job leaves it there) shows the old header at once while the body is still being redrawn;
+     *  the market steps that follow were refused on that half-drawn frame (real phone, 29 Sep 2026: "tab strip not visible",
+     *  "Game Lines grid not read consistently") where the old fixed 3.4 s wait let the page finish. This can only delay:
+     *  after EVENT_LOAD_CAP_MS the frame is judged exactly as before. */
+    private boolean marketsDrawn(VisualScreen s) {
+        if ("football".equals(sport)) return FootballMarkets.tabStrip(wordsOf(s), true) != null;
+        if ("basketball".equals(sport)) {   // the Game Lines column headings; row parsing needs the fixture, which is not known yet
+            boolean spread = false, total = false;
+            for (GameLinesParser.Word w : wordsOf(s)) {
+                String t = w.text.toLowerCase(java.util.Locale.US);
+                spread |= t.startsWith("spread"); total |= t.startsWith("total");
+            }
+            return spread && total;
+        }
+        return true;
     }
 
     private CompletableFuture<VisualScreen> directEventLoaded(int attempt) {
@@ -1417,7 +1435,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
     private CompletableFuture<List<Selection>> footballViews(List<String> tabs, int index, VisualScreen lastFrame, List<Selection> lastFound, String lastView) {
         if (index >= tabs.size()) return footballFinish(lastFound, lastView);
         String prefix = tabs.get(index);
-        return footballOpenTab(prefix, lastFrame, 0).thenCompose(s -> {
+        return footballOpenTab(prefix, lastFrame, 0, 0).thenCompose(s -> {
             List<Selection> found = footballSelections(footballParse(s, prefix));
             if (footballExactIn(found)) return CompletableFuture.completedFuture(found);
             noteBand(found, prefix);
@@ -1431,11 +1449,12 @@ final class Bet365LiveAdapter implements SiteAdapter {
         if (footballBandView == null || footballBandView.equals(lastView) || footballTargetIn(lastFound)) return CompletableFuture.completedFuture(lastFound);
         final String view = footballBandView;
         ui.put("football_band_revisit", view);
-        return footballOpenTab(view, null, 0).thenApply(s -> footballSelections(footballParse(s, view + "_revisit")));
+        return footballOpenTab(view, null, 0, 0).thenApply(s -> footballSelections(footballParse(s, view + "_revisit")));
     }
 
     /** Tables captured until this tab's own section is drawn (PageReady.footballTabReady), at most FOOTBALL_TAB_CAP_MS after the tap. */
     private static final long FOOTBALL_TAB_CAP_MS = 3500;
+    private static final int TAB_STRIP_REDRAW_LOOKS = 14;
 
     private CompletableFuture<VisualScreen> footballCaptureTab(String prefix, String label, long tappedAt) {
         return ui.captureTable(label).thenCompose(s -> {
@@ -1449,7 +1468,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
     /** Open the market tab whose label starts with `prefix` and return the frame that shows it. The tab strip is read from
      *  `known` (the frame already on screen) when given; it scrolls horizontally, so it is swiped (right-to-left for tabs
      *  beyond the edge, left-to-right back to "popular") until the tab is visible. */
-    private CompletableFuture<VisualScreen> footballOpenTab(String prefix, VisualScreen known, int attempt) {
+    private CompletableFuture<VisualScreen> footballOpenTab(String prefix, VisualScreen known, int attempt, int redrawLooks) {
         CompletableFuture<VisualScreen> frame = known != null && attempt == 0 ? CompletableFuture.completedFuture(known)
                 : ui.capture("tabs_" + prefix + (attempt > 0 ? "_" + attempt : ""));
         return frame.thenCompose(s -> {
@@ -1461,14 +1480,20 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 return ui.tap(box, "football tab " + tab.text, 120).thenCompose(v -> footballCaptureTab(prefix, "markets_" + prefix, tapped));
             }
             int[] strip = FootballMarkets.tabStrip(wordsOf(s), true);
+            if (strip == null && redrawLooks < TAB_STRIP_REDRAW_LOOKS) {
+                // The page is being redrawn (opening the link of the event already on screen re-renders it a moment after the
+                // old header was drawn): look again before judging. Bounded; after it the same refusal as before.
+                ui.put("football_strip_redraw_looks", redrawLooks + 1);
+                return ui.delay(250).thenCompose(v -> footballOpenTab(prefix, null, attempt, redrawLooks + 1));
+            }
             require(strip != null, "EVENT_NOT_VERIFIED", "Football market tab strip not visible");
             require(attempt < 3, "EVENT_NOT_VERIFIED", "Football market tab '" + prefix + "' not found on the tab strip");
             if ("popular".equals(prefix))   // back to the first tab: drag the strip left-to-right
-                return ui.swipeHorizontal(strip[0], 120 + attempt * 60, 560, 650).thenCompose(v -> footballOpenTab(prefix, null, attempt + 1));
+                return ui.swipeHorizontal(strip[0], 120 + attempt * 60, 560, 650).thenCompose(v -> footballOpenTab(prefix, null, attempt + 1, 0));
             // Drag the strip from its last visible label leftwards (a drag started on the bell at the right edge did not scroll it:
             // Eskilsminne v Ariana FC Malmo, 27 Sep 2026). Slower than a fling so Chrome treats it as a scroll of the strip.
             int fromX = Math.max(300, Math.min(strip[2] - 30, 560)) - attempt * 60;
-            return ui.swipeHorizontal(strip[0], fromX, 90, 650).thenCompose(v -> footballOpenTab(prefix, null, attempt + 1));
+            return ui.swipeHorizontal(strip[0], fromX, 90, 650).thenCompose(v -> footballOpenTab(prefix, null, attempt + 1, 0));
         });
     }
 
@@ -2130,6 +2155,21 @@ final class Bet365LiveAdapter implements SiteAdapter {
         return visible(s, "Search", "In-Play", "In-play", "My Bets") && !headerLogin;
     }
 
+    /** The frame settles the session question either way: logged in (sessionLoggedIn), the login wall, or the logged-out chrome
+     *  (Log In + Join in the header). False while the top/bottom bars have not been drawn yet - an event header can be readable
+     *  a moment before them, and judging the session then would start a needless 12 s session re-check. */
+    private static boolean sessionKnown(VisualScreen s) {
+        if (sessionLoggedIn(s) || loginWall(s)) return true;
+        boolean login = false, join = false;
+        for (VisualScreen.Line line : s.lines) {
+            if (line.bounds.top > 320) continue;
+            String t = " " + line.text.trim().toLowerCase(Locale.US) + " ";
+            if (t.contains(" log in ") || t.contains(" login ")) login = true;
+            if (t.contains(" join ") || t.contains(" join now ")) join = true;
+        }
+        return login && join;
+    }
+
     private static boolean sessionExpired(VisualScreen s) {
         String blob = "";
         for (VisualScreen.Line line : s.lines) blob += " " + line.text.toLowerCase(java.util.Locale.US);
@@ -2678,6 +2718,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     /** Capture the Game Lines grid until two consecutive reads are identical (max 4 captures) and return the
      *  cells agreed across reads (GameLinesParser.consensus). Every read is recorded in game_lines_reads. */
+    private static final int GRID_REDRAW_LOOKS = 12;
     private CompletableFuture<List<Selection>> gridConsensus(String tag, int attempt, List<List<GameLinesParser.Cell>> reads, JSONArray log) {
         return ui.captureTable(tag).thenCompose(s -> {
             GameLinesParser.Result r = GameLinesParser.parse(wordsOf(s), liveFixture.home, liveFixture.away);
@@ -2685,6 +2726,9 @@ final class Bet365LiveAdapter implements SiteAdapter {
             for (GameLinesParser.Cell c : r.cells) cells.put(c.toString());
             log.put(CoordinatorAgent.object("tag", tag, "cells", cells, "notes", new JSONArray(r.notes)));
             ui.put("game_lines_reads", log);
+            if (r.cells.isEmpty() && log.length() < GRID_REDRAW_LOOKS) {   // page still being redrawn: look again without using an attempt
+                return ui.delay(350).thenCompose(v -> gridConsensus(tag, attempt, reads, log));
+            }
             List<GameLinesParser.Cell> previous = reads.isEmpty() ? null : reads.get(reads.size() - 1);
             if (!r.cells.isEmpty()) reads.add(r.cells);
             boolean stable = previous != null && !r.cells.isEmpty() && String.valueOf(previous).equals(String.valueOf(r.cells));

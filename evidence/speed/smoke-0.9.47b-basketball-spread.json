@@ -1,0 +1,920 @@
+[
+ {
+  "case": "basketball-spread",
+  "id": "speed-basketball-spread-164933",
+  "result": {
+   "instruction_id": "speed-basketball-spread-164933",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "COMPLETE_EXECUTION_READY",
+   "duration_ms": 14774,
+   "progress": {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 14543,
+    "last_progress_at_ms": 1790696988203,
+    "instruction_id": "speed-basketball-spread-164933",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790696973898
+     },
+     {
+      "stage": "OPEN_EVENT",
+      "elapsed_ms": 30,
+      "at_ms": 1790696973905
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 37,
+      "at_ms": 1790696973917,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 37,
+       "start_ts_ms": 1790696973908,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 223,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1027,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1258,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1511,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1682,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1930,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2104,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2337,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2499,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2756,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2926,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3182,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3349,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3584,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3751,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4023,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4189,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4441,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4608,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 5333,
+      "at_ms": 1790696973917
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 5594,
+      "at_ms": 1790696979499,
+      "timing": {
+       "stage": "MARKET_NAV",
+       "start_elapsed_ms": 5594,
+       "start_ts_ms": 1790696979465,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 5630,
+      "at_ms": 1790696979499
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 6284,
+      "at_ms": 1790696979499
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 6971,
+      "at_ms": 1790696979499
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 7625,
+      "at_ms": 1790696979499
+     },
+     {
+      "stage": "READ_SELECTION",
+      "elapsed_ms": 7779,
+      "at_ms": 1790696981692,
+      "timing": {
+       "stage": "READ_SELECTION",
+       "start_elapsed_ms": 7779,
+       "start_ts_ms": 1790696981650,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "READ_LINE",
+      "elapsed_ms": 7825,
+      "at_ms": 1790696981747,
+      "timing": {
+       "stage": "READ_LINE",
+       "start_elapsed_ms": 7825,
+       "start_ts_ms": 1790696981696,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "READ_PRICE",
+      "elapsed_ms": 7881,
+      "at_ms": 1790696981806,
+      "timing": {
+       "stage": "READ_PRICE",
+       "start_elapsed_ms": 7881,
+       "start_ts_ms": 1790696981752,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 7937,
+      "at_ms": 1790696981860,
+      "timing": {
+       "stage": "OPEN_SELECTION",
+       "start_elapsed_ms": 7937,
+       "start_ts_ms": 1790696981808,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 7994,
+      "at_ms": 1790696981860
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 8577,
+      "at_ms": 1790696981860
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 8639,
+      "at_ms": 1790696981860
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 9483,
+      "at_ms": 1790696983439,
+      "timing": {
+       "stage": "ENTER_STAKE",
+       "start_elapsed_ms": 9483,
+       "start_ts_ms": 1790696983355,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 9573,
+      "at_ms": 1790696983439
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 10208,
+      "at_ms": 1790696983439
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 10240,
+      "at_ms": 1790696983439
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 11001,
+      "at_ms": 1790696983439
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 11563,
+      "at_ms": 1790696983439
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 11628,
+      "at_ms": 1790696983439
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 11853,
+      "at_ms": 1790696983439
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 12107,
+      "at_ms": 1790696983439
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 12351,
+      "at_ms": 1790696983439
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 12583,
+      "at_ms": 1790696983439
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 13110,
+      "at_ms": 1790696983439
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 13226,
+      "at_ms": 1790696983439
+     },
+     {
+      "stage": "VERIFY_FINAL_STATE",
+      "elapsed_ms": 13549,
+      "at_ms": 1790696987472,
+      "timing": {
+       "stage": "VERIFY_FINAL_STATE",
+       "start_elapsed_ms": 13549,
+       "start_ts_ms": 1790696987420,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "VERIFY_FINAL_STATE",
+      "elapsed_ms": 13603,
+      "at_ms": 1790696987472
+     },
+     {
+      "stage": "VERIFY_FINAL_STATE",
+      "elapsed_ms": 14164,
+      "at_ms": 1790696987472
+     },
+     {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "elapsed_ms": 14290,
+      "at_ms": 1790696988203,
+      "timing": {
+       "stage": "PREPARE_COMPLETE_EXECUTION",
+       "start_elapsed_ms": 14290,
+       "start_ts_ms": 1790696988160,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "elapsed_ms": 14543,
+      "at_ms": 1790696988203
+     }
+    ]
+   },
+   "device_stage": "PREPARE_COMPLETE_EXECUTION",
+   "execution_count": 1,
+   "run_id": "c_dsdiAeyQ31LmjsY3MjAnTaA_6bCXvwC2vcCsKiI0CjI",
+   "fixture_name": "Kangoeroes Mechelen (W) v Rapid Bucuresti (W)",
+   "home": "Kangoeroes Mechelen (W)",
+   "away": "Rapid Bucuresti (W)",
+   "competition": "Club Friendlies Women 29 Sep 18:00",
+   "selection": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-8.5",
+    "price": "1.83",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Kangoeroes Mechelen (W)",
+    "bounds": [
+     301,
+     693,
+     345,
+     743
+    ]
+   },
+   "final_state": {
+    "home": "Kangoeroes Mechelen (W)",
+    "away": "Rapid Bucuresti (W)",
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "-8.5",
+    "price": "1.83",
+    "stake": "0.10",
+    "state": "READY",
+    "place_bet_visible": true,
+    "wager_submitted": false
+   },
+   "ready_state": {
+    "fixture_home": "Kangoeroes Mechelen (W)",
+    "fixture_away": "Rapid Bucuresti (W)",
+    "market": "SPREAD",
+    "selection_role": "HOME",
+    "selection_name": "Kangoeroes Mechelen (W)",
+    "line": "-8.5",
+    "price": "1.83",
+    "stake": "0.10",
+    "session": "LOGGED_IN",
+    "state": "READY",
+    "minimum_price_ok": true,
+    "place_bet_visible": true,
+    "wager_submitted": false,
+    "stop_before_wager": true
+   },
+   "complete_execution_ready": {
+    "state": "COMPLETE_EXECUTION_READY",
+    "fixture": "Kangoeroes Mechelen (W) v Rapid Bucuresti (W)",
+    "fixture_home": "Kangoeroes Mechelen (W)",
+    "fixture_away": "Rapid Bucuresti (W)",
+    "market": "SPREAD",
+    "selection_role": "HOME",
+    "selection_name": "Kangoeroes Mechelen (W)",
+    "line": "-8.5",
+    "price": "1.83",
+    "stake": "0.10",
+    "minimum_price": "1.01",
+    "final_control": "Place Bet",
+    "final_control_bounds": [
+     461,
+     1150,
+     620,
+     1200
+    ],
+    "final_control_enabled": true,
+    "final_control_actionable": true,
+    "prepared_gesture": {
+     "type": "tap",
+     "target": "Place Bet",
+     "package": "com.android.chrome",
+     "bounds": [
+      461,
+      1150,
+      620,
+      1200
+     ],
+     "center_x": 540.5,
+     "center_y": 1175,
+     "duration_ms": 100,
+     "dispatched": false
+    },
+    "gesture_dispatched": false,
+    "wager_submitted": false,
+    "timestamp_ms": 1790696988410,
+    "validation_hash": "0d0d5d162fed4ba78b752cb73ec081d0"
+   },
+   "wager_submitted": false,
+   "verification_detail": "HELD: verified bet on the slip, \u00a3 stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+   "event_context": {
+    "home": "Kangoeroes Mechelen (W)",
+    "away": "Rapid Bucuresti (W)",
+    "competition": "club friendlies women",
+    "kickoff_utc": "2026-09-29T18:00",
+    "period": "FULL_GAME"
+   },
+   "route": "event_link",
+   "held": true,
+   "execution_observations": [
+    {
+     "stage": "grid",
+     "observed_at_ms": 1790696981694,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "-8.5",
+      "price": "1.83",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Kangoeroes Mechelen (W)",
+      "bounds": [
+       301,
+       693,
+       345,
+       743
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "selection",
+     "observed_at_ms": 1790696981695,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "-8.5",
+      "price": "1.83",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Kangoeroes Mechelen (W)",
+      "bounds": [
+       301,
+       693,
+       345,
+       743
+      ]
+     },
+     "identity_verified": true
+    },
+    {
+     "stage": "grid",
+     "observed_at_ms": 1790696982509,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "-8.5",
+      "price": "1.83",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Kangoeroes Mechelen (W)",
+      "bounds": [
+       301,
+       693,
+       345,
+       743
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "selection",
+     "observed_at_ms": 1790696982509,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "-8.5",
+      "price": "1.83",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Kangoeroes Mechelen (W)",
+      "bounds": [
+       301,
+       693,
+       345,
+       743
+      ]
+     },
+     "identity_verified": true
+    },
+    {
+     "stage": "stake",
+     "observed_at_ms": 1790696987032,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "-8.5",
+      "price": "1.83",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Kangoeroes Mechelen (W)",
+      "bounds": [
+       301,
+       693,
+       345,
+       743
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "stake",
+     "observed_at_ms": 1790696987071,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "-8.5",
+      "price": "1.83",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Kangoeroes Mechelen (W)",
+      "bounds": [
+       301,
+       693,
+       345,
+       743
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "final",
+     "observed_at_ms": 1790696988133,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "-8.5",
+      "price": "1.83",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Kangoeroes Mechelen (W)",
+      "bounds": [
+       301,
+       693,
+       345,
+       743
+      ]
+     },
+     "identity_verified": true
+    },
+    {
+     "stage": "prepare",
+     "observed_at_ms": 1790696988261,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "-8.5",
+      "price": "1.83",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Kangoeroes Mechelen (W)",
+      "bounds": [
+       301,
+       693,
+       345,
+       743
+      ]
+     },
+     "identity_verified": true
+    }
+   ],
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 37,
+     "start_ts_ms": 1790696973908,
+     "end_elapsed_ms": 5594,
+     "end_ts_ms": 1790696979464,
+     "duration_ms": 5557,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "MARKET_NAV",
+     "start_elapsed_ms": 5594,
+     "start_ts_ms": 1790696979465,
+     "end_elapsed_ms": 7779,
+     "end_ts_ms": 1790696981650,
+     "duration_ms": 2185,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_SELECTION",
+     "start_elapsed_ms": 7779,
+     "start_ts_ms": 1790696981650,
+     "end_elapsed_ms": 7825,
+     "end_ts_ms": 1790696981696,
+     "duration_ms": 46,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_LINE",
+     "start_elapsed_ms": 7825,
+     "start_ts_ms": 1790696981696,
+     "end_elapsed_ms": 7881,
+     "end_ts_ms": 1790696981752,
+     "duration_ms": 56,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_PRICE",
+     "start_elapsed_ms": 7881,
+     "start_ts_ms": 1790696981752,
+     "end_elapsed_ms": 7937,
+     "end_ts_ms": 1790696981808,
+     "duration_ms": 56,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "start_elapsed_ms": 7937,
+     "start_ts_ms": 1790696981808,
+     "end_elapsed_ms": 9483,
+     "end_ts_ms": 1790696983355,
+     "duration_ms": 1546,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "start_elapsed_ms": 9483,
+     "start_ts_ms": 1790696983355,
+     "end_elapsed_ms": 13549,
+     "end_ts_ms": 1790696987420,
+     "duration_ms": 4066,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "start_elapsed_ms": 13549,
+     "start_ts_ms": 1790696987420,
+     "end_elapsed_ms": 14290,
+     "end_ts_ms": 1790696988160,
+     "duration_ms": 741,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "start_elapsed_ms": 14290,
+     "start_ts_ms": 1790696988160,
+     "end_elapsed_ms": 14543,
+     "end_ts_ms": 1790696988414,
+     "duration_ms": 253,
+     "status": "ok",
+     "retries": 0
+    }
+   ],
+   "alias_candidate": {
+    "feed_home": "Kangoeroes Mechelen",
+    "feed_away": "CS Rapid Bucuresti",
+    "bet365_home": "Kangoeroes Mechelen (W)",
+    "bet365_away": "Rapid Bucuresti (W)",
+    "event_url": "https://www.bet365.com/#/AC/B18/C21168228/D19/E26844754/F19/I0/",
+    "kickoff_shown": "29 Sep 18:00",
+    "kickoff_expected": "29 Sep 19:00",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+    "confidence": "deterministic",
+    "candidates": {
+     "Kangoeroes Mechelen": "Kangoeroes Mechelen (W)",
+     "CS Rapid Bucuresti": "Rapid Bucuresti (W)"
+    },
+    "sport": "basketball"
+   },
+   "stake_field_state": "EMPTY",
+   "stake_check_typed": {
+    "ok": true,
+    "detail": "stake 0.10 and return agree",
+    "stake_digits": "010",
+    "return_digits": "018",
+    "stake": "0.10",
+    "price": "1.83"
+   },
+   "stake_keypad": {
+    "zero": [
+     359,
+     1250
+    ],
+    "dot": [
+     117,
+     1250
+    ]
+   },
+   "stake_entered": "0.10",
+   "identity": {
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+    "reason": "event link + kick-off 29 Sep 18:00 (same_instant_utc_display (-60 min)) + women's competition supplies Bet365's (W) + both names compatible: 'Kangoeroes Mechelen' ~ 'Kangoeroes Mechelen (W)' (women_marker_from_competition 1.00); 'CS Rapid Bucuresti' ~ 'Rapid Bucuresti (W)' (women_marker_from_competition 1.00)",
+    "home": {
+     "feed": "Kangoeroes Mechelen",
+     "bookmaker": "Kangoeroes Mechelen (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00",
+     "alias_safe": true
+    },
+    "away": {
+     "feed": "CS Rapid Bucuresti",
+     "bookmaker": "Rapid Bucuresti (W)",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [women] supplied by the competition; names agree 1.00",
+     "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+     "event_id_match": true,
+     "event_anchor": "page opened from the alert's own Bet365 event link",
+     "sport_match": "equal",
+     "kickoff_match": "same_instant_utc_display (-60 min)",
+     "competition_match": "equal",
+     "competing_event": "none: a single event page reached through the alert's own link",
+     "home_similarity": {
+      "feed": "Kangoeroes Mechelen",
+      "bookmaker": "Kangoeroes Mechelen (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [women] supplied by the competition; names agree 1.00"
+     },
+     "away_similarity": {
+      "feed": "CS Rapid Bucuresti",
+      "bookmaker": "Rapid Bucuresti (W)",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [women] supplied by the competition; names agree 1.00"
+     },
+     "protected_markers": "agree",
+     "orientation": "agree",
+     "policy": "event_evidence_both_variants",
+     "verdict": "HIGH_CONFIDENCE_EVENT_MATCH"
+    }
+   },
+   "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "event_url": "https://www.bet365.com/#/AC/B18/C21168228/D19/E26844754/F19/I0/"
+  },
+  "reset": {
+   "instruction_id": "rs-speed-basketball-spread-164933",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "RESET_BETSLIP",
+   "duration_ms": 3257,
+   "progress": {
+    "stage": "RESET_BETSLIP",
+    "elapsed_ms": 3129,
+    "last_progress_at_ms": 1790696988889,
+    "instruction_id": "rs-speed-basketball-spread-164933",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790696988882
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 23,
+      "at_ms": 1790696988889,
+      "timing": {
+       "stage": "RESET_BETSLIP",
+       "start_elapsed_ms": 23,
+       "start_ts_ms": 1790696988883,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 33,
+      "at_ms": 1790696988889
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 602,
+      "at_ms": 1790696988889
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 646,
+      "at_ms": 1790696988889
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 2412,
+      "at_ms": 1790696988889
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 3092,
+      "at_ms": 1790696988889
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 3129,
+      "at_ms": 1790696988889
+     }
+    ]
+   },
+   "device_stage": "RESET_BETSLIP",
+   "execution_count": 1,
+   "run_id": "c_UN7udLUp-PF5DzKSjb8z8if7zGwTVGQGpEiX6NpoVi0",
+   "fixture_name": null,
+   "home": null,
+   "away": null,
+   "competition": null,
+   "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+   "betslip_reset": {
+    "tapped": true,
+    "control": "remove selection X",
+    "bounds": [
+     21,
+     1179,
+     42,
+     1207
+    ],
+    "place_bet_still_visible": false
+   },
+   "stage_timings": [
+    {
+     "stage": "RESET_BETSLIP",
+     "start_elapsed_ms": 23,
+     "start_ts_ms": 1790696988883,
+     "end_elapsed_ms": 3129,
+     "end_ts_ms": 1790696991988,
+     "duration_ms": 3106,
+     "status": "ok",
+     "retries": 0
+    }
+   ]
+  },
+  "wall_s": 15.14100000000326
+ }
+]

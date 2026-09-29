@@ -328,7 +328,9 @@ final class CoordinatorAgent implements AutoCloseable {
                 "stage", progressStage,
                 "elapsed_ms", elapsedMs,
                 "at_ms", lastProgressWallMs);
-            if (timing != null) ev.put("timing", timing);
+            // A private copy: the caller's timing object is still being written by the UI thread (closeStage), while this
+            // event is serialised later on an HTTP thread (ConcurrentModificationException -> HTTP 400 on a result poll).
+            if (timing != null) ev.put("timing", new JSONObject(timing.toString()));
             progressStages.put(ev);
             // Cap memory
             if (progressStages.length() > 80) {
@@ -351,13 +353,18 @@ final class CoordinatorAgent implements AutoCloseable {
         }
     }
 
-    private JSONObject progressSnapshot() {
+    /** A consistent snapshot for an HTTP thread: taken under the lock that guards appends (noteProgress), with its own array;
+     *  the events in it are never modified after insertion. Serialising the live array from another thread raced with the UI
+     *  thread's appends (measured once response times dropped from ~0.5 s to ~70 ms). */
+    private synchronized JSONObject progressSnapshot() {
+        JSONArray stages = new JSONArray();
+        for (int i = 0; i < progressStages.length(); i++) stages.put(progressStages.opt(i));
         return object(
             "stage", progressStage,
             "elapsed_ms", progressElapsedMs,
             "last_progress_at_ms", lastProgressWallMs,
             "instruction_id", progressInstructionId == null ? JSONObject.NULL : progressInstructionId,
-            "stages", progressStages);
+            "stages", stages);
     }
 
     private long remaining(JSONObject row, int timeout) { return timeout - (SystemClock.elapsedRealtime() - row.optLong("received_elapsed")); }

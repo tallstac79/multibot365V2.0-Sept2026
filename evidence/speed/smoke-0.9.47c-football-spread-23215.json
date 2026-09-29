@@ -1,0 +1,272 @@
+[
+ {
+  "case": "football-spread",
+  "id": "speed-football-spread-165251",
+  "result": {
+   "instruction_id": "speed-football-spread-165251",
+   "status": "FAIL",
+   "stage": "EVENT_NOT_VERIFIED",
+   "detail": "Football market tab strip not visible",
+   "duration_ms": 1342,
+   "progress": {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 1179,
+    "last_progress_at_ms": 1790697172631,
+    "instruction_id": "speed-football-spread-165251",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790697171694
+     },
+     {
+      "stage": "OPEN_EVENT",
+      "elapsed_ms": 19,
+      "at_ms": 1790697171705
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 33,
+      "at_ms": 1790697171715,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 33,
+       "start_ts_ms": 1790697171709,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 212,
+      "at_ms": 1790697171715
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 726,
+      "at_ms": 1790697171715
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 942,
+      "at_ms": 1790697172631,
+      "timing": {
+       "stage": "MARKET_NAV",
+       "start_elapsed_ms": 942,
+       "start_ts_ms": 1790697172618,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 959,
+      "at_ms": 1790697172631
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 1171,
+      "at_ms": 1790697172631
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 1179,
+      "at_ms": 1790697172631
+     }
+    ]
+   },
+   "device_stage": "MARKET_NAV",
+   "execution_count": 1,
+   "run_id": "c_lMwDIWySPxdgNKElmoCSVC7lIxhMIhs1JBRybobjWVg",
+   "fixture_name": "Estonia U21 v France U21",
+   "home": "Estonia U21",
+   "away": "France U21",
+   "competition": "European U21 Championship Qual \u2022 29 Sep 17:00",
+   "verification_detail": "Football market tab strip not visible",
+   "event_context": {
+    "home": "Estonia U21",
+    "away": "France U21",
+    "competition": "european u21 championship qual",
+    "kickoff_utc": "2026-09-29T17:00",
+    "period": "FULL_GAME"
+   },
+   "route": "event_link",
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 33,
+     "start_ts_ms": 1790697171709,
+     "end_elapsed_ms": 942,
+     "end_ts_ms": 1790697172618,
+     "duration_ms": 909,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "MARKET_NAV",
+     "start_elapsed_ms": 942,
+     "start_ts_ms": 1790697172618,
+     "end_elapsed_ms": 1179,
+     "end_ts_ms": 1790697172855,
+     "duration_ms": 237,
+     "status": "fail",
+     "retries": 0
+    }
+   ],
+   "alias_candidate": {
+    "feed_home": "Estonia",
+    "feed_away": "France",
+    "bet365_home": "Estonia U21",
+    "bet365_away": "France U21",
+    "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201885656/F3/",
+    "kickoff_shown": "29 Sep 17:00",
+    "kickoff_expected": "29 Sep 18:00",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+    "confidence": "deterministic",
+    "candidates": {
+     "Estonia": "Estonia U21",
+     "France": "France U21"
+    },
+    "sport": "football"
+   },
+   "identity": {
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+    "reason": "event link + kick-off 29 Sep 17:00 (same_instant_utc_display (-60 min)) + women's competition supplies Bet365's (W) + both names compatible: 'Estonia' ~ 'Estonia U21' (women_marker_from_competition 1.00); 'France' ~ 'France U21' (women_marker_from_competition 1.00)",
+    "home": {
+     "feed": "Estonia",
+     "bookmaker": "Estonia U21",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [u21] supplied by the competition; names agree 1.00",
+     "alias_safe": true
+    },
+    "away": {
+     "feed": "France",
+     "bookmaker": "France U21",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [u21] supplied by the competition; names agree 1.00",
+     "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+     "event_id_match": true,
+     "event_anchor": "page opened from the alert's own Bet365 event link",
+     "sport_match": "equal",
+     "kickoff_match": "same_instant_utc_display (-60 min)",
+     "competition_match": "structural_compatible (feed 'u21 euro championship qualifiers' vs page 'european u21 championship qual')",
+     "competing_event": "none: a single event page reached through the alert's own link",
+     "competition_markers": "[u21]",
+     "home_similarity": {
+      "feed": "Estonia",
+      "bookmaker": "Estonia U21",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [u21] supplied by the competition; names agree 1.00"
+     },
+     "away_similarity": {
+      "feed": "France",
+      "bookmaker": "France U21",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [u21] supplied by the competition; names agree 1.00"
+     },
+     "protected_markers": "agree",
+     "orientation": "agree",
+     "policy": "event_evidence_both_variants",
+     "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+     "competition_structure": "feed {women=false level=[u21] tier=top letters=[] cup=false friendly=false federation=false} page {women=false level=[u21] tier=top letters=[] cup=false friendly=false federation=false}"
+    }
+   },
+   "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201885656/F3/"
+  },
+  "reset": {
+   "instruction_id": "rs-speed-football-spread-165251",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "RESET_BETSLIP",
+   "duration_ms": 336,
+   "progress": {
+    "stage": "RESET_BETSLIP",
+    "elapsed_ms": 224,
+    "last_progress_at_ms": 1790697173145,
+    "instruction_id": "rs-speed-football-spread-165251",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790697173141
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 17,
+      "at_ms": 1790697173145,
+      "timing": {
+       "stage": "RESET_BETSLIP",
+       "start_elapsed_ms": 17,
+       "start_ts_ms": 1790697173141,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 28,
+      "at_ms": 1790697173145
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 217,
+      "at_ms": 1790697173145
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 224,
+      "at_ms": 1790697173145
+     }
+    ]
+   },
+   "device_stage": "RESET_BETSLIP",
+   "execution_count": 1,
+   "run_id": "c_Tr5_5QAeyAPfJQK1wEdhnYhSjpydbRDHPA2wuZGKwUk",
+   "fixture_name": null,
+   "home": null,
+   "away": null,
+   "competition": null,
+   "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+   "betslip_reset": {
+    "tapped": false,
+    "detail": "No safe reset control visible"
+   },
+   "stage_timings": [
+    {
+     "stage": "RESET_BETSLIP",
+     "start_elapsed_ms": 17,
+     "start_ts_ms": 1790697173141,
+     "end_elapsed_ms": 224,
+     "end_ts_ms": 1790697173348,
+     "duration_ms": 207,
+     "status": "ok",
+     "retries": 0
+    }
+   ]
+  },
+  "wall_s": 1.5309999999881256
+ }
+]

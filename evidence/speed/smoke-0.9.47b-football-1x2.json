@@ -1,0 +1,832 @@
+[
+ {
+  "case": "football-1x2",
+  "id": "speed-football-1x2-165030",
+  "result": {
+   "instruction_id": "speed-football-1x2-165030",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "COMPLETE_EXECUTION_READY",
+   "duration_ms": 11263,
+   "progress": {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 11107,
+    "last_progress_at_ms": 1790697041723,
+    "instruction_id": "speed-football-1x2-165030",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790697030787
+     },
+     {
+      "stage": "OPEN_EVENT",
+      "elapsed_ms": 15,
+      "at_ms": 1790697030793
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 24,
+      "at_ms": 1790697030804,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 24,
+       "start_ts_ms": 1790697030797,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 204,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 872,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1141,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1341,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1498,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1683,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1858,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2078,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2242,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2448,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2620,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2820,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2983,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3196,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3358,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3617,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3777,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3987,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4151,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4717,
+      "at_ms": 1790697030804
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 4836,
+      "at_ms": 1790697035625,
+      "timing": {
+       "stage": "MARKET_NAV",
+       "start_elapsed_ms": 4836,
+       "start_ts_ms": 1790697035609,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 4853,
+      "at_ms": 1790697035625
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 5309,
+      "at_ms": 1790697035625
+     },
+     {
+      "stage": "READ_SELECTION",
+      "elapsed_ms": 5345,
+      "at_ms": 1790697036140,
+      "timing": {
+       "stage": "READ_SELECTION",
+       "start_elapsed_ms": 5345,
+       "start_ts_ms": 1790697036118,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "READ_LINE",
+      "elapsed_ms": 5369,
+      "at_ms": 1790697036169,
+      "timing": {
+       "stage": "READ_LINE",
+       "start_elapsed_ms": 5369,
+       "start_ts_ms": 1790697036142,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "READ_PRICE",
+      "elapsed_ms": 5399,
+      "at_ms": 1790697036214,
+      "timing": {
+       "stage": "READ_PRICE",
+       "start_elapsed_ms": 5399,
+       "start_ts_ms": 1790697036172,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 5443,
+      "at_ms": 1790697036260,
+      "timing": {
+       "stage": "OPEN_SELECTION",
+       "start_elapsed_ms": 5443,
+       "start_ts_ms": 1790697036216,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 5491,
+      "at_ms": 1790697036260
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 5914,
+      "at_ms": 1790697036260
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 5942,
+      "at_ms": 1790697036260
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 6734,
+      "at_ms": 1790697037561,
+      "timing": {
+       "stage": "ENTER_STAKE",
+       "start_elapsed_ms": 6734,
+       "start_ts_ms": 1790697037507,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 6791,
+      "at_ms": 1790697037561
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 7275,
+      "at_ms": 1790697037561
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 7308,
+      "at_ms": 1790697037561
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 8043,
+      "at_ms": 1790697037561
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 8500,
+      "at_ms": 1790697037561
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 8587,
+      "at_ms": 1790697037561
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 8806,
+      "at_ms": 1790697037561
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 9021,
+      "at_ms": 1790697037561
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 9241,
+      "at_ms": 1790697037561
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 9465,
+      "at_ms": 1790697037561
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 9950,
+      "at_ms": 1790697037561
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 10030,
+      "at_ms": 1790697037561
+     },
+     {
+      "stage": "VERIFY_FINAL_STATE",
+      "elapsed_ms": 10319,
+      "at_ms": 1790697041172,
+      "timing": {
+       "stage": "VERIFY_FINAL_STATE",
+       "start_elapsed_ms": 10319,
+       "start_ts_ms": 1790697041092,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "VERIFY_FINAL_STATE",
+      "elapsed_ms": 10402,
+      "at_ms": 1790697041172
+     },
+     {
+      "stage": "VERIFY_FINAL_STATE",
+      "elapsed_ms": 10847,
+      "at_ms": 1790697041172
+     },
+     {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "elapsed_ms": 10919,
+      "at_ms": 1790697041723,
+      "timing": {
+       "stage": "PREPARE_COMPLETE_EXECUTION",
+       "start_elapsed_ms": 10919,
+       "start_ts_ms": 1790697041692,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "elapsed_ms": 11107,
+      "at_ms": 1790697041723
+     }
+    ]
+   },
+   "device_stage": "PREPARE_COMPLETE_EXECUTION",
+   "execution_count": 1,
+   "run_id": "c_VJZujl9MycNBl0_DqDO9Utz_mL_ghzZ1md0vQpwHYJ0",
+   "fixture_name": "Estonia U21 v France U21",
+   "home": "Estonia U21",
+   "away": "France U21",
+   "competition": "European U21 Championship Qual \u2022 29 Sep 17:00",
+   "selection": {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "41.00",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Estonia U21",
+    "bounds": [
+     89,
+     625,
+     176,
+     666
+    ]
+   },
+   "final_state": {
+    "home": "Estonia U21",
+    "away": "France U21",
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "41.00",
+    "stake": "0.10",
+    "state": "READY",
+    "place_bet_visible": true,
+    "wager_submitted": false
+   },
+   "ready_state": {
+    "fixture_home": "Estonia U21",
+    "fixture_away": "France U21",
+    "market": "MONEYLINE",
+    "selection_role": "HOME",
+    "selection_name": "Estonia U21",
+    "line": "NONE",
+    "price": "41.00",
+    "stake": "0.10",
+    "session": "LOGGED_IN",
+    "state": "READY",
+    "minimum_price_ok": true,
+    "place_bet_visible": true,
+    "wager_submitted": false,
+    "stop_before_wager": true
+   },
+   "complete_execution_ready": {
+    "state": "COMPLETE_EXECUTION_READY",
+    "fixture": "Estonia U21 v France U21",
+    "fixture_home": "Estonia U21",
+    "fixture_away": "France U21",
+    "market": "MONEYLINE",
+    "selection_role": "HOME",
+    "selection_name": "Estonia U21",
+    "line": "NONE",
+    "price": "41.00",
+    "stake": "0.10",
+    "minimum_price": "1.01",
+    "final_control": "Place Bet",
+    "final_control_bounds": [
+     461,
+     1216,
+     620,
+     1266
+    ],
+    "final_control_enabled": true,
+    "final_control_actionable": true,
+    "prepared_gesture": {
+     "type": "tap",
+     "target": "Place Bet",
+     "package": "com.android.chrome",
+     "bounds": [
+      461,
+      1216,
+      620,
+      1266
+     ],
+     "center_x": 540.5,
+     "center_y": 1241,
+     "duration_ms": 100,
+     "dispatched": false
+    },
+    "gesture_dispatched": false,
+    "wager_submitted": false,
+    "timestamp_ms": 1790697041876,
+    "validation_hash": "e93d8ae0876e5360cdf99ac01780e1ea"
+   },
+   "wager_submitted": false,
+   "verification_detail": "HELD: verified bet on the slip, \u00a3 stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+   "event_context": {
+    "home": "Estonia U21",
+    "away": "France U21",
+    "competition": "european u21 championship qual",
+    "kickoff_utc": "2026-09-29T17:00",
+    "period": "FULL_GAME"
+   },
+   "route": "event_link",
+   "held": true,
+   "execution_observations": [
+    {
+     "stage": "grid",
+     "observed_at_ms": 1790697036141,
+     "observed": {
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "41.00",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Estonia U21",
+      "bounds": [
+       89,
+       625,
+       176,
+       666
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "selection",
+     "observed_at_ms": 1790697036142,
+     "observed": {
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "41.00",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Estonia U21",
+      "bounds": [
+       89,
+       625,
+       176,
+       666
+      ]
+     },
+     "identity_verified": true
+    },
+    {
+     "stage": "selection_preflight",
+     "observed_at_ms": 1790697036714,
+     "observed": {
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "41.00",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Estonia U21",
+      "bounds": [
+       89,
+       625,
+       176,
+       666
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "final",
+     "observed_at_ms": 1790697041670,
+     "observed": {
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "41.00",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Estonia U21",
+      "bounds": [
+       89,
+       625,
+       176,
+       666
+      ]
+     },
+     "identity_verified": true
+    }
+   ],
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 24,
+     "start_ts_ms": 1790697030797,
+     "end_elapsed_ms": 4836,
+     "end_ts_ms": 1790697035609,
+     "duration_ms": 4812,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "MARKET_NAV",
+     "start_elapsed_ms": 4836,
+     "start_ts_ms": 1790697035609,
+     "end_elapsed_ms": 5345,
+     "end_ts_ms": 1790697036118,
+     "duration_ms": 509,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_SELECTION",
+     "start_elapsed_ms": 5345,
+     "start_ts_ms": 1790697036118,
+     "end_elapsed_ms": 5369,
+     "end_ts_ms": 1790697036142,
+     "duration_ms": 24,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_LINE",
+     "start_elapsed_ms": 5369,
+     "start_ts_ms": 1790697036142,
+     "end_elapsed_ms": 5399,
+     "end_ts_ms": 1790697036172,
+     "duration_ms": 30,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_PRICE",
+     "start_elapsed_ms": 5399,
+     "start_ts_ms": 1790697036172,
+     "end_elapsed_ms": 5443,
+     "end_ts_ms": 1790697036216,
+     "duration_ms": 44,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "start_elapsed_ms": 5443,
+     "start_ts_ms": 1790697036216,
+     "end_elapsed_ms": 6734,
+     "end_ts_ms": 1790697037507,
+     "duration_ms": 1291,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "start_elapsed_ms": 6734,
+     "start_ts_ms": 1790697037507,
+     "end_elapsed_ms": 10319,
+     "end_ts_ms": 1790697041092,
+     "duration_ms": 3585,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "start_elapsed_ms": 10319,
+     "start_ts_ms": 1790697041092,
+     "end_elapsed_ms": 10919,
+     "end_ts_ms": 1790697041692,
+     "duration_ms": 600,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "start_elapsed_ms": 10919,
+     "start_ts_ms": 1790697041692,
+     "end_elapsed_ms": 11107,
+     "end_ts_ms": 1790697041880,
+     "duration_ms": 188,
+     "status": "ok",
+     "retries": 0
+    }
+   ],
+   "alias_candidate": {
+    "feed_home": "Estonia",
+    "feed_away": "France",
+    "bet365_home": "Estonia U21",
+    "bet365_away": "France U21",
+    "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201885656/F3/",
+    "kickoff_shown": "29 Sep 17:00",
+    "kickoff_expected": "29 Sep 18:00",
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+    "confidence": "deterministic",
+    "candidates": {
+     "Estonia": "Estonia U21",
+     "France": "France U21"
+    },
+    "sport": "football"
+   },
+   "stake_field_state": "EMPTY",
+   "stake_check_typed": {
+    "ok": true,
+    "detail": "stake 0.10 and return agree",
+    "stake_digits": "010",
+    "return_digits": "410",
+    "stake": "0.10",
+    "price": "41.00"
+   },
+   "stake_keypad": {
+    "zero": [
+     359,
+     1250
+    ],
+    "dot": [
+     117,
+     1250
+    ]
+   },
+   "stake_entered": "0.10",
+   "identity": {
+    "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+    "reason": "event link + kick-off 29 Sep 17:00 (same_instant_utc_display (-60 min)) + women's competition supplies Bet365's (W) + both names compatible: 'Estonia' ~ 'Estonia U21' (women_marker_from_competition 1.00); 'France' ~ 'France U21' (women_marker_from_competition 1.00)",
+    "home": {
+     "feed": "Estonia",
+     "bookmaker": "Estonia U21",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [u21] supplied by the competition; names agree 1.00",
+     "alias_safe": true
+    },
+    "away": {
+     "feed": "France",
+     "bookmaker": "France U21",
+     "level": "VARIANT",
+     "kind": "women_marker_from_competition",
+     "score": 1,
+     "note": "marker [u21] supplied by the competition; names agree 1.00",
+     "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+     "event_id_match": true,
+     "event_anchor": "page opened from the alert's own Bet365 event link",
+     "sport_match": "equal",
+     "kickoff_match": "same_instant_utc_display (-60 min)",
+     "competition_match": "structural_compatible (feed 'u21 euro championship qualifiers' vs page 'european u21 championship qual')",
+     "competing_event": "none: a single event page reached through the alert's own link",
+     "competition_markers": "[u21]",
+     "home_similarity": {
+      "feed": "Estonia",
+      "bookmaker": "Estonia U21",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [u21] supplied by the competition; names agree 1.00"
+     },
+     "away_similarity": {
+      "feed": "France",
+      "bookmaker": "France U21",
+      "level": "VARIANT",
+      "kind": "women_marker_from_competition",
+      "score": 1,
+      "note": "marker [u21] supplied by the competition; names agree 1.00"
+     },
+     "protected_markers": "agree",
+     "orientation": "agree",
+     "policy": "event_evidence_both_variants",
+     "verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+     "competition_structure": "feed {women=false level=[u21] tier=top letters=[] cup=false friendly=false federation=false} page {women=false level=[u21] tier=top letters=[] cup=false friendly=false federation=false}"
+    }
+   },
+   "identity_verdict": "HIGH_CONFIDENCE_EVENT_MATCH",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201885656/F3/"
+  },
+  "reset": {
+   "instruction_id": "rs-speed-football-1x2-165030",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "RESET_BETSLIP",
+   "duration_ms": 2888,
+   "progress": {
+    "stage": "RESET_BETSLIP",
+    "elapsed_ms": 2775,
+    "last_progress_at_ms": 1790697042519,
+    "instruction_id": "rs-speed-football-1x2-165030",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790697042512
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 21,
+      "at_ms": 1790697042519,
+      "timing": {
+       "stage": "RESET_BETSLIP",
+       "start_elapsed_ms": 21,
+       "start_ts_ms": 1790697042512,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 30,
+      "at_ms": 1790697042519
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 511,
+      "at_ms": 1790697042519
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 561,
+      "at_ms": 1790697042519
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 2322,
+      "at_ms": 1790697042519
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 2745,
+      "at_ms": 1790697042519
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 2775,
+      "at_ms": 1790697042519
+     }
+    ]
+   },
+   "device_stage": "RESET_BETSLIP",
+   "execution_count": 1,
+   "run_id": "c_Y49z0O7xhj_SmhsGZSvKTKXTa_aYZ7s9p5SUxX7WvvY",
+   "fixture_name": null,
+   "home": null,
+   "away": null,
+   "competition": null,
+   "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+   "betslip_reset": {
+    "tapped": true,
+    "control": "remove selection X",
+    "bounds": [
+     21,
+     1180,
+     42,
+     1202
+    ],
+    "place_bet_still_visible": false
+   },
+   "stage_timings": [
+    {
+     "stage": "RESET_BETSLIP",
+     "start_elapsed_ms": 21,
+     "start_ts_ms": 1790697042512,
+     "end_elapsed_ms": 2774,
+     "end_ts_ms": 1790697045265,
+     "duration_ms": 2753,
+     "status": "ok",
+     "retries": 0
+    }
+   ]
+  },
+  "wall_s": 11.843999999997322
+ }
+]

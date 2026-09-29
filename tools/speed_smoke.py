@@ -52,8 +52,24 @@ def guard():
         raise SystemExit(f'REFUSED: {busy} instruction(s) queued/in flight/held; not touching the phone')
 
 
-def wait(client, iid, seconds):
-    return client.result(iid, seconds=seconds)
+POLL_ERRORS = []
+
+
+def wait(client, iid, seconds, gap=0.15):
+    """Poll the job's result every `gap` s (fast on purpose: also a stress test of the phone's progress snapshot). A non-2xx
+    reply is COUNTED and polling continues - the backend does the same (RESULT_POLL_FAILED, retried next tick)."""
+    deadline = time.monotonic() + seconds
+    while time.monotonic() < deadline:
+        try:
+            code, value = client.request('GET', '/instructions/' + iid)
+            if code == 200:
+                return value
+            if code != 202:
+                POLL_ERRORS.append((iid, code, str(value)[:120]))
+        except Exception as error:
+            POLL_ERRORS.append((iid, 'EXC', f'{type(error).__name__}: {error}'[:120]))
+        time.sleep(gap)
+    raise TimeoutError(f'no result for {iid} within {seconds}s')
 
 
 def run(case, client):
@@ -89,6 +105,7 @@ def main():
     guard()
     client = Client(json.loads((ROOT / '.local' / 'coordinator.json').read_text(encoding='utf-8-sig')))
     runs = [run(args.case, client) for _ in range(args.repeat)]
+    print(f'\npoll replies that were not 200/202: {len(POLL_ERRORS)}', POLL_ERRORS[:5])
     if args.out:
         Path(args.out).parent.mkdir(parents=True, exist_ok=True)
         Path(args.out).write_text(json.dumps(runs, indent=1), encoding='utf-8')
