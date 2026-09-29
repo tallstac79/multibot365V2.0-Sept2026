@@ -158,6 +158,10 @@ def measure(db, client, row):
     m['total.alert_to_receipt_seen_est'] = None if m['total.alert_to_tap_est'] is None or m['place.tap_to_receipt_seen'] is None         else m['total.alert_to_tap_est'] + m['place.tap_to_receipt_seen']
     m['total.alert_to_completed'] = secs(source, done)
     m['place.result_lag'] = None if m['place.phone_total'] is None else (secs(a2, done) - m['place.phone_total'] if secs(a2, done) is not None else None)
+    # how the hold reached the event page (0.9.49): hot = the persistent tab was already on it, prewarmed = the backend started the
+    # load before the job, cold = the job navigated itself (also every pre-0.9.49 bet)
+    h = hold or {}
+    m['_path'] = 'hot' if h.get('hot_tab') and not h.get('hot_tab_recovered') else 'prewarmed' if h.get('prewarmed_ms_before_job') is not None and not h.get('prewarm_recovered') else 'cold'
     m['_id'] = iid
     m['_market'] = f"{row['sport']}/{row['market']}"
     return m
@@ -214,10 +218,17 @@ def main():
     for market, group in sorted(by_market.items()):
         if len(group) >= 3:
             print('\n' + render(f'{args.label} / {market}', group, summarise(group)))
+    by_path = {}
+    for s in samples:
+        by_path.setdefault(s['_path'], []).append(s)
+    for path, group in sorted(by_path.items()):
+        if len(by_path) > 1:
+            print('
+' + render(f'{args.label} / path={path}', group, summarise(group)))
     if args.out:
         Path(args.out).parent.mkdir(parents=True, exist_ok=True)
         Path(args.out).write_text(json.dumps(dict(label=args.label, n=len(samples), summary=summary, samples=samples,
-                                                  by_market={k: summarise(v) for k, v in by_market.items() if len(v) >= 3}), indent=1), encoding='utf-8')
+                                                  by_market={k: summarise(v) for k, v in by_market.items() if len(v) >= 3}, by_path={k: summarise(v) for k, v in by_path.items()}), indent=1), encoding='utf-8')
 
 
 if __name__ == '__main__':
