@@ -6,6 +6,9 @@ instruction still PENDING becomes INTERNAL_ERROR and keeps whatever progress it 
 
 Final action (28 Sep 2026, desktop routing work):
   holds          the verified slip terms of a HOLD (COMPLETE_EXECUTION_READY) plus their sha256, for PLACE_HELD;
+  reality_check_episodes / reality_check_events  every Reality Check episode and each step of its automatic
+                 acknowledgement (29 Sep 2026): what the dialog showed, the click (committed before it is dispatched), the
+                 frames kept, and how the episode ended.
   final_intents  the durable per-instruction 'intent before click' guard, replacing the one-per-day marker file. The
                  intent row is committed BEFORE a live click is dispatched; an intent without a confirmed receipt is
                  never clicked again (the outcome is PLACEMENT_UNKNOWN and the next step is MY_BETS), across restarts.
@@ -57,6 +60,30 @@ CREATE TABLE IF NOT EXISTS final_intents (
     source TEXT
 );
 CREATE INDEX IF NOT EXISTS final_intents_held ON final_intents(held_instruction_id);
+CREATE TABLE IF NOT EXISTS reality_check_episodes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    opened_at_ms INTEGER NOT NULL,
+    closed_at_ms INTEGER,
+    attempts INTEGER NOT NULL DEFAULT 0,  -- 'Remain Logged In' clicks dispatched (at most MAX_ACK_ATTEMPTS)
+    last_attempt_ms INTEGER,
+    failed_alerted INTEGER NOT NULL DEFAULT 0,
+    outcome TEXT,                     -- NULL (open) | CLEARED_AFTER_AUTO_ACK | CLEARED_BY_OPERATOR
+    detail TEXT
+);
+CREATE TABLE IF NOT EXISTS reality_check_events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    episode_id INTEGER,
+    at_ms INTEGER NOT NULL,
+    kind TEXT NOT NULL,               -- DETECTED | NOT_RECOGNISED | DEFERRED | ABORTED | CLICK_INTENT | CLICKED | GAVE_UP | VERIFIED_CLEAR
+    session_elapsed TEXT,
+    interval_min INTEGER,
+    dialog_text TEXT,
+    button_text TEXT,
+    click_x INTEGER,
+    click_y INTEGER,
+    frames TEXT,
+    detail TEXT
+);
 """
 
 CONFIRMED = ('PLACED',)
@@ -254,3 +281,68 @@ class Ledger:
     def intents(self):
         with self._db() as db:
             return [dict(r) for r in db.execute('SELECT * FROM final_intents ORDER BY intent_at_ms').fetchall()]
+
+    # ------------------------------------------------------------------ holds on the slip
+    def active_hold(self, max_age_ms, now=None):
+        """An unconsumed HOLD younger than max_age_ms (a verified selection may be on the slip awaiting PLACE_HELD)."""
+        now = now_ms() if now is None else now
+        with self._db() as db:
+            row = db.execute('SELECT instruction_id, held_at_ms FROM holds WHERE consumed_by IS NULL AND held_at_ms > ? '
+                             'ORDER BY held_at_ms DESC LIMIT 1', (now - max_age_ms,)).fetchone()
+        return dict(row) if row else None
+
+    # ------------------------------------------------------------------ Reality Check episodes (durable log)
+    def rc_open_episode(self, create=True, now=None):
+        """The open Reality Check episode (created when asked and none is open)."""
+        with self.lock, self._db() as db:
+            row = db.execute('SELECT * FROM reality_check_episodes WHERE closed_at_ms IS NULL ORDER BY id DESC LIMIT 1').fetchone()
+            if row is None and create:
+                cur = db.execute('INSERT INTO reality_check_episodes(opened_at_ms) VALUES (?)', (now_ms() if now is None else now,))
+                row = db.execute('SELECT * FROM reality_check_episodes WHERE id=?', (cur.lastrowid,)).fetchone()
+        return dict(row) if row else None
+
+    def rc_update_episode(self, episode_id, **fields):
+        allowed = {'attempts', 'last_attempt_ms', 'failed_alerted', 'detail'}
+        keys = [k for k in fields if k in allowed]
+        if not keys:
+            return
+        with self.lock, self._db() as db:
+            db.execute(f"UPDATE reality_check_episodes SET {', '.join(k + '=?' for k in keys)} WHERE id=?",
+                       [fields[k] for k in keys] + [episode_id])
+
+    def rc_event(self, episode_id, kind, dialog=None, click=None, frames=None, detail=None, at=None):
+        d = dialog or {}
+        with self.lock, self._db() as db:
+            db.execute('INSERT INTO reality_check_events(episode_id, at_ms, kind, session_elapsed, interval_min, dialog_text, button_text, '
+                       'click_x, click_y, frames, detail) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
+                       (episode_id, now_ms() if at is None else at, kind, d.get('session_elapsed'), d.get('interval_min'),
+                        (d.get('text') or '')[:600] or None, (d.get('target') or {}).get('text'),
+                        (click or {}).get('x'), (click or {}).get('y'), json.dumps(frames) if frames else None,
+                        (detail or '')[:500] or None))
+
+    def rc_close_open(self, detail=None, now=None):
+        """Close the open episode (the session read clean again); returns it, or None when none was open."""
+        ep = self.rc_open_episode(create=False)
+        if ep is None:
+            return None
+        outcome = 'CLEARED_AFTER_AUTO_ACK' if ep['attempts'] else 'CLEARED_BY_OPERATOR'
+        at = now_ms() if now is None else now
+        with self.lock, self._db() as db:
+            db.execute('UPDATE reality_check_episodes SET closed_at_ms=?, outcome=?, detail=COALESCE(?, detail) WHERE id=?',
+                       (at, outcome, detail, ep['id']))
+        self.rc_event(ep['id'], 'VERIFIED_CLEAR', detail=detail, at=at)
+        return dict(ep, closed_at_ms=at, outcome=outcome)
+
+    def rc_events(self, episode_id=None, limit=50):
+        with self._db() as db:
+            if episode_id is None:
+                rows = db.execute('SELECT * FROM reality_check_events ORDER BY id DESC LIMIT ?', (limit,)).fetchall()
+            else:
+                rows = db.execute('SELECT * FROM reality_check_events WHERE episode_id=? ORDER BY id', (episode_id,)).fetchall()
+        return [dict(r) for r in rows]
+
+    def rc_last_click(self):
+        """The most recent CLICKED event (for the advisory 'Reality Check due' estimate)."""
+        with self._db() as db:
+            row = db.execute("SELECT * FROM reality_check_events WHERE kind='CLICKED' ORDER BY id DESC LIMIT 1").fetchone()
+        return dict(row) if row else None

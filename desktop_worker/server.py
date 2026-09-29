@@ -17,8 +17,17 @@ False: this is not the phone); the backend's automatic policy requires final_act
 Health is fail-closed: healthy=false / ready=false with blocked_reason CHROME_DOWN / LOGGED_OUT / REALITY_CHECK /
 SESSION_UNKNOWN (incl. no session read yet, or a read older than SESSION_MAX_AGE_S) / RECOVERING. The session is read from
 a screenshot every PROBE_S while idle (no navigation), every BLOCKED_PROBE_S while a Reality Check / logout / unknown session
-blocks it, so it returns to READY/IDLE by itself seconds after David clears the dialog (never clicked by the worker).
-Blocking episodes are sent to Telegram once, with one recovery message when they clear (desktop_worker.alerts).
+blocks it. READY needs positive evidence (lifecycle.assess) on RECOVERY_CONFIRM_READS consecutive reads spanning at least
+MIN_CLEAR_SPAN_S; any other read blocks at once. Blocking episodes are sent to Telegram once, with one recovery message
+when they clear (desktop_worker.alerts).
+
+Reality Check (David's instruction, 29 Sep 2026 05:53 BST): the idle probe - never an instruction, so never while a
+betslip action is in flight - acknowledges a recognised Reality Check with ONE ordinary mouse click on 'Remain Logged In'
+(Worker._auto_ack; desktop_worker.reality_check decides the target), at most MAX_ACK_ATTEMPTS per episode, reports every
+click to Telegram with what the dialog showed, logs it in the ledger (reality_check_* tables) with frames, and returns
+to READY only through the same strict multi-read check. Unrecognised or ambiguous: no click, BLOCKED + one alert.
+Disable with reality_check_auto_ack=false in .local/desktop_worker.json. Every instruction that touches the page first
+takes a fresh screenshot read (pre-run gate) and is refused without touching the page unless it reads clean.
 """
 import argparse
 import asyncio
@@ -47,7 +56,14 @@ PROBE_S = 60                                   # visual session probe period whi
 BLOCKED_PROBE_S = 12                           # faster read-only probe while a manual block (Reality Check/logout) is open
 TICK_S = 3                                     # watchdog loop granularity
 FAST_PROBE_REASONS = ('REALITY_CHECK', 'LOGGED_OUT', 'SESSION_UNKNOWN')
-RECOVERY_CONFIRM_READS = 2                     # consecutive LOGGED_IN reads that clear a Reality Check / logout block
+RECOVERY_CONFIRM_READS = 3                     # consecutive clean LOGGED_IN reads before READY (after any block or at start)
+MIN_CLEAR_SPAN_S = 20                          # ... spanning at least this long (3 reads at the 12 s blocked cadence = 24 s)
+MAX_ACK_ATTEMPTS = 2                           # 'Remain Logged In' clicks per Reality Check episode, then BLOCKED + alert
+ACK_RETRY_GAP_S = 10                           # a second click only after the post-click reads had time to confirm
+ACK_SETTLE_MS = 1500                           # wait after the click before the verification screenshot
+SLIP_MARGIN_PX = 80                            # never click within this distance of a visible betslip panel
+DUE_SOON_LEAD_S = 300                          # advisory 'Reality Check due' window before the estimated next dialog
+PAGE_ACTIONS = ('ADAPTER_WORKFLOW', 'RESET_BETSLIP', 'PLACE_HELD', 'MY_BETS')    # pre-run gate applies
 PROBE_HISTORY = 60                             # probe frames kept around a block (.local/desktop-evidence/probe/hist)
 SESSION_MAX_AGE_S = 300                        # an older session read is not trusted (SESSION_UNKNOWN)
 ID = re.compile(r'^[A-Za-z0-9_-]{1,64}$')
@@ -94,7 +110,9 @@ class Worker:
         self.recover_queued = False
         self.lock = threading.Lock()
         self.probe_queued = False
-        self.clear_reads = 0                  # consecutive LOGGED_IN reads while a manual block is open
+        self.clean_reads = []                 # times of consecutive clean LOGGED_IN reads while not yet READY
+        self.now_ms = now_ms                  # clock for the confirmation span (tests replace it)
+        self.rc_note = None                   # why the last Reality Check was not acknowledged automatically
         if alerter is None:
             from desktop_worker.alerts import Alerter, NullAlerter
             alerter = Alerter.from_config() if start_executor else NullAlerter()
@@ -158,24 +176,42 @@ class Worker:
         self.queue.put(dict(_internal='PROBE_SESSION'))
         return True
 
+    def ready_confirmed(self):
+        return self.session.get('visual_state') == 'LOGGED_IN'
+
     def note_probe(self, session, chrome_up=True):
-        """Record a visual session read: session state and the matching operator alert (cleared when LOGGED_IN)."""
+        """Record a visual session read. Once READY, a clean LOGGED_IN read keeps it and anything else blocks at once.
+        While not READY (after any block, and at start-up), READY needs RECOVERY_CONFIRM_READS consecutive clean reads
+        spanning at least MIN_CLEAR_SPAN_S; until then the previous state (and its block) stays. Returns the visual
+        state now in force."""
         from desktop_worker import lifecycle
-        visual = (session or {}).get('state', 'UNKNOWN')
-        held = self.session.get('visual_state') if self.session.get('visual_state') in ('REALITY_CHECK', 'LOGGED_OUT') else None
-        if held and visual == 'LOGGED_IN':
-            # hysteresis: a Reality Check / logout clears only after RECOVERY_CONFIRM_READS consecutive LOGGED_IN reads
-            # (one frame without the dialog - an animation, a re-render, a transient overlay - must not resume routing)
-            self.clear_reads += 1
-            if self.clear_reads < RECOVERY_CONFIRM_READS:
-                self.session = dict(self.session, detail=f'LOGGED_IN read {self.clear_reads}/{RECOVERY_CONFIRM_READS} while '
-                                    f'{held}: confirming before resuming', confirm_at_ms=now_ms())
-                self.chrome.update(state='UP' if chrome_up else 'DOWN', cdp_up=chrome_up, checked_at_ms=now_ms())
-                return held
-        self.clear_reads = 0
-        self.session = dict(state={'LOGGED_IN': 'AUTHENTICATED', 'LOGGED_OUT': 'LOGGED_OUT'}.get(visual, 'UNKNOWN'), visual_state=visual,
-                            observed_at_ms=(session or {}).get('observed_at_ms') or now_ms(), detail=(session or {}).get('detail'), source='probe')
+        session = session or {}
+        visual = session.get('state', 'UNKNOWN')
         self.chrome.update(state='UP' if chrome_up else 'DOWN', cdp_up=chrome_up, checked_at_ms=now_ms())
+        if visual == 'LOGGED_IN' and not self.ready_confirmed():
+            t = self.now_ms()
+            self.clean_reads.append(t)
+            span = (t - self.clean_reads[0]) / 1000
+            if len(self.clean_reads) < RECOVERY_CONFIRM_READS or span < MIN_CLEAR_SPAN_S:
+                held = self.session.get('visual_state') or 'UNKNOWN'
+                self.session = dict(self.session, visual_state=held, detail=f'clean LOGGED_IN read {len(self.clean_reads)}/'
+                                    f'{RECOVERY_CONFIRM_READS} ({span:.0f}/{MIN_CLEAR_SPAN_S} s) while {held}: confirming before READY',
+                                    confirm_at_ms=now_ms())
+                return held
+            reads = len(self.clean_reads)
+            closed = self._close_rc_episode(f'{reads} clean reads over {span:.0f} s')
+            self.clean_reads = []
+            self.rc_note = None
+            self.session = dict(state='AUTHENTICATED', visual_state='LOGGED_IN', observed_at_ms=session.get('observed_at_ms') or now_ms(),
+                                detail=session.get('detail'), source=session.get('source', 'probe'),
+                                confirmed=f'{reads} clean reads over {span:.0f} s', closed_episode=closed)
+            self.operator_alert = None
+            return 'LOGGED_IN'
+        if visual != 'LOGGED_IN':
+            self.clean_reads = []
+        self.session = dict(state={'LOGGED_IN': 'AUTHENTICATED', 'LOGGED_OUT': 'LOGGED_OUT'}.get(visual, 'UNKNOWN'), visual_state=visual,
+                            observed_at_ms=session.get('observed_at_ms') or now_ms(), detail=session.get('detail'),
+                            source=session.get('source', 'probe'))
         current = (self.operator_alert or {}).get('code')
         wanted = {'REALITY_CHECK': 'REALITY_CHECK_OPEN', 'LOGGED_OUT': 'SESSION_LOGGED_OUT', 'UNKNOWN': 'SESSION_UNKNOWN'}.get(visual)
         if wanted is None:
@@ -183,6 +219,13 @@ class Worker:
         elif current != wanted:
             self.operator_alert = lifecycle.alert_for(visual)
         return visual
+
+    def _close_rc_episode(self, detail):
+        try:
+            ep = self.ledger.rc_close_open(detail)
+            return dict(id=ep['id'], outcome=ep['outcome']) if ep else None
+        except Exception:                     # logging never blocks the recovery
+            return None
 
     def blocked_reason(self):
         """Why the worker must not be routed to now (None = routable as far as Chrome and the session go)."""
@@ -202,25 +245,54 @@ class Worker:
             return 'SESSION_UNKNOWN'
         if not self.current and now_ms() - (self.session.get('observed_at_ms') or 0) > SESSION_MAX_AGE_S * 1000:
             return 'SESSION_UNKNOWN'
+        if self.cfg.get('reality_check_due_soon_block') is True and self.rc_status().get('due_soon'):
+            return 'REALITY_CHECK_DUE'
         return None
+
+    def auto_ack_enabled(self):
+        return self.cfg.get('reality_check_auto_ack', True) is not False
+
+    def rc_status(self):
+        """Reality Check summary for /health: the open episode, the last automatic click and an ADVISORY estimate of the
+        next dialog (last click + the interval the dialog stated). The estimate blocks routing only when
+        reality_check_due_soon_block=true: the live evidence (28-29 Sep) does not yet show that Bet365's timer restarts
+        at the acknowledgement."""
+        out = dict(auto_ack_enabled=self.auto_ack_enabled(), max_attempts=MAX_ACK_ATTEMPTS, note=self.rc_note,
+                   due_soon_blocks=self.cfg.get('reality_check_due_soon_block') is True)
+        try:
+            ep = self.ledger.rc_open_episode(create=False)
+            last = self.ledger.rc_last_click()
+        except Exception:
+            return out
+        if ep:
+            out['episode'] = dict(id=ep['id'], opened_at_ms=ep['opened_at_ms'], attempts=ep['attempts'])
+        if last:
+            out['last_auto_ack_ms'] = last['at_ms']
+            if last.get('interval_min'):
+                due = last['at_ms'] + last['interval_min'] * 60_000
+                out.update(interval_min=last['interval_min'], next_due_estimate_ms=due,
+                           due_soon=not ep and due - DUE_SOON_LEAD_S * 1000 <= now_ms() <= due + DUE_SOON_LEAD_S * 1000)
+        return out
 
     def alert_update(self):
         try:
-            return self.alerter.update(self.blocked_reason())
+            reason = self.blocked_reason()
+            return self.alerter.update(reason, self.rc_note if reason == 'REALITY_CHECK' else None)
         except Exception as e:                # alerts never stop the worker
             self.chrome['alert_error'] = f'{type(e).__name__}'[:80]
 
     def note_recovery(self, r):
-        """Record a recovery / session check (chrome state, visual session state, operator alert); identity untouched."""
-        session = r.get('session') or {}
+        """Record a recovery / session check (chrome state, visual session state, operator alert); identity untouched.
+        The read goes through note_probe, so a relaunch never makes the worker READY on one frame."""
+        session = dict(r.get('session') or {}, source='recovery')
         visual = session.get('state', 'UNKNOWN')
-        self.session = dict(state={'LOGGED_IN': 'AUTHENTICATED', 'LOGGED_OUT': 'LOGGED_OUT'}.get(visual, 'UNKNOWN'), visual_state=visual,
-                            observed_at_ms=session.get('observed_at_ms') or now_ms(), detail=session.get('detail'))
-        self.chrome.update(state='UP' if r.get('page') is not None or visual != 'UNKNOWN' else 'DOWN',
-                           last_recovery=dict(at_ms=now_ms(), relaunched=r.get('relaunched'),
+        up = r.get('page') is not None or visual != 'UNKNOWN'
+        self.chrome.update(last_recovery=dict(at_ms=now_ms(), relaunched=r.get('relaunched'),
                                               method=(r.get('launch') or {}).get('method'), session=visual))
-        self.operator_alert = r.get('alert')
-        return visual
+        now = self.note_probe(session, chrome_up=up)
+        if visual != 'LOGGED_IN' and r.get('alert'):
+            self.operator_alert = r.get('alert')
+        return now
 
     # ------------------------------------------------------------------ admission
     def health(self):
@@ -241,7 +313,7 @@ class Worker:
                                               hold_max_age_seconds=lim['hold_max_age_seconds'],
                                               max_daily_live_stake=lim['max_daily_live_stake']),
                     last_result=self.ledger.last_result(), restarted_pending=self.closed_at_start, pid=os.getpid(),
-                    operator_alert=self.operator_alert, chrome=self.chrome)
+                    operator_alert=self.operator_alert, chrome=self.chrome, reality_check=self.rc_status())
 
     def note_result(self, result):
         """The latest result's operator alert (None clears it: a later run got past the dialog). A Reality Check / logout
@@ -339,6 +411,10 @@ class Worker:
                             raise _Refusal(refusal)
                     if browser is None or not browser.is_connected():
                         browser, context, page = await connect(pw)
+                    if body['action'] in PAGE_ACTIONS:
+                        refusal = await self.pre_run_gate(page, iid)
+                        if refusal:
+                            raise _Refusal(refusal)
                     result = await asyncio.wait_for(self._run(body, page, decisions), timeout=body.get('timeout_ms', 300000) / 1000)
                 except _Refusal as r:
                     result = r.result
@@ -368,12 +444,12 @@ class Worker:
         try:
             hist = Path(out) / 'hist'
             hist.mkdir(parents=True, exist_ok=True)
-            name = time.strftime('%H%M%S') + f'_{state}'
+            name = time.strftime('%Y%m%d-%H%M%S') + f'_{state}'
             for ext in ('png', 'ocr.txt'):
                 src = Path(out) / f'last.{ext}'
                 if src.exists():
                     (hist / f'{name}.{ext}').write_bytes(src.read_bytes())
-            frames = sorted(hist.glob('*.png'))
+            frames = sorted(hist.glob('*.png'), key=lambda f: f.stat().st_mtime)     # by time: names cross midnight
             for old in frames[:-PROBE_HISTORY]:
                 old.unlink(missing_ok=True)
                 old.with_suffix('').with_suffix('.ocr.txt').unlink(missing_ok=True)
@@ -381,7 +457,8 @@ class Worker:
             pass
 
     async def _probe(self, pw, browser, page, connect, chrome_up):
-        """Screenshot-only session read (no navigation, nothing clicked)."""
+        """Screenshot-only session read (no navigation). A Reality Check read here - the idle probe, never during an
+        instruction - may be acknowledged by _auto_ack; nothing else is ever clicked."""
         from desktop_worker import lifecycle
         try:
             if not chrome_up():
@@ -395,12 +472,119 @@ class Worker:
             self.note_probe(session)
             if around_block:
                 self._keep_probe(out, session.get('state'))
+            if session.get('state') == 'REALITY_CHECK':
+                await self._reality_check(page, session)
         except Exception as e:
             self.note_probe(dict(state='UNKNOWN', detail=f'probe failed: {type(e).__name__}: {e}'[:200]))
             browser = None
         finally:
             self.probe_queued = False
         return browser, page
+
+    async def _reality_check(self, page, session):
+        """Log the episode; acknowledge it if allowed and recognised; otherwise leave it blocked with the reason."""
+        try:
+            ep = self.ledger.rc_open_episode()
+            if not self.ledger.rc_events(ep['id']):
+                self.ledger.rc_event(ep['id'], 'DETECTED', dialog=session.get('dialog'), frames=[session.get('screenshot')],
+                                     detail=session.get('detail'))
+        except Exception as e:
+            self.rc_note = f'episode log failed: {type(e).__name__}'
+            return
+        if not self.auto_ack_enabled():
+            self.rc_note = 'automatic acknowledgement is switched off (reality_check_auto_ack=false)'
+            return
+        await self._auto_ack(page, session, ep)
+
+    def _rc_note(self, ep, kind, note, dialog=None, frames=None):
+        """Record why no click happened (once per distinct reason per episode) and keep it for the alert."""
+        if self.rc_note != note:
+            self.ledger.rc_event(ep['id'], kind, dialog=dialog, frames=frames, detail=note)
+        self.rc_note = note
+
+    async def _auto_ack(self, page, session, ep):
+        """ONE ordinary mouse click on the Reality Check's 'Remain Logged In' button (David's instruction, 29 Sep 2026).
+        Preconditions, all required: idle (no instruction owns the page), fewer than MAX_ACK_ATTEMPTS clicks this episode,
+        no verified hold waiting on the slip, the target recognised with high confidence on the probe frame AND on a
+        fresh frame at the same place, and the click point away from any visible betslip. The click is committed to the
+        ledger before it is dispatched; the frames before/after are kept; David gets a Telegram message for every click."""
+        from desktop_worker import lifecycle, reality_check as rc, visual_slip as vs
+        if self.current:
+            return self._rc_note(ep, 'DEFERRED', 'an instruction owns the page')
+        if ep['attempts'] >= MAX_ACK_ATTEMPTS:
+            if not ep['failed_alerted']:
+                self.ledger.rc_update_episode(ep['id'], failed_alerted=1)
+                self.ledger.rc_event(ep['id'], 'GAVE_UP', detail=f'still open after {ep["attempts"]} clicks')
+                self.rc_note = f'still open after {ep["attempts"]} clicks on Remain Logged In'
+                self.alerter.ack_failed(self.rc_note)
+            return
+        if ep['last_attempt_ms'] and self.now_ms() - ep['last_attempt_ms'] < ACK_RETRY_GAP_S * 1000:
+            return
+        hold = self.ledger.active_hold(int(held_mod.limits(self.cfg)['hold_max_age_seconds']) * 1000)
+        if hold:
+            return self._rc_note(ep, 'DEFERRED', f"a verified hold ({hold['instruction_id']}) is on the slip; waiting until it expires")
+        dialog = session.get('dialog') or {}
+        if not dialog.get('target'):
+            note = f"not recognised with confidence: {dialog.get('reason') or 'no dialog panel read'}"
+            return self._rc_note(ep, 'NOT_RECOGNISED', note, dialog=dialog, frames=[session.get('screenshot')])
+        attempt = ep['attempts'] + 1
+        out = ROOT / '.local' / 'desktop-evidence' / 'reality-check' / f"ep{ep['id']:04d}-{time.strftime('%Y%m%d-%H%M%S')}-click{attempt}"
+        out.mkdir(parents=True, exist_ok=True)
+        frames = []
+
+        def keep(name, png, d):
+            f = out / f'{name}.png'
+            f.write_bytes(png)
+            (out / f'{name}.json').write_text(json.dumps({k: v for k, v in (d or {}).items() if not k.startswith('_')}, indent=1,
+                                                         default=str), encoding='utf-8')
+            frames.append(str(f))
+        keep('1_detected', session['_png'], dict(dialog=dialog, detail=session.get('detail')))
+        img2, png2 = await vs.screenshot(page)            # fresh frame immediately before the click
+        d2 = rc.read_dialog(img2)
+        keep('2_before_click', png2, dict(dialog=d2))
+        if not rc.same_target(dialog.get('target'), d2.get('target')):
+            return self._rc_note(ep, 'ABORTED', f"target not confirmed on a fresh frame ({d2.get('reason')})", dialog=d2, frames=frames)
+        x, y = d2['target']['x'], d2['target']['y']
+        slip = vs.find_panel(img2)
+        if slip and rc.near_rect(x, y, slip, SLIP_MARGIN_PX):
+            return self._rc_note(ep, 'ABORTED', f'a betslip panel {slip} is within {SLIP_MARGIN_PX} px of the button; not clicking',
+                                 dialog=d2, frames=frames)
+        if self.current:                                  # last check before the click (executor thread: cannot change here)
+            return self._rc_note(ep, 'DEFERRED', 'an instruction owns the page')
+        self.ledger.rc_update_episode(ep['id'], attempts=attempt, last_attempt_ms=self.now_ms())
+        self.ledger.rc_event(ep['id'], 'CLICK_INTENT', dialog=d2, click=dict(x=x, y=y), frames=frames,
+                             detail=f'click {attempt}/{MAX_ACK_ATTEMPTS} on {d2["target"]["text"]!r} at ({x},{y})')
+        await vs.click(page, x, y)                        # the same ordinary mouse input the worker uses for the slip
+        await page.wait_for_timeout(ACK_SETTLE_MS)
+        img3, png3 = await vs.screenshot(page)
+        after = lifecycle.assess(img3)
+        keep('3_after_click', png3, dict(state=after['state'], detail=after['detail'], signals=after['signals'], dialog=after['dialog']))
+        self.ledger.rc_event(ep['id'], 'CLICKED', dialog=d2, click=dict(x=x, y=y), frames=frames,
+                             detail=f"after the click the page reads {after['state']} ({after['detail']})")
+        self.rc_note = None
+        self.alerter.acknowledged(rc.message_info(d2), attempt, MAX_ACK_ATTEMPTS)
+        # the after-click frame is an ordinary read: clean counts towards READY, the dialog keeps it blocked
+        self.note_probe(dict(state=after['state'], detail=after['detail'], observed_at_ms=now_ms(), source='after_ack'))
+
+    async def pre_run_gate(self, page, iid):
+        """Before an instruction touches the page: refuse while blocked, then one fresh screenshot read; anything but a
+        clean LOGGED_IN blocks the worker and refuses the instruction without touching the page (closes the window
+        between the backend's last /health and this dispatch)."""
+        from desktop_worker import lifecycle
+        blocked = self.blocked_reason()
+        if blocked is None:
+            try:
+                s = await lifecycle.session_state(page, ROOT / '.local' / 'desktop-evidence' / 'probe', name='prerun')
+            except Exception as e:
+                s = dict(state='UNKNOWN', detail=f'pre-run read failed: {type(e).__name__}: {e}'[:200])
+            if s.get('state') != 'LOGGED_IN':
+                self.note_probe(dict({k: v for k, v in s.items() if not k.startswith('_')}, source='pre_run'))
+                blocked = self.blocked_reason() or 'SESSION_UNKNOWN'
+        if blocked is None:
+            return None
+        stage = 'SESSION_EXPIRED' if blocked == 'REALITY_CHECK' else 'INTERNAL_ERROR' if blocked == 'CHROME_DOWN' else 'SESSION_REQUIRED'
+        return dict(instruction_id=iid, status='FAIL', stage=stage, wager_submitted=False, operator_alert=self.operator_alert,
+                    detail=f'desktop worker blocked ({blocked}) at the start of the instruction; the page was not touched')
 
     async def _recover(self, pw, browser, page):
         """Relaunch (if down) + visual session check; returns (browser, page) to use, (None, None) if Chrome is down."""
@@ -450,8 +634,8 @@ class Worker:
                 return run.finish(r['status'], r['stage'], r['detail'])
             if action == 'SESSION_CHECK':
                 logged = await site.session(run)
-                self.session = dict(state='AUTHENTICATED' if logged else 'LOGGED_OUT' if logged is False else 'UNKNOWN',
-                                    observed_at_ms=now_ms(), detail='session check')
+                if logged is not True:            # a SESSION_CHECK can block, never make the worker READY (the probe does)
+                    self.note_probe(dict(state='LOGGED_OUT' if logged is False else 'UNKNOWN', detail='session check', source='session_check'))
                 if logged:
                     return run.finish('PASS', 'PASS', 'SESSION_AUTHENTICATED')
                 return run.finish('FAIL', 'SESSION_REQUIRED', 'Not logged in on the desktop worker: log in by hand in its Chrome window')

@@ -324,6 +324,7 @@ class Pipeline:
         session is authenticated, and only when normal routing is ON or a supervised target is armed; otherwise the phone."""
         s = self.settings
         if self.is_desktop(row['device_id']):
+            self.refresh_desktop()            # fresh /health for this row's dispatch checks (not the tick-start snapshot)
             return s.desktop_device_id, 'bound to the desktop'
         if row['state'] != State.QUEUED.value or self.desktop is None or not self.desktop_configured():
             return s.device_id, 'phone'
@@ -331,7 +332,9 @@ class Pipeline:
         if not s.desktop_routing_enabled and not (armed and self._target_eligible(row, armed)):
             return s.device_id, 'phone'
         from core.device_routing import routable
-        ok, why = routable(self.desktop_health, s.desktop_device_id, s.desktop_expected_worker_id, s.desktop_expected_account_fingerprint)
+        # a fresh /health right before the decision: a Reality Check seen by the worker since the tick began is honoured
+        # now (the worker's own pre-run gate refuses anything that still slips through, without touching the page)
+        ok, why = routable(self.refresh_desktop(), s.desktop_device_id, s.desktop_expected_worker_id, s.desktop_expected_account_fingerprint)
         if not ok:
             return s.device_id, f'desktop not routable: {why}'
         permitted, why = session_gate(self.store.session(s.desktop_device_id), self.clock(), s.session_max_age_seconds)

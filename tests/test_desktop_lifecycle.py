@@ -157,11 +157,19 @@ class BindingKept(unittest.TestCase):
         self.assertEqual(w.queue.get_nowait(), dict(_internal='RECOVER_CHROME'))
         self.assertEqual(w.health()['chrome']['state'], 'DOWN')
         w.recover_queued = False
+        t = [1_000_000]
+        w.now_ms = lambda: t[0]
         w.note_recovery(dict(relaunched=True, launch=dict(method='wmi_win32_process_create'), page=object(), alert=None,
                              session=dict(state='LOGGED_IN', detail='top bar', observed_at_ms=5)))
         h = w.health()
         self.assertEqual((h['state'], h['device_id'], h['worker_id'], h['account_fingerprint']),
                          ('IDLE', 'desktop-chrome', 'dw-abc123', 'f00dfeed1234'))
+        self.assertEqual(h['blocked_reason'], 'SESSION_UNKNOWN')                  # one clean frame after a relaunch is not READY
+        for _ in range(server.RECOVERY_CONFIRM_READS - 1):                         # the fast probe confirms it
+            t[0] += 12_000
+            w.note_probe(dict(state='LOGGED_IN', detail='top bar'))
+        h = w.health()
+        self.assertEqual((h['ready'], h['blocked_reason']), (True, None))
         self.assertEqual(json.loads(h['session'])['state'], 'AUTHENTICATED')
         self.assertIsNone(h['operator_alert'])
         self.assertEqual(self.cfg_path.read_text(encoding='utf-8'), before)       # config (token, IDs) untouched
@@ -175,8 +183,14 @@ class BindingKept(unittest.TestCase):
         self.assertEqual((r['status'], r['stage'], r['wager_submitted'], r['operator_alert']['code']),
                          ('FAIL', 'SESSION_EXPIRED', False, 'REALITY_CHECK_OPEN'))
         self.assertEqual(w.health()['operator_alert']['code'], 'REALITY_CHECK_OPEN')
+        t = [1_000_000]
+        w.now_ms = lambda: t[0]
         w.note_recovery(dict(page=object(), session=dict(state='LOGGED_IN'), alert=None))
-        self.assertIsNone(w.recovery_refusal('i-2'))
+        self.assertEqual(w.recovery_refusal('i-2')['stage'], 'SESSION_EXPIRED')    # the dialog's block holds until confirmed
+        for _ in range(server.RECOVERY_CONFIRM_READS - 1):
+            t[0] += 12_000
+            w.note_probe(dict(state='LOGGED_IN'))
+        self.assertIsNone(w.recovery_refusal('i-3'))
 
 
 if __name__ == '__main__':

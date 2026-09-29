@@ -1,5 +1,11 @@
 """Telegram operator alerts for the desktop worker: once per blocking episode, plus a recovery message when it clears.
 
+Hysteresis (29 Sep 2026): the RESUMED message is sent only after the worker has stayed unblocked for RESUME_QUIET_S; a
+block that comes back within that window is the same episode (no second BLOCKED, no RESUMED/BLOCKED pair). Reality Check
+auto-acknowledgement: every click the worker makes on 'Remain Logged In' is reported at once (acknowledged(): time plus
+what the dialog showed), and if it cannot clear the dialog one BLOCKED message says so (ack_failed()). A message that
+fails to send is kept in the persisted outbox and retried; it is never dropped.
+
 Uses the repo's own sender (core.status_notifier.TelegramBotSender) and the pipeline's notification config
 (.local/pipeline.json -> notifications.bot_token / chat_id). The token is never printed, logged or stored here; errors are
 sanitised before they are kept. The episode state is persisted (.local/desktop_alerts.json) so a server restart during
@@ -16,10 +22,12 @@ STATE = ROOT / '.local' / 'desktop_alerts.json'
 PIPELINE_CONFIG = ROOT / '.local' / 'pipeline.json'
 RETRY_S = 60                                        # a failed send is retried at most once a minute
 UNKNOWN_AFTER_S = 300                               # SESSION_UNKNOWN alerts only once it has lasted 5 minutes
+RESUME_QUIET_S = 45                                 # unblocked this long before RESUMED is sent (flapping = one episode)
 
 MESSAGES = {
-    'REALITY_CHECK': 'Bet365 Reality Check is open on the mini PC; answer it manually to resume the desktop worker. '
-                     'The desktop worker (desktop-chrome) is blocked and not routable meanwhile; it never answers the dialog itself.',
+    'REALITY_CHECK': 'Bet365 Reality Check is open on the mini PC and the desktop worker did not acknowledge it automatically; '
+                     'answer it manually to resume the desktop worker. The desktop worker (desktop-chrome) is blocked and not '
+                     'routable meanwhile.',
     'LOGGED_OUT': "Bet365 is logged out in the desktop worker's Chrome on the mini PC; log in manually to resume the desktop worker. "
                   'It is blocked and not routable meanwhile; it never logs in itself.',
     'CHROME_DOWN': "The desktop worker's dedicated Chrome is down on the mini PC and could not be restarted automatically; start it "
@@ -31,7 +39,7 @@ LABELS = {'REALITY_CHECK': 'Reality Check open', 'LOGGED_OUT': 'logged out', 'CH
 
 
 def _clock():
-    return datetime.now().astimezone().strftime('%H:%M %Z').replace('GMT Summer Time', 'BST').replace('GMT Standard Time', 'GMT')
+    return datetime.now().astimezone().strftime('%H:%M %Z').replace('GMT Summer Time', 'BST').replace('GMT Daylight Time', 'BST').replace('GMT Standard Time', 'GMT')
 
 
 def sanitise(text, secrets=()):
@@ -90,10 +98,23 @@ class Alerter:
             st['last_failed_at'] = self.clock()
             return False
 
-    def update(self, blocked_reason):
+    def _flush(self, st, now):
+        """Retry queued messages (auto-acknowledge reports) - at most once a minute after a failure."""
+        box = st.get('outbox') or []
+        if not box or now - st.get('last_failed_at', 0) < RETRY_S:
+            return
+        while box:
+            if not self._send(box[0], st):
+                break
+            box.pop(0)
+        st['outbox'] = box
+        self._save(st)
+
+    def update(self, blocked_reason, detail=None):
         """Feed the current blocked_reason (None = routable). Returns 'ALERT' / 'RECOVERY' when a message was sent now."""
         st = self._load()
         now = self.clock()
+        self._flush(st, now)
         active, pending = st.get('active'), st.get('pending')
         reason = blocked_reason if blocked_reason in MESSAGES else None
         if reason == 'SESSION_UNKNOWN':             # startup / a transient unreadable frame is not worth a message
@@ -105,28 +126,71 @@ class Alerter:
             if now - first < UNKNOWN_AFTER_S:
                 return None
         else:
-            st.pop('unknown_since', None); st.pop('unknown_reason', None)
+            if 'unknown_since' in st or 'unknown_reason' in st:
+                st.pop('unknown_since', None); st.pop('unknown_reason', None)
+                self._save(st)
+        if reason and reason == active:
+            if st.get('clear_since') is not None:   # blocked again inside the quiet window: the same episode
+                st['clear_since'] = None
+                self._save(st)
+            return None
         if reason and reason != active:
             if pending == reason and now - st.get('last_failed_at', 0) < RETRY_S:
                 return None
-            if self._send(f"BLOCKED ({LABELS[reason]}, since {_clock()}): {MESSAGES[reason]}", st):
-                st.update(active=reason, since=now, pending=None, sent_at=now)
+            extra = f' ({detail})' if detail else ''
+            if self._send(f"BLOCKED ({LABELS[reason]}, since {_clock()}): {MESSAGES[reason]}{extra}", st):
+                st.update(active=reason, since=now, pending=None, sent_at=now, clear_since=None, auto_ack=None, ack_failed=None)
                 self._save(st)
                 return 'ALERT'
             st['pending'] = reason
             self._save(st)
             return None
         if reason is None and active and blocked_reason is None:
+            if st.get('clear_since') is None:
+                st['clear_since'] = now
+                self._save(st)
+                return None
+            if now - st['clear_since'] < RESUME_QUIET_S:
+                return None
             if now - st.get('last_failed_at', 0) < RETRY_S and st.get('pending') == 'RECOVERY':
                 return None
-            if self._send(f"RESUMED ({_clock()}): the desktop worker is unblocked (was: {LABELS.get(active, active)}); "
-                          'the Bet365 session reads LOGGED_IN and it is routable again.', st):
-                st.update(active=None, pending=None, recovered_at=now)
+            how = ' after the automatic Reality Check acknowledgement' if st.get('auto_ack') and active == 'REALITY_CHECK' else ''
+            if self._send(f"RESUMED ({_clock()}): the desktop worker is unblocked (was: {LABELS.get(active, active)}){how}; "
+                          'the Bet365 session reads LOGGED_IN on consecutive clean screenshots and it is routable again.', st):
+                st.update(active=None, pending=None, recovered_at=now, clear_since=None, auto_ack=None, ack_failed=None)
                 self._save(st)
                 return 'RECOVERY'
             st['pending'] = 'RECOVERY'
             self._save(st)
         return None
+
+    def acknowledged(self, info, attempt, max_attempts):
+        """Report ONE automatic 'Remain Logged In' click: time plus what the dialog showed. The Reality Check episode
+        is then this message's (no separate BLOCKED unless the click does not clear it: ack_failed)."""
+        st = self._load()
+        text = (f"REALITY CHECK AUTO-ACKNOWLEDGED ({_clock()}, click {attempt}/{max_attempts}): Bet365's Reality Check "
+                f"opened in the desktop worker's Chrome; " + '; '.join(info) + ". The worker clicked 'Remain Logged In' once "
+                "(never 'Log out' or any other option). The desktop stays blocked (not routable) until consecutive clean "
+                'screenshots show the dialog gone.')
+        if not self._send(text, st):
+            st.setdefault('outbox', []).append(text)
+        st.update(active='REALITY_CHECK', since=st.get('since') if st.get('active') == 'REALITY_CHECK' else self.clock(),
+                  pending=None, clear_since=None, auto_ack=True)
+        self._save(st)
+        return text
+
+    def ack_failed(self, detail):
+        """One BLOCKED message when the worker could not clear the Reality Check itself (once per episode)."""
+        st = self._load()
+        if st.get('ack_failed') and st.get('active') == 'REALITY_CHECK':
+            return None
+        text = (f"BLOCKED ({LABELS['REALITY_CHECK']}, since {_clock()}): the desktop worker did not clear Bet365's Reality Check "
+                f"automatically ({detail}); answer it manually on the mini PC. The desktop worker is blocked and not routable meanwhile.")
+        if not self._send(text, st):
+            st.setdefault('outbox', []).append(text)
+        st.update(active='REALITY_CHECK', since=st.get('since') or self.clock(), pending=None, clear_since=None, ack_failed=True)
+        self._save(st)
+        return text
 
     def test(self):
         """One labelled TEST message in the real format (used once for David to see it)."""
@@ -137,7 +201,13 @@ class Alerter:
 
 
 class NullAlerter:
-    def update(self, blocked_reason):
+    def update(self, blocked_reason, detail=None):
+        return None
+
+    def acknowledged(self, info, attempt, max_attempts):
+        return None
+
+    def ack_failed(self, detail):
         return None
 
 

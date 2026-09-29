@@ -597,7 +597,7 @@ def reality_check_failure(run, detail):
     """SESSION_EXPIRED for an open Reality Check (never answered by the worker) plus the operator notice: a structured
     `operator_alert` on the result (and so on /health) and an ERROR line in logs/desktop_worker.log (dashboard logs)."""
     alert = operator_notice('REALITY_CHECK_OPEN', 'SESSION_EXPIRED', 'Bet365 Reality Check is open; answer it on the mini PC to continue',
-                            instruction_id=run.i.get('instruction_id'), run_id=run.run_id, suffix='; it never answers the dialog')
+                            instruction_id=run.i.get('instruction_id'), run_id=run.run_id, suffix='; no instruction ever clicks the dialog (only the idle probe may acknowledge it, between instructions)')
     if 'log_error' in alert:
         run.record.setdefault('evidence_errors', []).append(f"operator log: {alert.pop('log_error')}")
     run.put('operator_alert', alert)

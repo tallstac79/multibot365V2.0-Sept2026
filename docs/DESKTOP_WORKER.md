@@ -9,7 +9,8 @@ The backend remains the only source of truth. The worker receives the same instr
 | File | Role |
 | --- | --- |
 | `desktop_worker/chrome.py` | Installed Google Chrome with a dedicated profile (`.local/desktop-chrome-profile`) and a CDP port on 127.0.0.1:9333. Playwright uses `connect_over_cdp`. There is no Multilogin or antidetect layer. The operator signs in by hand, and the code never types or reads credentials. Chrome is started outside the caller's process tree and job object (WMI `Win32_Process.Create`, then `CREATE_BREAKAWAY_FROM_JOB`, then the old detached start), with the same flags. |
-| `desktop_worker/lifecycle.py` | Chrome status (CDP probe + process list: UP / HUNG / DOWN), relaunch of the same profile, and the visual Bet365 session state (screenshot + OCR: LOGGED_IN / LOGGED_OUT / REALITY_CHECK / UNKNOWN). Never logs in and never answers Reality Check; anything but LOGGED_IN raises an `operator_alert` through `workflow.operator_notice`. CLI: `py -3.11 -m desktop_worker.lifecycle`. |
+| `desktop_worker/lifecycle.py` | Chrome status (CDP probe + process list: UP / HUNG / DOWN), relaunch of the same profile, and the visual Bet365 session state (screenshot + OCR + pixels: LOGGED_IN / LOGGED_OUT / REALITY_CHECK / UNKNOWN; LOGGED_IN only on positive evidence, see 'Reality Check: strict READY and automatic acknowledgement'). Never logs in and never clicks; anything but LOGGED_IN raises an `operator_alert` through `workflow.operator_notice`. CLI: `py -3.11 -m desktop_worker.lifecycle`. |
+| `desktop_worker/reality_check.py` | Pure screenshot functions for Bet365's Reality Check dialog: the light dialog panel, its green buttons each read on their own, the session time / interval / win-loss it shows, and the one permitted click target ('Remain Logged In', high confidence, unambiguous). |
 | `desktop_worker/layout.py` | Visible page text plus geometry from the DOM (a TreeWalker over text nodes; it calls none of the page's wrapped query APIs), in the phone's OCR word format. Used on the event / market pages only, before the selection click. Read-only: the page is never tagged or modified. |
 | `desktop_worker/bet365_page.py` | Pure functions that turn the page into the phone's header lines and quotes. Group titles are found by font (15px bold) and columns by bold headers. |
 | `desktop_worker/jvm/DesktopDecisions.java` + `decisions.py` | Decision bridge. The phone's own Java classes (EventPage / EventIdentity / CompetitionStructure / FootballLineCheck / ExecutionTolerance / FootballMarkets / HeldSlipIdentity) are compiled unchanged from `android/` into `.local/desktop-decisions/decisions.jar`. One JVM answers over stdin/stdout, and the jar is rebuilt whenever a source is newer. Identity, competition, kick-off, the football ±0.25 line band and the price/line tolerances are therefore identical to the phone's. |
@@ -324,3 +325,74 @@ receipt) still run on PLACE_HELD.
   - A block clears only after 2 consecutive LOGGED_IN reads (b3ef231).
   - Frames around a block are kept in `.local/desktop-evidence/probe/hist`.
 - **Still open:** no genuine clearance by David has been observed yet. The earlier "recoveries" were those misreads.
+
+## Reality Check: strict READY and automatic acknowledgement (29 Sep 2026, 05:50-07:00 BST)
+
+### Account setting (research, nothing changed on the account)
+- bet365 offers Reality Checks as a customer control under **Account menu > Gambling Controls > Reality Checks** (password
+  required); choose **Change** and pick an interval. Shorter intervals apply at once; a longer interval (or, where allowed,
+  switching it off) only takes effect after a **24-hour** cooling-off period. Sources: bet365 responsible-gambling pages
+  (<https://responsiblegambling.bet365.com/stay-in-control/limit-your-account> - geo-dependent content, the UK version
+  was not retrievable from the fetch provider, 403 from the mini PC), <https://verantwoordgokken.bet365.nl/en/stay-in-control/limit-your-account>
+  (same menu path, 24 h rule), <https://www.aceodds.com/features/bet365-safer-gambling.html> (UK walkthrough: Gambling
+  Controls list incl. Reality Checks, password to change, 24 h cooling-off on less frequent reminders).
+- UK rule: Gambling Commission RTS 13B (<https://www.gamblingcommission.gov.uk/standards/remote-gambling-and-software-technical-standards/rts-13-time-requirements-and-reality-checks>)
+  requires operators to let customers set the reality-check frequency; the customer must acknowledge the check for it to
+  leave the screen.
+- 29 Sep 05:53 BST: David reports he has switched the Reality Check off in his account himself. The worker does not rely on
+  that (a 24 h delay may apply, and the account may show it again).
+
+### Behaviour, state by state
+| situation | worker | backend | Telegram |
+| --- | --- | --- | --- |
+| start-up / after any block | SESSION_UNKNOWN (or the block) until **3 consecutive clean reads spanning >= 20 s** (12 s probe cadence, so about 24-36 s) | not routable | - |
+| clean read | LOGGED_IN only when the top bar shows 'My Bets' AND the balance AND the sports navigation, the centre has no Reality Check wording, and no light dialog panel is over the page (pixels) | routable (READY/IDLE) | - |
+| any other read while READY (dialog wording, a light panel, a half-drawn top bar) | blocks at once: REALITY_CHECK if any Reality Check wording or its dialog, else UNKNOWN | not routable from the next /health; the pipeline re-reads /health immediately before every desktop dispatch decision | SESSION_UNKNOWN only after 5 min |
+| Reality Check recognised (signature + exactly one green button reading 'Remain Logged In', Remain/Logged conf >= 60, nothing else on it, button-sized, inside the dialog) | idle probe only: fresh frame confirms the same target (+-6 px), no verified hold on the slip, no betslip panel within 80 px; click intent committed to the ledger; **one ordinary mouse click** (`visual_slip.click`, the slip's own input path) on 'Remain Logged In'; after-click frame read | stays not routable until 3 clean reads over >= 20 s | **every click**: 'REALITY CHECK AUTO-ACKNOWLEDGED (time, click n/2)' with the session time, the interval and any win/loss the dialog showed |
+| still open after the click | second click at the next probe (>= 10 s later); after **2 clicks** no more clicks | not routable | one BLOCKED ('did not clear ... answer it manually') |
+| dialog unrecognised / ambiguous / low confidence, auto-ack disabled, hold on the slip, slip next to the button, target moved | **no click**, BLOCKED; the reason is kept in `/health.reality_check.note` and the ledger | not routable | one BLOCKED with the reason |
+| dialog gone (after the click, or David answered it) | READY by itself after 3 clean reads over >= 20 s; episode closed in the ledger (CLEARED_AFTER_AUTO_ACK / CLEARED_BY_OPERATOR) | routable again | one RESUMED, sent after 45 s of continuous READY (a block inside that window is the same episode: no BLOCKED/RESUMED flapping) |
+| an instruction arrives | pre-run gate: refused unless READY and a fresh screenshot reads clean (`SESSION_EXPIRED` for a Reality Check); the page is not touched | the row fails closed | - |
+| an instruction meets the dialog mid-run | fails SESSION_EXPIRED as before; **no instruction ever clicks the dialog**; the idle probe after it may | not routable | as above |
+
+Never clicked: 'Log out', 'Review Your Account History', 'Safer Gambling', 'Contact Us', any limit / deposit option; no
+DOM or script is used to find or press the button (screenshot + OCR + pixels, one mouse click). Login stays manual.
+
+Durable record: `.local/desktop_worker.sqlite3` tables `reality_check_episodes` / `reality_check_events` (DETECTED,
+NOT_RECOGNISED, DEFERRED, ABORTED, CLICK_INTENT, CLICKED, GAVE_UP, VERIFIED_CLEAR, with session time, interval, dialog
+text, click point and frame paths); frames `1_detected` / `2_before_click` / `3_after_click` (.png + .json) under
+`.local/desktop-evidence/reality-check/epNNNN-<time>-clickN/`. Alert state (incl. unsent messages, retried) persists in
+`.local/desktop_alerts.json`, so a restart neither re-alerts nor resets the click count.
+
+Settings in `.local/desktop_worker.json`: `reality_check_auto_ack` (default **true**; false = the old manual-only
+behaviour); `reality_check_due_soon_block` (default **false**).
+
+'Due soon' (proactive): `/health.reality_check` shows `next_due_estimate_ms` = last automatic click + the interval the
+dialog stated ('after every 60 minutes of play'). It is advisory only: the 28 Sep timings (session start about 11:38 BST,
+dialog 20:04, cleared by 20:08, next seen 22:06) do not show whether Bet365 counts from login, from the acknowledgement,
+or only 'play' time, so it does not block routing unless `reality_check_due_soon_block=true`.
+
+Also fixed: the probe history (`.local/desktop-evidence/probe/hist`) pruned by file name, so after midnight the newest
+frames were deleted first (the 00:00-05:40 frames of 29 Sep were lost this way); names now carry the date and pruning is by time.
+
+### Tests
+- `tests/test_desktop_rc_autoack.py` (new, 19 tests): every Reality Check frame captured on 28 Sep (fixtures, the committed
+  evidence frames and 6 frames of 23:48-23:59 BST in `tests/fixtures/desktop/rc_replay/`) reads REALITY_CHECK with its
+  target inside 'Remain Logged In' and away from 'Log out'; clean frames (home, event page, slip with Place Bet, My Bets)
+  read LOGGED_IN with every signal; the 05:37 relaunch frame reads UNKNOWN; OCR-substituted cases (two 'Remain' buttons,
+  low confidence, 'Continue', extra words, no signature) give no target; click flow, 2-click limit, restart, unrecognised,
+  hold on the slip, slip next to the button, moved target, instruction in flight, flapping replay, 3-reads/20 s rule,
+  pre-run gate.
+- `tests/test_desktop_backend.py::FreshHealthAtDispatch`: a block that appears between the tick's first /health and the
+  dispatch decision keeps the instruction off the desktop.
+- Suites: desktop 119/119; full `tests/` 615/618 (the 3 known dashboard tests that depend on live data); `tools/` 13/13.
+
+### Live (29 Sep 2026)
+- The 22:06 BST dialog was still open at 23:59 (session 12:09:36 on screen). Chrome was relaunched by the watchdog at 05:37
+  BST and the session came back without the dialog (David had switched the Reality Check off); nothing was clicked by the worker.
+- 06:26 BST: supervisor and pipeline restarted on the new code. Health: SESSION_UNKNOWN while confirming, then READY at
+  06:26:56 after 4 clean reads over 26 s (My Bets, balance GBP 4.90, navigation, no dialog wording, no dialog panel).
+  `desktop_routing_enabled` false, `live_click_enabled` false, `DESKTOP_LIVE_CLICK` unset, `final_action_armed` false.
+- **Not yet observed live:** an automatic acknowledgement (no Reality Check has appeared since the new code went live) and
+  the recovery path after it. The click target is proven only on the 13 captured dialog frames (11 at 1384x874, 2 at 1384x813).
+

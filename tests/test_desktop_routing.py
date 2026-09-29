@@ -12,7 +12,7 @@ from unittest import mock
 from core import device_routing as dr
 from core.pipeline import Settings
 from desktop_worker import held
-from desktop_worker.alerts import Alerter, sanitise
+from desktop_worker.alerts import Alerter, RESUME_QUIET_S, sanitise
 from desktop_worker.ledger import Ledger, now_ms
 
 
@@ -140,6 +140,17 @@ class FakePlacement:
         raise AssertionError('the dry run must never click')
 
 
+def confirm_ready(w, reads=None, step_ms=12_000):
+    """READY needs server.RECOVERY_CONFIRM_READS clean reads spanning server.MIN_CLEAR_SPAN_S (29 Sep 2026)."""
+    from desktop_worker import server as srv
+    t = [max(now_ms(), w.now_ms()) + step_ms]            # continues any clock a previous call installed
+    w.now_ms = lambda: t[0]
+    for _ in range(reads or srv.RECOVERY_CONFIRM_READS):
+        w.note_probe(dict(state='LOGGED_IN', detail='top bar'))
+        t[0] += step_ms
+    return w
+
+
 class ServerHoldPlace(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -157,8 +168,7 @@ class ServerHoldPlace(unittest.TestCase):
     def worker(self, **cfg):
         from desktop_worker.server import Worker
         w = Worker(dict(dict(port=0, token='t', worker_id='dw-1', account_fingerprint='fp1'), **cfg), ledger_path=self.path, start_executor=False)
-        w.note_probe(dict(state='LOGGED_IN', detail='top bar'))
-        return w
+        return confirm_ready(w)
 
     def hold(self, w, at_ms=None):
         digest = w.ledger.record_hold('e2e-hold-1', 'd_run', held.hold_terms(HOLD_BODY, HOLD_RESULT, READY))
@@ -305,6 +315,8 @@ class HealthStates(unittest.TestCase):
         w = self.worker()
         self.assertEqual(self.verdict(w), (False, False, 'SESSION_UNKNOWN', False))          # nothing read yet
         w.note_probe(dict(state='LOGGED_IN'))
+        self.assertEqual(self.verdict(w), (False, False, 'SESSION_UNKNOWN', False))          # one clean read is not READY
+        confirm_ready(w)
         self.assertEqual(self.verdict(w), (True, True, None, True))
         w.note_probe(dict(state='REALITY_CHECK'))
         self.assertEqual(self.verdict(w), (False, False, 'REALITY_CHECK', False))
@@ -314,6 +326,8 @@ class HealthStates(unittest.TestCase):
         w.note_probe(dict(state='UNKNOWN'))
         self.assertEqual(self.verdict(w)[2], 'SESSION_UNKNOWN')
         w.note_probe(dict(state='LOGGED_IN'))
+        self.assertEqual(w.health()['operator_alert']['code'], 'SESSION_UNKNOWN')            # still confirming
+        confirm_ready(w)
         self.assertIsNone(w.health()['operator_alert'])
         w.note_probe(dict(state='LOGGED_IN', observed_at_ms=now_ms() - 301_000))
         self.assertEqual(self.verdict(w)[2], 'SESSION_UNKNOWN')                               # stale read
@@ -347,8 +361,16 @@ class TelegramDedup(unittest.TestCase):
         self.assertIsNone(a.update('REALITY_CHECK'))
         self.assertIsNone(self.alerter().update('REALITY_CHECK'))        # a server restart during the episode: still once
         self.assertEqual(len(self.sent), 1)
-        self.assertIn('Bet365 Reality Check is open on the mini PC; answer it manually to resume the desktop worker', self.sent[0])
+        self.assertIn('Bet365 Reality Check is open on the mini PC and the desktop worker did not acknowledge it automatically; '
+                      'answer it manually to resume the desktop worker', self.sent[0])
         self.assertIsNone(a.update('RECOVERING'))                         # not a recovery yet
+        self.assertIsNone(a.update(None))                                 # unblocked: the quiet window starts
+        self.t[0] += 10
+        self.assertIsNone(a.update('REALITY_CHECK'))                      # back inside the window: same episode, no message
+        self.assertIsNone(a.update(None))
+        self.t[0] += RESUME_QUIET_S - 1
+        self.assertIsNone(a.update(None))
+        self.t[0] += 2
         self.assertEqual(a.update(None), 'RECOVERY')
         self.assertIsNone(a.update(None))
         self.assertEqual(len(self.sent), 2)

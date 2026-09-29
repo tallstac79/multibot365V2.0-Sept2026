@@ -257,5 +257,29 @@ class PhoneUnchanged(Base):
         self.assertNotIn('PLACE_HELD', [x['action'] for x in self.phone.submitted + self.desk.submitted])
 
 
+class FreshHealthAtDispatch(Base):
+    """29 Sep 2026: the desktop's /health is read again right before a desktop dispatch decision, so a Reality Check the
+    worker saw after the tick's first health poll keeps the instruction off the desktop (no race)."""
+    def test_block_seen_between_the_tick_poll_and_the_decision_keeps_work_off_the_desktop(self):
+        self.tick()
+        self.arm()
+        iid = self.p.ingest(message(MELBOURNE, received=self.clock()))['instruction_id']
+        calls = []
+        original = self.desk.health
+
+        def health():
+            calls.append(1)
+            if len(calls) >= 2:                          # the dialog opened after the tick-start poll
+                self.desk.blocked = 'REALITY_CHECK'
+            return original()
+        self.desk.health = health
+        self.tick()
+        self.assertGreaterEqual(len(calls), 2)
+        self.assertEqual(self.desk.submitted, [])
+        self.assertNotEqual(self.row(iid)['device_id'], 'desktop-chrome')
+        self.assertEqual(self.p.store.device('desktop-chrome') and
+                         json.loads(self.p.store.device('desktop-chrome')['health'])['blocked_reason'], 'REALITY_CHECK')
+
+
 if __name__ == '__main__':
     unittest.main()
