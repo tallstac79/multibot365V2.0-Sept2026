@@ -87,13 +87,17 @@ def wait(client, iid, seconds, gap=0.15):
     raise TimeoutError(f'no result for {iid} within {seconds}s')
 
 
-def run(case, client):
+def run(case, client, prewarm=None):
     spec = dict(CASES[case])
     band = spec.pop('band', '50')
     stamp = time.strftime('%H%M%S')
     iid = f'speed-{case}-{stamp}'.replace('_', '-')
     payload = dict(instruction_id=iid, action='ADAPTER_WORKFLOW', adapter='live_bet365', scenario='live', minimum_price='1.01', stake='0.10',
                    timeout_ms=120000, execution_mode='hold', period='FULL_GAME', max_line_deterioration=band, **{k: v for k, v in spec.items() if v is not None})
+    if prewarm is not None:
+        # what the backend does at queue time: start the page loading, then send the hold `prewarm` seconds later
+        print('    prewarm:', client.prewarm(spec['event_url']), 'then the hold in', prewarm, 's')
+        time.sleep(prewarm)
     t0 = time.monotonic()
     client.submit(payload)
     res = wait(client, iid, 150)
@@ -119,10 +123,11 @@ def main():
     ap.add_argument('case', choices=sorted(CASES))
     ap.add_argument('--repeat', type=int, default=1)
     ap.add_argument('--out')
+    ap.add_argument('--prewarm', type=float, default=None, help='call /prewarm, wait this many seconds, then send the hold')
     args = ap.parse_args()
     guard()
     client = Client(json.loads((ROOT / '.local' / 'coordinator.json').read_text(encoding='utf-8-sig')))
-    runs = [run(args.case, client) for _ in range(args.repeat)]
+    runs = [run(args.case, client, args.prewarm) for _ in range(args.repeat)]
     print(f'\npoll replies that were not 200/202: {len(POLL_ERRORS)}', POLL_ERRORS[:5])
     if args.out:
         Path(args.out).parent.mkdir(parents=True, exist_ok=True)

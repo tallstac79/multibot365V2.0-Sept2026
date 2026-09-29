@@ -24,6 +24,11 @@ class Client:
         code, value = self.request('GET', '/health')
         if code != 200: raise RuntimeError(value)
         return value
+    def prewarm(self, url):
+        """Ask the phone to start loading this event page (navigation only). {'started': bool, ...}; a busy phone answers started False."""
+        code, value = self.request('POST', '/prewarm', {'url': url})
+        if code not in (200, 202, 409): raise RuntimeError(value)
+        return value
     def submit(self, instruction, seconds=20):
         # Never generate a replacement ID after an uncertain response.
         deadline = time.monotonic() + seconds

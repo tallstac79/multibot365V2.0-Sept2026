@@ -1,0 +1,197 @@
+[
+ {
+  "case": "hn-1x2",
+  "id": "speed-hn-1x2-220411",
+  "result": {
+   "instruction_id": "speed-hn-1x2-220411",
+   "status": "FAIL",
+   "stage": "SUSPENDED",
+   "detail": "Bet365 event page: betting has closed or been suspended (no search fallback)",
+   "duration_ms": 2465,
+   "progress": {
+    "stage": "OPEN_HOME",
+    "elapsed_ms": 2253,
+    "last_progress_at_ms": 1790715852090,
+    "instruction_id": "speed-hn-1x2-220411",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790715852060
+     },
+     {
+      "stage": "OPEN_EVENT",
+      "elapsed_ms": 35,
+      "at_ms": 1790715852076
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 50,
+      "at_ms": 1790715852090,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 50,
+       "start_ts_ms": 1790715852079,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 216,
+      "at_ms": 1790715852090
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 438,
+      "at_ms": 1790715852090
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 634,
+      "at_ms": 1790715852090
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 860,
+      "at_ms": 1790715852090
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1037,
+      "at_ms": 1790715852090
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1244,
+      "at_ms": 1790715852090
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1403,
+      "at_ms": 1790715852090
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1647,
+      "at_ms": 1790715852090
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1816,
+      "at_ms": 1790715852090
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2200,
+      "at_ms": 1790715852090
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2253,
+      "at_ms": 1790715852090
+     }
+    ]
+   },
+   "device_stage": "OPEN_HOME",
+   "execution_count": 1,
+   "run_id": "c_B1pBV4dV2t32-51nFGC-nwH7sugiD84DQmR65Xn5Dh0",
+   "fixture_name": null,
+   "home": null,
+   "away": null,
+   "competition": null,
+   "verification_detail": "Bet365 event page: betting has closed or been suspended (no search fallback)",
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 50,
+     "start_ts_ms": 1790715852079,
+     "end_elapsed_ms": 2253,
+     "end_ts_ms": 1790715854281,
+     "duration_ms": 2203,
+     "status": "fail",
+     "retries": 0
+    }
+   ],
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E202043384/F3/I1/"
+  },
+  "reset": {
+   "instruction_id": "rs-speed-hn-1x2-220411",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "RESET_BETSLIP",
+   "duration_ms": 674,
+   "progress": {
+    "stage": "RESET_BETSLIP",
+    "elapsed_ms": 431,
+    "last_progress_at_ms": 1790715854636,
+    "instruction_id": "rs-speed-hn-1x2-220411",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790715854629
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 18,
+      "at_ms": 1790715854636,
+      "timing": {
+       "stage": "RESET_BETSLIP",
+       "start_elapsed_ms": 18,
+       "start_ts_ms": 1790715854630,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 26,
+      "at_ms": 1790715854636
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 397,
+      "at_ms": 1790715854636
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 431,
+      "at_ms": 1790715854636
+     }
+    ]
+   },
+   "device_stage": "RESET_BETSLIP",
+   "execution_count": 1,
+   "run_id": "c_Tck0VAIROAJRSBK9WRpJhreWhanOWqifpKzu_K5R3i4",
+   "fixture_name": null,
+   "home": null,
+   "away": null,
+   "competition": null,
+   "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+   "betslip_reset": {
+    "tapped": false,
+    "detail": "No safe reset control visible"
+   },
+   "stage_timings": [
+    {
+     "stage": "RESET_BETSLIP",
+     "start_elapsed_ms": 18,
+     "start_ts_ms": 1790715854630,
+     "end_elapsed_ms": 430,
+     "end_ts_ms": 1790715855042,
+     "duration_ms": 412,
+     "status": "ok",
+     "retries": 0
+    }
+   ]
+  },
+  "wall_s": 2.6090000000112923
+ }
+]

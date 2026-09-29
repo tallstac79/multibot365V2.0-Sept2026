@@ -738,6 +738,42 @@ final class Bet365LiveAdapter implements SiteAdapter {
         return homePart;
     }
 
+    // ------------------------------------------------------------------ the persistent Bet365 tab
+    /**
+     * The phone keeps ONE Bet365 Chrome tab on the event it last verified. The next job for the SAME event link does not navigate
+     * (a re-open re-renders the page: 3-4 s of blank/redraw measured on the phone); it reads the screen it already has and the
+     * unchanged identity / market / slip checks judge that frame. The page is trusted only until anything navigates elsewhere, a job
+     * ends badly, or HOT_MAX_AGE_MS passes; a page that does not read as the event within HOT_READY_CAP_MS is navigated afresh.
+     */
+    static final class HotPage {
+        private HotPage() {}
+        static volatile String url; static volatile long atMs;
+        static final long HOT_MAX_AGE_MS = 5 * 60_000L;
+        /** Job outcomes that leave the event page as it was (the bet was only refused on price or line). */
+        private static final java.util.Set<String> SOFT = java.util.Set.of("PRICE_CHANGED", "BELOW_MINIMUM", "LINE_CHANGED");
+        static void verified(String eventUrl) { url = eventUrl; atMs = android.os.SystemClock.elapsedRealtime(); prewarmUrl = null; }
+        static void clear() { url = null; atMs = 0; prewarmUrl = null; }
+        /** The backend asked the phone to start loading this event's page before its hold job arrives (CoordinatorAgent /prewarm). */
+        static volatile String prewarmUrl; static volatile long prewarmAtMs;
+        static final long PREWARM_MAX_AGE_MS = 20_000L;
+        static void prewarm(String eventUrl) { url = null; atMs = 0; prewarmUrl = eventUrl; prewarmAtMs = android.os.SystemClock.elapsedRealtime(); }
+        /** elapsedRealtime at which the page for this link began loading on a prewarm, or 0. */
+        static long prewarmedAt(String eventUrl) {
+            String u = prewarmUrl;
+            return u != null && u.equals(eventUrl) && android.os.SystemClock.elapsedRealtime() - prewarmAtMs < PREWARM_MAX_AGE_MS ? prewarmAtMs : 0;
+        }
+        static boolean isFor(String eventUrl) {
+            String u = url;
+            return u != null && u.equals(eventUrl) && android.os.SystemClock.elapsedRealtime() - atMs < HOT_MAX_AGE_MS;
+        }
+        static void jobEnded(String status) { if (!"PASS".equals(status) && !SOFT.contains(status)) clear(); else if (url != null) atMs = android.os.SystemClock.elapsedRealtime(); }
+    }
+
+    /** How long a hot page is given to read as the event before it is navigated afresh. */
+    private static final long HOT_READY_CAP_MS = 2500;
+    /** How long, from the start of a prewarm, its page is given to read as the event before the job navigates afresh. */
+    private static final long PREWARM_READY_CAP_MS = 8000;
+
     // ------------------------------------------------------------------ direct event link
     /**
      * Open the alert's exact Bet365 event link and verify it: sport (link B-code), login, both teams from
@@ -757,7 +793,33 @@ final class Bet365LiveAdapter implements SiteAdapter {
         ui.put("event_url", url);
         final long opened = android.os.SystemClock.elapsedRealtime();
         final String wantUk = kickoffUtc == null || kickoffUtc.isEmpty() ? null : EventPage.ukDisplay(kickoffUtc);
-        return ui.openNow(url).thenCompose(v -> directEventReady(opened, wantUk)).thenCompose(s -> {
+        final boolean hot = HotPage.isFor(url);
+        final long prewarmAt = hot ? 0 : HotPage.prewarmedAt(url);
+        CompletableFuture<VisualScreen> loaded;
+        if (prewarmAt > 0) {
+            // The backend had this page loading before the job arrived: look at it (its clock started at prewarmAt) instead of navigating.
+            ui.put("prewarmed_ms_before_job", opened - prewarmAt);
+            ui.checkpoint("OPEN_HOME");
+            loaded = directEventReady(prewarmAt, wantUk, PREWARM_READY_CAP_MS).thenCompose(s0 -> {
+                if (eventFrameReady(s0, android.os.SystemClock.elapsedRealtime() - prewarmAt, wantUk) || EventPage.closed(texts(s0)) || loginWall(s0))
+                    return CompletableFuture.completedFuture(s0);
+                ui.put("prewarm_recovered", true);   // it never read as the event: navigate afresh, exactly as without a prewarm
+                final long again = android.os.SystemClock.elapsedRealtime();
+                return ui.openNow(url).thenCompose(v -> directEventReady(again, wantUk, EVENT_LOAD_CAP_MS));
+            });
+        } else if (hot) {
+            ui.put("hot_tab", true);
+            ui.checkpoint("OPEN_HOME");
+            loaded = directEventReady(opened, wantUk, HOT_READY_CAP_MS).thenCompose(s0 -> {
+                if (eventFrameReady(s0, android.os.SystemClock.elapsedRealtime() - opened, wantUk)) return CompletableFuture.completedFuture(s0);
+                ui.put("hot_tab_recovered", true);   // the page did not read as the event: navigate afresh, as if it were not hot
+                final long again = android.os.SystemClock.elapsedRealtime();
+                return ui.openNow(url).thenCompose(v -> directEventReady(again, wantUk, EVENT_LOAD_CAP_MS));
+            });
+        } else {
+            loaded = ui.openNow(url).thenCompose(v -> directEventReady(opened, wantUk, EVENT_LOAD_CAP_MS));
+        }
+        return loaded.thenCompose(s -> {
             if (sessionLoggedIn(s)) { ui.put("session", "AUTHENTICATED"); return CompletableFuture.completedFuture(s); }
             // Not clearly logged in: the normal session step (may re-home / log in), then back to the event.
             return ensure_session().thenCompose(v -> ui.open(url)).thenCompose(v -> directEventLoaded(1));
@@ -790,19 +852,23 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     /** Look at the screen at once and keep looking until it shows THIS event's header (PageReady.eventReady), the page is
      *  closed/suspended, or the login wall shows; then hand that frame to the unchanged identity verification. */
-    private CompletableFuture<VisualScreen> directEventReady(long openedAt, String wantUk) {
+    private CompletableFuture<VisualScreen> directEventReady(long openedAt, String wantUk, long capMs) {
         return ui.delay(150).thenCompose(v -> ui.capture("event_direct")).thenCompose(s -> {
             long waited = android.os.SystemClock.elapsedRealtime() - openedAt;
-            List<String> header = headerLines(s);
-            boolean ready = PageReady.eventReady(header, headerTeams(header), EventPage.hints(identityHome, instructionAliases),
-                    EventPage.hints(expectedAway, instructionAliases), wantUk, waited) && sessionKnown(s) && marketsDrawn(s);
-            if (ready || EventPage.closed(texts(s)) || loginWall(s) || waited >= EVENT_LOAD_CAP_MS) {
+            if (eventFrameReady(s, waited, wantUk) || EventPage.closed(texts(s)) || loginWall(s) || waited >= capMs) {
                 ui.put("event_load_ms", waited);
                 return CompletableFuture.completedFuture(s);
             }
             ui.put("event_direct_wait", ui.record.optInt("event_direct_wait") + 1);
-            return directEventReady(openedAt, wantUk);
+            return directEventReady(openedAt, wantUk, capMs);
         });
+    }
+
+    /** This frame is THIS event's page, fully drawn (header, session bars, market section): the hold may go on with it. */
+    private boolean eventFrameReady(VisualScreen s, long waitedMs, String wantUk) {
+        List<String> header = headerLines(s);
+        return PageReady.eventReady(header, headerTeams(header), EventPage.hints(identityHome, instructionAliases),
+                EventPage.hints(expectedAway, instructionAliases), wantUk, waitedMs) && sessionKnown(s) && marketsDrawn(s);
     }
 
     /** The event page's own market section is on screen, not just its header. Opening a link to the event the phone is
@@ -923,6 +989,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
         ui.put("identity_verified_home", identityHome);
         ui.put("identity_verified_away", expectedAway);
         ui.put("event_verified", true);
+        if (!ui.record.optString("event_url").isEmpty()) HotPage.verified(ui.record.optString("event_url"));
         ui.put("event_context", CoordinatorAgent.object("home", f.home, "away", f.away,
                 "competition", EventIdentity.competitionKey(f.competition), "kickoff_utc", kickoffUtc, "period", contextPeriod));
         return f;
@@ -1276,6 +1343,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     public CompletableFuture<Fixture> discover_fixture() {
+        HotPage.clear();   // Search leaves the event page
         return ui.capture("fixtures").thenApply(s -> {
             require(!visible(s, "SIMULATOR"), "NO_FIXTURE_FOUND", "Simulator page during live fixture discovery");
             List<Fixture> all = fixturesFromSearch(s);
@@ -1391,6 +1459,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     private FootballMarkets.Result footballParse(VisualScreen s, String view) {
         FootballMarkets.Result r = FootballMarkets.parse(wordsOf(s), liveFixture.home, liveFixture.away, altCols);
+        footballFrameAtMs = android.os.SystemClock.elapsedRealtime();
         JSONArray cells = new JSONArray();
         for (FootballMarkets.Cell c : r.cells) cells.put(c.toString());
         JSONArray reads = ui.record.optJSONArray("football_market_reads");
@@ -1419,6 +1488,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
         List<String> tabs = new ArrayList<>();
         if ("SPREAD".equals(targetMarket)) tabs.add("asia");
         else if ("TOTAL".equals(targetMarket)) { tabs.add("goals"); tabs.add("asia"); }
+        else if ("MONEYLINE".equals(targetMarket)) tabs.add("popular");   // only visited when the page opened on another tab (hot page)
         CompletableFuture<List<Selection>> discovered;
         if ("SPREAD".equals(targetMarket)) {
             discovered = footballViews(tabs, 0, null, Collections.<Selection>emptyList(), null);
@@ -1449,6 +1519,11 @@ final class Bet365LiveAdapter implements SiteAdapter {
     // ------------------------------------------------------------------ alternative football lines (FALLBACK ONLY)
     /** Column geometry of the expanded alternative section once the fallback has opened it (null on every normal run). */
     private FootballMarkets.AltColumns altCols;
+    /** When the football market frame the selections came from was read (CAPTURED, elapsedRealtime); 0 = none. */
+    private long footballFrameAtMs;
+    /** A market read this recent is not read again before the selection tap: the slip that opens shows the real line and price and
+     *  verify_final_state / the pre-tap check judge them against the tolerances, so a second read of the same page adds no evidence. */
+    private static final long MARKET_FRAME_REUSE_MS = 1200;
     private static final int ALT_MAX_FRAMES = 6, ALT_SCROLL_FROM = 1200, ALT_SCROLL_TO = 600;
 
     /** The fallback exists for one case only: the alert's exact line and every line inside the allowance are missing from the
@@ -1737,6 +1812,20 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 });
             });
         }
+        if ("football".equals(sport) && liveFixture != null && selection.bounds != null && footballFrameAtMs > 0
+                && android.os.SystemClock.elapsedRealtime() - footballFrameAtMs < MARKET_FRAME_REUSE_MS && altCols == null) {
+            long age = android.os.SystemClock.elapsedRealtime() - footballFrameAtMs;
+            ui.put("selection_preflight", "reused the market read of " + age + " ms ago");
+            Selection current = selection;
+            observeExecution("selection_preflight", current, false);
+            String[] refusal = FootballLineCheck.freshTerms(current.market, current.side, requestedLine, current.line, current.price, lineTolerance, executionMinimum);
+            if (refusal != null) throw new Failure(refusal[0], refusal[1]);
+            latestSelection = current;
+            if (!"MONEYLINE".equals(current.market)) targetLine = current.line;
+            require("OPEN".equals(current.availability), current.availability.equals("SUSPENDED") ? "SUSPENDED" : "UNAVAILABLE", "Selection not open");
+            openedPrice = current.price;
+            return ui.tap(current.bounds, current.market + " / " + current.side + " / " + current.line + " / " + current.price, TAP_SELECTION_SETTLE_MS);
+        }
         return ui.captureTable("selection_preflight").thenCompose(s -> {
             Selection current = refind(s, selection);
             if ("football".equals(sport)) {
@@ -1753,9 +1842,13 @@ final class Bet365LiveAdapter implements SiteAdapter {
             }
             require("OPEN".equals(current.availability), current.availability.equals("SUSPENDED") ? "SUSPENDED" : "UNAVAILABLE", "Selection not open");
             openedPrice = current.price;
-            return ui.tap(current.bounds, current.market + " / " + current.side + " / " + current.line + " / " + current.price, 650);
+            return ui.tap(current.bounds, current.market + " / " + current.side + " / " + current.line + " / " + current.price, TAP_SELECTION_SETTLE_MS);
         });
     }
+
+    /** Pause after the selection tap. The next step polls the screen until the slip shows (and re-taps once if it never does), so a
+     *  long fixed wait here is dead time (was 650 ms; the slip appears ~0.75 s after the tap and the capture itself takes ~0.45 s). */
+    private static final long TAP_SELECTION_SETTLE_MS = 250;
 
 
     /** Stake entry, with ONE bounded recovery from Bet365's changed-price slip state (football; SlipChange): the stake
@@ -1781,6 +1874,9 @@ final class Bet365LiveAdapter implements SiteAdapter {
     /** The selection open_selection last tapped, and whether it was tapped a second time because no slip appeared. */
     private Selection openedSelection;
     private boolean selectionRetapped;
+    /** The slip frame on which a remembered stake was read back (fresh), for verify_final_state to check instead of capturing again. */
+    private VisualScreen slipFrame; private long slipFrameAtMs;
+    private static final long SLIP_FRAME_REUSE_MS = 1500;
 
     private CompletableFuture<Void> acceptChangedPrice() {
         Selection held = latestSelection;
@@ -1836,6 +1932,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
                         || visibleLoose(s, liveFixture != null ? liveFixture.home : ""),
                 "TARGET_NOT_FOUND", "Betslip not visible for stake entry");
         if (openedPrice != null && !openedPrice.isEmpty() && prefilledStakeReads(s, amount)) {
+            slipFrame = s; slipFrameAtMs = android.os.SystemClock.elapsedRealtime();   // verify_final_state may judge this same fresh frame
             ui.put("stake_prefilled", "slip");
             ui.put("stake_entered", amount);
             return CompletableFuture.completedFuture(null);
@@ -2270,7 +2367,12 @@ final class Bet365LiveAdapter implements SiteAdapter {
         // Read 2 is a plain re-read (a slip still rendering after Done / a single bad frame); read 3 is Tesseract's
         // enhanced per-word pass (3x, contrast), the second engine's opinion: real slips where the plain read missed
         // "1.83" and read "£0.18" as "£0118" (Berck v Pays Salonais). The checks themselves never change.
-        CompletableFuture<VisualScreen> frame = attempt == 1 ? ui.capture(label).thenCompose(s -> keypadSettled(s, label, 0))
+        VisualScreen reuse = slipFrame;
+        boolean reuseSlip = attempt == 1 && "final".equals(label) && reuse != null && android.os.SystemClock.elapsedRealtime() - slipFrameAtMs < SLIP_FRAME_REUSE_MS;
+        slipFrame = null;   // one use: any retry captures afresh
+        if (reuseSlip) ui.put("final_frame", "reused the slip frame the remembered stake was read on (" + (android.os.SystemClock.elapsedRealtime() - slipFrameAtMs) + " ms old)");
+        CompletableFuture<VisualScreen> frame = reuseSlip ? CompletableFuture.completedFuture(reuse)
+                : attempt == 1 ? ui.capture(label).thenCompose(s -> keypadSettled(s, label, 0))
                 : attempt == 2 ? ui.capture(label + "_reread") : ui.captureEnhanced(label + "_enhanced");
         return frame.thenCompose(s -> {
             try {
@@ -2590,7 +2692,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
                         ui.put("place_bet_result", outcome);
                         ui.put("place_bet_detail", detail);
                         ui.put("t_receipt_ms", System.currentTimeMillis());
-                        return resetBetslip().thenCompose(v -> returnHome());
+                        return resetBetslip().thenCompose(v -> stayOnEvent());
                     });
                 });
     }
@@ -2615,6 +2717,15 @@ final class Bet365LiveAdapter implements SiteAdapter {
             if (legacy != null && !legacy.equals(r.betReference)) ui.put("bet_reference_disputed", true);
             return r.betReference;
         });
+    }
+
+    /** After a placement the phone STAYS on the event page (receipt closed, slip cleared): the next job navigates straight to its own
+     *  event, or reuses this page when it is the same event. HOME is used only for recovery (My Bets, session repair). */
+    private CompletableFuture<Void> stayOnEvent() {
+        ui.put("returned_home", false);
+        ui.put("stayed_on_event", true);
+        ui.put("t_home_ms", System.currentTimeMillis());
+        return CompletableFuture.completedFuture(null);
     }
 
     /** After a placement: Bet365 HOME is the clean idle state (never re-taps anything). */

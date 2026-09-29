@@ -93,6 +93,7 @@ final class CoordinatorAgent implements AutoCloseable {
             }
         }
         if (method.equals("GET") && (path.equals("/health") || path.equals("/state"))) return json(200, health());
+        if (method.equals("POST") && path.equals("/prewarm")) return prewarm(body);
         if (method.equals("POST") && path.equals("/instructions")) return accept(body);
         if (method.equals("POST") && path.equals("/diagnostics")) {
             int seconds = new JSONObject(body).getInt("seconds");
@@ -419,6 +420,66 @@ final class CoordinatorAgent implements AutoCloseable {
             "SELECTION_UNAVAILABLE", "SPORTS_RESULTS_NOT_FOUND", "WRONG_SPORT", "CONFIRMATION_REQUIRED",
             "BETSLIP_NOT_SINGLE", "PLACEMENT_UNKNOWN", "REJECTED", "INVALID_INSTRUCTION", "MY_BETS_UNAVAILABLE", "BOT_CHECK", "ALIAS_REQUIRED", "TWO_FACTOR_REQUIRED").contains(textStatus) ? textStatus : "INTERNAL_ERROR";
     }
+    /**
+     * Start loading an event page in the phone's Bet365 tab BEFORE its hold job arrives, so the page load overlaps the backend's own
+     * intake-to-dispatch time. Navigation only: nothing is tapped, entered or placed. Refused while any job is on the phone (it never
+     * navigates under a running job or a held slip); a hold for the same link then looks at this page instead of navigating.
+     */
+    private CoordinatorHttp.Reply prewarm(String body) {
+        String url;
+        try { url = new JSONObject(body).optString("url", ""); }
+        catch (Exception e) { return error(400, "", "INVALID_INSTRUCTION", "prewarm needs a JSON body with url"); }
+        if (!EventPage.validUrl(url)) return error(400, "", "INVALID_INSTRUCTION", "prewarm needs an event link");
+        if (closed || store.active() != null) return json(409, object("started", false, "reason", "phone busy"));
+        if (Bet365LiveAdapter.HotPage.isFor(url)) return json(200, object("started", false, "hot", true));
+        Bet365LiveAdapter.HotPage.prewarm(url);
+        final Uri target = Uri.parse(url);
+        main.post(() -> {
+            try {
+                service.startActivity(new Intent(Intent.ACTION_VIEW, target).setPackage("com.android.chrome").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .putExtra(android.provider.Browser.EXTRA_APPLICATION_ID, service.getPackageName()));
+            } catch (Exception e) { Bet365LiveAdapter.HotPage.clear(); }
+        });
+        return json(202, object("started", true));
+    }
+
+    /** {configured marker or null, account fingerprint or null}, refreshed at most every 60 s: reading the encrypted credential store on every
+     *  /health cost ~0.3 s of the ~0.5 s the backend waits for it before each dispatch and each approval. Not a security input: the
+     *  backend binds approvals to the fingerprint, which changes only when the account is changed in Settings. */
+    private volatile String[] identityCache; private volatile long identityCacheAtMs;
+    /** Final-action permission as /health reports it, refreshed at most every 3 s: each read re-derives the configured account from the
+     *  encrypted credential store (~0.2 s apiece, three times per /health). The phone re-checks LocalExecution itself at PLACE_HELD, so
+     *  this snapshot is advisory to the backend and a 3 s lag in it cannot enable a tap. */
+    private static final class ExecState { final boolean armed; final JSONObject state; ExecState(boolean a, JSONObject s) { armed = a; state = s; } }
+    private volatile ExecState execCache; private volatile long execCacheAtMs;
+    private ExecState execState() {
+        long now = SystemClock.elapsedRealtime();
+        ExecState cached = execCache;
+        if (cached != null && now - execCacheAtMs < 3_000L) return cached;
+        if (cached != null && now - execCacheAtMs < 30_000L) {
+            // stale but recent: answer with it now and refresh off the request path (single flight), so /health never pays the read
+            if (execRefreshing.compareAndSet(false, true)) new Thread(() -> {
+                try { execRefresh(); } catch (Exception ignored) { } finally { execRefreshing.set(false); }
+            }, "exec-state-refresh").start();
+            return cached;
+        }
+        return execRefresh();
+    }
+    private final java.util.concurrent.atomic.AtomicBoolean execRefreshing = new java.util.concurrent.atomic.AtomicBoolean(false);
+    private ExecState execRefresh() {
+        ExecState fresh = new ExecState(CoordinatorConfig.finalActionArmed(service), LocalExecution.state(service));
+        execCache = fresh; execCacheAtMs = SystemClock.elapsedRealtime();
+        return fresh;
+    }
+    private String[] accountIdentity() {
+        long now = SystemClock.elapsedRealtime();
+        String[] cached = identityCache;
+        if (cached != null && now - identityCacheAtMs < 60_000L) return cached;
+        boolean has = CoordinatorConfig.hasBet365Credentials(service);
+        String[] fresh = new String[] {has ? "yes" : null, has ? WorkerIdentity.fingerprint(CoordinatorConfig.bet365Username(service)) : null};
+        identityCache = fresh; identityCacheAtMs = now;
+        return fresh;
+    }
     private JSONObject health() throws Exception {
         JSONObject active = store.active(), last = store.last();
         android.content.pm.PackageInfo pkg = service.getPackageManager().getPackageInfo(service.getPackageName(), 0);
@@ -436,17 +497,16 @@ final class CoordinatorAgent implements AutoCloseable {
             .put("state", active == null ? "IDLE" : active.optString("state"))
             .put("current_instruction", active == null ? JSONObject.NULL : active.getJSONObject("payload"))
             .put("last_result", last == null ? JSONObject.NULL : last.getJSONObject("result"))
-            .put("app_version", pkg.versionName).put("version_code", pkg.versionCode).put("phone_final_action_armed", CoordinatorConfig.finalActionArmed(service))
+            .put("app_version", pkg.versionName).put("version_code", pkg.versionCode).put("phone_final_action_armed", execState().armed)
             .put("diagnostics_active", diagnosticsActive())
             .put("endpoint", endpoint() == null ? JSONObject.NULL : endpoint()).put("pid", android.os.Process.myPid())
             .put("device_id", DEVICE_ID).put("session", session).put("ocr_engine", CoordinatorConfig.ocrEngine(service)).put("fast_ocr_error", runner.fastEngineError() == null ? JSONObject.NULL : runner.fastEngineError())
-            .put("credentials_configured", CoordinatorConfig.hasBet365Credentials(service)).put("credential_store", SecureCredentials.storeKind())
+            .put("credentials_configured", accountIdentity()[0] != null).put("credential_store", SecureCredentials.storeKind())
             // Non-secret identity the backend binds automatic approvals to: this installation and the configured account.
             .put("worker_id", WorkerIdentity.workerId(service))
-            .put("account_fingerprint", CoordinatorConfig.hasBet365Credentials(service)
-                    ? WorkerIdentity.fingerprint(CoordinatorConfig.bet365Username(service)) : JSONObject.NULL)
+            .put("account_fingerprint", accountIdentity()[1] != null ? accountIdentity()[1] : JSONObject.NULL)
             // Persistent local execution permission (LocalExecution): readable here, never settable over HTTP.
-            .put("local_execution", LocalExecution.state(service))
+            .put("local_execution", execState().state)
             .put("session_recovery", selfHealStatus())
             .put("worker_health", workerHealth.snapshot());
         if (active != null) {

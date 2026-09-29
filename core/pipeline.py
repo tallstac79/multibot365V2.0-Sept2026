@@ -13,7 +13,7 @@ No live-site logic lives here: the device gateway sends the proven coordinator r
 and the Android adapter owns everything on the phone.
 """
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import hashlib
 import json
 import logging
@@ -116,6 +116,9 @@ class Settings:
     busy_tick_seconds: float = 0.2
     health_reuse_seconds: float = 1.5
     dispatch_newest_first: bool = True
+    #  prewarm_enabled       the phone starts loading the event page of the next queued alert at once, in parallel with the dispatcher's
+    #                        own intake-to-dispatch work (navigation only; refused by the phone while any job runs or a slip is held)
+    prewarm_enabled: bool = True
 
     APPROVAL_MODES = ('manual', 'automatic')
 
@@ -271,6 +274,8 @@ class Pipeline:
         self.clock = clock
         self._wake = threading.Event()          # set after an intake commit / a result: the dispatcher need not wait out its sleep
         self._health_cache = (None, None)       # (clock time, health) of the last phone health read
+        self._prewarmed = None                  # (instruction_id, url) last sent to the phone as a prewarm
+        self._prewarm_retry_at = None
         self.final = FinalAction(self)
         self.identity = IdentityRegistry(self.store)
         self.armed_at = iso(clock())    # one-shot: only Place Bet runs dispatched after this count
@@ -724,8 +729,50 @@ class Pipeline:
         self._health_cache = (self.clock(), health)
         return health
 
+    PREWARM_STATES = ('DISPATCHED', 'DEVICE_ACTIVE', 'READY', 'APPROVED', 'PLACEMENT_UNKNOWN')
+
+    def _prewarm(self, gateway):
+        """Start the phone loading the event page of the alert that will be dispatched next. Called at the start of a tick, BEFORE the
+        health read and the dispatch checks, so the ~4 s page load overlaps them instead of following them. Best effort: any refusal or
+        error changes nothing (the hold navigates itself exactly as before)."""
+        if not self.settings.prewarm_enabled or not self.settings.dispatch_enabled or self.final.paused():
+            return
+        if not hasattr(gateway, 'prewarm') or self.store.instructions_in([State(x) for x in self.PREWARM_STATES]):
+            return
+        if self.held_instruction() or self.final.device_busy('phone'):
+            return
+        rows = self.store.instructions_in([State.QUEUED])
+        if not rows:
+            return
+        rows.sort(key=lambda r: -_epoch(r['received_at'])) if self.settings.dispatch_newest_first else rows.sort(key=lambda r: _epoch(r['received_at']))
+        row = rows[0]
+        try:
+            target, _ = self._choose_target(row)
+        except Exception:
+            return
+        url = event_link(row)
+        if target != self.settings.device_id or not url or row['sport'] not in ('football', 'basketball'):
+            return
+        key = (row['instruction_id'], url)
+        now = self.clock()
+        if self._prewarmed == key or (self._prewarm_retry_at is not None and now < self._prewarm_retry_at):
+            return
+        try:
+            reply = gateway.prewarm(url)
+        except Exception as error:
+            reply = {'started': False, 'error': type(error).__name__}
+        if reply.get('started') or reply.get('hot'):
+            self._prewarmed = key
+            self._prewarm_retry_at = None
+        else:
+            self._prewarm_retry_at = now + timedelta(seconds=0.5)   # the phone is finishing something: ask again shortly
+            return
+        with self.store.tx() as db:
+            self.store.audit(db, 'PREWARM', dict(url=url, reply=reply), row['instruction_id'])
+
     def tick(self, gateway):
         """One dispatcher cycle. Safe to call repeatedly and after any restart."""
+        self._prewarm(gateway)
         in_flight = bool(self.store.instructions_in([State.DISPATCHED, State.DEVICE_ACTIVE]))
         health = self._phone_health(gateway, in_flight)
         desktop_health = self.refresh_desktop()

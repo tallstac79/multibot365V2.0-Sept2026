@@ -128,6 +128,7 @@ final class VisualSession {
     CompletableFuture<Void> openNow(String url) {
         if(!live())return failed("TIMEOUT","Session expired");
         checkpoint("OPEN_HOME");
+        Bet365LiveAdapter.HotPage.clear();   // any navigation ends the hot event page (open_event_direct re-marks it once verified)
         // EXTRA_APPLICATION_ID makes Chrome reuse this app's tab instead of opening a new one per workflow.
         service.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(url)).setPackage("com.android.chrome").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .putExtra(android.provider.Browser.EXTRA_APPLICATION_ID,service.getPackageName()));
@@ -395,7 +396,7 @@ final class VisualSession {
     }
     void finish(String status,String detail) { if(done)return;terminated(status,detail);runner.finish(id,status,detail); }
     private void terminated(String status,String detail) {
-        if(done)return;done=true;main.removeCallbacksAndMessages(null);
+        if(done)return;done=true;main.removeCallbacksAndMessages(null);Bet365LiveAdapter.HotPage.jobEnded(status);
         closeStage(SystemClock.elapsedRealtime(), status.equals("PASS")?"ok":"fail");put("stage_timings",stageTimings);put("status",status.equals("INTERRUPTED")?"INTERNAL_ERROR":status);put("detail",detail);put("duration_ms",SystemClock.elapsedRealtime()-started);checkpoint("FINISHED");
         for(CompletableFuture<?> f:new ArrayList<>(pending))f.completeExceptionally(new SiteAdapter.Failure(status,detail));
     }

@@ -39,6 +39,7 @@ class FakeGateway:
         self.session = 'AUTHENTICATED'     # None -> no session object reported
         self.session_age = 0               # seconds before "now" the phone observed it
         self.submitted, self.polled = [], []
+        self.prewarmed = []
         self.results = {}                  # instruction_id -> payload (or Exception to raise)
         self.submit_error = None
 
@@ -50,6 +51,10 @@ class FakeGateway:
             observed = self.clock() - timedelta(seconds=self.session_age)
             value['session'] = {'state': self.session, 'observed_at': observed.isoformat()}
         return value
+
+    def prewarm(self, url):
+        self.prewarmed.append(url)
+        return {'started': True}
 
     def submit(self, payload):
         self.submitted.append(payload)
