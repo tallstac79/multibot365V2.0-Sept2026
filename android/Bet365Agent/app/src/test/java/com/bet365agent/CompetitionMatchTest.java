@@ -88,4 +88,101 @@ public class CompetitionMatchTest {
         assertTrue(EventIdentity.competitionMatchKind("", "Mexico", "Mexico Liga ABE").startsWith("unknown"));
         assertTrue(EventIdentity.competitionMatchKind("Liga ABE", "Mexico", "Mexico LNBP").startsWith("mismatch"));
     }
+
+    /** 2026-09-29 inventory: SAFE verified equivalences seeded into COMPETITION_ALIASES (Spain ACB already present). */
+    @Test public void inventorySafeCompetitionMappings20260929() {
+        // Adriatic: operator scope international| (alerts often omit ISO country)
+        assertTrue(EventIdentity.competitionMatchKind("Adriatic League Women", "International", "Adriatic WABA Women 27 Sep 15:00").startsWith("approved_mapping"));
+        assertFalse(EventIdentity.competitionMatches("Adriatic League Women", "Poland", "Adriatic WABA Women 27 Sep 15:00"));
+        assertTrue(EventIdentity.competitionMatchKind("Liga 1 Women", "Poland", "Poland 1 Liga Women 27 Sep 12:00").startsWith("approved_mapping")
+                || EventIdentity.competitionMatchKind("Liga 1 Women", "Poland", "Poland 1 Liga Women 27 Sep 12:00").equals("same_words_reordered"));
+        assertTrue(EventIdentity.competitionMatches("Liga 1 Women", "Poland", "Poland 1 Liga Women 27 Sep 12:00"));
+        assertTrue(EventIdentity.competitionMatchKind("Super League Women", "Turkey", "Turkiye TKBSL Women 27 Sep 12:00").startsWith("approved_mapping"));
+        assertTrue(EventIdentity.competitionMatches("Division 1 Women", "Belgium", "Belgium Div 1 Women 27 Sep 14:00"));
+        assertTrue(EventIdentity.competitionMatchKind("NPFL", "Nigeria", "Nigeria Premier League 27 Sep 16:00").startsWith("approved_mapping"));
+        assertTrue(EventIdentity.competitionMatchKind("SB League", "Switzerland", "Switzerland LNA 27 Sep 15:00").startsWith("approved_mapping"));
+        assertTrue(EventIdentity.competitionMatchKind("ACB", "Spain", "Spain Liga ACB 27 Sep 12:30").startsWith("approved_mapping")); // already present
+        assertTrue(EventIdentity.competitionMatchKind("Nacional Championship Women", "Portugal", "Portugal Campeonato Nacional Women 27 Sep 17:00").startsWith("approved_mapping"));
+        assertTrue(EventIdentity.competitionMatchKind("NB 2 Women", "Hungary", "Hungary NBII Women 27 Sep 16:30").startsWith("approved_mapping"));
+        assertTrue(EventIdentity.competitionMatchKind("Paraense 3", "Brazil", "Brazil Campeonato Paraense A3 27 Sep 23:00").startsWith("approved_mapping"));
+        assertTrue(EventIdentity.competitionMatchKind("Super League", "Turkey", "Turkiye BSL 27 Sep 16:00").startsWith("approved_mapping"));
+        // country / gender / tier scoping still closed
+        assertFalse(EventIdentity.competitionMatches("Super League Women", "Greece", "Turkiye TKBSL Women 27 Sep 12:00"));
+        assertFalse(EventIdentity.competitionMatches("Super League", "Turkey", "Turkiye TKBSL Women 27 Sep 12:00")); // men vs women page
+        assertFalse(EventIdentity.competitionMatches("NPFL", "Nigeria", "Nigeria Premier League Women 27 Sep 16:00"));
+        assertFalse(EventIdentity.competitionMatches("SB League", "Switzerland", "Switzerland LNB 27 Sep 15:00"));
+        assertFalse(EventIdentity.competitionMatches("Paraense 3", "Brazil", "Brazil Campeonato Paraense A2 27 Sep 23:00"));
+    }
+
+    /**
+     * Historical ALIAS_REQUIRED competition-mismatch instructions from the 2026-09-29 SAFE set (33 occurrences
+     * across 11 pairs / 11 event IDs). Anchored direct-link pages with known kick-off must pass the competition gate;
+     * must_remain_conflicting and needs_manual_review must not gain approved mappings.
+     */
+    @Test public void inventorySafeHistoricalInstructionsPassCompetitionGate() {
+        Object[][] safe = new Object[][] {
+            // sport, home, away, kickoff, feedCompetition, pageCompetition, country, occurrences
+            {"basketball", "ZKK Buducnost", "Sibenik", "27 Sep 15:00", "Adriatic League Women", "Adriatic WABA Women 27 Sep 15:00", "International", 8},
+            {"basketball", "LKS Lodz", "Sparta Ziebice", "27 Sep 12:00", "Liga 1 Women", "Poland 1 Liga Women 27 Sep 12:00", "Poland", 7},
+            {"basketball", "Botas SK", "CBK Mersin Yenisehir Bld", "27 Sep 12:00", "Super League Women", "Turkiye TKBSL Women 27 Sep 12:00", "Turkey", 6},
+            {"basketball", "Phantoms Boom", "Liege Panthers", "27 Sep 14:00", "Division 1 Women", "Belgium Div 1 Women 27 Sep 14:00", "Belgium", 3},
+            {"football", "Ikorodu City", "Enugu Rangers International", "27 Sep 16:00", "NPFL", "Nigeria Premier League 27 Sep 16:00", "Nigeria", 2},
+            {"basketball", "Fribourg Olympic", "Union Neuchatel Basket", "27 Sep 15:00", "SB League", "Switzerland LNA 27 Sep 15:00", "Switzerland", 2},
+            {"basketball", "CB San Pablo Burgos", "Baskonia Vitoria Gasteiz", "27 Sep 11:30", "ACB", "Spain Liga ACB 27 Sep 11:30", "Spain", 1},
+            {"football", "Torreense", "Maritimo", "27 Sep 17:00", "Nacional Championship Women", "Portugal Campeonato Nacional Women 27 Sep 17:00", "Portugal", 1},
+            {"football", "Budaorsi", "Godolloi SK", "27 Sep 16:30", "NB 2 Women", "Hungary NBII Women 27 Sep 16:30", "Hungary", 1},
+            {"football", "Tesla", "Pedreira EC", "27 Sep 23:00", "Paraense 3", "Brazil Campeonato Paraense A3 27 Sep 23:00", "Brazil", 1},
+            {"basketball", "Bahcesehir Koleji", "Fenerbahce", "27 Sep 16:00", "Super League", "Turkiye BSL 27 Sep 16:00", "Turkey", 1},
+        };
+        int covered = 0;
+        for (Object[] row : safe) {
+            EventIdentity.Event feed = new EventIdentity.Event((String) row[0], (String) row[1], (String) row[2], (String) row[3], (String) row[4], false);
+            EventIdentity.Event page = new EventIdentity.Event((String) row[0], (String) row[1], (String) row[2], (String) row[3], (String) row[5], true);
+            EventIdentity.Result r = EventIdentity.resolveVerified(feed, page, Collections.emptyMap(), false, (String) row[6]);
+            assertTrue(row[4] + " -> " + row[5] + " : " + r.reason + " evidence=" + r.evidence, r.accepted());
+            String kind = String.valueOf(r.evidence.get("competition_match"));
+            assertFalse("must not be mismatch: " + kind, kind.startsWith("mismatch"));
+            covered += (Integer) row[7];
+        }
+        assertEquals("33 historical SAFE instruction occurrences", 33, covered);
+
+        // Empty-country Adriatic (as on live alerts): anchored + structural_compatible still passes; no code-path widen.
+        EventIdentity.Event af = new EventIdentity.Event("basketball", "ZKK Buducnost", "Sibenik", "27 Sep 15:00", "Adriatic League Women", false);
+        EventIdentity.Event ap = new EventIdentity.Event("basketball", "ZKK Buducnost", "Sibenik", "27 Sep 15:00", "Adriatic WABA Women 27 Sep 15:00", true);
+        EventIdentity.Result ar = EventIdentity.resolveVerified(af, ap, Collections.emptyMap(), false, null);
+        assertTrue(ar.reason, ar.accepted());
+    }
+
+    @Test public void inventoryConflictingAndReviewDoNotGainApprovedMappings() {
+        // must_remain_conflicting — naming gate stays mismatch; structural gate stays closed
+        assertTrue(EventIdentity.competitionMatchKind("Professional Development League U21", "England", "England Development League 2").startsWith("mismatch"));
+        assertFalse(EventIdentity.competitionMatches("Professional Development League U21", "England", "England Development League 2"));
+        assertTrue(EventIdentity.competitionMatchKind("Friendlies Women", "International", "Women s International Match").startsWith("mismatch"));
+        assertTrue(EventIdentity.competitionMatchKind("Friendlies U19", "International", "U19 International").startsWith("mismatch"));
+        assertTrue(EventIdentity.competitionMatchKind("Nations League A", "CONCACAF", "CONCACAF Nations League").startsWith("mismatch"));
+        EventIdentity.Event f = new EventIdentity.Event("football", "Swansea City", "Queens Park Rangers", "28 Sep 19:00", "Professional Development League U21", false);
+        EventIdentity.Event p = new EventIdentity.Event("football", "Swansea City", "Queens Park Rangers", "28 Sep 19:00", "England Development League 2", true);
+        EventIdentity.Result bad = EventIdentity.resolveVerified(f, p, Collections.emptyMap(), false, "England");
+        assertFalse(bad.accepted());
+        assertTrue(String.valueOf(bad.evidence.get("competition_match")), String.valueOf(bad.evidence.get("competition_match")).contains("structural conflict"));
+
+        // Friendlies / Nations League / U19: must NOT gain approved COMPETITION_ALIASES entries (naming gate stays mismatch).
+        // Structural friendly-vs-competitive may still use genericOnly exceptions for bare international labels —
+        // that path is unchanged here; we only assert aliases were not seeded.
+        assertFalse(EventIdentity.COMPETITION_ALIASES.containsKey("international|friendlies women"));
+        assertFalse(EventIdentity.COMPETITION_ALIASES.containsKey("international|friendlies u19"));
+        assertFalse(EventIdentity.COMPETITION_ALIASES.containsKey("concacaf|nations league a"));
+        assertFalse(EventIdentity.COMPETITION_ALIASES.containsKey("england|professional development league u21"));
+        assertFalse(EventIdentity.COMPETITION_ALIASES.containsKey("spain|tercera division"));
+        assertFalse(EventIdentity.COMPETITION_ALIASES.containsKey("spain|segunda federacion"));
+        assertFalse(EventIdentity.COMPETITION_ALIASES.containsKey("bosnia and herzegovina|1st league"));
+
+        // needs_manual_review — do NOT seed whole-competition aliases for group-specific / residue keys
+        assertTrue(EventIdentity.competitionMatchKind("Tercera Division", "Spain", "Spain Tercera Group 18").startsWith("mismatch"));
+        assertFalse(EventIdentity.competitionMatchKind("Tercera Division", "Spain", "Spain Tercera Group 18").startsWith("approved_mapping"));
+        assertTrue(EventIdentity.competitionMatchKind("Segunda Federacion", "Spain", "Spain Segunda Division RFEF Group1").startsWith("mismatch"));
+        assertFalse(EventIdentity.competitionMatchKind("Segunda Federacion", "Spain", "Spain Segunda Division RFEF Group1").startsWith("approved_mapping"));
+        // Bosnia date-glue residue: after competitionKey strip it becomes country_prefixed, not an alias seed
+        assertFalse(EventIdentity.competitionMatchKind("1st League", "Bosnia and Herzegovina", "Bosnia & Herzegovina 1st League27 Sep 15:00").startsWith("approved_mapping"));
+    }
 }
