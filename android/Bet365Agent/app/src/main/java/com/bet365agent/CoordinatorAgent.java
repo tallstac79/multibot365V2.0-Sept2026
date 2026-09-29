@@ -77,6 +77,7 @@ final class CoordinatorAgent implements AutoCloseable {
         runner.setResultListener(this::runnerFinished);
         http = new CoordinatorHttp(this);
         sessionHandler.post(sessionRefresh);
+        StartupRecovery.request(service, store.active() != null);
     }
     String token() { return CoordinatorConfig.token(service); }
     String endpoint() { return http.endpoint(); }

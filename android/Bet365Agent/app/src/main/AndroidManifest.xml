@@ -13,6 +13,8 @@
         android:theme="@style/Theme.Bet365Agent">
 
         <activity android:name=".CoordinatorSettingsActivity" android:exported="false" />
+        <activity android:name=".WorkerRecoveryActivity" android:exported="false"
+            android:excludeFromRecents="true" android:theme="@android:style/Theme.Material.Light.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

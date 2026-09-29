@@ -2,6 +2,8 @@
 
 The worker is an Android system-bound AccessibilityService. Once the operator enables it, Android starts it after boot/user unlock; a BOOT_COMPLETED receiver must not try to manufacture an accessibility binding. The coordinator retries discovery and binding of Wi-Fi/Tailscale addresses automatically. Neither reconnect nor process restart replays an unfinished instruction. Tailscale must be connected and selected as Android's Always-on VPN. Do not enable a second VPN or require Internet lockdown merely to recover this worker.
 
+A private startup activity may request Android's normal dismissal of a **non-secure swipe keyguard**, once per boot, within the first two minutes, while idle, with credential storage unlocked and the existing local worker/account grant valid. It finishes within five seconds, never opens the bookmaker, never enters credentials and never clicks a selection. A secure PIN/password/SIM keyguard is never requested for dismissal, even if Android considers it trusted. A manually locked device later in the boot is left alone. The outcome is visible in `/health.worker_health.startup_recovery`.
+
 On the dedicated phone, exempt only the agent and Tailscale from battery optimization. With the already-authorized USB connection:
 
 ```powershell
@@ -22,4 +24,4 @@ For a recovery proof, temporarily pause dispatch using the existing operator con
 
 A powered-off phone cannot run the agent or Tailscale. On 28 September the phone exhausted its battery while USB remained present, then charged in off-mode until manually powered on. App restart logic cannot press the hardware power button or supply missing watts. Use a power source/cable that sustains the running workload and confirm battery charge is stable or rising under load. Do not assume `USB powered=true` proves sufficient charging, disable thermal protections, root the phone or alter bootloader settings to conceal inadequate power.
 
-References: [Android BatteryManager current semantics](https://developer.android.com/reference/android/os/BatteryManager), [Android always-on VPN](https://support.google.com/work/android/answer/9213914?hl=en). Device-specific behavior is verified by retained boot logs and the recorded recovery proofs.
+References: [Android BatteryManager current semantics](https://developer.android.com/reference/android/os/BatteryManager), [Android always-on VPN](https://support.google.com/work/android/answer/9213914?hl=en), [normal keyguard dismissal](https://developer.android.com/reference/android/app/KeyguardManager). Device-specific behavior is verified by retained boot logs and the recorded recovery proofs.

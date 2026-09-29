@@ -54,6 +54,8 @@ final class WorkerHealth {
             result.put("battery_optimization_exempt", power != null && power.isIgnoringBatteryOptimizations(context.getPackageName()));
             KeyguardManager keyguard = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
             result.put("keyguard_locked", keyguard != null && keyguard.isKeyguardLocked());
+            result.put("keyguard_secure", keyguard != null && keyguard.isKeyguardSecure());
+            result.put("startup_recovery", StartupRecovery.state(context));
         } catch (Exception error) {
             // Diagnostic collection must never make /health fail or decide that an otherwise healthy worker is offline.
             try { result.put("diagnostic_error", error.getClass().getSimpleName()); } catch (Exception ignored) { }
