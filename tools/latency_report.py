@@ -223,8 +223,8 @@ def main():
         by_path.setdefault(s['_path'], []).append(s)
     for path, group in sorted(by_path.items()):
         if len(by_path) > 1:
-            print('
-' + render(f'{args.label} / path={path}', group, summarise(group)))
+            print()
+            print(render(f'{args.label} / path={path}', group, summarise(group)))
     if args.out:
         Path(args.out).parent.mkdir(parents=True, exist_ok=True)
         Path(args.out).write_text(json.dumps(dict(label=args.label, n=len(samples), summary=summary, samples=samples,
