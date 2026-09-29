@@ -1715,6 +1715,23 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 .thenCompose(v -> captureUntil("stake_typed", 2, 300, s -> stakeVerifiedWhileTyping(s, amount, "stake_check_typed")))
                 .thenCompose(first -> {
             if (stakeVerifiedWhileTyping(first, amount, "stake_check_typed")) return CompletableFuture.completedFuture(first);
+            // Mauritania U23 28 Sep 2026 (on-a63fdd61): stake digits already matched 0.10 but To Return was 0.41
+            // (= 0.10 x 4.10) while openedPrice was 4.50, with no Accept Change banner. Retyping cannot fix a
+            // return/price mismatch and burned ~11 s before STAKE_REJECTED. Fail closed immediately when the
+            // stake box already shows the typed amount (silent price move, Accept Change, or return mismatch).
+            StakePad.Check typedCheck = StakePad.check(wordsOf(first), amount, openedPrice == null ? "0" : openedPrice);
+            boolean acceptOnFirst = visible(first, "Accept Change", "Accept Changes");
+            String moved = (openedPrice == null || openedPrice.isEmpty()) ? null : StakePad.silentMovedPrice(typedCheck, amount, openedPrice);
+            if (moved != null) ui.put("stake_silent_price", moved);
+            if (acceptOnFirst || moved != null || StakePad.stakeDigitsMatch(typedCheck, amount)) {
+                return erase(keys, 10).<VisualScreen>thenCompose(v -> {
+                    if (acceptOnFirst) throw new Failure("PRICE_CHANGED", PRICE_CHANGED_ON_SLIP);
+                    if (moved != null) throw new Failure("PRICE_CHANGED",
+                            "Slip To Return implies price " + moved + " while typing stake (opened " + openedPrice + "); no Accept Change; field erased");
+                    throw new Failure("STAKE_REJECTED",
+                            "Typed stake read as " + amount + " but To Return did not agree (" + typedCheck.detail + "); field erased");
+                });
+            }
             ui.put("stake_retyped", true);
             return clearToVerifiedEmpty(first, keys, "retype").thenCompose(v -> typeAmount(keys, amount)).thenCompose(v -> ui.delay(400))
                     .thenCompose(v -> ui.capture("stake_retyped")).thenCompose(second -> {
@@ -1722,8 +1739,14 @@ final class Bet365LiveAdapter implements SiteAdapter {
                         // Bet365 replaces "To Return" with "Accept Change and Place Bet" when the price moved on the slip
                         // (Panionios v Zakynthos, 27 Sep 2026): that is a price change, never accepted here.
                         boolean priceChanged = visible(second, "Accept Change", "Accept Changes") || visible(first, "Accept Change", "Accept Changes");
+                        StakePad.Check retypedCheck = StakePad.check(wordsOf(second), amount, openedPrice == null ? "0" : openedPrice);
+                        String moved2 = (openedPrice == null || openedPrice.isEmpty()) ? null : StakePad.silentMovedPrice(retypedCheck, amount, openedPrice);
+                        if (moved2 != null) ui.put("stake_silent_price", moved2);
                         return erase(keys, 10).<VisualScreen>thenCompose(v -> {
-                            if (priceChanged) throw new Failure("PRICE_CHANGED", PRICE_CHANGED_ON_SLIP);
+                            if (priceChanged || moved2 != null) throw new Failure("PRICE_CHANGED",
+                                    moved2 != null
+                                            ? ("Slip To Return implies price " + moved2 + " after retype (opened " + openedPrice + "); field erased")
+                                            : PRICE_CHANGED_ON_SLIP);
                             throw new Failure("STAKE_REJECTED", "Typed stake did not read back as " + amount + " after one retype; field erased");
                         });
                     });

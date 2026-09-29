@@ -154,6 +154,50 @@ final class StakePad {
         return "EMPTY";
     }
 
+    /**
+     * True when the stake-box OCR already shows the typed amount (one stray leading glyph allowed).
+     * Used to decide whether a failed read-back is worth a retype: if the stake digits already match,
+     * retyping cannot fix a To Return / price mismatch.
+     */
+    static boolean stakeDigitsMatch(Check c, String stake) {
+        if (c == null || c.stakeDigits == null || c.stakeDigits.isEmpty() || stake == null) return false;
+        String want = digits(new BigDecimal(stake).setScale(2, RoundingMode.UNNECESSARY).toPlainString());
+        return agrees(c.stakeDigits, want);
+    }
+
+    /**
+     * Silent price move while typing: stake box matches the typed amount, but To Return equals stake x some
+     * other price (not expectedPrice). Real case Mauritania U23 28 Sep 2026 (on-a63fdd61): typed 0.10 correctly;
+     * To Return showed 0.41 (= 0.10 x 4.10) while opened price was 4.50; Bet365 kept "Place Bet" (no Accept Change).
+     * The old path cleared+retyped (~11 s) then failed STAKE_REJECTED. Returns the implied price, or null.
+     */
+    static String silentMovedPrice(Check c, String stake, String expectedPrice) {
+        // Exact stake digits only (not agrees): "1010" agrees with "010" via the stray-leading rule but is £10.10.
+        if (c == null || c.ok || c.stakeDigits == null || c.returnDigits == null || c.returnDigits.isEmpty()) return null;
+        if (expectedPrice == null || expectedPrice.isEmpty() || stake == null) return null;
+        String want = digits(new BigDecimal(stake).setScale(2, RoundingMode.UNNECESSARY).toPlainString());
+        if (!c.stakeDigits.equals(want)) return null;
+        BigDecimal s;
+        try { s = new BigDecimal(stake); } catch (NumberFormatException e) { return null; }
+        if (s.signum() <= 0) return null;
+        BigDecimal ret;
+        try { ret = new BigDecimal(c.returnDigits).movePointLeft(2); } catch (NumberFormatException e) { return null; }
+        // Bet365 odds are 2 or 3 dp. Try both; keep the one that reproduces the return digits.
+        String[] candidates = new String[] {
+                ret.divide(s, 2, RoundingMode.HALF_UP).toPlainString(),
+                ret.divide(s, 3, RoundingMode.HALF_UP).toPlainString()
+        };
+        for (String candidate : candidates) {
+            if (new BigDecimal(candidate).compareTo(new BigDecimal(expectedPrice)) == 0) continue;
+            BigDecimal raw = s.multiply(new BigDecimal(candidate));
+            String down = digits(raw.setScale(2, RoundingMode.DOWN).toPlainString());
+            String half = digits(raw.setScale(2, RoundingMode.HALF_UP).toPlainString());
+            String rd = dotReadAsOne(c.returnDigits, down, half);
+            if (agrees(rd, down) || agrees(rd, half)) return candidate;
+        }
+        return null;
+    }
+
     /** OCR digits equal the expected digits, or have exactly one stray leading character (a misread £). */
     static boolean agrees(String ocr, String want) {
         return ocr.equals(want) || (ocr.length() == want.length() + 1 && ocr.endsWith(want));
