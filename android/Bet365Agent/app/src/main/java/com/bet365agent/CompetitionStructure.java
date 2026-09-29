@@ -98,7 +98,8 @@ final class CompetitionStructure {
         // glued forms: "nbii" -> "nb ii", "group1" -> "group 1", "u-19"/"u 19" -> "u19"
         key = key.replaceAll("\\b([a-z]{2,3}?)(iii|ii|iv)\\b", "$1 $2")
                  .replaceAll("\\b(group|grupo|groupe|gruppe|girone|grupa|pool)(\\d{1,2})\\b", "$1 $2")
-                 .replaceAll("\\bu (1[4-9]|2[0-3])\\b", "u$1");
+                 .replaceAll("\\bu (1[4-9]|2[0-3])\\b", "u$1")
+                 .replaceAll("\\b(women|men|ladies) s\\b", "$1");   // the possessive of "Women's International Match" (key: "women s")
         // group / pool designators are the bookmaker's split of one competition, never its identity
         key = key.replaceAll("\\b(group|grupo|groupe|gruppe|girone|grupa|pool|gr)\\s+([a-z]|\\d{1,2})\\b", " ").replaceAll("\\s+", " ").trim();
         List<String> tokens = new ArrayList<>(Arrays.asList(key.split(" ")));
@@ -164,7 +165,7 @@ final class CompetitionStructure {
         return "feed {" + facts(feedCompetition).describe() + "} page {" + facts(pageCompetition).describe() + "}";
     }
 
-    private static final Set<String> GENERIC_LABEL = new HashSet<>(Arrays.asList("international", "internationals", "national", "teams", "club", "clubs"));
+    private static final Set<String> GENERIC_LABEL = new HashSet<>(Arrays.asList("international", "internationals", "national", "teams", "club", "clubs", "match", "matches"));
 
     /** The name carries no competition of its own: only generic labels (after country, age, tier and level facts). */
     private static boolean genericOnly(Facts f) {

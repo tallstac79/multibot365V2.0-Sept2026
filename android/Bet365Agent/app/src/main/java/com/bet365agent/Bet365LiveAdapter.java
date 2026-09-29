@@ -844,8 +844,16 @@ final class Bet365LiveAdapter implements SiteAdapter {
     /** Header teams with the alert's own names as the only hints (EventPage.teams(header, homeHints, awayHints)): the
      *  same parse on the direct link, the Search return and the replay. */
     private String[] headerTeams(List<String> header) {
-        return EventPage.teams(header, EventPage.hints(identityHome, instructionAliases), EventPage.hints(expectedAway, instructionAliases));
+        List<String> homeHints = EventPage.hints(identityHome, instructionAliases), awayHints = EventPage.hints(expectedAway, instructionAliases);
+        if (searchRow != null) {   // Search route: the fixture row the phone itself selected names the teams as Bet365 spells them
+            homeHints = new ArrayList<>(homeHints); awayHints = new ArrayList<>(awayHints);
+            homeHints.add(searchRow.home); awayHints.add(searchRow.away);
+        }
+        return EventPage.teams(header, homeHints, awayHints);
     }
+
+    /** The ONE fixture row Search matched to the alert (set by select_fixture); null on the direct-link route. */
+    private Fixture searchRow;
 
     private static boolean headerLine(VisualScreen.Line line) {
         return line.bounds.top >= 120 && line.bounds.top <= 480 && !line.text.toLowerCase(Locale.US).contains("bet365");
@@ -871,7 +879,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
         require("FULL_GAME".equals(contextPeriod), "WRONG_EVENT", "Full-game period required");
         String feedAway = expectedAway;
         EventPage.Direct direct = EventPage.decide(header, rereadTeams != null ? rereadTeams : headerTeams(header), sport, identityHome, feedAway, want,
-                contextCompetition, contextCountry, !ui.record.optString("event_url").isEmpty(), instructionAliases, womensCompetition);
+                contextCompetition, contextCountry, !ui.record.optString("event_url").isEmpty(),
+                searchRow != null && ui.record.optString("event_url").isEmpty(), instructionAliases, womensCompetition);
         String[] teams = direct.teams;
         String shown = direct.shown;
         EventIdentity.Result id = direct.result;
@@ -1279,6 +1288,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     : ((lastQuery == null || lastQuery.isEmpty()) ? defaultQuery() : lastQuery);
             Fixture chosen = selectUniqueFixtureForQuery(all, q, expectedAway);
             liveFixture = chosen;
+            searchRow = chosen;   // selectUniqueFixtureForQuery requires exactly one pairing
             ui.put("sport_observed", sport);
             ui.put("verified_fixture", chosen.json());
             return chosen;
@@ -1292,6 +1302,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
             require(!matches.isEmpty(), "NO_FIXTURE_FOUND", "Chosen live fixture no longer visible");
             require(matches.size() == 1 || softSame(matches.get(0), fixture), "AMBIGUOUS_FIXTURE", "Live fixture not unique on screen");
             liveFixture = matches.get(0);
+            searchRow = matches.size() == 1 ? matches.get(0) : null;   // uniqueness is what lets Search corroborate (never anchor)
             return ui.tap(matches.get(0).bounds, fixture.name());
         });
     }
@@ -1379,7 +1390,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     private FootballMarkets.Result footballParse(VisualScreen s, String view) {
-        FootballMarkets.Result r = FootballMarkets.parse(wordsOf(s), liveFixture.home, liveFixture.away);
+        FootballMarkets.Result r = FootballMarkets.parse(wordsOf(s), liveFixture.home, liveFixture.away, altCols);
         JSONArray cells = new JSONArray();
         for (FootballMarkets.Cell c : r.cells) cells.put(c.toString());
         JSONArray reads = ui.record.optJSONArray("football_market_reads");
@@ -1419,7 +1430,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 return footballViews(tabs, 0, s, found, "popular");
             });
         }
-        return discovered.thenApply(found -> {
+        return discovered.thenCompose(found -> footballTargetIn(found) || !altApplies() ? CompletableFuture.completedFuture(found) : footballAlternativeLines(found))
+                .thenApply(found -> {
             requireFootballLineWithinAllowance(found);
             require(!found.isEmpty(), "EVENT_NOT_VERIFIED", "No live football market quotes parsed from Bet365 event OCR (see football_market_reads)");
             validateMoneylineIdentities(found);
@@ -1429,6 +1441,102 @@ final class Bet365LiveAdapter implements SiteAdapter {
             ui.put("football_markets", map);
             return found;
         });
+    }
+
+    // ------------------------------------------------------------------ alternative football lines (FALLBACK ONLY)
+    /** Column geometry of the expanded alternative section once the fallback has opened it (null on every normal run). */
+    private FootballMarkets.AltColumns altCols;
+    private static final int ALT_MAX_FRAMES = 6, ALT_SCROLL_FROM = 1200, ALT_SCROLL_TO = 600;
+
+    /** The fallback exists for one case only: the alert's exact line and every line inside the allowance are missing from the
+     *  normal market path (Popular / Goals / the main Asian Handicap and Goal Line rows) although that market/side WAS read there,
+     *  i.e. the market is on offer at other lines. Never for 1X2, never when nothing was read. */
+    private boolean altApplies() {
+        if (!"football".equals(sport) || liveFixture == null) return false;
+        if (!"SPREAD".equals(targetMarket) && !"TOTAL".equals(targetMarket)) return false;
+        if (requestedLine == null || requestedLine.isEmpty() || requestedLine.equalsIgnoreCase("NONE")) return false;
+        for (Selection q : footballSeen) if (q.market.equals(targetMarket) && q.side.equals(targetSide)) return true;
+        return false;
+    }
+
+    /** Open the Asian Lines tab's full-game "Alternative Asian Handicap" / "Alternative Goal Line" list (collapsed by default) and
+     *  read it. The same rules as the normal path apply to what it shows: the EXACT alert line first, else the nearest line inside
+     *  the allowance (FootballLineCheck), decided later on a fresh re-read, the slip and the backend. Anything unclear leaves the
+     *  normal result (and its LINE_CHANGED refusal) untouched. */
+    private CompletableFuture<List<Selection>> footballAlternativeLines(List<Selection> normal) {
+        ui.put("football_alt_lines", CoordinatorAgent.object("reason", "alert line and allowance band not on the normal market path", "market", targetMarket,
+                "requested_line", requestedLine, "allowance", lineTolerance));
+        return footballOpenTab("asia", null, 0, 0).thenCompose(s -> altFindHeading(s, 0)).handle((r, e) -> {
+            if (e == null && r != null && !r.isEmpty()) { ui.put("football_alt_result", "line found on the alternative list"); return r; }
+            altCols = null;
+            Throwable cause = e instanceof java.util.concurrent.CompletionException && e.getCause() != null ? e.getCause() : e;
+            ui.put("football_alt_result", cause == null ? "no line inside the allowance on the alternative list" : String.valueOf(cause.getMessage()));
+            return normal;
+        });
+    }
+
+    private CompletableFuture<List<Selection>> altFindHeading(VisualScreen s, int scrolls) {
+        FootballMarkets.Alt alt = FootballMarkets.alternative(wordsOf(s), targetMarket, liveFixture.home, liveFixture.away);
+        if (alt == null || (!alt.expanded && alt.headingCy > 1000)) {
+            if (scrolls >= 3) throw new Failure("EVENT_NOT_VERIFIED", "Alternative line section not found on the Asian Lines tab");
+            return ui.swipe(360, ALT_SCROLL_FROM, 650, 400).thenCompose(v -> ui.delay(150))
+                    .thenCompose(v -> ui.captureTable("alt_heading_" + (scrolls + 1))).thenCompose(n -> altFindHeading(n, scrolls + 1));
+        }
+        if (alt.expanded) return altScan(s, alt.columns);
+        android.graphics.Rect box = new android.graphics.Rect(alt.headingBox[0], alt.headingBox[1], alt.headingBox[2], alt.headingBox[3]);
+        return ui.tap(box, "expand the alternative section", 150).thenCompose(v -> altExpanded(0));
+    }
+
+    private CompletableFuture<List<Selection>> altExpanded(int looks) {
+        return ui.captureTable("alt_expand_" + looks).thenCompose(s -> {
+            FootballMarkets.Alt alt = FootballMarkets.alternative(wordsOf(s), targetMarket, liveFixture.home, liveFixture.away);
+            if (alt != null && alt.expanded) return altScan(s, alt.columns);
+            if (looks >= 12) throw new Failure("EVENT_NOT_VERIFIED", "Alternative line section did not expand");
+            return ui.delay(200).thenCompose(v -> altExpanded(looks + 1));
+        });
+    }
+
+    private CompletableFuture<List<Selection>> altScan(VisualScreen first, FootballMarkets.AltColumns columns) {
+        altCols = columns;
+        FootballMarkets.Result r = footballParse(first, "alt_0");
+        return altStep(r, footballSelections(r), 0, false);
+    }
+
+    /** One frame of the alternative list. The list is sorted with quarter lines on consecutive rows and successive frames overlap
+     *  by several rows, so the exact line is on the same frame as any in-allowance line or on the next one: an in-allowance line
+     *  alone is used only after ONE more frame showed no exact line. Empty list: no line inside the allowance. */
+    private CompletableFuture<List<Selection>> altStep(FootballMarkets.Result r, List<Selection> found, int idx, boolean bandInPrevious) {
+        if (footballExactIn(found)) return CompletableFuture.completedFuture(found);
+        boolean band = footballTargetIn(found);
+        if (band && bandInPrevious) return CompletableFuture.completedFuture(found);
+        if (!band && bandInPrevious) return altBack(r, idx);
+        if (idx >= ALT_MAX_FRAMES - 1 || r.altEnd) return CompletableFuture.completedFuture(band ? found : Collections.<Selection>emptyList());
+        return ui.swipe(360, ALT_SCROLL_FROM, ALT_SCROLL_TO, 450).thenCompose(v -> ui.delay(150))
+                .thenCompose(v -> ui.captureTable("alt_" + (idx + 1))).thenCompose(n -> {
+                    FootballMarkets.Result nr = footballParse(n, "alt_" + (idx + 1));
+                    require(altChained(r, nr), "EVENT_NOT_VERIFIED", "Alternative list frames do not overlap; not trusting the scroll");
+                    return altStep(nr, footballSelections(nr), idx + 1, band);
+                });
+    }
+
+    /** The in-allowance line was on the frame just left and nothing better followed: scroll back to it so the tap target is on screen. */
+    private CompletableFuture<List<Selection>> altBack(FootballMarkets.Result current, int idx) {
+        return ui.swipe(360, ALT_SCROLL_TO, ALT_SCROLL_FROM, 450).thenCompose(v -> ui.delay(150))
+                .thenCompose(v -> ui.captureTable("alt_back_" + idx)).thenApply(n -> {
+                    FootballMarkets.Result nr = footballParse(n, "alt_back_" + idx);
+                    require(altChained(current, nr), "EVENT_NOT_VERIFIED", "Alternative list frames do not overlap after scrolling back");
+                    List<Selection> nf = footballSelections(nr);
+                    require(footballTargetIn(nf), "LINE_CHANGED", "Alternative list moved: the line seen a moment ago is not on screen");
+                    return nf;
+                });
+    }
+
+    /** Two frames are the same list only if one row (market, side, line, price) appears on both. */
+    private static boolean altChained(FootballMarkets.Result a, FootballMarkets.Result b) {
+        for (FootballMarkets.Cell x : a.cells)
+            for (FootballMarkets.Cell y : b.cells)
+                if (x.market.equals(y.market) && x.side.equals(y.side) && x.line.equals(y.line) && x.price.equals(y.price)) return true;
+        return false;
     }
 
     /** Visit the remaining tabs in order; the exact alert line ends the hunt on that tab's own frame. */
@@ -1453,7 +1561,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     /** Tables captured until this tab's own section is drawn (PageReady.footballTabReady), at most FOOTBALL_TAB_CAP_MS after the tap. */
-    private static final long FOOTBALL_TAB_CAP_MS = 3500;
+    private static final long FOOTBALL_TAB_CAP_MS = 6000;
     private static final int TAB_STRIP_REDRAW_LOOKS = 14;
 
     private CompletableFuture<VisualScreen> footballCaptureTab(String prefix, String label, long tappedAt) {
@@ -1763,6 +1871,12 @@ final class Bet365LiveAdapter implements SiteAdapter {
         // cleared and typed ONCE more; a second mismatch clears and fails closed.
         String fieldState = StakePad.fieldState(wordsOf(uiScreen));
         ui.put("stake_field_state", fieldState);
+        // A stake Bet365 already shows (Remember Stake) that reads back EXACTLY as the instructed stake, with To Return exactly
+        // stake x price on this same fresh frame, is left as it is (no clear, no typing). Anything else is cleared and typed.
+        if ("FILLED".equals(fieldState) && openedPrice != null && !openedPrice.isEmpty() && prefilledStakeReads(uiScreen, amount)) {
+            ui.put("stake_prefilled", true);
+            return finishStake(uiScreen, keys);
+        }
         CompletableFuture<Void> ready = "EMPTY".equals(fieldState) ? CompletableFuture.completedFuture(null)
                 : clearToVerifiedEmpty(uiScreen, keys, "FILLED".equals(fieldState) ? "known" : "unknown");
         return ready.thenCompose(v -> typeAmount(keys, amount))
@@ -1804,15 +1918,27 @@ final class Bet365LiveAdapter implements SiteAdapter {
                             throw new Failure("STAKE_REJECTED", "Typed stake did not read back as " + amount + " after one retype; field erased");
                         });
                     });
-        }).thenCompose(s -> {
-            VisualScreen.Line done = findDoneLine(s);
-            if (done == null) {
-                return erase(keys, 10).<Void>thenCompose(v -> {
-                    throw new Failure("STAKE_REJECTED", "Done not visible after typing stake; field erased");
-                });
-            }
-            return ui.tap(doneTapRect(done), "Done", 150);
-        });
+        }).thenCompose(s -> finishStake(s, keys));
+    }
+
+    /** The prefilled stake is judged by StakePad.checkPrefilled; for basketball stakeVerifiedWhileTyping also checks the
+     *  slip's own line and price against the instruction on the same frame. */
+    private boolean prefilledStakeReads(VisualScreen s, String amount) {
+        boolean terms = stakeVerifiedWhileTyping(s, amount, "stake_check_prefilled_terms");
+        StakePad.Check c = StakePad.checkPrefilled(wordsOf(s), amount, openedPrice);
+        ui.put("stake_check_prefilled", CoordinatorAgent.object("ok", c.ok && terms, "detail", c.detail, "stake_digits", String.valueOf(c.stakeDigits),
+                "return_digits", String.valueOf(c.returnDigits), "stake", amount, "price", openedPrice));
+        return c.ok && terms;
+    }
+
+    private CompletableFuture<Void> finishStake(VisualScreen s, java.util.Map<Character, int[]> keys) {
+        VisualScreen.Line done = findDoneLine(s);
+        if (done == null) {
+            return erase(keys, 10).<Void>thenCompose(v -> {
+                throw new Failure("STAKE_REJECTED", "Done not visible after typing stake; field erased");
+            });
+        }
+        return ui.tap(doneTapRect(done), "Done", 150);
     }
 
     /**
@@ -2770,6 +2896,12 @@ final class Bet365LiveAdapter implements SiteAdapter {
             List<String[]> quotes = new ArrayList<>();
             for (Selection s : fresh) quotes.add(FootballLineCheck.quote(s.market, s.side, s.line, s.price));
             int i = FootballLineCheck.pick(quotes, expected.market, expected.side, expected.line, requestedLine, lineTolerance);
+            if (i >= 0 && altCols != null) {
+                // Alternative-list rows of a scrolled frame have no header of their own: the fresh row must be the same row (same
+                // place on the same screen) that discovery read, or the list moved and nothing is tapped.
+                int dy = Math.abs(fresh.get(i).bounds.centerY() - expected.bounds.centerY());
+                if (dy > 40) throw new Failure("LINE_CHANGED", "Alternative list moved before the tap (" + dy + " px); not tapping");
+            }
             if (i >= 0) return fresh.get(i);
             throw new Failure("LINE_CHANGED", "Football market re-read has no " + expected.market + "/" + expected.side + " at "
                     + expected.line + " or another line inside the allowance " + lineTolerance + " of the alert line " + requestedLine);
@@ -3364,6 +3496,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
         Fixture chosen = selectUniqueFixtureForQuery(all, idHome, idAway);
         // One-team discovery must still verify opponent when expectedAway is set (already in select).
         liveFixture = chosen;
+        searchRow = chosen;   // exactly one pairing (selectUniqueFixtureForQuery)
         ui.put("verified_fixture", chosen.json());
         ui.put("fixture_home", chosen.home);
         ui.put("fixture_away", chosen.away);

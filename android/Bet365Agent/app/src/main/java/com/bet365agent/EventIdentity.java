@@ -131,10 +131,19 @@ final class EventIdentity {
 
     /** One side's view of an event. kickoffUk: as Bet365 shows it ("25 Sep 10:35"); the feed's UTC time is
      *  converted by the caller. anchored: the page was opened from the alert's own Bet365 event link. */
+    private static final Pattern WEAK_SHARED_WORD = Pattern.compile("shared \\[[^\\]]+\\]");
+
     static final class Event {
         final String sport, home, away, kickoffUk, competition; final boolean anchored;
+        /** The page was reached by Search AND the fixture row it was opened from was the ONE row matching the alert (never an
+         *  anchor: a weaker evidence tier that may use stronger corroboration - see resolve, "search_unique_*"). */
+        final boolean searchUnique;
         Event(String sport, String home, String away, String kickoffUk, String competition, boolean anchored) {
+            this(sport, home, away, kickoffUk, competition, anchored, false);
+        }
+        Event(String sport, String home, String away, String kickoffUk, String competition, boolean anchored, boolean searchUnique) {
             this.sport = sport; this.home = home; this.away = away; this.kickoffUk = kickoffUk; this.competition = competition; this.anchored = anchored;
+            this.searchUnique = searchUnique && !anchored;
         }
     }
 
@@ -839,6 +848,17 @@ final class EventIdentity {
                 return recheckIfNeeded(new Result(Verdict.HIGH_CONFIDENCE_EVENT_MATCH, anchorText + " + '" + (v == h ? a.feed : h.feed) + "' " + (v == h ? a.kind : h.kind)
                         + "; '" + v.feed + "' is a naming variant of '" + v.bookmaker + "' (" + v.kind + " " + fmt(v.score) + ")", h, a, koKnown, koAgrees, false, cand, conf, ev));
             }
+            Side sure = v == h ? a : h;
+            if (page.searchUnique && koKnown && ko.equals("exact") && v.tokenEvidence()) {
+                // SEARCH is never an anchor. It may still identify the event when the fixture row it opened from was the ONE match
+                // and the corroboration is stronger than the direct link needs: the kick-off EXACT (not merely within tolerance),
+                // the opponent ALIAS-or-better, the other team a deterministic token-level variant, and (resolveVerified, always
+                // for an unanchored page) a deterministic competition match. Sport, protected markers and orientation were judged above.
+                ev.put("policy", "search_unique_one_sure_team_plus_variant");
+                return recheckIfNeeded(new Result(Verdict.HIGH_CONFIDENCE_EVENT_MATCH, "search: the one matching fixture row + kick-off " + page.kickoffUk
+                        + " exact + '" + sure.feed + "' " + sure.kind + "; '" + v.feed + "' is a naming variant of '" + v.bookmaker + "' (" + v.kind + " "
+                        + fmt(v.score) + ")", h, a, koKnown, koAgrees, false, cand, "high", ev));
+            }
             ev.put("policy", "variant_without_anchor");
             return new Result(Verdict.AMBIGUOUS, "'" + v.feed + "' only resembles '" + v.bookmaker + "' (" + v.kind + " " + fmt(v.score)
                     + ") and there is no event anchor with an agreeing kick-off", h, a, koKnown, koAgrees, false, cand, "review", ev);
@@ -864,6 +884,20 @@ final class EventIdentity {
         }
         if (lo == Level.WEAK) {
             Side w = h.level == Level.WEAK ? h : a;
+            Side other = w == h ? a : h;
+            boolean otherSure = other.atLeast(Level.ALIAS) || other.sureWithCompetitionMarker();
+            boolean sharesWord = w.kind.equals("partial") && WEAK_SHARED_WORD.matcher(w.note).find();
+            if (page.anchored && koKnown && ko.equals("exact") && otherSure && sharesWord && h.level != a.level) {
+                // Bookmaker abbreviations that cannot be derived from the feed name ("San Sebastian Golden Stags" / "SSC-R Stags"):
+                // on the alert's OWN event link, with the kick-off EXACT, sport, protected markers and orientation agreeing and the
+                // opponent confirmed, one team only PARTLY resembling (a real shared word, no conflicting marker or club-family
+                // prefix: those are Level.NONE / MISMATCH above) cannot leave a team playing that opponent at that minute
+                // undecided. The competition gate (resolveVerified) still applies. No alias is created.
+                ev.put("policy", "anchored_confirmed_opponent_plus_shared_word");
+                return recheckIfNeeded(new Result(Verdict.HIGH_CONFIDENCE_EVENT_MATCH, "event link + kick-off " + page.kickoffUk + " exact + '" + other.feed + "' "
+                        + other.kind + "; '" + w.feed + "' only partly resembles '" + w.bookmaker + "' (" + w.note + ") but the same opponent is at the same kick-off",
+                        h, a, koKnown, koAgrees, false, none, "review", ev));
+            }
             ev.put("policy", "weak_resemblance");
             return new Result(Verdict.AMBIGUOUS, "'" + w.feed + "' only partly resembles '" + w.bookmaker + "' (" + w.note + "); not a different event, not proven the same",
                     h, a, koKnown, koAgrees, false, none, "review", ev);

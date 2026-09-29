@@ -1,0 +1,839 @@
+[
+ {
+  "case": "am-spread-band",
+  "id": "speed-am-spread-band-181358",
+  "result": {
+   "instruction_id": "speed-am-spread-band-181358",
+   "status": "FAIL",
+   "stage": "PRICE_CHANGED",
+   "detail": "Slip after Accept Change does not show the verified terms +2.0 @ 1.275",
+   "duration_ms": 32846,
+   "progress": {
+    "stage": "CLEAR_BETSLIP",
+    "elapsed_ms": 32589,
+    "last_progress_at_ms": 1790702068346,
+    "instruction_id": "speed-am-spread-band-181358",
+    "stages": [
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 13062,
+      "at_ms": 1790702043887
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 13284,
+      "at_ms": 1790702043887
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 13807,
+      "at_ms": 1790702043887
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 15094,
+      "at_ms": 1790702043887
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 15539,
+      "at_ms": 1790702043887
+     },
+     {
+      "stage": "READ_SELECTION",
+      "elapsed_ms": 15599,
+      "at_ms": 1790702054216,
+      "timing": {
+       "stage": "READ_SELECTION",
+       "start_elapsed_ms": 15599,
+       "start_ts_ms": 1790702054156,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "READ_LINE",
+      "elapsed_ms": 15665,
+      "at_ms": 1790702054293,
+      "timing": {
+       "stage": "READ_LINE",
+       "start_elapsed_ms": 15665,
+       "start_ts_ms": 1790702054222,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "READ_PRICE",
+      "elapsed_ms": 15739,
+      "at_ms": 1790702054352,
+      "timing": {
+       "stage": "READ_PRICE",
+       "start_elapsed_ms": 15739,
+       "start_ts_ms": 1790702054295,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 15797,
+      "at_ms": 1790702054410,
+      "timing": {
+       "stage": "OPEN_SELECTION",
+       "start_elapsed_ms": 15797,
+       "start_ts_ms": 1790702054354,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 15856,
+      "at_ms": 1790702054410
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 16294,
+      "at_ms": 1790702054410
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 16333,
+      "at_ms": 1790702054410
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 17146,
+      "at_ms": 1790702055930,
+      "timing": {
+       "stage": "ENTER_STAKE",
+       "start_elapsed_ms": 17146,
+       "start_ts_ms": 1790702055705,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 17377,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 17884,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 17931,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 18691,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 19189,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 19216,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 19437,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 19683,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 19953,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 20189,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 20428,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 20654,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 20877,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 21099,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 21338,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 21861,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 22337,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 22354,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 22593,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 22826,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 23072,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 23304,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 23780,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 24193,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 24706,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 24793,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 25015,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 25238,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 25512,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 25757,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 26021,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 26293,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 26538,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 26779,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 27014,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 27758,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 28254,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 28286,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 29139,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 29605,
+      "at_ms": 1790702055930
+     },
+     {
+      "stage": "CLEAR_BETSLIP",
+      "elapsed_ms": 29691,
+      "at_ms": 1790702068346
+     },
+     {
+      "stage": "CLEAR_BETSLIP",
+      "elapsed_ms": 29790,
+      "at_ms": 1790702068346
+     },
+     {
+      "stage": "CLEAR_BETSLIP",
+      "elapsed_ms": 30245,
+      "at_ms": 1790702068346
+     },
+     {
+      "stage": "CLEAR_BETSLIP",
+      "elapsed_ms": 30267,
+      "at_ms": 1790702068346
+     },
+     {
+      "stage": "CLEAR_BETSLIP",
+      "elapsed_ms": 32080,
+      "at_ms": 1790702068346
+     },
+     {
+      "stage": "CLEAR_BETSLIP",
+      "elapsed_ms": 32558,
+      "at_ms": 1790702068346
+     },
+     {
+      "stage": "CLEAR_BETSLIP",
+      "elapsed_ms": 32589,
+      "at_ms": 1790702068346
+     }
+    ]
+   },
+   "device_stage": "CLEAR_BETSLIP",
+   "execution_count": 1,
+   "run_id": "c_KdQ0buY-eUGl0Dd_kQgkO2LJHc40mhtXknRvGKsVVhI",
+   "fixture_name": "Al Markhiya v Al-Ahli Doha",
+   "home": "Al Markhiya",
+   "away": "Al-Ahli Doha",
+   "competition": "Qatar Stars Cup 29 Sep 18:15",
+   "selection": {
+    "market": "SPREAD",
+    "side": "HOME",
+    "line": "+2.0",
+    "price": "1.300",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Al Markhiya",
+    "bounds": [
+     188,
+     472,
+     272,
+     516
+    ]
+   },
+   "verification_detail": "Slip after Accept Change does not show the verified terms +2.0 @ 1.275",
+   "betslip_clear": {
+    "tapped": true,
+    "bounds": [
+     21,
+     512,
+     42,
+     541
+    ],
+    "place_bet_still_visible": false
+   },
+   "event_context": {
+    "home": "Al Markhiya",
+    "away": "Al-Ahli Doha",
+    "competition": "qatar stars cup",
+    "kickoff_utc": "2026-09-29T17:15",
+    "period": "FULL_GAME"
+   },
+   "route": "event_link",
+   "execution_observations": [
+    {
+     "stage": "grid",
+     "observed_at_ms": 1790702054219,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "+1.5",
+      "price": "1.550",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Al Markhiya",
+      "bounds": [
+       188,
+       303,
+       272,
+       348
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "grid",
+     "observed_at_ms": 1790702054220,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "+1.75",
+      "price": "1.425",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Al Markhiya",
+      "bounds": [
+       187,
+       391,
+       273,
+       435
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "grid",
+     "observed_at_ms": 1790702054220,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "+2.0",
+      "price": "1.300",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Al Markhiya",
+      "bounds": [
+       188,
+       472,
+       272,
+       516
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "grid",
+     "observed_at_ms": 1790702054220,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "+2.25",
+      "price": "1.260",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Al Markhiya",
+      "bounds": [
+       189,
+       559,
+       274,
+       603
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "grid",
+     "observed_at_ms": 1790702054220,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "+2.5",
+      "price": "1.225",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Al Markhiya",
+      "bounds": [
+       188,
+       641,
+       272,
+       685
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "grid",
+     "observed_at_ms": 1790702054220,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "+2.75",
+      "price": "1.160",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Al Markhiya",
+      "bounds": [
+       189,
+       728,
+       274,
+       772
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "grid",
+     "observed_at_ms": 1790702054220,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "+3.0",
+      "price": "1.100",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Al Markhiya",
+      "bounds": [
+       188,
+       810,
+       272,
+       853
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "selection",
+     "observed_at_ms": 1790702054221,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "+2.0",
+      "price": "1.300",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Al Markhiya",
+      "bounds": [
+       188,
+       472,
+       272,
+       516
+      ]
+     },
+     "identity_verified": true
+    },
+    {
+     "stage": "selection_preflight",
+     "observed_at_ms": 1790702054889,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "+2.0",
+      "price": "1.300",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Al Markhiya",
+      "bounds": [
+       188,
+       472,
+       272,
+       516
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "price_change",
+     "observed_at_ms": 1790702066843,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "+2.0",
+      "price": "1.275",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Al Markhiya",
+      "bounds": [
+       188,
+       472,
+       272,
+       516
+      ]
+     },
+     "identity_verified": true
+    }
+   ],
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 38,
+     "start_ts_ms": 1790702038595,
+     "end_elapsed_ms": 5304,
+     "end_ts_ms": 1790702043861,
+     "duration_ms": 5266,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "MARKET_NAV",
+     "start_elapsed_ms": 5304,
+     "start_ts_ms": 1790702043861,
+     "end_elapsed_ms": 15599,
+     "end_ts_ms": 1790702054156,
+     "duration_ms": 10295,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_SELECTION",
+     "start_elapsed_ms": 15599,
+     "start_ts_ms": 1790702054156,
+     "end_elapsed_ms": 15665,
+     "end_ts_ms": 1790702054222,
+     "duration_ms": 66,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_LINE",
+     "start_elapsed_ms": 15665,
+     "start_ts_ms": 1790702054222,
+     "end_elapsed_ms": 15739,
+     "end_ts_ms": 1790702054295,
+     "duration_ms": 74,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_PRICE",
+     "start_elapsed_ms": 15739,
+     "start_ts_ms": 1790702054295,
+     "end_elapsed_ms": 15797,
+     "end_ts_ms": 1790702054354,
+     "duration_ms": 58,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "start_elapsed_ms": 15797,
+     "start_ts_ms": 1790702054354,
+     "end_elapsed_ms": 17146,
+     "end_ts_ms": 1790702055704,
+     "duration_ms": 1349,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "start_elapsed_ms": 17146,
+     "start_ts_ms": 1790702055705,
+     "end_elapsed_ms": 32589,
+     "end_ts_ms": 1790702071146,
+     "duration_ms": 15443,
+     "status": "fail",
+     "retries": 0
+    }
+   ],
+   "stake_field_state": "UNKNOWN",
+   "stake_clear": {
+    "why": "unknown",
+    "backspaces": 10
+   },
+   "stake_check_typed": {
+    "ok": false,
+    "detail": "To Return not read",
+    "stake_digits": "010",
+    "return_digits": "",
+    "stake": "0.10",
+    "price": "1.300"
+   },
+   "stake_keypad": {
+    "zero": [
+     359,
+     1250
+    ],
+    "dot": [
+     117,
+     1250
+    ]
+   },
+   "identity": {
+    "verdict": "EXACT",
+    "reason": "both teams exact",
+    "home": {
+     "feed": "Al Markhiya",
+     "bookmaker": "Al Markhiya",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact",
+     "alias_safe": true
+    },
+    "away": {
+     "feed": "Al Ahli Doha",
+     "bookmaker": "Al-Ahli Doha",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact",
+     "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+     "event_id_match": true,
+     "event_anchor": "page opened from the alert's own Bet365 event link",
+     "sport_match": "equal",
+     "kickoff_match": "exact",
+     "competition_match": "country_prefixed",
+     "competing_event": "none: a single event page reached through the alert's own link",
+     "home_similarity": {
+      "feed": "Al Markhiya",
+      "bookmaker": "Al Markhiya",
+      "level": "EXACT",
+      "kind": "exact",
+      "score": 1,
+      "note": "exact"
+     },
+     "away_similarity": {
+      "feed": "Al Ahli Doha",
+      "bookmaker": "Al-Ahli Doha",
+      "level": "EXACT",
+      "kind": "exact",
+      "score": 1,
+      "note": "exact"
+     },
+     "protected_markers": "agree",
+     "orientation": "agree",
+     "policy": "both_exact",
+     "verdict": "EXACT"
+    }
+   },
+   "identity_verdict": "EXACT",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201917178/F3/I1/"
+  },
+  "reset": {
+   "instruction_id": "rs-speed-am-spread-band-181358",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "RESET_BETSLIP",
+   "duration_ms": 657,
+   "progress": {
+    "stage": "RESET_BETSLIP",
+    "elapsed_ms": 539,
+    "last_progress_at_ms": 1790702071763,
+    "instruction_id": "rs-speed-am-spread-band-181358",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790702071759
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 23,
+      "at_ms": 1790702071763,
+      "timing": {
+       "stage": "RESET_BETSLIP",
+       "start_elapsed_ms": 23,
+       "start_ts_ms": 1790702071759,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 28,
+      "at_ms": 1790702071763
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 481,
+      "at_ms": 1790702071763
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 539,
+      "at_ms": 1790702071763
+     }
+    ]
+   },
+   "device_stage": "RESET_BETSLIP",
+   "execution_count": 1,
+   "run_id": "c_DqYANUwUzYT71B73gtaDvaeFuq1Y5I3PC35G5rCLx3k",
+   "fixture_name": null,
+   "home": null,
+   "away": null,
+   "competition": null,
+   "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+   "betslip_reset": {
+    "tapped": false,
+    "detail": "No safe reset control visible"
+   },
+   "stage_timings": [
+    {
+     "stage": "RESET_BETSLIP",
+     "start_elapsed_ms": 23,
+     "start_ts_ms": 1790702071759,
+     "end_elapsed_ms": 539,
+     "end_ts_ms": 1790702072276,
+     "duration_ms": 516,
+     "status": "ok",
+     "retries": 0
+    }
+   ]
+  },
+  "wall_s": 33.312000000005355
+ }
+]

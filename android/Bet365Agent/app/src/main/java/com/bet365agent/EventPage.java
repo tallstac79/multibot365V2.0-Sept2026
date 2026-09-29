@@ -144,7 +144,7 @@ final class EventPage {
             String[] w = tidy(headerText(raw)).split(" ");
             int at = -1, count = 0;
             for (int k = 0; k < w.length - 1; k++)
-                if (w[k].length() >= 3 && w[k].endsWith("v") && Character.isLetter(w[k].charAt(w[k].length() - 2))) { at = k; count++; }
+                if (w[k].length() >= 3 && (w[k].endsWith("v") || w[k].endsWith("V")) && Character.isLetter(w[k].charAt(w[k].length() - 2))) { at = k; count++; }
             if (count != 1) continue;
             StringBuilder home = new StringBuilder();
             for (int k = 0; k <= at; k++) home.append(k == 0 ? "" : " ").append(k == at ? w[k].substring(0, w[k].length() - 1) : w[k]);
@@ -249,11 +249,17 @@ final class EventPage {
 
     static Direct decide(List<String> header, String[] teams, String sport, String feedHome, String feedAway, String wantUk, String feedCompetition,
                          String country, boolean anchored, java.util.Map<String, String> aliases, boolean womensCompetition) {
+        return decide(header, teams, sport, feedHome, feedAway, wantUk, feedCompetition, country, anchored, false, aliases, womensCompetition);
+    }
+
+    /** searchUnique: the page was opened from the ONE fixture row Search matched to the alert (never an anchor). */
+    static Direct decide(List<String> header, String[] teams, String sport, String feedHome, String feedAway, String wantUk, String feedCompetition,
+                         String country, boolean anchored, boolean searchUnique, java.util.Map<String, String> aliases, boolean womensCompetition) {
         String shown = kickoffText(header);
         if (teams == null) return new Direct(header, null, shown, null);
         EventIdentity.Result r = EventIdentity.resolveVerified(
                 new EventIdentity.Event(sport, feedHome, feedAway, wantUk, feedCompetition, false),
-                new EventIdentity.Event(sport, teams[0], teams[1], shown, header.isEmpty() ? null : header.get(0), anchored),
+                new EventIdentity.Event(sport, teams[0], teams[1], shown, header.isEmpty() ? null : header.get(0), anchored, searchUnique),
                 aliases, womensCompetition, country);
         return new Direct(header, teams, shown, r);
     }

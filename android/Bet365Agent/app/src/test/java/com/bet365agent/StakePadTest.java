@@ -131,4 +131,35 @@ public class StakePadTest {
                 w("To", 438, 696, 459, 711), w("Return", 467, 696, 526, 711), w("£18.48", 534, 696, 610, 715));
         assertFalse(StakePad.check(words, "0.10", "1.83").ok);
     }
+
+    // ---- a stake already in the field (Remember Stake) is kept only on a stricter read than a typed one
+    private static List<GameLinesParser.Word> slip(String stakeText, String returnText) {
+        List<GameLinesParser.Word> l = new ArrayList<>(Arrays.asList(w("Stake", 20, 654, 70, 669),
+                w("Place", 478, 658, 550, 680), w("Bet", 560, 659, 604, 680), w("To", 438, 696, 459, 711), w("Return", 467, 696, 526, 711)));
+        if (stakeText != null) l.add(w(stakeText, 20, 686, 102, 718));
+        if (returnText != null) l.add(w(returnText, 534, 696, 590, 715));
+        return l;
+    }
+
+    @Test public void aRememberedStakeThatReadsExactlyIsAccepted() {
+        assertTrue(StakePad.checkPrefilled(slip("£0.10", "£0.18"), "0.10", "1.83").ok);
+        assertTrue("one misread pound sign is tolerated on the stake box only", StakePad.checkPrefilled(slip("10.10", "£0.18"), "0.10", "1.83").ok);
+    }
+
+    @Test public void aRememberedStakeNeedsTheStakeBoxRead() {
+        assertFalse("return alone is never enough for a stake nobody typed", StakePad.checkPrefilled(slip(null, "£0.18"), "0.10", "1.83").ok);
+        assertTrue("the same frame is fine for a stake that was typed", StakePad.check(slip(null, "£0.18"), "0.10", "1.83").ok);
+    }
+
+    @Test public void aRememberedStakeNeedsTheExactReturn() {
+        assertFalse("stray glyph on the return", StakePad.checkPrefilled(slip("£0.10", "£10.18"), "0.10", "1.83").ok);
+        assertFalse("wrong remembered stake 0.20", StakePad.checkPrefilled(slip("£0.20", "£0.36"), "0.10", "1.83").ok);
+        assertFalse("wrong remembered stake 1.00", StakePad.checkPrefilled(slip("£1.00", "£1.83"), "0.10", "1.83").ok);
+        assertFalse("wrong remembered stake 10.10 with the pound sign dropped", StakePad.checkPrefilled(slip("10.10", "£18.48"), "0.10", "1.83").ok);
+        assertFalse("no To Return", StakePad.checkPrefilled(slip("£0.10", null), "0.10", "1.83").ok);
+    }
+
+    @Test public void aRememberedStakeIsJudgedAtTheFreshPrice() {
+        assertFalse("price moved 1.83 -> 2.10 under the remembered stake", StakePad.checkPrefilled(slip("£0.10", "£0.18"), "0.10", "2.10").ok);
+    }
 }

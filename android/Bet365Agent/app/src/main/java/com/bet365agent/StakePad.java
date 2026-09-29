@@ -125,6 +125,26 @@ final class StakePad {
     }
 
     /**
+     * A stake ALREADY in the field (Bet365 "Remember Stake") may be left as it is only on stricter terms than a stake that
+     * was just typed: the stake box must be READ (never "unread") and agree with the instructed stake, AND To Return must
+     * equal stake x price EXACTLY at 2 dp (no stray leading glyph on the return). A different stake gives a different return
+     * at 2 dp for prices from 1.10, and the box digits decide below that, so a wrong remembered amount cannot pass both.
+     * Anything else is not ok and the caller clears the field and types the stake as before.
+     */
+    static Check checkPrefilled(List<GameLinesParser.Word> words, String stake, String price) {
+        Check c = check(words, stake, price);
+        if (!c.ok) return c;
+        if (c.stakeDigits == null || c.stakeDigits.isEmpty()) return new Check(false, "remembered stake not read: " + c.detail, c.stakeDigits, c.returnDigits);
+        BigDecimal raw = new BigDecimal(stake).multiply(new BigDecimal(price));
+        String down = digits(raw.setScale(2, RoundingMode.DOWN).toPlainString());
+        String half = digits(raw.setScale(2, RoundingMode.HALF_UP).toPlainString());
+        String rd = dotReadAsOne(c.returnDigits, down, half);
+        if (!rd.equals(down) && !rd.equals(half))
+            return new Check(false, "remembered stake: To Return '" + c.returnDigits + "' is not exactly " + stake + " x " + price, c.stakeDigits, c.returnDigits);
+        return new Check(true, "remembered stake " + stake + " read and To Return exactly " + stake + " x " + price, c.stakeDigits, c.returnDigits);
+    }
+
+    /**
      * Real slips (Besancon, Berck): "£0.18" OCR'd as "£0118", the decimal point read as "1". Only for amounts
      * under £1 ("0" integer part) and only at the exact decimal position: "0" + "1" + the two decimals. A
      * real Bet365 amount is never shown as "01.18", so this cannot turn a different amount into the expected one.

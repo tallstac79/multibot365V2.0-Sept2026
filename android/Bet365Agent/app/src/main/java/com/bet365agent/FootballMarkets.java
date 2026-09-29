@@ -38,6 +38,20 @@ final class FootballMarkets {
         final List<Cell> cells = new ArrayList<>();
         final List<String> notes = new ArrayList<>();
         boolean fullTimeResult, goalsOverUnder, asianHandicap, goalLine;
+        /** Alternative-line fallback only: the next market heading is on this frame, i.e. the alternative list ends on it. */
+        boolean altEnd;
+    }
+
+    /** Column geometry of an EXPANDED alternative section, read from a frame that shows its header row. The rows of a
+     *  scrolled frame have no header of their own; they are read with these columns. */
+    static final class AltColumns {
+        final String market; final int mid, overX, underX;
+        AltColumns(String market, int mid, int overX, int underX) { this.market = market; this.mid = mid; this.overX = overX; this.underX = underX; }
+    }
+
+    /** The "Alternative Asian Handicap" / "Alternative Goal Line" (full game) section of the Asian Lines tab on one frame. */
+    static final class Alt {
+        int headingCy; int[] headingBox; boolean expanded, endVisible; AltColumns columns;
     }
 
     private static final class Row {
@@ -149,16 +163,17 @@ final class FootballMarkets {
             if (over != null && under != null) { headerIndex = i; break; }
         }
         if (over == null || under == null || over.cx() >= under.cx()) { r.notes.add(what + ": no Over/Under header"); return; }
-        for (int i = headerIndex + 1; i < end; i++) {
-            Row row = rows.get(i);
-            String line = lineToken(row, over.cx() - 60);
-            List<GameLinesParser.Word> prices = priceWords(row);
-            if (line == null || prices.size() < 2) continue;
-            GameLinesParser.Word o = nearestWord(prices, over.cx(), 90), u = nearestWord(prices, under.cx(), 90);
-            if (o == null || u == null || o == u) { r.notes.add(what + ": prices not under the Over/Under columns at line " + line); continue; }
-            r.cells.add(new Cell("TOTAL", "OVER", line, price(o.text), "Over", bounds(o)));
-            r.cells.add(new Cell("TOTAL", "UNDER", line, price(u.text), "Under", bounds(u)));
-        }
+        for (int i = headerIndex + 1; i < end; i++) totalRow(rows.get(i), over.cx(), under.cx(), r, what);
+    }
+
+    private static void totalRow(Row row, int overX, int underX, Result r, String what) {
+        String line = lineToken(row, overX - 60);
+        List<GameLinesParser.Word> prices = priceWords(row);
+        if (line == null || prices.size() < 2) return;
+        GameLinesParser.Word o = nearestWord(prices, overX, 90), u = nearestWord(prices, underX, 90);
+        if (o == null || u == null || o == u) { r.notes.add(what + ": prices not under the Over/Under columns at line " + line); return; }
+        r.cells.add(new Cell("TOTAL", "OVER", line, price(o.text), "Over", bounds(o)));
+        r.cells.add(new Cell("TOTAL", "UNDER", line, price(u.text), "Under", bounds(u)));
     }
 
     private static void asianHandicap(List<Row> rows, int h, String home, String away, Result r) {
@@ -174,22 +189,96 @@ final class FootballMarkets {
         if (headerIndex < 0) { r.notes.add("asian handicap: team header not read"); return; }
         if (homeX > awayX) { r.notes.add("asian handicap: away team column left of the home team; not used"); return; }
         int mid = (homeX + awayX) / 2;
-        for (int i = headerIndex + 1; i < end; i++) {
-            Row row = rows.get(i);
-            List<GameLinesParser.Word> prices = priceWords(row);
-            if (prices.size() != 2) continue;
-            String homeLine = null, awayLine = null;
-            for (GameLinesParser.Word p : prices) {
-                String line = lineLeftOf(row, p);
-                if (line == null) continue;
-                if (p.cx() < mid) homeLine = line; else awayLine = line;
-            }
-            if (homeLine == null || awayLine == null) { r.notes.add("asian handicap: a row without a readable line per team"); continue; }
-            GameLinesParser.Word hp = prices.get(0).cx() < mid ? prices.get(0) : prices.get(1), ap = hp == prices.get(0) ? prices.get(1) : prices.get(0);
-            if (new BigDecimal(homeLine).add(new BigDecimal(awayLine)).signum() != 0) { r.notes.add("asian handicap: lines are not opposite (" + homeLine + " / " + awayLine + ")"); continue; }
-            r.cells.add(new Cell("SPREAD", "HOME", homeLine, price(hp.text), home, bounds(hp)));
-            r.cells.add(new Cell("SPREAD", "AWAY", awayLine, price(ap.text), away, bounds(ap)));
+        for (int i = headerIndex + 1; i < end; i++) handicapRow(rows.get(i), mid, home, away, r);
+    }
+
+    private static void handicapRow(Row row, int mid, String home, String away, Result r) {
+        List<GameLinesParser.Word> prices = priceWords(row);
+        if (prices.size() != 2) return;
+        String homeLine = null, awayLine = null;
+        for (GameLinesParser.Word p : prices) {
+            String line = lineLeftOf(row, p);
+            if (line == null) continue;
+            if (p.cx() < mid) homeLine = line; else awayLine = line;
         }
+        if (homeLine == null || awayLine == null) { r.notes.add("asian handicap: a row without a readable line per team"); return; }
+        GameLinesParser.Word hp = prices.get(0).cx() < mid ? prices.get(0) : prices.get(1), ap = hp == prices.get(0) ? prices.get(1) : prices.get(0);
+        if (new BigDecimal(homeLine).add(new BigDecimal(awayLine)).signum() != 0) { r.notes.add("asian handicap: lines are not opposite (" + homeLine + " / " + awayLine + ")"); return; }
+        r.cells.add(new Cell("SPREAD", "HOME", homeLine, price(hp.text), home, bounds(hp)));
+        r.cells.add(new Cell("SPREAD", "AWAY", awayLine, price(ap.text), away, bounds(ap)));
+    }
+
+    // ------------------------------------------------------------------ alternative lines (fallback only)
+    /** Rows above LIST_TOP are the browser bar and the bet365 header; rows below LIST_BOTTOM the bottom navigation. */
+    private static final int LIST_TOP = 250, LIST_BOTTOM = 1395;
+
+    /** The full-game alternative section of `market` ("SPREAD": Alternative Asian Handicap; "TOTAL": Alternative Goal Line) on
+     *  this frame, or null when its heading is not on screen. `expanded` = its header row (the two team names / Over and
+     *  Under) is on screen under the heading, from which the column geometry is taken. First-half, corner and other
+     *  alternative groups never match. */
+    static Alt alternative(List<GameLinesParser.Word> rawWords, String market, String home, String away) {
+        List<Row> rows = rows(rawWords);
+        for (int i = 0; i < rows.size(); i++) {
+            Row row = rows.get(i);
+            String t = row.text();
+            if (row.cy < LIST_TOP || row.cy > LIST_BOTTOM || !t.contains("alternative")) continue;
+            if (t.contains("1st") || t.contains("2nd") || t.contains("half") || t.contains("corner")) continue;
+            boolean spread = "SPREAD".equals(market);
+            if (!(spread ? t.contains("asian") : (t.contains("goal") && t.contains("line")))) continue;
+            Alt a = new Alt();
+            a.headingCy = row.cy;
+            int l = Integer.MAX_VALUE, tp = Integer.MAX_VALUE, rt = 0, bt = 0;
+            for (GameLinesParser.Word w : row.words) { l = Math.min(l, w.left); tp = Math.min(tp, w.top); rt = Math.max(rt, w.right); bt = Math.max(bt, w.bottom); }
+            a.headingBox = new int[] {l - 10, tp - 14, rt + 10, bt + 14};
+            int end = sectionEnd(rows, i);
+            a.endVisible = end < rows.size() && rows.get(end).cy <= LIST_BOTTOM;
+            for (int j = i + 1; j < end && !a.expanded; j++) {
+                Row h = rows.get(j);
+                if (spread) {
+                    int hx = labelX(h, home), ax = labelX(h, away);
+                    if (hx >= 0 && ax >= 0 && hx < ax) { a.expanded = true; a.columns = new AltColumns(market, (hx + ax) / 2, 0, 0); }
+                } else {
+                    GameLinesParser.Word over = null, under = null;
+                    for (GameLinesParser.Word w : h.words) {
+                        String x = w.text.toLowerCase(Locale.US);
+                        if (x.equals("over")) over = w;
+                        if (x.equals("under")) under = w;
+                    }
+                    if (over != null && under != null && over.cx() < under.cx()) { a.expanded = true; a.columns = new AltColumns(market, 0, over.cx(), under.cx()); }
+                }
+            }
+            return a;
+        }
+        return null;
+    }
+
+    /** parse() plus, in the alternative fallback, the rows of a SCROLLED frame: when the frame shows no heading of the alternative
+     *  section, the rows above its first market heading are read with the section's saved columns (no header of their own).
+     *  Callers chain such frames by overlap and never trust a frame that does not repeat a row of the previous one. */
+    static Result parse(List<GameLinesParser.Word> rawWords, String home, String away, AltColumns cols) {
+        Result r = parse(rawWords, home, away);
+        if (cols == null) return r;
+        Alt alt = alternative(rawWords, cols.market, home, away);
+        if (alt != null) { r.altEnd = alt.endVisible; return r; }
+        List<Row> rows = rows(rawWords);
+        Result extra = new Result();
+        for (Row row : rows) {
+            if (row.cy < LIST_TOP || row.cy > LIST_BOTTOM) continue;
+            String t = row.text();
+            boolean heading = t.contains("information and transmission");
+            for (String h : HEADINGS) if (t.contains(h)) heading = true;
+            if (heading) { r.altEnd = true; break; }
+            if ("SPREAD".equals(cols.market)) handicapRow(row, cols.mid, home, away, extra);
+            else totalRow(row, cols.overX, cols.underX, extra, "alternative goal line");
+        }
+        for (Cell c : extra.cells) {
+            boolean dup = false;
+            for (Cell k : r.cells)
+                if (k.market.equals(c.market) && k.side.equals(c.side) && k.line.equals(c.line) && k.price.equals(c.price)
+                        && Math.abs(k.bounds[1] - c.bounds[1]) <= 10) dup = true;
+            if (!dup) r.cells.add(c);
+        }
+        return r;
     }
 
     // ------------------------------------------------------------------ helpers
@@ -241,6 +330,10 @@ final class FootballMarkets {
         for (int i = 0; i < row.words.size(); i++) {
             GameLinesParser.Word w = row.words.get(i);
             if (w == price || w.right > price.left + 4 || PRICE.matcher(w.text).matches()) continue;
+            // The second half of a quarter pair OCR'd as two words ("-0.5," "-1.0") is not a line of its own (it would read as
+            // -1.0 instead of -0.75, a 0.25 error the tolerance band could otherwise absorb).
+            if (i > 0 && row.words.get(i - 1).text.endsWith(",")
+                    && normaliseLine(row.words.get(i - 1).text.replace(" ", "") + w.text.replace(" ", "")) != null) continue;
             String t = w.text.replace(" ", "");
             if (t.endsWith(",") && i + 1 < row.words.size() && row.words.get(i + 1) != price) t = t + row.words.get(i + 1).text;
             String line = normaliseLine(t);
