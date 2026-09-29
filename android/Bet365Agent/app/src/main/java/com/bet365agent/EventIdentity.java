@@ -1,6 +1,9 @@
 package com.bet365agent;
 
 import java.text.Normalizer;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -588,7 +591,10 @@ final class EventIdentity {
         return ((DAY_OF_YEAR[month] + day) * 24 + Integer.parseInt(m.group(3))) * 60 + Integer.parseInt(m.group(4));
     }
 
-    /** exact | within_tolerance (+n min) | mismatch (n min) | unknown */
+    /** exact | within_tolerance (+n min) | same_instant_utc_display (-60 min BST) | mismatch (n min) | unknown.
+     *  same_instant_utc_display: the page shows the UTC wall-clock of the same instant the alert shows in UK time
+     *  (false -60 min class: Zetech 28 Sep 2026 11:57 BST, Fomento Los Hornos 19:54/19:59 BST). Only during UK
+     *  summer time, same calendar day/month, and exactly -60 minutes (page behind = UTC wall-clock). */
     static String kickoffMatch(String feedUk, String pageUk) {
         if (feedUk == null || pageUk == null) return "unknown";
         if (feedUk.trim().equalsIgnoreCase(pageUk.trim())) return "exact";
@@ -596,7 +602,31 @@ final class EventIdentity {
         if (f == null || p == null) return "mismatch (texts differ: '" + feedUk + "' vs '" + pageUk + "')";
         int delta = p - f;
         if (Math.abs(delta) <= KICKOFF_TOLERANCE_MINUTES) return String.format(Locale.US, "within_tolerance (%+d min)", delta);
+        // Only page-behind (-60): page UTC wall-clock vs alert UK. Page-ahead (+60) stays a mismatch
+        // (corpus: constructed "same page one hour later" must still refuse).
+        if (delta == -60 && sameKickoffDayMonth(feedUk, pageUk) && ukSummerTime(feedUk))
+            return String.format(Locale.US, "same_instant_utc_display (%+d min)", delta);
         return String.format(Locale.US, "mismatch (%+d min)", delta);
+    }
+
+    /** True when both UK display strings name the same day and month (year is not on the Bet365 header). */
+    private static boolean sameKickoffDayMonth(String a, String b) {
+        Matcher ma = UK_KICKOFF.matcher(a.trim()), mb = UK_KICKOFF.matcher(b.trim());
+        return ma.matches() && mb.matches()
+                && ma.group(1).equals(mb.group(1))
+                && ma.group(2).equalsIgnoreCase(mb.group(2));
+    }
+
+    /** Europe/London is on BST (UTC+1) for this day/month/hour. Year 2026 is used only for the DST table. */
+    private static boolean ukSummerTime(String uk) {
+        Matcher m = UK_KICKOFF.matcher(uk.trim());
+        if (!m.matches()) return false;
+        int day = Integer.parseInt(m.group(1)), month = MONTHS.indexOf(m.group(2).toLowerCase(Locale.US)) + 1;
+        if (month < 1) return false;
+        int hour = Integer.parseInt(m.group(3)), minute = Integer.parseInt(m.group(4));
+        ZoneOffset off = LocalDateTime.of(2026, month, day, hour, minute)
+                .atZone(ZoneId.of("Europe/London")).getOffset();
+        return off.getTotalSeconds() == 3600;
     }
 
     // ------------------------------------------------------------------ event level (B4, B8)
@@ -728,7 +758,7 @@ final class EventIdentity {
         ev.put("sport_match", sportKnown ? (sportOk ? "equal" : "mismatch (" + feed.sport + " vs " + page.sport + ")") : "unknown");
         String ko = kickoffMatch(feed.kickoffUk, page.kickoffUk);
         boolean koKnown = feed.kickoffUk != null && page.kickoffUk != null;
-        boolean koAgrees = koKnown && (ko.equals("exact") || ko.startsWith("within_tolerance"));
+        boolean koAgrees = koKnown && (ko.equals("exact") || ko.startsWith("within_tolerance") || ko.startsWith("same_instant"));
         ev.put("kickoff_match", ko);
         ev.put("competition_match", "not checked (resolve)");
         ev.put("competing_event", page.anchored ? "none: a single event page reached through the alert's own link" : "not excluded: no event anchor");

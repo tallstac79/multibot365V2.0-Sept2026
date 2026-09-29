@@ -277,6 +277,13 @@ final class EventPage {
         return uk.getDayOfMonth() + " " + MONTHS[uk.getMonthValue() - 1] + " " + uk.format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
+    /** The same UTC instant as a Bet365-style wall clock with no zone conversion ("2026-09-28T12:00" -> "28 Sep 12:00").
+     *  Used to recognise the false -60 min class where the page OCR/display shows UTC while the alert path shows UK. */
+    static String utcDisplay(String kickoffUtc) {
+        LocalDateTime utc = LocalDateTime.parse(kickoffUtc);
+        return utc.getDayOfMonth() + " " + MONTHS[utc.getMonthValue() - 1] + " " + utc.format(DateTimeFormatter.ofPattern("HH:mm"));
+    }
+
     private static String cap(String s) { return s.substring(0, 1).toUpperCase(Locale.US) + s.substring(1).toLowerCase(Locale.US); }
     private static String pad(String h) { return h.length() == 1 ? "0" + h : h; }
 }

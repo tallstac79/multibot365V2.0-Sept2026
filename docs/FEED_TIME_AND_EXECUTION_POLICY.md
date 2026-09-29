@@ -185,3 +185,11 @@ event-start rule changed beyond marking the operator's UTC setting verified.
 The totals correction changes only its saved absolute allowance, from null to 1.0. Every observed comparison remains durably stored in the instruction result and audit trail, for accepted and rejected outcomes, using the original alert as baseline. Validation/configuration evidence for this correction is in `evidence/totals-one-step/`; earlier evidence remains historical.
 
 Basketball MONEYLINE is now a supported price-only market under [the audited ML contract](MONEYLINE_AUDIT.md). Its existing 10% net-payout tolerance applies, with no handicap or line allowance required. Spread/Totals settings and interpretation are unchanged.
+
+## False -60 min kick-off on the phone (28 Sep 2026)
+
+When the Bet365 header OCR shows the UTC wall-clock of the alert instant while the alert path shows
+Europe/London (BST), identity used to refuse with `mismatch (-60 min)` on the alert's own event link
+(Zetech, Fomento Los Hornos). Phone `EventIdentity.kickoffMatch` now accepts that signature as
+`same_instant_utc_display` during UK summer time only. See `evidence/kickoff-false-minus60-20260928/`.
+Feed `event_timezone=Europe/London` policy above is unchanged.
