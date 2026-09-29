@@ -72,7 +72,11 @@ final class VisualSession {
         }
         put("phase",phase);
         events.put(CoordinatorAgent.object("phase",phase,"elapsed_ms",elapsed,"wall_ts_ms",System.currentTimeMillis()));
-        persist(file(service,id),record);
+        // Progress markers of a capture (CAPTURE_x / CAPTURED_x / READ_REGION_x) are kept in memory and reach the disk with the
+        // next durable boundary: every gesture ("GESTURE_DISPATCHING", durable intent BEFORE the effect), every stage change
+        // and the final record still persist. ~40 full-record atomic writes per hold were made on the main thread for them.
+        boolean progressOnly = phase != null && (phase.startsWith("CAPTURE_") || phase.startsWith("CAPTURED_") || phase.startsWith("READ_REGION"));
+        if (!progressOnly) persist(file(service,id),record);
         if (progressListener != null && isWorkflowStage(phase)) {
             JSONObject snap = stageTimings.length() == 0 ? null : stageTimings.optJSONObject(stageTimings.length()-1);
             progressListener.onProgress(phase, elapsed, snap);
@@ -118,13 +122,16 @@ final class VisualSession {
     CompletableFuture<Void> delay(long ms) {
         CompletableFuture<Void> f=future();main.postDelayed(()->{if(live())f.complete(null);},ms);return f;
     }
-    CompletableFuture<Void> open(String url) {
+    CompletableFuture<Void> open(String url) { return openNow(url).thenCompose(v -> delay(1200)); }
+    /** Start the navigation and return at once: the caller looks at the screen and decides when the page is ready (the fixed
+     *  1.2 s of open() is what made every event load wait; PageReady says when to stop looking). */
+    CompletableFuture<Void> openNow(String url) {
         if(!live())return failed("TIMEOUT","Session expired");
         checkpoint("OPEN_HOME");
         // EXTRA_APPLICATION_ID makes Chrome reuse this app's tab instead of opening a new one per workflow.
         service.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(url)).setPackage("com.android.chrome").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .putExtra(android.provider.Browser.EXTRA_APPLICATION_ID,service.getPackageName()));
-        return delay(1200);
+        return CompletableFuture.completedFuture(null);
     }
     CompletableFuture<VisualScreen> capture(String label) { return capture(label,false); }
     VisualControlRunner runner() { return runner; }

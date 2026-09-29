@@ -755,7 +755,9 @@ final class Bet365LiveAdapter implements SiteAdapter {
             return CompletableFuture.completedFuture(null);
         }
         ui.put("event_url", url);
-        return ui.open(url).thenCompose(v -> directEventLoaded(1)).thenCompose(s -> {
+        final long opened = android.os.SystemClock.elapsedRealtime();
+        final String wantUk = kickoffUtc == null || kickoffUtc.isEmpty() ? null : EventPage.ukDisplay(kickoffUtc);
+        return ui.openNow(url).thenCompose(v -> directEventReady(opened, wantUk)).thenCompose(s -> {
             if (sessionLoggedIn(s)) { ui.put("session", "AUTHENTICATED"); return CompletableFuture.completedFuture(s); }
             // Not clearly logged in: the normal session step (may re-home / log in), then back to the event.
             return ensure_session().thenCompose(v -> ui.open(url)).thenCompose(v -> directEventLoaded(1));
@@ -780,6 +782,27 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 return verifyDirectEvent(s, kickoffUtc, true, patched);
             });
         }
+    }
+
+    /** Longest the event page is given to draw its header before the frame on screen is judged as it is. Generous: the
+     *  old fixed schedule allowed 1.2 + 2.2 + 3 x 0.9 s plus captures (~6.5 s). */
+    private static final long EVENT_LOAD_CAP_MS = 9000;
+
+    /** Look at the screen at once and keep looking until it shows THIS event's header (PageReady.eventReady), the page is
+     *  closed/suspended, or the login wall shows; then hand that frame to the unchanged identity verification. */
+    private CompletableFuture<VisualScreen> directEventReady(long openedAt, String wantUk) {
+        return ui.delay(150).thenCompose(v -> ui.capture("event_direct")).thenCompose(s -> {
+            long waited = android.os.SystemClock.elapsedRealtime() - openedAt;
+            List<String> header = headerLines(s);
+            boolean ready = PageReady.eventReady(header, headerTeams(header), EventPage.hints(identityHome, instructionAliases),
+                    EventPage.hints(expectedAway, instructionAliases), wantUk, waited);
+            if (ready || EventPage.closed(texts(s)) || loginWall(s) || waited >= EVENT_LOAD_CAP_MS) {
+                ui.put("event_load_ms", waited);
+                return CompletableFuture.completedFuture(s);
+            }
+            ui.put("event_direct_wait", ui.record.optInt("event_direct_wait") + 1);
+            return directEventReady(openedAt, wantUk);
+        });
     }
 
     private CompletableFuture<VisualScreen> directEventLoaded(int attempt) {
@@ -1297,8 +1320,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
         return false;
     }
 
-    /** First view that showed the requested market/side inside the band but not at the exact line: "popular" or a tab
-     *  prefix, "+scroll" when it was the scrolled frame. Revisited when no view shows the exact line. */
+    /** First view that showed the requested market/side inside the band but not at the exact line ("popular" or a tab
+     *  prefix). Revisited only when a later view ended discovery on another screen. */
     private String footballBandView;
 
     private void noteBand(List<Selection> found, String view) {
@@ -1348,12 +1371,17 @@ final class Bet365LiveAdapter implements SiteAdapter {
         return r;
     }
 
-    /** Football event page (Popular tab: Full Time Result and the main Goals Over/Under line; Goals tab: every total
-     *  line; Asian Lines tab: Asian Handicap and Goal Line). The requested market decides which tabs are opened and
-     *  only the frame that shows it supplies the selections, so every returned tap target is on the current screen.
-     *  The EXACT alert line is hunted first on every view; only when no view shows it is the first view that showed a line
-     *  inside the +/- allowance opened again (Wenzhou Yincai v Qingdao Red Lions U20, 28 Sep 2026: the Popular tab's main
-     *  Over 2.5 ended discovery for Over 4.25 / 4.5 alerts and the Goals tab was never opened). */
+    /** Football event page (Popular tab: Full Time Result and the main Goals Over/Under line; Goals tab: the main Goals
+     *  Over/Under row; Asian Lines tab: the main Asian Handicap and Goal Line rows). The requested market decides which tabs
+     *  are opened and only the frame that shows it supplies the selections, so every returned tap target is on the current
+     *  screen. The EXACT alert line is hunted first on every view; only when no view shows it is the first view that showed
+     *  a line inside the +/- allowance opened again (Wenzhou Yincai v Qingdao Red Lions U20, 28 Sep 2026).
+     *
+     *  Speed (29 Sep 2026, measured on 74 real football holds): the parser only ever reads each market's main rows (collapsed
+     *  alternative groups are never on screen), and no scrolled or revisited frame ever added a cell the tab's first frame
+     *  lacked - yet the scroll, swipe-back and revisit steps cost ~14 s of a 17 s market discovery. Discovery now reads each
+     *  needed tab once, waits for the tab's own section to be drawn instead of a fixed 1.9 s, reuses the frame it already
+     *  has for the tab strip, and skips the Popular frame for a spread (it never holds a handicap). */
     private CompletableFuture<List<Selection>> discoverFootballMarkets() {
         footballSeen.clear();
         footballBandView = null;
@@ -1362,12 +1390,18 @@ final class Bet365LiveAdapter implements SiteAdapter {
         List<String> tabs = new ArrayList<>();
         if ("SPREAD".equals(targetMarket)) tabs.add("asia");
         else if ("TOTAL".equals(targetMarket)) { tabs.add("goals"); tabs.add("asia"); }
-        return ui.captureTable("markets").thenCompose(s -> {
-            List<Selection> found = footballSelections(footballParse(s, "popular"));
-            if (footballExactIn(found)) return CompletableFuture.completedFuture(found);
-            noteBand(found, "popular");
-            return footballTabs(tabs, 0, found);
-        }).thenApply(found -> {
+        CompletableFuture<List<Selection>> discovered;
+        if ("SPREAD".equals(targetMarket)) {
+            discovered = footballViews(tabs, 0, null, Collections.<Selection>emptyList(), null);
+        } else {
+            discovered = ui.captureTable("markets").thenCompose(s -> {
+                List<Selection> found = footballSelections(footballParse(s, "popular"));
+                if (footballExactIn(found)) return CompletableFuture.completedFuture(found);
+                noteBand(found, "popular");
+                return footballViews(tabs, 0, s, found, "popular");
+            });
+        }
+        return discovered.thenApply(found -> {
             requireFootballLineWithinAllowance(found);
             require(!found.isEmpty(), "EVENT_NOT_VERIFIED", "No live football market quotes parsed from Bet365 event OCR (see football_market_reads)");
             validateMoneylineIdentities(found);
@@ -1379,67 +1413,62 @@ final class Bet365LiveAdapter implements SiteAdapter {
         });
     }
 
-    private CompletableFuture<List<Selection>> footballTabs(List<String> tabs, int index, List<Selection> lastFound) {
-        if (index >= tabs.size()) {
-            // Last resort on the current view: one scroll for further lines of the same market. Whatever this frame shows is
-            // what is returned: tap targets from an earlier frame would be stale after the scrolls (fail closed instead).
-            return ui.swipe(360, 1200, 600, 400).thenCompose(v -> ui.delay(900)).thenCompose(v -> ui.captureTable("markets_scroll"))
-                    .thenCompose(s -> {
-                        List<Selection> last = footballSelections(footballParse(s, "scroll"));
-                        if (footballExactIn(last) || footballTargetIn(last) || footballBandView == null) return CompletableFuture.completedFuture(last);
-                        return footballRevisitBand();
-                    });
-        }
+    /** Visit the remaining tabs in order; the exact alert line ends the hunt on that tab's own frame. */
+    private CompletableFuture<List<Selection>> footballViews(List<String> tabs, int index, VisualScreen lastFrame, List<Selection> lastFound, String lastView) {
+        if (index >= tabs.size()) return footballFinish(lastFound, lastView);
         String prefix = tabs.get(index);
-        return footballOpenTab(prefix, 0).thenCompose(v -> ui.captureTable("markets_" + prefix)).thenCompose(s -> {
+        return footballOpenTab(prefix, lastFrame, 0).thenCompose(s -> {
             List<Selection> found = footballSelections(footballParse(s, prefix));
             if (footballExactIn(found)) return CompletableFuture.completedFuture(found);
             noteBand(found, prefix);
-            return ui.swipe(360, 1200, 600, 400).thenCompose(v -> ui.delay(900)).thenCompose(v -> ui.captureTable("markets_" + prefix + "_scroll")).thenCompose(s2 -> {
-                List<Selection> more = footballSelections(footballParse(s2, prefix + "_scroll"));
-                if (footballExactIn(more)) return CompletableFuture.completedFuture(more);
-                noteBand(more, prefix + "+scroll");
-                return ui.swipe(360, 500, 1300, 300).thenCompose(v -> ui.delay(700))   // back to the top: the tab strip must be visible again
-                        .thenCompose(v -> footballTabs(tabs, index + 1, more.isEmpty() ? found : more));
-            });
+            return footballViews(tabs, index + 1, s, found, prefix);
         });
     }
 
-    /** No view showed the exact alert line: open again the first view that showed a line inside the band, so the returned
-     *  tap targets are on the current screen. Whatever that frame shows is returned (a line gone by now fails closed). */
-    private CompletableFuture<List<Selection>> footballRevisitBand() {
-        String view = footballBandView;
-        boolean scrolled = view.endsWith("+scroll");
-        String prefix = scrolled ? view.substring(0, view.length() - "+scroll".length()) : view;
+    /** No view showed the exact line. If the in-band line is on the screen we ended on, use it; if it was on an earlier view,
+     *  open that view again so the tap target is on the current screen (a line gone by now fails closed). */
+    private CompletableFuture<List<Selection>> footballFinish(List<Selection> lastFound, String lastView) {
+        if (footballBandView == null || footballBandView.equals(lastView) || footballTargetIn(lastFound)) return CompletableFuture.completedFuture(lastFound);
+        final String view = footballBandView;
         ui.put("football_band_revisit", view);
-        return ui.swipe(360, 500, 1300, 300).thenCompose(v -> ui.delay(700))
-                .thenCompose(v -> footballOpenTab(prefix, 0))
-                .thenCompose(v -> ui.captureTable("markets_" + prefix + "_revisit"))
-                .thenCompose(s -> {
-                    List<Selection> found = footballSelections(footballParse(s, prefix + "_revisit"));
-                    if (!scrolled || footballTargetIn(found)) return CompletableFuture.completedFuture(found);
-                    return ui.swipe(360, 1200, 600, 400).thenCompose(v -> ui.delay(900))
-                            .thenCompose(v -> ui.captureTable("markets_" + prefix + "_revisit_scroll"))
-                            .thenApply(s2 -> footballSelections(footballParse(s2, prefix + "_revisit_scroll")));
-                });
+        return footballOpenTab(view, null, 0).thenApply(s -> footballSelections(footballParse(s, view + "_revisit")));
     }
 
-    /** Tap the market tab whose label starts with `prefix`; the strip scrolls horizontally, so swipe it once or twice when the tab is off-screen. */
-    private CompletableFuture<Void> footballOpenTab(String prefix, int attempt) {
-        return ui.capture("tabs_" + prefix + (attempt > 0 ? "_" + attempt : "")).thenCompose(s -> {
+    /** Tables captured until this tab's own section is drawn (PageReady.footballTabReady), at most FOOTBALL_TAB_CAP_MS after the tap. */
+    private static final long FOOTBALL_TAB_CAP_MS = 3500;
+
+    private CompletableFuture<VisualScreen> footballCaptureTab(String prefix, String label, long tappedAt) {
+        return ui.captureTable(label).thenCompose(s -> {
+            long waited = android.os.SystemClock.elapsedRealtime() - tappedAt;
+            FootballMarkets.Result r = FootballMarkets.parse(wordsOf(s), liveFixture.home, liveFixture.away);
+            if (waited >= FOOTBALL_TAB_CAP_MS || PageReady.footballTabReady(prefix, r, waited)) return CompletableFuture.completedFuture(s);
+            return ui.delay(120).thenCompose(v -> footballCaptureTab(prefix, label, tappedAt));
+        });
+    }
+
+    /** Open the market tab whose label starts with `prefix` and return the frame that shows it. The tab strip is read from
+     *  `known` (the frame already on screen) when given; it scrolls horizontally, so it is swiped (right-to-left for tabs
+     *  beyond the edge, left-to-right back to "popular") until the tab is visible. */
+    private CompletableFuture<VisualScreen> footballOpenTab(String prefix, VisualScreen known, int attempt) {
+        CompletableFuture<VisualScreen> frame = known != null && attempt == 0 ? CompletableFuture.completedFuture(known)
+                : ui.capture("tabs_" + prefix + (attempt > 0 ? "_" + attempt : ""));
+        return frame.thenCompose(s -> {
             GameLinesParser.Word tab = FootballMarkets.tab(wordsOf(s), prefix);
             if (tab != null) {
                 android.graphics.Rect box = new android.graphics.Rect(tab.left - 6, tab.top - 10, tab.right + 6, tab.bottom + 10);
                 ui.put("football_tab_" + prefix, CoordinatorAgent.object("text", tab.text, "bounds", VisualSession.bounds(box)));
-                return ui.tap(box, "football tab " + tab.text, 500).thenCompose(v -> ui.delay(1400));
+                final long tapped = android.os.SystemClock.elapsedRealtime();
+                return ui.tap(box, "football tab " + tab.text, 120).thenCompose(v -> footballCaptureTab(prefix, "markets_" + prefix, tapped));
             }
             int[] strip = FootballMarkets.tabStrip(wordsOf(s), true);
             require(strip != null, "EVENT_NOT_VERIFIED", "Football market tab strip not visible");
             require(attempt < 3, "EVENT_NOT_VERIFIED", "Football market tab '" + prefix + "' not found on the tab strip");
+            if ("popular".equals(prefix))   // back to the first tab: drag the strip left-to-right
+                return ui.swipeHorizontal(strip[0], 120 + attempt * 60, 560, 650).thenCompose(v -> footballOpenTab(prefix, null, attempt + 1));
             // Drag the strip from its last visible label leftwards (a drag started on the bell at the right edge did not scroll it:
             // Eskilsminne v Ariana FC Malmo, 27 Sep 2026). Slower than a fling so Chrome treats it as a scroll of the strip.
             int fromX = Math.max(300, Math.min(strip[2] - 30, 560)) - attempt * 60;
-            return ui.swipeHorizontal(strip[0], fromX, 90, 650).thenCompose(v -> ui.delay(900)).thenCompose(v -> footballOpenTab(prefix, attempt + 1));
+            return ui.swipeHorizontal(strip[0], fromX, 90, 650).thenCompose(v -> footballOpenTab(prefix, null, attempt + 1));
         });
     }
 
@@ -1815,11 +1844,15 @@ final class Bet365LiveAdapter implements SiteAdapter {
         return chain;
     }
 
+    /** Pause after each keypad tap (was 150 ms: ~0.26 s per key on the 4 keys of 0.10). A dropped or doubled key can only
+     *  make the read-back (stake digits AND To Return) fail, which clears and retypes once, then fails closed. */
+    private static final long KEY_SETTLE_MS = 70;
+
     private CompletableFuture<Void> tapKey(java.util.Map<Character, int[]> keys, char key) {
         int[] c = keys.get(key);
         require(c != null, "STAKE_REJECTED", "No keypad key for '" + key + "'");
         android.graphics.Rect r = new android.graphics.Rect(c[0] - 30, c[1] - 22, c[0] + 30, c[1] + 22);
-        return ui.tap(r, "key:" + key, 150);   // keypad keys register at once; no 450 ms page settle
+        return ui.tap(r, "key:" + key, KEY_SETTLE_MS);   // keypad keys register at once; the typed stake is read back before Done
     }
 
     private CompletableFuture<Void> erase(java.util.Map<Character, int[]> keys, int times) {
@@ -2192,7 +2225,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     /** Waits between post-tap frames (ms): outcome is classified from up to five screens (~12 s). */
-    private static final long[] OUTCOME_WAITS_MS = {1500, 1500, 2000, 3000, 4000};
+    private long tapElapsedMs;
+    private int receiptExtraLooks;
 
     public CompletableFuture<Void> place_bet(Fixture fixture, Selection selection, String stake) {
         // REAL Place Bet tap, once. Only reached for execution_mode=dispatch + confirmation APPROVED.
@@ -2220,8 +2254,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
             ui.put("placement", placement("PLACEMENT_UNKNOWN", "Place Bet tap dispatching; outcome not yet classified",
                     null, null, stake, selection.price, new JSONArray(), null));
             ui.checkpoint("PLACE_BET");
-            ui.put("t_tap_ms", System.currentTimeMillis());
-            return ui.flushEvidence().thenCompose(z -> ui.tap(tap, "Place Bet")).thenCompose(x -> {
+            ui.put("t_tap_ms", System.currentTimeMillis());          // the durable-intent moment (same meaning as before the speed work)
+            tapElapsedMs = android.os.SystemClock.elapsedRealtime();
+            receiptExtraLooks = 0;
+            return ui.flushEvidence().thenCompose(z -> { ui.put("t_flush_done_ms", System.currentTimeMillis()); ui.put("t_gesture_ms", System.currentTimeMillis()); return ui.tap(tap, "Place Bet"); }).thenCompose(x -> {
                 if (preparedGesture != null) {
                     try { preparedGesture.put("dispatched", true); } catch (Exception ignored) {}
                     ui.put("prepared_gesture", preparedGesture);
@@ -2262,6 +2298,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
             boolean identity = HeldSlipIdentity.matches(slipLines, heldContext.optString("home"), heldContext.optString("away"), market, place.bounds.top, sport);
             HeldSlipQuote quote = HeldSlipQuote.read(slipLines, name, market, place.bounds.top, sport);
             observeExecution("pretap", quote == null ? null : new Selection(market, side, quote.line, quote.price, "OPEN", place.bounds, name), identity);
+            ui.put("t_pretap_frame_ms", System.currentTimeMillis());          // the fresh frame is in hand: checks start
             require(identity, "WRONG_EVENT", "Both approved teams and full-game market must be inside this slip");
             require(quote != null, "PRICE_CHANGED", "Current slip selection line and price unreadable");
             require("MONEYLINE".equals(market) || ExecutionTolerance.lineForSport(sport, market, side, heldContext.optString("requested_line"),
@@ -2290,7 +2327,8 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     private CompletableFuture<Void> observeOutcome(int attempt, JSONArray frames, Selection selection, String stake) {
-        return ui.delay(OUTCOME_WAITS_MS[attempt - 1])
+        long since = android.os.SystemClock.elapsedRealtime() - tapElapsedMs;
+        return ui.delay(attempt == 1 ? OutcomeWatch.FIRST_LOOK_MS : OutcomeWatch.gapMs(since))
                 .thenCompose(v -> { ui.checkpoint("PLACE_BET_OUTCOME"); return ui.capture("place_bet_after"); })
                 .thenCompose(after -> {
                     frames.put(ui.lastImage());
@@ -2300,7 +2338,13 @@ final class Bet365LiveAdapter implements SiteAdapter {
                     // receipt means the gesture landed on the stake field, not on Place Bet (never re-tapped).
                     final PlacementClassifier.Result r = !read.definitive && findPlaceBetLine(after) != null && PlaceBetTarget.keypadOpen(wordsOf(after))
                             ? PlacementClassifier.tapNotAccepted() : read;
-                    if (!r.definitive && attempt < OUTCOME_WAITS_MS.length) return observeOutcome(attempt + 1, frames, selection, stake);
+                    long seenAfter = android.os.SystemClock.elapsedRealtime() - tapElapsedMs;
+                    if (OutcomeWatch.lookAgain(r, seenAfter, receiptExtraLooks)) {
+                        if (r.definitive) { receiptExtraLooks++; ui.put("receipt_extra_looks", receiptExtraLooks); }   // thin receipt: see OutcomeWatch
+                        return observeOutcome(attempt + 1, frames, selection, stake);
+                    }
+                    ui.put("t_receipt_seen_ms", System.currentTimeMillis());
+                    ui.put("receipt_seen_after_tap_ms", seenAfter);
                     return confirmReference(after, r).thenCompose(reference -> {
                         String outcome = r.definitive ? r.outcome : "PLACEMENT_UNKNOWN";
                         String detail = r.definitive ? r.detail
@@ -2358,7 +2402,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
     /** Bet365 HOME as the clean idle state, VERIFIED on screen (nav bar visible, not on My Bets). Never taps. */
     CompletableFuture<Void> return_home_verified() {
         ui.checkpoint("RETURN_HOME");
-        return ui.open(HOME_URL).thenCompose(v -> homeVerified(1)).thenAccept(ok -> {
+        return ui.openNow(HOME_URL).thenCompose(v -> homeVerified(1)).thenAccept(ok -> {
             ui.put("returned_home", ok);
             ui.put("home_verified", ok);
             ui.put("t_home_ms", System.currentTimeMillis());
@@ -2368,7 +2412,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
     /** HOME is verified when the address bar reads #/HO/ (or the Search bar shows) and nothing reads #/MB;
      *  the page settles over a few seconds, so up to three captures. Nothing is tapped. */
     private CompletableFuture<Boolean> homeVerified(int attempt) {
-        return ui.delay(attempt == 1 ? 1500 : 1200).thenCompose(v -> ui.capture("home_verify")).thenCompose(s -> {
+        return ui.delay(attempt == 1 ? 150 : 250).thenCompose(v -> ui.capture("home_verify")).thenCompose(s -> {
             boolean homeUrl = false, myBets = false;
             for (VisualScreen.Line line : s.lines) {
                 String t = line.text;
@@ -2376,7 +2420,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 if (t.contains("#/MB")) myBets = true;
             }
             boolean ok = !myBets && (homeUrl || visible(s, "Search"));
-            if (ok || attempt >= 3) return CompletableFuture.completedFuture(ok);
+            if (ok || attempt >= 12) return CompletableFuture.completedFuture(ok);
             return homeVerified(attempt + 1);
         });
     }
@@ -2458,11 +2502,19 @@ final class Bet365LiveAdapter implements SiteAdapter {
         }
         final String method = how;
         final android.graphics.Rect target = close;
-        return ui.tap(target, "Close receipt").thenCompose(v -> ui.delay(1200))
-                .thenCompose(v -> ui.capture("receipt_closed")).thenAccept(after ->
+        // The banner closes at once: look after 150 ms, then every 200 ms until it is gone (was a fixed 1.2 s + 0.5 s).
+        return ui.tap(target, "Close receipt", 150).thenCompose(v -> receiptGone(0))
+                .thenAccept(after ->
                         ui.put("betslip_reset", CoordinatorAgent.object("tapped", true, "control", "receipt X",
                                 "method", method, "bounds", VisualSession.bounds(target),
                                 "receipt_still_visible", PlacementClassifier.receiptVisible(texts(after)))));
+    }
+
+    private CompletableFuture<VisualScreen> receiptGone(int polls) {
+        return ui.capture("receipt_closed").thenCompose(s -> {
+            if (!PlacementClassifier.receiptVisible(texts(s)) || polls >= 8) return CompletableFuture.completedFuture(s);
+            return ui.delay(200).thenCompose(v -> receiptGone(polls + 1));
+        });
     }
 
     /** Remove icon of a selection on the slip: the OCR'd X glyph, else (glyph not read) the icon area left of an

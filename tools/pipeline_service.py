@@ -129,7 +129,18 @@ async def dispatch_loop(pipeline, gateway, tick_seconds, on_cycle=None, stop=Non
             log.exception('Pipeline cycle failed')
         if on_cycle:
             on_cycle(error)
-        await asyncio.sleep(tick_seconds)
+        # Busy cadence while work is queued/in flight, and an intake commit wakes this wait at once (latency only: the
+        # same tick, run sooner). Idle, it sleeps tick_seconds exactly as before.
+        delay = tick_seconds
+        if hasattr(pipeline, 'next_tick_delay'):
+            try:
+                delay = await asyncio.to_thread(pipeline.next_tick_delay, tick_seconds)
+            except Exception:
+                delay = tick_seconds
+        if hasattr(pipeline, 'wait_for_work'):
+            await asyncio.to_thread(pipeline.wait_for_work, delay)
+        else:
+            await asyncio.sleep(delay)
 
 
 async def telegram_loop(notifier, commands, tick_seconds, status, stop=None, batch=NOTIFY_BATCH):

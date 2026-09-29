@@ -189,8 +189,20 @@ final class VisualControlRunner {
         return true;
     }
 
+    /** Android refuses takeScreenshot calls less than 333 ms apart (ERROR_TAKE_SCREENSHOT_INTERVAL_TIME_SHORT) and this runner
+     *  answers that with a 700 ms retry. Fixed waits never came near the limit; the poll-until-ready loops (29 Sep 2026 speed
+     *  work) can on fast captures, so requests are spaced here: a poll waits the few ms it needs instead of losing 0.7 s. */
+    private static final long MIN_SHOT_GAP_MS = 345;
+    private long lastShotRequestAt;
+
     private void capture(String id, String phase, int attempt, Consumer<Bitmap> next) {
         if (!withinDeadline(id)) return;
+        long sinceLast = SystemClock.elapsedRealtime() - lastShotRequestAt;
+        if (attempt == 0 && sinceLast >= 0 && sinceLast < MIN_SHOT_GAP_MS) {
+            main.postDelayed(() -> capture(id, phase, attempt, next), MIN_SHOT_GAP_MS - sinceLast);
+            return;
+        }
+        lastShotRequestAt = SystemClock.elapsedRealtime();
         prefs.edit().putString("phase", "CAPTURE_" + phase).apply();
         if (android.os.Build.VERSION.SDK_INT < 30) {
             finish(id, "FAIL", "Accessibility screenshots require API 30; MediaProjection required"); return;

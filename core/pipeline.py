@@ -18,6 +18,7 @@ import hashlib
 import json
 import logging
 import re
+import threading
 
 from core import alert_classifier
 from core.final_action import FinalAction
@@ -30,6 +31,14 @@ from core.session_contract import parse_report, gate as session_gate, DEFAULT_MA
 
 log = logging.getLogger('multibot.pipeline')
 HISTORY_SCANS = ('reconcile', 'catch_up', 'backfill')
+
+
+def _epoch(text):
+    """Sortable epoch seconds of a stored ISO timestamp (0 when unreadable)."""
+    try:
+        return datetime.fromisoformat(str(text).replace('Z', '+00:00')).timestamp()
+    except (TypeError, ValueError):
+        return 0.0
 
 
 class _LostRace(Exception):
@@ -99,6 +108,14 @@ class Settings:
     desktop_device_id: str = 'desktop-chrome'
     desktop_expected_worker_id: str = ''
     desktop_expected_account_fingerprint: str = ''
+    # Hot-path latency (29 Sep 2026 speed work; no rule, tolerance, stake or approval value involved):
+    #  busy_tick_seconds     dispatcher cadence while work is queued/in flight (idle cadence stays the service's tick_seconds)
+    #  health_reuse_seconds  while a job is in flight the phone's health snapshot is reused this long (it is re-read at once
+    #                        whenever a result arrives, before approval/dispatch); 0 = read every tick
+    #  dispatch_newest_first the freshest queued alert goes first (an approved final action always outranks new work)
+    busy_tick_seconds: float = 0.2
+    health_reuse_seconds: float = 1.5
+    dispatch_newest_first: bool = True
 
     APPROVAL_MODES = ('manual', 'automatic')
 
@@ -181,6 +198,20 @@ def record_request_stage(store, db, row, payload):
                        selection_name=payload.get('selection_name'), detail=payload)
 
 
+PHONE_MARKS = ('t_start_ms', 't_pretap_frame_ms', 't_pretap_done_ms', 't_flush_done_ms', 't_gesture_ms', 't_tap_ms', 't_receipt_seen_ms',
+               't_receipt_ms', 't_home_ms', 'event_load_ms',
+               'receipt_seen_after_tap_ms', 'receipt_extra_looks', 'event_direct_wait', 'duration_ms')
+
+
+def phone_timings(result):
+    """The phone's own timing record of one job (its stage_timings and wall-clock marks), for latency analysis only."""
+    timings = [dict(stage=t.get('stage'), start_elapsed_ms=t.get('start_elapsed_ms'), end_elapsed_ms=t.get('end_elapsed_ms'),
+                    duration_ms=t.get('duration_ms'), retries=t.get('retries'), status=t.get('status'))
+               for t in (result.get('stage_timings') or []) if isinstance(t, dict)]
+    return dict(marks={k: result[k] for k in PHONE_MARKS if result.get(k) is not None}, stage_timings=timings,
+                app_version=result.get('app_version'), run_id=result.get('run_id'))
+
+
 def record_result_stages(store, db, instruction_id, result, final_action, state, at=None):
     """Per-stage evidence from a phone result, written once each (analysis only; nothing here affects execution).
     hold run   -> first_quote (the first live quote the phone read, and the route it actually used) + hold_result;
@@ -206,7 +237,11 @@ def record_result_stages(store, db, instruction_id, result, final_action, state,
                            detail=dict(event_url=result.get('event_url'), identity_verdict=result.get('identity_verdict'),
                                        event_context=result.get('event_context'), fixture_name=result.get('fixture_name'),
                                        detail=result.get('detail'), run_id=result.get('run_id')))
+        store.record_stage(db, instruction_id, 'hold_timings', source='phone hold result', at=at, device_instruction_id=job,
+                           route=route, outcome=state, detail=phone_timings(result))
         return
+    store.record_stage(db, instruction_id, 'place_timings', source='phone place result', at=at, device_instruction_id=job,
+                       outcome=state, detail=phone_timings(result))
     pretap = result.get('pretap') if isinstance(result.get('pretap'), dict) else None
     if pretap is None:
         pre = [o for o in observations if o.get('stage') == 'pretap']
@@ -234,6 +269,8 @@ class Pipeline:
         self.config_provider = config_provider   # () -> decision-support config dict
         self.settings = settings or Settings()
         self.clock = clock
+        self._wake = threading.Event()          # set after an intake commit / a result: the dispatcher need not wait out its sleep
+        self._health_cache = (None, None)       # (clock time, health) of the last phone health read
         self.final = FinalAction(self)
         self.identity = IdentityRegistry(self.store)
         self.armed_at = iso(clock())    # one-shot: only Place Bet runs dispatched after this count
@@ -346,6 +383,13 @@ class Pipeline:
 
     # ================================================================== intake
     def ingest(self, message, delivery='event'):
+        """Record one delivered message (see _ingest), then wake the dispatcher: a newly QUEUED alert is dispatched at once
+        instead of at the end of the dispatcher's sleep (the commit has completed by now, so the tick sees the row)."""
+        result = self._ingest(message, delivery)
+        self._wake.set()
+        return result
+
+    def _ingest(self, message, delivery='event'):
         """Record one delivered message. Returns a summary dict; never silently drops.
 
         History scans (delivery 'reconcile', 'catch_up', 'backfill') skip a message that is
@@ -383,7 +427,7 @@ class Pipeline:
         except _LostRace:
             # A concurrent delivery stored this message first. Retry only after our write
             # transaction has rolled back, so the retry never waits on its own lock.
-            return self.ingest(message, delivery)
+            return self._ingest(message, delivery)
 
     def _record(self, message, verdict, parsed, instruction_id, now, delivery):
         with self.store.tx() as db:
@@ -653,15 +697,54 @@ class Pipeline:
         self.store.set_control(HELD_KEY, dict(held, released=outcome, reset=device_id), by='dispatcher')
         return outcome == 'reset sent'
 
+    # ---- cadence (latency only)
+    BUSY_STATES = (State.QUEUED, State.APPROVED, State.DISPATCHED, State.DEVICE_ACTIVE)
+
+    def next_tick_delay(self, idle_seconds):
+        """Seconds the dispatcher may sleep: the short busy cadence while work is queued/approved/in flight, else idle."""
+        busy = self.settings.busy_tick_seconds
+        if busy and busy < idle_seconds and self.store.instructions_in(self.BUSY_STATES):
+            return busy
+        return idle_seconds
+
+    def wait_for_work(self, timeout):
+        """Sleep up to `timeout` seconds, returning early when an intake commit woke the dispatcher."""
+        self._wake.wait(max(0.0, timeout))
+        self._wake.clear()
+
+    def _phone_health(self, gateway, job_in_flight):
+        """The phone's health for this tick. While a job is in flight the snapshot is reused for health_reuse_seconds
+        (each read is an HTTP call to the phone); everything that decides on it re-reads after a result (see tick)."""
+        at, health = self._health_cache
+        reuse = self.settings.health_reuse_seconds
+        if job_in_flight and reuse > 0 and at is not None and health is not None and (self.clock() - at).total_seconds() < reuse \
+                and not health.get('diagnostics_active'):
+            return health
+        health = self.refresh_device(gateway)
+        self._health_cache = (self.clock(), health)
+        return health
+
     def tick(self, gateway):
         """One dispatcher cycle. Safe to call repeatedly and after any restart."""
-        health = self.refresh_device(gateway)
+        in_flight = bool(self.store.instructions_in([State.DISPATCHED, State.DEVICE_ACTIVE]))
+        health = self._phone_health(gateway, in_flight)
         desktop_health = self.refresh_desktop()
         if health and health.get('diagnostics_active'):
             self._poll_in_flight(gateway)
             return  # lease suppresses reset, warmup, reconciliation and dispatch; polling remains safe
         self._poll_warmup(gateway)
-        self._poll_in_flight(gateway)
+
+        def phone_state_moved():
+            # A terminal result is about to be applied (and, for a READY hold, approved and dispatched on it): read the phone's
+            # health NOW, after the result and before the decision - never a snapshot from the start of the tick. A finished
+            # hold is then no longer 'current_instruction', so the approved final action is sent in this same tick instead of
+            # waiting a whole extra cycle (the ~2 s tail of approved -> place dispatch), and worker/account/permission are
+            # checked against the state at the moment of approval.
+            nonlocal health
+            fresh = self._phone_health(gateway, False)
+            health = fresh if fresh is not None else health
+
+        self._poll_in_flight(gateway, before_apply=phone_state_moved)
         self._one_shot()
         if self._release_hold(gateway, health):
             return  # the phone is now running RESET_BETSLIP; this tick's health snapshot is stale (27 Sep 2026 BUSY race)
@@ -713,7 +796,10 @@ class Pipeline:
                              row['instruction_id'])
         self.store.set_control(self.ONE_SHOT_KEY, self.disarmed, by='one-shot')
 
-    def _poll_in_flight(self, gateway):
+    def _poll_in_flight(self, gateway, before_apply=None):
+        """Poll every in-flight job; True when at least one terminal result was applied. `before_apply` runs once before each
+        terminal result is applied (the tick re-reads the phone's health there)."""
+        applied = False
         for row in self.store.instructions_in([State.DISPATCHED, State.DEVICE_ACTIVE]):
             try:
                 gw = self.gateway_of(row['device_id'], gateway)
@@ -737,7 +823,10 @@ class Pipeline:
                                              row['instruction_id'], row['device_id'] or self.settings.device_id)
                     result = None
                 else:
+                    if before_apply is not None:
+                        before_apply()
                     self.apply_result(row['instruction_id'], result)
+                    applied = True
                     continue
             dispatched = datetime.fromisoformat(row['dispatched_at'])
             if (self.clock() - dispatched).total_seconds() > self.settings.result_timeout_seconds:
@@ -753,6 +842,7 @@ class Pipeline:
                         self.store.transition(db, row['instruction_id'], State.TIMEOUT, actor='dispatcher',
                                               reason=f'No device result within {self.settings.result_timeout_seconds}s; '
                                                      'outcome unknown, never re-dispatched')
+        return applied
 
     def _expire_ready(self):
         for row in self.store.instructions_in([State.READY]):
@@ -767,8 +857,12 @@ class Pipeline:
             return
         paused = self.final.paused()
         in_flight = self.store.instructions_in([State.DISPATCHED, State.DEVICE_ACTIVE])
-        # Approved final actions first: an operator is waiting on them.
-        candidates.sort(key=lambda r: 0 if r['state'] == State.APPROVED.value else 1)
+        # Approved final actions first: an operator is waiting on them. Then (29 Sep 2026, burst handling) the FRESHEST queued
+        # alert: its price is the least stale, while older ones keep waiting and age out as STALE exactly as before.
+        if self.settings.dispatch_newest_first:
+            candidates.sort(key=lambda r: (0 if r['state'] == State.APPROVED.value else 1, -_epoch(r['received_at'])))
+        else:
+            candidates.sort(key=lambda r: 0 if r['state'] == State.APPROVED.value else 1)
         warmup_for = None
         held = self.held_instruction()
         activation = self.store.control(self.ACTIVATION_KEY)

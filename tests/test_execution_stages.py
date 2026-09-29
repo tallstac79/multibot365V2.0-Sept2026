@@ -44,7 +44,7 @@ class ExecutionStages(unittest.TestCase):
         self.assertEqual(row['state'], 'COMPLETED')
         self.assertNotIn('route', row['result_payload'])            # the final result replaced the hold result...
         s = self.stages(iid)                                          # ...but every stage is kept
-        self.assertEqual(set(s), {'hold_request', 'first_quote', 'hold_result', 'place_request', 'pretap', 'receipt'})
+        self.assertEqual(set(s), {'hold_request', 'first_quote', 'hold_result', 'hold_timings', 'place_request', 'place_timings', 'pretap', 'receipt'})
         self.assertEqual((s['hold_request']['route'], s['hold_request']['device_instruction_id']), ('event_link', iid))
         # requested (alert) and minimum acceptable prices are separate; `price` is never the floor
         with self.p.store.connection() as db:
@@ -60,6 +60,10 @@ class ExecutionStages(unittest.TestCase):
         self.assertEqual((s['pretap']['line'], s['pretap']['price'], s['pretap']['stake']), ('190.5', '2.20', '1.00'))
         self.assertEqual((s['receipt']['bet_reference'], s['receipt']['line'], s['receipt']['price']), ('JL1234567890', '190.5', '2.20'))
         self.assertTrue(s['receipt']['outcome'].startswith('PLACED'))
+        # the phone's own stage timings and marks are kept per job (latency analysis; nothing here affects execution)
+        import json as _json
+        self.assertIn('stage_timings', _json.loads(s['hold_timings']['detail']))
+        self.assertIn('marks', _json.loads(s['place_timings']['detail']))
 
     def test_search_route_and_a_failed_hold(self):
         iid = self.p.ingest(message(MELBOURNE))['instruction_id']

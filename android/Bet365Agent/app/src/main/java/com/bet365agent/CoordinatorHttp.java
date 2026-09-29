@@ -104,17 +104,17 @@ final class CoordinatorHttp implements AutoCloseable {
                 servers = Collections.unmodifiableList(new ArrayList<>(open));
                 endpoint = targets.endpointLabel(CoordinatorConfig.PORT);
                 Log.i("AgentCoordinator", "LISTEN " + targets.listenDetail(CoordinatorConfig.PORT));
-                while (!closed && targets.equals(discoverAddresses())) {
-                    for (ServerSocket socket : open) {
-                        if (closed) break;
-                        try {
-                            Socket client = socket.accept();
-                            if (!privateAddress(client.getInetAddress())) { client.close(); continue; }
-                            try { clients.execute(() -> handle(client)); }
-                            catch (RejectedExecutionException busy) { client.close(); }
-                        } catch (SocketTimeoutException ignored) { }
-                    }
+                // One acceptor per bound socket. A single loop taking turns over the LAN and the Tailscale socket, each
+                // accept() blocking up to its 500 ms timeout, made a request on the second socket wait for the first
+                // socket's timeout: a median of ~0.5 s (up to 1 s) on EVERY call the backend makes over Tailscale (job
+                // ACK, health, result polls). The address supervision below runs on this thread; a change closes the
+                // sockets (finally), which ends the acceptors.
+                for (ServerSocket socket : open) {
+                    Thread acceptor = new Thread(() -> accept(socket), "coordinator-accept-" + socket.getLocalPort());
+                    acceptor.setDaemon(true);
+                    acceptor.start();
                 }
+                while (!closed && targets.equals(discoverAddresses())) Thread.sleep(500);
             } catch (Exception e) {
                 if (!closed) Log.w("AgentCoordinator", "Listener retry: " + e.getClass().getSimpleName());
                 try { Thread.sleep(1000); } catch (InterruptedException ignored) { }
@@ -126,11 +126,27 @@ final class CoordinatorHttp implements AutoCloseable {
             }
         }
     }
+    /** Accept loop of ONE server socket: hand each private-address peer to the bounded client pool. */
+    private void accept(ServerSocket socket) {
+        while (!closed && !socket.isClosed()) {
+            try {
+                Socket client = socket.accept();
+                if (!privateAddress(client.getInetAddress())) { client.close(); continue; }
+                try { clients.execute(() -> handle(client)); }
+                catch (RejectedExecutionException busy) { client.close(); }
+            } catch (SocketTimeoutException ignored) {
+            } catch (IOException closedOrFailed) {
+                return;   // the supervisor closed this socket (address change / shutdown)
+            }
+        }
+    }
+
     private void handle(Socket socket) {
         Reply reply = null;
         ScheduledFuture<?> deadline = deadlines.schedule(() -> { try { socket.close(); } catch (IOException ignored) { } }, 5, TimeUnit.SECONDS);
         try (Socket client = socket) {
             client.setSoTimeout(3000);
+            client.setTcpNoDelay(true);   // small replies: never wait for Nagle/delayed-ACK
             try {
                 InputStream in = client.getInputStream();
                 String[] start = line(in, 1024).split(" ");
@@ -173,7 +189,11 @@ final class CoordinatorHttp implements AutoCloseable {
                 OutputStream out = client.getOutputStream();
                 String header = "HTTP/1.1 " + reply.code + " Response\r\nContent-Type: " + reply.type
                     + "\r\nContent-Length: " + reply.data.length + "\r\nConnection: close\r\nCache-Control: no-store\r\nX-Content-Type-Options: nosniff\r\n\r\n";
-                out.write(header.getBytes(StandardCharsets.US_ASCII)); out.write(reply.data); out.flush();
+                byte[] head = header.getBytes(StandardCharsets.US_ASCII);
+                byte[] whole = new byte[head.length + reply.data.length];      // one write: header and body leave together
+                System.arraycopy(head, 0, whole, 0, head.length);
+                System.arraycopy(reply.data, 0, whole, head.length, reply.data.length);
+                out.write(whole); out.flush();
             } finally {
                 // A lost ACK never rolls back an accepted instruction or causes a second dispatch.
                 if (reply.afterWrite != null) reply.afterWrite.run();
