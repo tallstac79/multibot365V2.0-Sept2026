@@ -2,6 +2,7 @@ package com.bet365agent;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -102,5 +103,54 @@ public class KickoffFalseMinus60Test {
                 EventPage.ukDisplay("2026-09-28T12:00"), "Premier League Women", "Kenya", true, Collections.emptyMap(), true);
         assertEquals("exact", d.result.evidence.get("kickoff_match"));
         assertTrue(d.result.accepted());
+    }
+
+    @Test public void searchPathWithMinusSixtyMustRefuseEvenWithExactTeams() {
+        // Search / unanchored must NOT treat same_instant_utc_display as a general 60-minute tolerance.
+        // Exact team names + -60 BST on a Search candidate must still refuse (WRONG_EVENT / kick-off differs).
+        java.util.List<String> header = java.util.Arrays.asList(
+                "Kenya League Women 28 Sep 12:00",
+                "Zetech Sparks FC (W) v Kenya Police Bullets (W)");
+        EventPage.Direct search = EventPage.decide(header, "football", "Zetech Sparks FC", "Kenya Police Bullets",
+                EventPage.ukDisplay("2026-09-28T12:00"), "Premier League Women", "Kenya", false, java.util.Collections.emptyMap(), true);
+        assertTrue(String.valueOf(search.result.evidence.get("kickoff_match")).startsWith("same_instant"));
+        assertFalse("Search path must not agree on same_instant without event_id_match", search.result.kickoffAgrees);
+        assertFalse("Search path with -60 must refuse", search.result.accepted());
+        assertNotNull(search.result.evidence.get("same_instant_gate"));
+        assertTrue(search.result.reason != null && search.result.reason.startsWith("kick-off differs"));
+    }
+
+    @Test public void weakUnanchoredMinusSixtyMustRefuse() {
+        // Weak identity (naming variants) + unanchored + -60: still refuse; same_instant is not a Search tolerance.
+        java.util.List<String> header = java.util.Arrays.asList(
+                "Argentina Torneo Regional Amateur 28 Sep 20:00",
+                "Formento Los Hornos v Napoli Argentino");
+        EventPage.Direct weak = EventPage.decide(header, "football", "Fomento Los Hornos", "Napoli Argentino",
+                EventPage.ukDisplay("2026-09-28T20:00"), "Torneo Regional Federal Amateur", "Argentina", false, java.util.Collections.emptyMap(), false);
+        assertTrue(String.valueOf(weak.result.evidence.get("kickoff_match")).startsWith("same_instant"));
+        assertFalse(weak.result.kickoffAgrees);
+        assertFalse(weak.result.accepted());
+    }
+
+    @Test public void anchoredZetechAndFomentoStillAcceptSameInstant() {
+        // Direct-link anchor + teams/date + no protected conflict: same_instant may ACCEPT (the 1f36d20 class).
+        java.util.List<String> zHeader = java.util.Arrays.asList(
+                "Kenya League Women 28 Sep 12:00",
+                "Zetech Sparks FC (W) v Kenya Police Bullets (W)");
+        EventPage.Direct z = EventPage.decide(zHeader, "football", "Zetech Sparks FC", "Kenya Police Bullets",
+                EventPage.ukDisplay("2026-09-28T12:00"), "Premier League Women", "Kenya", true, java.util.Collections.emptyMap(), true);
+        assertTrue(z.result.accepted());
+        assertTrue(z.result.kickoffAgrees);
+        assertEquals(Boolean.TRUE, z.result.evidence.get("event_id_match"));
+
+        java.util.Map<String, String> aliases = new java.util.HashMap<>();
+        java.util.List<String> fHeader = java.util.Arrays.asList(
+                "Argentina Torneo Regional Amateur 28 Sep 20:00",
+                "Formento Los Hornos v Napoli Argentino");
+        EventPage.Direct f = EventPage.decide(fHeader, "football", "Fomento Los Hornos", "Napoli Argentino",
+                EventPage.ukDisplay("2026-09-28T20:00"), "Torneo Regional Federal Amateur", "Argentina", true, aliases, false);
+        assertTrue(f.result.kickoffAgrees);
+        assertTrue(String.valueOf(f.result.evidence.get("kickoff_match")).startsWith("same_instant"));
+        assertFalse(f.result.reason != null && f.result.reason.startsWith("kick-off differs"));
     }
 }

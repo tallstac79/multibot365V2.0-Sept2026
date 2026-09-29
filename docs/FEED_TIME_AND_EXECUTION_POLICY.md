@@ -191,5 +191,5 @@ Basketball MONEYLINE is now a supported price-only market under [the audited ML 
 When the Bet365 header OCR shows the UTC wall-clock of the alert instant while the alert path shows
 Europe/London (BST), identity used to refuse with `mismatch (-60 min)` on the alert's own event link
 (Zetech, Fomento Los Hornos). Phone `EventIdentity.kickoffMatch` now accepts that signature as
-`same_instant_utc_display` during UK summer time only. See `evidence/kickoff-false-minus60-20260928/`.
+`same_instant_utc_display` during UK summer time only, and only when the page is the alert's own Bet365 event link (`event_id_match` / anchored direct). Search and unanchored / weak identity paths must still refuse a -60 reading; it is not a general 60-minute tolerance. See `evidence/kickoff-false-minus60-20260928/`.
 Feed `event_timezone=Europe/London` policy above is unchanged.

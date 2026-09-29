@@ -16,14 +16,14 @@ as a hard -60 minute mismatch and refused the alert's own Bet365 event link (`ev
 Frames were not on the PC; reconstructed from `result_payload` / `execution_stages` in
 `analysis/betswifty-2026-09-28/db-snapshots/pipeline.sqlite3` and the speed-gap report.
 
-## Fix (phone identity path, 0.9.45-ops)
+## Fix (phone identity path, 0.9.46-ops)
 `EventIdentity.kickoffMatch`: when the two UK-format strings are the same day/month, UK is on BST, and the
-delta is exactly -60 minutes (page behind), treat as `same_instant_utc_display` (agree). Winter GMT still rejects a real
-60-minute difference. Strategy / tolerances / minimum-price rules unchanged.
-
+delta is exactly -60 minutes (page behind), label as `same_instant_utc_display`. That label may contribute to
+kick-off agreement **only** on an anchored direct Bet365 event link (`event_id_match`). Search / unanchored / weak
+identity paths still refuse. Winter GMT still rejects a real 60-minute difference. Strategy / tolerances / minimum-price rules unchanged.
 Regression: `KickoffFalseMinus60Test`.
 
 ## Build note
 Deployed phone build **0.9.40** (commit a8c9801) does **not** include this fix. Source is on
-`claude/final-action` as 0.9.45-ops (versionCode 128). A new APK build + install is required before the
+`claude/final-action` as 0.9.46-ops (versionCode 129). A new APK build + install is required before the
 phone worker stops false-refusing this class.

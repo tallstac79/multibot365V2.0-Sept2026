@@ -594,7 +594,9 @@ final class EventIdentity {
     /** exact | within_tolerance (+n min) | same_instant_utc_display (-60 min BST) | mismatch (n min) | unknown.
      *  same_instant_utc_display: the page shows the UTC wall-clock of the same instant the alert shows in UK time
      *  (false -60 min class: Zetech 28 Sep 2026 11:57 BST, Fomento Los Hornos 19:54/19:59 BST). Only during UK
-     *  summer time, same calendar day/month, and exactly -60 minutes (page behind = UTC wall-clock). */
+     *  summer time, same calendar day/month, and exactly -60 minutes (page behind = UTC wall-clock).
+     *  Acceptance of same_instant is gated in resolve(): only when page.anchored (event_id_match / direct
+     *  Bet365 event link). Search and unanchored pages must not treat -60 as a general kick-off tolerance. */
     static String kickoffMatch(String feedUk, String pageUk) {
         if (feedUk == null || pageUk == null) return "unknown";
         if (feedUk.trim().equalsIgnoreCase(pageUk.trim())) return "exact";
@@ -758,8 +760,15 @@ final class EventIdentity {
         ev.put("sport_match", sportKnown ? (sportOk ? "equal" : "mismatch (" + feed.sport + " vs " + page.sport + ")") : "unknown");
         String ko = kickoffMatch(feed.kickoffUk, page.kickoffUk);
         boolean koKnown = feed.kickoffUk != null && page.kickoffUk != null;
-        boolean koAgrees = koKnown && (ko.equals("exact") || ko.startsWith("within_tolerance") || ko.startsWith("same_instant"));
+        // same_instant_utc_display is NOT a general +/-60 tolerance. It may contribute to kickoffAgrees only on a
+        // strongly anchored direct Bet365 event/link (event_id_match). Search / unanchored / weak identity paths
+        // still see the class label in evidence but must refuse as kick-off differs.
+        boolean sameInstant = ko.startsWith("same_instant");
+        boolean koAgrees = koKnown && (ko.equals("exact") || ko.startsWith("within_tolerance") || (sameInstant && page.anchored));
         ev.put("kickoff_match", ko);
+        if (sameInstant && !page.anchored) {
+            ev.put("same_instant_gate", "refused: same_instant_utc_display requires event_id_match (direct Bet365 event link)");
+        }
         ev.put("competition_match", "not checked (resolve)");
         ev.put("competing_event", page.anchored ? "none: a single event page reached through the alert's own link" : "not excluded: no event anchor");
         Map<String, String> none = Collections.emptyMap();
