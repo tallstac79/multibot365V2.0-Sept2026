@@ -771,6 +771,19 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     /** How long a hot page is given to read as the event before it is navigated afresh. */
     private static final long HOT_READY_CAP_MS = 2500;
+
+    /** The frame the event page was recognised on. The market read that follows uses it when it is less than EVENT_FRAME_REUSE_MS old
+     *  (the same OCR engine reads both, and a second capture of an unchanged page adds no evidence); the slip that opens next shows the
+     *  real line and price, which verify_final_state and the pre-tap check judge. */
+    private VisualScreen eventFrame; private long eventFrameAtMs;
+    private static final long EVENT_FRAME_REUSE_MS = 900;
+    private VisualScreen freshEventFrame() {
+        VisualScreen f = eventFrame;
+        if (f == null || android.os.SystemClock.elapsedRealtime() - eventFrameAtMs >= EVENT_FRAME_REUSE_MS || "legacy".equals(ui.runner().engine())) return null;
+        eventFrame = null;   // one use
+        ui.put("market_frame", "reused the event frame (" + (android.os.SystemClock.elapsedRealtime() - eventFrameAtMs) + " ms old)");
+        return f;
+    }
     /** How long, from the start of a prewarm, its page is given to read as the event before the job navigates afresh. */
     private static final long PREWARM_READY_CAP_MS = 8000;
 
@@ -820,6 +833,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
             loaded = ui.openNow(url).thenCompose(v -> directEventReady(opened, wantUk, EVENT_LOAD_CAP_MS));
         }
         return loaded.thenCompose(s -> {
+            eventFrame = s; eventFrameAtMs = android.os.SystemClock.elapsedRealtime();
             if (sessionLoggedIn(s)) { ui.put("session", "AUTHENTICATED"); return CompletableFuture.completedFuture(s); }
             // Not clearly logged in: the normal session step (may re-home / log in), then back to the event.
             return ensure_session().thenCompose(v -> ui.open(url)).thenCompose(v -> directEventLoaded(1));
@@ -1491,12 +1505,15 @@ final class Bet365LiveAdapter implements SiteAdapter {
         else if ("MONEYLINE".equals(targetMarket)) tabs.add("popular");   // only visited when the page opened on another tab (hot page)
         CompletableFuture<List<Selection>> discovered;
         if ("SPREAD".equals(targetMarket)) {
-            discovered = footballViews(tabs, 0, null, Collections.<Selection>emptyList(), null);
+            discovered = footballViews(tabs, 0, freshEventFrame(), Collections.<Selection>emptyList(), null);   // its tab strip is read from the frame already on screen
         } else {
             // The event header (and the tab strip) draw before the market body: read the popular view only once its own section is
             // on screen (PageReady.footballTabReady), like every other tab. A single read straight after the header found no quotes
             // on every 1X2 alert from 0.9.47 (Deportivo Muniz, Brightlingsea, Hendon, 29 Sep 2026).
-            discovered = footballCaptureTab("popular", "markets", android.os.SystemClock.elapsedRealtime() - 1000).thenCompose(s -> {
+            VisualScreen reuse = freshEventFrame();
+            boolean usable = reuse != null && PageReady.footballTabReady("popular", FootballMarkets.parse(wordsOf(reuse), liveFixture.home, liveFixture.away), 1000);
+            discovered = (usable ? CompletableFuture.completedFuture(reuse)
+                    : footballCaptureTab("popular", "markets", android.os.SystemClock.elapsedRealtime() - 1000)).thenCompose(s -> {
                 List<Selection> found = footballSelections(footballParse(s, "popular"));
                 if (footballExactIn(found)) return CompletableFuture.completedFuture(found);
                 noteBand(found, "popular");
@@ -1687,7 +1704,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
         if ("football".equals(sport) && liveFixture != null) return discoverFootballMarkets();
         if ("basketball".equals(sport) && liveFixture != null) {
             // Game Lines grid: several OCR reads must agree (single frames misread digits).
-            return gridConsensus("markets", 1, new ArrayList<>(), new JSONArray()).thenApply(found -> {
+            return gridConsensus("markets", 1, new ArrayList<>(), new JSONArray(), freshEventFrame()).thenApply(found -> {
                 require(!found.isEmpty(), "EVENT_NOT_VERIFIED", "Game Lines grid not read consistently (see game_lines_reads)");
                 ui.put("fixture_home", liveFixture.home);
                 ui.put("fixture_away", liveFixture.away);
@@ -3012,7 +3029,12 @@ final class Bet365LiveAdapter implements SiteAdapter {
      *  cells agreed across reads (GameLinesParser.consensus). Every read is recorded in game_lines_reads. */
     private static final int GRID_REDRAW_LOOKS = 12;
     private CompletableFuture<List<Selection>> gridConsensus(String tag, int attempt, List<List<GameLinesParser.Cell>> reads, JSONArray log) {
-        return ui.captureTable(tag).thenCompose(s -> {
+        return gridConsensus(tag, attempt, reads, log, null);
+    }
+
+    /** `first`: an already fresh frame used as the first read instead of capturing (attempt 1 only). */
+    private CompletableFuture<List<Selection>> gridConsensus(String tag, int attempt, List<List<GameLinesParser.Cell>> reads, JSONArray log, VisualScreen first) {
+        return (first != null ? CompletableFuture.completedFuture(first) : ui.captureTable(tag)).thenCompose(s -> {
             GameLinesParser.Result r = GameLinesParser.parse(wordsOf(s), liveFixture.home, liveFixture.away);
             JSONArray cells = new JSONArray();
             for (GameLinesParser.Cell c : r.cells) cells.put(c.toString());

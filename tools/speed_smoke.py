@@ -35,7 +35,12 @@ MARKHIYA = dict(sport='football', event_url='https://www.bet365.com/#/AC/B1/C1/D
                 kickoff_utc='2026-09-29T17:15', competition='Stars Cup', country='Qatar', aliases='{"al ahli doha": "Al-Ahli Doha"}')
 HONDURAS = dict(sport='football', event_url='https://www.bet365.com/#/AC/B1/C1/D8/E202043384/F3/I1/', query='Real Espana Reserves||Motagua Reserves',
                 kickoff_utc='2026-09-29T21:00', competition='Reserve League', country='Honduras')
+POTOSI = dict(sport='football', event_url='https://www.bet365.com/#/AC/B1/C1/D8/E201915268/F3/I1/', query='Real Potosi||ABB',
+              kickoff_utc='2026-09-29T22:00', competition='Cup', country='Bolivia')
 CASES = {
+    'rp-1x2': dict(POTOSI, market='MONEYLINE', side='HOME', line=None),
+    'rp-total': dict(POTOSI, market='TOTALS', side='OVER', line='2.5', band='0.25'),
+    'rp-spread': dict(POTOSI, market='SPREAD', side='HOME', line='-0.5', band='0.5'),
     'hn-1x2': dict(HONDURAS, market='MONEYLINE', side='HOME', line=None),
     'hn-total': dict(HONDURAS, market='TOTALS', side='OVER', line='2.5', band='0.25'),
     'am-total': dict(MARKHIYA, market='TOTALS', side='OVER', line='3.5', band='0.25'),

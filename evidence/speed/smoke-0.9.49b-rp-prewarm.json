@@ -1,0 +1,723 @@
+[
+ {
+  "case": "rp-1x2",
+  "id": "speed-rp-1x2-221442",
+  "result": {
+   "instruction_id": "speed-rp-1x2-221442",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "COMPLETE_EXECUTION_READY",
+   "duration_ms": 6021,
+   "progress": {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 5874,
+    "last_progress_at_ms": 1790716488783,
+    "instruction_id": "speed-rp-1x2-221442",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790716483083
+     },
+     {
+      "stage": "OPEN_EVENT",
+      "elapsed_ms": 19,
+      "at_ms": 1790716483087
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 25,
+      "at_ms": 1790716483096,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 25,
+       "start_ts_ms": 1790716483089,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 185,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 397,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 554,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 839,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1004,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1192,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1358,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1568,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1732,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1982,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2143,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2379,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2548,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2789,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2956,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3477,
+      "at_ms": 1790716483096
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 3646,
+      "at_ms": 1790716486726,
+      "timing": {
+       "stage": "MARKET_NAV",
+       "start_elapsed_ms": 3646,
+       "start_ts_ms": 1790716486710,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "READ_SELECTION",
+      "elapsed_ms": 3690,
+      "at_ms": 1790716486775,
+      "timing": {
+       "stage": "READ_SELECTION",
+       "start_elapsed_ms": 3690,
+       "start_ts_ms": 1790716486754,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "READ_LINE",
+      "elapsed_ms": 3716,
+      "at_ms": 1790716486803,
+      "timing": {
+       "stage": "READ_LINE",
+       "start_elapsed_ms": 3716,
+       "start_ts_ms": 1790716486780,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "READ_PRICE",
+      "elapsed_ms": 3741,
+      "at_ms": 1790716486828,
+      "timing": {
+       "stage": "READ_PRICE",
+       "start_elapsed_ms": 3741,
+       "start_ts_ms": 1790716486805,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 3768,
+      "at_ms": 1790716486854,
+      "timing": {
+       "stage": "OPEN_SELECTION",
+       "start_elapsed_ms": 3768,
+       "start_ts_ms": 1790716486832,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 3796,
+      "at_ms": 1790716486854
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 4180,
+      "at_ms": 1790716487270,
+      "timing": {
+       "stage": "ENTER_STAKE",
+       "start_elapsed_ms": 4180,
+       "start_ts_ms": 1790716487244,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 4209,
+      "at_ms": 1790716487270
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 4724,
+      "at_ms": 1790716487270
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 4989,
+      "at_ms": 1790716487270
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 5517,
+      "at_ms": 1790716487270
+     },
+     {
+      "stage": "VERIFY_FINAL_STATE",
+      "elapsed_ms": 5606,
+      "at_ms": 1790716488694,
+      "timing": {
+       "stage": "VERIFY_FINAL_STATE",
+       "start_elapsed_ms": 5606,
+       "start_ts_ms": 1790716488670,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "elapsed_ms": 5694,
+      "at_ms": 1790716488783,
+      "timing": {
+       "stage": "PREPARE_COMPLETE_EXECUTION",
+       "start_elapsed_ms": 5694,
+       "start_ts_ms": 1790716488758,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "elapsed_ms": 5874,
+      "at_ms": 1790716488783
+     }
+    ]
+   },
+   "device_stage": "PREPARE_COMPLETE_EXECUTION",
+   "execution_count": 1,
+   "run_id": "c__1MPUrKGUXmyNP5BtbjzrvE-uzIHH6BWqHpmHiAu92A",
+   "fixture_name": "Real Potosi v ABB",
+   "home": "Real Potosi",
+   "away": "ABB",
+   "competition": "Bolivia Copa Division Profesional 29 Sep 23:00",
+   "selection": {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "1.20",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Real Potosi",
+    "bounds": [
+     97,
+     625,
+     169,
+     666
+    ]
+   },
+   "final_state": {
+    "home": "Real Potosi",
+    "away": "ABB",
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "1.20",
+    "stake": "0.10",
+    "state": "READY",
+    "place_bet_visible": true,
+    "wager_submitted": false
+   },
+   "ready_state": {
+    "fixture_home": "Real Potosi",
+    "fixture_away": "ABB",
+    "market": "MONEYLINE",
+    "selection_role": "HOME",
+    "selection_name": "Real Potosi",
+    "line": "NONE",
+    "price": "1.20",
+    "stake": "0.10",
+    "session": "LOGGED_IN",
+    "state": "READY",
+    "minimum_price_ok": true,
+    "place_bet_visible": true,
+    "wager_submitted": false,
+    "stop_before_wager": true
+   },
+   "complete_execution_ready": {
+    "state": "COMPLETE_EXECUTION_READY",
+    "fixture": "Real Potosi v ABB",
+    "fixture_home": "Real Potosi",
+    "fixture_away": "ABB",
+    "market": "MONEYLINE",
+    "selection_role": "HOME",
+    "selection_name": "Real Potosi",
+    "line": "NONE",
+    "price": "1.20",
+    "stake": "0.10",
+    "minimum_price": "1.01",
+    "final_control": "Place Bet",
+    "final_control_bounds": [
+     461,
+     1310,
+     620,
+     1360
+    ],
+    "final_control_enabled": true,
+    "final_control_actionable": true,
+    "prepared_gesture": {
+     "type": "tap",
+     "target": "Place Bet",
+     "package": "com.android.chrome",
+     "bounds": [
+      461,
+      1310,
+      620,
+      1360
+     ],
+     "center_x": 540.5,
+     "center_y": 1335,
+     "duration_ms": 100,
+     "dispatched": false
+    },
+    "gesture_dispatched": false,
+    "wager_submitted": false,
+    "timestamp_ms": 1790716488934,
+    "validation_hash": "727b749f2a004722134f785c37b8aafc"
+   },
+   "wager_submitted": false,
+   "verification_detail": "HELD: verified bet on the slip, \u00a3 stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+   "event_context": {
+    "home": "Real Potosi",
+    "away": "ABB",
+    "competition": "bolivia copa division profesional",
+    "kickoff_utc": "2026-09-29T22:00",
+    "period": "FULL_GAME"
+   },
+   "route": "event_link",
+   "held": true,
+   "execution_observations": [
+    {
+     "stage": "grid",
+     "observed_at_ms": 1790716486779,
+     "observed": {
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "1.20",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Real Potosi",
+      "bounds": [
+       97,
+       625,
+       169,
+       666
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "selection",
+     "observed_at_ms": 1790716486779,
+     "observed": {
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "1.20",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Real Potosi",
+      "bounds": [
+       97,
+       625,
+       169,
+       666
+      ]
+     },
+     "identity_verified": true
+    },
+    {
+     "stage": "selection_preflight",
+     "observed_at_ms": 1790716486859,
+     "observed": {
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "1.20",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Real Potosi",
+      "bounds": [
+       97,
+       625,
+       169,
+       666
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "final",
+     "observed_at_ms": 1790716488736,
+     "observed": {
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "1.20",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Real Potosi",
+      "bounds": [
+       97,
+       625,
+       169,
+       666
+      ]
+     },
+     "identity_verified": true
+    }
+   ],
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 25,
+     "start_ts_ms": 1790716483089,
+     "end_elapsed_ms": 3646,
+     "end_ts_ms": 1790716486710,
+     "duration_ms": 3621,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "MARKET_NAV",
+     "start_elapsed_ms": 3646,
+     "start_ts_ms": 1790716486710,
+     "end_elapsed_ms": 3690,
+     "end_ts_ms": 1790716486754,
+     "duration_ms": 44,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_SELECTION",
+     "start_elapsed_ms": 3690,
+     "start_ts_ms": 1790716486754,
+     "end_elapsed_ms": 3716,
+     "end_ts_ms": 1790716486780,
+     "duration_ms": 26,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_LINE",
+     "start_elapsed_ms": 3716,
+     "start_ts_ms": 1790716486780,
+     "end_elapsed_ms": 3741,
+     "end_ts_ms": 1790716486805,
+     "duration_ms": 25,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_PRICE",
+     "start_elapsed_ms": 3741,
+     "start_ts_ms": 1790716486805,
+     "end_elapsed_ms": 3768,
+     "end_ts_ms": 1790716486832,
+     "duration_ms": 27,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "start_elapsed_ms": 3768,
+     "start_ts_ms": 1790716486832,
+     "end_elapsed_ms": 4180,
+     "end_ts_ms": 1790716487244,
+     "duration_ms": 412,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "start_elapsed_ms": 4180,
+     "start_ts_ms": 1790716487244,
+     "end_elapsed_ms": 5606,
+     "end_ts_ms": 1790716488670,
+     "duration_ms": 1426,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "start_elapsed_ms": 5606,
+     "start_ts_ms": 1790716488670,
+     "end_elapsed_ms": 5694,
+     "end_ts_ms": 1790716488758,
+     "duration_ms": 88,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "start_elapsed_ms": 5694,
+     "start_ts_ms": 1790716488758,
+     "end_elapsed_ms": 5874,
+     "end_ts_ms": 1790716488938,
+     "duration_ms": 180,
+     "status": "ok",
+     "retries": 0
+    }
+   ],
+   "stake_prefilled": "slip",
+   "stake_check_prefilled": {
+    "ok": true,
+    "detail": "remembered stake 0.10 read and To Return exactly 0.10 x 1.20",
+    "stake_digits": "010",
+    "return_digits": "012",
+    "stake": "0.10",
+    "price": "1.20"
+   },
+   "stake_check_prefilled_terms": {
+    "ok": true,
+    "detail": "stake 0.10 and return agree",
+    "stake_digits": "010",
+    "return_digits": "012",
+    "stake": "0.10",
+    "price": "1.20"
+   },
+   "stake_entered": "0.10",
+   "identity": {
+    "verdict": "EXACT",
+    "reason": "both teams exact",
+    "home": {
+     "feed": "Real Potosi",
+     "bookmaker": "Real Potosi",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact",
+     "alias_safe": true
+    },
+    "away": {
+     "feed": "ABB",
+     "bookmaker": "ABB",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact",
+     "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+     "event_id_match": true,
+     "event_anchor": "page opened from the alert's own Bet365 event link",
+     "sport_match": "equal",
+     "kickoff_match": "exact",
+     "competition_match": "structural_compatible (feed 'cup' vs page 'bolivia copa division profesional')",
+     "competing_event": "none: a single event page reached through the alert's own link",
+     "home_similarity": {
+      "feed": "Real Potosi",
+      "bookmaker": "Real Potosi",
+      "level": "EXACT",
+      "kind": "exact",
+      "score": 1,
+      "note": "exact"
+     },
+     "away_similarity": {
+      "feed": "ABB",
+      "bookmaker": "ABB",
+      "level": "EXACT",
+      "kind": "exact",
+      "score": 1,
+      "note": "exact"
+     },
+     "protected_markers": "agree",
+     "orientation": "agree",
+     "policy": "both_exact",
+     "verdict": "EXACT",
+     "competition_structure": "feed {women=false level=[] tier=top letters=[] cup=true friendly=false federation=false} page {women=false level=[] tier=top letters=[] cup=true friendly=false federation=false country=bolivia}"
+    }
+   },
+   "identity_verdict": "EXACT",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201915268/F3/I1/"
+  },
+  "reset": {
+   "instruction_id": "rs-speed-rp-1x2-221442",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "RESET_BETSLIP",
+   "duration_ms": 3174,
+   "progress": {
+    "stage": "RESET_BETSLIP",
+    "elapsed_ms": 2940,
+    "last_progress_at_ms": 1790716489306,
+    "instruction_id": "rs-speed-rp-1x2-221442",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790716489298
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 18,
+      "at_ms": 1790716489306,
+      "timing": {
+       "stage": "RESET_BETSLIP",
+       "start_elapsed_ms": 18,
+       "start_ts_ms": 1790716489299,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 28,
+      "at_ms": 1790716489306
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 553,
+      "at_ms": 1790716489306
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 578,
+      "at_ms": 1790716489306
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 2346,
+      "at_ms": 1790716489306
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 2882,
+      "at_ms": 1790716489306
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 2940,
+      "at_ms": 1790716489306
+     }
+    ]
+   },
+   "device_stage": "RESET_BETSLIP",
+   "execution_count": 1,
+   "run_id": "c_pMnqbR5BClZbenj_B9BFX4z3LCvCt0EMZkMgJnjZx6o",
+   "fixture_name": null,
+   "home": null,
+   "away": null,
+   "competition": null,
+   "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+   "betslip_reset": {
+    "tapped": true,
+    "control": "remove selection X",
+    "bounds": [
+     21,
+     1180,
+     42,
+     1202
+    ],
+    "place_bet_still_visible": false
+   },
+   "stage_timings": [
+    {
+     "stage": "RESET_BETSLIP",
+     "start_elapsed_ms": 18,
+     "start_ts_ms": 1790716489299,
+     "end_elapsed_ms": 2940,
+     "end_ts_ms": 1790716492221,
+     "duration_ms": 2922,
+     "status": "ok",
+     "retries": 0
+    }
+   ]
+  },
+  "wall_s": 6.2189999999973224
+ }
+]

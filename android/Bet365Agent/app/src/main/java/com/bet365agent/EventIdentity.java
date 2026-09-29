@@ -679,6 +679,19 @@ final class EventIdentity {
         COMPETITION_ALIASES.put("spain|acb", "spain liga acb");
         // football: Vihiga Queens FC (W) v Ulinzi Starlets (W), feed "Premier League Women" (Kenya), page "Kenya League Women"
         COMPETITION_ALIASES.put("kenya|premier league women", "kenya league women");
+        // Operator-approved 2026-09-29 from competition-mismatch inventory (SAFE verified equivalences only;
+        // Spain ACB already present above). 33 historical ALIAS_REQUIRED misses across these pairs.
+        // Adriatic: alerts lack ISO country — international| is the operator scope.
+        COMPETITION_ALIASES.put("international|adriatic league women", "adriatic waba women");
+        COMPETITION_ALIASES.put("poland|liga 1 women", "poland 1 liga women");
+        COMPETITION_ALIASES.put("turkey|super league women", "turkiye tkbsl women");
+        COMPETITION_ALIASES.put("belgium|division 1 women", "belgium div 1 women");
+        COMPETITION_ALIASES.put("nigeria|npfl", "nigeria premier league");
+        COMPETITION_ALIASES.put("switzerland|sb league", "switzerland lna");
+        COMPETITION_ALIASES.put("portugal|nacional championship women", "portugal campeonato nacional women");
+        COMPETITION_ALIASES.put("hungary|nb 2 women", "hungary nbii women");
+        COMPETITION_ALIASES.put("brazil|paraense 3", "brazil campeonato paraense a3");
+        COMPETITION_ALIASES.put("turkey|super league", "turkiye bsl");
     }
     /** Governing bodies Bet365 prefixes to a competition the feed names without one ("FIBA Intercontinental Cup"). */
     private static final List<String> BODY_PREFIXES = Arrays.asList("fiba", "fifa", "uefa", "concacaf", "conmebol", "afc", "caf");

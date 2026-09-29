@@ -1,0 +1,357 @@
+[
+ {
+  "case": "rp-spread",
+  "id": "speed-rp-spread-221501",
+  "result": {
+   "instruction_id": "speed-rp-spread-221501",
+   "status": "FAIL",
+   "stage": "LINE_CHANGED",
+   "detail": "Bet365 SPREAD HOME shows -2.0 @ 1.875; alert line -0.5: no line within 0.5 of the alert line",
+   "duration_ms": 10071,
+   "progress": {
+    "stage": "MARKET_NAV",
+    "elapsed_ms": 9937,
+    "last_progress_at_ms": 1790716502120,
+    "instruction_id": "speed-rp-spread-221501",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790716501284
+     },
+     {
+      "stage": "OPEN_EVENT",
+      "elapsed_ms": 16,
+      "at_ms": 1790716501300
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 35,
+      "at_ms": 1790716501315,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 35,
+       "start_ts_ms": 1790716501304,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 200,
+      "at_ms": 1790716501315
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 667,
+      "at_ms": 1790716501315
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 843,
+      "at_ms": 1790716502120,
+      "timing": {
+       "stage": "MARKET_NAV",
+       "start_elapsed_ms": 843,
+       "start_ts_ms": 1790716502112,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 2141,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 2561,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 2654,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 2923,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 3415,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 3567,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 4003,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 4128,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 4584,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 4599,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 4839,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 5278,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 6524,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 6815,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 7997,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 8336,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 9522,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 9923,
+      "at_ms": 1790716502120
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 9937,
+      "at_ms": 1790716502120
+     }
+    ]
+   },
+   "device_stage": "MARKET_NAV",
+   "execution_count": 1,
+   "run_id": "c_o3tKWp7BX-8U0vr7LEpzsg3YdRFq7G7-uKoQT4Z24kA",
+   "fixture_name": "Real Potosi v ABB",
+   "home": "Real Potosi",
+   "away": "ABB",
+   "competition": "Bolivia Copa Division Profesional 29 Sep 23:00",
+   "verification_detail": "Bet365 SPREAD HOME shows -2.0 @ 1.875; alert line -0.5: no line within 0.5 of the alert line",
+   "event_context": {
+    "home": "Real Potosi",
+    "away": "ABB",
+    "competition": "bolivia copa division profesional",
+    "kickoff_utc": "2026-09-29T22:00",
+    "period": "FULL_GAME"
+   },
+   "route": "event_link",
+   "execution_observations": [
+    {
+     "stage": "grid",
+     "observed_at_ms": 1790716511205,
+     "observed": {
+      "market": "SPREAD",
+      "side": "HOME",
+      "line": "-2.0",
+      "price": "1.875",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Real Potosi",
+      "bounds": [
+       188,
+       659,
+       273,
+       700
+      ]
+     },
+     "identity_verified": true
+    }
+   ],
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 35,
+     "start_ts_ms": 1790716501304,
+     "end_elapsed_ms": 843,
+     "end_ts_ms": 1790716502112,
+     "duration_ms": 808,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "MARKET_NAV",
+     "start_elapsed_ms": 843,
+     "start_ts_ms": 1790716502112,
+     "end_elapsed_ms": 9937,
+     "end_ts_ms": 1790716511205,
+     "duration_ms": 9094,
+     "status": "fail",
+     "retries": 0
+    }
+   ],
+   "identity": {
+    "verdict": "EXACT",
+    "reason": "both teams exact",
+    "home": {
+     "feed": "Real Potosi",
+     "bookmaker": "Real Potosi",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact",
+     "alias_safe": true
+    },
+    "away": {
+     "feed": "ABB",
+     "bookmaker": "ABB",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact",
+     "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+     "event_id_match": true,
+     "event_anchor": "page opened from the alert's own Bet365 event link",
+     "sport_match": "equal",
+     "kickoff_match": "exact",
+     "competition_match": "structural_compatible (feed 'cup' vs page 'bolivia copa division profesional')",
+     "competing_event": "none: a single event page reached through the alert's own link",
+     "home_similarity": {
+      "feed": "Real Potosi",
+      "bookmaker": "Real Potosi",
+      "level": "EXACT",
+      "kind": "exact",
+      "score": 1,
+      "note": "exact"
+     },
+     "away_similarity": {
+      "feed": "ABB",
+      "bookmaker": "ABB",
+      "level": "EXACT",
+      "kind": "exact",
+      "score": 1,
+      "note": "exact"
+     },
+     "protected_markers": "agree",
+     "orientation": "agree",
+     "policy": "both_exact",
+     "verdict": "EXACT",
+     "competition_structure": "feed {women=false level=[] tier=top letters=[] cup=true friendly=false federation=false} page {women=false level=[] tier=top letters=[] cup=true friendly=false federation=false country=bolivia}"
+    }
+   },
+   "identity_verdict": "EXACT",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E201915268/F3/I1/"
+  },
+  "reset": {
+   "instruction_id": "rs-speed-rp-spread-221501",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "RESET_BETSLIP",
+   "duration_ms": 550,
+   "progress": {
+    "stage": "RESET_BETSLIP",
+    "elapsed_ms": 464,
+    "last_progress_at_ms": 1790716511447,
+    "instruction_id": "rs-speed-rp-spread-221501",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790716511436
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 17,
+      "at_ms": 1790716511447,
+      "timing": {
+       "stage": "RESET_BETSLIP",
+       "start_elapsed_ms": 17,
+       "start_ts_ms": 1790716511437,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 30,
+      "at_ms": 1790716511447
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 442,
+      "at_ms": 1790716511447
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 464,
+      "at_ms": 1790716511447
+     }
+    ]
+   },
+   "device_stage": "RESET_BETSLIP",
+   "execution_count": 1,
+   "run_id": "c_Okn1juZA5PTPX67yR2Qy3IyUPjKsUZ0PovNscx4o6P4",
+   "fixture_name": null,
+   "home": null,
+   "away": null,
+   "competition": null,
+   "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+   "betslip_reset": {
+    "tapped": false,
+    "detail": "No safe reset control visible"
+   },
+   "stage_timings": [
+    {
+     "stage": "RESET_BETSLIP",
+     "start_elapsed_ms": 17,
+     "start_ts_ms": 1790716511437,
+     "end_elapsed_ms": 463,
+     "end_ts_ms": 1790716511883,
+     "duration_ms": 446,
+     "status": "ok",
+     "retries": 0
+    }
+   ]
+  },
+  "wall_s": 10.264999999999418
+ }
+]
