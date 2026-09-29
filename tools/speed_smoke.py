@@ -33,7 +33,11 @@ KIDSGROVE = dict(sport='football', event_url='https://www.bet365.com/#/AC/B1/C1/
                  kickoff_utc='2026-09-29T18:45', competition='Northern League Division 1', country='England')
 MARKHIYA = dict(sport='football', event_url='https://www.bet365.com/#/AC/B1/C1/D8/E201917178/F3/I1/', query='Al Markhiya||Al Ahli Doha',
                 kickoff_utc='2026-09-29T17:15', competition='Stars Cup', country='Qatar', aliases='{"al ahli doha": "Al-Ahli Doha"}')
+HONDURAS = dict(sport='football', event_url='https://www.bet365.com/#/AC/B1/C1/D8/E202043384/F3/I1/', query='Real Espana Reserves||Motagua Reserves',
+                kickoff_utc='2026-09-29T21:00', competition='Reserve League', country='Honduras')
 CASES = {
+    'hn-1x2': dict(HONDURAS, market='MONEYLINE', side='HOME', line=None),
+    'hn-total': dict(HONDURAS, market='TOTALS', side='OVER', line='2.5', band='0.25'),
     'am-total': dict(MARKHIYA, market='TOTALS', side='OVER', line='3.5', band='0.25'),
     'am-spread': dict(MARKHIYA, market='SPREAD', side='HOME', line='2.0', band='0.25'),
     'am-spread-band': dict(MARKHIYA, market='SPREAD', side='HOME', line='2.1', band='0.25'),

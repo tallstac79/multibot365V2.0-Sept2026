@@ -1,0 +1,752 @@
+[
+ {
+  "case": "hn-1x2",
+  "id": "speed-hn-1x2-214448",
+  "result": {
+   "instruction_id": "speed-hn-1x2-214448",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "COMPLETE_EXECUTION_READY",
+   "duration_ms": 9723,
+   "progress": {
+    "stage": "PREPARE_COMPLETE_EXECUTION",
+    "elapsed_ms": 9456,
+    "last_progress_at_ms": 1790714698384,
+    "instruction_id": "speed-hn-1x2-214448",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790714689111
+     },
+     {
+      "stage": "OPEN_EVENT",
+      "elapsed_ms": 27,
+      "at_ms": 1790714689118
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 35,
+      "at_ms": 1790714689136,
+      "timing": {
+       "stage": "OPEN_HOME",
+       "start_elapsed_ms": 35,
+       "start_ts_ms": 1790714689121,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 224,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 861,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1138,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1373,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1554,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1774,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 1948,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2210,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2379,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2607,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 2773,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3032,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3200,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3790,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 3998,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4536,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 4748,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "OPEN_HOME",
+      "elapsed_ms": 5331,
+      "at_ms": 1790714689136
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 5476,
+      "at_ms": 1790714694630,
+      "timing": {
+       "stage": "MARKET_NAV",
+       "start_elapsed_ms": 5476,
+       "start_ts_ms": 1790714694562,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 5547,
+      "at_ms": 1790714694630
+     },
+     {
+      "stage": "MARKET_NAV",
+      "elapsed_ms": 6097,
+      "at_ms": 1790714694630
+     },
+     {
+      "stage": "READ_SELECTION",
+      "elapsed_ms": 6166,
+      "at_ms": 1790714695292,
+      "timing": {
+       "stage": "READ_SELECTION",
+       "start_elapsed_ms": 6166,
+       "start_ts_ms": 1790714695252,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "READ_LINE",
+      "elapsed_ms": 6212,
+      "at_ms": 1790714695350,
+      "timing": {
+       "stage": "READ_LINE",
+       "start_elapsed_ms": 6212,
+       "start_ts_ms": 1790714695299,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "READ_PRICE",
+      "elapsed_ms": 6267,
+      "at_ms": 1790714695399,
+      "timing": {
+       "stage": "READ_PRICE",
+       "start_elapsed_ms": 6267,
+       "start_ts_ms": 1790714695353,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 6318,
+      "at_ms": 1790714695504,
+      "timing": {
+       "stage": "OPEN_SELECTION",
+       "start_elapsed_ms": 6318,
+       "start_ts_ms": 1790714695404,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 6421,
+      "at_ms": 1790714695504
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 6964,
+      "at_ms": 1790714695504
+     },
+     {
+      "stage": "OPEN_SELECTION",
+      "elapsed_ms": 6990,
+      "at_ms": 1790714695504
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 7796,
+      "at_ms": 1790714696935,
+      "timing": {
+       "stage": "ENTER_STAKE",
+       "start_elapsed_ms": 7796,
+       "start_ts_ms": 1790714696882,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 7852,
+      "at_ms": 1790714696935
+     },
+     {
+      "stage": "ENTER_STAKE",
+      "elapsed_ms": 8425,
+      "at_ms": 1790714696935
+     },
+     {
+      "stage": "VERIFY_FINAL_STATE",
+      "elapsed_ms": 8514,
+      "at_ms": 1790714697650,
+      "timing": {
+       "stage": "VERIFY_FINAL_STATE",
+       "start_elapsed_ms": 8514,
+       "start_ts_ms": 1790714697600,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "VERIFY_FINAL_STATE",
+      "elapsed_ms": 8569,
+      "at_ms": 1790714697650
+     },
+     {
+      "stage": "VERIFY_FINAL_STATE",
+      "elapsed_ms": 9166,
+      "at_ms": 1790714697650
+     },
+     {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "elapsed_ms": 9247,
+      "at_ms": 1790714698384,
+      "timing": {
+       "stage": "PREPARE_COMPLETE_EXECUTION",
+       "start_elapsed_ms": 9247,
+       "start_ts_ms": 1790714698333,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "PREPARE_COMPLETE_EXECUTION",
+      "elapsed_ms": 9456,
+      "at_ms": 1790714698384
+     }
+    ]
+   },
+   "device_stage": "PREPARE_COMPLETE_EXECUTION",
+   "execution_count": 1,
+   "run_id": "c_5BIiUjdOnz3MltYIrT-igg50Mjn3BOUjwJhIToW62Qs",
+   "fixture_name": "Real Espana Reserves v Motagua Reserves",
+   "home": "Real Espana Reserves",
+   "away": "Motagua Reserves",
+   "competition": "Honduras Reserve League 29 Sep 22:00",
+   "selection": {
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "2.45",
+    "availability": "OPEN",
+    "selection_role": "HOME",
+    "selection_name": "Real Espana Reserves",
+    "bounds": [
+     96,
+     657,
+     169,
+     698
+    ]
+   },
+   "final_state": {
+    "home": "Real Espana Reserves",
+    "away": "Motagua Reserves",
+    "market": "MONEYLINE",
+    "side": "HOME",
+    "line": "NONE",
+    "price": "2.45",
+    "stake": "0.10",
+    "state": "READY",
+    "place_bet_visible": true,
+    "wager_submitted": false
+   },
+   "ready_state": {
+    "fixture_home": "Real Espana Reserves",
+    "fixture_away": "Motagua Reserves",
+    "market": "MONEYLINE",
+    "selection_role": "HOME",
+    "selection_name": "Real Espana Reserves",
+    "line": "NONE",
+    "price": "2.45",
+    "stake": "0.10",
+    "session": "LOGGED_IN",
+    "state": "READY",
+    "minimum_price_ok": true,
+    "place_bet_visible": true,
+    "wager_submitted": false,
+    "stop_before_wager": true
+   },
+   "complete_execution_ready": {
+    "state": "COMPLETE_EXECUTION_READY",
+    "fixture": "Real Espana Reserves v Motagua Reserves",
+    "fixture_home": "Real Espana Reserves",
+    "fixture_away": "Motagua Reserves",
+    "market": "MONEYLINE",
+    "selection_role": "HOME",
+    "selection_name": "Real Espana Reserves",
+    "line": "NONE",
+    "price": "2.45",
+    "stake": "0.10",
+    "minimum_price": "1.01",
+    "final_control": "Place Bet",
+    "final_control_bounds": [
+     461,
+     1310,
+     620,
+     1360
+    ],
+    "final_control_enabled": true,
+    "final_control_actionable": true,
+    "prepared_gesture": {
+     "type": "tap",
+     "target": "Place Bet",
+     "package": "com.android.chrome",
+     "bounds": [
+      461,
+      1310,
+      620,
+      1360
+     ],
+     "center_x": 540.5,
+     "center_y": 1335,
+     "duration_ms": 100,
+     "dispatched": false
+    },
+    "gesture_dispatched": false,
+    "wager_submitted": false,
+    "timestamp_ms": 1790714698538,
+    "validation_hash": "dd5be2a0953b7a9240a29c84b2720ba5"
+   },
+   "wager_submitted": false,
+   "verification_detail": "HELD: verified bet on the slip, \u00a3 stake + To Return verified, Place Bet located; NOT tapped, slip kept",
+   "event_context": {
+    "home": "Real Espana Reserves",
+    "away": "Motagua Reserves",
+    "competition": "honduras reserve league",
+    "kickoff_utc": "2026-09-29T21:00",
+    "period": "FULL_GAME"
+   },
+   "route": "event_link",
+   "held": true,
+   "execution_observations": [
+    {
+     "stage": "grid",
+     "observed_at_ms": 1790714695296,
+     "observed": {
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "2.45",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Real Espana Reserves",
+      "bounds": [
+       96,
+       657,
+       169,
+       698
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "selection",
+     "observed_at_ms": 1790714695297,
+     "observed": {
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "2.45",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Real Espana Reserves",
+      "bounds": [
+       96,
+       657,
+       169,
+       698
+      ]
+     },
+     "identity_verified": true
+    },
+    {
+     "stage": "selection_preflight",
+     "observed_at_ms": 1790714696075,
+     "observed": {
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "2.45",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Real Espana Reserves",
+      "bounds": [
+       96,
+       657,
+       169,
+       698
+      ]
+     },
+     "identity_verified": false
+    },
+    {
+     "stage": "final",
+     "observed_at_ms": 1790714698311,
+     "observed": {
+      "market": "MONEYLINE",
+      "side": "HOME",
+      "line": "NONE",
+      "price": "2.45",
+      "availability": "OPEN",
+      "selection_role": "HOME",
+      "selection_name": "Real Espana Reserves",
+      "bounds": [
+       96,
+       657,
+       169,
+       698
+      ]
+     },
+     "identity_verified": true
+    }
+   ],
+   "stage_timings": [
+    {
+     "stage": "OPEN_HOME",
+     "start_elapsed_ms": 35,
+     "start_ts_ms": 1790714689121,
+     "end_elapsed_ms": 5476,
+     "end_ts_ms": 1790714694562,
+     "duration_ms": 5441,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "MARKET_NAV",
+     "start_elapsed_ms": 5476,
+     "start_ts_ms": 1790714694562,
+     "end_elapsed_ms": 6166,
+     "end_ts_ms": 1790714695252,
+     "duration_ms": 690,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_SELECTION",
+     "start_elapsed_ms": 6166,
+     "start_ts_ms": 1790714695252,
+     "end_elapsed_ms": 6212,
+     "end_ts_ms": 1790714695299,
+     "duration_ms": 46,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_LINE",
+     "start_elapsed_ms": 6212,
+     "start_ts_ms": 1790714695299,
+     "end_elapsed_ms": 6267,
+     "end_ts_ms": 1790714695353,
+     "duration_ms": 55,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "READ_PRICE",
+     "start_elapsed_ms": 6267,
+     "start_ts_ms": 1790714695353,
+     "end_elapsed_ms": 6318,
+     "end_ts_ms": 1790714695404,
+     "duration_ms": 51,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "OPEN_SELECTION",
+     "start_elapsed_ms": 6318,
+     "start_ts_ms": 1790714695404,
+     "end_elapsed_ms": 7796,
+     "end_ts_ms": 1790714696882,
+     "duration_ms": 1478,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "ENTER_STAKE",
+     "start_elapsed_ms": 7796,
+     "start_ts_ms": 1790714696882,
+     "end_elapsed_ms": 8514,
+     "end_ts_ms": 1790714697600,
+     "duration_ms": 718,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "VERIFY_FINAL_STATE",
+     "start_elapsed_ms": 8514,
+     "start_ts_ms": 1790714697600,
+     "end_elapsed_ms": 9247,
+     "end_ts_ms": 1790714698333,
+     "duration_ms": 733,
+     "status": "ok",
+     "retries": 0
+    },
+    {
+     "stage": "PREPARE_COMPLETE_EXECUTION",
+     "start_elapsed_ms": 9247,
+     "start_ts_ms": 1790714698333,
+     "end_elapsed_ms": 9456,
+     "end_ts_ms": 1790714698542,
+     "duration_ms": 209,
+     "status": "ok",
+     "retries": 0
+    }
+   ],
+   "stake_prefilled": "slip",
+   "stake_check_prefilled": {
+    "ok": true,
+    "detail": "remembered stake 0.10 read and To Return exactly 0.10 x 2.45",
+    "stake_digits": "010",
+    "return_digits": "024",
+    "stake": "0.10",
+    "price": "2.45"
+   },
+   "stake_check_prefilled_terms": {
+    "ok": true,
+    "detail": "stake 0.10 and return agree",
+    "stake_digits": "010",
+    "return_digits": "024",
+    "stake": "0.10",
+    "price": "2.45"
+   },
+   "stake_entered": "0.10",
+   "identity": {
+    "verdict": "EXACT",
+    "reason": "both teams exact",
+    "home": {
+     "feed": "Real Espana Reserves",
+     "bookmaker": "Real Espana Reserves",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact",
+     "alias_safe": true
+    },
+    "away": {
+     "feed": "Motagua Reserves",
+     "bookmaker": "Motagua Reserves",
+     "level": "EXACT",
+     "kind": "exact",
+     "score": 1,
+     "note": "exact",
+     "alias_safe": true
+    },
+    "kickoff_known": true,
+    "kickoff_agrees": true,
+    "reversed": false,
+    "evidence": {
+     "event_id_match": true,
+     "event_anchor": "page opened from the alert's own Bet365 event link",
+     "sport_match": "equal",
+     "kickoff_match": "exact",
+     "competition_match": "country_prefixed",
+     "competing_event": "none: a single event page reached through the alert's own link",
+     "home_similarity": {
+      "feed": "Real Espana Reserves",
+      "bookmaker": "Real Espana Reserves",
+      "level": "EXACT",
+      "kind": "exact",
+      "score": 1,
+      "note": "exact"
+     },
+     "away_similarity": {
+      "feed": "Motagua Reserves",
+      "bookmaker": "Motagua Reserves",
+      "level": "EXACT",
+      "kind": "exact",
+      "score": 1,
+      "note": "exact"
+     },
+     "protected_markers": "agree",
+     "orientation": "agree",
+     "policy": "both_exact",
+     "verdict": "EXACT"
+    }
+   },
+   "identity_verdict": "EXACT",
+   "event_url": "https://www.bet365.com/#/AC/B1/C1/D8/E202043384/F3/I1/"
+  },
+  "reset": {
+   "instruction_id": "rs-speed-hn-1x2-214448",
+   "status": "PASS",
+   "stage": "PASS",
+   "detail": "RESET_BETSLIP",
+   "duration_ms": 3156,
+   "progress": {
+    "stage": "RESET_BETSLIP",
+    "elapsed_ms": 3002,
+    "last_progress_at_ms": 1790714699062,
+    "instruction_id": "rs-speed-hn-1x2-214448",
+    "stages": [
+     {
+      "stage": "STARTED",
+      "elapsed_ms": 0,
+      "at_ms": 1790714699054
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 20,
+      "at_ms": 1790714699062,
+      "timing": {
+       "stage": "RESET_BETSLIP",
+       "start_elapsed_ms": 20,
+       "start_ts_ms": 1790714699055,
+       "end_elapsed_ms": null,
+       "end_ts_ms": null,
+       "duration_ms": null,
+       "status": "running",
+       "retries": 0
+      }
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 31,
+      "at_ms": 1790714699062
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 612,
+      "at_ms": 1790714699062
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 658,
+      "at_ms": 1790714699062
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 2434,
+      "at_ms": 1790714699062
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 2980,
+      "at_ms": 1790714699062
+     },
+     {
+      "stage": "RESET_BETSLIP",
+      "elapsed_ms": 3002,
+      "at_ms": 1790714699062
+     }
+    ]
+   },
+   "device_stage": "RESET_BETSLIP",
+   "execution_count": 1,
+   "run_id": "c_qpdDavOkTcGNQvCH57f9UeIOVvxNjGp69v6w32WI63w",
+   "fixture_name": null,
+   "home": null,
+   "away": null,
+   "competition": null,
+   "verification_detail": "Betslip/receipt reset on the current screen; whitelisted controls only",
+   "betslip_reset": {
+    "tapped": true,
+    "control": "remove selection X",
+    "bounds": [
+     21,
+     1180,
+     42,
+     1207
+    ],
+    "place_bet_still_visible": false
+   },
+   "stage_timings": [
+    {
+     "stage": "RESET_BETSLIP",
+     "start_elapsed_ms": 20,
+     "start_ts_ms": 1790714699055,
+     "end_elapsed_ms": 3001,
+     "end_ts_ms": 1790714702036,
+     "duration_ms": 2981,
+     "status": "ok",
+     "retries": 0
+    }
+   ]
+  },
+  "wall_s": 10.031000000002678
+ }
+]

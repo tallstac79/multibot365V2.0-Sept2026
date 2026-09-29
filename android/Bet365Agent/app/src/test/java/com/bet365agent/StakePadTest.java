@@ -1,5 +1,6 @@
 package com.bet365agent;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -161,5 +162,16 @@ public class StakePadTest {
 
     @Test public void aRememberedStakeIsJudgedAtTheFreshPrice() {
         assertFalse("price moved 1.83 -> 2.10 under the remembered stake", StakePad.checkPrefilled(slip("£0.10", "£0.18"), "0.10", "2.10").ok);
+    }
+
+    @Test public void theRealRememberedStakeSlipIsKeptOnlyWhenStakeAndReturnAgreeExactly() throws Exception {
+        // 29 Sep 2026 21:41 (Real Espana Reserves v Motagua Reserves, 1X2 HOME 2.45): Bet365 "Remember Stake" shows the slip as
+        // "Stake £0.10 | Place Bet, To Return £0.24" with no "Set Stake" control. 0.10 x 2.45 = 0.245 -> 0.24.
+        List<GameLinesParser.Word> words = load("slip_remembered_stake_20260929.txt");
+        assertTrue(StakePad.checkPrefilled(words, "0.10", "2.45").detail, StakePad.checkPrefilled(words, "0.10", "2.45").ok);
+        assertFalse("another stake", StakePad.checkPrefilled(words, "0.20", "2.45").ok);
+        assertFalse("another stake", StakePad.checkPrefilled(words, "1.00", "2.45").ok);
+        assertFalse("the price moved under the remembered stake", StakePad.checkPrefilled(words, "0.10", "2.60").ok);
+        assertEquals("FILLED", StakePad.fieldState(words));
     }
 }

@@ -1423,7 +1423,10 @@ final class Bet365LiveAdapter implements SiteAdapter {
         if ("SPREAD".equals(targetMarket)) {
             discovered = footballViews(tabs, 0, null, Collections.<Selection>emptyList(), null);
         } else {
-            discovered = ui.captureTable("markets").thenCompose(s -> {
+            // The event header (and the tab strip) draw before the market body: read the popular view only once its own section is
+            // on screen (PageReady.footballTabReady), like every other tab. A single read straight after the header found no quotes
+            // on every 1X2 alert from 0.9.47 (Deportivo Muniz, Brightlingsea, Hendon, 29 Sep 2026).
+            discovered = footballCaptureTab("popular", "markets", android.os.SystemClock.elapsedRealtime() - 1000).thenCompose(s -> {
                 List<Selection> found = footballSelections(footballParse(s, "popular"));
                 if (footballExactIn(found)) return CompletableFuture.completedFuture(found);
                 noteBand(found, "popular");
@@ -1716,6 +1719,7 @@ final class Bet365LiveAdapter implements SiteAdapter {
     }
 
     public CompletableFuture<Void> open_selection(Selection selection) {
+        openedSelection = selection;
         if ("basketball".equals(sport) && liveFixture != null && cleanGridAtMs > 0
                 && android.os.SystemClock.elapsedRealtime() - cleanGridAtMs < 8000) {
             // The static event page was read cleanly <8 s ago; the betslip then re-shows the exact line and
@@ -1774,6 +1778,9 @@ final class Bet365LiveAdapter implements SiteAdapter {
 
     static final String PRICE_CHANGED_ON_SLIP = "Bet365 asks to accept a changed price on the slip; stake erased, nothing accepted";
     private boolean priceChangeAccepted;
+    /** The selection open_selection last tapped, and whether it was tapped a second time because no slip appeared. */
+    private Selection openedSelection;
+    private boolean selectionRetapped;
 
     private CompletableFuture<Void> acceptChangedPrice() {
         Selection held = latestSelection;
@@ -1813,42 +1820,90 @@ final class Bet365LiveAdapter implements SiteAdapter {
                 if (!chromeMenu) return CompletableFuture.completedFuture(first);
                 return dismissChromeMenu(0).thenCompose(v -> ui.capture("betslip_pre_stake"));
             })
-            .thenCompose(s -> {
-                detectBetslipFaults(s);
-                require(visible(s, "Set Stake", "Stake", "Place Bet", "Bet Slip", "Betslip", "Quick Bet")
-                                || visibleLoose(s, liveFixture != null ? liveFixture.home : ""),
-                        "TARGET_NOT_FOUND", "Betslip not visible for stake entry");
-                // OCR often merges "Set Stake Place Bet" onto one line ? match contains, tap LEFT half only.
-                VisualScreen.Line setStake = null;
-                for (VisualScreen.Line line : s.lines) {
-                    String t = line.text.trim().toLowerCase(java.util.Locale.US);
-                    boolean hit = (t.contains("set") && t.contains("stake"))
-                            || (t.contains("stake") && !t.contains("place"));
-                    if (hit) {
-                        if (setStake == null || line.bounds.top > setStake.bounds.top) setStake = line;
-                    }
-                }
-                require(setStake != null, "TARGET_NOT_FOUND", "Set Stake control not visible on betslip");
-                int mid = setStake.bounds.left + Math.max(120, setStake.bounds.width() / 3);
-                android.graphics.Rect tap = new android.graphics.Rect(
-                        Math.max(0, setStake.bounds.left),
-                        Math.max(0, setStake.bounds.top - 10),
-                        Math.min(setStake.bounds.right, mid),
-                        Math.min(3000, setStake.bounds.bottom + 10));
-                return ui.tap(tap, "Set Stake", 600);   // keypad slides up; measured present by ~1.1 s, absent at ~0.3 s
-            })
-            .thenCompose(v -> captureUntil("stake_ui", 5, 250, s -> StakePad.keypad(wordsOf(s), 850) != null))
-            .thenCompose(uiScreen -> {
-                detectBetslipFaults(uiScreen);
-                require(visible(uiScreen, "Done") || hasDigitPad(uiScreen) || visible(uiScreen, "Remember Stake", "Remember"),
-                        "TARGET_NOT_FOUND", "Stake pad not visible after Set Stake");
-                return enterStakeOnPad(uiScreen, amount);
-            })
-            .thenAccept(v -> {
-                // Typed stake was verified before Done (stake digits AND To Return). The slip after Done is
-                // re-verified strictly by verify_final_state (and again before the tap): no extra read here.
-                ui.put("stake_entered", amount);
-            });
+            .thenCompose(s -> stakeSlipStep(s, amount, 0));
+    }
+
+    /**
+     * The slip just opened. With Bet365's "Remember Stake" ON the slip already shows the stake ("Stake £0.10", "To Return £0.24")
+     * and has no "Set Stake" control (29 Sep 2026: every hold from 17:44Z failed "Set Stake control not visible"). A stake that
+     * reads back EXACTLY as the instructed stake with To Return exactly stake x price on this fresh frame is kept as it is: no pad,
+     * no typing, no Done (StakePad.checkPrefilled). Anything else opens the pad by the stake control / stake box and the
+     * normal clear-and-type path with its read-back runs as before. The slip is verified again by verify_final_state and before the tap.
+     */
+    private CompletableFuture<Void> stakeSlipStep(VisualScreen s, String amount, int recaptures) {
+        detectBetslipFaults(s);
+        require(visible(s, "Set Stake", "Stake", "Place Bet", "Bet Slip", "Betslip", "Quick Bet")
+                        || visibleLoose(s, liveFixture != null ? liveFixture.home : ""),
+                "TARGET_NOT_FOUND", "Betslip not visible for stake entry");
+        if (openedPrice != null && !openedPrice.isEmpty() && prefilledStakeReads(s, amount)) {
+            ui.put("stake_prefilled", "slip");
+            ui.put("stake_entered", amount);
+            return CompletableFuture.completedFuture(null);
+        }
+        android.graphics.Rect tap = stakeControl(s);
+        if (tap == null && !slipOnScreen(s) && !selectionRetapped && openedSelection != null) {
+            // No slip at all after the polling window: the selection tap did not land (29 Sep 2026: the page scrolled ~80 px between the
+            // capture and the tap and the tap hit a section heading). Nothing is on the slip, so the same cell is re-read and tapped ONCE
+            // more through the normal open_selection (fresh re-read, tolerance check, tap); a slip that WAS there is never tapped again.
+            selectionRetapped = true;
+            ui.put("selection_retap", true);
+            return open_selection(openedSelection)
+                    .thenCompose(v -> captureUntil("betslip_pre_stake_retap", 4, 250, p -> slipOnScreen(p)))
+                    .thenCompose(n -> stakeSlipStep(n, amount, 0));
+        }
+        if (tap == null) {
+            // the slip can still be drawing (the stake box appears after the selection row): look again before refusing
+            if (recaptures < 2) return ui.delay(250).thenCompose(v -> ui.capture("betslip_pre_stake_" + (recaptures + 1))).thenCompose(n -> stakeSlipStep(n, amount, recaptures + 1));
+            throw new Failure("TARGET_NOT_FOUND", "Set Stake control not visible on betslip");
+        }
+        return ui.tap(tap, "Set Stake", 600)   // keypad slides up; measured present by ~1.1 s, absent at ~0.3 s
+                .thenCompose(v -> captureUntil("stake_ui", 5, 250, p -> StakePad.keypad(wordsOf(p), 850) != null))
+                .thenCompose(uiScreen -> {
+                    detectBetslipFaults(uiScreen);
+                    require(visible(uiScreen, "Done") || hasDigitPad(uiScreen) || visible(uiScreen, "Remember Stake", "Remember"),
+                            "TARGET_NOT_FOUND", "Stake pad not visible after Set Stake");
+                    return enterStakeOnPad(uiScreen, amount);
+                })
+                .thenAccept(v -> {
+                    // Typed stake was verified before Done (stake digits AND To Return). The slip after Done is
+                    // re-verified strictly by verify_final_state (and again before the tap): no extra read here.
+                    ui.put("stake_entered", amount);
+                });
+    }
+
+    /** Some betslip is on screen: a Place Bet button, or the stake label / Set Stake control. */
+    private static boolean slipOnScreen(VisualScreen s) {
+        return findPlaceBetLine(s) != null || visible(s, "Set Stake", "Bet Slip", "Betslip") || stakeControl(s) != null;
+    }
+
+    /** The control that opens the stake pad: the "Set Stake" line, else the "Stake" label / stake box left of Place Bet (a
+     *  remembered-stake slip shows "Stake £0.10" there). Null when neither is on screen. */
+    static android.graphics.Rect stakeControl(VisualScreen s) {
+        // OCR often merges "Set Stake Place Bet" onto one line: match contains, tap the LEFT part only.
+        VisualScreen.Line setStake = null;
+        for (VisualScreen.Line line : s.lines) {
+            String t = line.text.trim().toLowerCase(java.util.Locale.US);
+            boolean hit = (t.contains("set") && t.contains("stake")) || (t.contains("stake") && !t.contains("place"));
+            if (hit && (setStake == null || line.bounds.top > setStake.bounds.top)) setStake = line;
+        }
+        if (setStake != null) {
+            int mid = setStake.bounds.left + Math.max(120, setStake.bounds.width() / 3);
+            return new android.graphics.Rect(Math.max(0, setStake.bounds.left), Math.max(0, setStake.bounds.top - 10),
+                    Math.min(setStake.bounds.right, mid), Math.min(3000, setStake.bounds.bottom + 10));
+        }
+        // word level: the standalone "Stake" label on the left of the Place Bet row, with its amount below it
+        List<GameLinesParser.Word> words = wordsOf(s);
+        GameLinesParser.Word place = null;
+        for (GameLinesParser.Word w : words) {
+            if (!w.text.equalsIgnoreCase("Place")) continue;
+            for (GameLinesParser.Word b : words) if (b.text.equalsIgnoreCase("Bet") && Math.abs(b.cy() - w.cy()) <= 10 && b.left > w.right && b.left - w.right < 40) place = w;
+        }
+        if (place == null) return null;
+        for (GameLinesParser.Word w : words) {
+            if (!w.text.equalsIgnoreCase("Stake") || w.right > place.left - 20 || Math.abs(w.cy() - place.cy()) > 60) continue;
+            return new android.graphics.Rect(Math.max(0, w.left - 4), Math.max(0, w.top - 10), Math.max(w.right + 40, Math.min(place.left - 20, w.left + 200)), w.bottom + 60);
+        }
+        return null;
     }
 
     /** Type the stake on the betslip keypad. Keys are located only from OCR'd digit words on a validated
